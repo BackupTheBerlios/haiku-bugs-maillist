@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2504: Haiku freezes at bootup (leaf icon)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232504%3A%20Haiku%20freezes%20at%20bootup%20%28leaf%20icon%29&In-Reply-To=%3C049.94fc83a164421b81468f471e2d4da26b%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="018217.html">
+   <LINK REL="Next"  HREF="018093.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2504: Haiku freezes at bootup (leaf icon)</H1>
+    <B>El-Al</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232504%3A%20Haiku%20freezes%20at%20bootup%20%28leaf%20icon%29&In-Reply-To=%3C049.94fc83a164421b81468f471e2d4da26b%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2504: Haiku freezes at bootup (leaf icon)">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Jun 23 21:55:42 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="018217.html">[Haiku-bugs] [Haiku] #4038: Tracker random crash (GCC4 - r31165)
+</A></li>
+        <LI>Next message: <A HREF="018093.html">[Haiku-bugs] [Haiku] #3914: Tracker crash
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18091">[ date ]</a>
+              <a href="thread.html#18091">[ thread ]</a>
+              <a href="subject.html#18091">[ subject ]</a>
+              <a href="author.html#18091">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2504: Haiku freezes at bootup (leaf icon)
+-----------------------+----------------------------------------------------
+ Reporter:  El-Al      |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+Blockedby:             |    Platform:  All           
+ Blocking:             |  
+-----------------------+----------------------------------------------------
+
+Comment(by El-Al):
+
+ Replying to [comment:7 El-Al]:
+ &gt; Replying to [comment:6 El-Al]:
+ &gt; &gt; A little progress here. After performing the above the system now
+ boots up to the last icon on the splash screen.  Thereafter, the boot
+ splash either moves a couple of inches across the screen to the left or,
+ stretches itself out across the entire (bottom) of the screen and breaks
+ up into short strips. In either case, I can't use F12 to access KDL and
+ the system is essentially frozen.  Using the on-screen debug option, I get
+ exactly the same output as my original post.
+ &gt; &gt;
+ &gt; &gt;
+ &gt; Even tried installing to an IDE drive as opposed to SATA. Same problem
+ occurs. I guess the driver overhaul hasn't caused this problem at all. I'm
+ stumped!
+
+
+ Well, it seems as though this problem is related to a limitation in the
+ motherboards BIOS.
+
+ I have now changed the motherboard for another make and model.  Haiku
+ boots perfectly well now.
+
+ I noticed (whilst looking through the BIOS) in the USB Configuration
+ options a switch for BIOS EHCI hand-off.
+
+ The explaination of the switch is as follows:
+
+ This is a workaround for OSes without EHCI hand-off support. The EHCI
+ ownership change should claim by EHCI driver.
+
+ As can be seen by the original screen output, the systen froze at the
+ point of change of ownership.
+
+ This option was not available in the previous BIOS although the system was
+ booting fine up to a point in time.  What puzzles me is what actually
+ happened in order to make the system stop booting.
+
+ I can only think of two possibilities:
+
+ 1. That I was responsible by flashing the BIOS (which I recall doing at
+ some point).
+ 2. That ongoing work to the USB subsystem has somehow exposed the problem.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2504#comment:8">http://dev.haiku-os.org/ticket/2504#comment:8</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="018217.html">[Haiku-bugs] [Haiku] #4038: Tracker random crash (GCC4 - r31165)
+</A></li>
+	<LI>Next message: <A HREF="018093.html">[Haiku-bugs] [Haiku] #3914: Tracker crash
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18091">[ date ]</a>
+              <a href="thread.html#18091">[ thread ]</a>
+              <a href="subject.html#18091">[ subject ]</a>
+              <a href="author.html#18091">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

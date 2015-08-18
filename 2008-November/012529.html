@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1590: Updated Broadcom Tigon3 ethernet	driver
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231590%3A%20Updated%20Broadcom%20Tigon3%20ethernet%0A%09driver&In-Reply-To=%3C053.687be226092f98ed2cfceb94e771ca72%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012528.html">
+   <LINK REL="Next"  HREF="012532.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1590: Updated Broadcom Tigon3 ethernet	driver</H1>
+    <B>PieterPanman</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231590%3A%20Updated%20Broadcom%20Tigon3%20ethernet%0A%09driver&In-Reply-To=%3C053.687be226092f98ed2cfceb94e771ca72%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1590: Updated Broadcom Tigon3 ethernet	driver">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Nov 15 17:16:18 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012528.html">[Haiku-bugs] [Haiku] #2842: ScsiSynchronizeCache message	flooding
+</A></li>
+        <LI>Next message: <A HREF="012532.html">[Haiku-bugs] [Haiku] #2980: Event and Sound columns shouldn't	be fixed
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12529">[ date ]</a>
+              <a href="thread.html#12529">[ thread ]</a>
+              <a href="subject.html#12529">[ subject ]</a>
+              <a href="author.html#12529">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1590: Updated Broadcom Tigon3 ethernet driver
+------------------------------+---------------------------------------------
+  Reporter:  pieterpan        |       Owner:  axeld         
+      Type:  enhancement      |      Status:  new           
+  Priority:  normal           |   Milestone:  R1            
+ Component:  Drivers/Network  |     Version:  R1 development
+Resolution:                   |   Blockedby:                
+  Platform:  x86              |    Blocking:                
+------------------------------+---------------------------------------------
+
+Comment(by PieterPanman):
+
+ Karmak, thanks for testing. Good to know it works for you too.
+ Adek, can you also try it with my patch? Then it can be committed to the
+ tree and enabled by default.
+ I haven't yet gotten any stalled downloads. I just downloaded the latest
+ ubuntu iso at 1600 kB/sec without a hickup.
+ Regarding the icon in NetworkStatus, it reports the same as ifconfig. It
+ only shows  a connection if both 'up' and 'link' are true. Only 'up' is
+ true here. Maybe this is also the reason why it doesn't get an ip address
+ through dhcp when you plug it in after booting.
+ Bug in the freebsd compat layer?
+
+ {{{
+ /dev/net/broadcom570x/0
+         Hardware Type: Ethernet, Address: 00:16:d4:dc:ca:f2
+         inet addr: 192.168.1.37, Bcast: 192.168.1.255, Mask: 255.255.255.0
+         MTU: 1500, Metric: 0, up broadcast auto-configured
+         Receive: 559660 packets, 0 errors, 846238348 bytes, 0 mcasts, 0
+ dropped
+         Transmit: 306325 packets, 0 errors, 20346875 bytes, 0 mcasts, 0
+ dropped
+         Collisions: 0
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1590#comment:39">http://dev.haiku-os.org/ticket/1590#comment:39</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012528.html">[Haiku-bugs] [Haiku] #2842: ScsiSynchronizeCache message	flooding
+</A></li>
+	<LI>Next message: <A HREF="012532.html">[Haiku-bugs] [Haiku] #2980: Event and Sound columns shouldn't	be fixed
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12529">[ date ]</a>
+              <a href="thread.html#12529">[ thread ]</a>
+              <a href="subject.html#12529">[ subject ]</a>
+              <a href="author.html#12529">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

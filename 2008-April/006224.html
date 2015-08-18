@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1999: [PATCH] Bootsplash enhancement
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231999%3A%20%5BPATCH%5D%20Bootsplash%20enhancement&In-Reply-To=%3C050.90d5a67d9f72a08205f0d9b786027ae3%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006195.html">
+   <LINK REL="Next"  HREF="006750.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1999: [PATCH] Bootsplash enhancement</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231999%3A%20%5BPATCH%5D%20Bootsplash%20enhancement&In-Reply-To=%3C050.90d5a67d9f72a08205f0d9b786027ae3%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1999: [PATCH] Bootsplash enhancement">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Apr  6 20:54:04 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006195.html">[Haiku-bugs] [Haiku] #1999: [PATCH] Bootsplash enhancement
+</A></li>
+        <LI>Next message: <A HREF="006750.html">[Haiku-bugs] [Haiku] #1999: [PATCH] Bootsplash enhancement
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6224">[ date ]</a>
+              <a href="thread.html#6224">[ thread ]</a>
+              <a href="subject.html#6224">[ subject ]</a>
+              <a href="author.html#6224">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1999: [PATCH] Bootsplash enhancement
+--------------------------+-------------------------------------------------
+  Reporter:  stpere       |       Owner:  stippi        
+      Type:  enhancement  |      Status:  assigned      
+  Priority:  normal       |   Milestone:  R1            
+ Component:  - General    |     Version:  R1 development
+Resolution:               |    Platform:  All           
+--------------------------+-------------------------------------------------
+Comment (by stpere):
+
+ New version of the RLE encoding/decoding (based on suggestions from
+ stippi)!
+
+ What's new :
+
+ 1. smaller bootloader (again) because I don't use uint16 for counts.. that
+ limits myself to a count of 127 (see 2. for why 127), but I'm winning in
+ the long run because I don't lose a byte each time I have a count of,
+ say.. 3, 4 or any other small count..
+
+ 2. If some data cannot be compressed by RLE, because they aren't in a run
+ (like 0x00 0x00 0x00...) but rather like (0x06 0x03 0xf5...), I put a
+ negative count (count + 128, in fact) and simply write the said data
+ without putting the count for that section.
+
+ So if 0x06 0x03 0xf5 would have been encoded as :
+ 1, 0x06, 1, 0x03, 1, 0xf5,
+
+ this is now encoded as :
+ -3, 0x06, 0x03, 0xf5
+
+ In this simple case, we just saved 2 bytes.  But we are reserving/losing
+ all counts of over 128 for this trick.
+
+ 3. I encode the color channels separately because we often got something
+ like this to encode before :
+
+ 0x00 0x30 0xfe 0x00 0x30 0xfe 0x00 0x30 0xfe
+
+ that meant it was a single color repeating itself, but my first
+ implementation couldn't compress it.
+
+ 4. I have made the necessary adjustments to decoder in order to support
+ this new format.  I have optimized it a bit to help reduce the loading
+ time.  I know BeOS has a good reputation in regards with its boottime :)
+
+
+ Numbers :
+
+ /x86/release/system/boot/boot_loader_bios_ia32
+ before RLE: 372 KB
+ after RLE (first implementation): 324KB
+ after RLE (latest): 296KB
+
+ /x86/release/system/boot/zbeos
+ before RLE: 320
+ after RLE (first): 272
+ after RLE (latest): 248
+
+ /x86/release/system/kernel/kernel_x86
+ before RLE: 1125
+ after RLE (first): 1053
+ after RLE (latest): 1057
+ (this is with a later revision which added some kernel code, I didn't
+ change anything to the kernel for this implementation)
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1999#comment:13">http://dev.haiku-os.org/ticket/1999#comment:13</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006195.html">[Haiku-bugs] [Haiku] #1999: [PATCH] Bootsplash enhancement
+</A></li>
+	<LI>Next message: <A HREF="006750.html">[Haiku-bugs] [Haiku] #1999: [PATCH] Bootsplash enhancement
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6224">[ date ]</a>
+              <a href="thread.html#6224">[ thread ]</a>
+              <a href="subject.html#6224">[ subject ]</a>
+              <a href="author.html#6224">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

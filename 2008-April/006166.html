@@ -1,0 +1,159 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2028: KDL: get_writable_cached_block: invalid block number 119165821333100 (max 2618594)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232028%3A%20KDL%3A%20get_writable_cached_block%3A%20invalid%0A%20block%20number%20119165821333100%20%28max%202618594%29&In-Reply-To=%3C043.4880a34909291c97b30035b854a06402%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006165.html">
+   <LINK REL="Next"  HREF="006167.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2028: KDL: get_writable_cached_block: invalid block number 119165821333100 (max 2618594)</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232028%3A%20KDL%3A%20get_writable_cached_block%3A%20invalid%0A%20block%20number%20119165821333100%20%28max%202618594%29&In-Reply-To=%3C043.4880a34909291c97b30035b854a06402%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2028: KDL: get_writable_cached_block: invalid block number 119165821333100 (max 2618594)">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Apr  5 13:05:31 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006165.html">[Haiku-bugs] [Haiku] #1412: Haiku doesn't have the sys/ipc.h sys/sem.h and sys/mman.h files.
+</A></li>
+        <LI>Next message: <A HREF="006167.html">[Haiku-bugs] [Haiku] #2028: KDL: get_writable_cached_block: invalid block number 119165821333100 (max 2618594)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6166">[ date ]</a>
+              <a href="thread.html#6166">[ thread ]</a>
+              <a href="subject.html#6166">[ subject ]</a>
+              <a href="author.html#6166">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2028: KDL: get_writable_cached_block: invalid block number 119165821333100 (max
+2618594)
+---------------------------+------------------------------------------------
+ Reporter:  kaoutsis       |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1 development
+ Platform:  All            |  
+---------------------------+------------------------------------------------
+ 'haiku-src' is mounted read-only, as it may contains bad data.
+ I took the naive approach: copy from that volume to the home
+ dir the 'develop' dir via tracker (~280000 files)
+
+
+ {{{
+ kdebug&gt; where
+ stack trace for thread 217 &quot;MoveTask&quot;
+     kernel stack: 0x92ffa000 to 0x92ffe000
+       user stack: 0x7028a000 to 0x702ca000
+ frame            caller     &lt;image&gt;:function + offset
+ 92ffda2c (+  52) 8008907f   &lt;kernel&gt;:invoke_debugger_command + 0x00cf
+ 92ffda60 (+  64) 80089e20   &lt;kernel&gt;:_ParseCommand__16ExpressionParserRi +
+ 0x01f8
+ 92ffdaa0 (+  48) 80089812
+ &lt;kernel&gt;:EvaluateCommand__16ExpressionParserPCcRi + 0x01de
+ 92ffdad0 (+ 228) 8008af34   &lt;kernel&gt;:evaluate_debug_command + 0x0088
+ 92ffdbb4 (+  64) 80087bc2   &lt;kernel&gt;:kernel_debugger_loop__Fv + 0x017a
+ 92ffdbf4 (+  48) 8008886d   &lt;kernel&gt;:kernel_debugger + 0x010d
+ 92ffdc24 (+ 192) 80088755   &lt;kernel&gt;:panic + 0x0029
+ 92ffdce4 (+  64) 800681ef
+ &lt;kernel&gt;:get_writable_cached_block__FP11block_cachexxxlb + 0x003f
+ 92ffdd24 (+  80) 8006b260   &lt;kernel&gt;:block_cache_get_writable_etc + 0x0070
+ 92ffdd74 (+ 128) 8055efb2   &lt;bfs&gt;:_ShrinkStream__5InodeR11Transactionx +
+ 0x01ee
+ 92ffddf4 (+  48) 8055f330   &lt;bfs&gt;:TrimPreallocation__5InodeR11Transaction
+ + 0x0030
+ 92ffde24 (+  96) 8056aa15   &lt;bfs&gt;:bfs_free_cookie__FPvN20 + 0x0215
+ 92ffde84 (+  48) 8004e455   &lt;kernel&gt;:file_free_fd__FP15file_descriptor +
+ 0x0031
+ 92ffdeb4 (+  48) 80047174   &lt;kernel&gt;:put_fd + 0x0038
+ 92ffdee4 (+  64) 80047b97   &lt;kernel&gt;:common_close__Fib + 0x004b
+ 92ffdf24 (+  32) 800483e8   &lt;kernel&gt;:_user_close + 0x0018
+ 92ffdf44 (+ 100) 8009ac62   &lt;kernel&gt;:pre_syscall_debug_done + 0x0002
+ (nearest)
+ iframe at 0x92ffdfa8 (end = 0x92ffe000)
+  eax 0x77           ebx 0x42c818        ecx 0x2          edx 0x43d560
+  esi 0x702c7c64     edi 0x702c7c64      ebp 0x702c774c   esp 0x92ffdfdc
+  eip 0xffff0102  eflags 0x207
+  vector: 0x63, error code: 0x0
+ 92ffdfa8 (+   0) ffff0102
+ 702c774c (+  48) 0037286d
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libbe.so at 0x00202000</A>&gt;:unknown + 0x17086d
+ 702c777c (+  48) 003726b1
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libbe.so at 0x00202000</A>&gt;:unknown + 0x1706b1
+ 702c77ac (+  48) 00385674
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libbe.so at 0x00202000</A>&gt;:unknown + 0x183674
+ 702c77dc (+1312) 0050540a
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libtracker.so at 0x00441000</A>&gt;:unknown + 0xc440a
+ 702c7cfc (+ 464) 00504f89
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libtracker.so at 0x00441000</A>&gt;:unknown + 0xc3f89
+ 702c7ecc (+ 688) 0050624a
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libtracker.so at 0x00441000</A>&gt;:unknown + 0xc524a
+ 702c817c (+ 688) 0050621e
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libtracker.so at 0x00441000</A>&gt;:unknown + 0xc521e
+ 702c842c (+ 688) 0050621e
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libtracker.so at 0x00441000</A>&gt;:unknown + 0xc521e
+ 702c86dc (+ 688) 0050621e
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libtracker.so at 0x00441000</A>&gt;:unknown + 0xc521e
+ 702c898c (+ 688) 0050621e
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libtracker.so at 0x00441000</A>&gt;:unknown + 0xc521e
+ 702c8c3c (+ 688) 0050621e
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libtracker.so at 0x00441000</A>&gt;:unknown + 0xc521e
+ 702c8eec (+ 688) 0050621e
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libtracker.so at 0x00441000</A>&gt;:unknown + 0xc521e
+ 702c919c (+ 688) 0050621e
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libtracker.so at 0x00441000</A>&gt;:unknown + 0xc521e
+ 702c944c (+ 688) 0050621e
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libtracker.so at 0x00441000</A>&gt;:unknown + 0xc521e
+ 702c96fc (+1680) 00506c23
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libtracker.so at 0x00441000</A>&gt;:unknown + 0xc5c23
+ 702c9d8c (+ 400) 00504916
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libtracker.so at 0x00441000</A>&gt;:unknown + 0xc3916
+ 702c9f1c (+  48) 0051122b
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libtracker.so at 0x00441000</A>&gt;:unknown + 0xd022b
+ 702c9f4c (+  48) 005a21f3
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libtracker.so at 0x00441000</A>&gt;:unknown + 0x1611f3
+ 702c9f7c (+  48) 005a2038
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libtracker.so at 0x00441000</A>&gt;:unknown + 0x161038
+ 702c9fac (+  48) 0064cb20
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libroot.so at 0x00629000</A>&gt;:unknown + 0x23b20
+ 702c9fdc (+   0) 702c9fec   1822:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">MoveTask_217_stack at 0x7028a000</A> + 0x3ffec
+ kdebug&gt;
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2028">http://dev.haiku-os.org/ticket/2028</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006165.html">[Haiku-bugs] [Haiku] #1412: Haiku doesn't have the sys/ipc.h sys/sem.h and sys/mman.h files.
+</A></li>
+	<LI>Next message: <A HREF="006167.html">[Haiku-bugs] [Haiku] #2028: KDL: get_writable_cached_block: invalid block number 119165821333100 (max 2618594)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6166">[ date ]</a>
+              <a href="thread.html#6166">[ thread ]</a>
+              <a href="subject.html#6166">[ subject ]</a>
+              <a href="author.html#6166">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

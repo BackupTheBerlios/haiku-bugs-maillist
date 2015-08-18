@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1128: Backgrounds desktop rightclick menu	crash
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231128%3A%20Backgrounds%20desktop%20rightclick%20menu%0A%09crash&In-Reply-To=%3C040.ef6d6490fa4565e85cc6e18ad04fd591%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000900.html">
+   <LINK REL="Next"  HREF="000895.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1128: Backgrounds desktop rightclick menu	crash</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231128%3A%20Backgrounds%20desktop%20rightclick%20menu%0A%09crash&In-Reply-To=%3C040.ef6d6490fa4565e85cc6e18ad04fd591%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1128: Backgrounds desktop rightclick menu	crash">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Mar 27 05:28:59 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000900.html">[Haiku-bugs] [Haiku] #1127: Missing ctags command [patch]
+</A></li>
+        <LI>Next message: <A HREF="000895.html">[Haiku-bugs] [Haiku] #1128: Backgrounds desktop rightclick menu	crash
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#893">[ date ]</a>
+              <a href="thread.html#893">[ thread ]</a>
+              <a href="subject.html#893">[ subject ]</a>
+              <a href="author.html#893">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1128: Backgrounds desktop rightclick menu crash
+-----------------------+----------------------------------------------------
+ Reporter:  cebif      |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+ Platform:  All        |  
+-----------------------+----------------------------------------------------
+ I get this crash when openning backgrounds from the desktop right click
+ menu.
+ The steps to produce this are:
+ 1. right click on desktop.
+ 2. Move mouse pointer to addons/backgrounds
+ The moment backgrounds is clicked a crash.
+ Expected behaviour: the backgrounds application should open
+
+ Here is the debug information from the crash:
+ GNU gdb 6.3
+ Copyright 2004 Free Software Foundation, Inc.
+ GDB is free software, covered by the GNU General Public License, and you
+ are
+ welcome to change it and/or distribute copies of it under certain
+ conditions.
+ Type &quot;show copying&quot; to see the conditions.
+ There is absolutely no warranty for GDB.  Type &quot;show warranty&quot; for
+ details.
+ This GDB was configured as &quot;i586-pc-haiku&quot;...(no debugging symbols found)
+
+ Thread 145 caused an exception: Segment violation
+ Reading symbols from /boot/beos/system/lib/libbe.so...(no debugging
+ symbols found)...done.
+ Loaded symbols for /boot/beos/system/lib/libbe.so
+ Reading symbols from /boot/beos/system/lib/libtracker.so...(no debugging
+ symbols found)...done.
+ Loaded symbols for /boot/beos/system/lib/libtracker.so
+ Reading symbols from /boot/beos/system/lib/libroot.so...done.
+ Loaded symbols for /boot/beos/system/lib/libroot.so
+ Reading symbols from /boot/beos/system/lib/libqoca.so...done.
+ Loaded symbols for /boot/beos/system/lib/libqoca.so
+ Reading symbols from /boot/beos/system/lib/libstdc++.r4.so...done.
+ Loaded symbols for /boot/beos/system/lib/libstdc++.r4.so
+ Reading symbols from /boot/beos/system/lib/libtranslation.so...done.
+ Loaded symbols for /boot/beos/system/lib/libtranslation.so
+ Reading symbols from /boot/beos/system/lib/libtextencoding.so...done.
+ Loaded symbols for /boot/beos/system/lib/libtextencoding.so
+ Reading symbols from /boot/beos/system/add-
+ ons/Tracker/Background-B...done.
+ Loaded symbols for /boot/beos/system/add-ons/Tracker/Background-B
+
+ [Switching to team /boot/beos/system/Tracker (60) thread Backgrounds
+ (145)]
+ 0x00969780 in BackgroundsView::MessageReceived ()
+    from /boot/beos/system/add-ons/Tracker/Background-B
+ (gdb)
+ I was using a raw hard drive image: haiku.image.bz2, about the 22nd March.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1128">http://dev.haiku-os.org/ticket/1128</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000900.html">[Haiku-bugs] [Haiku] #1127: Missing ctags command [patch]
+</A></li>
+	<LI>Next message: <A HREF="000895.html">[Haiku-bugs] [Haiku] #1128: Backgrounds desktop rightclick menu	crash
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#893">[ date ]</a>
+              <a href="thread.html#893">[ thread ]</a>
+              <a href="subject.html#893">[ subject ]</a>
+              <a href="author.html#893">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

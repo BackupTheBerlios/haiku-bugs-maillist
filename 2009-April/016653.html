@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3835: when booting VMCache::InsertPage(): there's already page 0x8203a920 with cache offset 146 in cache 0x8101bd20; inserting page 0x8203bc58
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233835%3A%20when%20booting%20VMCache%3A%3AInsertPage%28%29%3A%0A%20there%27s%20already%20page%200x8203a920%20with%20cache%20offset%20146%20in%20cache%200x8101bd20%3B%0A%20inserting%20page%200x8203bc58&In-Reply-To=%3C040.407365164de204ef461eeee72da46d32%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="016652.html">
+   <LINK REL="Next"  HREF="016654.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3835: when booting VMCache::InsertPage(): there's already page 0x8203a920 with cache offset 146 in cache 0x8101bd20; inserting page 0x8203bc58</H1>
+    <B>korli</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233835%3A%20when%20booting%20VMCache%3A%3AInsertPage%28%29%3A%0A%20there%27s%20already%20page%200x8203a920%20with%20cache%20offset%20146%20in%20cache%200x8101bd20%3B%0A%20inserting%20page%200x8203bc58&In-Reply-To=%3C040.407365164de204ef461eeee72da46d32%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3835: when booting VMCache::InsertPage(): there's already page 0x8203a920 with cache offset 146 in cache 0x8101bd20; inserting page 0x8203bc58">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Apr 27 21:53:56 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="016652.html">[Haiku-bugs] [Haiku] #2539: [app_server] crash in	HWInterface::_CopyToFront
+</A></li>
+        <LI>Next message: <A HREF="016654.html">[Haiku-bugs] [Haiku] #3835: when booting VMCache::InsertPage(): there's already page 0x8203a920 with cache offset 146 in cache 0x8101bd20; inserting page 0x8203bc58
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16653">[ date ]</a>
+              <a href="thread.html#16653">[ thread ]</a>
+              <a href="subject.html#16653">[ subject ]</a>
+              <a href="author.html#16653">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3835: when booting VMCache::InsertPage(): there's already page 0x8203a920 with
+cache offset 146 in cache 0x8101bd20; inserting page 0x8203bc58
+---------------------------+------------------------------------------------
+ Reporter:  korli          |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  blocker        |   Milestone:  R1/alpha1     
+Component:  System/Kernel  |     Version:  R1 development
+Blockedby:                 |    Platform:  All           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+ r30468 on VMWare on boot:
+
+ {{{
+ PANIC: VMCache::InsertPage(): there's already page 0x8203a920 with cache
+ offset 146 in cache 0x8101bd20; inserting page 0x8203bc58
+ Welcome to Kernel Debugging Land...
+ Thread 37 &quot;sh&quot; running on CPU 0
+ kdebug&gt; bt
+ stack trace for thread 37 &quot;sh&quot;
+     kernel stack: 0x80208000 to 0x8020c000
+       user stack: 0x7efef000 to 0x7ffef000
+ frame               caller     &lt;image&gt;:function + offset
+  0 8020ba54 (+  48) 80062345   &lt;kernel_x86&gt;:invoke_debugger_command +
+ 0x00f5
+  1 8020ba84 (+  64) 80062135   &lt;kernel_x86&gt;
+ invoke_pipe_segment(debugger_command_pipe*: ESC[34m0x8012f380ESC[0m,
+ int32: ESC[34m0ESC[0m, ESC[34m0x0ESC[0m ESC[31m&quot;&lt;NULL&gt;&quot;ESC[0m) + 0x0079
+  2 8020bac4 (+  64) 800624bc   &lt;kernel_x86&gt;:invoke_debugger_command_pipe +
+ 0x009c
+  3 8020bb04 (+  48) 80063a6c   &lt;kernel_x86&gt;
+ ExpressionParser&lt;ESC[32m0x8020bbb8ESC[0m&gt;::_ParseCommandPipe(ESC[34m0x8020bbb4ESC[0m)
+ + 0x0234
+  4 8020bb34 (+  64) 80062ea6   &lt;kernel_x86&gt;
+ ExpressionParser&lt;ESC[32m0x8020bbb8ESC[0m&gt;::EvaluateCommand(ESC[34m0x8011fc00ESC[0m
+ ESC[36m&quot;bt&quot;ESC[0m, ESC[34m0x8020bbb4ESC[0m) + 0x02ba
+  5 8020bb74 (+ 224) 80064e94   &lt;kernel_x86&gt;:evaluate_debug_command +
+ 0x0088
+  6 8020bc54 (+  64) 800601be   &lt;kernel_x86&gt; kernel_debugger_loop() +
+ 0x01ae
+  7 8020bc94 (+  32) 800610c5   &lt;kernel_x86&gt;:kernel_debugger + 0x004d
+  8 8020bcb4 (+ 192) 8006106d   &lt;kernel_x86&gt;:panic + 0x0029
+  9 8020bd74 (+ 112) 800c9551   &lt;kernel_x86&gt;
+ VMCache&lt;ESC[32m0x8101bd20ESC[0m&gt;::InsertPage(vm_page*:
+ ESC[34m0x8203bc58ESC[0m, int64: ESC[34m598016ESC[0m) + 0x01e9
+ 10 8020bde4 (+  80) 800331b1   &lt;kernel_x86&gt;
+ PrecacheIO&lt;ESC[32m0x81009eb0ESC[0m&gt;::Start(ESC[34m0x92000ESC[0m,
+ ESC[34m0x0ESC[0m, ESC[34m0x800c90aaESC[0m, ESC[34m0x8020bec4ESC[0m,
+ ESC[34m0x0ESC[0m, ESC[34m0x7000ESC[0m) + 0x0079
+ 11 8020be34 (+  80) 80034a0c   &lt;kernel_x86&gt;:cache_prefetch_vnode + 0x0168
+ 12 8020be84 (+  80) 800c183c   &lt;kernel_x86&gt; _vm_map_file(int32:
+ ESC[34m37ESC[0m, ESC[34m0x8020bf24ESC[0m ESC[36m&quot;bash_seg1rw&quot;ESC[0m,
+ ESC[34m0x8020bf20ESC[0m, uint32: ESC[34m0x1ESC[0m (ESC[34m1ESC[0m),
+ uint32: ESC[34m0x7000ESC[0m (ESC[34m28672ESC[0m), uint32:
+ ESC[34m0x33ESC[0m (ESC[34m51ESC[0m), uint32: ESC[34m0x1ESC[0m
+ (ESC[34m1ESC[0m), int32: ESC[34m2ESC[0m, int64: ESC[34m573440ESC[0m,
+ ESC[34mfalseESC[0m) + 0x0304
+ 13 8020bed4 (+ 112) 800c7c1f   &lt;kernel_x86&gt;:_user_map_file + 0x00c3
+ 14 8020bf44 (+ 100) 800d8c62   &lt;kernel_x86&gt;:handle_syscall + 0x00af
+ user iframe at 0x8020bfa8 (end = 0x8020c000)
+  eax 0xb8           ebx 0x115374        ecx 0x7ffeda60   edx 0xffff0104
+  esi 0x24           edi 0x116004        ebp 0x7ffedaec   esp 0x8020bfdc
+  eip 0xffff0104  eflags 0x246      user esp 0x7ffeda60
+  vector: 0x63, error code: 0x0
+ 15 8020bfa8 (+   0) ffff0104   &lt;commpage&gt;:commpage_syscall + 0x0004
+ 16 7ffedaec (+5248) 00102f9d
+ &lt;/boot/system/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">runtime_loader at 0x00100000</A>&gt;:unknown + 0x2f9d
+ 17 7ffeef6c (+  64) 00103a07
+ &lt;/boot/system/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">runtime_loader at 0x00100000</A>&gt;:unknown + 0x3a07
+ 18 7ffeefac (+  48) 001008de
+ &lt;/boot/system/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">runtime_loader at 0x00100000</A>&gt;:unknown + 0x08de
+ 19 7ffeefdc (+   0) 7ffeefec   9071:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">sh_main_stack at 0x7efef000</A> + 0xffffec
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3835">http://dev.haiku-os.org/ticket/3835</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="016652.html">[Haiku-bugs] [Haiku] #2539: [app_server] crash in	HWInterface::_CopyToFront
+</A></li>
+	<LI>Next message: <A HREF="016654.html">[Haiku-bugs] [Haiku] #3835: when booting VMCache::InsertPage(): there's already page 0x8203a920 with cache offset 146 in cache 0x8101bd20; inserting page 0x8203bc58
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16653">[ date ]</a>
+              <a href="thread.html#16653">[ thread ]</a>
+              <a href="subject.html#16653">[ subject ]</a>
+              <a href="author.html#16653">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

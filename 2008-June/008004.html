@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1263: Tracker scrollbar confusion
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231263%3A%20Tracker%20scrollbar%20confusion&In-Reply-To=%3C057.806307b67988e75411f1a5880881ac1e%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008003.html">
+   <LINK REL="Next"  HREF="008006.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1263: Tracker scrollbar confusion</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231263%3A%20Tracker%20scrollbar%20confusion&In-Reply-To=%3C057.806307b67988e75411f1a5880881ac1e%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1263: Tracker scrollbar confusion">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Jun 10 14:19:47 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008003.html">[Haiku-bugs] [Haiku] #2366: Mouse stops working
+</A></li>
+        <LI>Next message: <A HREF="008006.html">[Haiku-bugs] [Haiku] #2367: Media checker blocks in USB when	booting from USB
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8004">[ date ]</a>
+              <a href="thread.html#8004">[ thread ]</a>
+              <a href="subject.html#8004">[ subject ]</a>
+              <a href="author.html#8004">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1263: Tracker scrollbar confusion
+-----------------------------------+----------------------------------------
+  Reporter:  jonas.kirilla         |       Owner:  axeld         
+      Type:  bug                   |      Status:  new           
+  Priority:  normal                |   Milestone:  R1            
+ Component:  Applications/Tracker  |     Version:  R1 development
+Resolution:                        |    Platform:  All           
+-----------------------------------+----------------------------------------
+Comment (by aldeck):
+
+ Replying to [comment:3 stippi]:
+ I think there is another problem, but i've found what is the cause of the
+ unnecessary negative offset. The icons are positioned correctly but the
+ extent calculation is not optimal. This happens when the text of a
+ leftmost icon is larger than the width of the icon (see Pose::CalcRect()
+ ). In Extent() you can see that it enlarge the extent by fOffset, which
+ would be ok if extent was enclosing icons not icons+text.
+ I have a patch pending that fixes this by calculating two extents, one
+ with text, one without, and a separate minimal textOffset (ex: 5px) for
+ text that is enforced if necessary. Now the layout is nice on the first
+ time except if an icon's text is really long.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1263#comment:5">http://dev.haiku-os.org/ticket/1263#comment:5</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008003.html">[Haiku-bugs] [Haiku] #2366: Mouse stops working
+</A></li>
+	<LI>Next message: <A HREF="008006.html">[Haiku-bugs] [Haiku] #2367: Media checker blocks in USB when	booting from USB
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8004">[ date ]</a>
+              <a href="thread.html#8004">[ thread ]</a>
+              <a href="subject.html#8004">[ subject ]</a>
+              <a href="author.html#8004">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

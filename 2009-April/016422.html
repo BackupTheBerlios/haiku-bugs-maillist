@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3768: create_image -i 943718400 (or other large sizes) results in freeze
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233768%3A%20create_image%20-i%20943718400%20%28or%20other%0A%20large%20sizes%29%20results%20in%20freeze&In-Reply-To=%3C053.f9fb11024b3a51fda853ce5cf4159fba%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="016418.html">
+   <LINK REL="Next"  HREF="016171.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3768: create_image -i 943718400 (or other large sizes) results in freeze</H1>
+    <B>axeld</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233768%3A%20create_image%20-i%20943718400%20%28or%20other%0A%20large%20sizes%29%20results%20in%20freeze&In-Reply-To=%3C053.f9fb11024b3a51fda853ce5cf4159fba%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3768: create_image -i 943718400 (or other large sizes) results in freeze">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Apr 20 19:59:19 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="016418.html">[Haiku-bugs] [Haiku] #3768: create_image -i 943718400 (or other large sizes) results in freeze
+</A></li>
+        <LI>Next message: <A HREF="016171.html">[Haiku-bugs] [Haiku] #3769: Fell into gdb while configuring	perl-5.10.0
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16422">[ date ]</a>
+              <a href="thread.html#16422">[ thread ]</a>
+              <a href="subject.html#16422">[ subject ]</a>
+              <a href="author.html#16422">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3768: create_image -i 943718400 (or other large sizes) results in freeze
+---------------------------+------------------------------------------------
+ Reporter:  anevilyak      |       Owner:  bonefish      
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1 development
+Blockedby:                 |    Platform:  All           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+
+Comment(by axeld):
+
+ IIRC the reasoning of separating the two was to let the expensive page
+ daemon run as few times as possible. However, that was still with the old
+ &quot;iterate over all user address spaces&quot; approach, that made the page daemon
+ much more expensive it probably is today. It should still be much more
+ expensive than the page writer alone, though.
+
+ OTOH letting the page daemon always run would improve the scoring of the
+ pages to remove when the pressure comes. It should not really keep the
+ CPUs busy all the time, though. And since contention is an actual problem
+ as you say, it might be worth to investigate it. Maybe we should just have
+ the page daemon also write back pages when it's running, taking over the
+ duty of the page writer.
+
+ Anyway, the other ideas sound nice as well. I'm really looking forward to
+ this (and the DebugAnalyzer, btw) :-)
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3768#comment:20">http://dev.haiku-os.org/ticket/3768#comment:20</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="016418.html">[Haiku-bugs] [Haiku] #3768: create_image -i 943718400 (or other large sizes) results in freeze
+</A></li>
+	<LI>Next message: <A HREF="016171.html">[Haiku-bugs] [Haiku] #3769: Fell into gdb while configuring	perl-5.10.0
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16422">[ date ]</a>
+              <a href="thread.html#16422">[ thread ]</a>
+              <a href="subject.html#16422">[ subject ]</a>
+              <a href="author.html#16422">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

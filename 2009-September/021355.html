@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4479: Resolutions missing with LG	W2353V-PF monitor
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234479%3A%20Resolutions%20missing%20with%20LG%0A%09W2353V-PF%20monitor&In-Reply-To=%3C052.3058c7437956191d772b526f6b4551f0%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="021308.html">
+   <LINK REL="Next"  HREF="021460.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4479: Resolutions missing with LG	W2353V-PF monitor</H1>
+    <B>rudolfc</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234479%3A%20Resolutions%20missing%20with%20LG%0A%09W2353V-PF%20monitor&In-Reply-To=%3C052.3058c7437956191d772b526f6b4551f0%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4479: Resolutions missing with LG	W2353V-PF monitor">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Sep 15 20:43:56 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="021308.html">[Haiku-bugs] [Haiku] #4479: Resolutions missing with LG	W2353V-PF monitor
+</A></li>
+        <LI>Next message: <A HREF="021460.html">[Haiku-bugs] [Haiku] #4479: Resolutions missing with LG	W2353V-PF monitor
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21355">[ date ]</a>
+              <a href="thread.html#21355">[ thread ]</a>
+              <a href="subject.html#21355">[ subject ]</a>
+              <a href="author.html#21355">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4479: Resolutions missing with LG W2353V-PF monitor
+-------------------------------------+--------------------------------------
+ Reporter:  ThaLuser                 |       Owner:  rudolfc  
+     Type:  bug                      |      Status:  new      
+ Priority:  normal                   |   Milestone:  R1       
+Component:  Drivers/Graphics/nVidia  |     Version:  R1 alpha1
+Blockedby:                           |    Platform:  x86      
+ Blocking:                           |  
+-------------------------------------+--------------------------------------
+
+Comment(by rudolfc):
+
+ Hi,
+
+ That's good news.
+
+ About the static: this indicates that not enough RAM bandwidth is
+ available to feed the DAC consistently with data during RAM accesses from
+ the main system. This is not related to the problem you had, but should
+ not be anyway:
+
+ You can try a few things:
+ - modify nvidia.settings. Please select:
+ 'usebios true'.
+ This let's the driver run the card as it was inited by it's BIOS at POST
+ time. It might be there's slightly more bandwidth available then.
+
+ BTW: you should also select: 'dma_acc true'. Though it isn't used atm,
+ it's working much better than PIO mode. Also, on NV40 and later, PIO mode
+ doesn't work at all.
+
+
+ - try 16 bit colordepth. This halves the bandwidth needed. Problem gone?
+ - try 8 bit colordepth if 16 bit did not help. OK?
+
+ If you see that it's OK in the lower colordepth, but you can't solve it in
+ 32bit mode by setting 'usebios true',
+
+ There's only one option left atm: you could tweak the RAM clock, on your
+ own risk of course!
+ From the log you uploaded which executed the coldstart scripts, you can
+ gather that your GPU speed is set at 250Mhz, and the RAM clock at 400Mhz.
+
+ Try to up your RAM speed by say 5%, so around 420Mhz. Does that influence
+ the static in a positive manner? If so, and your card remains stable, you
+ could try 10%, 440Mhz.
+
+ I wouldn't go further than that though..
+
+ ----
+
+ I expect in Windows you don't have that problem in 1920x1080 @ 60Hz in
+ 32bit depth. Correct?
+ This could mean the clock is higher in windows too, but it could also mean
+ that in windows there's a (better) algorithm in the driver to share the
+ bandwidth between sys access and DAC access (prioritizing). This is
+ something I'd rather not setup since little is known about the inner
+ workings of that mechanism.
+
+ What you can also try is lowering the refreshrate below 60Hz: the lower,
+ the less bandwidth is required. If you are on a flatpanel (you are I'd
+ say) then 50Hz still offers a steady picture I guess.
+
+ OK, lots of things for you to try ;-)
+
+ Keep me posted please!
+
+ Rudolf.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4479#comment:8">http://dev.haiku-os.org/ticket/4479#comment:8</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="021308.html">[Haiku-bugs] [Haiku] #4479: Resolutions missing with LG	W2353V-PF monitor
+</A></li>
+	<LI>Next message: <A HREF="021460.html">[Haiku-bugs] [Haiku] #4479: Resolutions missing with LG	W2353V-PF monitor
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21355">[ date ]</a>
+              <a href="thread.html#21355">[ thread ]</a>
+              <a href="subject.html#21355">[ subject ]</a>
+              <a href="author.html#21355">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

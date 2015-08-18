@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2471: PANIC: page fault but interrupts were disabled. Touching address 0x00000008 from eip 0x80031f85 while building Haiku
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-July/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232471%3A%20PANIC%3A%20page%20fault%20but%20interrupts%0A%20were%20disabled.%20Touching%20address%200x00000008%20from%20eip%200x80031f85%20while%0A%20building%20Haiku&In-Reply-To=%3C053.0249cd576bc690a1967ca8a9a348a469%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008690.html">
+   <LINK REL="Next"  HREF="008693.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2471: PANIC: page fault but interrupts were disabled. Touching address 0x00000008 from eip 0x80031f85 while building Haiku</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232471%3A%20PANIC%3A%20page%20fault%20but%20interrupts%0A%20were%20disabled.%20Touching%20address%200x00000008%20from%20eip%200x80031f85%20while%0A%20building%20Haiku&In-Reply-To=%3C053.0249cd576bc690a1967ca8a9a348a469%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2471: PANIC: page fault but interrupts were disabled. Touching address 0x00000008 from eip 0x80031f85 while building Haiku">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Jul  2 02:25:57 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008690.html">[Haiku-bugs] [Haiku] #2359: weird pauses during disk access
+</A></li>
+        <LI>Next message: <A HREF="008693.html">[Haiku-bugs] [Haiku] #2443: kernel missing strupr
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8691">[ date ]</a>
+              <a href="thread.html#8691">[ thread ]</a>
+              <a href="subject.html#8691">[ subject ]</a>
+              <a href="author.html#8691">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2471: PANIC: page fault but interrupts were disabled. Touching address 0x00000008
+from eip 0x80031f85  while building Haiku
+----------------------------+-----------------------------------------------
+  Reporter:  anevilyak      |       Owner:  axeld         
+      Type:  bug            |      Status:  new           
+  Priority:  critical       |   Milestone:  R1/alpha1     
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |   Blockedby:                
+  Platform:  All            |    Blocking:                
+----------------------------+-----------------------------------------------
+
+Comment(by anevilyak):
+
+ Hi,
+
+ Now I get:
+ {{{
+ 9db5ae04 (+120) 800321c5 &lt;kernel&gt;:_mutex_unlock + 0x0045
+ 9db5ae7c (+160) 80097a76 &lt;kernel&gt;:vm_soft_fault__FulbT1 + 0x0296
+
+ call 25184 12 -3 yields:
+ 9db5ae7c 80097a76 &lt;kernel&gt;:vm_soft_fault__FUlbT1(0x18031078, 0x800e7c01,
+ 0xc001 (49153))
+ }}}
+
+ Doing cache_tree on 0x18031078 yields ***READ/WRITE FAULT***
+
+ In any case, I'm leaving the box in the kernel debugger, please let me
+ know what else I can gather that'd be any use here.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2471#comment:7">http://dev.haiku-os.org/ticket/2471#comment:7</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008690.html">[Haiku-bugs] [Haiku] #2359: weird pauses during disk access
+</A></li>
+	<LI>Next message: <A HREF="008693.html">[Haiku-bugs] [Haiku] #2443: kernel missing strupr
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8691">[ date ]</a>
+              <a href="thread.html#8691">[ thread ]</a>
+              <a href="subject.html#8691">[ subject ]</a>
+              <a href="author.html#8691">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

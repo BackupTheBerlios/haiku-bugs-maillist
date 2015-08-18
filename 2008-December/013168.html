@@ -1,0 +1,180 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3220: Value of multi_mix_value::id provied with B_MULTI_SET_MIX is differ from one set in multi_mix_control::id.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-December/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233220%3A%20Value%20of%20multi_mix_value%3A%3Aid%20provied%0A%20with%20B_MULTI_SET_MIX%20is%20differ%20from%20one%20set%20in%20multi_mix_control%3A%3Aid.&In-Reply-To=%3C043.df7207237892a8e941e3da38abb65d2a%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="013169.html">
+   <LINK REL="Next"  HREF="013179.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3220: Value of multi_mix_value::id provied with B_MULTI_SET_MIX is differ from one set in multi_mix_control::id.</H1>
+    <B>siarzhuk</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233220%3A%20Value%20of%20multi_mix_value%3A%3Aid%20provied%0A%20with%20B_MULTI_SET_MIX%20is%20differ%20from%20one%20set%20in%20multi_mix_control%3A%3Aid.&In-Reply-To=%3C043.df7207237892a8e941e3da38abb65d2a%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3220: Value of multi_mix_value::id provied with B_MULTI_SET_MIX is differ from one set in multi_mix_control::id.">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Dec 13 13:20:56 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="013169.html">[Haiku-bugs] [Haiku] #3219: [PATCH] small bug in InputServer
+</A></li>
+        <LI>Next message: <A HREF="013179.html">[Haiku-bugs] [Haiku] #3220: Value of multi_mix_value::id provied with B_MULTI_SET_MIX is differ from one set in multi_mix_control::id.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13168">[ date ]</a>
+              <a href="thread.html#13168">[ thread ]</a>
+              <a href="subject.html#13168">[ subject ]</a>
+              <a href="author.html#13168">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3220: Value of multi_mix_value::id provied with B_MULTI_SET_MIX is differ from
+one set in   multi_mix_control::id.
+----------------------------+-----------------------------------------------
+ Reporter:  siarzhuk        |       Owner:  marcusoverhagen
+     Type:  bug             |      Status:  new            
+ Priority:  normal          |   Milestone:  R1             
+Component:  Kits/Media Kit  |     Version:  R1 development 
+Blockedby:                  |    Platform:  All            
+ Blocking:                  |  
+----------------------------+-----------------------------------------------
+ '''The Problem:'''
+
+ Id of control, provided by media server to driver with B_MULTI_SET_MIX
+ call is differ from id assigned by the driver on creating controls list in
+ the handler of B_MULTI_LIST_MIX_CONTROLS call. Such behavior was observed
+ for B_MULTI_MIX_GAIN type of controls with non-zero master (for example
+ right channel of the the stereo gain control). The id of this slave
+ control is equal to incremented id of it's master control instead of this
+ control id.
+
+ To illustrate the problem I have added following changes to the null_audio
+ driver:
+
+ {{{
+ Index: null_multi.c
+ ===================================================================
+ --- null_multi.c        (revision 28803)
+ +++ null_multi.c        (working copy)
+ @@ -155,8 +155,27 @@
+
+         parent = create_group_control(data-&gt;controls +0, 0, 0, 0,
+ &quot;Record&quot;);
+         parent = create_group_control(data-&gt;controls +1, 1, 0, 0,
+ &quot;Playback&quot;);
+ -       data-&gt;control_count = 2;
+ +
+ +    data-&gt;controls[2].id = MULTI_AUDIO_BASE_ID + 100; // 1124
+ +    data-&gt;controls[2].parent = parent;
+ +    data-&gt;controls[2].flags = B_MULTI_MIX_GAIN;
+ +    data-&gt;controls[2].master = MULTI_AUDIO_MASTER_ID;
+ +    data-&gt;controls[2].string = S_GAIN;
+ +    data-&gt;controls[2].u.gain.min_gain = 0.;
+ +    data-&gt;controls[2].u.gain.max_gain = 100.;
+ +    data-&gt;controls[2].u.gain.granularity = 1.;
+ +
+ +    data-&gt;controls[3].id = MULTI_AUDIO_BASE_ID + 200; // 1224
+ +    data-&gt;controls[3].parent = parent;
+ +    data-&gt;controls[3].flags = B_MULTI_MIX_GAIN;
+ +    data-&gt;controls[3].master = data-&gt;controls[2].id;
+ +    data-&gt;controls[3].string = S_GAIN;
+ +    data-&gt;controls[3].u.gain.min_gain = 0.;
+ +    data-&gt;controls[3].u.gain.max_gain = 100.;
+ +    data-&gt;controls[3].u.gain.granularity = 1.;
+
+ +       data-&gt;control_count = 4;
+ +
+         return B_OK;
+  }
+
+ @@ -334,8 +353,16 @@
+                 case B_MULTI_SET_GLOBAL_FORMAT:                 return
+ set_global_format(cookie, arg);
+                 case B_MULTI_GET_CHANNEL_FORMATS:               return
+ B_ERROR;
+                 case B_MULTI_SET_CHANNEL_FORMATS:               return
+ B_ERROR;
+ -               case B_MULTI_GET_MIX:
+ return B_ERROR;
+ -               case B_MULTI_SET_MIX:
+ return B_ERROR;
+ +               case B_MULTI_GET_MIX:
+ return B_OK;
+ +               case B_MULTI_SET_MIX:
+ +               {
+ +                       multi_mix_value_info *info = (multi_mix_value_info
+ *)arg;
+ +                       int i = 0;
+ +                       for(i=0; i &lt; info-&gt;item_count; i++) {
+ +                               dprintf(&quot;SET_MIX:item #%d id:%d\n&quot;, i,
+ info-&gt;values[i].id);
+ +                       }
+ +                       return B_OK;
+ +               }
+                 case B_MULTI_LIST_MIX_CHANNELS:                 return
+ list_mix_channels(cookie, arg);
+                 case B_MULTI_LIST_MIX_CONTROLS:                 return
+ list_mix_controls(cookie, arg);
+                 case B_MULTI_LIST_MIX_CONNECTIONS:              return
+ list_mix_connections(cookie, arg);
+ }}}
+
+ I have expected such behavior:
+
+ {{{
+ KERN: SET_MIX:item #0 id:1124
+ KERN: SET_MIX:item #1 id:1224
+ }}}
+
+ but real attempt to touch gain control has following result:
+
+ {{{
+ KERN: SET_MIX:item #0 id:1124
+ KERN: SET_MIX:item #1 id:1125
+ }}}
+
+ '''The Question:'''
+
+ Is such behavior intended???
+
+ '''PS:''' Current implementation of the Haiku multi-audio drivers is not
+ affected by this problem because all they use the same algorithm of
+ creating controls list. This algorithm assign id to controls by increment.
+ I have tried to write more compact code for controls creation in my
+ sis7018 driver and observed this issue.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3220">http://dev.haiku-os.org/ticket/3220</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="013169.html">[Haiku-bugs] [Haiku] #3219: [PATCH] small bug in InputServer
+</A></li>
+	<LI>Next message: <A HREF="013179.html">[Haiku-bugs] [Haiku] #3220: Value of multi_mix_value::id provied with B_MULTI_SET_MIX is differ from one set in multi_mix_control::id.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13168">[ date ]</a>
+              <a href="thread.html#13168">[ thread ]</a>
+              <a href="subject.html#13168">[ subject ]</a>
+              <a href="author.html#13168">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

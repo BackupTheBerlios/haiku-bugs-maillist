@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1874: VIA Rhine-II not working
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231874%3A%20VIA%20Rhine-II%20not%20working&In-Reply-To=%3C051.36f65c4c38aea9153e600f29d73067c4%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010435.html">
+   <LINK REL="Next"  HREF="010413.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1874: VIA Rhine-II not working</H1>
+    <B>Adek336</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231874%3A%20VIA%20Rhine-II%20not%20working&In-Reply-To=%3C051.36f65c4c38aea9153e600f29d73067c4%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1874: VIA Rhine-II not working">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Sep 19 00:58:50 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010435.html">[Haiku-bugs] [Haiku] #2753: Subpixel antialiasing doesn't work with hinting on
+</A></li>
+        <LI>Next message: <A HREF="010413.html">[Haiku-bugs] [Haiku] #1874: VIA Rhine-II not working
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10410">[ date ]</a>
+              <a href="thread.html#10410">[ thread ]</a>
+              <a href="subject.html#10410">[ subject ]</a>
+              <a href="author.html#10410">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1874: VIA Rhine-II not working
+------------------------------+---------------------------------------------
+  Reporter:  scottmc          |       Owner:  axeld         
+      Type:  bug              |      Status:  new           
+  Priority:  normal           |   Milestone:  R1            
+ Component:  Drivers/Network  |     Version:  R1 development
+Resolution:                   |   Blockedby:                
+  Platform:  All              |    Blocking:                
+------------------------------+---------------------------------------------
+
+Comment(by Adek336):
+
+ So cool, I actually made Haiku to sent exactly one frame to the link
+ partner for inspection in WireShark.
+ Changes in if_vr.c:
+ {{{
+ added:
+
+ static void tx_trash(struct ifnet *ifp);
+ static void tx_trash(struct ifnet *ifp)
+ {
+     struct vr_softc   *sc = ifp-&gt;if_softc;
+     uint32_t   cval;
+
+     sc-&gt;vr_tx_prod-&gt;vr_data = 0;
+
+     cval = 100;
+     cval |= VR_TXCTL_TLINK;
+     cval |= VR_TXCTL_FIRSTFRAG;
+     cval |= VR_TXCTL_LASTFRAG;
+     cval |= VR_TXCTL_FINT;
+     sc-&gt;vr_tx_prod-&gt;vr_ctl = cval;
+
+     sc-&gt;vr_tx_prod-&gt;vr_status = 0;
+
+     atomic_set_acq_32(&amp;sc-&gt;vr_tx_prod-&gt;vr_status, VR_TXSTAT_OWN);
+
+     VR_SETBIT16(sc, VR_COMMAND, VR_CMD_TX_GO);
+ }
+ }}}
+ changed:
+ {{{
+ ...
+ int ya=0;
+ static void
+ vr_tick(void *xsc)
+ {
+    struct vr_softc *sc = xsc;
+    struct mii_data *mii;
+
+    ya++;
+    if (ya == 5)
+        tx_trash(sc-&gt;vr_ifp);
+
+    VR_LOCK_ASSERT(sc);
+ ....
+ }}}
+
+ tx_trash is a stripped down from vr_start_locked to the minimum to send a
+ frame; it is invoked after a few ticks from vr_tick.
+
+
+ I added a dprintf to vr_start and it seems that in FreeBSD it is called
+ when a new frame is to be sent, however on Haiku vr_start didn't seem to
+ be called at all.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1874#comment:19">http://dev.haiku-os.org/ticket/1874#comment:19</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010435.html">[Haiku-bugs] [Haiku] #2753: Subpixel antialiasing doesn't work with hinting on
+</A></li>
+	<LI>Next message: <A HREF="010413.html">[Haiku-bugs] [Haiku] #1874: VIA Rhine-II not working
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10410">[ date ]</a>
+              <a href="thread.html#10410">[ thread ]</a>
+              <a href="subject.html#10410">[ subject ]</a>
+              <a href="author.html#10410">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3772: Freeze on Haiku tree compilation	(reproduceable)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233772%3A%20Freeze%20on%20Haiku%20tree%20compilation%0A%09%28reproduceable%29&In-Reply-To=%3C060.1f661fce5b571b4a62d8f006db680853%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="016524.html">
+   <LINK REL="Next"  HREF="016665.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3772: Freeze on Haiku tree compilation	(reproduceable)</H1>
+    <B>michael.weirauch</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233772%3A%20Freeze%20on%20Haiku%20tree%20compilation%0A%09%28reproduceable%29&In-Reply-To=%3C060.1f661fce5b571b4a62d8f006db680853%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3772: Freeze on Haiku tree compilation	(reproduceable)">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Apr 27 21:33:44 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="016524.html">[Haiku-bugs] [Haiku] #3772: Freeze on Haiku tree compilation	(reproduceable)
+</A></li>
+        <LI>Next message: <A HREF="016665.html">[Haiku-bugs] [Haiku] #3772: Freeze on Haiku tree compilation	(reproduceable)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16651">[ date ]</a>
+              <a href="thread.html#16651">[ thread ]</a>
+              <a href="subject.html#16651">[ subject ]</a>
+              <a href="author.html#16651">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3772: Freeze on Haiku tree compilation (reproduceable)
+------------------------------+---------------------------------------------
+ Reporter:  michael.weirauch  |       Owner:  axeld         
+     Type:  bug               |      Status:  new           
+ Priority:  normal            |   Milestone:  R1            
+Component:  System            |     Version:  R1 development
+Blockedby:                    |    Platform:  x86           
+ Blocking:                    |  
+------------------------------+---------------------------------------------
+
+Comment(by michael.weirauch):
+
+ r30464; new-ata-bm; default image:
+
+ It seems Marcus' recent changes (r30443 and r30454) have had some impact.
+
+  * Only one freeze on svn co of the haiku tree with acpi disabled.
+
+  * Full tree compile with acpi enabled. (Freeze minutes later when
+ changing font prefs in Firefox)
+
+ What is observable that there are seconds of UI freeze (especially
+ noticeable Deskbar and ActivityMonitor living on the desktop). The mouse
+ and windows are movable, though. Just nothing gets updated. Populating the
+ haiku.image &quot;froze&quot; UI updates for 1m12 seconds.
+
+ During heavy IO (svn checkout + deletion of 40k files via Tracker; tree
+ compile) there is noticeable UI update freezes, but the system gets back
+ after up to 10 seconds.
+
+ Generally, the &quot;scsi scheduler&quot; kernel thread takes up full CPU
+ periodically. (Only confirmable when UI is not frozen.)
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3772#comment:8">http://dev.haiku-os.org/ticket/3772#comment:8</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="016524.html">[Haiku-bugs] [Haiku] #3772: Freeze on Haiku tree compilation	(reproduceable)
+</A></li>
+	<LI>Next message: <A HREF="016665.html">[Haiku-bugs] [Haiku] #3772: Freeze on Haiku tree compilation	(reproduceable)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16651">[ date ]</a>
+              <a href="thread.html#16651">[ thread ]</a>
+              <a href="subject.html#16651">[ subject ]</a>
+              <a href="author.html#16651">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

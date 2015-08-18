@@ -1,0 +1,190 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #53: POP3 SSL addon crashes mail_daemon when connection fails
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-February/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%2353%3A%20POP3%20SSL%20addon%20crashes%20mail_daemon%0A%20when%20connection%20fails&In-Reply-To=%3C062.7e5a09429859f53ac568e25cb06610ad%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000419.html">
+   <LINK REL="Next"  HREF="000421.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #53: POP3 SSL addon crashes mail_daemon when connection fails</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%2353%3A%20POP3%20SSL%20addon%20crashes%20mail_daemon%0A%20when%20connection%20fails&In-Reply-To=%3C062.7e5a09429859f53ac568e25cb06610ad%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #53: POP3 SSL addon crashes mail_daemon when connection fails">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Feb  7 23:47:31 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000419.html">[Haiku-bugs] [Haiku] #979: CD Player app should follow the multimedia application look and feel
+</A></li>
+        <LI>Next message: <A HREF="000421.html">[Haiku-bugs] [Haiku] #1003: KDL while expanding a file
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#420">[ date ]</a>
+              <a href="thread.html#420">[ thread ]</a>
+              <a href="subject.html#420">[ subject ]</a>
+              <a href="author.html#420">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#53: POP3 SSL addon crashes mail_daemon when connection fails
+---------------------------------+------------------------------------------
+  Reporter:  <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">genki at bredband.net</A>  |       Owner:  <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">nathanw at uchicago.edu</A>
+      Type:  bug                 |      Status:  closed              
+  Priority:  normal              |   Milestone:  R1                  
+ Component:  - Applications      |     Version:                      
+Resolution:  fixed               |    Platform:  All                 
+---------------------------------+------------------------------------------
+Changes (by darkwyrm):
+
+  * status:  new =&gt; closed
+  * resolution:  =&gt; fixed
+
+Old description:
+
+&gt;<i> Hello,
+</I>&gt;<i>
+</I>&gt;<i> This crash happens when the mail_daemon tries to look for new e-mail
+</I>&gt;<i> but the machine is not connected to the network.
+</I>&gt;<i> My ISP wasn't working at the time. (I got no IP from the DHCP).
+</I>&gt;<i>
+</I>&gt;<i> It seems only POP3 with SSL crashes, the other accounts on
+</I>&gt;<i> standard POP3 seems fine.
+</I>&gt;<i> On those accounts I just get an error message (which is
+</I>&gt;<i> good and correct); &quot;Error while connecting blah blah&quot;
+</I>&gt;<i>
+</I>&gt;<i> I'm pretty sure this can be reproduced by disconnecting
+</I>&gt;<i> your network cable, or switching off your DSL modem(or similar).
+</I>&gt;<i>
+</I>&gt;<i> Here is a stack dump:
+</I>&gt;<i>
+</I>
+&gt;<i> loading symbols
+</I>&gt;<i> segment violation occurred
+</I>&gt;<i> SSL_pending:
+</I>&gt;<i> SSL_pending:
+</I>&gt;<i> +0017  ec7fb2ab:   *        08508b    movl    0x00000008(%eax), %edx
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">XXXX at gmail.com</A>:sc
+</I>&gt;<i>    frame         retaddr
+</I>&gt;<i> fd1e4534   ea5d360b  POP3Protocol::~POP3Protocol(void) + 0000002f
+</I>&gt;<i> fd1e4564   ec768364  BMailChainRunner::MessageReceived(BMessage *) +
+</I>&gt;<i> 000000e0
+</I>&gt;<i> fd1e4a44   ec19a9c0  BLooper::DispatchMessage(BMessage *, BHandler *) +
+</I>&gt;<i> 0000007c
+</I>&gt;<i> fd1e4a5c   ec198a39  BLooper::task_looper(void) + 0000043d
+</I>&gt;<i> fd1e4d28   ec19ae46  BLooper::_task0_(void *) + 00000036
+</I>&gt;<i> fd1e4d3c   ec06c50d  thread_start + 00000039
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">XXXXX at gmail.com</A>:
+</I>&gt;<i>
+</I>&gt;<i> Another one again:
+</I>&gt;<i>
+</I>&gt;<i> loading symbols
+</I>&gt;<i> segment violation occurred
+</I>&gt;<i> SSL_shutdown:
+</I>&gt;<i> SSL_shutdown:
+</I>&gt;<i> +0015  ec7fc08d:   *      00207e83    cmpl    $0x00, 0x00000020(%esi)
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">XXXXX at gmail.com</A>:sc
+</I>&gt;<i>    frame         retaddr
+</I>&gt;<i> fd1a7564   ec768364  BMailChainRunner::MessageReceived(BMessage *) +
+</I>&gt;<i> 000000e0
+</I>&gt;<i> fd1a7a44   ec19a9c0  BLooper::DispatchMessage(BMessage *, BHandler *) +
+</I>&gt;<i> 0000007c
+</I>&gt;<i> fd1a7a5c   ec198a39  BLooper::task_looper(void) + 0000043d
+</I>&gt;<i> fd1a7d28   ec19ae46  BLooper::_task0_(void *) + 00000036
+</I>&gt;<i> fd1a7d3c   ec06c50d  thread_start + 00000039
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">XXXX at gmail.com</A>:
+</I>
+New description:
+
+ Hello,
+
+ This crash happens when the mail_daemon tries to look for new e-mail
+ but the machine is not connected to the network.
+ My ISP wasn't working at the time. (I got no IP from the DHCP).
+
+ It seems only POP3 with SSL crashes, the other accounts on
+ standard POP3 seems fine.
+ On those accounts I just get an error message (which is
+ good and correct); &quot;Error while connecting blah blah&quot;
+
+ I'm pretty sure this can be reproduced by disconnecting
+ your network cable, or switching off your DSL modem(or similar).
+
+ Here is a stack dump:
+
+
+ loading symbols
+ segment violation occurred
+ SSL_pending:
+ SSL_pending:
+ +0017  ec7fb2ab:   *        08508b    movl    0x00000008(%eax), %edx
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">XXXX at gmail.com</A>:sc
+    frame         retaddr
+ fd1e4534   ea5d360b  POP3Protocol::~POP3Protocol(void) + 0000002f
+ fd1e4564   ec768364  BMailChainRunner::MessageReceived(BMessage *) +
+ 000000e0
+ fd1e4a44   ec19a9c0  BLooper::DispatchMessage(BMessage *, BHandler *) +
+ 0000007c
+ fd1e4a5c   ec198a39  BLooper::task_looper(void) + 0000043d
+ fd1e4d28   ec19ae46  BLooper::_task0_(void *) + 00000036
+ fd1e4d3c   ec06c50d  thread_start + 00000039
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">XXXXX at gmail.com</A>:
+
+ Another one again:
+
+ loading symbols
+ segment violation occurred
+ SSL_shutdown:
+ SSL_shutdown:
+ +0015  ec7fc08d:   *      00207e83    cmpl    $0x00, 0x00000020(%esi)
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">XXXXX at gmail.com</A>:sc
+    frame         retaddr
+ fd1a7564   ec768364  BMailChainRunner::MessageReceived(BMessage *) +
+ 000000e0
+ fd1a7a44   ec19a9c0  BLooper::DispatchMessage(BMessage *, BHandler *) +
+ 0000007c
+ fd1a7a5c   ec198a39  BLooper::task_looper(void) + 0000043d
+ fd1a7d28   ec19ae46  BLooper::_task0_(void *) + 00000036
+ fd1a7d3c   ec06c50d  thread_start + 00000039
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">XXXX at gmail.com</A>:
+
+Comment:
+
+ This bug was fixed in r19557 and 19558.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/53#comment:3">http://dev.haiku-os.org/ticket/53#comment:3</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000419.html">[Haiku-bugs] [Haiku] #979: CD Player app should follow the multimedia application look and feel
+</A></li>
+	<LI>Next message: <A HREF="000421.html">[Haiku-bugs] [Haiku] #1003: KDL while expanding a file
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#420">[ date ]</a>
+              <a href="thread.html#420">[ thread ]</a>
+              <a href="subject.html#420">[ subject ]</a>
+              <a href="author.html#420">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

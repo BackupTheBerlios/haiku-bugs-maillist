@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4841: Unable to boot from CD (PANIC: Double	Fault!)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234841%3A%20Unable%20to%20boot%20from%20CD%20%28PANIC%3A%20Double%0A%09Fault%21%29&In-Reply-To=%3C038.33568dda4bbe7fe733a2920175ab0818%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="023080.html">
+   <LINK REL="Next"  HREF="023083.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4841: Unable to boot from CD (PANIC: Double	Fault!)</H1>
+    <B>rjg</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234841%3A%20Unable%20to%20boot%20from%20CD%20%28PANIC%3A%20Double%0A%09Fault%21%29&In-Reply-To=%3C038.33568dda4bbe7fe733a2920175ab0818%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4841: Unable to boot from CD (PANIC: Double	Fault!)">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Oct 24 15:42:04 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="023080.html">[Haiku-bugs] [Haiku] #4460: Auich causes media_addon_server to	use 100% CPU
+</A></li>
+        <LI>Next message: <A HREF="023083.html">[Haiku-bugs] [Haiku] #4841: Unable to boot from CD (PANIC:	Double Fault!)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#23081">[ date ]</a>
+              <a href="thread.html#23081">[ thread ]</a>
+              <a href="subject.html#23081">[ subject ]</a>
+              <a href="author.html#23081">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4841: Unable to boot from CD (PANIC: Double Fault!)
+---------------------------+------------------------------------------------
+ Reporter:  rjg            |       Owner:  axeld    
+     Type:  bug            |      Status:  new      
+ Priority:  normal         |   Milestone:  R1       
+Component:  System/Kernel  |     Version:  R1/alpha1
+Blockedby:                 |    Platform:  x86      
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+ I am currently unable to boot Haiku off CD on my PC. Initially it would
+ instantly reboot after showing &quot;1. FD 2.88MB System Type-(0F)&quot; and some
+ dots. I had to be very quick with the Pause key! (see 01.jpg)
+
+ [[Image(<A HREF="http://rguk.eu/s/haiku/01.jpg">http://rguk.eu/s/haiku/01.jpg</A>)]]
+ (01.jpg)
+
+ After going into the BIOS setup I disabled APIC. This got me a little
+ further with the splash screen displaying followed instantly by the KDL
+ displaying &quot;PANIC: Double Fault!&quot; (see 02.jpg)
+
+ [[Image(<A HREF="http://rguk.eu/s/haiku/02.jpg">http://rguk.eu/s/haiku/02.jpg</A>)]]
+ (02.jpg)
+
+ This is the sc output after the above:
+
+ [[Image(<A HREF="http://rguk.eu/s/haiku/03.jpg">http://rguk.eu/s/haiku/03.jpg</A>)]]
+ (03.jpg)
+
+ I next tried the various safe mode options. None would allow it to boot
+ and instead I would get the following error: &quot;PANIC: mapping the local
+ apic failed&quot; (see 04.jpg)
+
+ [[Image(<A HREF="http://rguk.eu/s/haiku/04.jpg">http://rguk.eu/s/haiku/04.jpg</A>)]]
+ (04.jpg)
+
+ Here is the sc output after the above:
+
+ [[Image(<A HREF="http://rguk.eu/s/haiku/05.jpg">http://rguk.eu/s/haiku/05.jpg</A>)]]
+ (05.jpg)
+
+ And here's the ints output:
+
+ [[Image(<A HREF="http://rguk.eu/s/haiku/06.jpg">http://rguk.eu/s/haiku/06.jpg</A>)]]
+ (06.jpg)
+
+ The machine I'm trying to run it on has an ECS L4S8A motherboard with
+ Award BIOS, Pentium 4 and SiS 648 chipset. Full system details/PCI listing
+ are in the attached sysinfo.txt. I have also attached all the linked
+ images above should they be inaccessible at any time.
+
+ I will happily provide more information if it's needed.
+
+ I can confirm that this also occurs with the latest nightly build
+ (r33748).
+
+ Thanks,
+
+ Rob
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4841">http://dev.haiku-os.org/ticket/4841</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="023080.html">[Haiku-bugs] [Haiku] #4460: Auich causes media_addon_server to	use 100% CPU
+</A></li>
+	<LI>Next message: <A HREF="023083.html">[Haiku-bugs] [Haiku] #4841: Unable to boot from CD (PANIC:	Double Fault!)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#23081">[ date ]</a>
+              <a href="thread.html#23081">[ thread ]</a>
+              <a href="subject.html#23081">[ subject ]</a>
+              <a href="author.html#23081">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

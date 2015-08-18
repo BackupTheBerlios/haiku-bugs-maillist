@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2713: SATA disk problem: &quot;PANIC: could not write back block ### (Device seek error)&quot;
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232713%3A%20SATA%20disk%20problem%3A%20%22PANIC%3A%20could%20not%0A%20write%20back%20block%20%23%23%23%20%28Device%20seek%20error%29%22&In-Reply-To=%3C040.166b378ca402a7efcce39a7ac2554aa3%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010174.html">
+   <LINK REL="Next"  HREF="010284.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2713: SATA disk problem: &quot;PANIC: could not write back block ### (Device seek error)&quot;</H1>
+    <B>luroh</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232713%3A%20SATA%20disk%20problem%3A%20%22PANIC%3A%20could%20not%0A%20write%20back%20block%20%23%23%23%20%28Device%20seek%20error%29%22&In-Reply-To=%3C040.166b378ca402a7efcce39a7ac2554aa3%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2713: SATA disk problem: &quot;PANIC: could not write back block ### (Device seek error)&quot;">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Sep  8 22:57:08 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010174.html">[Haiku-bugs] [Haiku] #1874: VIA Rhine-II not working
+</A></li>
+        <LI>Next message: <A HREF="010284.html">[Haiku-bugs] [Haiku] #2713: SATA disk problem: &quot;PANIC: could not write back block ### (Device seek error)&quot;
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10175">[ date ]</a>
+              <a href="thread.html#10175">[ thread ]</a>
+              <a href="subject.html#10175">[ subject ]</a>
+              <a href="author.html#10175">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2713: SATA disk problem: &quot;PANIC: could not write back block ### (Device seek
+error)&quot;
+-----------------------+----------------------------------------------------
+ Reporter:  luroh      |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+Blockedby:             |    Platform:  All           
+ Blocking:             |  
+-----------------------+----------------------------------------------------
+ Haiku panics after booting to desktop (complete with terminal, menubar and
+ icons). The bad block number varies, I have seen 2, 8 and 129.
+
+ Tried r27383 and r26827 (&quot;last known good version&quot; before the I/O
+ scheduling changes). I have also tried building with virtual memory
+ disabled, just to rule it out.
+
+ The disk is a 320GB SATA with a 4.6 GB Haiku partition at the very
+ beginning of the disk. It also has an ext3 partition, a swap partition and
+ GRUB on the MBR. The disk itself should be good, I've never had any
+ problems with it, at least.
+
+ There is a BIOS settning which lets you switch SATA mode between 'RAID'
+ and 'IDE'. However, it makes no difference.
+
+ Stack crawl screenshot and hardware list attached.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2713">http://dev.haiku-os.org/ticket/2713</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010174.html">[Haiku-bugs] [Haiku] #1874: VIA Rhine-II not working
+</A></li>
+	<LI>Next message: <A HREF="010284.html">[Haiku-bugs] [Haiku] #2713: SATA disk problem: &quot;PANIC: could not write back block ### (Device seek error)&quot;
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10175">[ date ]</a>
+              <a href="thread.html#10175">[ thread ]</a>
+              <a href="subject.html#10175">[ subject ]</a>
+              <a href="author.html#10175">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3113: Fatal Exception &quot;NMI Interrupt&quot; on	kernel boot
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233113%3A%20Fatal%20Exception%20%22NMI%20Interrupt%22%20on%0A%09kernel%20boot&In-Reply-To=%3C050.0fb9758f172f452736275739581f3d47%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012727.html">
+   <LINK REL="Next"  HREF="012738.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3113: Fatal Exception &quot;NMI Interrupt&quot; on	kernel boot</H1>
+    <B>graham</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233113%3A%20Fatal%20Exception%20%22NMI%20Interrupt%22%20on%0A%09kernel%20boot&In-Reply-To=%3C050.0fb9758f172f452736275739581f3d47%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3113: Fatal Exception &quot;NMI Interrupt&quot; on	kernel boot">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Nov 24 20:21:31 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012727.html">[Haiku-bugs] [Haiku] #3113: Fatal Exception &quot;NMI Interrupt&quot; on	kernel boot
+</A></li>
+        <LI>Next message: <A HREF="012738.html">[Haiku-bugs] [Haiku] #3113: Fatal Exception &quot;NMI Interrupt&quot; on	kernel boot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12737">[ date ]</a>
+              <a href="thread.html#12737">[ thread ]</a>
+              <a href="subject.html#12737">[ subject ]</a>
+              <a href="author.html#12737">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3113: Fatal Exception &quot;NMI Interrupt&quot; on kernel boot
+----------------------------+-----------------------------------------------
+  Reporter:  graham         |       Owner:  axeld         
+      Type:  bug            |      Status:  new           
+  Priority:  normal         |   Milestone:  R1            
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |   Blockedby:                
+  Platform:  x86            |    Blocking:                
+----------------------------+-----------------------------------------------
+
+Comment(by graham):
+
+ Replying to [comment:13 marcusoverhagen]:
+ &gt; Please attach a complete syslog, I'm interested in the PCI
+ configuration.
+ &gt; Please also attach the complete PCI status (you have to enter KDL once
+ for that)
+ &gt;
+ &gt; Especially what is the secondary bus number of bridge on bus 0, dev 30,
+ func 0, and what devices are on that bus. Has any of the devices a pending
+ error status?
+
+ [[BR]]
+
+ Whew! I had to take a picture of the pcistatus output and type it but I
+ managed to extract the syslog files using the skyfs/befs viewer. This is
+ the output with the SERR# Enable bit disabled. Files are zipped because
+ the syslog file is bigger than the maximum upload limit.
+
+ It's probably also worth mentioning that the mouse seems to lock up after
+ a minute or so after the boot completes. This didn't happen when I
+ modified the code to skip bus 0, dev 30.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3113#comment:14">http://dev.haiku-os.org/ticket/3113#comment:14</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012727.html">[Haiku-bugs] [Haiku] #3113: Fatal Exception &quot;NMI Interrupt&quot; on	kernel boot
+</A></li>
+	<LI>Next message: <A HREF="012738.html">[Haiku-bugs] [Haiku] #3113: Fatal Exception &quot;NMI Interrupt&quot; on	kernel boot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12737">[ date ]</a>
+              <a href="thread.html#12737">[ thread ]</a>
+              <a href="subject.html#12737">[ subject ]</a>
+              <a href="author.html#12737">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

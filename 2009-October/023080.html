@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4460: Auich causes media_addon_server to	use 100% CPU
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234460%3A%20Auich%20causes%20media_addon_server%20to%0A%09use%20100%25%20CPU&In-Reply-To=%3C050.75c924d60f9552f632cf65c0a950c9df%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="023079.html">
+   <LINK REL="Next"  HREF="023081.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4460: Auich causes media_addon_server to	use 100% CPU</H1>
+    <B>korli</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234460%3A%20Auich%20causes%20media_addon_server%20to%0A%09use%20100%25%20CPU&In-Reply-To=%3C050.75c924d60f9552f632cf65c0a950c9df%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4460: Auich causes media_addon_server to	use 100% CPU">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Oct 24 15:29:48 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="023079.html">[Haiku-bugs] [Haiku] #4840: Collectcatkeys does not work on Haiku
+</A></li>
+        <LI>Next message: <A HREF="023081.html">[Haiku-bugs] [Haiku] #4841: Unable to boot from CD (PANIC: Double	Fault!)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#23080">[ date ]</a>
+              <a href="thread.html#23080">[ thread ]</a>
+              <a href="subject.html#23080">[ subject ]</a>
+              <a href="author.html#23080">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4460: Auich causes media_addon_server to use 100% CPU
+---------------------------+------------------------------------------------
+ Reporter:  Joshua         |       Owner:  korli        
+     Type:  bug            |      Status:  new          
+ Priority:  normal         |   Milestone:  R1           
+Component:  Drivers/Audio  |     Version:  R1/pre-alpha1
+Blockedby:                 |    Platform:  x86          
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+
+Comment(by korli):
+
+ Could you please try with a revision at least 33347 ?
+ Clearly the driver initialization should now fail because the configured
+ interrupt (0xff) is not valid.
+ As the codec errors comes before installing the interrupt handler, I'm now
+ wondering if this installation should better happen before cold resetting
+ (as noticed at BG on Daniel's laptop).
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4460#comment:2">http://dev.haiku-os.org/ticket/4460#comment:2</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="023079.html">[Haiku-bugs] [Haiku] #4840: Collectcatkeys does not work on Haiku
+</A></li>
+	<LI>Next message: <A HREF="023081.html">[Haiku-bugs] [Haiku] #4841: Unable to boot from CD (PANIC: Double	Fault!)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#23080">[ date ]</a>
+              <a href="thread.html#23080">[ thread ]</a>
+              <a href="subject.html#23080">[ subject ]</a>
+              <a href="author.html#23080">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

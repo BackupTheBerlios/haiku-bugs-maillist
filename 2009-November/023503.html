@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4908: Oddness in new mail query result window
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234908%3A%20Oddness%20in%20new%20mail%20query%20result%20window&In-Reply-To=%3C044.1538af777245725ca20793a6dbffdb67%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="023508.html">
+   <LINK REL="Next"  HREF="023504.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4908: Oddness in new mail query result window</H1>
+    <B>humdinger</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234908%3A%20Oddness%20in%20new%20mail%20query%20result%20window&In-Reply-To=%3C044.1538af777245725ca20793a6dbffdb67%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4908: Oddness in new mail query result window">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Nov  6 17:31:46 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="023508.html">[Haiku-bugs] [Haiku] #4907: New tag in forums not showing up on	2nd page
+</A></li>
+        <LI>Next message: <A HREF="023504.html">[Haiku-bugs] [Haiku] #4908: Oddness in new mail query result	window
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#23503">[ date ]</a>
+              <a href="thread.html#23503">[ thread ]</a>
+              <a href="subject.html#23503">[ subject ]</a>
+              <a href="author.html#23503">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4908: Oddness in new mail query result window
+---------------------------------+------------------------------------------
+ Reporter:  humdinger            |       Owner:  bga           
+     Type:  bug                  |      Status:  new           
+ Priority:  normal               |   Milestone:  R1            
+Component:  Servers/mail_server  |     Version:  R1/Development
+Blockedby:                       |    Platform:  All           
+ Blocking:                       |  
+---------------------------------+------------------------------------------
+ This is r33893.
+
+ First off, I didn't experience the following with r33755 that I've used
+ for some time before my latest update.
+
+  * Open mail_daemons New-Mail query from the Deskbar symbol.
+  * Wait for new mail to arrive.
+
+ Every once in a while, new mail appears in the result window with a
+ missing &quot;Status&quot;, displaying &quot;-&quot; instead of &quot;New&quot;. These mails cannot be
+ opened, a right-click &quot;Open With...&quot; says &quot;no supporting apps&quot;.
+
+ The file doesn't seem to exist and resides in a funny folder. A listattr
+ when I drag this file from the result window into Terminal results in this
+ output:
+
+ {{{
+ listattr /HiQ-Data/mail/googlemail/in/Downloading\ \(Humdinger:\ 2\)...
+ listattr: initialization failed for &quot;/HiQ-
+ Data/mail/googlemail/in/Downloading (Humdinger: 2)...&quot;: No such file or
+ directory
+ }}}
+
+ There normally is no &quot;Downloading&quot; folder in my /HiQ-
+ Data/mail/googlemail/in/.
+
+ By contrast, this is the listattr of another, albeit correctly working
+ mail:
+
+ {{{
+ listattr /HiQ-Data/mail/googlemail/in/\[haiku-commits\]\ r33914\ -\
+ haiku_trunk_src_apps_debugger_dwarf\ 20091106165943\ Rene\ Gollent
+ File: /HiQ-Data/mail/googlemail/in/[haiku-commits] r33914 -
+ haiku_trunk_src_apps_debugger_dwarf 20091106165943 Rene Gollent
+         Type       Size  Name
+ ----------------------------------------------------------
+  MIME String        13  &quot;BEOS:TYPE&quot;
+         Text        24  &quot;MAIL:unique_id&quot;
+         Text        10  &quot;MAIL:account&quot;
+       Int-32         4  &quot;MAIL:chain&quot;
+       Int-32         4  &quot;MAIL:content_length&quot;
+         Text        28  &quot;MAIL:to&quot;
+         Text        35  &quot;MAIL:from&quot;
+       'TIME'         4  &quot;MAIL:when&quot;
+         Text        28  &quot;MAIL:reply&quot;
+         Text        65  &quot;MAIL:subject&quot;
+         Text         4  &quot;MAIL:mime&quot;
+         Text        61  &quot;MAIL:thread&quot;
+         Text        13  &quot;MAIL:name&quot;
+       'SIZT'         4  &quot;MAIL:fullsize&quot;
+         Text         4  &quot;MAIL:status&quot;
+
+ 301 bytes total in attributes.
+ }}}
+
+ Closing the query result window and re-initiating the query works.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4908">http://dev.haiku-os.org/ticket/4908</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="023508.html">[Haiku-bugs] [Haiku] #4907: New tag in forums not showing up on	2nd page
+</A></li>
+	<LI>Next message: <A HREF="023504.html">[Haiku-bugs] [Haiku] #4908: Oddness in new mail query result	window
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#23503">[ date ]</a>
+              <a href="thread.html#23503">[ thread ]</a>
+              <a href="subject.html#23503">[ subject ]</a>
+              <a href="author.html#23503">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4470: net_server crash and static IP not	working
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234470%3A%20net_server%20crash%20and%20static%20IP%20not%0A%09working&In-Reply-To=%3C050.78e6043aac78b6e7eabd9a4eb1e27607%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="021082.html">
+   <LINK REL="Next"  HREF="021084.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4470: net_server crash and static IP not	working</H1>
+    <B>marcusoverhagen</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234470%3A%20net_server%20crash%20and%20static%20IP%20not%0A%09working&In-Reply-To=%3C050.78e6043aac78b6e7eabd9a4eb1e27607%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4470: net_server crash and static IP not	working">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Sep 10 23:16:52 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="021082.html">[Haiku-bugs] [Haiku] #4469: Disable DMA for specific devices
+</A></li>
+        <LI>Next message: <A HREF="021084.html">[Haiku-bugs] [Haiku] #4470: net_server crash and static IP not	working
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21083">[ date ]</a>
+              <a href="thread.html#21083">[ thread ]</a>
+              <a href="subject.html#21083">[ subject ]</a>
+              <a href="author.html#21083">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4470: net_server crash and static IP not working
+--------------------------------------+-------------------------------------
+ Reporter:  marcusoverhagen           |       Owner:  axeld         
+     Type:  bug                       |      Status:  new           
+ Priority:  normal                    |   Milestone:  R1/alpha1     
+Component:  Network &amp; Internet/Stack  |     Version:  R1 development
+Blockedby:                            |    Platform:  All           
+ Blocking:                            |  
+--------------------------------------+-------------------------------------
+ I'm not using DHCP.
+
+ On first start of a fresh initialized haiku image, net_server does crash.
+ Entering static IP information into Network preferences has no effect,
+ network (ping, etc) is not working.
+
+ After the first reboot, network is working, and net_server no longer
+ crashes.
+
+ Tested with r33042
+
+ available information from syslog:
+ {{{
+ DAEMON 'DHCP': DHCP timeout shift: 8 secs (try 0)
+ DAEMON 'DHCP': DHCP timeout shift: 8 secs (try 0)
+ DAEMON 'DHCP': DHCP timeout shift: 2 secs (try 1)
+ DAEMON 'DHCP': DHCP timeout shift: 2 secs (try 1)
+ DAEMON 'DHCP': DHCP timeout shift: 4 secs (try 1)
+ DAEMON 'DHCP': DHCP timeout shift: 4 secs (try 1)
+ DAEMON 'DHCP': DHCP timeout shift: 8 secs (try 1)
+ DAEMON 'DHCP': DHCP timeout shift: 8 secs (try 1)
+ DAEMON 'DHCP': DHCP timeout shift: 2 secs (try 2)
+ DAEMON 'DHCP': DHCP timeout shift: 2 secs (try 2)
+ DAEMON 'DHCP': DHCP timeout shift: 4 secs (try 2)
+ DAEMON 'DHCP': DHCP timeout shift: 4 secs (try 2)
+ DAEMON 'DHCP': DHCP timeout shift: 8 secs (try 2)
+ DAEMON 'DHCP': DHCP timeout shift: 8 secs (try 2)
+ DAEMON 'DHCP': DHCP for /dev/net/ipro1000/0, status: Operation timed out
+ KERN: 119: DEBUGGER: looperlist is not locked; proceed at great risk!
+ KERN: debug_server: Thread 119 entered the debugger: Debugger call:
+ `looperlist is not locked; proceed at great risk!'
+ KERN: stack trace, current PC 0xffff0114  :
+ KERN:   (0x70080b7c)  0x2da99d  AssertLocked__Q28BPrivate11BLooperList +
+ 0x35
+ DAEMON 'DHCP': DHCP for /dev/net/rtl8169/0, status: Operation timed out
+ KERN:   (0x70080bac)  0x2da11a
+ IsLooperValid__Q28BPrivate11BLooperListPC7BLooper + 0x3a
+ KERN: 122: DEBUGGER: looperlist is not locked; proceed at great risk!
+ KERN:   (0x70080bec)  0x2d838f  IsLocked__C7BLooper + 0x27
+ KERN:   (0x70080c1c)  0x2d994b  AssertLocked__C7BLooper + 0x1f
+ KERN:   (0x70080c4c)  0x2d7f68  RemoveHandler__7BLooperP8BHandler + 0x28
+ KERN:   (0x70080c7c)  0x20e7f0  _RemoveClient__16AutoconfigLooper + 0x30
+ KERN:   (0x70080cac)  0x20e9b8  _Configure__16AutoconfigLooper + 0x18c
+ KERN:   (0x70080e8c)  0x20eca0  _ReadyToRun__16AutoconfigLooper + 0x30
+ KERN:   (0x70080ecc)  0x20ece4
+ MessageReceived__16AutoconfigLooperP8BMessage + 0x38
+ KERN:   (0x70080f0c)  0x2d7df7
+ DispatchMessage__7BLooperP8BMessageP8BHandler + 0x5b
+ KERN:   (0x70080f3c)  0x2d9765  task_looper__7BLooper + 0x211
+ KERN:   (0x70080f7c)  0x2d9353  _task0___7BLooperPv + 0x3f
+ KERN:   (0x70080fac)  0x5390c8  thread_entry + 0x20
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4470">http://dev.haiku-os.org/ticket/4470</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="021082.html">[Haiku-bugs] [Haiku] #4469: Disable DMA for specific devices
+</A></li>
+	<LI>Next message: <A HREF="021084.html">[Haiku-bugs] [Haiku] #4470: net_server crash and static IP not	working
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21083">[ date ]</a>
+              <a href="thread.html#21083">[ thread ]</a>
+              <a href="subject.html#21083">[ subject ]</a>
+              <a href="author.html#21083">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

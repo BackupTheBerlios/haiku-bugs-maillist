@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2381: [socket]: dup missing - which causes running out of file descriptors
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232381%3A%20%5Bsocket%5D%3A%20dup%20missing%20-%20which%0A%20causes%20running%20out%20of%20file%20descriptors&In-Reply-To=%3C051.ac1c38325711571709d7f1ca2d2b4a0c%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008168.html">
+   <LINK REL="Next"  HREF="008174.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2381: [socket]: dup missing - which causes running out of file descriptors</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232381%3A%20%5Bsocket%5D%3A%20dup%20missing%20-%20which%0A%20causes%20running%20out%20of%20file%20descriptors&In-Reply-To=%3C051.ac1c38325711571709d7f1ca2d2b4a0c%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2381: [socket]: dup missing - which causes running out of file descriptors">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Jun 15 02:00:55 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008168.html">[Haiku-bugs] [Haiku] #2381: [socket]: dup missing - which causes running out of file descriptors
+</A></li>
+        <LI>Next message: <A HREF="008174.html">[Haiku-bugs] [Haiku] #2381: [socket]: dup missing - which causes running out of file descriptors
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8171">[ date ]</a>
+              <a href="thread.html#8171">[ thread ]</a>
+              <a href="subject.html#8171">[ subject ]</a>
+              <a href="author.html#8171">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2381: [socket]: dup missing - which causes running out of file descriptors
+---------------------------------------+------------------------------------
+  Reporter:  emitrax                   |       Owner:  axeld         
+      Type:  bug                       |      Status:  new           
+  Priority:  normal                    |   Milestone:  R1            
+ Component:  Network &amp; Internet/Stack  |     Version:  R1 development
+Resolution:                            |    Platform:  All           
+---------------------------------------+------------------------------------
+Comment (by bonefish):
+
+ You apparently misunderstood how file descriptors work. A file descriptor
+ is an object representing an open file or socket. Each application has a
+ file table with indexed slots (0 stdin, 1 stdout,...). Each slot can refer
+ to a file descriptor. dup() and dup2() cause several slots to refer to the
+ same file descriptor. A file descriptor (and thus the underlying
+ file/socket) is closed when the last slot referring to it is closed. dup()
+ and dup2() are handled by the kernel's FS layer. They just increment the
+ open count of the file descriptor. The component responsible for the
+ underlying open object doesn't need to know anything about such an
+ operation.
+
+ Please check, that your code doesn't just leak sockets. If you're sure it
+ doesn't, please attach a version as minimal as possible to the ticket.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2381#comment:1">http://dev.haiku-os.org/ticket/2381#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008168.html">[Haiku-bugs] [Haiku] #2381: [socket]: dup missing - which causes running out of file descriptors
+</A></li>
+	<LI>Next message: <A HREF="008174.html">[Haiku-bugs] [Haiku] #2381: [socket]: dup missing - which causes running out of file descriptors
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8171">[ date ]</a>
+              <a href="thread.html#8171">[ thread ]</a>
+              <a href="subject.html#8171">[ subject ]</a>
+              <a href="author.html#8171">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

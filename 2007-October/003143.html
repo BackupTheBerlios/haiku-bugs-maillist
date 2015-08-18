@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1555: [Deskbar] crash in DeleteMenuWindow
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231555%3A%20%5BDeskbar%5D%20crash%20in%20DeleteMenuWindow&In-Reply-To=%3C040.7ec4d49a1f0249dde547e9386c4b4eb6%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003225.html">
+   <LINK REL="Next"  HREF="003144.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1555: [Deskbar] crash in DeleteMenuWindow</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231555%3A%20%5BDeskbar%5D%20crash%20in%20DeleteMenuWindow&In-Reply-To=%3C040.7ec4d49a1f0249dde547e9386c4b4eb6%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1555: [Deskbar] crash in DeleteMenuWindow">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Oct 12 22:51:24 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003225.html">[Haiku-bugs] [Haiku] #1554: Clock demo app doesn't show the clock face or replicant grabber
+</A></li>
+        <LI>Next message: <A HREF="003144.html">[Haiku-bugs] [Haiku] #757: [app_server] deadlock on workspace	switching
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3143">[ date ]</a>
+              <a href="thread.html#3143">[ thread ]</a>
+              <a href="subject.html#3143">[ subject ]</a>
+              <a href="author.html#3143">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1555: [Deskbar] crash in DeleteMenuWindow
+------------------------------------+---------------------------------------
+ Reporter:  diver                   |       Owner:  axeld         
+     Type:  bug                     |      Status:  new           
+ Priority:  normal                  |   Milestone:  R1            
+Component:  - Applications/Deskbar  |     Version:  R1 development
+ Platform:  All                     |  
+------------------------------------+---------------------------------------
+ {{{vm_soft_fault: va 0xa5 not covered by area in address space
+ vm_page_fault: vm_soft_fault returned error 'Bad address' on fault at
+ 0xa5, ip 0x360cb3, write 0, user 1, thread 0x1ad
+ vm_page_fault: sending team &quot;/boot/beos/system/Deskbar&quot; 0x49 SIGSEGV, ip
+ 0x360cb3 (&quot;libbe.so_seg0ro&quot; +0x115cb3)
+ stack trace:
+   0x003632ea (libbe.so_seg0ro + 0x1182ea)
+   0x00362ccd (libbe.so_seg0ro + 0x117ccd)
+   0x006c4ad0 (libroot.so_seg0ro + 0x20ad0)
+   0x7003ffec (menu_tracking_1ad_stack + 0x3ffec)
+ vm_soft_fault: va 0x0 not covered by area in address space
+ vm_page_fault: vm_soft_fault returned error 'Bad address' on fault at 0x0,
+ ip 0x8009b92c, write 0, user 0, thread 0x1ad
+ debug_server: Thread 429 entered the debugger: Segment violation
+ stack trace, current PC 0x360cb3  _DeleteMenuWindow__5BMenu + 0x3b:
+   (0x7003fedc)  0x3632ea  Track__8BMenuBarPllb + 0x59a
+   (0x7003ff4c)  0x362ccd  TrackTask__8BMenuBarPv + 0x7d
+   (0x7003ffac)  0x6c4ad0  _get_next_team_info + 0x5c (closest symbol)
+ }}}
+
+ Found with r22510 in vmware.
+ Don't know how to reproduce it yet.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1555">http://dev.haiku-os.org/ticket/1555</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003225.html">[Haiku-bugs] [Haiku] #1554: Clock demo app doesn't show the clock face or replicant grabber
+</A></li>
+	<LI>Next message: <A HREF="003144.html">[Haiku-bugs] [Haiku] #757: [app_server] deadlock on workspace	switching
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3143">[ date ]</a>
+              <a href="thread.html#3143">[ thread ]</a>
+              <a href="subject.html#3143">[ subject ]</a>
+              <a href="author.html#3143">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

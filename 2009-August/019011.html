@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3399: The system reboots while running jam -q on the haiku trunk.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233399%3A%20The%20system%20reboots%20while%20running%0A%20jam%20-q%20on%20the%20haiku%20trunk.&In-Reply-To=%3C051.d6dbfaebcbe6ac8cd95b23ddfc0079a9%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="019109.html">
+   <LINK REL="Next"  HREF="019012.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3399: The system reboots while running jam -q on the haiku trunk.</H1>
+    <B>bonefish</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233399%3A%20The%20system%20reboots%20while%20running%0A%20jam%20-q%20on%20the%20haiku%20trunk.&In-Reply-To=%3C051.d6dbfaebcbe6ac8cd95b23ddfc0079a9%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3399: The system reboots while running jam -q on the haiku trunk.">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Aug  3 22:31:34 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="019109.html">[Haiku-bugs] [Haiku] #4181: 'query' Cannot Parse Dates
+</A></li>
+        <LI>Next message: <A HREF="019012.html">[Haiku-bugs] [Haiku] #3011: Filling Tracker windows with many files takes too long
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19011">[ date ]</a>
+              <a href="thread.html#19011">[ thread ]</a>
+              <a href="subject.html#19011">[ subject ]</a>
+              <a href="author.html#19011">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3399: The system reboots while running jam -q on the haiku trunk.
+---------------------------+------------------------------------------------
+ Reporter:  bbjimmy        |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1 development
+Blockedby:                 |    Platform:  All           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+
+Comment(by bonefish):
+
+ Replying to [comment:9 mmlr]:
+ &gt; I'm sorry to tell, but even with an updated kernel including all your
+ changes it still triplefaults :-(.
+
+ You could add a {{{while (true);}}} at the beginning of
+ {{{x86_double_fault_exception()}}} (in arch_int.cpp) to verify that the
+ double fault handler is taken at least.
+
+ Unfortunately there has to be some trade-off between safely catching the
+ double fault and still being able to get useful info in the kernel
+ debugger (respectively being able to enter the kernel debugger at all). If
+ the basic VM, CPU, ICI, or kernel debugger structures have been corrupted,
+ the odds are that a double fault will end in a triple fault or an infinite
+ exception loop. With some more work we could push the limit a bit further.
+ Given how annoying triple faults are to debug that might even be worth it.
+
+ &gt; Tracing output from just before the reboot clearly shows that the
+ structures the scheduler uses are corrupted (as was to be expected). I
+ will now try to review the translation map issue. Of course it's possible
+ that something leading up to there messes up.
+
+ Yeah, e.g. corrupted/deleted thread or team structure could theoretically
+ cause any kind of damage, though usually things just crash earlier and
+ without double-faulting in such a case.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3399#comment:10">http://dev.haiku-os.org/ticket/3399#comment:10</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="019109.html">[Haiku-bugs] [Haiku] #4181: 'query' Cannot Parse Dates
+</A></li>
+	<LI>Next message: <A HREF="019012.html">[Haiku-bugs] [Haiku] #3011: Filling Tracker windows with many files takes too long
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19011">[ date ]</a>
+              <a href="thread.html#19011">[ thread ]</a>
+              <a href="subject.html#19011">[ subject ]</a>
+              <a href="author.html#19011">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

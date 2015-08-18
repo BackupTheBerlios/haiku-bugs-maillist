@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3687: app_server crash while moving Firefox between workspaces
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233687%3A%20app_server%20crash%20while%20moving%20Firefox%0A%20between%20workspaces&In-Reply-To=%3C044.1936da52413870ba2a5cbc401da9d00e%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="015751.html">
+   <LINK REL="Next"  HREF="015754.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3687: app_server crash while moving Firefox between workspaces</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233687%3A%20app_server%20crash%20while%20moving%20Firefox%0A%20between%20workspaces&In-Reply-To=%3C044.1936da52413870ba2a5cbc401da9d00e%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3687: app_server crash while moving Firefox between workspaces">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Apr  6 23:38:24 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="015751.html">[Haiku-bugs] [Haiku] #3458: BTextView's Caret drawing
+</A></li>
+        <LI>Next message: <A HREF="015754.html">[Haiku-bugs] [Haiku] #3687: app_server crash while moving Firefox between workspaces
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15753">[ date ]</a>
+              <a href="thread.html#15753">[ thread ]</a>
+              <a href="subject.html#15753">[ subject ]</a>
+              <a href="author.html#15753">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3687: app_server crash while moving Firefox between workspaces
+--------------------------------+-------------------------------------------
+ Reporter:  anevilyak           |       Owner:  axeld         
+     Type:  bug                 |      Status:  new           
+ Priority:  normal              |   Milestone:  R1            
+Component:  Servers/app_server  |     Version:  R1 development
+Blockedby:                      |    Platform:  All           
+ Blocking:                      |  
+--------------------------------+-------------------------------------------
+ I just got this crash with r29979 about 1 seconds after moving FF to a new
+ workspace:
+
+ 791: DEBUGGER: getNumAvailable() == 0
+ debug_server: Thread 791 entered the debugger: Debugger call:
+ `getNumAvailable() == 0'
+ stack trace, current PC 0xffff0104  :
+   (0x70697474)  0x660ad9  __assert_fail + 0x51
+   (0x706974a4)  0x66af98  malloc__Q28BPrivate10threadHeapUl + 0x4a0
+   (0x706974f4)  0x66b8ec  malloc + 0x154
+   (0x70697524)  0x655bbd  __nw__FUlRC9nothrow_t + 0x29
+   (0x70697554)  0x28ac5c  ScreenAndUserClipping__C4ViewP7BRegionb + 0x68
+   (0x70697594)  0x28db28
+ GetEffectiveDrawingRegion__6WindowP4ViewR7BRegion + 0xd4
+   (0x706975cc)  0x286f68  _UpdateCurrentDrawingRegion__12ServerWindow +
+ 0x54
+   (0x706975fc)  0x282b38
+ _DispatchViewDrawingMessage__12ServerWindowlRQ28BPrivate12LinkReceiver +
+ 0xb0
+   (0x70698c3c)  0x282836
+ _DispatchViewMessage__12ServerWindowlRQ28BPrivate12LinkReceiver + 0x215a
+   (0x70698ddc)  0x280621
+ _DispatchMessage__12ServerWindowlRQ28BPrivate12LinkReceiver + 0x1239
+   (0x70698f0c)  0x286482  _MessageLooper__12ServerWindow + 0x282
+   (0x70698f7c)  0x268978  _message_thread__13MessageLooperPv + 0x28
+   (0x70698fac)  0x65bcd8  thread_entry + 0x20
+
+ Unfortunately I'm uncertain as to how easy that one will be to reproduce,
+ and I don't see anything suspicious on serial log prior to it crashing
+ into gdb.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3687">http://dev.haiku-os.org/ticket/3687</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="015751.html">[Haiku-bugs] [Haiku] #3458: BTextView's Caret drawing
+</A></li>
+	<LI>Next message: <A HREF="015754.html">[Haiku-bugs] [Haiku] #3687: app_server crash while moving Firefox between workspaces
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15753">[ date ]</a>
+              <a href="thread.html#15753">[ thread ]</a>
+              <a href="subject.html#15753">[ subject ]</a>
+              <a href="author.html#15753">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3856: page fault in	LegacyDevice::UninitDevice
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233856%3A%20page%20fault%20in%0A%09LegacyDevice%3A%3AUninitDevice&In-Reply-To=%3C059.ded3407daee935e318317b3df1acc788%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="017354.html">
+   <LINK REL="Next"  HREF="017367.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3856: page fault in	LegacyDevice::UninitDevice</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233856%3A%20page%20fault%20in%0A%09LegacyDevice%3A%3AUninitDevice&In-Reply-To=%3C059.ded3407daee935e318317b3df1acc788%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3856: page fault in	LegacyDevice::UninitDevice">trac at haiku-os.org
+       </A><BR>
+    <I>Sat May 16 18:33:06 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="017354.html">[Haiku-bugs] [Haiku] #3856: page fault in	LegacyDevice::UninitDevice
+</A></li>
+        <LI>Next message: <A HREF="017367.html">[Haiku-bugs] [Haiku] #3856: page fault in	LegacyDevice::UninitDevice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17366">[ date ]</a>
+              <a href="thread.html#17366">[ thread ]</a>
+              <a href="subject.html#17366">[ subject ]</a>
+              <a href="author.html#17366">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3856: page fault in LegacyDevice::UninitDevice
+-----------------------------+----------------------------------------------
+ Reporter:  marcusoverhagen  |       Owner:  axeld         
+     Type:  bug              |      Status:  assigned      
+ Priority:  normal           |   Milestone:  R1            
+Component:  System/Kernel    |     Version:  R1 development
+Blockedby:                   |    Platform:  All           
+ Blocking:                   |  
+-----------------------------+----------------------------------------------
+
+Comment(by anevilyak):
+
+ I can reproduce this also if I boot with my ps2 keyboard unplugged,
+ backtrace as follows:
+
+ {{{
+ PANIC: vm_page_fault: unhandled page fault in kernel space at 0x2c, ip
+ 0x8007f9bc
+
+ stack trace for thread 136 &quot;ps2 service&quot;
+     kernel stack: 0x9157c000 to 0x91580000
+ frame               caller     &lt;image&gt;:function + offset
+  0 9157fa34 (+  48) 800659f1   &lt;kernel_x86&gt;:invoke_debugger_command +
+ 0x00f5
+  1 9157fa64 (+  64) 800657e1   &lt;kernel_x86&gt;
+ invoke_pipe_segment(debugger_command_pipe*: 0x80136b20, int32: 0, 0x0
+ &quot;&lt;NULL&gt;&quot;) + 0x0079
+  2 9157faa4 (+  64) 80065b68   &lt;kernel_x86&gt;:invoke_debugger_command_pipe +
+ 0x009c
+  3 9157fae4 (+  48) 80067118   &lt;kernel_x86&gt;
+ ExpressionParser&lt;0x9157fb98&gt;::_ParseCommandPipe(0x9157fb94) + 0x0234
+  4 9157fb14 (+  64) 80066552   &lt;kernel_x86&gt;
+ ExpressionParser&lt;0x9157fb98&gt;::EvaluateCommand(0x80127200 &quot;bt&quot;, 0x9157fb94)
+ + 0x02ba
+  5 9157fb54 (+ 224) 80068540   &lt;kernel_x86&gt;:evaluate_debug_command +
+ 0x0088
+  6 9157fc34 (+  64) 8006386a   &lt;kernel_x86&gt; kernel_debugger_loop() +
+ 0x01ae
+  7 9157fc74 (+  32) 80064771   &lt;kernel_x86&gt;:kernel_debugger + 0x004d
+  8 9157fc94 (+ 192) 80064719   &lt;kernel_x86&gt;:panic + 0x0029
+  9 9157fd54 (+  80) 800ca551   &lt;kernel_x86&gt;:vm_page_fault + 0x0139
+ 10 9157fda4 (+  64) 800daf65   &lt;kernel_x86&gt;:page_fault_exception + 0x00d9
+ 11 9157fde4 (+  12) 800de696   &lt;kernel_x86&gt;:int_bottom + 0x0036
+ kernel iframe at 0x9157fdf0 (end = 0x9157fe40)
+  eax 0x1            ebx 0x2c            ecx 0x8012bd60   edx 0x0
+  esi 0x8132c3b8     edi 0x8119f398      ebp 0x9157fe58   esp 0x9157fe24
+  eip 0x8007f9bc  eflags 0x10286
+  vector: 0xe, error code: 0x0
+ 12 9157fdf0 (+ 104) 8007f9bc   &lt;kernel_x86&gt;
+ LegacyDevice&lt;0x8132c3b8&gt;::Removed(0x812de780, 0x9157fe98) + 0x004c
+ 13 9157fe58 (+  48) 80076f14   &lt;kernel_x86&gt; devfs_delete_vnode(devfs*:
+ 0x8119f3c0, devfs_vnode*: 0x812de780, false) + 0x006c
+ 14 9157fe88 (+  48) 8007807c   &lt;kernel_x86&gt; devfs_remove_vnode(fs_volume*:
+ 0x8119f398, fs_vnode*: 0x81330d8c, true) + 0x005c
+ 15 9157feb8 (+  48) 8009fea8   &lt;kernel_x86&gt; free_vnode(vnode*: 0x81330d8c,
+ true) + 0x00ac
+ 16 9157fee8 (+  48) 800a00a4   &lt;kernel_x86&gt; dec_vnode_ref_count(vnode*:
+ 0x81330d8c, false, true) + 0x0140
+ 17 9157ff18 (+  48) 800a4105   &lt;kernel_x86&gt;:put_vnode + 0x0069
+ 18 9157ff48 (+  48) 80079986   &lt;kernel_x86&gt;:devfs_unpublish_device +
+ 0x0086
+ 19 9157ff78 (+  48) 91576c23   &lt;/boot/system/add-
+ ons/kernel/bus_managers/ps2&gt;:ps2_dev_unpublish + 0x002f
+ 20 9157ffa8 (+  48) 915794c0   &lt;/boot/system/add-
+ ons/kernel/bus_managers/ps2&gt;:ps2_service_thread + 0x00d8
+ 21 9157ffd8 (+  32) 800592ab   &lt;kernel_x86&gt; _create_kernel_thread_kentry()
+ + 0x001b
+ 22 9157fff8 (+1856503816) 80059248   &lt;kernel_x86&gt; thread_kthread_exit() +
+ 0x0000
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3856#comment:8">http://dev.haiku-os.org/ticket/3856#comment:8</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="017354.html">[Haiku-bugs] [Haiku] #3856: page fault in	LegacyDevice::UninitDevice
+</A></li>
+	<LI>Next message: <A HREF="017367.html">[Haiku-bugs] [Haiku] #3856: page fault in	LegacyDevice::UninitDevice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17366">[ date ]</a>
+              <a href="thread.html#17366">[ thread ]</a>
+              <a href="subject.html#17366">[ subject ]</a>
+              <a href="author.html#17366">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

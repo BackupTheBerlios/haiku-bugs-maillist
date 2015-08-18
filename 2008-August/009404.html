@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2582: scsi scheduler page fault with	interrupts disabled
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232582%3A%20scsi%20scheduler%20page%20fault%20with%0A%09interrupts%20disabled&In-Reply-To=%3C043.37e59dd7f85990a04c69a3b2f4fcfaa1%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009403.html">
+   <LINK REL="Next"  HREF="009406.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2582: scsi scheduler page fault with	interrupts disabled</H1>
+    <B>andreasf</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232582%3A%20scsi%20scheduler%20page%20fault%20with%0A%09interrupts%20disabled&In-Reply-To=%3C043.37e59dd7f85990a04c69a3b2f4fcfaa1%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2582: scsi scheduler page fault with	interrupts disabled">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Aug  7 18:11:34 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009403.html">[Haiku-bugs] [Haiku] #1217: AUICH looping media_server
+</A></li>
+        <LI>Next message: <A HREF="009406.html">[Haiku-bugs] [Haiku] #2582: scsi scheduler page fault with interrupts disabled
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9404">[ date ]</a>
+              <a href="thread.html#9404">[ thread ]</a>
+              <a href="subject.html#9404">[ subject ]</a>
+              <a href="author.html#9404">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2582: scsi scheduler page fault with interrupts disabled
+---------------------------+------------------------------------------------
+ Reporter:  andreasf       |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1 development
+Blockedby:                 |    Platform:  x86           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+ Got the following KDL on ca. r26856 while launching Firefox (SMP enabled,
+ gcc2 hybrid build).
+ {{{
+ PANIC: page fault, but interrupts were disabled. Touching address
+ 0xdeadbf03 from eip 0x800631d3
+
+ Welcome to Kernel Debugging Land...
+ Thread 32 &quot;scsi scheduler&quot; running on CPU 0
+ kdebug&gt; sc
+ stack trace for thread 32 &quot;scsi scheduler&quot;
+     kernel stack: 0x936ba000 to 0x936be000
+ frame            caller     &lt;image&gt;:function + offset
+  0 936bdb44 (+  48) 8005460d   &lt;kernel&gt;:invoke_debugger_command + 0x00ed
+  1 936bdb74 (+  64) 80054405
+ &lt;kernel&gt;:invoke_pipe_segment__FP21debugger_command_pipelPc + 0x0079
+  2 936bdbb4 (+  64) 8005474d   &lt;kernel&gt;:invoke_debugger_command_pipe +
+ 0x009d
+  3 936bdbf4 (+  48) 80055628
+ &lt;kernel&gt;:_ParseCommandPipe__16ExpressionParserRi + 0x0234
+  4 936bdc24 (+  48) 80054fde
+ &lt;kernel&gt;:EvaluateCommand__16ExpressionParserPCcRi + 0x01de
+  5 936bdc54 (+ 224) 800569f4   &lt;kernel&gt;:evaluate_debug_command + 0x0088
+  6 936bdd34 (+  64) 80052a82   &lt;kernel&gt;:kernel_debugger_loop__Fv + 0x01ae
+  7 936bdd74 (+  48) 8005361b   &lt;kernel&gt;:kernel_debugger + 0x0117
+  8 936bdda4 (+ 192) 800534f9   &lt;kernel&gt;:panic + 0x0029
+  9 936bde64 (+  48) 800b3e74   &lt;kernel&gt;:page_fault_exception + 0x0060
+ 10 936bde94 (+  12) 800b7426   &lt;kernel&gt;:int_bottom + 0x0036 (nearest)
+ kernel iframe at 0x936bdea0 (end = 0x936bdef0)
+  eax 0xdeadbeef     ebx 0x90bc2104      ecx 0x90c073d4   edx 0xdeadbeef
+  esi 0x90c073c0     edi 0x90bc2088      ebp 0x936bdf28   esp 0x936bded4
+  eip 0x800631d3  eflags 0x210082
+  vector: 0xe, error code: 0x2
+ 11 936bdea0 (+ 136) 800631d3   &lt;kernel&gt;:_Finisher__11IOScheduler + 0x008f
+ 12 936bdf28 (+  96) 8006363b   &lt;kernel&gt;:_GetOperation__11IOScheduler +
+ 0x0177
+ 13 936bdf88 (+  48) 80063a3e   &lt;kernel&gt;:_Scheduler__11IOScheduler + 0x0032
+ 14 936bdfb8 (+  32) 80063ace   &lt;kernel&gt;:_SchedulerThread__11IOSchedulerPv
+ + 0x0012
+ 15 936bdfd8 (+  32) 8004b2af   &lt;kernel&gt;:_create_kernel_thread_kentry__Fv +
+ 0x001b
+ 16 936bdff8 (+1821646856) 8004b24c   &lt;kernel&gt;:thread_kthread_exit__Fv +
+ 0x0000
+ kdebug&gt;
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2582">http://dev.haiku-os.org/ticket/2582</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009403.html">[Haiku-bugs] [Haiku] #1217: AUICH looping media_server
+</A></li>
+	<LI>Next message: <A HREF="009406.html">[Haiku-bugs] [Haiku] #2582: scsi scheduler page fault with interrupts disabled
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9404">[ date ]</a>
+              <a href="thread.html#9404">[ thread ]</a>
+              <a href="subject.html#9404">[ subject ]</a>
+              <a href="author.html#9404">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

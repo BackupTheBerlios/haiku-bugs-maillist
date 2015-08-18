@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1920: Userland Heap Garbage in Kernel Heap	Page
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231920%3A%20Userland%20Heap%20Garbage%20in%20Kernel%20Heap%0A%09Page&In-Reply-To=%3C043.587b706d72315bf206a07bb81bdbffef%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005537.html">
+   <LINK REL="Next"  HREF="005539.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1920: Userland Heap Garbage in Kernel Heap	Page</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231920%3A%20Userland%20Heap%20Garbage%20in%20Kernel%20Heap%0A%09Page&In-Reply-To=%3C043.587b706d72315bf206a07bb81bdbffef%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1920: Userland Heap Garbage in Kernel Heap	Page">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Mar 14 19:31:56 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005537.html">[Haiku-bugs] [Haiku] #1711: Haiku stops booting at allocate_commpage_entry(4, 34)
+</A></li>
+        <LI>Next message: <A HREF="005539.html">[Haiku-bugs] [Haiku] #1920: Userland Heap Garbage in Kernel	Heap Page
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5538">[ date ]</a>
+              <a href="thread.html#5538">[ thread ]</a>
+              <a href="subject.html#5538">[ subject ]</a>
+              <a href="author.html#5538">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1920: Userland Heap Garbage in Kernel Heap Page
+---------------------------+------------------------------------------------
+ Reporter:  bonefish       |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  blocker        |   Milestone:  R1/alpha1     
+Component:  System/Kernel  |     Version:  R1 development
+ Platform:  All            |  
+---------------------------+------------------------------------------------
+ r24356, VMware
+
+ Cf. attached KDL session. Kernel page fault occurred while running the
+ perl test suite. As can be seen in the attachment, there's a complete page
+ of garbage in the entry array of a hash table. The contents looks like it
+ stems from the heap of one of the perl tests (t/TEST or one of its
+ children). The corresponding page looks good though -- it's in the right
+ cache and has no bogus area mappings.
+
+ My suspicion would be that e.g. on an exec() a userland heap page has been
+ freed, but not correctly unmapped, so that writes to that virtual address
+ (likely the heap of the exec()ed program) would not cause a page fault and
+ continue to modify that page. At some point the kernel heap would reuse
+ the page and hand out an chunk of memory backed by it. Subsequent writes
+ to the userland heap would then overwrite the contents of this allocation.
+
+ Needless to say that I've looked through the involved code and didn't spot
+ a problem. There's still a TODO regarding removing page mappings in
+ delete_cache(), but that looks obsolete to me (mappings and wired_count of
+ the page have been checked a few lines before). There's another TODO in
+ vm_soft_fault() talking about the possibility of mapping a page twice, but
+ that seems unrelated.
+
+ I saved the virtual machine state, so if there're any hints what more to
+ examine, I can do that.
+
+ Might be related to #1900.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1920">http://dev.haiku-os.org/ticket/1920</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005537.html">[Haiku-bugs] [Haiku] #1711: Haiku stops booting at allocate_commpage_entry(4, 34)
+</A></li>
+	<LI>Next message: <A HREF="005539.html">[Haiku-bugs] [Haiku] #1920: Userland Heap Garbage in Kernel	Heap Page
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5538">[ date ]</a>
+              <a href="thread.html#5538">[ thread ]</a>
+              <a href="subject.html#5538">[ subject ]</a>
+              <a href="author.html#5538">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

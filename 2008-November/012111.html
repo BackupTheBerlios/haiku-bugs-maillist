@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3080: PhotoGrabber cannot be killed when	camera is attached
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233080%3A%20PhotoGrabber%20cannot%20be%20killed%20when%0A%09camera%20is%20attached&In-Reply-To=%3C041.109410183a3836e93bd637f9bc41343c%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012110.html">
+   <LINK REL="Next"  HREF="012144.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3080: PhotoGrabber cannot be killed when	camera is attached</H1>
+    <B>nutela</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233080%3A%20PhotoGrabber%20cannot%20be%20killed%20when%0A%09camera%20is%20attached&In-Reply-To=%3C041.109410183a3836e93bd637f9bc41343c%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3080: PhotoGrabber cannot be killed when	camera is attached">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Nov  5 22:25:05 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012110.html">[Haiku-bugs] [Haiku] #3010: A file is routinely corrupt after	shutdown
+</A></li>
+        <LI>Next message: <A HREF="012144.html">[Haiku-bugs] [Haiku] #3080: PhotoGrabber cannot be killed when camera is attached
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12111">[ date ]</a>
+              <a href="thread.html#12111">[ thread ]</a>
+              <a href="subject.html#12111">[ subject ]</a>
+              <a href="author.html#12111">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3080: PhotoGrabber cannot be killed when camera is attached
+---------------------------+------------------------------------------------
+ Reporter:  nutela         |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1 development
+Blockedby:                 |    Platform:  x86           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+ *  how to reproduce
+ unpack Photograbber from Haikuware.com, the bin should be from 28 Aug
+ 2008, have a camera (in this case Canon Ixus) attached to USB and start
+ Photograbber and set it up to look for a camera (see settings)
+     * experienced behavior
+ Photograbber never updates its window, cannot be killed with ctrl-alt-del
+ or kill -9, the window leaves an area on the desktop which is wrongly
+ redrawn, after several kill -9 of PhotoGrabber's threads, the picasso
+ thread is hogging cpu. only when the camera is switched off the Deskbar
+ entry disapeared, the area on the desktop previously occupied by
+ PhotoGrabber is being redrawn normally again.
+     * expected behavior
+ Every app should be killed by ctrl-alt-del or always with kill -9, picasso
+ shouldn't get confused? :-)
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3080">http://dev.haiku-os.org/ticket/3080</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012110.html">[Haiku-bugs] [Haiku] #3010: A file is routinely corrupt after	shutdown
+</A></li>
+	<LI>Next message: <A HREF="012144.html">[Haiku-bugs] [Haiku] #3080: PhotoGrabber cannot be killed when camera is attached
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12111">[ date ]</a>
+              <a href="thread.html#12111">[ thread ]</a>
+              <a href="subject.html#12111">[ subject ]</a>
+              <a href="author.html#12111">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

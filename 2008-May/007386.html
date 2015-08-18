@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2143: KDL in net timer.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232143%3A%20KDL%20in%20net%20timer.&In-Reply-To=%3C047.9b3e5e890e53c2666233f1e9f3f338ae%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007385.html">
+   <LINK REL="Next"  HREF="007387.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2143: KDL in net timer.</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232143%3A%20KDL%20in%20net%20timer.&In-Reply-To=%3C047.9b3e5e890e53c2666233f1e9f3f338ae%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2143: KDL in net timer.">trac at haiku-os.org
+       </A><BR>
+    <I>Sun May 18 02:24:56 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007385.html">[Haiku-bugs] [Haiku] #1838: Horizontal scrolling is broken in BColumnListView.
+</A></li>
+        <LI>Next message: <A HREF="007387.html">[Haiku-bugs] [Haiku] #1620: Firefox crashes with &quot;-safe-mode&quot;	switch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7386">[ date ]</a>
+              <a href="thread.html#7386">[ thread ]</a>
+              <a href="subject.html#7386">[ subject ]</a>
+              <a href="author.html#7386">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2143: KDL in net timer.
+---------------------------------------+------------------------------------
+  Reporter:  bga                       |       Owner:  axeld         
+      Type:  bug                       |      Status:  new           
+  Priority:  high                      |   Milestone:  R1/alpha1     
+ Component:  Network &amp; Internet/Stack  |     Version:  R1 development
+Resolution:                            |    Platform:  All           
+---------------------------------------+------------------------------------
+Comment (by bonefish):
+
+ Probably related (r25537):
+
+ {{{
+ PANIC: vm_page_fault: unhandled page fault in kernel space at 0xdeadbeef,
+ ip 0xdeadbeef
+
+ Welcome to Kernel Debugging Land...
+ Running on CPU 0
+ kdebug&gt; sc
+ stack trace for thread 66 &quot;net timer&quot;
+     kernel stack: 0x807ca000 to 0x807ce000
+ frame            caller     &lt;image&gt;:function + offset
+ 807cdc20 (+  48) 8004e69b   &lt;kernel&gt;:invoke_debugger_command + 0x00cf
+ 807cdc50 (+  64) 8004f444   &lt;kernel&gt;:_ParseCommand__16ExpressionParserRi +
+ 0x01f8
+ 807cdc90 (+  48) 8004ee36
+ &lt;kernel&gt;:EvaluateCommand__16ExpressionParserPCcRi + 0x01de
+ 807cdcc0 (+ 224) 80050558   &lt;kernel&gt;:evaluate_debug_command + 0x0088
+ 807cdda0 (+  64) 8004d1d6   &lt;kernel&gt;:kernel_debugger_loop__Fv + 0x017a
+ 807cdde0 (+  48) 8004de89   &lt;kernel&gt;:kernel_debugger + 0x010d
+ 807cde10 (+ 192) 8004dd71   &lt;kernel&gt;:panic + 0x0029
+ 807cded0 (+  64) 8009acef   &lt;kernel&gt;:vm_page_fault + 0x00ab
+ 807cdf10 (+  64) 800a4de1   &lt;kernel&gt;:page_fault_exception + 0x00b1
+ 807cdf50 (+  12) 800a857d   &lt;kernel&gt;:int_bottom + 0x001d (nearest)
+ iframe at 0x807cdf5c (end = 0x807cdfb4)
+  eax 0xdeadbeef     ebx 0x807c9498      ecx 0x9115f000   edx 0x200246
+  esi 0x91be9e6c     edi 0x0             ebp 0x807cdfd8   esp 0x807cdf90
+  eip 0xdeadbeef  eflags 0x210287
+  vector: 0xe, error code: 0x0
+ 807cdf5c (+ 124) deadbeef
+ 807cdfd8 (+  32) 800446ef   &lt;kernel&gt;:_create_kernel_thread_kentry__Fv +
+ 0x001b
+ 807cdff8 (+2139299848) 80044684   &lt;kernel&gt;:thread_kthread_exit__Fv +
+ 0x0000
+ }}}
+
+ If TCP does indeed use the timers as explained on the commit mailing list
+ recently, it might be a good idea to remove the race condition, as it
+ perfectly explains these kinds of problems.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2143#comment:6">http://dev.haiku-os.org/ticket/2143#comment:6</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007385.html">[Haiku-bugs] [Haiku] #1838: Horizontal scrolling is broken in BColumnListView.
+</A></li>
+	<LI>Next message: <A HREF="007387.html">[Haiku-bugs] [Haiku] #1620: Firefox crashes with &quot;-safe-mode&quot;	switch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7386">[ date ]</a>
+              <a href="thread.html#7386">[ thread ]</a>
+              <a href="subject.html#7386">[ subject ]</a>
+              <a href="author.html#7386">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

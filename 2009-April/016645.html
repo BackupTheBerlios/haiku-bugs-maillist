@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2539: [app_server] crash in	HWInterface::_CopyToFront
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232539%3A%20%5Bapp_server%5D%20crash%20in%0A%09HWInterface%3A%3A_CopyToFront&In-Reply-To=%3C049.56e9c4ba3b1beefbc24f44b26438fda8%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="016644.html">
+   <LINK REL="Next"  HREF="016652.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2539: [app_server] crash in	HWInterface::_CopyToFront</H1>
+    <B>stpere</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232539%3A%20%5Bapp_server%5D%20crash%20in%0A%09HWInterface%3A%3A_CopyToFront&In-Reply-To=%3C049.56e9c4ba3b1beefbc24f44b26438fda8%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2539: [app_server] crash in	HWInterface::_CopyToFront">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Apr 27 19:51:12 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="016644.html">[Haiku-bugs] [Haiku] #3610: minor mimetype error for welcome.html and BeBook index.html
+</A></li>
+        <LI>Next message: <A HREF="016652.html">[Haiku-bugs] [Haiku] #2539: [app_server] crash in	HWInterface::_CopyToFront
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16645">[ date ]</a>
+              <a href="thread.html#16645">[ thread ]</a>
+              <a href="subject.html#16645">[ subject ]</a>
+              <a href="author.html#16645">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2539: [app_server] crash in HWInterface::_CopyToFront
+--------------------------------+-------------------------------------------
+ Reporter:  diver               |       Owner:  stippi        
+     Type:  bug                 |      Status:  assigned      
+ Priority:  normal              |   Milestone:  R1            
+Component:  Servers/app_server  |     Version:  R1 development
+Blockedby:                      |    Platform:  All           
+ Blocking:                      |  
+--------------------------------+-------------------------------------------
+
+Comment(by stpere):
+
+ Hi,
+
+ I have the same (or I think it's the same) error here on r30464.
+ {{{
+ vm_soft_fault: va 0x835b8000 not covered by area in address space
+ vm_page_fault: vm_soft_fault returned error 'Bad address' on fault at
+ 0x835b8bc0, ip 0x2a0cb4, write 1, user 1, thread 0x58
+ vm_page_fault: thread &quot;cursor loop&quot; (88) in team &quot;app_server&quot; (49) tried
+ to write address 0x835b8bc0, ip 0x2a0cb4 (&quot;???&quot; +0x2a0cb4)
+ debug_server: Thread 88 entered the debugger: Segment violation
+ stack trace, current PC 0x2a0cb4  _CopyToFront__C11HWInterfacePUcUlllll +
+ 0x1a8:
+   (0x701c5cec)  0x2a0407  _CopyBackToFront__11HWInterfaceR7BRegion + 0xbb
+   (0x701c5d5c)  0x2969b4
+ _CopyBackToFront__21AccelerantHWInterfaceR7BRegion + 0xfc
+   (0x701c5dac)  0x2a027a  CopyBackToFront__11HWInterfaceRC5BRect + 0x272
+   (0x701c5e5c)  0x29fffc  Invalidate__11HWInterfaceRC5BRect + 0x58
+   (0x701c5e8c)  0x29fcc8  MoveCursorTo__11HWInterfaceRCfT1 + 0x1b4
+   (0x701c5f0c)  0x29687b  MoveCursorTo__21AccelerantHWInterfaceRCfT1 +
+ 0x27
+   (0x701c5f3c)  0x25a48e  _CursorLoop__15EventDispatcher + 0x7a
+   (0x701c5f7c)  0x25a59b  _cursor_looper__15EventDispatcherPv + 0x1f
+   (0x701c5fac)  0x65bd78  thread_entry + 0x20
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2539#comment:2">http://dev.haiku-os.org/ticket/2539#comment:2</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="016644.html">[Haiku-bugs] [Haiku] #3610: minor mimetype error for welcome.html and BeBook index.html
+</A></li>
+	<LI>Next message: <A HREF="016652.html">[Haiku-bugs] [Haiku] #2539: [app_server] crash in	HWInterface::_CopyToFront
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16645">[ date ]</a>
+              <a href="thread.html#16645">[ thread ]</a>
+              <a href="subject.html#16645">[ subject ]</a>
+              <a href="author.html#16645">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

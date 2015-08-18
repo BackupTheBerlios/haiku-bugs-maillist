@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4622: ipro100 driver defauts to 10Mb ; Can't change to 100Mb
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234622%3A%20ipro100%20driver%20defauts%20to%2010Mb%20%3B%0A%20Can%27t%20change%20to%20100Mb&In-Reply-To=%3C042.5617e565b51d5b13aedc13a601875bbc%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="022076.html">
+   <LINK REL="Next"  HREF="021806.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4622: ipro100 driver defauts to 10Mb ; Can't change to 100Mb</H1>
+    <B>thetick</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234622%3A%20ipro100%20driver%20defauts%20to%2010Mb%20%3B%0A%20Can%27t%20change%20to%20100Mb&In-Reply-To=%3C042.5617e565b51d5b13aedc13a601875bbc%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4622: ipro100 driver defauts to 10Mb ; Can't change to 100Mb">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Sep 22 05:29:57 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="022076.html">[Haiku-bugs] [Haiku] #4621: Stripping down &quot;Configure Deskbar	Menu&quot;
+</A></li>
+        <LI>Next message: <A HREF="021806.html">[Haiku-bugs] [Haiku] #4622: ipro100 driver defauts to 10Mb ; Can't change to 100Mb
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21805">[ date ]</a>
+              <a href="thread.html#21805">[ thread ]</a>
+              <a href="subject.html#21805">[ subject ]</a>
+              <a href="author.html#21805">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4622: ipro100 driver defauts to 10Mb ; Can't change to 100Mb
+-----------------------------+----------------------------------------------
+ Reporter:  thetick          |       Owner:  axeld    
+     Type:  bug              |      Status:  new      
+ Priority:  normal           |   Milestone:  R1       
+Component:  Drivers/Network  |     Version:  R1/alpha1
+Blockedby:                   |    Platform:  All      
+ Blocking:                   |  
+-----------------------------+----------------------------------------------
+ I would like the ipro100 driver to automatically detect 100M. I have a 20M
+ connection that works at 20M with Linux and Windows on the exact same
+ machine.  Haiku connects at 10Mb and I get 5Mb max transfers.  Not bad at
+ all but I would like to get 20Mb transfers.
+
+ I tried:
+ &gt;ifconfig /dev/net/ipro100/0 media 100baseTX
+ ifconfig: Setting media failed: Operation not supported
+
+ &quot;ifconfig --help&quot; shows:
+ For Ethernet &lt;media&gt; can be one of: 10baseT 100baseTX 1000baseT 1000baseSX
+
+ Below is the syslog which shows the speed=10000 (10M):
+ KERN: ipro100: init_hardware(0x8115990c)
+ KERN: ipro100, found Intel 82550 Pro/100 Ethernet at 5
+ KERN: ipro100: init_driver(0x8115990c)
+ KERN: [ipro100] (fxp) bus_alloc_resource(3, [16], 0x0, 0xffffffff, 0x1,
+ 0x2)
+ KERN: [ipro100] (fxp) bus_alloc_resource(1, [0], 0x0, 0xffffffff, 0x1,
+ 0x6)
+ KERN: [ipro100] (fxp) using memory space register mapping
+ KERN: [ipro100] (fxp) PCI IDs: 8086 1229 8086 2205 000c
+ KERN: [ipro100] (fxp) Dynamic Standby mode is disabled
+ KERN: [ipro100] (miibus) No PHY module found (aa00/15)!
+ KERN: [ipro100] ipro100: /dev/net/ipro100/0
+ KERN: loaded driver /boot/system/add-ons/kernel/drivers/dev/net/ipro100
+ KERN: ipro1000: init_hardware(0x83935864)
+ KERN: ipro1000: no hardware found.
+ KERN: get_device_interface: ask &quot;network/devices/ethernet/v1&quot; for
+ /dev/net/ipro100/0
+ KERN: ipv4_datalink_init(/dev/net/ipro100/0)
+ KERN: [net/ipro100/0] compat_open(0x2)
+ KERN: /dev/net/ipro100/0: media change, media 0x22 quality 1000 speed
+ 10000
+ DAEMON 'DHCP': DHCP for /dev/net/ipro100/0, status: No error
+
+ listdev shows:
+ device Network controller (Ethernet controller) [2|0|0]
+   vendor 8086: Intel Corporation
+   device 1229: 82557/8/9/0/1 Ethernet Pro 100
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4622">http://dev.haiku-os.org/ticket/4622</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="022076.html">[Haiku-bugs] [Haiku] #4621: Stripping down &quot;Configure Deskbar	Menu&quot;
+</A></li>
+	<LI>Next message: <A HREF="021806.html">[Haiku-bugs] [Haiku] #4622: ipro100 driver defauts to 10Mb ; Can't change to 100Mb
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21805">[ date ]</a>
+              <a href="thread.html#21805">[ thread ]</a>
+              <a href="subject.html#21805">[ subject ]</a>
+              <a href="author.html#21805">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

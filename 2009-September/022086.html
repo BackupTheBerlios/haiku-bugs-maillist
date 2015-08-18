@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4648: Fix BMessage key events where the bytes array contains an ASCII NUL
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234648%3A%20Fix%20BMessage%20key%20events%20where%20the%0A%20bytes%20array%20contains%20an%20ASCII%20NUL&In-Reply-To=%3C049.c816a6b6b61cff8d84a2988ab6d662f3%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="022060.html">
+   <LINK REL="Next"  HREF="022129.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4648: Fix BMessage key events where the bytes array contains an ASCII NUL</H1>
+    <B>joshe</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234648%3A%20Fix%20BMessage%20key%20events%20where%20the%0A%20bytes%20array%20contains%20an%20ASCII%20NUL&In-Reply-To=%3C049.c816a6b6b61cff8d84a2988ab6d662f3%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4648: Fix BMessage key events where the bytes array contains an ASCII NUL">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Sep 27 20:45:42 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="022060.html">[Haiku-bugs] [Haiku] #4648: Fix BMessage key events where the bytes array contains an ASCII NUL
+</A></li>
+        <LI>Next message: <A HREF="022129.html">[Haiku-bugs] [Haiku] #4648: Fix BMessage key events where the bytes array contains an ASCII NUL
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22086">[ date ]</a>
+              <a href="thread.html#22086">[ thread ]</a>
+              <a href="subject.html#22086">[ subject ]</a>
+              <a href="author.html#22086">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4648: Fix BMessage key events where the bytes array contains an ASCII NUL
+-----------------------+----------------------------------------------------
+ Reporter:  joshe      |       Owner:  nobody   
+     Type:  bug        |      Status:  new      
+ Priority:  normal     |   Milestone:  R1       
+Component:  - General  |     Version:  R1/alpha1
+Blockedby:             |    Platform:  All      
+ Blocking:             |  
+-----------------------+----------------------------------------------------
+
+Comment(by joshe):
+
+ No, it didn't occur to me to test under BeOS.  If you'd like then I can
+ try to dig up my old R5 CD and install it in a VM.
+
+ However the BeBook seems to suggest that including a NUL is the right
+ thing to do in this case.  On the [<A HREF="http://www.haiku-os.org/legacy-">http://www.haiku-os.org/legacy-</A>
+ docs/bebook/BView.html#BView_KeyDown BView page] it says &quot;The bytes array
+ is not null-terminated; '0' is a valid character value&quot;.
+
+ For what it's worth, this patch makes the Control-Space sequence work in
+ the Terminal with no other changes, which also suggests to me that this is
+ how it originally worked in BeOS.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4648#comment:2">http://dev.haiku-os.org/ticket/4648#comment:2</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="022060.html">[Haiku-bugs] [Haiku] #4648: Fix BMessage key events where the bytes array contains an ASCII NUL
+</A></li>
+	<LI>Next message: <A HREF="022129.html">[Haiku-bugs] [Haiku] #4648: Fix BMessage key events where the bytes array contains an ASCII NUL
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22086">[ date ]</a>
+              <a href="thread.html#22086">[ thread ]</a>
+              <a href="subject.html#22086">[ subject ]</a>
+              <a href="author.html#22086">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

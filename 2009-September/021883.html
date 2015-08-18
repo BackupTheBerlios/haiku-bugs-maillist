@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4053: USB MIDI not recognized dynamically
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234053%3A%20USB%20MIDI%20not%20recognized%20dynamically&In-Reply-To=%3C048.fdcea21dff0e44ee69cd1b8ce38a60bb%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="021881.html">
+   <LINK REL="Next"  HREF="021885.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4053: USB MIDI not recognized dynamically</H1>
+    <B>Pete</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234053%3A%20USB%20MIDI%20not%20recognized%20dynamically&In-Reply-To=%3C048.fdcea21dff0e44ee69cd1b8ce38a60bb%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4053: USB MIDI not recognized dynamically">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Sep 23 03:28:55 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="021881.html">[Haiku-bugs] [Haiku] #4629: request: meta-search tool for the various mailing lists
+</A></li>
+        <LI>Next message: <A HREF="021885.html">[Haiku-bugs] [Haiku] #4630: Mouse messaging via VMWare's VNC server do not get handled in Haiku events properly...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21883">[ date ]</a>
+              <a href="thread.html#21883">[ thread ]</a>
+              <a href="subject.html#21883">[ subject ]</a>
+              <a href="author.html#21883">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4053: USB MIDI not recognized dynamically
+---------------------------------+------------------------------------------
+ Reporter:  Pete                 |       Owner:  phoudoin     
+     Type:  bug                  |      Status:  assigned     
+ Priority:  normal               |   Milestone:  R1           
+Component:  Servers/midi_server  |     Version:  R1/pre-alpha1
+Blockedby:                       |    Platform:  All          
+ Blocking:                       |  
+---------------------------------+------------------------------------------
+
+Comment(by Pete):
+
+ This is an interim report, as I've been a bit delayed by a dose of flu [or
+ something!].  It isn't fully working yet, and I haven't got all the
+ answers, but for now:
+
+ Replying to [comment:15 phoudoin]:
+ &gt; In r33202 I fix two major DeviceWatcher.cpp issues. I add an extra check
+ to enforce that a valid path for a device should be a file, not a
+ directory.
+ This doesn't work, because '/dev/midi/usb/0' is not recognized as a file!
+ In my variant, I was just checking the Leaf of the full path against the
+ 'name' in the message. However...:
+ &gt; I don't understand how a duplicate path could now be published twice, as
+ I check against the known path -&gt; device's endpoints map.
+ This probably avoids the dual entry anyway (you weren't doing the check in
+ r33118 which is what I was looking at).  I haven't got to check that yet.
+
+ Once I took out the 'IsFile' check, which prevented any port being found,
+ _AddDevice seems to work.  (The extra thread has prevented the lockups.)
+
+ However, _RemoveDevice just hangs, because the destructor for
+ MidiPortProducer just hangs at the wait_for_thread().  As a result I still
+ get to KDL when I quit midi_server.
+
+ I now have to find out why the thread isn't quitting, unless you have an
+ immediate solution.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4053#comment:16">http://dev.haiku-os.org/ticket/4053#comment:16</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="021881.html">[Haiku-bugs] [Haiku] #4629: request: meta-search tool for the various mailing lists
+</A></li>
+	<LI>Next message: <A HREF="021885.html">[Haiku-bugs] [Haiku] #4630: Mouse messaging via VMWare's VNC server do not get handled in Haiku events properly...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21883">[ date ]</a>
+              <a href="thread.html#21883">[ thread ]</a>
+              <a href="subject.html#21883">[ subject ]</a>
+              <a href="author.html#21883">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

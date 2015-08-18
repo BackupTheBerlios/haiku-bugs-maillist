@@ -1,0 +1,186 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2661: bfs : 1397 : Name in use.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232661%3A%20bfs%20%3A%201397%20%3A%20Name%20in%20use.&In-Reply-To=%3C047.5d24b76428802752ab2dfe226bafb137%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010419.html">
+   <LINK REL="Next"  HREF="010421.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2661: bfs : 1397 : Name in use.</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232661%3A%20bfs%20%3A%201397%20%3A%20Name%20in%20use.&In-Reply-To=%3C047.5d24b76428802752ab2dfe226bafb137%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2661: bfs : 1397 : Name in use.">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Sep 19 17:23:24 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010419.html">[Haiku-bugs] [Haiku] #2305: [Preferences::Time] crashes on	startup
+</A></li>
+        <LI>Next message: <A HREF="010421.html">[Haiku-bugs] [Haiku] #1874: VIA Rhine-II not working
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10420">[ date ]</a>
+              <a href="thread.html#10420">[ thread ]</a>
+              <a href="subject.html#10420">[ subject ]</a>
+              <a href="author.html#10420">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2661: bfs : 1397 : Name in use.
+-------------------------------+--------------------------------------------
+  Reporter:  bga               |       Owner:  axeld         
+      Type:  bug               |      Status:  new           
+  Priority:  normal            |   Milestone:  R1            
+ Component:  File Systems/BFS  |     Version:  R1 development
+Resolution:                    |   Blockedby:                
+  Platform:  All               |    Blocking:                
+-------------------------------+--------------------------------------------
+
+Comment(by anevilyak):
+
+ Assuming you meant 8874, that yields:
+
+ {{{
+ Inode at block 8874:
+ -----------------------------------------
+ inode &quot;(null)&quot;:
+   magic1             = 3bbe0ad9 (;...) valid
+   inode_num          = (0, 8874, 1)
+   uid                = 0
+   gid                = 0
+   mode               = 4100040000 (octal)
+   flags              = 00000001
+   create_time        = Fri Aug 29 19:22:08 2008
+   last_modified_time = Fri Aug 29 19:22:08 2008
+   parent             = (0, 8841, 1)
+   attributes         = (0, 0, 0)
+   type               = 1129534546
+   inode_size         = 2048
+   etc                = 00000000
+   short_symlink      = -
+ data_stream:
+   direct[00]                = (0, 8875, 32)
+   direct[01]                = (0, 8973, 32)
+   direct[02]                = (0, 9069, 32)
+   direct[03]                = (0, 9165, 32)
+   direct[04]                = (0, 9229, 32)
+   direct[05]                = (0, 9325, 32)
+   direct[06]                = (0, 9389, 32)
+   direct[07]                = (0, 9453, 32)
+   direct[08]                = (0, 9549, 32)
+   direct[09]                = (0, 9613, 32)
+   direct[10]                = (0, 9709, 32)
+   direct[11]                = (0, 9805, 32)
+   max_direct_range          = 786432
+   indirect                  = (0, 9933, 4)
+   max_indirect_range        = 5177344
+   max_double_indirect_range = 0
+   size                      = 5136384
+   --
+ indirect stream:
+   indirect[00]              = (0, 9901, 32)
+   indirect[01]              = (0, 10001, 32)
+   indirect[02]              = (0, 10069, 32)
+   indirect[03]              = (0, 10165, 32)
+   indirect[04]              = (0, 10261, 32)
+   indirect[05]              = (0, 10329, 32)
+   indirect[06]              = (0, 10425, 32)
+   indirect[07]              = (0, 10521, 32)
+   indirect[08]              = (0, 10585, 32)
+   indirect[09]              = (0, 10681, 32)
+   indirect[10]              = (0, 10809, 32)
+   indirect[11]              = (0, 10905, 32)
+   indirect[12]              = (0, 10969, 32)
+   indirect[13]              = (0, 11033, 32)
+   indirect[14]              = (0, 11129, 32)
+   indirect[15]              = (0, 11225, 32)
+   indirect[16]              = (0, 11321, 32)
+   indirect[17]              = (0, 11417, 32)
+   indirect[18]              = (0, 11545, 32)
+   indirect[19]              = (0, 11673, 32)
+   indirect[20]              = (0, 11769, 32)
+   indirect[21]              = (0, 11865, 32)
+   indirect[22]              = (0, 11961, 32)
+   indirect[23]              = (0, 12057, 32)
+   indirect[24]              = (0, 12185, 32)
+   indirect[25]              = (0, 12345, 32)
+   indirect[26]              = (0, 12441, 32)
+   indirect[27]              = (0, 12537, 32)
+   indirect[28]              = (0, 12665, 32)
+   indirect[29]              = (0, 12729, 32)
+   indirect[30]              = (0, 12793, 32)
+   indirect[31]              = (0, 12889, 32)
+   indirect[32]              = (0, 12953, 32)
+   indirect[33]              = (0, 13049, 32)
+   indirect[34]              = (0, 13145, 32)
+   indirect[35]              = (0, 13241, 64)
+   indirect[36]              = (0, 13369, 32)
+   indirect[37]              = (0, 13465, 32)
+   indirect[38]              = (0, 13561, 32)
+   indirect[39]              = (0, 13657, 32)
+   indirect[40]              = (0, 13753, 32)
+   indirect[41]              = (0, 13849, 32)
+   indirect[42]              = (0, 13913, 32)
+   indirect[43]              = (0, 14009, 32)
+   indirect[44]              = (0, 14105, 32)
+   indirect[45]              = (0, 14201, 32)
+   indirect[46]              = (0, 14297, 32)
+   indirect[47]              = (0, 14393, 32)
+   indirect[48]              = (0, 14457, 32)
+   indirect[49]              = (0, 14521, 32)
+   indirect[50]              = (0, 14617, 32)
+   indirect[51]              = (0, 14681, 32)
+   indirect[52]              = (0, 14777, 32)
+   indirect[53]              = (0, 14873, 32)
+   indirect[54]              = (0, 14937, 32)
+   indirect[55]              = (0, 15033, 32)
+   indirect[56]              = (0, 15129, 32)
+   indirect[57]              = (0, 15225, 32)
+   indirect[58]              = (0, 15321, 32)
+   indirect[59]              = (0, 15417, 32)
+   indirect[60]              = (0, 15513, 32)
+   indirect[61]              = (0, 15674, 32)
+   indirect[62]              = (0, 15738, 32)
+   indirect[63]              = (0, 15869, 32)
+   indirect[64]              = (0, 16029, 32)
+   indirect[65]              = (0, 16093, 32)
+ small data section (max. 1816 bytes):
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2661#comment:10">http://dev.haiku-os.org/ticket/2661#comment:10</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010419.html">[Haiku-bugs] [Haiku] #2305: [Preferences::Time] crashes on	startup
+</A></li>
+	<LI>Next message: <A HREF="010421.html">[Haiku-bugs] [Haiku] #1874: VIA Rhine-II not working
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10420">[ date ]</a>
+              <a href="thread.html#10420">[ thread ]</a>
+              <a href="subject.html#10420">[ subject ]</a>
+              <a href="author.html#10420">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

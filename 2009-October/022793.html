@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4790: PANIC on USB boot with CS5536 chipset
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234790%3A%20PANIC%20on%20USB%20boot%20with%20CS5536%20chipset&In-Reply-To=%3C042.121f2100cb59f4dab62c54588a78f255%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="022790.html">
+   <LINK REL="Next"  HREF="022796.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4790: PANIC on USB boot with CS5536 chipset</H1>
+    <B>delroth</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234790%3A%20PANIC%20on%20USB%20boot%20with%20CS5536%20chipset&In-Reply-To=%3C042.121f2100cb59f4dab62c54588a78f255%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4790: PANIC on USB boot with CS5536 chipset">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Oct 15 14:14:10 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="022790.html">[Haiku-bugs] [Haiku] #4617: Tracker freezes while on desktop are +10 files and icons are set to big
+</A></li>
+        <LI>Next message: <A HREF="022796.html">[Haiku-bugs] [Haiku] #4790: PANIC on USB boot with CS5536	chipset
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22793">[ date ]</a>
+              <a href="thread.html#22793">[ thread ]</a>
+              <a href="subject.html#22793">[ subject ]</a>
+              <a href="author.html#22793">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4790: PANIC on USB boot with CS5536 chipset
+---------------------------+------------------------------------------------
+ Reporter:  delroth        |       Owner:  axeld    
+     Type:  bug            |      Status:  new      
+ Priority:  normal         |   Milestone:  R1       
+Component:  System/Kernel  |     Version:  R1/alpha1
+Blockedby:                 |    Platform:  x86      
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+ I get a kernel panic (unable to find boot partitions) when booting Haiku
+ from my USB drive (with a sufficient size, that is not the source of the
+ problem).
+
+ From the on-screen debugging output (no camera, no serial output, so I
+ can't provide screenshots or whatever else) :
+ {{{
+ usb uhci: no defices found
+ usb ohci -1: iospace offset: 0xeff00000
+ usb ohci -1: smm is in control of the host controller
+ usb ohci -1: ownership change successful
+ usb ohci -1: successfully started the controller
+ usb ehci -1: claiming ownership of the host controller
+ usb ehci -1: successfully took ownership of the host controller
+ usb ehci -1: successfully started the controller
+ usb hub 2: port 1: device removed
+ usb hub 2: port 2: device removed
+ usb hub 7: port 1: new device connected
+ usb error control pipe 11: timeout waiting for queued request to complete
+ usb error control pipe 11: timeout waiting for queued request to complete
+ usb error ehci 1: qtd (0x02522580) error: 0x00B80248
+ usb error control pipe 11: timeout waiting for queued request to complete
+ usb error ehci 1: qtd (0x02522780) error: 0x00B80240
+ usb error ehci 1: error while setting device address
+ }}}
+
+ After this point, the kernel searches for the boot partition and
+ (obviously) do not find anything.
+
+ Reproduced the problem on both R1/A1 and last SVN.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4790">http://dev.haiku-os.org/ticket/4790</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="022790.html">[Haiku-bugs] [Haiku] #4617: Tracker freezes while on desktop are +10 files and icons are set to big
+</A></li>
+	<LI>Next message: <A HREF="022796.html">[Haiku-bugs] [Haiku] #4790: PANIC on USB boot with CS5536	chipset
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22793">[ date ]</a>
+              <a href="thread.html#22793">[ thread ]</a>
+              <a href="subject.html#22793">[ subject ]</a>
+              <a href="author.html#22793">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

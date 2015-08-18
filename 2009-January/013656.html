@@ -1,0 +1,2422 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3218: can't reach bootmenu
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-January/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233218%3A%20can%27t%20reach%20bootmenu&In-Reply-To=%3C048.cb59e085c14e410e29c0296011cf72b4%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="013697.html">
+   <LINK REL="Next"  HREF="013661.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3218: can't reach bootmenu</H1>
+    <B>peat</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233218%3A%20can%27t%20reach%20bootmenu&In-Reply-To=%3C048.cb59e085c14e410e29c0296011cf72b4%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3218: can't reach bootmenu">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Jan 13 16:28:46 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="013697.html">[Haiku-bugs] [Haiku] #3297: PackageInstaller fails to open/install the QEMU package from beBits
+</A></li>
+        <LI>Next message: <A HREF="013661.html">[Haiku-bugs] [Haiku] #2975: Tracker, some items not properly redrawn in list mode
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13656">[ date ]</a>
+              <a href="thread.html#13656">[ thread ]</a>
+              <a href="subject.html#13656">[ subject ]</a>
+              <a href="author.html#13656">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3218: can't reach bootmenu
+--------------------------------+-------------------------------------------
+ Reporter:  peat                |       Owner:  axeld         
+     Type:  bug                 |      Status:  new           
+ Priority:  high                |   Milestone:  R1            
+Component:  System/Boot Loader  |     Version:  R1 development
+Blockedby:                      |    Platform:  All           
+ Blocking:                      |  
+--------------------------------+-------------------------------------------
+
+Comment(by peat):
+
+ Debug Output follows:
+
+
+ {{{
+ APM version 1.2 available, flags 3.
+ smp: using ACPI to detect MP configuration
+ smp: local apic address is 0xfee00000
+ smp: found local APIC with id 0
+ smp: found io APIC with id 1 and address 0xfec00000
+ VESA version = 2.0
+ OEM string: Bochs/Plex86 VBE(C) 2003
+ <A HREF="http://savannah.nongnu.org/projects/vgabios/">http://savannah.nongnu.org/projects/vgabios/</A>
+   100: 640 x 400 x 8 (a = 155, mem = 4, phy = e0000000, p = 1, b = 4)
+   101: 640 x 480 x 8 (a = 155, mem = 4, phy = e0000000, p = 1, b = 5)
+   102: 800 x 600 x 4 (a = 155, mem = 3, phy = e0000000, p = 4, b = 1)
+   103: 800 x 600 x 8 (a = 155, mem = 4, phy = e0000000, p = 1, b = 8)
+   105: 1024 x 768 x 8 (a = 155, mem = 4, phy = e0000000, p = 1, b = 12)
+   107: 1280 x 1024 x 8 (a = 155, mem = 4, phy = e0000000, p = 1, b = 20)
+   10d: 320 x 200 x 15 (a = 155, mem = 6, phy = e0000000, p = 1, b = 2)
+   10e: 320 x 200 x 16 (a = 155, mem = 6, phy = e0000000, p = 1, b = 2)
+   10f: 320 x 200 x 24 (a = 155, mem = 6, phy = e0000000, p = 1, b = 3)
+   110: 640 x 480 x 15 (a = 155, mem = 6, phy = e0000000, p = 1, b = 10)
+   111: 640 x 480 x 16 (a = 155, mem = 6, phy = e0000000, p = 1, b = 10)
+   112: 640 x 480 x 24 (a = 155, mem = 6, phy = e0000000, p = 1, b = 15)
+   113: 800 x 600 x 15 (a = 155, mem = 6, phy = e0000000, p = 1, b = 15)
+   114: 800 x 600 x 16 (a = 155, mem = 6, phy = e0000000, p = 1, b = 15)
+   115: 800 x 600 x 24 (a = 155, mem = 6, phy = e0000000, p = 1, b = 22)
+   116: 1024 x 768 x 15 (a = 155, mem = 6, phy = e0000000, p = 1, b = 24)
+   117: 1024 x 768 x 16 (a = 155, mem = 6, phy = e0000000, p = 1, b = 24)
+   118: 1024 x 768 x 24 (a = 155, mem = 6, phy = e0000000, p = 1, b = 36)
+   119: 1280 x 1024 x 15 (a = 155, mem = 6, phy = e0000000, p = 1, b = 40)
+   11a: 1280 x 1024 x 16 (a = 155, mem = 6, phy = e0000000, p = 1, b = 40)
+   11b: 1280 x 1024 x 24 (a = 155, mem = 6, phy = e0000000, p = 1, b = 60)
+   11c: 1600 x 1200 x 8 (a = 155, mem = 4, phy = e0000000, p = 1, b = 30)
+   11d: 1600 x 1200 x 15 (a = 155, mem = 6, phy = e0000000, p = 1, b = 59)
+   11e: 1600 x 1200 x 16 (a = 155, mem = 6, phy = e0000000, p = 1, b = 59)
+   11f: 1600 x 1200 x 24 (a = 155, mem = 6, phy = e0000000, p = 1, b = 88)
+   140: 320 x 200 x 32 (a = 155, mem = 6, phy = e0000000, p = 1, b = 4)
+   141: 640 x 400 x 32 (a = 155, mem = 6, phy = e0000000, p = 1, b = 16)
+   142: 640 x 480 x 32 (a = 155, mem = 6, phy = e0000000, p = 1, b = 19)
+   143: 800 x 600 x 32 (a = 155, mem = 6, phy = e0000000, p = 1, b = 30)
+   144: 1024 x 768 x 32 (a = 155, mem = 6, phy = e0000000, p = 1, b = 48)
+   145: 1280 x 1024 x 32 (a = 155, mem = 6, phy = e0000000, p = 1, b = 80)
+   146: 320 x 200 x 8 (a = 155, mem = 4, phy = e0000000, p = 1, b = 1)
+   147: 1600 x 1200 x 32 (a = 155, mem = 6, phy = e0000000, p = 1, b = 118)
+   148: 1152 x 864 x 8 (a = 155, mem = 4, phy = e0000000, p = 1, b = 16)
+   149: 1152 x 864 x 15 (a = 155, mem = 6, phy = e0000000, p = 1, b = 31)
+   14a: 1152 x 864 x 16 (a = 155, mem = 6, phy = e0000000, p = 1, b = 31)
+   14b: 1152 x 864 x 24 (a = 155, mem = 6, phy = e0000000, p = 1, b = 46)
+   14c: 1152 x 864 x 32 (a = 155, mem = 6, phy = e0000000, p = 1, b = 61)
+ VESA compatible graphics!
+ Welcome to the Haiku boot loader!
+ legacy base address 1f0
+ ATA device, master
+ number of drives: 1
+ add_partitions_for(0x001053a8, mountFS = no)
+ add_partitions_for(fd = 0, mountFS = no)
+ 0x001054fc Partition::Partition
+ 0x001054fc Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+   priority: 810
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00105650 Partition::Partition
+ 0x001054fc Partition::AddChild 0x00105650
+ 0x00105650 Partition::SetParent 0x001054fc
+ new child partition!
+ 0x00105700 Partition::Partition
+ 0x001054fc Partition::AddChild 0x00105700
+ 0x00105700 Partition::SetParent 0x001054fc
+ new child partition!
+ 0x001057bc Partition::Partition
+ 0x001054fc Partition::AddChild 0x001057bc
+ 0x001057bc Partition::SetParent 0x001054fc
+ new child partition!
+ 0x001054fc Partition::Scan(): scan child 0x00105650 (start = 32256, size =
+ 2130315264, parent = 0x001054fc)!
+ 0x00105650 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ 0x001054fc Partition::Scan(): scan child 0x00105700 (start = 2130347520,
+ size = 2163248640, parent = 0x001054fc)!
+ 0x00105700 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x001054fc Partition::Scan(): scan child 0x001057bc (start = 4293596160,
+ size = 65020838400, parent = 0x001054fc)!
+ 0x001057bc Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+   priority: 949
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00105ca4 Partition::Partition
+ 0x001057bc Partition::AddChild 0x00105ca4
+ 0x00105ca4 Partition::SetParent 0x001057bc
+ new child partition!
+ 0x00105d6c Partition::Partition
+ 0x001057bc Partition::AddChild 0x00105d6c
+ 0x00105d6c Partition::SetParent 0x001057bc
+ new child partition!
+ 0x00105e34 Partition::Partition
+ 0x001057bc Partition::AddChild 0x00105e34
+ 0x00105e34 Partition::SetParent 0x001057bc
+ new child partition!
+ 0x00105efc Partition::Partition
+ 0x001057bc Partition::AddChild 0x00105efc
+ 0x00105efc Partition::SetParent 0x001057bc
+ new child partition!
+ 0x00105fb8 Partition::Partition
+ 0x001057bc Partition::AddChild 0x00105fb8
+ 0x00105fb8 Partition::SetParent 0x001057bc
+ new child partition!
+ 0x00106074 Partition::Partition
+ 0x001057bc Partition::AddChild 0x00106074
+ 0x00106074 Partition::SetParent 0x001057bc
+ new child partition!
+ 0x0010613c Partition::Partition
+ 0x001057bc Partition::AddChild 0x0010613c
+ 0x0010613c Partition::SetParent 0x001057bc
+ new child partition!
+ 0x001061dc Partition::Partition
+ 0x001057bc Partition::AddChild 0x001061dc
+ 0x001061dc Partition::SetParent 0x001057bc
+ new child partition!
+ 0x00106290 Partition::Partition
+ 0x001057bc Partition::AddChild 0x00106290
+ 0x00106290 Partition::SetParent 0x001057bc
+ new child partition!
+ 0x0010634c Partition::Partition
+ 0x001057bc Partition::AddChild 0x0010634c
+ 0x0010634c Partition::SetParent 0x001057bc
+ new child partition!
+ 0x00106400 Partition::Partition
+ 0x001057bc Partition::AddChild 0x00106400
+ 0x00106400 Partition::SetParent 0x001057bc
+ new child partition!
+ 0x001064bc Partition::Partition
+ 0x001057bc Partition::AddChild 0x001064bc
+ 0x001064bc Partition::SetParent 0x001057bc
+ new child partition!
+ 0x00106570 Partition::Partition
+ 0x001057bc Partition::AddChild 0x00106570
+ 0x00106570 Partition::SetParent 0x001057bc
+ new child partition!
+ 0x00106624 Partition::Partition
+ 0x001057bc Partition::AddChild 0x00106624
+ 0x00106624 Partition::SetParent 0x001057bc
+ new child partition!
+ 0x001066e0 Partition::Partition
+ 0x001057bc Partition::AddChild 0x001066e0
+ 0x001066e0 Partition::SetParent 0x001057bc
+ new child partition!
+ 0x00106794 Partition::Partition
+ 0x001057bc Partition::AddChild 0x00106794
+ 0x00106794 Partition::SetParent 0x001057bc
+ new child partition!
+ 0x0010685c Partition::Partition
+ 0x001057bc Partition::AddChild 0x0010685c
+ 0x0010685c Partition::SetParent 0x001057bc
+ new child partition!
+ 0x00106910 Partition::Partition
+ 0x001057bc Partition::AddChild 0x00106910
+ 0x00106910 Partition::SetParent 0x001057bc
+ new child partition!
+ 0x001069cc Partition::Partition
+ 0x001057bc Partition::AddChild 0x001069cc
+ 0x001069cc Partition::SetParent 0x001057bc
+ new child partition!
+ 0x001057bc Partition::Scan(): scan child 0x00105ca4 (start = 4293628416,
+ size = 2146765824, parent = 0x001057bc)!
+ 0x00105ca4 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x001057bc Partition::Scan(): scan child 0x00105d6c (start = 6440426496,
+ size = 3216052224, parent = 0x001057bc)!
+ 0x00105d6c Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x001057bc Partition::Scan(): scan child 0x00105e34 (start = 9656510976,
+ size = 3216052224, parent = 0x001057bc)!
+ 0x00105e34 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x001057bc Partition::Scan(): scan child 0x00105efc (start = 12872595456,
+ size = 1069254144, parent = 0x001057bc)!
+ 0x00105efc Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x001057bc Partition::Scan(): scan child 0x00105fb8 (start = 13941881856,
+ size = 534610944, parent = 0x001057bc)!
+ 0x00105fb8 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x001057bc Partition::Scan(): scan child 0x00106074 (start = 14476525056,
+ size = 10733958144, parent = 0x001057bc)!
+ 0x00106074 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x001057bc Partition::Scan(): scan child 0x0010613c (start = 25210515456,
+ size = 8587160064, parent = 0x001057bc)!
+ 0x0010613c Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x001057bc Partition::Scan(): scan child 0x001061dc (start = 33797707776,
+ size = 8587160064, parent = 0x001057bc)!
+ 0x001061dc Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x001057bc Partition::Scan(): scan child 0x00106290 (start = 42384900096,
+ size = 526385664, parent = 0x001057bc)!
+ 0x00106290 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x001057bc Partition::Scan(): scan child 0x0010634c (start = 42911318016,
+ size = 2689634304, parent = 0x001057bc)!
+ 0x0010634c Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x001057bc Partition::Scan(): scan child 0x00106400 (start = 45600984576,
+ size = 1061028864, parent = 0x001057bc)!
+ 0x00106400 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x001057bc Partition::Scan(): scan child 0x001064bc (start = 46662045696,
+ size = 2154991104, parent = 0x001057bc)!
+ 0x001064bc Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x001057bc Partition::Scan(): scan child 0x00106570 (start = 48817069056,
+ size = 608638464, parent = 0x001057bc)!
+ 0x00106570 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x001057bc Partition::Scan(): scan child 0x00106624 (start = 49425739776,
+ size = 1077479424, parent = 0x001057bc)!
+ 0x00106624 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00108f04 Partition::Partition
+ 0x00106624 Partition::AddChild 0x00108f04
+ 0x00108f04 Partition::SetParent 0x00106624
+ new child partition!
+ 0x00106624 Partition::Scan(): scan child 0x00108f04 (start = 49427567616,
+ size = 1067458560, parent = 0x00106624)!
+ 0x00108f04 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x001057bc Partition::Scan(): scan child 0x001066e0 (start = 50503251456,
+ size = 3758920704, parent = 0x001057bc)!
+ 0x001066e0 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x001057bc Partition::Scan(): scan child 0x00106794 (start = 54262204416,
+ size = 2154991104, parent = 0x001057bc)!
+ 0x00106794 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x001057bc Partition::Scan(): scan child 0x0010685c (start = 56417227776,
+ size = 8595385344, parent = 0x001057bc)!
+ 0x0010685c Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x001057bc Partition::Scan(): scan child 0x00106910 (start = 65012645376,
+ size = 2154991104, parent = 0x001057bc)!
+ 0x00106910 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x001057bc Partition::Scan(): scan child 0x001069cc (start = 67167668736,
+ size = 2146765824, parent = 0x001057bc)!
+ 0x001069cc Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00109bdc Partition::Partition
+ 0x001069cc Partition::AddChild 0x00109bdc
+ 0x00109bdc Partition::SetParent 0x001069cc
+ new child partition!
+ 0x001069cc Partition::Scan(): scan child 0x00109bdc (start = 67167668736,
+ size = 2145884160, parent = 0x001069cc)!
+ 0x00109bdc Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00109c60 Partition::Partition
+ 0x00109bdc Partition::AddChild 0x00109c60
+ 0x00109c60 Partition::SetParent 0x00109bdc
+ new child partition!
+ 0x00109bdc Partition::Scan(): scan child 0x00109c60 (start = 67167668736,
+ size = 2145884160, parent = 0x00109bdc)!
+ 0x00109c60 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00109ce4 Partition::Partition
+ 0x00109c60 Partition::AddChild 0x00109ce4
+ 0x00109ce4 Partition::SetParent 0x00109c60
+ new child partition!
+ 0x00109c60 Partition::Scan(): scan child 0x00109ce4 (start = 67167668736,
+ size = 2145884160, parent = 0x00109c60)!
+ 0x00109ce4 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00109d68 Partition::Partition
+ 0x00109ce4 Partition::AddChild 0x00109d68
+ 0x00109d68 Partition::SetParent 0x00109ce4
+ new child partition!
+ 0x00109ce4 Partition::Scan(): scan child 0x00109d68 (start = 67167668736,
+ size = 2145884160, parent = 0x00109ce4)!
+ 0x00109d68 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00109af0 Partition::Partition
+ 0x00109d68 Partition::AddChild 0x00109af0
+ 0x00109af0 Partition::SetParent 0x00109d68
+ new child partition!
+ 0x00109d68 Partition::Scan(): scan child 0x00109af0 (start = 67167668736,
+ size = 2145884160, parent = 0x00109d68)!
+ 0x00109af0 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00109ef0 Partition::Partition
+ 0x00109af0 Partition::AddChild 0x00109ef0
+ 0x00109ef0 Partition::SetParent 0x00109af0
+ new child partition!
+ 0x00109af0 Partition::Scan(): scan child 0x00109ef0 (start = 67167668736,
+ size = 2145884160, parent = 0x00109af0)!
+ 0x00109ef0 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00109f74 Partition::Partition
+ 0x00109ef0 Partition::AddChild 0x00109f74
+ 0x00109f74 Partition::SetParent 0x00109ef0
+ new child partition!
+ 0x00109ef0 Partition::Scan(): scan child 0x00109f74 (start = 67167668736,
+ size = 2145884160, parent = 0x00109ef0)!
+ 0x00109f74 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00109ff8 Partition::Partition
+ 0x00109f74 Partition::AddChild 0x00109ff8
+ 0x00109ff8 Partition::SetParent 0x00109f74
+ new child partition!
+ 0x00109f74 Partition::Scan(): scan child 0x00109ff8 (start = 67167668736,
+ size = 2145884160, parent = 0x00109f74)!
+ 0x00109ff8 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010a07c Partition::Partition
+ 0x00109ff8 Partition::AddChild 0x0010a07c
+ 0x0010a07c Partition::SetParent 0x00109ff8
+ new child partition!
+ 0x00109ff8 Partition::Scan(): scan child 0x0010a07c (start = 67167668736,
+ size = 2145884160, parent = 0x00109ff8)!
+ 0x0010a07c Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00109e04 Partition::Partition
+ 0x0010a07c Partition::AddChild 0x00109e04
+ 0x00109e04 Partition::SetParent 0x0010a07c
+ new child partition!
+ 0x0010a07c Partition::Scan(): scan child 0x00109e04 (start = 67167668736,
+ size = 2145884160, parent = 0x0010a07c)!
+ 0x00109e04 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010a204 Partition::Partition
+ 0x00109e04 Partition::AddChild 0x0010a204
+ 0x0010a204 Partition::SetParent 0x00109e04
+ new child partition!
+ 0x00109e04 Partition::Scan(): scan child 0x0010a204 (start = 67167668736,
+ size = 2145884160, parent = 0x00109e04)!
+ 0x0010a204 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010a288 Partition::Partition
+ 0x0010a204 Partition::AddChild 0x0010a288
+ 0x0010a288 Partition::SetParent 0x0010a204
+ new child partition!
+ 0x0010a204 Partition::Scan(): scan child 0x0010a288 (start = 67167668736,
+ size = 2145884160, parent = 0x0010a204)!
+ 0x0010a288 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010a30c Partition::Partition
+ 0x0010a288 Partition::AddChild 0x0010a30c
+ 0x0010a30c Partition::SetParent 0x0010a288
+ new child partition!
+ 0x0010a288 Partition::Scan(): scan child 0x0010a30c (start = 67167668736,
+ size = 2145884160, parent = 0x0010a288)!
+ 0x0010a30c Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010a390 Partition::Partition
+ 0x0010a30c Partition::AddChild 0x0010a390
+ 0x0010a390 Partition::SetParent 0x0010a30c
+ new child partition!
+ 0x0010a30c Partition::Scan(): scan child 0x0010a390 (start = 67167668736,
+ size = 2145884160, parent = 0x0010a30c)!
+ 0x0010a390 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010a118 Partition::Partition
+ 0x0010a390 Partition::AddChild 0x0010a118
+ 0x0010a118 Partition::SetParent 0x0010a390
+ new child partition!
+ 0x0010a390 Partition::Scan(): scan child 0x0010a118 (start = 67167668736,
+ size = 2145884160, parent = 0x0010a390)!
+ 0x0010a118 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010a518 Partition::Partition
+ 0x0010a118 Partition::AddChild 0x0010a518
+ 0x0010a518 Partition::SetParent 0x0010a118
+ new child partition!
+ 0x0010a118 Partition::Scan(): scan child 0x0010a518 (start = 67167668736,
+ size = 2145884160, parent = 0x0010a118)!
+ 0x0010a518 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010a59c Partition::Partition
+ 0x0010a518 Partition::AddChild 0x0010a59c
+ 0x0010a59c Partition::SetParent 0x0010a518
+ new child partition!
+ 0x0010a518 Partition::Scan(): scan child 0x0010a59c (start = 67167668736,
+ size = 2145884160, parent = 0x0010a518)!
+ 0x0010a59c Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010a620 Partition::Partition
+ 0x0010a59c Partition::AddChild 0x0010a620
+ 0x0010a620 Partition::SetParent 0x0010a59c
+ new child partition!
+ 0x0010a59c Partition::Scan(): scan child 0x0010a620 (start = 67167668736,
+ size = 2145884160, parent = 0x0010a59c)!
+ 0x0010a620 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010a6a4 Partition::Partition
+ 0x0010a620 Partition::AddChild 0x0010a6a4
+ 0x0010a6a4 Partition::SetParent 0x0010a620
+ new child partition!
+ 0x0010a620 Partition::Scan(): scan child 0x0010a6a4 (start = 67167668736,
+ size = 2145884160, parent = 0x0010a620)!
+ 0x0010a6a4 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010a42c Partition::Partition
+ 0x0010a6a4 Partition::AddChild 0x0010a42c
+ 0x0010a42c Partition::SetParent 0x0010a6a4
+ new child partition!
+ 0x0010a6a4 Partition::Scan(): scan child 0x0010a42c (start = 67167668736,
+ size = 2145884160, parent = 0x0010a6a4)!
+ 0x0010a42c Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010a82c Partition::Partition
+ 0x0010a42c Partition::AddChild 0x0010a82c
+ 0x0010a82c Partition::SetParent 0x0010a42c
+ new child partition!
+ 0x0010a42c Partition::Scan(): scan child 0x0010a82c (start = 67167668736,
+ size = 2145884160, parent = 0x0010a42c)!
+ 0x0010a82c Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010a8b0 Partition::Partition
+ 0x0010a82c Partition::AddChild 0x0010a8b0
+ 0x0010a8b0 Partition::SetParent 0x0010a82c
+ new child partition!
+ 0x0010a82c Partition::Scan(): scan child 0x0010a8b0 (start = 67167668736,
+ size = 2145884160, parent = 0x0010a82c)!
+ 0x0010a8b0 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010a934 Partition::Partition
+ 0x0010a8b0 Partition::AddChild 0x0010a934
+ 0x0010a934 Partition::SetParent 0x0010a8b0
+ new child partition!
+ 0x0010a8b0 Partition::Scan(): scan child 0x0010a934 (start = 67167668736,
+ size = 2145884160, parent = 0x0010a8b0)!
+ 0x0010a934 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010a9b8 Partition::Partition
+ 0x0010a934 Partition::AddChild 0x0010a9b8
+ 0x0010a9b8 Partition::SetParent 0x0010a934
+ new child partition!
+ 0x0010a934 Partition::Scan(): scan child 0x0010a9b8 (start = 67167668736,
+ size = 2145884160, parent = 0x0010a934)!
+ 0x0010a9b8 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010a740 Partition::Partition
+ 0x0010a9b8 Partition::AddChild 0x0010a740
+ 0x0010a740 Partition::SetParent 0x0010a9b8
+ new child partition!
+ 0x0010a9b8 Partition::Scan(): scan child 0x0010a740 (start = 67167668736,
+ size = 2145884160, parent = 0x0010a9b8)!
+ 0x0010a740 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010ab40 Partition::Partition
+ 0x0010a740 Partition::AddChild 0x0010ab40
+ 0x0010ab40 Partition::SetParent 0x0010a740
+ new child partition!
+ 0x0010a740 Partition::Scan(): scan child 0x0010ab40 (start = 67167668736,
+ size = 2145884160, parent = 0x0010a740)!
+ 0x0010ab40 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010abc4 Partition::Partition
+ 0x0010ab40 Partition::AddChild 0x0010abc4
+ 0x0010abc4 Partition::SetParent 0x0010ab40
+ new child partition!
+ 0x0010ab40 Partition::Scan(): scan child 0x0010abc4 (start = 67167668736,
+ size = 2145884160, parent = 0x0010ab40)!
+ 0x0010abc4 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010ac48 Partition::Partition
+ 0x0010abc4 Partition::AddChild 0x0010ac48
+ 0x0010ac48 Partition::SetParent 0x0010abc4
+ new child partition!
+ 0x0010abc4 Partition::Scan(): scan child 0x0010ac48 (start = 67167668736,
+ size = 2145884160, parent = 0x0010abc4)!
+ 0x0010ac48 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010accc Partition::Partition
+ 0x0010ac48 Partition::AddChild 0x0010accc
+ 0x0010accc Partition::SetParent 0x0010ac48
+ new child partition!
+ 0x0010ac48 Partition::Scan(): scan child 0x0010accc (start = 67167668736,
+ size = 2145884160, parent = 0x0010ac48)!
+ 0x0010accc Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010aa54 Partition::Partition
+ 0x0010accc Partition::AddChild 0x0010aa54
+ 0x0010aa54 Partition::SetParent 0x0010accc
+ new child partition!
+ 0x0010accc Partition::Scan(): scan child 0x0010aa54 (start = 67167668736,
+ size = 2145884160, parent = 0x0010accc)!
+ 0x0010aa54 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010ae54 Partition::Partition
+ 0x0010aa54 Partition::AddChild 0x0010ae54
+ 0x0010ae54 Partition::SetParent 0x0010aa54
+ new child partition!
+ 0x0010aa54 Partition::Scan(): scan child 0x0010ae54 (start = 67167668736,
+ size = 2145884160, parent = 0x0010aa54)!
+ 0x0010ae54 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010aed8 Partition::Partition
+ 0x0010ae54 Partition::AddChild 0x0010aed8
+ 0x0010aed8 Partition::SetParent 0x0010ae54
+ new child partition!
+ 0x0010ae54 Partition::Scan(): scan child 0x0010aed8 (start = 67167668736,
+ size = 2145884160, parent = 0x0010ae54)!
+ 0x0010aed8 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010af5c Partition::Partition
+ 0x0010aed8 Partition::AddChild 0x0010af5c
+ 0x0010af5c Partition::SetParent 0x0010aed8
+ new child partition!
+ 0x0010aed8 Partition::Scan(): scan child 0x0010af5c (start = 67167668736,
+ size = 2145884160, parent = 0x0010aed8)!
+ 0x0010af5c Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010afe0 Partition::Partition
+ 0x0010af5c Partition::AddChild 0x0010afe0
+ 0x0010afe0 Partition::SetParent 0x0010af5c
+ new child partition!
+ 0x0010af5c Partition::Scan(): scan child 0x0010afe0 (start = 67167668736,
+ size = 2145884160, parent = 0x0010af5c)!
+ 0x0010afe0 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010ad68 Partition::Partition
+ 0x0010afe0 Partition::AddChild 0x0010ad68
+ 0x0010ad68 Partition::SetParent 0x0010afe0
+ new child partition!
+ 0x0010afe0 Partition::Scan(): scan child 0x0010ad68 (start = 67167668736,
+ size = 2145884160, parent = 0x0010afe0)!
+ 0x0010ad68 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010b168 Partition::Partition
+ 0x0010ad68 Partition::AddChild 0x0010b168
+ 0x0010b168 Partition::SetParent 0x0010ad68
+ new child partition!
+ 0x0010ad68 Partition::Scan(): scan child 0x0010b168 (start = 67167668736,
+ size = 2145884160, parent = 0x0010ad68)!
+ 0x0010b168 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010b1ec Partition::Partition
+ 0x0010b168 Partition::AddChild 0x0010b1ec
+ 0x0010b1ec Partition::SetParent 0x0010b168
+ new child partition!
+ 0x0010b168 Partition::Scan(): scan child 0x0010b1ec (start = 67167668736,
+ size = 2145884160, parent = 0x0010b168)!
+ 0x0010b1ec Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010b270 Partition::Partition
+ 0x0010b1ec Partition::AddChild 0x0010b270
+ 0x0010b270 Partition::SetParent 0x0010b1ec
+ new child partition!
+ 0x0010b1ec Partition::Scan(): scan child 0x0010b270 (start = 67167668736,
+ size = 2145884160, parent = 0x0010b1ec)!
+ 0x0010b270 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010b2f4 Partition::Partition
+ 0x0010b270 Partition::AddChild 0x0010b2f4
+ 0x0010b2f4 Partition::SetParent 0x0010b270
+ new child partition!
+ 0x0010b270 Partition::Scan(): scan child 0x0010b2f4 (start = 67167668736,
+ size = 2145884160, parent = 0x0010b270)!
+ 0x0010b2f4 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010b07c Partition::Partition
+ 0x0010b2f4 Partition::AddChild 0x0010b07c
+ 0x0010b07c Partition::SetParent 0x0010b2f4
+ new child partition!
+ 0x0010b2f4 Partition::Scan(): scan child 0x0010b07c (start = 67167668736,
+ size = 2145884160, parent = 0x0010b2f4)!
+ 0x0010b07c Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010b47c Partition::Partition
+ 0x0010b07c Partition::AddChild 0x0010b47c
+ 0x0010b47c Partition::SetParent 0x0010b07c
+ new child partition!
+ 0x0010b07c Partition::Scan(): scan child 0x0010b47c (start = 67167668736,
+ size = 2145884160, parent = 0x0010b07c)!
+ 0x0010b47c Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010b500 Partition::Partition
+ 0x0010b47c Partition::AddChild 0x0010b500
+ 0x0010b500 Partition::SetParent 0x0010b47c
+ new child partition!
+ 0x0010b47c Partition::Scan(): scan child 0x0010b500 (start = 67167668736,
+ size = 2145884160, parent = 0x0010b47c)!
+ 0x0010b500 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010b584 Partition::Partition
+ 0x0010b500 Partition::AddChild 0x0010b584
+ 0x0010b584 Partition::SetParent 0x0010b500
+ new child partition!
+ 0x0010b500 Partition::Scan(): scan child 0x0010b584 (start = 67167668736,
+ size = 2145884160, parent = 0x0010b500)!
+ 0x0010b584 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010b608 Partition::Partition
+ 0x0010b584 Partition::AddChild 0x0010b608
+ 0x0010b608 Partition::SetParent 0x0010b584
+ new child partition!
+ 0x0010b584 Partition::Scan(): scan child 0x0010b608 (start = 67167668736,
+ size = 2145884160, parent = 0x0010b584)!
+ 0x0010b608 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010b390 Partition::Partition
+ 0x0010b608 Partition::AddChild 0x0010b390
+ 0x0010b390 Partition::SetParent 0x0010b608
+ new child partition!
+ 0x0010b608 Partition::Scan(): scan child 0x0010b390 (start = 67167668736,
+ size = 2145884160, parent = 0x0010b608)!
+ 0x0010b390 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010b790 Partition::Partition
+ 0x0010b390 Partition::AddChild 0x0010b790
+ 0x0010b790 Partition::SetParent 0x0010b390
+ new child partition!
+ 0x0010b390 Partition::Scan(): scan child 0x0010b790 (start = 67167668736,
+ size = 2145884160, parent = 0x0010b390)!
+ 0x0010b790 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010b814 Partition::Partition
+ 0x0010b790 Partition::AddChild 0x0010b814
+ 0x0010b814 Partition::SetParent 0x0010b790
+ new child partition!
+ 0x0010b790 Partition::Scan(): scan child 0x0010b814 (start = 67167668736,
+ size = 2145884160, parent = 0x0010b790)!
+ 0x0010b814 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010b898 Partition::Partition
+ 0x0010b814 Partition::AddChild 0x0010b898
+ 0x0010b898 Partition::SetParent 0x0010b814
+ new child partition!
+ 0x0010b814 Partition::Scan(): scan child 0x0010b898 (start = 67167668736,
+ size = 2145884160, parent = 0x0010b814)!
+ 0x0010b898 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010b91c Partition::Partition
+ 0x0010b898 Partition::AddChild 0x0010b91c
+ 0x0010b91c Partition::SetParent 0x0010b898
+ new child partition!
+ 0x0010b898 Partition::Scan(): scan child 0x0010b91c (start = 67167668736,
+ size = 2145884160, parent = 0x0010b898)!
+ 0x0010b91c Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010b6a4 Partition::Partition
+ 0x0010b91c Partition::AddChild 0x0010b6a4
+ 0x0010b6a4 Partition::SetParent 0x0010b91c
+ new child partition!
+ 0x0010b91c Partition::Scan(): scan child 0x0010b6a4 (start = 67167668736,
+ size = 2145884160, parent = 0x0010b91c)!
+ 0x0010b6a4 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010baa4 Partition::Partition
+ 0x0010b6a4 Partition::AddChild 0x0010baa4
+ 0x0010baa4 Partition::SetParent 0x0010b6a4
+ new child partition!
+ 0x0010b6a4 Partition::Scan(): scan child 0x0010baa4 (start = 67167668736,
+ size = 2145884160, parent = 0x0010b6a4)!
+ 0x0010baa4 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010bb28 Partition::Partition
+ 0x0010baa4 Partition::AddChild 0x0010bb28
+ 0x0010bb28 Partition::SetParent 0x0010baa4
+ new child partition!
+ 0x0010baa4 Partition::Scan(): scan child 0x0010bb28 (start = 67167668736,
+ size = 2145884160, parent = 0x0010baa4)!
+ 0x0010bb28 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010bbac Partition::Partition
+ 0x0010bb28 Partition::AddChild 0x0010bbac
+ 0x0010bbac Partition::SetParent 0x0010bb28
+ new child partition!
+ 0x0010bb28 Partition::Scan(): scan child 0x0010bbac (start = 67167668736,
+ size = 2145884160, parent = 0x0010bb28)!
+ 0x0010bbac Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010bc30 Partition::Partition
+ 0x0010bbac Partition::AddChild 0x0010bc30
+ 0x0010bc30 Partition::SetParent 0x0010bbac
+ new child partition!
+ 0x0010bbac Partition::Scan(): scan child 0x0010bc30 (start = 67167668736,
+ size = 2145884160, parent = 0x0010bbac)!
+ 0x0010bc30 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010b9b8 Partition::Partition
+ 0x0010bc30 Partition::AddChild 0x0010b9b8
+ 0x0010b9b8 Partition::SetParent 0x0010bc30
+ new child partition!
+ 0x0010bc30 Partition::Scan(): scan child 0x0010b9b8 (start = 67167668736,
+ size = 2145884160, parent = 0x0010bc30)!
+ 0x0010b9b8 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010bdb8 Partition::Partition
+ 0x0010b9b8 Partition::AddChild 0x0010bdb8
+ 0x0010bdb8 Partition::SetParent 0x0010b9b8
+ new child partition!
+ 0x0010b9b8 Partition::Scan(): scan child 0x0010bdb8 (start = 67167668736,
+ size = 2145884160, parent = 0x0010b9b8)!
+ 0x0010bdb8 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010be3c Partition::Partition
+ 0x0010bdb8 Partition::AddChild 0x0010be3c
+ 0x0010be3c Partition::SetParent 0x0010bdb8
+ new child partition!
+ 0x0010bdb8 Partition::Scan(): scan child 0x0010be3c (start = 67167668736,
+ size = 2145884160, parent = 0x0010bdb8)!
+ 0x0010be3c Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010bec0 Partition::Partition
+ 0x0010be3c Partition::AddChild 0x0010bec0
+ 0x0010bec0 Partition::SetParent 0x0010be3c
+ new child partition!
+ 0x0010be3c Partition::Scan(): scan child 0x0010bec0 (start = 67167668736,
+ size = 2145884160, parent = 0x0010be3c)!
+ 0x0010bec0 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010bf44 Partition::Partition
+ 0x0010bec0 Partition::AddChild 0x0010bf44
+ 0x0010bf44 Partition::SetParent 0x0010bec0
+ new child partition!
+ 0x0010bec0 Partition::Scan(): scan child 0x0010bf44 (start = 67167668736,
+ size = 2145884160, parent = 0x0010bec0)!
+ 0x0010bf44 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010bccc Partition::Partition
+ 0x0010bf44 Partition::AddChild 0x0010bccc
+ 0x0010bccc Partition::SetParent 0x0010bf44
+ new child partition!
+ 0x0010bf44 Partition::Scan(): scan child 0x0010bccc (start = 67167668736,
+ size = 2145884160, parent = 0x0010bf44)!
+ 0x0010bccc Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010c0cc Partition::Partition
+ 0x0010bccc Partition::AddChild 0x0010c0cc
+ 0x0010c0cc Partition::SetParent 0x0010bccc
+ new child partition!
+ 0x0010bccc Partition::Scan(): scan child 0x0010c0cc (start = 67167668736,
+ size = 2145884160, parent = 0x0010bccc)!
+ 0x0010c0cc Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ 0x001054fc Partition::~Partition
+ 0x00105650 Partition::SetParent 0x00000000
+ 0x00105700 Partition::SetParent 0x00000000
+ 0x001057bc Partition::SetParent 0x00000000
+ boot partition offset: 48817069056
+ 0x00106570 Partition::_Mount check for file_system: BFS Filesystem
+ 0x00105650 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+   priority: 500
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ 0x00105650 Partition::_Mount check for file_system: BFS Filesystem
+ 0x00105650 Partition::_Mount check for file_system: AmigaFFS Filesystem
+ 0x00105650 Partition::_Mount check for file_system: FAT32 Filesystem
+ 0x00105700 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00105700 Partition::_Mount check for file_system: BFS Filesystem
+ 0x00105700 Partition::_Mount check for file_system: AmigaFFS Filesystem
+ 0x00105700 Partition::_Mount check for file_system: FAT32 Filesystem
+ fatfs: cannot mount (bad superblock ?)
+ 0x00105700 Partition::_Mount check for file_system: TAR Filesystem
+ 0x00105700 Partition::~Partition
+ 0x00105ca4 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00105ca4 Partition::_Mount check for file_system: BFS Filesystem
+ 0x00105ca4 Partition::_Mount check for file_system: AmigaFFS Filesystem
+ 0x00105ca4 Partition::_Mount check for file_system: FAT32 Filesystem
+ fatfs: cannot mount (bad superblock ?)
+ 0x00105ca4 Partition::_Mount check for file_system: TAR Filesystem
+ 0x00105ca4 Partition::~Partition
+ 0x00105d6c Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00105d6c Partition::_Mount check for file_system: BFS Filesystem
+ 0x00105d6c Partition::_Mount check for file_system: AmigaFFS Filesystem
+ 0x00105d6c Partition::_Mount check for file_system: FAT32 Filesystem
+ fatfs: cannot mount (bad superblock ?)
+ 0x00105d6c Partition::_Mount check for file_system: TAR Filesystem
+ 0x00105d6c Partition::~Partition
+ 0x00105e34 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00105e34 Partition::_Mount check for file_system: BFS Filesystem
+ 0x00105e34 Partition::_Mount check for file_system: AmigaFFS Filesystem
+ 0x00105e34 Partition::_Mount check for file_system: FAT32 Filesystem
+ fatfs: cannot mount (bad superblock ?)
+ 0x00105e34 Partition::_Mount check for file_system: TAR Filesystem
+ 0x00105e34 Partition::~Partition
+ 0x00105efc Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00105efc Partition::_Mount check for file_system: BFS Filesystem
+ 0x00105efc Partition::_Mount check for file_system: AmigaFFS Filesystem
+ 0x00105efc Partition::_Mount check for file_system: FAT32 Filesystem
+ fatfs: cannot mount (bad superblock ?)
+ 0x00105efc Partition::_Mount check for file_system: TAR Filesystem
+ 0x00105efc Partition::~Partition
+ 0x00105fb8 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00105fb8 Partition::_Mount check for file_system: BFS Filesystem
+ 0x00105fb8 Partition::_Mount check for file_system: AmigaFFS Filesystem
+ 0x00105fb8 Partition::_Mount check for file_system: FAT32 Filesystem
+ fatfs: cannot mount (bad superblock ?)
+ 0x00105fb8 Partition::_Mount check for file_system: TAR Filesystem
+ 0x00105fb8 Partition::~Partition
+ 0x00106074 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00106074 Partition::_Mount check for file_system: BFS Filesystem
+ 0x00106074 Partition::_Mount check for file_system: AmigaFFS Filesystem
+ 0x00106074 Partition::_Mount check for file_system: FAT32 Filesystem
+ fatfs: cannot mount (bad superblock ?)
+ 0x00106074 Partition::_Mount check for file_system: TAR Filesystem
+ 0x00106074 Partition::~Partition
+ 0x0010613c Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010613c Partition::_Mount check for file_system: BFS Filesystem
+ 0x0010613c Partition::_Mount check for file_system: AmigaFFS Filesystem
+ 0x0010613c Partition::_Mount check for file_system: FAT32 Filesystem
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010613c Partition::_Mount check for file_system: TAR Filesystem
+ 0x0010613c Partition::~Partition
+ 0x001061dc Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x001061dc Partition::_Mount check for file_system: BFS Filesystem
+ 0x001061dc Partition::_Mount check for file_system: AmigaFFS Filesystem
+ 0x001061dc Partition::_Mount check for file_system: FAT32 Filesystem
+ fatfs: cannot mount (bad superblock ?)
+ 0x001061dc Partition::_Mount check for file_system: TAR Filesystem
+ 0x001061dc Partition::~Partition
+ 0x00106290 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00106290 Partition::_Mount check for file_system: BFS Filesystem
+ 0x00106290 Partition::_Mount check for file_system: AmigaFFS Filesystem
+ 0x00106290 Partition::_Mount check for file_system: FAT32 Filesystem
+ fatfs: cannot mount (bad superblock ?)
+ 0x00106290 Partition::_Mount check for file_system: TAR Filesystem
+ 0x00106290 Partition::~Partition
+ 0x0010634c Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010634c Partition::_Mount check for file_system: BFS Filesystem
+ 0x00106400 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00106400 Partition::_Mount check for file_system: BFS Filesystem
+ 0x00106400 Partition::_Mount check for file_system: AmigaFFS Filesystem
+ 0x00106400 Partition::_Mount check for file_system: FAT32 Filesystem
+ fatfs: cannot mount (bad superblock ?)
+ 0x00106400 Partition::_Mount check for file_system: TAR Filesystem
+ 0x00106400 Partition::~Partition
+ 0x001064bc Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x001064bc Partition::_Mount check for file_system: BFS Filesystem
+ 0x00108f04 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00108f04 Partition::_Mount check for file_system: BFS Filesystem
+ 0x00108f04 Partition::_Mount check for file_system: AmigaFFS Filesystem
+ 0x00108f04 Partition::_Mount check for file_system: FAT32 Filesystem
+ fatfs: cannot mount (bad superblock ?)
+ 0x00108f04 Partition::_Mount check for file_system: TAR Filesystem
+ 0x00108f04 Partition::~Partition
+ 0x00106624 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010613c Partition::Partition
+ 0x00106624 Partition::AddChild 0x0010613c
+ 0x0010613c Partition::SetParent 0x00106624
+ new child partition!
+ 0x00106624 Partition::Scan(): scan child 0x0010613c (start = 49427567616,
+ size = 1067458560, parent = 0x00106624)!
+ 0x0010613c Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010613c Partition::_Mount check for file_system: BFS Filesystem
+ 0x0010613c Partition::_Mount check for file_system: AmigaFFS Filesystem
+ 0x0010613c Partition::_Mount check for file_system: FAT32 Filesystem
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010613c Partition::_Mount check for file_system: TAR Filesystem
+ 0x0010613c Partition::~Partition
+ 0x001066e0 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x001066e0 Partition::_Mount check for file_system: BFS Filesystem
+ 0x00106794 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00106794 Partition::_Mount check for file_system: BFS Filesystem
+ 0x00106794 Partition::_Mount check for file_system: AmigaFFS Filesystem
+ 0x00106794 Partition::_Mount check for file_system: FAT32 Filesystem
+ fatfs: cannot mount (bad superblock ?)
+ 0x00106794 Partition::_Mount check for file_system: TAR Filesystem
+ 0x00106794 Partition::~Partition
+ 0x0010685c Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010685c Partition::_Mount check for file_system: BFS Filesystem
+ 0x0010685c Partition::_Mount check for file_system: AmigaFFS Filesystem
+ 0x0010685c Partition::_Mount check for file_system: FAT32 Filesystem
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010685c Partition::_Mount check for file_system: TAR Filesystem
+ 0x0010685c Partition::~Partition
+ 0x00106910 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00106910 Partition::_Mount check for file_system: BFS Filesystem
+ 0x00106910 Partition::_Mount check for file_system: AmigaFFS Filesystem
+ 0x00106910 Partition::_Mount check for file_system: FAT32 Filesystem
+ fatfs: cannot mount (bad superblock ?)
+ 0x00106910 Partition::_Mount check for file_system: TAR Filesystem
+ 0x00106910 Partition::~Partition
+ 0x0010c0cc Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00106400 Partition::Partition
+ 0x0010c0cc Partition::AddChild 0x00106400
+ 0x00106400 Partition::SetParent 0x0010c0cc
+ new child partition!
+ 0x0010c0cc Partition::Scan(): scan child 0x00106400 (start = 67167668736,
+ size = 2145884160, parent = 0x0010c0cc)!
+ 0x00106400 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00106074 Partition::Partition
+ 0x00106400 Partition::AddChild 0x00106074
+ 0x00106074 Partition::SetParent 0x00106400
+ new child partition!
+ 0x00106400 Partition::Scan(): scan child 0x00106074 (start = 67167668736,
+ size = 2145884160, parent = 0x00106400)!
+ 0x00106074 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00105e34 Partition::Partition
+ 0x00106074 Partition::AddChild 0x00105e34
+ 0x00105e34 Partition::SetParent 0x00106074
+ new child partition!
+ 0x00106074 Partition::Scan(): scan child 0x00105e34 (start = 67167668736,
+ size = 2145884160, parent = 0x00106074)!
+ 0x00105e34 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010613c Partition::Partition
+ 0x00105e34 Partition::AddChild 0x0010613c
+ 0x0010613c Partition::SetParent 0x00105e34
+ new child partition!
+ 0x00105e34 Partition::Scan(): scan child 0x0010613c (start = 67167668736,
+ size = 2145884160, parent = 0x00105e34)!
+ 0x0010613c Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00105efc Partition::Partition
+ 0x0010613c Partition::AddChild 0x00105efc
+ 0x00105efc Partition::SetParent 0x0010613c
+ new child partition!
+ 0x0010613c Partition::Scan(): scan child 0x00105efc (start = 67167668736,
+ size = 2145884160, parent = 0x0010613c)!
+ 0x00105efc Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00106290 Partition::Partition
+ 0x00105efc Partition::AddChild 0x00106290
+ 0x00106290 Partition::SetParent 0x00105efc
+ new child partition!
+ 0x00105efc Partition::Scan(): scan child 0x00106290 (start = 67167668736,
+ size = 2145884160, parent = 0x00105efc)!
+ 0x00106290 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00105d6c Partition::Partition
+ 0x00106290 Partition::AddChild 0x00105d6c
+ 0x00105d6c Partition::SetParent 0x00106290
+ new child partition!
+ 0x00106290 Partition::Scan(): scan child 0x00105d6c (start = 67167668736,
+ size = 2145884160, parent = 0x00106290)!
+ 0x00105d6c Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00105fb8 Partition::Partition
+ 0x00105d6c Partition::AddChild 0x00105fb8
+ 0x00105fb8 Partition::SetParent 0x00105d6c
+ new child partition!
+ 0x00105d6c Partition::Scan(): scan child 0x00105fb8 (start = 67167668736,
+ size = 2145884160, parent = 0x00105d6c)!
+ 0x00105fb8 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00108f04 Partition::Partition
+ 0x00105fb8 Partition::AddChild 0x00108f04
+ 0x00108f04 Partition::SetParent 0x00105fb8
+ new child partition!
+ 0x00105fb8 Partition::Scan(): scan child 0x00108f04 (start = 67167668736,
+ size = 2145884160, parent = 0x00105fb8)!
+ 0x00108f04 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x001061dc Partition::Partition
+ 0x00108f04 Partition::AddChild 0x001061dc
+ 0x001061dc Partition::SetParent 0x00108f04
+ new child partition!
+ 0x00108f04 Partition::Scan(): scan child 0x001061dc (start = 67167668736,
+ size = 2145884160, parent = 0x00108f04)!
+ 0x001061dc Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x0010685c Partition::Partition
+ 0x001061dc Partition::AddChild 0x0010685c
+ 0x0010685c Partition::SetParent 0x001061dc
+ new child partition!
+ 0x001061dc Partition::Scan(): scan child 0x0010685c (start = 67167668736,
+ size = 2145884160, parent = 0x001061dc)!
+ 0x0010685c Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00105ca4 Partition::Partition
+ 0x0010685c Partition::AddChild 0x00105ca4
+ 0x00105ca4 Partition::SetParent 0x0010685c
+ new child partition!
+ 0x0010685c Partition::Scan(): scan child 0x00105ca4 (start = 67167668736,
+ size = 2145884160, parent = 0x0010685c)!
+ 0x00105ca4 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00106794 Partition::Partition
+ 0x00105ca4 Partition::AddChild 0x00106794
+ 0x00106794 Partition::SetParent 0x00105ca4
+ new child partition!
+ 0x00105ca4 Partition::Scan(): scan child 0x00106794 (start = 67167668736,
+ size = 2145884160, parent = 0x00105ca4)!
+ 0x00106794 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00105700 Partition::Partition
+ 0x00106794 Partition::AddChild 0x00105700
+ 0x00105700 Partition::SetParent 0x00106794
+ new child partition!
+ 0x00106794 Partition::Scan(): scan child 0x00105700 (start = 67167668736,
+ size = 2145884160, parent = 0x00106794)!
+ 0x00105700 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00106910 Partition::Partition
+ 0x00105700 Partition::AddChild 0x00106910
+ 0x00106910 Partition::SetParent 0x00105700
+ new child partition!
+ 0x00105700 Partition::Scan(): scan child 0x00106910 (start = 67167668736,
+ size = 2145884160, parent = 0x00105700)!
+ 0x00106910 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x001054fc Partition::Partition
+ 0x00106910 Partition::AddChild 0x001054fc
+ 0x001054fc Partition::SetParent 0x00106910
+ new child partition!
+ 0x00106910 Partition::Scan(): scan child 0x001054fc (start = 67167668736,
+ size = 2145884160, parent = 0x00106910)!
+ 0x001054fc Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00111a00 Partition::Partition
+ 0x001054fc Partition::AddChild 0x00111a00
+ 0x00111a00 Partition::SetParent 0x001054fc
+ new child partition!
+ 0x001054fc Partition::Scan(): scan child 0x00111a00 (start = 67167668736,
+ size = 2145884160, parent = 0x001054fc)!
+ 0x00111a00 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00111a84 Partition::Partition
+ 0x00111a00 Partition::AddChild 0x00111a84
+ 0x00111a84 Partition::SetParent 0x00111a00
+ new child partition!
+ 0x00111a00 Partition::Scan(): scan child 0x00111a84 (start = 67167668736,
+ size = 2145884160, parent = 0x00111a00)!
+ 0x00111a84 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00111b08 Partition::Partition
+ 0x00111a84 Partition::AddChild 0x00111b08
+ 0x00111b08 Partition::SetParent 0x00111a84
+ new child partition!
+ 0x00111a84 Partition::Scan(): scan child 0x00111b08 (start = 67167668736,
+ size = 2145884160, parent = 0x00111a84)!
+ 0x00111b08 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00111b8c Partition::Partition
+ 0x00111b08 Partition::AddChild 0x00111b8c
+ 0x00111b8c Partition::SetParent 0x00111b08
+ new child partition!
+ 0x00111b08 Partition::Scan(): scan child 0x00111b8c (start = 67167668736,
+ size = 2145884160, parent = 0x00111b08)!
+ 0x00111b8c Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00111c10 Partition::Partition
+ 0x00111b8c Partition::AddChild 0x00111c10
+ 0x00111c10 Partition::SetParent 0x00111b8c
+ new child partition!
+ 0x00111b8c Partition::Scan(): scan child 0x00111c10 (start = 67167668736,
+ size = 2145884160, parent = 0x00111b8c)!
+ 0x00111c10 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00111c94 Partition::Partition
+ 0x00111c10 Partition::AddChild 0x00111c94
+ 0x00111c94 Partition::SetParent 0x00111c10
+ new child partition!
+ 0x00111c10 Partition::Scan(): scan child 0x00111c94 (start = 67167668736,
+ size = 2145884160, parent = 0x00111c10)!
+ 0x00111c94 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00111d18 Partition::Partition
+ 0x00111c94 Partition::AddChild 0x00111d18
+ 0x00111d18 Partition::SetParent 0x00111c94
+ new child partition!
+ 0x00111c94 Partition::Scan(): scan child 0x00111d18 (start = 67167668736,
+ size = 2145884160, parent = 0x00111c94)!
+ 0x00111d18 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00111d9c Partition::Partition
+ 0x00111d18 Partition::AddChild 0x00111d9c
+ 0x00111d9c Partition::SetParent 0x00111d18
+ new child partition!
+ 0x00111d18 Partition::Scan(): scan child 0x00111d9c (start = 67167668736,
+ size = 2145884160, parent = 0x00111d18)!
+ 0x00111d9c Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00111e20 Partition::Partition
+ 0x00111d9c Partition::AddChild 0x00111e20
+ 0x00111e20 Partition::SetParent 0x00111d9c
+ new child partition!
+ 0x00111d9c Partition::Scan(): scan child 0x00111e20 (start = 67167668736,
+ size = 2145884160, parent = 0x00111d9c)!
+ 0x00111e20 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00111ea4 Partition::Partition
+ 0x00111e20 Partition::AddChild 0x00111ea4
+ 0x00111ea4 Partition::SetParent 0x00111e20
+ new child partition!
+ 0x00111e20 Partition::Scan(): scan child 0x00111ea4 (start = 67167668736,
+ size = 2145884160, parent = 0x00111e20)!
+ 0x00111ea4 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00111f28 Partition::Partition
+ 0x00111ea4 Partition::AddChild 0x00111f28
+ 0x00111f28 Partition::SetParent 0x00111ea4
+ new child partition!
+ 0x00111ea4 Partition::Scan(): scan child 0x00111f28 (start = 67167668736,
+ size = 2145884160, parent = 0x00111ea4)!
+ 0x00111f28 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00111fac Partition::Partition
+ 0x00111f28 Partition::AddChild 0x00111fac
+ 0x00111fac Partition::SetParent 0x00111f28
+ new child partition!
+ 0x00111f28 Partition::Scan(): scan child 0x00111fac (start = 67167668736,
+ size = 2145884160, parent = 0x00111f28)!
+ 0x00111fac Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00112030 Partition::Partition
+ 0x00111fac Partition::AddChild 0x00112030
+ 0x00112030 Partition::SetParent 0x00111fac
+ new child partition!
+ 0x00111fac Partition::Scan(): scan child 0x00112030 (start = 67167668736,
+ size = 2145884160, parent = 0x00111fac)!
+ 0x00112030 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x001120b4 Partition::Partition
+ 0x00112030 Partition::AddChild 0x001120b4
+ 0x001120b4 Partition::SetParent 0x00112030
+ new child partition!
+ 0x00112030 Partition::Scan(): scan child 0x001120b4 (start = 67167668736,
+ size = 2145884160, parent = 0x00112030)!
+ 0x001120b4 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00112138 Partition::Partition
+ 0x001120b4 Partition::AddChild 0x00112138
+ 0x00112138 Partition::SetParent 0x001120b4
+ new child partition!
+ 0x001120b4 Partition::Scan(): scan child 0x00112138 (start = 67167668736,
+ size = 2145884160, parent = 0x001120b4)!
+ 0x00112138 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x001121bc Partition::Partition
+ 0x00112138 Partition::AddChild 0x001121bc
+ 0x001121bc Partition::SetParent 0x00112138
+ new child partition!
+ 0x00112138 Partition::Scan(): scan child 0x001121bc (start = 67167668736,
+ size = 2145884160, parent = 0x00112138)!
+ 0x001121bc Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00112240 Partition::Partition
+ 0x001121bc Partition::AddChild 0x00112240
+ 0x00112240 Partition::SetParent 0x001121bc
+ new child partition!
+ 0x001121bc Partition::Scan(): scan child 0x00112240 (start = 67167668736,
+ size = 2145884160, parent = 0x001121bc)!
+ 0x00112240 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x001122c4 Partition::Partition
+ 0x00112240 Partition::AddChild 0x001122c4
+ 0x001122c4 Partition::SetParent 0x00112240
+ new child partition!
+ 0x00112240 Partition::Scan(): scan child 0x001122c4 (start = 67167668736,
+ size = 2145884160, parent = 0x00112240)!
+ 0x001122c4 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00112348 Partition::Partition
+ 0x001122c4 Partition::AddChild 0x00112348
+ 0x00112348 Partition::SetParent 0x001122c4
+ new child partition!
+ 0x001122c4 Partition::Scan(): scan child 0x00112348 (start = 67167668736,
+ size = 2145884160, parent = 0x001122c4)!
+ 0x00112348 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x001123cc Partition::Partition
+ 0x00112348 Partition::AddChild 0x001123cc
+ 0x001123cc Partition::SetParent 0x00112348
+ new child partition!
+ 0x00112348 Partition::Scan(): scan child 0x001123cc (start = 67167668736,
+ size = 2145884160, parent = 0x00112348)!
+ 0x001123cc Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00112450 Partition::Partition
+ 0x001123cc Partition::AddChild 0x00112450
+ 0x00112450 Partition::SetParent 0x001123cc
+ new child partition!
+ 0x001123cc Partition::Scan(): scan child 0x00112450 (start = 67167668736,
+ size = 2145884160, parent = 0x001123cc)!
+ 0x00112450 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x001124d4 Partition::Partition
+ 0x00112450 Partition::AddChild 0x001124d4
+ 0x001124d4 Partition::SetParent 0x00112450
+ new child partition!
+ 0x00112450 Partition::Scan(): scan child 0x001124d4 (start = 67167668736,
+ size = 2145884160, parent = 0x00112450)!
+ 0x001124d4 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00112558 Partition::Partition
+ 0x001124d4 Partition::AddChild 0x00112558
+ 0x00112558 Partition::SetParent 0x001124d4
+ new child partition!
+ 0x001124d4 Partition::Scan(): scan child 0x00112558 (start = 67167668736,
+ size = 2145884160, parent = 0x001124d4)!
+ 0x00112558 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x001125dc Partition::Partition
+ 0x00112558 Partition::AddChild 0x001125dc
+ 0x001125dc Partition::SetParent 0x00112558
+ new child partition!
+ 0x00112558 Partition::Scan(): scan child 0x001125dc (start = 67167668736,
+ size = 2145884160, parent = 0x00112558)!
+ 0x001125dc Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00112660 Partition::Partition
+ 0x001125dc Partition::AddChild 0x00112660
+ 0x00112660 Partition::SetParent 0x001125dc
+ new child partition!
+ 0x001125dc Partition::Scan(): scan child 0x00112660 (start = 67167668736,
+ size = 2145884160, parent = 0x001125dc)!
+ 0x00112660 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x001126e4 Partition::Partition
+ 0x00112660 Partition::AddChild 0x001126e4
+ 0x001126e4 Partition::SetParent 0x00112660
+ new child partition!
+ 0x00112660 Partition::Scan(): scan child 0x001126e4 (start = 67167668736,
+ size = 2145884160, parent = 0x00112660)!
+ 0x001126e4 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00112768 Partition::Partition
+ 0x001126e4 Partition::AddChild 0x00112768
+ 0x00112768 Partition::SetParent 0x001126e4
+ new child partition!
+ 0x001126e4 Partition::Scan(): scan child 0x00112768 (start = 67167668736,
+ size = 2145884160, parent = 0x001126e4)!
+ 0x00112768 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x001127ec Partition::Partition
+ 0x00112768 Partition::AddChild 0x001127ec
+ 0x001127ec Partition::SetParent 0x00112768
+ new child partition!
+ 0x00112768 Partition::Scan(): scan child 0x001127ec (start = 67167668736,
+ size = 2145884160, parent = 0x00112768)!
+ 0x001127ec Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00112870 Partition::Partition
+ 0x001127ec Partition::AddChild 0x00112870
+ 0x00112870 Partition::SetParent 0x001127ec
+ new child partition!
+ 0x001127ec Partition::Scan(): scan child 0x00112870 (start = 67167668736,
+ size = 2145884160, parent = 0x001127ec)!
+ 0x00112870 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x001128f4 Partition::Partition
+ 0x00112870 Partition::AddChild 0x001128f4
+ 0x001128f4 Partition::SetParent 0x00112870
+ new child partition!
+ 0x00112870 Partition::Scan(): scan child 0x001128f4 (start = 67167668736,
+ size = 2145884160, parent = 0x00112870)!
+ 0x001128f4 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00112978 Partition::Partition
+ 0x001128f4 Partition::AddChild 0x00112978
+ 0x00112978 Partition::SetParent 0x001128f4
+ new child partition!
+ 0x001128f4 Partition::Scan(): scan child 0x00112978 (start = 67167668736,
+ size = 2145884160, parent = 0x001128f4)!
+ 0x00112978 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x001129fc Partition::Partition
+ 0x00112978 Partition::AddChild 0x001129fc
+ 0x001129fc Partition::SetParent 0x00112978
+ new child partition!
+ 0x00112978 Partition::Scan(): scan child 0x001129fc (start = 67167668736,
+ size = 2145884160, parent = 0x00112978)!
+ 0x001129fc Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00112a80 Partition::Partition
+ 0x001129fc Partition::AddChild 0x00112a80
+ 0x00112a80 Partition::SetParent 0x001129fc
+ new child partition!
+ 0x001129fc Partition::Scan(): scan child 0x00112a80 (start = 67167668736,
+ size = 2145884160, parent = 0x001129fc)!
+ 0x00112a80 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00112b04 Partition::Partition
+ 0x00112a80 Partition::AddChild 0x00112b04
+ 0x00112b04 Partition::SetParent 0x00112a80
+ new child partition!
+ 0x00112a80 Partition::Scan(): scan child 0x00112b04 (start = 67167668736,
+ size = 2145884160, parent = 0x00112a80)!
+ 0x00112b04 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00112b88 Partition::Partition
+ 0x00112b04 Partition::AddChild 0x00112b88
+ 0x00112b88 Partition::SetParent 0x00112b04
+ new child partition!
+ 0x00112b04 Partition::Scan(): scan child 0x00112b88 (start = 67167668736,
+ size = 2145884160, parent = 0x00112b04)!
+ 0x00112b88 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00112c0c Partition::Partition
+ 0x00112b88 Partition::AddChild 0x00112c0c
+ 0x00112c0c Partition::SetParent 0x00112b88
+ new child partition!
+ 0x00112b88 Partition::Scan(): scan child 0x00112c0c (start = 67167668736,
+ size = 2145884160, parent = 0x00112b88)!
+ 0x00112c0c Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00112c90 Partition::Partition
+ 0x00112c0c Partition::AddChild 0x00112c90
+ 0x00112c90 Partition::SetParent 0x00112c0c
+ new child partition!
+ 0x00112c0c Partition::Scan(): scan child 0x00112c90 (start = 67167668736,
+ size = 2145884160, parent = 0x00112c0c)!
+ 0x00112c90 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00112d14 Partition::Partition
+ 0x00112c90 Partition::AddChild 0x00112d14
+ 0x00112d14 Partition::SetParent 0x00112c90
+ new child partition!
+ 0x00112c90 Partition::Scan(): scan child 0x00112d14 (start = 67167668736,
+ size = 2145884160, parent = 0x00112c90)!
+ 0x00112d14 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00112d98 Partition::Partition
+ 0x00112d14 Partition::AddChild 0x00112d98
+ 0x00112d98 Partition::SetParent 0x00112d14
+ new child partition!
+ 0x00112d14 Partition::Scan(): scan child 0x00112d98 (start = 67167668736,
+ size = 2145884160, parent = 0x00112d14)!
+ 0x00112d98 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00111914 Partition::Partition
+ 0x00112d98 Partition::AddChild 0x00111914
+ 0x00111914 Partition::SetParent 0x00112d98
+ new child partition!
+ 0x00112d98 Partition::Scan(): scan child 0x00111914 (start = 67167668736,
+ size = 2145884160, parent = 0x00112d98)!
+ 0x00111914 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00112f20 Partition::Partition
+ 0x00111914 Partition::AddChild 0x00112f20
+ 0x00112f20 Partition::SetParent 0x00111914
+ new child partition!
+ 0x00111914 Partition::Scan(): scan child 0x00112f20 (start = 67167668736,
+ size = 2145884160, parent = 0x00111914)!
+ 0x00112f20 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+   priority: 500
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ fatfs: cannot mount (bad superblock ?)
+ 0x00112fa4 Partition::Partition
+ 0x00112f20 Partition::AddChild 0x00112fa4
+ 0x00112fa4 Partition::SetParent 0x00112f20
+ new child partition!
+ 0x00112f20 Partition::Scan(): scan child 0x00112fa4 (start = 67167668736,
+ size = 2145884160, parent = 0x00112f20)!
+ 0x00112fa4 Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ 0x00112fa4 Partition::_Mount check for file_system: BFS Filesystem
+ 0x00112fa4 Partition::_Mount check for file_system: AmigaFFS Filesystem
+ 0x00112fa4 Partition::_Mount check for file_system: FAT32 Filesystem
+ }}}
+
+
+ After that Qemu crashes.
+
+
+ {{{
+
+ qemu: fatal: triple fault
+ EAX=cccccccc EBX=00000003 ECX=00000000 EDX=00000000
+ ESI=cccccccc EDI=00000000 EBP=0000e0e8 ESP=0000e0c4
+ EIP=00028ae5 EFL=00200002 [-------] CPL=0 II=0 A20=1 SMM=0 HLT=0
+ ES =0010 00000000 ffffffff 00cf9300
+ CS =0008 00000000 ffffffff 00cf9e00
+ SS =0010 00000000 ffffffff 00cf9300
+ DS =0010 00000000 ffffffff 00cf9300
+ FS =0010 00000000 ffffffff 00cf9300
+ GS =0010 00000000 ffffffff 00cf9300
+ LDT=0000 00000000 00000000 00008200
+ TR =0038 00017c10 00000067 00008901
+ GDT=     00010380 0000002f
+ IDT=     00000000 000007ff
+ CR0=80010031 CR2=ccccccd8 CR3=00100000 CR4=00000000
+ CCS=fffffff4 CCD=0000e0c4 CCO=ADDL
+ FCW=037f FSW=4000 [ST=0] FTW=00 MXCSR=00001f80
+ FPR0=0000000000000000 0000 FPR1=f5c28f5c28f5c28f 3ffa
+ FPR2=a01a36e2eb1c432d 3ffd FPR3=a3d70a3d70a3d70a 3ffe
+ FPR4=a8f5c28f5c28f5c3 3ffd FPR5=999999999999999a 3ffd
+ FPR6=0000000000000000 0000 FPR7=0000000000000000 0000
+ XMM00=00000000000000000000000000000000
+ XMM01=00000000000000000000000000000000
+ XMM02=00000000000000000000000000000000
+ XMM03=00000000000000000000000000000000
+ XMM04=00000000000000000000000000000000
+ XMM05=00000000000000000000000000000000
+ XMM06=00000000000000000000000000000000
+ XMM07=00000000000000000000000000000000
+ Abgebrochen
+
+ }}}
+
+ Hope that helps !!! :-)
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3218#comment:4">http://dev.haiku-os.org/ticket/3218#comment:4</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="013697.html">[Haiku-bugs] [Haiku] #3297: PackageInstaller fails to open/install the QEMU package from beBits
+</A></li>
+	<LI>Next message: <A HREF="013661.html">[Haiku-bugs] [Haiku] #2975: Tracker, some items not properly redrawn in list mode
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13656">[ date ]</a>
+              <a href="thread.html#13656">[ thread ]</a>
+              <a href="subject.html#13656">[ subject ]</a>
+              <a href="author.html#13656">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

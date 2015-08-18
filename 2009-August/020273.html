@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4354: app_server crash in Screen:Frame().
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234354%3A%20app_server%20crash%20in%20Screen%3AFrame%28%29.&In-Reply-To=%3C047.21b3ef176063280cb00b832a2551adfa%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="020269.html">
+   <LINK REL="Next"  HREF="020281.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4354: app_server crash in Screen:Frame().</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234354%3A%20app_server%20crash%20in%20Screen%3AFrame%28%29.&In-Reply-To=%3C047.21b3ef176063280cb00b832a2551adfa%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4354: app_server crash in Screen:Frame().">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Aug 28 03:55:35 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="020269.html">[Haiku-bugs] [Haiku] #4354: app_server crash in Screen:Frame().
+</A></li>
+        <LI>Next message: <A HREF="020281.html">[Haiku-bugs] [Haiku] #4354: app_server crash in Screen:Frame().
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20273">[ date ]</a>
+              <a href="thread.html#20273">[ thread ]</a>
+              <a href="subject.html#20273">[ subject ]</a>
+              <a href="author.html#20273">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4354: app_server crash in Screen:Frame().
+--------------------------------+-------------------------------------------
+ Reporter:  bga                 |       Owner:  jackburton    
+     Type:  bug                 |      Status:  new           
+ Priority:  high                |   Milestone:  R1            
+Component:  Servers/app_server  |     Version:  R1 development
+Blockedby:                      |    Platform:  All           
+ Blocking:                      |  
+--------------------------------+-------------------------------------------
+
+Comment(by anevilyak):
+
+ I'm seeing this as well when the screen saver kicks in:
+
+ {{{
+ vm_soft_fault: va 0x0 not covered by area in address space
+ vm_page_fault: vm_soft_fault returned error 'Bad address' on fault at 0xc,
+ ip 0x2628a0, write 0, user 1, thread 0x521
+ vm_page_fault: thread &quot;w:1310:ScreenSaver Window&quot; (1313) in team
+ &quot;app_server&quot; (62) tried to read address 0xc, ip 0x2628a0
+ (&quot;app_server_seg0ro&quot; +0x628a0)
+ debug_server: Thread 1313 entered the debugger: Segment violation
+ stack trace, current PC 0x2628a0  _ZNK6Screen5FrameEv + 0xe:
+   (0x705d5ddc)  0x27415a  _ZN12ServerWindow19_ResizeToFullScreenEv + 0x2c
+   (0x705d5e1c)  0x27422f  _ZN12ServerWindow26_DirectWindowSetFullScreenEb
+ + 0x6b
+   (0x705d5e5c)  0x27b5e6
+ _ZN12ServerWindow16_DispatchMessageElRN8BPrivate12LinkReceiverE + 0xda2
+   (0x705d5f1c)  0x276809  _ZN12ServerWindow14_MessageLooperEv + 0x27f
+   (0x705d5f9c)  0x25f1a3  _ZN13MessageLooper15_message_threadEPv + 0xf
+   (0x705d5fbc)  0x74e0cd  thread_entry + 0x1a
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4354#comment:1">http://dev.haiku-os.org/ticket/4354#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="020269.html">[Haiku-bugs] [Haiku] #4354: app_server crash in Screen:Frame().
+</A></li>
+	<LI>Next message: <A HREF="020281.html">[Haiku-bugs] [Haiku] #4354: app_server crash in Screen:Frame().
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20273">[ date ]</a>
+              <a href="thread.html#20273">[ thread ]</a>
+              <a href="subject.html#20273">[ subject ]</a>
+              <a href="author.html#20273">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

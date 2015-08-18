@@ -1,0 +1,181 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3852: MeTOS crashing, again.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233852%3A%20MeTOS%20crashing%2C%20again.&In-Reply-To=%3C041.197f1ca39e04144af92c5b9dfe398a45%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="016776.html">
+   <LINK REL="Next"  HREF="016799.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3852: MeTOS crashing, again.</H1>
+    <B>kvdman</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233852%3A%20MeTOS%20crashing%2C%20again.&In-Reply-To=%3C041.197f1ca39e04144af92c5b9dfe398a45%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3852: MeTOS crashing, again.">trac at haiku-os.org
+       </A><BR>
+    <I>Sat May  2 02:17:06 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="016776.html">[Haiku-bugs] [Haiku] #1599: Haiku Booting on a MacBook	Info...(gets stuck)
+</A></li>
+        <LI>Next message: <A HREF="016799.html">[Haiku-bugs] [Haiku] #3852: MeTOS crashing, again.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16794">[ date ]</a>
+              <a href="thread.html#16794">[ thread ]</a>
+              <a href="subject.html#16794">[ subject ]</a>
+              <a href="author.html#16794">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3852: MeTOS crashing, again.
+--------------------------------+-------------------------------------------
+ Reporter:  kvdman              |       Owner:  axeld         
+     Type:  bug                 |      Status:  new           
+ Priority:  normal              |   Milestone:  R1            
+Component:  Kits/Interface Kit  |     Version:  R1 development
+Blockedby:                      |    Platform:  All           
+ Blocking:                      |  
+--------------------------------+-------------------------------------------
+ Binary compatibility problem. There was an older bug that was resolved
+ (#1553) regarding MeTOS:
+
+ [<A HREF="http://www.haikuware.com/directory/view-details/development/gui-">http://www.haikuware.com/directory/view-details/development/gui-</A>
+ creation/metos]
+
+ but this one seems to involve CTabView, BTabView?
+
+ Tested on r30522.
+
+ {{{
+ GNU gdb 6.3
+ Copyright 2004 Free Software Foundation, Inc.
+ GDB is free software, covered by the GNU General Public License, and you
+ are
+ welcome to change it and/or distribute copies of it under certain
+ conditions.
+ Type &quot;show copying&quot; to see the conditions.
+ There is absolutely no warranty for GDB.  Type &quot;show warranty&quot; for
+ details.
+ This GDB was configured as &quot;i586-pc-haiku&quot;...(no debugging symbols found)
+
+ [tcsetpgrp failed in terminal_inferior: Invalid Argument]
+ Thread 225 called debugger(): looper must be locked before proceeding
+
+ Reading symbols from /boot/system/runtime_loader...done.
+ Loaded symbols for /boot/system/runtime_loader
+ Reading symbols from /boot/system/lib/libbe.so...done.
+ Loaded symbols for /boot/system/lib/libbe.so
+ Reading symbols from /boot/system/lib/libroot.so...done.
+ Loaded symbols for /boot/system/lib/libroot.so
+ Reading symbols from /boot/system/lib/libtracker.so...done.
+ Loaded symbols for /boot/system/lib/libtracker.so
+ Reading symbols from /boot/system/lib/libtranslation.so...done.
+ Loaded symbols for /boot/system/lib/libtranslation.so
+ Reading symbols from /boot/apps/Develop/MeTOS/lib/libMeTOS.so...done.
+ Loaded symbols for /boot/apps/Develop/MeTOS/lib/libMeTOS.so
+ Reading symbols from /boot/apps/Develop/MeTOS/lib/libCS.so...done.
+ Loaded symbols for /boot/apps/Develop/MeTOS/lib/libCS.so
+ Reading symbols from /boot/system/lib/libnetwork.so...done.
+ Loaded symbols for /boot/system/lib/libnetwork.so
+ Reading symbols from /boot/system/lib/libstdc++.r4.so...done.
+ Loaded symbols for /boot/system/lib/libstdc++.r4.so
+ Reading symbols from /boot/system/lib/libtextencoding.so...done.
+ Loaded symbols for /boot/system/lib/libtextencoding.so
+ Reading symbols from /boot/home/config/lib/libiconv.so...done.
+ Loaded symbols for /boot/home/config/lib/libiconv.so
+ Reading symbols from
+ /boot/apps/Develop/MeTOS/AddOns/Translators/MeTOSProjectFile...done.
+ Loaded symbols for
+ /boot/apps/Develop/MeTOS/AddOns/Translators/MeTOSProjectFile
+ Loaded symbols for
+ /boot/apps/Develop/MeTOS/AddOns/Translators/MeTOSProjectFile
+ Reading symbols from
+ /boot/apps/Develop/MeTOS/AddOns/CodeGenerators/BePascalCodeGenerator...done.
+ Loaded symbols for
+ /boot/apps/Develop/MeTOS/AddOns/CodeGenerators/BePascalCodeGenerator
+ Reading symbols from
+ /boot/apps/Develop/MeTOS/AddOns/CodeGenerators/CPPCodeGenerator...done.
+ Loaded symbols for
+ /boot/apps/Develop/MeTOS/AddOns/CodeGenerators/CPPCodeGenerator
+ [tcsetpgrp failed in terminal_inferior: Invalid Argument]
+ [Switching to team /boot/apps/Develop/MeTOS/MeTOS (225) thread MeTOS
+ (225)]
+ 0xffff0104 in ?? ()
+ (gdb) bt
+ #0  0xffff0104 in ?? ()
+ #1  0x004f78b6 in debugger () from /boot/system/lib/libroot.so
+ #2  0x00323d03 in BLooper::AssertLocked () from /boot/system/lib/libbe.so
+ #3  0x003226bc in BLooper::Unlock () from /boot/system/lib/libbe.so
+ #4  0x0031d506 in BHandler::UnlockLooper () from /boot/system/lib/libbe.so
+ #5  0x009840b1 in CTabView::Select ()
+    from /boot/apps/Develop/MeTOS/AddOns/CodeGenerators/CPPCodeGenerator
+ #6  0x003ba8d4 in BTabView::AddTab () from /boot/system/lib/libbe.so
+ #7  0x0097c3e5 in CPPCodeWin::CPPCodeWin ()
+    from /boot/apps/Develop/MeTOS/AddOns/CodeGenerators/CPPCodeGenerator
+ #8  0x0097bfae in CPPCodeGenerator::CPPCodeGenerator ()
+    from /boot/apps/Develop/MeTOS/AddOns/CodeGenerators/CPPCodeGenerator
+ #9  0x0097c12c in instantiate_VCodeGenerator ()
+    from /boot/apps/Develop/MeTOS/AddOns/CodeGenerators/CPPCodeGenerator
+ #10 0x00227461 in MetosApp::LoadGenerators ()
+ #11 0x00224b24 in MetosApp::MetosApp ()
+ #12 0x002244e7 in main ()
+ (gdb) cont
+ Continuing.
+ Thread 225 caused an exception: Segment violation
+
+ Program received signal SIGSEGV, Segmentation fault.
+ 0x003226bc in BLooper::Unlock () from /boot/system/lib/libbe.so
+ (gdb) bt
+ #0  0x003226bc in BLooper::Unlock () from /boot/system/lib/libbe.so
+ #1  0x0031d506 in BHandler::UnlockLooper () from /boot/system/lib/libbe.so
+ #2  0x009840b1 in CTabView::Select ()
+    from /boot/apps/Develop/MeTOS/AddOns/CodeGenerators/CPPCodeGenerator
+ #3  0x003ba8d4 in BTabView::AddTab () from /boot/system/lib/libbe.so
+ #4  0x0097c3e5 in CPPCodeWin::CPPCodeWin ()
+    from /boot/apps/Develop/MeTOS/AddOns/CodeGenerators/CPPCodeGenerator
+ #5  0x0097bfae in CPPCodeGenerator::CPPCodeGenerator ()
+    from /boot/apps/Develop/MeTOS/AddOns/CodeGenerators/CPPCodeGenerator
+ #6  0x0097c12c in instantiate_VCodeGenerator ()
+    from /boot/apps/Develop/MeTOS/AddOns/CodeGenerators/CPPCodeGenerator
+ #7  0x00227461 in MetosApp::LoadGenerators ()
+ #8  0x00224b24 in MetosApp::MetosApp ()
+ #9  0x002244e7 in main ()
+ (gdb)
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3852">http://dev.haiku-os.org/ticket/3852</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="016776.html">[Haiku-bugs] [Haiku] #1599: Haiku Booting on a MacBook	Info...(gets stuck)
+</A></li>
+	<LI>Next message: <A HREF="016799.html">[Haiku-bugs] [Haiku] #3852: MeTOS crashing, again.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16794">[ date ]</a>
+              <a href="thread.html#16794">[ thread ]</a>
+              <a href="subject.html#16794">[ subject ]</a>
+              <a href="author.html#16794">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

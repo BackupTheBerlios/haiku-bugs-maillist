@@ -1,0 +1,229 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1512: deadlock after clicking on Deskbar
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-December/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231512%3A%20deadlock%20after%20clicking%20on%20Deskbar&In-Reply-To=%3C059.fbc1675f72148acb394da5208b686ec5%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="013165.html">
+   <LINK REL="Next"  HREF="013167.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1512: deadlock after clicking on Deskbar</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231512%3A%20deadlock%20after%20clicking%20on%20Deskbar&In-Reply-To=%3C059.fbc1675f72148acb394da5208b686ec5%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1512: deadlock after clicking on Deskbar">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Dec 13 06:57:05 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="013165.html">[Haiku-bugs] [Haiku] #2918: on screen debug: many keystrokes needed to get to next page of messages
+</A></li>
+        <LI>Next message: <A HREF="013167.html">[Haiku-bugs] [Haiku] #3219: [PATCH] small bug in InputServer
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13166">[ date ]</a>
+              <a href="thread.html#13166">[ thread ]</a>
+              <a href="subject.html#13166">[ subject ]</a>
+              <a href="author.html#13166">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1512: deadlock after clicking on Deskbar
+------------------------------+---------------------------------------------
+  Reporter:  marcusoverhagen  |       Owner:  axeld         
+      Type:  bug              |      Status:  new           
+  Priority:  critical         |   Milestone:  R1            
+ Component:  System/Kernel    |     Version:  R1 development
+Resolution:                   |   Blockedby:                
+  Platform:  All              |    Blocking:                
+------------------------------+---------------------------------------------
+
+Comment(by anevilyak):
+
+ I just saw this one again while messing with IMKit...one of its teams
+ seemed to be unkillable. Dropped to KDL and found the following:
+
+
+ The deadlocking team:
+ {{{
+ team 164512
+ TEAM: 0xb1f54000
+ id:          164512 (0x282a0)
+ name:        'ProtocolLoader'
+ args:        '/boot/apps/im_kit/ProtocolLoader /boot/common/add-
+ ons/im_kit/pr'
+ next:        0x00000000
+ parent:      0x81192198 (id = 1)
+ children:    0x00000000
+ num_threads: 2
+ state:       0
+ flags:       0x0
+ io_context:  0x96ac7e80
+ address_space: 0x94008d20
+ main_thread: 0x9055d000
+ thread_list: 0x905c8800
+ group_id:    164504
+ session_id:  160047
+ kdebug&gt; threads 164512
+ thread         id  state     wait for   object  cpu pri  stack      team
+ name
+ 0x905c8800 164529  waiting   rwlock 0x94008d28    -  10  0x95eec000164512
+ user thread
+ 0x9055d000 164512  waiting   rwlock 0x94008d28    -  20  0x95ebc000164512
+ MSN
+ }}}
+
+ The rw_lock mentioned:
+ {{{
+ rw lock 0x94008d28:
+   name:            address space
+   holder:          -1
+   reader count:    1
+   writer count:    1
+   owner count:      0
+   flags:           0x0
+   waiting threads: 164512/w 164529/r 164575/r 164602/r
+ }}}
+
+ The mentioned threads:
+ {{{
+ thread 164512
+ THREAD: 0x9055d000
+ id:                 164512 (0x282a0)
+ name:               &quot;MSN&quot;
+ all_next:           0x905db800
+ team_next:          0x00000000
+ q_next:             0x905d4800
+ priority:           20 (next 20, I/O: -1)
+ state:              waiting
+ next_state:         waiting
+ cpu:                0x00000000
+ sig_pending:        0x104100 (blocked: 0x0)
+ in_kernel:          1
+ waiting for:        rwlock 0x94008d28
+ fault_handler:      0x00000000
+ args:               0x813f055c 0x00000000
+ entry:              0x8004d4fc
+ team:               0xb1f54000, &quot;ProtocolLoader&quot;
+   exit.sem:         45164700
+   exit.status:      0x0 (No error)
+   exit.reason:      0x1
+   exit.signal:      0x0
+   exit.waiters:
+ kernel_stack_area:  736446
+ kernel_stack_base:  0x95ebc000
+ user_stack_area:    -1
+ user_stack_base:    0x7efef000
+ user_local_storage: 0x7ffef000
+ kernel_errno:       0x0 (No error)
+ kernel_time:        6022
+ user_time:          5048
+ flags:              0x1
+ architecture dependant section:
+         esp: 0x95ebfc08
+         ss: 0x00000010
+         fpu_state at 0x9055d3d0
+ }}}
+
+ I find it interesting that this particular one is marked as user_stack
+ area -1, which seems incorrect.
+
+ The other 3 threads waiting on read locks belong to ProcessController, and
+ were me attempting to invoke its context menu. Backtrace of 164512:
+ {{{
+ stack trace for thread 164512 &quot;MSN&quot;
+     kernel stack: 0x95ebc000 to 0x95ec0000
+       user stack: 0x7efef000 to 0x7ffef000
+ frame               caller     &lt;image&gt;:function + offset
+  0 95ebfc64 (+  48) 80057bc8   &lt;kernel_x86&gt; context_switch(thread*:
+ 0x9055d000, thread*: 0x905d4800) + 0x003c
+  1 95ebfc94 (+  64) 80057eaf   &lt;kernel_x86&gt; simple_reschedule() + 0x029f
+  2 95ebfcd4 (+  48) 8003c8ad   &lt;kernel_x86&gt; rw_lock_wait(rw_lock*:
+ 0x94008d28, true) + 0x00c9
+  3 95ebfd04 (+  64) 8003cf12   &lt;kernel_x86&gt;:rw_lock_write_lock + 0x010a
+  4 95ebfd44 (+  48) 800b6c20   &lt;kernel_x86&gt;
+ AddressSpaceWriteLocker&lt;0x95ebfdfc&gt;::SetFromArea(int32: 164512, int32:
+ 736448, false, vm_area&amp;: 0x95ebfdf8) + 0x008c
+  5 95ebfd74 (+  64) 800b6ca9   &lt;kernel_x86&gt;
+ AddressSpaceWriteLocker&lt;0x95ebfdfc&gt;::SetFromArea(int32: 164512, int32:
+ 736448, vm_area&amp;: 0x95ebfdf8) + 0x0025
+  6 95ebfdb4 (+  80) 800b99c7   &lt;kernel_x86&gt;:vm_delete_area + 0x0027
+  7 95ebfe04 (+ 192) 80052c7b   &lt;kernel_x86&gt;:thread_exit + 0x009f
+  8 95ebfec4 (+  64) 800484e8   &lt;kernel_x86&gt;:handle_signals + 0x0454
+  9 95ebff04 (+  64) 80053384   &lt;kernel_x86&gt;:thread_at_kernel_exit + 0x0090
+ 10 95ebff44 (+ 100) 800d0152   &lt;kernel_x86&gt;:kernel_exit_handle_signals +
+ 0x0006
+ user iframe at 0x95ebffa8 (end = 0x95ec0000)
+  eax 0x0            ebx 0x55f580        ecx 0x7ffeef40   edx 0x246
+  esi 0x7ffef538     edi 0x7ffef54c      ebp 0x7ffeef6c   esp 0x95ebffdc
+  eip 0xffff0104  eflags 0x200207   user esp 0x7ffeef40
+  vector: 0x63, error code: 0x0
+ 11 95ebffa8 (+   0) ffff0104   &lt;commpage&gt;:commpage_syscall + 0x0004
+ 12 7ffeef6c (+  64) 00202998   &lt;_APP_&gt;:_start + 0x0064
+ 13 7ffeefac (+  48) 0010090a
+ &lt;/boot/beos/system/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">runtime_loader at 0x00100000</A>&gt;:unknown + 0x090a
+ 14 7ffeefdc (+   0) 7ffeefec   736448:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">ProtocolLoader_main_stack at 0x7efef000</A>
+ + 0xffffec
+ }}}
+
+ The areas mentioned in the call to AddressSpaceWriteLocker:
+ {{{
+ kdebug&gt; area 164512
+ could not find area 164512 (164512)
+ kdebug&gt; area 736448
+ AREA: 0x8134aeb0
+ name:           'ProtocolLoader_main_stack'
+ owner:          0x282a0
+ id:             0xb3cc0
+ base:           0x7efef000
+ size:           0x1001000
+ protection:     0x3b
+ wiring:         0x0
+ memory_type:    0x0
+ cache:          0x94008f00
+ cache_type:     RAM
+ cache_offset:   0x0
+ cache_next:     0x00000000
+ cache_prev:     0x00000000
+ page mappings:  8
+ }}}
+
+ Not sure what else to look up right now, leaving this system up and
+ running though, please let me know if there's any other information I can
+ dig up from its current state.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1512#comment:22">http://dev.haiku-os.org/ticket/1512#comment:22</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="013165.html">[Haiku-bugs] [Haiku] #2918: on screen debug: many keystrokes needed to get to next page of messages
+</A></li>
+	<LI>Next message: <A HREF="013167.html">[Haiku-bugs] [Haiku] #3219: [PATCH] small bug in InputServer
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13166">[ date ]</a>
+              <a href="thread.html#13166">[ thread ]</a>
+              <a href="subject.html#13166">[ subject ]</a>
+              <a href="author.html#13166">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

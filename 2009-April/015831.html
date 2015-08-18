@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3712: dhcp failure
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233712%3A%20dhcp%20failure&In-Reply-To=%3C040.67e917c2a4e44bf66e416ff2a616f458%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="015827.html">
+   <LINK REL="Next"  HREF="015916.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3712: dhcp failure</H1>
+    <B>rossi</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233712%3A%20dhcp%20failure&In-Reply-To=%3C040.67e917c2a4e44bf66e416ff2a616f458%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3712: dhcp failure">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Apr  7 22:14:52 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="015827.html">[Haiku-bugs] [Haiku] #3347: PANIC: IORequest::_CopyData(): invalid range: (1837760000, 16320)
+</A></li>
+        <LI>Next message: <A HREF="015916.html">[Haiku-bugs] [Haiku] #3712: dhcp failure
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15831">[ date ]</a>
+              <a href="thread.html#15831">[ thread ]</a>
+              <a href="subject.html#15831">[ subject ]</a>
+              <a href="author.html#15831">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3712: dhcp failure
+--------------------------------------+-------------------------------------
+ Reporter:  rossi                     |       Owner:  axeld         
+     Type:  bug                       |      Status:  new           
+ Priority:  normal                    |   Milestone:  R1            
+Component:  Network &amp; Internet/Stack  |     Version:  R1 development
+Blockedby:                            |    Platform:  All           
+ Blocking:                            |  
+--------------------------------------+-------------------------------------
+ One of the recent changes to the networking stack, prevent DHCP from
+ functioning properly. No IP address is assigned, the system defaults to a
+ 169... address. Static settings of course still work.
+
+ However other networking apps also experience issues, e.g. NetworkTime:
+
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">rossi at wayreth</A> home&gt; /boot/apps/NetworkTime/NetworkTime -g
+   0% Contacting server &quot;pool.ntp.org&quot;...
+  25% Sending request...
+  50% Waiting for answer...
+      Waiting for answer failed: General system error
+   0% Contacting server &quot;de.pool.ntp.org&quot;...
+  25% Sending request...
+  50% Waiting for answer...
+      Waiting for answer failed: General system error
+   0% Contacting server &quot;time.nist.gov&quot;...
+  25% Sending request...
+  50% Waiting for answer...
+      Waiting for answer failed: General system error
+
+ Syslog attached.
+
+ This happens on r30001.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3712">http://dev.haiku-os.org/ticket/3712</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="015827.html">[Haiku-bugs] [Haiku] #3347: PANIC: IORequest::_CopyData(): invalid range: (1837760000, 16320)
+</A></li>
+	<LI>Next message: <A HREF="015916.html">[Haiku-bugs] [Haiku] #3712: dhcp failure
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15831">[ date ]</a>
+              <a href="thread.html#15831">[ thread ]</a>
+              <a href="subject.html#15831">[ subject ]</a>
+              <a href="author.html#15831">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

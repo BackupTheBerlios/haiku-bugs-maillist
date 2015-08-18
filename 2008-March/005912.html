@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1982: unmount bug: PANIC: vm_page_fault: unhandled page fault in kernel
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231982%3A%20unmount%20bug%3A%20PANIC%3A%20vm_page_fault%3A%0A%20unhandled%20page%20fault%20in%20kernel&In-Reply-To=%3C040.07f9632ff503a91bdd3f366026b60cfc%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005911.html">
+   <LINK REL="Next"  HREF="005966.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1982: unmount bug: PANIC: vm_page_fault: unhandled page fault in kernel</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231982%3A%20unmount%20bug%3A%20PANIC%3A%20vm_page_fault%3A%0A%20unhandled%20page%20fault%20in%20kernel&In-Reply-To=%3C040.07f9632ff503a91bdd3f366026b60cfc%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1982: unmount bug: PANIC: vm_page_fault: unhandled page fault in kernel">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Mar 30 12:37:19 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005911.html">[Haiku-bugs] [Haiku] #837: [app_server] crash in	Desktop::Cursor()
+</A></li>
+        <LI>Next message: <A HREF="005966.html">[Haiku-bugs] [Haiku] #1982: unmount bug: PANIC: vm_page_fault: unhandled page fault in kernel
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5912">[ date ]</a>
+              <a href="thread.html#5912">[ thread ]</a>
+              <a href="subject.html#5912">[ subject ]</a>
+              <a href="author.html#5912">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1982: unmount bug: PANIC: vm_page_fault: unhandled page fault in kernel
+---------------------------+------------------------------------------------
+ Reporter:  thorn          |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1 development
+ Platform:  x86            |  
+---------------------------+------------------------------------------------
+ Haiku r24635
+
+ how to repeat:
+
+ * mount bfs volume from tracker (for example /work)
+ * in terminal - ''cd /work''
+ * in tracker - unmount volume and press 'cancel'
+ * in tracker - unmount volume again
+ * in terminal - ''ls''
+
+ {{{
+ vm_soft_fault: va 0xdeadbef3 not covered by area in address space
+ vm_page_fault: vm_soft_fault returned error 'Bad address' on fault at
+ 0xdeadbef3, ip 0x80047d37, write 0, user 0, thread 0x86
+ PANIC: vm_page_fault: unhandled page fault in kernel space at 0xdeadbef3,
+ ip 0x80047d37
+
+ Welcome to Kernel Debugging Land...
+ Running on CPU 0
+ kdebug&gt; bt
+ stack trace for thread 134 &quot;sh&quot;
+     kernel stack: 0x92720000 to 0x92724000
+       user stack: 0x7efe7000 to 0x7ffe7000
+ frame            caller     &lt;image&gt;:function + offset
+ 92723a18 (+  52) 800843f3   &lt;kernel&gt;:invoke_debugger_command + 0x00cf
+ 92723a4c (+  64) 80085194   &lt;kernel&gt;:_ParseCommand__16ExpressionParserRi +
+ 0x01f8
+ 92723a8c (+  48) 80084b86
+ &lt;kernel&gt;:EvaluateCommand__16ExpressionParserPCcRi + 0x01de
+ 92723abc (+ 228) 800862a8   &lt;kernel&gt;:evaluate_debug_command + 0x0088
+ 92723ba0 (+  64) 80082f36   &lt;kernel&gt;:kernel_debugger_loop__Fv + 0x017a
+ 92723be0 (+  48) 80083be1   &lt;kernel&gt;:kernel_debugger + 0x010d
+ 92723c10 (+ 192) 80083ac9   &lt;kernel&gt;:panic + 0x0029
+ 92723cd0 (+  64) 8005ca63   &lt;kernel&gt;:vm_page_fault + 0x00ab
+ 92723d10 (+  64) 80090a85   &lt;kernel&gt;:page_fault_exception + 0x00b1
+ 92723d50 (+  12) 8009418d   &lt;kernel&gt;:int_bottom + 0x001d (nearest)
+ iframe at 0x92723d5c (end = 0x92723db4)
+  eax 0xdeadbeef     ebx 0x90a24c00      ecx 0x800c7e7b   edx 0x2e
+  esi 0x90a24c01     edi 0x90b44880      ebp 0x92723df4   esp 0x92723d90
+  eip 0x80047d37  eflags 0x10206
+  vector: 0xe, error code: 0x0
+ 92723d5c (+ 152) 80047d37
+ &lt;kernel&gt;:vnode_path_to_vnode__FP5vnodePcbiPP5vnodePxPi + 0x0103
+ 92723df4 (+  64) 800480ee   &lt;kernel&gt;:path_to_vnode__FPcbPP5vnodePxT1 +
+ 0x00de
+ 92723e34 (+  64) 800488c9
+ &lt;kernel&gt;:fd_and_path_to_vnode__FiPcbPP5vnodePxT2 + 0x0061
+ 92723e74 (+  64) 8004ccd5   &lt;kernel&gt;:common_path_read_stat__FiPcbP4statT2
+ + 0x0031
+ 92723eb4 (+ 144) 8005198b   &lt;kernel&gt;:_user_read_stat + 0x00eb
+ 92723f44 (+ 100) 80094302   &lt;kernel&gt;:pre_syscall_debug_done + 0x0002
+ (nearest)
+ iframe at 0x92723fa8 (end = 0x92724000)
+  eax 0x72           ebx 0x33459c        ecx 0x7ffe6c10   edx 0xffff0104
+  esi 0x0            edi 0x1800ce13      ebp 0x7ffe6c4c   esp 0x92723fdc
+  eip 0xffff0104  eflags 0x207
+  vector: 0x63, error code: 0x0
+ 92723fa8 (+   0) ffff0104
+ 7ffe6c4c (+  48) 00310499   &lt;libroot.so&gt;:stat + 0x0025
+ 7ffe6c7c (+ 128) 00244f57   &lt;_APP_&gt;:user_command_matches + 0x04cb
+ (nearest)
+ 7ffe6cfc (+  48) 00244882   &lt;_APP_&gt;:find_path_file + 0x009a (nearest)
+ 7ffe6d2c (+  48) 002448af   &lt;_APP_&gt;:find_path_file + 0x00c7 (nearest)
+ 7ffe6d5c (+  48) 002447e1   &lt;_APP_&gt;:find_user_command + 0x0021
+ 7ffe6d8c (+  48) 00244a50   &lt;_APP_&gt;:search_for_command + 0x0138
+ 7ffe6dbc (+  48) 00227bcc   &lt;_APP_&gt;:setup_async_signals + 0x00dc (nearest)
+ 7ffe6dec (+ 112) 002271c1   &lt;_APP_&gt;:execute_command_internal + 0x344d
+ (nearest)
+ 7ffe6e5c (+  96) 00224232   &lt;_APP_&gt;:execute_command_internal + 0x04be
+ 7ffe6ebc (+  80) 00223bbd   &lt;_APP_&gt;:execute_command + 0x0065
+ 7ffe6f0c (+  48) 0021f879   &lt;_APP_&gt;:reader_loop + 0x01d1
+ 7ffe6f3c (+  64) 0021dab6   &lt;_APP_&gt;:main + 0x07b2
+ 7ffe6f7c (+  48) 00216773   &lt;_APP_&gt;:_start + 0x005b
+ 7ffe6fac (+  48) 0010078e   1358:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">runtime_loader_seg0ro at 0x00100000</A> + 0x78e
+ 7ffe6fdc (+   0) 7ffe6fec   1357:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">sh_main_stack at 0x7efe7000</A> + 0xffffec
+ kdebug&gt;
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1982">http://dev.haiku-os.org/ticket/1982</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005911.html">[Haiku-bugs] [Haiku] #837: [app_server] crash in	Desktop::Cursor()
+</A></li>
+	<LI>Next message: <A HREF="005966.html">[Haiku-bugs] [Haiku] #1982: unmount bug: PANIC: vm_page_fault: unhandled page fault in kernel
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5912">[ date ]</a>
+              <a href="thread.html#5912">[ thread ]</a>
+              <a href="subject.html#5912">[ subject ]</a>
+              <a href="author.html#5912">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

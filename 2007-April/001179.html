@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1185: Yet another story about non-working ps2 keyboards on laptop.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231185%3A%20Yet%20another%20story%20about%20non-working%20ps2%0A%20keyboards%20on%20laptop.&In-Reply-To=%3C043.10af14e9c9a804dc45fed9cfa5e52d37%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001178.html">
+   <LINK REL="Next"  HREF="001180.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1185: Yet another story about non-working ps2 keyboards on laptop.</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231185%3A%20Yet%20another%20story%20about%20non-working%20ps2%0A%20keyboards%20on%20laptop.&In-Reply-To=%3C043.10af14e9c9a804dc45fed9cfa5e52d37%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1185: Yet another story about non-working ps2 keyboards on laptop.">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Apr 28 08:51:18 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001178.html">[Haiku-bugs] [Haiku] #1106: Port USB mass storage driver to new SCSI module API
+</A></li>
+        <LI>Next message: <A HREF="001180.html">[Haiku-bugs] [Haiku] #1185: Yet another story about non-working ps2 keyboards on laptop.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1179">[ date ]</a>
+              <a href="thread.html#1179">[ thread ]</a>
+              <a href="subject.html#1179">[ subject ]</a>
+              <a href="author.html#1179">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1185: Yet another story about non-working ps2 keyboards on laptop.
+----------------------------------+-----------------------------------------
+ Reporter:  siarzhuk              |       Owner:  marcusoverhagen
+     Type:  bug                   |      Status:  new            
+ Priority:  high                  |   Milestone:  R1             
+Component:  Drivers/Keyboard/PS2  |     Version:  R1 development 
+ Platform:  All                   |  
+----------------------------------+-----------------------------------------
+ This problem is observed on sis620-based laptop.
+
+ The Problem: Inbound keyboard doesn't work. External one, attached to ps/2
+ extension port has the same problem. Keyboard mode LEDs (Num Lock, Caps
+ Lock etc.) are off and don't react on corresponding keys.
+ Both inbound (Synaptic) touchpad connected to ps/2 bus and external ps/2
+ mouse at mentioned above extension port are working OK. The problem is
+ observed only with keyboards.
+
+ The syslog acquired with activated in ps2 bus manager extra debug trace
+ info is attached. The only editing I made - removing a lot of same &quot;mouse
+ events&quot; blocks to reduce the size. The system was boot without any devices
+ attached to ps2 extension port. In other words only inbound keyboard and
+ touchpad were used during this test. No other modules were removed from
+ the Haiku partition before the test. The Haiku was installed on this
+ partition typically by jam build.
+
+ NOTE: This problem arise on my laptop about 3-4 months ago. Before this
+ time, the ps2 keyboard was working almost OK. There were some timeouts
+ before keyboards become available. In other words after Haiku loaded
+ completely I have to wait about 20-30 seconds before keyboard become
+ available. Both Tracker and Terminal windows at this time already opened.
+ Only keyboard was &quot;dead&quot;.
+
+ Please let me know if you need an additional info or more debugging and
+ testing. Hope this information help you to resolve the problem.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1185">http://dev.haiku-os.org/ticket/1185</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001178.html">[Haiku-bugs] [Haiku] #1106: Port USB mass storage driver to new SCSI module API
+</A></li>
+	<LI>Next message: <A HREF="001180.html">[Haiku-bugs] [Haiku] #1185: Yet another story about non-working ps2 keyboards on laptop.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1179">[ date ]</a>
+              <a href="thread.html#1179">[ thread ]</a>
+              <a href="subject.html#1179">[ subject ]</a>
+              <a href="author.html#1179">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

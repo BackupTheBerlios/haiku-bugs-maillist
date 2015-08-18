@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3760: partition 'out of space' when	building
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233760%3A%20partition%20%27out%20of%20space%27%20when%0A%09building&In-Reply-To=%3C049.6be2f584a46724890e96606343544367%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="016095.html">
+   <LINK REL="Next"  HREF="016097.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3760: partition 'out of space' when	building</H1>
+    <B>koki</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233760%3A%20partition%20%27out%20of%20space%27%20when%0A%09building&In-Reply-To=%3C049.6be2f584a46724890e96606343544367%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3760: partition 'out of space' when	building">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Apr 13 18:28:53 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="016095.html">[Haiku-bugs] [Haiku] #3760: partition 'out of space' when building
+</A></li>
+        <LI>Next message: <A HREF="016097.html">[Haiku-bugs] [Haiku] #3760: partition 'out of space' when	building
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16096">[ date ]</a>
+              <a href="thread.html#16096">[ thread ]</a>
+              <a href="subject.html#16096">[ subject ]</a>
+              <a href="author.html#16096">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3760: partition 'out of space' when building
+--------------------------+-------------------------------------------------
+ Reporter:  luroh         |       Owner:  bonefish      
+     Type:  bug           |      Status:  new           
+ Priority:  normal        |   Milestone:  R1            
+Component:  Build System  |     Version:  R1 development
+Blockedby:                |    Platform:  All           
+ Blocking:                |  
+--------------------------+-------------------------------------------------
+
+Comment(by koki):
+
+ I have a similar problem, where jam -q now stays at the &quot;Creating
+ image...&quot; stage a very long time (used to be a minute or two; it now stays
+ there like five minutes) and then spits the following error message:
+
+ {{{
+ Creating image ...
+ Error: writing to device file /dev/sda1 failed (No space left on device)
+
+ export imagePath=&quot;/dev/sda1&quot;
+ export isImage=&quot;1&quot;
+ export isVMwareImage=&quot;&quot;
+ build/scripts/build_haiku_image generated/haiku.image-init-vars
+ generated/haiku.image-make-dirs generated/haiku.image-copy-files
+ generated/haiku.image-unzip-files
+
+ ...failed BuildHaikuImage1 /dev/sda1 ...
+ ...removing /dev/sda1
+ ...failed updating 1 target(s)...
+ ...updated 423 target(s)...
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">jorge at jorge-laptop</A>:~/develop/haiku/trunk$
+ }}}
+
+ This is at r30144.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3760#comment:1">http://dev.haiku-os.org/ticket/3760#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="016095.html">[Haiku-bugs] [Haiku] #3760: partition 'out of space' when building
+</A></li>
+	<LI>Next message: <A HREF="016097.html">[Haiku-bugs] [Haiku] #3760: partition 'out of space' when	building
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16096">[ date ]</a>
+              <a href="thread.html#16096">[ thread ]</a>
+              <a href="subject.html#16096">[ subject ]</a>
+              <a href="author.html#16096">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

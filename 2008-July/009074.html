@@ -1,0 +1,164 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2535: Deadlock discovered: usb explore (legacy mutex) - sh (devfs mutex)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-July/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232535%3A%20Deadlock%20discovered%3A%20usb%20explore%0A%20%28legacy%20mutex%29%20-%20sh%20%28devfs%20mutex%29&In-Reply-To=%3C042.192a0aec42da9c9c6d55e28eb579e336%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009073.html">
+   <LINK REL="Next"  HREF="009087.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2535: Deadlock discovered: usb explore (legacy mutex) - sh (devfs mutex)</H1>
+    <B>emitrax</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232535%3A%20Deadlock%20discovered%3A%20usb%20explore%0A%20%28legacy%20mutex%29%20-%20sh%20%28devfs%20mutex%29&In-Reply-To=%3C042.192a0aec42da9c9c6d55e28eb579e336%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2535: Deadlock discovered: usb explore (legacy mutex) - sh (devfs mutex)">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Jul 23 11:21:16 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009073.html">[Haiku-bugs] [Haiku] #1808: [Screen] will not close if BMenu is	activated
+</A></li>
+        <LI>Next message: <A HREF="009087.html">[Haiku-bugs] [Haiku] #2535: Deadlock discovered: usb explore (legacy mutex) - sh (devfs mutex)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9074">[ date ]</a>
+              <a href="thread.html#9074">[ thread ]</a>
+              <a href="subject.html#9074">[ subject ]</a>
+              <a href="author.html#9074">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2535: Deadlock discovered: usb explore (legacy mutex) - sh (devfs mutex)
+-----------------------+----------------------------------------------------
+ Reporter:  emitrax    |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+Blockedby:             |    Platform:  All           
+ Blocking:             |  
+-----------------------+----------------------------------------------------
+ Since I don't know which lock should be held first (there should be an
+ order) I'll leave it to someone else.
+
+ {{{
+ kdebug&gt; thread 738
+ THREAD: 0x914de000
+ id:                 738 (0x2e2)
+ name:               &quot;sh&quot;
+ all_next:           0x9149d800
+ team_next:          0x00000000
+ q_next:             0x913c4800
+ priority:           10 (next 10)
+ state:              waiting
+ next_state:         waiting
+ cpu:                0x00000000
+ sig_pending:        0x0 (blocked: 0x0)
+ in_kernel:          1
+ waiting for:        mutex 0x8010129c
+ fault_handler:      0x00000000
+ args:               0x90d1c4b0 0x00000000
+ entry:              0x800458ac
+ team:               0x90cc42e8, &quot;sh&quot;
+   exit.sem:         8263
+   exit.status:      0x0 (No error)
+   exit.reason:      0x0
+   exit.signal:      0x0
+   exit.waiters:
+ kernel_stack_area:  15626
+ kernel_stack_base:  0x90b11000
+ user_stack_area:    15628
+ user_stack_base:    0x7efef000
+ user_local_storage: 0x7ffef000
+ kernel_errno:       0x0 (No error)
+ kernel_time:        10903338
+ user_time:          3868782
+ flags:              0x0
+ architecture dependant section:
+         esp: 0x90b149a8
+         ss: 0x00000010
+         fpu_state at 0x914de380
+ kdebug&gt; mutex 0x8010129c
+ mutex 0x8010129c:
+   name:            legacy driver
+   flags:           0x0
+   holder:          25
+   waiting threads: 738
+ kdebug&gt; thread 25
+ THREAD: 0x913c3800
+ id:                 25 (0x19)
+ name:               &quot;usb explore&quot;
+ all_next:           0x00000000
+ team_next:          0x913c3000
+ q_next:             0x800f79c0
+ priority:           5 (next 5)
+ state:              waiting
+ next_state:         waiting
+ cpu:                0x00000000
+ sig_pending:        0x0 (blocked: 0x0)
+ in_kernel:          1
+ waiting for:        mutex 0x90b7d9b8
+ fault_handler:      0x00000000
+ args:               0x90b6d500 0x00000000
+ entry:              0x80700858
+ team:               0x90b7b000, &quot;kernel_team&quot;
+   exit.sem:         100
+   exit.status:      0x0 (No error)
+   exit.reason:      0x0
+   exit.signal:      0x0
+   exit.waiters:
+ kernel_stack_area:  115
+ kernel_stack_base:  0x8016e000
+ user_stack_area:    -1
+ user_stack_base:    0x00000000
+ user_local_storage: 0x00000000
+ kernel_errno:       0x0 (No error)
+ kernel_time:        452272
+ user_time:          0
+ flags:              0x0
+ architecture dependant section:
+         esp: 0x80171cbc
+         ss: 0x00000010
+         fpu_state at 0x913c3b80
+ kdebug&gt; mutex 0x90b7d9b8
+ mutex 0x90b7d9b8:
+   name:            devfs lock
+   flags:           0x0
+   holder:          738
+   waiting threads: 25 2786 2820 2825
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2535">http://dev.haiku-os.org/ticket/2535</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009073.html">[Haiku-bugs] [Haiku] #1808: [Screen] will not close if BMenu is	activated
+</A></li>
+	<LI>Next message: <A HREF="009087.html">[Haiku-bugs] [Haiku] #2535: Deadlock discovered: usb explore (legacy mutex) - sh (devfs mutex)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9074">[ date ]</a>
+              <a href="thread.html#9074">[ thread ]</a>
+              <a href="subject.html#9074">[ subject ]</a>
+              <a href="author.html#9074">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1454: Running &quot;tar zxf&quot; on 1.4 MB tar.gz file results in KDL
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231454%3A%20Running%20%22tar%20zxf%22%20on%201.4%20MB%20tar.gz%0A%20file%20results%20in%20KDL&In-Reply-To=%3C054.aeb04468dc846acaf2ee8362728c7997%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002607.html">
+   <LINK REL="Next"  HREF="002609.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1454: Running &quot;tar zxf&quot; on 1.4 MB tar.gz file results in KDL</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231454%3A%20Running%20%22tar%20zxf%22%20on%201.4%20MB%20tar.gz%0A%20file%20results%20in%20KDL&In-Reply-To=%3C054.aeb04468dc846acaf2ee8362728c7997%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1454: Running &quot;tar zxf&quot; on 1.4 MB tar.gz file results in KDL">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Sep  6 03:07:44 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002607.html">[Haiku-bugs] [Haiku] #1454: Running &quot;tar zxf&quot; on 1.4 MB tar.gz file results in KDL
+</A></li>
+        <LI>Next message: <A HREF="002609.html">[Haiku-bugs] [Haiku] #1454: Running &quot;tar zxf&quot; on 1.4 MB tar.gz file results in KDL
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2608">[ date ]</a>
+              <a href="thread.html#2608">[ thread ]</a>
+              <a href="subject.html#2608">[ subject ]</a>
+              <a href="author.html#2608">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1454: Running &quot;tar zxf&quot; on 1.4 MB tar.gz file results in KDL
+----------------------------+-----------------------------------------------
+  Reporter:  leavengood     |       Owner:  axeld         
+      Type:  bug            |      Status:  new           
+  Priority:  normal         |   Milestone:  R1            
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |    Platform:  x86           
+----------------------------+-----------------------------------------------
+Comment (by leavengood):
+
+ Also this was on VMWare running in Linux and compiled with GCC4.
+
+ FYI the tar.gz in question expands to 16.6 MB with 3757 files. If someone
+ wishes to test with it I uploaded it to
+ <A HREF="http://ryanleavengood.com/files/mozilla.tar.gz">http://ryanleavengood.com/files/mozilla.tar.gz</A>
+
+ I just tested on r22185 compiled with GCC2 and it was fine. So it seems to
+ be a GCC4-only issue.
+
+ Another interesting thing was the expanded file seemed to consume 64.3 MB
+ of space on the drive. In other words my 250 MB image had 90.7 MB used
+ before the untarring, then 155 MB used after. Yet Tracker only shows 16.6
+ MB in that directory. Any ideas why? Even at 4K blocks, 3757 files would
+ only need 15,388,672 bytes if each file used a block.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1454#comment:1">http://dev.haiku-os.org/ticket/1454#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002607.html">[Haiku-bugs] [Haiku] #1454: Running &quot;tar zxf&quot; on 1.4 MB tar.gz file results in KDL
+</A></li>
+	<LI>Next message: <A HREF="002609.html">[Haiku-bugs] [Haiku] #1454: Running &quot;tar zxf&quot; on 1.4 MB tar.gz file results in KDL
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2608">[ date ]</a>
+              <a href="thread.html#2608">[ thread ]</a>
+              <a href="subject.html#2608">[ subject ]</a>
+              <a href="author.html#2608">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1208: Adding a &quot;Query&quot;-icon (easy)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231208%3A%20Adding%20a%20%22Query%22-icon%20%28easy%29&In-Reply-To=%3C053.38e0f194dca8b686e5c34b93a75a8f15%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003337.html">
+   <LINK REL="Next"  HREF="003340.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1208: Adding a &quot;Query&quot;-icon (easy)</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231208%3A%20Adding%20a%20%22Query%22-icon%20%28easy%29&In-Reply-To=%3C053.38e0f194dca8b686e5c34b93a75a8f15%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1208: Adding a &quot;Query&quot;-icon (easy)">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Oct 25 18:28:36 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003337.html">[Haiku-bugs] [Haiku] #1427: Firefox crashes on start
+</A></li>
+        <LI>Next message: <A HREF="003340.html">[Haiku-bugs] [Haiku] #562: [Gobe Productive] doesnt load splash screen correctly
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3338">[ date ]</a>
+              <a href="thread.html#3338">[ thread ]</a>
+              <a href="subject.html#3338">[ subject ]</a>
+              <a href="author.html#3338">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1208: Adding a &quot;Query&quot;-icon (easy)
+----------------------------------+-----------------------------------------
+  Reporter:  humdinger            |       Owner:  stippi        
+      Type:  enhancement          |      Status:  new           
+  Priority:  normal               |   Milestone:  R1            
+ Component:  - Applications/Mail  |     Version:  R1 development
+Resolution:                       |    Platform:  All           
+----------------------------------+-----------------------------------------
+Comment (by humdinger):
+
+ Replying to [comment:7 stippi]:
+ &gt; Could someone explain to me how this is &quot;supposed&quot; to work? Am I
+ creating the
+ &gt; correct kind of queries? Is it too late in the day and my brain too
+ tired?
+
+ I'm not sure you refer to your code so far or the principle in general
+ from a user's perspective. If it's the latter...
+
+ The Mail app should use the queries defined in /boot/home/mail/queries and
+ fill out the search strings with the according ones of the current email.
+
+ So, the template query &quot;Same Sender&quot; would look like this:
+ ((MAIL:from==&quot;*[tT][eE][sS][tT]*&quot;)&amp;&amp;(BEOS:TYPE==&quot;text/x-email&quot;))
+
+ When invoking the menu &quot;Query|Same Sender&quot;, Mail would replace the search
+ string (or strings when someone created a query template with more than
+ one attribute to search) with the MAIL:from attribute of the current email
+ file.
+
+ The same for &quot;Same Subject&quot;, replacing MAIL:subject.
+ And &quot;Same Recipient&quot; (only really useful when composing a mail or opening
+ one from your Sent folder, since for anything else you'll yourself be the
+ recipient... :) ), replacing MAIL:to
+
+ Selecting &quot;Edit Queries...&quot; (which IMO should be renamed to &quot;Create new
+ Query...) should open the folder /boot/home/mail/queries and a &quot;Find...&quot;
+ query window set to &quot;E-Mail by Attribute&quot;. Then you can save your new
+ query template via drag&amp;drop.
+ Existing queries are altered as usual by invoking them and choosing &quot;Edit
+ Query&quot; (Alt-E) from its menu.
+
+ I like the submenu approach in the Query menu (though that doesn't work
+ right now, does it?). You can quickly open an email from there directly.
+ There should be sanity checks if your query would have hundreds of results
+ though...
+ Maybe an entry after 20 items called &quot;...more...&quot; that would do the same
+ thing as if you clicked on the parent menu entry, e.g. &quot;Same Sender&quot;,
+ which should open the query result window.
+
+ Question is: How do you display the results in the submenu? If you query
+ for Same Sender, showing the queried attribute &quot;FROM&quot; wouldn't make sense.
+ I'd all be the Same Sender, of course... Here, the subject would be
+ informative.
+ Vice versa with Same Subject, where the sender (FROM) would be nice...
+ I guess we'd have to settle on the ugly filename. If we don't special-case
+ the above two queries.
+ Or we forget about the submenu and just open the query result window.
+
+ This is getting long. I apologise and will elaborate if you need more
+ opinion :)
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1208#comment:8">http://dev.haiku-os.org/ticket/1208#comment:8</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003337.html">[Haiku-bugs] [Haiku] #1427: Firefox crashes on start
+</A></li>
+	<LI>Next message: <A HREF="003340.html">[Haiku-bugs] [Haiku] #562: [Gobe Productive] doesnt load splash screen correctly
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3338">[ date ]</a>
+              <a href="thread.html#3338">[ thread ]</a>
+              <a href="subject.html#3338">[ subject ]</a>
+              <a href="author.html#3338">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

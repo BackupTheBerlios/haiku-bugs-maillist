@@ -1,0 +1,663 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3092: trac &quot;View Tickets&quot; doesn't work
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-December/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233092%3A%20trac%20%22View%20Tickets%22%20doesn%27t%20work&In-Reply-To=%3C059.c2cb01e1f0d263198305eb595834884f%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="013222.html">
+   <LINK REL="Next"  HREF="013224.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3092: trac &quot;View Tickets&quot; doesn't work</H1>
+    <B>nielx</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233092%3A%20trac%20%22View%20Tickets%22%20doesn%27t%20work&In-Reply-To=%3C059.c2cb01e1f0d263198305eb595834884f%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3092: trac &quot;View Tickets&quot; doesn't work">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Dec 20 00:09:53 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="013222.html">[Haiku-bugs] [Haiku] #3063: [Trac] OSError: [Errno 24] Too many	open files
+</A></li>
+        <LI>Next message: <A HREF="013224.html">[Haiku-bugs] [Haiku] #3093: new trac users can't attach files
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13223">[ date ]</a>
+              <a href="thread.html#13223">[ thread ]</a>
+              <a href="subject.html#13223">[ subject ]</a>
+              <a href="author.html#13223">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3092: trac &quot;View Tickets&quot; doesn't work
+------------------------------+---------------------------------------------
+  Reporter:  marcusoverhagen  |       Owner:  nielx         
+      Type:  bug              |      Status:  new           
+  Priority:  normal           |   Milestone:  R1            
+ Component:  Website/Trac     |     Version:  R1 development
+Resolution:                   |   Blockedby:                
+  Platform:  All              |    Blocking:                
+------------------------------+---------------------------------------------
+Changes (by nielx):
+
+  * owner:  haiku-web =&gt; nielx
+
+
+Old description:
+
+&gt;<i> Oops&#8230;
+</I>&gt;<i> Trac detected an internal error:
+</I>&gt;<i>
+</I>&gt;<i> TemplateNotFound: Template &quot;query_results.html&quot; not found
+</I>&gt;<i>
+</I>&gt;<i> If you think this should work you can reproduce the problem, you should
+</I>&gt;<i> consider reporting this to the Trac team.
+</I>&gt;<i>
+</I>&gt;<i> Before you do that, though, please first try searching for similar
+</I>&gt;<i> issues, as it is quite likely that this problem has been reported before.
+</I>&gt;<i> For questions about installation and configuration of Trac, please try
+</I>&gt;<i> the mailing list instead of filing a ticket.
+</I>&gt;<i>
+</I>&gt;<i> Otherwise, please ==== How to Reproduce ==== While doing a GET operation
+</I>&gt;<i> on `/query`, Trac issued an internal error. ''(please provide additional
+</I>&gt;<i> details here)'' User Agent was: `Mozilla/5.0 (Windows; U; Windows NT 5.0;
+</I>&gt;<i> de; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3` ==== System Information
+</I>&gt;<i> ==== || '''Trac''' || `0.11.1` || || '''Python''' || `2.5.1 (r251:54863,
+</I>&gt;<i> Nov 3 2007, 02:54:36) [C]` || || '''setuptools''' || `0.6c8` || ||
+</I>&gt;<i> '''psycopg2''' || `2.0.6` || || '''Genshi''' || `0.5` || ||
+</I>&gt;<i> '''Pygments''' || `0.10` || || '''Subversion''' || `1.4.5 (r25188)` || ||
+</I>&gt;<i> '''jQuery:''' || `1.2.6` || ==== Python Traceback ==== {{{ Traceback
+</I>&gt;<i> (most recent call last): File &quot;/opt/csw/lib/python/site-
+</I>&gt;<i> packages/Trac-0.11.1-py2.5.egg/trac/web/main.py&quot;, line 423, in
+</I>&gt;<i> _dispatch_request dispatcher.dispatch(req) File &quot;/opt/csw/lib/python
+</I>&gt;<i> /site-packages/Trac-0.11.1-py2.5.egg/trac/web/main.py&quot;, line 219, in
+</I>&gt;<i> dispatch data, content_type) File &quot;/opt/csw/lib/python/site-
+</I>&gt;<i> packages/Trac-0.11.1-py2.5.egg/trac/web/chrome.py&quot;, line 683, in
+</I>&gt;<i> render_template template = self.load_template(filename, method=method)
+</I>&gt;<i> File &quot;/opt/csw/lib/python/site-
+</I>&gt;<i> packages/Trac-0.11.1-py2.5.egg/trac/web/chrome.py&quot;, line 667, in
+</I>&gt;<i> load_template return self.templates.load(filename, cls=cls) File
+</I>&gt;<i> &quot;build/bdist.solaris-2.10-i86pc/egg/genshi/template/loader.py&quot;, line 221,
+</I>&gt;<i> in load filename, encoding=encoding) File
+</I>&gt;<i> &quot;build/bdist.solaris-2.10-i86pc/egg/genshi/template/loader.py&quot;, line 259,
+</I>&gt;<i> in _instantiate allow_exec=self.allow_exec) File
+</I>&gt;<i> &quot;build/bdist.solaris-2.10-i86pc/egg/genshi/template/base.py&quot;, line 377,
+</I>&gt;<i> in __init__ self.stream = list(self._prepare(self._parse(source,
+</I>&gt;<i> encoding))) File
+</I>&gt;<i> &quot;build/bdist.solaris-2.10-i86pc/egg/genshi/template/base.py&quot;, line 444,
+</I>&gt;<i> in _prepare cls=cls or self.__class__) File
+</I>&gt;<i> &quot;build/bdist.solaris-2.10-i86pc/egg/genshi/template/loader.py&quot;, line 231,
+</I>&gt;<i> in load raise TemplateNotFound(filename, search_path) TemplateNotFound:
+</I>&gt;<i> Template &quot;query_results.html&quot; not found }}} a new ticket at the Trac
+</I>&gt;<i> project site, where you can describe the problem and explain how to
+</I>&gt;<i> reproduce it.
+</I>&gt;<i> Python Traceback
+</I>&gt;<i> Most recent call last:
+</I>&gt;<i>
+</I>&gt;<i>     * File &quot;/opt/csw/lib/python/site-
+</I>&gt;<i> packages/Trac-0.11.1-py2.5.egg/trac/web/main.py&quot;, line 423, in
+</I>&gt;<i> _dispatch_request
+</I>&gt;<i>       Code fragment:
+</I>&gt;<i>        418. try:
+</I>&gt;<i>        419. if not env and env_error:
+</I>&gt;<i>        420. raise HTTPInternalError(env_error)
+</I>&gt;<i>        421. try:
+</I>&gt;<i>        422. dispatcher = RequestDispatcher(env)
+</I>&gt;<i>        423. dispatcher.dispatch(req)
+</I>&gt;<i>        424. except RequestDone:
+</I>&gt;<i>        425. pass
+</I>&gt;<i>        426. resp = req._response or []
+</I>&gt;<i>        427.
+</I>&gt;<i>        428. except HTTPException, e:
+</I>&gt;<i>       Local variables:
+</I>&gt;<i>       Name      Value
+</I>&gt;<i>       after     [u' except RequestDone:', u' pass', u' resp = ...
+</I>&gt;<i>       before    [u' try:', u' if not env and env_error:', u' raise ...
+</I>&gt;<i>       dispatcher        &lt;trac.web.main.RequestDispatcher object at
+</I>&gt;<i> 0x9aa86cc&gt;
+</I>&gt;<i>       e         TemplateNotFound(u'Template &quot;query_results.html&quot; not
+</I>&gt;<i> found',)
+</I>&gt;<i>       env       &lt;trac.env.Environment object at 0x96296ec&gt;
+</I>&gt;<i>       env_error         None
+</I>&gt;<i>       exc_info  (&lt;class 'genshi.template.loader.TemplateNotFound'&gt;, ...
+</I>&gt;<i>       filename  '/opt/csw/lib/python/site-
+</I>&gt;<i> packages/Trac-0.11.1-py2.5.egg/trac/web/main.py'
+</I>&gt;<i>       frames    [{'function': '_dispatch_request', 'lines_before': [u'
+</I>&gt;<i> try:', u' ...
+</I>&gt;<i>       has_admin         True
+</I>&gt;<i>       line      u' dispatcher.dispatch(req)'
+</I>&gt;<i>       lineno    422
+</I>&gt;<i>       message   u'TemplateNotFound: Template &quot;query_results.html&quot; not
+</I>&gt;<i> found'
+</I>&gt;<i>       req       &lt;Request &quot;GET u'/query'&quot;&gt;
+</I>&gt;<i>       resp      []
+</I>&gt;<i>       tb        &lt;traceback object at 0xb2a2c0c&gt;
+</I>&gt;<i>       tb_hide   None
+</I>&gt;<i>       traceback         'Traceback (most recent call last):\n File ...
+</I>&gt;<i>     * File &quot;/opt/csw/lib/python/site-
+</I>&gt;<i> packages/Trac-0.11.1-py2.5.egg/trac/web/main.py&quot;, line 219, in dispatch
+</I>&gt;<i>       Code fragment:
+</I>&gt;<i>        214. out = StringIO()
+</I>&gt;<i>        215. pprint(data, out)
+</I>&gt;<i>        216. req.send(out.getvalue(), 'text/plain')
+</I>&gt;<i>        217. else:
+</I>&gt;<i>        218. output = chrome.render_template(req, template,
+</I>&gt;<i>        219. data, content_type)
+</I>&gt;<i>        220. # Give the session a chance to persist changes
+</I>&gt;<i>        221. if req.session:
+</I>&gt;<i>        222. req.session.save()
+</I>&gt;<i>        223.
+</I>&gt;<i>        224. req.send(output, content_type or 'text/html')
+</I>&gt;<i>       Local variables:
+</I>&gt;<i>       Name      Value
+</I>&gt;<i>       chosen_handler    &lt;trac.ticket.query.QueryModule object at
+</I>&gt;<i> 0x9aa874c&gt;
+</I>&gt;<i>       chrome    &lt;trac.web.chrome.Chrome object at 0x9a9afec&gt;
+</I>&gt;<i>       content_type      None
+</I>&gt;<i>       data      {'tickets': [{u'status': u'assigned', u'changetime': ...
+</I>&gt;<i>       err       (&lt;class 'genshi.template.loader.TemplateNotFound'&gt;, ...
+</I>&gt;<i>       handler   &lt;trac.ticket.query.QueryModule object at 0x9aa874c&gt;
+</I>&gt;<i>       req       &lt;Request &quot;GET u'/query'&quot;&gt;
+</I>&gt;<i>       resp      ('query.html', {'tickets': [{u'status': u'assigned',
+</I>&gt;<i> u'changetime': ...
+</I>&gt;<i>       self      &lt;trac.web.main.RequestDispatcher object at 0x9aa86cc&gt;
+</I>&gt;<i>       template  'query.html'
+</I>&gt;<i>     * File &quot;/opt/csw/lib/python/site-
+</I>&gt;<i> packages/Trac-0.11.1-py2.5.egg/trac/web/chrome.py&quot;, line 683, in
+</I>&gt;<i> render_template
+</I>&gt;<i>       Code fragment:
+</I>&gt;<i>        678. if content_type is None:
+</I>&gt;<i>        679. content_type = 'text/html'
+</I>&gt;<i>        680. method = {'text/html': 'xhtml',
+</I>&gt;<i>        681. 'text/plain': 'text'}.get(content_type, 'xml')
+</I>&gt;<i>        682.
+</I>&gt;<i>        683. template = self.load_template(filename, method=method)
+</I>&gt;<i>        684. data = self.populate_data(req, data)
+</I>&gt;<i>        685.
+</I>&gt;<i>        686. stream = template.generate(**data)
+</I>&gt;<i>        687.
+</I>&gt;<i>        688. # Filter through ITemplateStreamFilter plugins
+</I>&gt;<i>       Local variables:
+</I>&gt;<i>       Name      Value
+</I>&gt;<i>       content_type      'text/html'
+</I>&gt;<i>       data      {'tickets': [{u'status': u'assigned', u'changetime': ...
+</I>&gt;<i>       filename  'query.html'
+</I>&gt;<i>       fragment  False
+</I>&gt;<i>       method    'xhtml'
+</I>&gt;<i>       req       &lt;Request &quot;GET u'/query'&quot;&gt;
+</I>&gt;<i>       self      &lt;trac.web.chrome.Chrome object at 0x9a9afec&gt;
+</I>&gt;<i>     * File &quot;/opt/csw/lib/python/site-
+</I>&gt;<i> packages/Trac-0.11.1-py2.5.egg/trac/web/chrome.py&quot;, line 667, in
+</I>&gt;<i> load_template
+</I>&gt;<i>       Code fragment:
+</I>&gt;<i>        662. if method == 'text':
+</I>&gt;<i>        663. cls = TextTemplate
+</I>&gt;<i>        664. else:
+</I>&gt;<i>        665. cls = MarkupTemplate
+</I>&gt;<i>        666.
+</I>&gt;<i>        667. return self.templates.load(filename, cls=cls)
+</I>&gt;<i>        668.
+</I>&gt;<i>        669. def render_template(self, req, filename, data,
+</I>&gt;<i> content_type=None,
+</I>&gt;<i>        670. fragment=False):
+</I>&gt;<i>        671. &quot;&quot;&quot;Render the `filename` using the `data` for the context.
+</I>&gt;<i>        672.
+</I>&gt;<i>       Local variables:
+</I>&gt;<i>       Name      Value
+</I>&gt;<i>       cls       &lt;class 'genshi.template.markup.MarkupTemplate'&gt;
+</I>&gt;<i>       filename  'query.html'
+</I>&gt;<i>       method    'xhtml'
+</I>&gt;<i>       self      &lt;trac.web.chrome.Chrome object at 0x9a9afec&gt;
+</I>&gt;<i>     * File
+</I>&gt;<i> &quot;build/bdist.solaris-2.10-i86pc/egg/genshi/template/loader.py&quot;, line 221,
+</I>&gt;<i> in load
+</I>&gt;<i>       Local variables:
+</I>&gt;<i>       Name      Value
+</I>&gt;<i>       cachekey  'query.html'
+</I>&gt;<i>       cls       &lt;class 'genshi.template.markup.MarkupTemplate'&gt;
+</I>&gt;<i>       encoding  None
+</I>&gt;<i>       filename  'query.html'
+</I>&gt;<i>       fileobj   &lt;closed file ...
+</I>&gt;<i>       filepath  '/opt/csw/lib/python/site-
+</I>&gt;<i> packages/Trac-0.11.1-py2.5.egg/trac/ticket/templa ...
+</I>&gt;<i>       isabs     False
+</I>&gt;<i>       loadfunc  &lt;function _load_from_directory at 0xad32df4&gt;
+</I>&gt;<i>       relative_to       None
+</I>&gt;<i>       search_path       ['/var/trac/dev.haiku-os.org/templates', ...
+</I>&gt;<i>       self      &lt;genshi.template.loader.TemplateLoader object at
+</I>&gt;<i> 0x989b46c&gt;
+</I>&gt;<i>       uptodate  &lt;function _uptodate at 0xad32684&gt;
+</I>&gt;<i>     * File
+</I>&gt;<i> &quot;build/bdist.solaris-2.10-i86pc/egg/genshi/template/loader.py&quot;, line 259,
+</I>&gt;<i> in _instantiate
+</I>&gt;<i>       Local variables:
+</I>&gt;<i>       Name      Value
+</I>&gt;<i>       cls       &lt;class 'genshi.template.markup.MarkupTemplate'&gt;
+</I>&gt;<i>       encoding  None
+</I>&gt;<i>       filename  'query.html'
+</I>&gt;<i>       fileobj   &lt;closed file ...
+</I>&gt;<i>       filepath  '/opt/csw/lib/python/site-
+</I>&gt;<i> packages/Trac-0.11.1-py2.5.egg/trac/ticket/templa ...
+</I>&gt;<i>       self      &lt;genshi.template.loader.TemplateLoader object at
+</I>&gt;<i> 0x989b46c&gt;
+</I>&gt;<i>     * File &quot;build/bdist.solaris-2.10-i86pc/egg/genshi/template/base.py&quot;,
+</I>&gt;<i> line 377, in __init__
+</I>&gt;<i>       Local variables:
+</I>&gt;<i>       Name      Value
+</I>&gt;<i>       allow_exec        True
+</I>&gt;<i>       encoding  None
+</I>&gt;<i>       filename  'query.html'
+</I>&gt;<i>       filepath  '/opt/csw/lib/python/site-
+</I>&gt;<i> packages/Trac-0.11.1-py2.5.egg/trac/ticket/templa ...
+</I>&gt;<i>       loader    &lt;genshi.template.loader.TemplateLoader object at
+</I>&gt;<i> 0x989b46c&gt;
+</I>&gt;<i>       lookup    'lenient'
+</I>&gt;<i>       self      &lt;MarkupTemplate &quot;query.html&quot;&gt;
+</I>&gt;<i>       source    &lt;closed file ...
+</I>&gt;<i>     * File &quot;build/bdist.solaris-2.10-i86pc/egg/genshi/template/base.py&quot;,
+</I>&gt;<i> line 444, in _prepare
+</I>&gt;<i>       Local variables:
+</I>&gt;<i>       Name      Value
+</I>&gt;<i>       TemplateNotFound  &lt;class 'genshi.template.loader.TemplateNotFound'&gt;
+</I>&gt;<i>       cls       &lt;class 'genshi.template.markup.MarkupTemplate'&gt;
+</I>&gt;<i>       data      (u'query_results.html', &lt;class
+</I>&gt;<i> 'genshi.template.markup.MarkupTemplate'&gt;, ...
+</I>&gt;<i>       directive         &lt;ForDirective&gt;
+</I>&gt;<i>       directives        [&lt;ForDirective&gt;]
+</I>&gt;<i>       event     ('END_NS', '', (u'layout.html', 57, 0))
+</I>&gt;<i>       fallback  None
+</I>&gt;<i>       href      u'query_results.html'
+</I>&gt;<i>       kind      'INCLUDE'
+</I>&gt;<i>       namespaces        {'': u'<A HREF="http://www.w3.org/1999/xhtml">http://www.w3.org/1999/xhtml</A>', u'py': ...
+</I>&gt;<i>       pos       ('query.html', 221, 46)
+</I>&gt;<i>       self      &lt;MarkupTemplate &quot;query.html&quot;&gt;
+</I>&gt;<i>       stream    [('DOCTYPE', (u'html', u'-//W3C//DTD XHTML 1.0
+</I>&gt;<i> Strict//EN', ...
+</I>&gt;<i>       substream         &lt;generator object at 0xb45818c&gt;
+</I>&gt;<i>       tmpl      &lt;MarkupTemplate &quot;layout.html&quot;&gt;
+</I>&gt;<i>       value     {u'each': u'(type_name, type_modes), sep in
+</I>&gt;<i> separated(modes.iteritems())'}
+</I>&gt;<i>     * File
+</I>&gt;<i> &quot;build/bdist.solaris-2.10-i86pc/egg/genshi/template/loader.py&quot;, line 231,
+</I>&gt;<i> in load
+</I>&gt;<i>       Local variables:
+</I>&gt;<i>       Name      Value
+</I>&gt;<i>       cachekey  u'query_results.html'
+</I>&gt;<i>       cls       &lt;class 'genshi.template.markup.MarkupTemplate'&gt;
+</I>&gt;<i>       encoding  None
+</I>&gt;<i>       filename  u'query_results.html'
+</I>&gt;<i>       isabs     False
+</I>&gt;<i>       loadfunc  &lt;function _load_from_directory at 0xac53d14&gt;
+</I>&gt;<i>       relative_to       'query.html'
+</I>&gt;<i>       search_path       ['/var/trac/dev.haiku-os.org/templates', ...
+</I>&gt;<i>       self      &lt;genshi.template.loader.TemplateLoader object at
+</I>&gt;<i> 0x989b46c&gt;
+</I>&gt;<i>
+</I>&gt;<i> File &quot;/opt/csw/lib/python/site-
+</I>&gt;<i> packages/Trac-0.11.1-py2.5.egg/trac/web/main.py&quot;, line 423, in
+</I>&gt;<i> _dispatch_request
+</I>&gt;<i>   dispatcher.dispatch(req)
+</I>&gt;<i> File &quot;/opt/csw/lib/python/site-
+</I>&gt;<i> packages/Trac-0.11.1-py2.5.egg/trac/web/main.py&quot;, line 219, in dispatch
+</I>&gt;<i>   data, content_type)
+</I>&gt;<i> File &quot;/opt/csw/lib/python/site-
+</I>&gt;<i> packages/Trac-0.11.1-py2.5.egg/trac/web/chrome.py&quot;, line 683, in
+</I>&gt;<i> render_template
+</I>&gt;<i>   template = self.load_template(filename, method=method)
+</I>&gt;<i> File &quot;/opt/csw/lib/python/site-
+</I>&gt;<i> packages/Trac-0.11.1-py2.5.egg/trac/web/chrome.py&quot;, line 667, in
+</I>&gt;<i> load_template
+</I>&gt;<i>   return self.templates.load(filename, cls=cls)
+</I>&gt;<i> File &quot;build/bdist.solaris-2.10-i86pc/egg/genshi/template/loader.py&quot;, line
+</I>&gt;<i> 221, in loadFile
+</I>&gt;<i> &quot;build/bdist.solaris-2.10-i86pc/egg/genshi/template/loader.py&quot;, line 259,
+</I>&gt;<i> in _instantiateFile
+</I>&gt;<i> &quot;build/bdist.solaris-2.10-i86pc/egg/genshi/template/base.py&quot;, line 377,
+</I>&gt;<i> in __init__File
+</I>&gt;<i> &quot;build/bdist.solaris-2.10-i86pc/egg/genshi/template/base.py&quot;, line 444,
+</I>&gt;<i> in _prepareFile
+</I>&gt;<i> &quot;build/bdist.solaris-2.10-i86pc/egg/genshi/template/loader.py&quot;, line 231,
+</I>&gt;<i> in load
+</I>&gt;<i>
+</I>&gt;<i> System Information:
+</I>&gt;<i>
+</I>&gt;<i> User Agent: Mozilla/5.0 (Windows; U; Windows NT 5.0; de; rv:1.9.0.3)
+</I>&gt;<i> Gecko/2008092417 Firefox/3.0.3
+</I>&gt;<i> Trac:   0.11.1
+</I>&gt;<i> Python:         2.5.1 (r251:54863, Nov 3 2007, 02:54:36) [C]
+</I>&gt;<i> setuptools:     0.6c8
+</I>&gt;<i> psycopg2:       2.0.6
+</I>&gt;<i> Genshi:         0.5
+</I>&gt;<i> Pygments:       0.10
+</I>&gt;<i> Subversion:     1.4.5 (r25188)
+</I>&gt;<i> jQuery: 1.2.6
+</I>&gt;<i>
+</I>&gt;<i> TracGuide &#8212; The Trac User and Administration Guide
+</I>
+New description:
+
+ Oops&#8230;
+ Trac detected an internal error:
+
+ TemplateNotFound: Template &quot;query_results.html&quot; not found
+
+ If you think this should work you can reproduce the problem, you should
+ consider reporting this to the Trac team.
+
+ Before you do that, though, please first try searching for similar issues,
+ as it is quite likely that this problem has been reported before. For
+ questions about installation and configuration of Trac, please try the
+ mailing list instead of filing a ticket.
+
+ Otherwise, please ==== How to Reproduce ==== While doing a GET operation
+ on `/query`, Trac issued an internal error. ''(please provide additional
+ details here)'' User Agent was: `Mozilla/5.0 (Windows; U; Windows NT 5.0;
+ de; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3` ==== System Information
+ ==== || '''Trac''' || `0.11.1` || || '''Python''' || `2.5.1 (r251:54863,
+ Nov 3 2007, 02:54:36) [C]` || || '''setuptools''' || `0.6c8` || ||
+ '''psycopg2''' || `2.0.6` || || '''Genshi''' || `0.5` || || '''Pygments'''
+ || `0.10` || || '''Subversion''' || `1.4.5 (r25188)` || || '''jQuery:'''
+ || `1.2.6` || ==== Python Traceback ==== {{{ Traceback (most recent call
+ last): File &quot;/opt/csw/lib/python/site-
+ packages/Trac-0.11.1-py2.5.egg/trac/web/main.py&quot;, line 423, in
+ _dispatch_request dispatcher.dispatch(req) File &quot;/opt/csw/lib/python/site-
+ packages/Trac-0.11.1-py2.5.egg/trac/web/main.py&quot;, line 219, in dispatch
+ data, content_type) File &quot;/opt/csw/lib/python/site-
+ packages/Trac-0.11.1-py2.5.egg/trac/web/chrome.py&quot;, line 683, in
+ render_template template = self.load_template(filename, method=method)
+ File &quot;/opt/csw/lib/python/site-
+ packages/Trac-0.11.1-py2.5.egg/trac/web/chrome.py&quot;, line 667, in
+ load_template return self.templates.load(filename, cls=cls) File
+ &quot;build/bdist.solaris-2.10-i86pc/egg/genshi/template/loader.py&quot;, line 221,
+ in load filename, encoding=encoding) File
+ &quot;build/bdist.solaris-2.10-i86pc/egg/genshi/template/loader.py&quot;, line 259,
+ in _instantiate allow_exec=self.allow_exec) File
+ &quot;build/bdist.solaris-2.10-i86pc/egg/genshi/template/base.py&quot;, line 377, in
+ __init__ self.stream = list(self._prepare(self._parse(source, encoding)))
+ File &quot;build/bdist.solaris-2.10-i86pc/egg/genshi/template/base.py&quot;, line
+ 444, in _prepare cls=cls or self.__class__) File
+ &quot;build/bdist.solaris-2.10-i86pc/egg/genshi/template/loader.py&quot;, line 231,
+ in load raise TemplateNotFound(filename, search_path) TemplateNotFound:
+ Template &quot;query_results.html&quot; not found }}} a new ticket at the Trac
+ project site, where you can describe the problem and explain how to
+ reproduce it.
+ Python Traceback
+ Most recent call last:
+
+     * File &quot;/opt/csw/lib/python/site-
+ packages/Trac-0.11.1-py2.5.egg/trac/web/main.py&quot;, line 423, in
+ _dispatch_request
+       Code fragment:
+        418. try:
+        419. if not env and env_error:
+        420. raise HTTPInternalError(env_error)
+        421. try:
+        422. dispatcher = RequestDispatcher(env)
+        423. dispatcher.dispatch(req)
+        424. except RequestDone:
+        425. pass
+        426. resp = req._response or []
+        427.
+        428. except HTTPException, e:
+       Local variables:
+       Name      Value
+       after     [u' except RequestDone:', u' pass', u' resp = ...
+       before    [u' try:', u' if not env and env_error:', u' raise ...
+       dispatcher        &lt;trac.web.main.RequestDispatcher object at
+ 0x9aa86cc&gt;
+       e         TemplateNotFound(u'Template &quot;query_results.html&quot; not
+ found',)
+       env       &lt;trac.env.Environment object at 0x96296ec&gt;
+       env_error         None
+       exc_info  (&lt;class 'genshi.template.loader.TemplateNotFound'&gt;, ...
+       filename  '/opt/csw/lib/python/site-
+ packages/Trac-0.11.1-py2.5.egg/trac/web/main.py'
+       frames    [{'function': '_dispatch_request', 'lines_before': [u'
+ try:', u' ...
+       has_admin         True
+       line      u' dispatcher.dispatch(req)'
+       lineno    422
+       message   u'TemplateNotFound: Template &quot;query_results.html&quot; not
+ found'
+       req       &lt;Request &quot;GET u'/query'&quot;&gt;
+       resp      []
+       tb        &lt;traceback object at 0xb2a2c0c&gt;
+       tb_hide   None
+       traceback         'Traceback (most recent call last):\n File ...
+     * File &quot;/opt/csw/lib/python/site-
+ packages/Trac-0.11.1-py2.5.egg/trac/web/main.py&quot;, line 219, in dispatch
+       Code fragment:
+        214. out = StringIO()
+        215. pprint(data, out)
+        216. req.send(out.getvalue(), 'text/plain')
+        217. else:
+        218. output = chrome.render_template(req, template,
+        219. data, content_type)
+        220. # Give the session a chance to persist changes
+        221. if req.session:
+        222. req.session.save()
+        223.
+        224. req.send(output, content_type or 'text/html')
+       Local variables:
+       Name      Value
+       chosen_handler    &lt;trac.ticket.query.QueryModule object at
+ 0x9aa874c&gt;
+       chrome    &lt;trac.web.chrome.Chrome object at 0x9a9afec&gt;
+       content_type      None
+       data      {'tickets': [{u'status': u'assigned', u'changetime': ...
+       err       (&lt;class 'genshi.template.loader.TemplateNotFound'&gt;, ...
+       handler   &lt;trac.ticket.query.QueryModule object at 0x9aa874c&gt;
+       req       &lt;Request &quot;GET u'/query'&quot;&gt;
+       resp      ('query.html', {'tickets': [{u'status': u'assigned',
+ u'changetime': ...
+       self      &lt;trac.web.main.RequestDispatcher object at 0x9aa86cc&gt;
+       template  'query.html'
+     * File &quot;/opt/csw/lib/python/site-
+ packages/Trac-0.11.1-py2.5.egg/trac/web/chrome.py&quot;, line 683, in
+ render_template
+       Code fragment:
+        678. if content_type is None:
+        679. content_type = 'text/html'
+        680. method = {'text/html': 'xhtml',
+        681. 'text/plain': 'text'}.get(content_type, 'xml')
+        682.
+        683. template = self.load_template(filename, method=method)
+        684. data = self.populate_data(req, data)
+        685.
+        686. stream = template.generate(**data)
+        687.
+        688. # Filter through ITemplateStreamFilter plugins
+       Local variables:
+       Name      Value
+       content_type      'text/html'
+       data      {'tickets': [{u'status': u'assigned', u'changetime': ...
+       filename  'query.html'
+       fragment  False
+       method    'xhtml'
+       req       &lt;Request &quot;GET u'/query'&quot;&gt;
+       self      &lt;trac.web.chrome.Chrome object at 0x9a9afec&gt;
+     * File &quot;/opt/csw/lib/python/site-
+ packages/Trac-0.11.1-py2.5.egg/trac/web/chrome.py&quot;, line 667, in
+ load_template
+       Code fragment:
+        662. if method == 'text':
+        663. cls = TextTemplate
+        664. else:
+        665. cls = MarkupTemplate
+        666.
+        667. return self.templates.load(filename, cls=cls)
+        668.
+        669. def render_template(self, req, filename, data,
+ content_type=None,
+        670. fragment=False):
+        671. &quot;&quot;&quot;Render the `filename` using the `data` for the context.
+        672.
+       Local variables:
+       Name      Value
+       cls       &lt;class 'genshi.template.markup.MarkupTemplate'&gt;
+       filename  'query.html'
+       method    'xhtml'
+       self      &lt;trac.web.chrome.Chrome object at 0x9a9afec&gt;
+     * File &quot;build/bdist.solaris-2.10-i86pc/egg/genshi/template/loader.py&quot;,
+ line 221, in load
+       Local variables:
+       Name      Value
+       cachekey  'query.html'
+       cls       &lt;class 'genshi.template.markup.MarkupTemplate'&gt;
+       encoding  None
+       filename  'query.html'
+       fileobj   &lt;closed file ...
+       filepath  '/opt/csw/lib/python/site-
+ packages/Trac-0.11.1-py2.5.egg/trac/ticket/templa ...
+       isabs     False
+       loadfunc  &lt;function _load_from_directory at 0xad32df4&gt;
+       relative_to       None
+       search_path       ['/var/trac/dev.haiku-os.org/templates', ...
+       self      &lt;genshi.template.loader.TemplateLoader object at
+ 0x989b46c&gt;
+       uptodate  &lt;function _uptodate at 0xad32684&gt;
+     * File &quot;build/bdist.solaris-2.10-i86pc/egg/genshi/template/loader.py&quot;,
+ line 259, in _instantiate
+       Local variables:
+       Name      Value
+       cls       &lt;class 'genshi.template.markup.MarkupTemplate'&gt;
+       encoding  None
+       filename  'query.html'
+       fileobj   &lt;closed file ...
+       filepath  '/opt/csw/lib/python/site-
+ packages/Trac-0.11.1-py2.5.egg/trac/ticket/templa ...
+       self      &lt;genshi.template.loader.TemplateLoader object at
+ 0x989b46c&gt;
+     * File &quot;build/bdist.solaris-2.10-i86pc/egg/genshi/template/base.py&quot;,
+ line 377, in __init__
+       Local variables:
+       Name      Value
+       allow_exec        True
+       encoding  None
+       filename  'query.html'
+       filepath  '/opt/csw/lib/python/site-
+ packages/Trac-0.11.1-py2.5.egg/trac/ticket/templa ...
+       loader    &lt;genshi.template.loader.TemplateLoader object at
+ 0x989b46c&gt;
+       lookup    'lenient'
+       self      &lt;MarkupTemplate &quot;query.html&quot;&gt;
+       source    &lt;closed file ...
+     * File &quot;build/bdist.solaris-2.10-i86pc/egg/genshi/template/base.py&quot;,
+ line 444, in _prepare
+       Local variables:
+       Name      Value
+       TemplateNotFound  &lt;class 'genshi.template.loader.TemplateNotFound'&gt;
+       cls       &lt;class 'genshi.template.markup.MarkupTemplate'&gt;
+       data      (u'query_results.html', &lt;class
+ 'genshi.template.markup.MarkupTemplate'&gt;, ...
+       directive         &lt;ForDirective&gt;
+       directives        [&lt;ForDirective&gt;]
+       event     ('END_NS', '', (u'layout.html', 57, 0))
+       fallback  None
+       href      u'query_results.html'
+       kind      'INCLUDE'
+       namespaces        {'': u'<A HREF="http://www.w3.org/1999/xhtml">http://www.w3.org/1999/xhtml</A>', u'py': ...
+       pos       ('query.html', 221, 46)
+       self      &lt;MarkupTemplate &quot;query.html&quot;&gt;
+       stream    [('DOCTYPE', (u'html', u'-//W3C//DTD XHTML 1.0
+ Strict//EN', ...
+       substream         &lt;generator object at 0xb45818c&gt;
+       tmpl      &lt;MarkupTemplate &quot;layout.html&quot;&gt;
+       value     {u'each': u'(type_name, type_modes), sep in
+ separated(modes.iteritems())'}
+     * File &quot;build/bdist.solaris-2.10-i86pc/egg/genshi/template/loader.py&quot;,
+ line 231, in load
+       Local variables:
+       Name      Value
+       cachekey  u'query_results.html'
+       cls       &lt;class 'genshi.template.markup.MarkupTemplate'&gt;
+       encoding  None
+       filename  u'query_results.html'
+       isabs     False
+       loadfunc  &lt;function _load_from_directory at 0xac53d14&gt;
+       relative_to       'query.html'
+       search_path       ['/var/trac/dev.haiku-os.org/templates', ...
+       self      &lt;genshi.template.loader.TemplateLoader object at
+ 0x989b46c&gt;
+
+ File &quot;/opt/csw/lib/python/site-
+ packages/Trac-0.11.1-py2.5.egg/trac/web/main.py&quot;, line 423, in
+ _dispatch_request
+   dispatcher.dispatch(req)
+ File &quot;/opt/csw/lib/python/site-
+ packages/Trac-0.11.1-py2.5.egg/trac/web/main.py&quot;, line 219, in dispatch
+   data, content_type)
+ File &quot;/opt/csw/lib/python/site-
+ packages/Trac-0.11.1-py2.5.egg/trac/web/chrome.py&quot;, line 683, in
+ render_template
+   template = self.load_template(filename, method=method)
+ File &quot;/opt/csw/lib/python/site-
+ packages/Trac-0.11.1-py2.5.egg/trac/web/chrome.py&quot;, line 667, in
+ load_template
+   return self.templates.load(filename, cls=cls)
+ File &quot;build/bdist.solaris-2.10-i86pc/egg/genshi/template/loader.py&quot;, line
+ 221, in loadFile
+ &quot;build/bdist.solaris-2.10-i86pc/egg/genshi/template/loader.py&quot;, line 259,
+ in _instantiateFile
+ &quot;build/bdist.solaris-2.10-i86pc/egg/genshi/template/base.py&quot;, line 377, in
+ __init__File &quot;build/bdist.solaris-2.10-i86pc/egg/genshi/template/base.py&quot;,
+ line 444, in _prepareFile
+ &quot;build/bdist.solaris-2.10-i86pc/egg/genshi/template/loader.py&quot;, line 231,
+ in load
+
+ System Information:
+
+ User Agent: Mozilla/5.0 (Windows; U; Windows NT 5.0; de; rv:1.9.0.3)
+ Gecko/2008092417 Firefox/3.0.3
+ Trac:   0.11.1
+ Python:         2.5.1 (r251:54863, Nov 3 2007, 02:54:36) [C]
+ setuptools:     0.6c8
+ psycopg2:       2.0.6
+ Genshi:         0.5
+ Pygments:       0.10
+ Subversion:     1.4.5 (r25188)
+ jQuery: 1.2.6
+
+ TracGuide &#8212; The Trac User and Administration Guide
+
+--
+
+Comment:
+
+ What was the issue of this ticket? Was it within the context of our well-
+ known server hangs?
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3092#comment:1">http://dev.haiku-os.org/ticket/3092#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="013222.html">[Haiku-bugs] [Haiku] #3063: [Trac] OSError: [Errno 24] Too many	open files
+</A></li>
+	<LI>Next message: <A HREF="013224.html">[Haiku-bugs] [Haiku] #3093: new trac users can't attach files
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13223">[ date ]</a>
+              <a href="thread.html#13223">[ thread ]</a>
+              <a href="subject.html#13223">[ subject ]</a>
+              <a href="author.html#13223">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

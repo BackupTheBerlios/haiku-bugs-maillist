@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2172: neon's single_read test hangs at	100% CPU
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232172%3A%20neon%27s%20single_read%20test%20hangs%20at%0A%09100%25%20CPU&In-Reply-To=%3C052.289a3842e73ee567f578d7494904d07e%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007034.html">
+   <LINK REL="Next"  HREF="006887.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2172: neon's single_read test hangs at	100% CPU</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232172%3A%20neon%27s%20single_read%20test%20hangs%20at%0A%09100%25%20CPU&In-Reply-To=%3C052.289a3842e73ee567f578d7494904d07e%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2172: neon's single_read test hangs at	100% CPU">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Apr 30 20:56:47 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007034.html">[Haiku-bugs] [Haiku] #2172: neon's single_read test hangs at	100% CPU
+</A></li>
+        <LI>Next message: <A HREF="006887.html">[Haiku-bugs] [Haiku] #1503: MediaPlayer doesn't remember previous volume setting
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7035">[ date ]</a>
+              <a href="thread.html#7035">[ thread ]</a>
+              <a href="subject.html#7035">[ subject ]</a>
+              <a href="author.html#7035">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2172: neon's single_read test hangs at 100% CPU
+---------------------------------+------------------------------------------
+  Reporter:  andreasf            |       Owner:  axeld         
+      Type:  bug                 |      Status:  new           
+  Priority:  normal              |   Milestone:  R1            
+ Component:  Network &amp; Internet  |     Version:  R1 development
+Resolution:                      |    Platform:  x86           
+---------------------------------+------------------------------------------
+Comment (by andreasf):
+
+ With SMP re-enabled, back to {{{single_read}}}:
+ {{{
+ stack trace for thread 177 &quot;socket&quot;
+     kernel stack: 0x94306000 to 0x9430a000
+       user stack: 0x7efe7000 to 0x7ffe7000
+ frame            caller     &lt;image&gt;:function + offset
+ 94309be8 (+  12) 8009ab6d   &lt;kernel&gt;:int_bottom + 0x001d (nearest)
+ iframe at 0x94309bf4 (end = 0x94309c4c)
+  eax 0x200          ebx 0x20c03         ecx 0x1          edx 0x246
+  esi 0x0            edi 0x284f          ebp 0x94309c44   esp 0x94309c28
+  eip 0x800971a4  eflags 0x246
+  vector: 0xfd, error code: 0x0
+ 94309bf4 (+  80) 800971a4   &lt;kernel&gt;:arch_int_restore_interrupts + 0x0020
+ 94309c44 (+  32) 80028aa2   &lt;kernel&gt;:restore_interrupts + 0x0012
+ 94309c64 (+  96) 80030824   &lt;kernel&gt;:release_sem_etc + 0x049c
+ 94309cc4 (+  48) 800291b1   &lt;kernel&gt;:mutex_unlock + 0x004d
+ 94309cf4 (+  48) 802f535a   &lt;/boot/beos/system/add-
+ ons/kernel/network/protocols/tcp&gt;:Wait__8WaitListRQ28BPrivatet10AutoLocker2Z5mutexZQ28BPrivate12MutexLockingxb
+ + 0x002e
+ 94309d24 (+  64) 802f6d13   &lt;/boot/beos/system/add-
+ ons/kernel/network/protocols/tcp&gt;:_WaitForEstablished__11TCPEndpointRQ28BPrivatet10AutoLocker2Z5mutexZQ28BPrivate12Mutex7
+ 94309d64 (+ 112) 802f5c20   &lt;/boot/beos/system/add-
+ ons/kernel/network/protocols/tcp&gt;:Connect__11TCPEndpointPC8sockaddr +
+ 0x0234
+ 94309dd4 (+  48) 802f497b   &lt;/boot/beos/system/add-
+ ons/kernel/network/protocols/tcp&gt;:tcp_connect__FP12net_protocolPC8sockaddr
+ + 0x0023
+ 94309e04 (+  48) 802d589d   &lt;/boot/beos/system/add-
+ ons/kernel/network/stack&gt;:socket_connect__FP10net_socketPC8sockaddrUi +
+ 0x0055
+ 94309e34 (+  48) 802db6f6   &lt;/boot/beos/system/add-
+ ons/kernel/network/stack&gt;:stack_interface_connect__FP10net_socketPC8sockaddrUi
+ + 0x002e
+ 94309e64 (+  48) 8004ad85   &lt;kernel&gt;:common_connect__FiPC8sockaddrUib +
+ 0x0049
+ 94309e94 (+ 176) 8004c178   &lt;kernel&gt;:_user_connect + 0x0080
+ 94309f44 (+ 100) 8009ace2   &lt;kernel&gt;:pre_syscall_debug_done + 0x0002
+ (nearest)
+ iframe at 0x94309fa8 (end = 0x9430a000)
+  eax 0x82           ebx 0x3c89f8        ecx 0x5          edx 0x1800e360
+  esi 0x7ffe6e3c     edi 0x20            ebp 0x7ffe6e0c   esp 0x94309fdc
+  eip 0xffff0102  eflags 0x200213
+  vector: 0x63, error code: 0x0
+ 94309fa8 (+   0) ffff0102
+ 7ffe6e0c (+  80) 002185c1   &lt;libneon.so.25&gt;:ne_addr_destroy + 0x0085
+ (nearest)
+ 7ffe6e5c (+  64) 00218688   &lt;libneon.so.25&gt;:ne_sock_connect + 0x006c
+ 7ffe6e9c (+  48) 00202742   &lt;socket&gt;:_term_after + 0x0122 (nearest)
+ 7ffe6ecc (+  48) 00202870   &lt;socket&gt;:_term_after + 0x0250 (nearest)
+ 7ffe6efc (+  64) 00203103   &lt;socket&gt;:_term_after + 0x0ae3 (nearest)
+ 7ffe6f3c (+  64) 00204e1c   &lt;socket&gt;:main + 0x03c8
+ 7ffe6f7c (+  48) 0020253f   &lt;socket&gt;:_start + 0x005b
+ 7ffe6fac (+  48) 0010078e   2220:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">runtime_loader_seg0ro at 0x00100000</A> + 0x78e
+ 7ffe6fdc (+   0) 7ffe6fec   2219:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">socket_main_stack at 0x7efe7000</A> + 0xffffec
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2172#comment:5">http://dev.haiku-os.org/ticket/2172#comment:5</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007034.html">[Haiku-bugs] [Haiku] #2172: neon's single_read test hangs at	100% CPU
+</A></li>
+	<LI>Next message: <A HREF="006887.html">[Haiku-bugs] [Haiku] #1503: MediaPlayer doesn't remember previous volume setting
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7035">[ date ]</a>
+              <a href="thread.html#7035">[ thread ]</a>
+              <a href="subject.html#7035">[ subject ]</a>
+              <a href="author.html#7035">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

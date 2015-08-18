@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2877: [BeHappy] crashes on startup
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232877%3A%20%5BBeHappy%5D%20crashes%20on%20startup&In-Reply-To=%3C042.7f10131feb7000b9ff9f7874207c747e%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011203.html">
+   <LINK REL="Next"  HREF="011255.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2877: [BeHappy] crashes on startup</H1>
+    <B>scottmc</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232877%3A%20%5BBeHappy%5D%20crashes%20on%20startup&In-Reply-To=%3C042.7f10131feb7000b9ff9f7874207c747e%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2877: [BeHappy] crashes on startup">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Oct 19 07:34:37 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011203.html">[Haiku-bugs] [Haiku] #2876: [BePDF] Help menu options don't work
+</A></li>
+        <LI>Next message: <A HREF="011255.html">[Haiku-bugs] [Haiku] #2877: [BeHappy] crashes on startup
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11129">[ date ]</a>
+              <a href="thread.html#11129">[ thread ]</a>
+              <a href="subject.html#11129">[ subject ]</a>
+              <a href="author.html#11129">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2877: [BeHappy] crashes on startup
+-----------------------+----------------------------------------------------
+ Reporter:  scottmc    |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+Blockedby:             |    Platform:  All           
+ Blocking:             |  
+-----------------------+----------------------------------------------------
+ On r28234 when opening BeHappy is crashes.  Here's the bt in gdb:
+ {{{
+ GNU gdb 6.3
+ Copyright 2004 Free Software Foundation, Inc.
+ GDB is free software, covered by the GNU General Public License, and you
+ are
+ welcome to change it and/or distribute copies of it under certain
+ conditions.
+ Type &quot;show copying&quot; to see the conditions.
+ There is absolutely no warranty for GDB.  Type &quot;show warranty&quot; for
+ details.
+ This GDB was configured as &quot;i586-pc-haiku&quot;...(no debugging symbols found)
+
+ [tcsetpgrp failed in terminal_inferior: Invalid Argument]
+ Thread 529 caused an exception: Segment violation
+ Reading symbols from /boot/beos/system/runtime_loader...done.
+ Loaded symbols for /boot/beos/system/runtime_loader
+ Reading symbols from /boot/beos/system/lib/libbe.so...done.
+ Loaded symbols for /boot/beos/system/lib/libbe.so
+ Reading symbols from /boot/beos/system/lib/libtracker.so...done.
+ Loaded symbols for /boot/beos/system/lib/libtracker.so
+ Reading symbols from /boot/beos/system/lib/libroot.so...done.
+ Loaded symbols for /boot/beos/system/lib/libroot.so
+ Reading symbols from /boot/beos/system/lib/libstdc++.r4.so...done.
+ Loaded symbols for /boot/beos/system/lib/libstdc++.r4.so
+ Reading symbols from /boot/beos/system/lib/libtranslation.so...done.
+ Loaded symbols for /boot/beos/system/lib/libtranslation.so
+ Reading symbols from /boot/beos/system/lib/libtextencoding.so...done.
+ Loaded symbols for /boot/beos/system/lib/libtextencoding.so
+ [tcsetpgrp failed in terminal_inferior: Invalid Argument]
+ [Switching to team /boot/apps/BeHappy/BeHappy (521) thread w&gt;BeHappy!
+ (529)]
+ 0x002e7a97 in BMessage::RemoveName () from /boot/beos/system/lib/libbe.so
+ (gdb) bt
+ #0  0x002e7a97 in BMessage::RemoveName () from
+ /boot/beos/system/lib/libbe.so
+ #1  0x00220da7 in Preferences::AddPref ()
+ #2  0x0022158a in Preferences::CloseWindow ()
+ #3  0x0021c08f in MainWindow::~MainWindow ()
+ #4  0x002e2dce in BLooper::_task0_ () from /boot/beos/system/lib/libbe.so
+ #5  0x006928fc in thread_entry () from /boot/beos/system/lib/libroot.so
+ #6  0x70102fec in ?? ()
+ (gdb)
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2877">http://dev.haiku-os.org/ticket/2877</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011203.html">[Haiku-bugs] [Haiku] #2876: [BePDF] Help menu options don't work
+</A></li>
+	<LI>Next message: <A HREF="011255.html">[Haiku-bugs] [Haiku] #2877: [BeHappy] crashes on startup
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11129">[ date ]</a>
+              <a href="thread.html#11129">[ thread ]</a>
+              <a href="subject.html#11129">[ subject ]</a>
+              <a href="author.html#11129">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

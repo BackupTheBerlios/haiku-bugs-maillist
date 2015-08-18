@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3077: Missed keystrokes and repeating keys on USB Keyboard
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-February/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233077%3A%20Missed%20keystrokes%20and%20repeating%0A%20keys%20on%20USB%20Keyboard&In-Reply-To=%3C052.8c311d4b7da26041a414eecfc3ba0539%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="014294.html">
+   <LINK REL="Next"  HREF="014298.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3077: Missed keystrokes and repeating keys on USB Keyboard</H1>
+    <B>mmlr</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233077%3A%20Missed%20keystrokes%20and%20repeating%0A%20keys%20on%20USB%20Keyboard&In-Reply-To=%3C052.8c311d4b7da26041a414eecfc3ba0539%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3077: Missed keystrokes and repeating keys on USB Keyboard">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Feb  6 22:44:44 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="014294.html">[Haiku-bugs] [Haiku] #3416: Handle _POSIX_VDISABLE Correctly
+</A></li>
+        <LI>Next message: <A HREF="014298.html">[Haiku-bugs] [Haiku] #3077: Missed keystrokes and repeating keys on USB Keyboard
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14297">[ date ]</a>
+              <a href="thread.html#14297">[ thread ]</a>
+              <a href="subject.html#14297">[ subject ]</a>
+              <a href="author.html#14297">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3077: Missed keystrokes and repeating keys on USB Keyboard
+-------------------------+--------------------------------------------------
+ Reporter:  tigerdog     |       Owner:  mmlr          
+     Type:  bug          |      Status:  assigned      
+ Priority:  normal       |   Milestone:  R1            
+Component:  Drivers/USB  |     Version:  R1 development
+Blockedby:               |    Platform:  All           
+ Blocking:               |  
+-------------------------+--------------------------------------------------
+
+Comment(by mmlr):
+
+ Sadly the output looks perfectly fine to me. Does the key repeat still
+ happen or has that part been resolved at least? Since we are not even
+ polling, it's not really possible to loose events because of an
+ insufficient interval. The transfers are interrupt like, so they should
+ react only on keypress and get all of them. The only thing I could imagine
+ is that your keyboard simply doesn't have a good boot protocol
+ implementation. Since other systems will use the keyboard in full HID mode
+ they won't notice that. That the keyboard works in R5 is just because it
+ uses it over BIOS emulation. It never uses it directly as a HID device, so
+ this is not a reference.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3077#comment:6">http://dev.haiku-os.org/ticket/3077#comment:6</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="014294.html">[Haiku-bugs] [Haiku] #3416: Handle _POSIX_VDISABLE Correctly
+</A></li>
+	<LI>Next message: <A HREF="014298.html">[Haiku-bugs] [Haiku] #3077: Missed keystrokes and repeating keys on USB Keyboard
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14297">[ date ]</a>
+              <a href="thread.html#14297">[ thread ]</a>
+              <a href="subject.html#14297">[ subject ]</a>
+              <a href="author.html#14297">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

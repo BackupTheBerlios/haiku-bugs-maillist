@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3842: pressing enter in window list for app triggers Looper must be locked.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233842%3A%20pressing%20enter%20in%20window%20list%20for%0A%20app%20triggers%20Looper%20must%20be%20locked.&In-Reply-To=%3C052.392f4d04479be7b89998393a55e175da%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="017091.html">
+   <LINK REL="Next"  HREF="017050.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3842: pressing enter in window list for app triggers Looper must be locked.</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233842%3A%20pressing%20enter%20in%20window%20list%20for%0A%20app%20triggers%20Looper%20must%20be%20locked.&In-Reply-To=%3C052.392f4d04479be7b89998393a55e175da%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3842: pressing enter in window list for app triggers Looper must be locked.">trac at haiku-os.org
+       </A><BR>
+    <I>Thu May  7 04:49:05 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="017091.html">[Haiku-bugs] [Haiku] #3887: BMenuItem is missing the ability to draw the modifier indicator for B_OPTION_KEY
+</A></li>
+        <LI>Next message: <A HREF="017050.html">[Haiku-bugs] [Haiku] #1530: Nvidia GeForce FX 6600 doesn't work
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17049">[ date ]</a>
+              <a href="thread.html#17049">[ thread ]</a>
+              <a href="subject.html#17049">[ subject ]</a>
+              <a href="author.html#17049">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3842: pressing enter in window list for app triggers Looper must be locked.
+--------------------------------+-------------------------------------------
+ Reporter:  timeless            |       Owner:  jackburton    
+     Type:  bug                 |      Status:  new           
+ Priority:  normal              |   Milestone:  R1            
+Component:  Kits/Interface Kit  |     Version:  R1 development
+Blockedby:                      |    Platform:  x86           
+ Blocking:                      |  
+--------------------------------+-------------------------------------------
+
+Comment(by anevilyak):
+
+ Replying to [comment:7 jackburton]:
+ &gt; Well, from a first look, when clicking on the item with the mouse, the
+ code path which triggers the call to BMenuItem::Invoke() is inside
+ MenuBar.cpp (lines 642 - 650):
+ &gt; while when using the keyboard, the code path is completely different,
+ and doesn't lock the looper
+
+ That's to be expected though, BView::KeyDown is called with the looper
+ locked implicitly. The problem here though is that deskbar's
+ WindowMenuItem is calling an operation on the *parent* menu's window, not
+ the window it's sitting in. In the mouse case the parent also appears to
+ be locked, while in the keydown case it isn't, which causes the debugger()
+ call to be triggered. What I can't figure out is what's locking the parent
+ window in the mouse case.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3842#comment:8">http://dev.haiku-os.org/ticket/3842#comment:8</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="017091.html">[Haiku-bugs] [Haiku] #3887: BMenuItem is missing the ability to draw the modifier indicator for B_OPTION_KEY
+</A></li>
+	<LI>Next message: <A HREF="017050.html">[Haiku-bugs] [Haiku] #1530: Nvidia GeForce FX 6600 doesn't work
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17049">[ date ]</a>
+              <a href="thread.html#17049">[ thread ]</a>
+              <a href="subject.html#17049">[ subject ]</a>
+              <a href="author.html#17049">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,186 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3152: Mouse (trackpad) used to work fine - now unreliable.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233152%3A%20Mouse%20%28trackpad%29%20used%20to%20work%20fine%0A%20-%20now%20unreliable.&In-Reply-To=%3C049.317ffcabc5ce48a2b356aa9c6fa80228%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="017082.html">
+   <LINK REL="Next"  HREF="017084.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3152: Mouse (trackpad) used to work fine - now unreliable.</H1>
+    <B>axeld</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233152%3A%20Mouse%20%28trackpad%29%20used%20to%20work%20fine%0A%20-%20now%20unreliable.&In-Reply-To=%3C049.317ffcabc5ce48a2b356aa9c6fa80228%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3152: Mouse (trackpad) used to work fine - now unreliable.">trac at haiku-os.org
+       </A><BR>
+    <I>Thu May  7 21:36:19 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="017082.html">[Haiku-bugs] [Haiku] #1589: Fat file system recognized by mount, but NOT mountvolume and tracker
+</A></li>
+        <LI>Next message: <A HREF="017084.html">[Haiku-bugs] [Haiku] #3714: PANIC: ASSERT FAILED (headers/private/kernel/util/DoublyLinkedList.h:467): fFirst != __null &amp;&amp; fLast != __null &amp;&amp; (fFirst != fLast ||
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17083">[ date ]</a>
+              <a href="thread.html#17083">[ thread ]</a>
+              <a href="subject.html#17083">[ subject ]</a>
+              <a href="author.html#17083">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3152: Mouse (trackpad) used to work fine - now unreliable.
+-------------------------------+--------------------------------------------
+ Reporter:  alban              |       Owner:  marcusoverhagen
+     Type:  bug                |      Status:  new            
+ Priority:  normal             |   Milestone:  R1             
+Component:  Drivers/Mouse/PS2  |     Version:  R1 development 
+Blockedby:                     |    Platform:  All            
+ Blocking:                     |  
+-------------------------------+--------------------------------------------
+Changes (by axeld):
+
+  * owner:  axeld =&gt; marcusoverhagen
+  * component:  - General =&gt; Drivers/Mouse/PS2
+
+
+Old description:
+
+&gt;<i> The mouse (trackpad) is much less reliable in very recent Haiku releases.
+</I>&gt;<i> The mouse pointer sometimes hangs or freezes during or shortly after
+</I>&gt;<i> startup.
+</I>&gt;<i> mouse buttons are not responsive; there is a delay between clicking a
+</I>&gt;<i> button and the action taking place. This makes the user interface hard to
+</I>&gt;<i> use.
+</I>&gt;<i>
+</I>&gt;<i> Syslog shows:-
+</I>&gt;<i> KERN: ps2_hid: init_hardware
+</I>&gt;<i> KERN: ps2_hid: init_driver
+</I>&gt;<i> KERN: ps2: active multiplexing v1.1 enabled
+</I>&gt;<i> KERN: ps2_hid: publish_devices
+</I>&gt;<i> KERN: ps2_hid: uninit_driver
+</I>&gt;<i> KERN: loaded driver /boot/beos/system/add-
+</I>&gt;<i> ons/kernel/drivers/dev/input/ps2_hid
+</I>&gt;<i> KERN: ps2: reset failed
+</I>&gt;<i> KERN: ps2: devfs_publish_device input/mouse/ps2/0, status = 0xffffffff
+</I>&gt;<i> KERN: ps2: reset failed
+</I>&gt;<i> KERN: ps2: devfs_publish_device input/mouse/ps2/1, status = 0xffffffff
+</I>&gt;<i> KERN: ps2: reset failed
+</I>&gt;<i> KERN: ps2: devfs_publish_device input/mouse/ps2/2, status = 0xffffffff
+</I>&gt;<i> KERN: ps2: devfs_publish_device input/touchpad/ps2/synaptics_3, status =
+</I>&gt;<i> 0x00000000
+</I>&gt;<i> KERN: ps2: devfs_publish_device input/keyboard/at/0, status = 0x00000000
+</I>&gt;<i> KERN: ps2: keyboard found
+</I>&gt;<i> KERN: ps2: probe_mouse Standard PS/2 mouse found
+</I>&gt;<i> KERN: ps2: devfs_publish_device input/mouse/ps2/standard_3, status =
+</I>&gt;<i> 0x00000000
+</I>&gt;<i> KERN: ps2_hid: init_hardware
+</I>&gt;<i> KERN: ps2_hid: init_driver
+</I>&gt;<i> KERN: ps2: active multiplexing v1.1 enabled
+</I>&gt;<i> KERN: ps2_hid: publish_devices
+</I>&gt;<i> KERN: ps2_hid: uninit_driver
+</I>&gt;<i> KERN: loaded driver /boot/beos/system/add-
+</I>&gt;<i> ons/kernel/drivers/dev/input/ps2_hid
+</I>&gt;<i> KERN: ps2: reset failed
+</I>&gt;<i> KERN: ps2: devfs_publish_device input/mouse/ps2/0, status = 0xffffffff
+</I>&gt;<i> KERN: ps2: reset failed
+</I>&gt;<i> KERN: ps2: devfs_publish_device input/mouse/ps2/1, status = 0xffffffff
+</I>&gt;<i> KERN: ps2: reset failed
+</I>&gt;<i> KERN: ps2: devfs_publish_device input/mouse/ps2/2, status = 0xffffffff
+</I>&gt;<i> KERN: ps2: devfs_publish_device input/touchpad/ps2/synaptics_3, status =
+</I>&gt;<i> 0x00000000
+</I>&gt;<i> KERN: ps2: devfs_publish_device input/keyboard/at/0, status = 0x00000000
+</I>&gt;<i> KERN: ps2: keyboard found
+</I>&gt;<i> KERN: ps2: probe_mouse Standard PS/2 mouse found
+</I>&gt;<i> KERN: ps2: devfs_publish_device input/mouse/ps2/standard_3, status =
+</I>&gt;<i> 0x00000000
+</I>
+New description:
+
+ The mouse (trackpad) is much less reliable in very recent Haiku releases.
+ The mouse pointer sometimes hangs or freezes during or shortly after
+ startup.
+ mouse buttons are not responsive; there is a delay between clicking a
+ button and the action taking place. This makes the user interface hard to
+ use.
+
+ Syslog shows:-
+ {{{
+ KERN: ps2_hid: init_hardware
+ KERN: ps2_hid: init_driver
+ KERN: ps2: active multiplexing v1.1 enabled
+ KERN: ps2_hid: publish_devices
+ KERN: ps2_hid: uninit_driver
+ KERN: loaded driver /boot/beos/system/add-
+ ons/kernel/drivers/dev/input/ps2_hid
+ KERN: ps2: reset failed
+ KERN: ps2: devfs_publish_device input/mouse/ps2/0, status = 0xffffffff
+ KERN: ps2: reset failed
+ KERN: ps2: devfs_publish_device input/mouse/ps2/1, status = 0xffffffff
+ KERN: ps2: reset failed
+ KERN: ps2: devfs_publish_device input/mouse/ps2/2, status = 0xffffffff
+ KERN: ps2: devfs_publish_device input/touchpad/ps2/synaptics_3, status =
+ 0x00000000
+ KERN: ps2: devfs_publish_device input/keyboard/at/0, status = 0x00000000
+ KERN: ps2: keyboard found
+ KERN: ps2: probe_mouse Standard PS/2 mouse found
+ KERN: ps2: devfs_publish_device input/mouse/ps2/standard_3, status =
+ 0x00000000
+ KERN: ps2_hid: init_hardware
+ KERN: ps2_hid: init_driver
+ KERN: ps2: active multiplexing v1.1 enabled
+ KERN: ps2_hid: publish_devices
+ KERN: ps2_hid: uninit_driver
+ KERN: loaded driver /boot/beos/system/add-
+ ons/kernel/drivers/dev/input/ps2_hid
+ KERN: ps2: reset failed
+ KERN: ps2: devfs_publish_device input/mouse/ps2/0, status = 0xffffffff
+ KERN: ps2: reset failed
+ KERN: ps2: devfs_publish_device input/mouse/ps2/1, status = 0xffffffff
+ KERN: ps2: reset failed
+ KERN: ps2: devfs_publish_device input/mouse/ps2/2, status = 0xffffffff
+ KERN: ps2: devfs_publish_device input/touchpad/ps2/synaptics_3, status =
+ 0x00000000
+ KERN: ps2: devfs_publish_device input/keyboard/at/0, status = 0x00000000
+ KERN: ps2: keyboard found
+ KERN: ps2: probe_mouse Standard PS/2 mouse found
+ KERN: ps2: devfs_publish_device input/mouse/ps2/standard_3, status =
+ 0x00000000
+ }}}
+
+--
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3152#comment:3">http://dev.haiku-os.org/ticket/3152#comment:3</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="017082.html">[Haiku-bugs] [Haiku] #1589: Fat file system recognized by mount, but NOT mountvolume and tracker
+</A></li>
+	<LI>Next message: <A HREF="017084.html">[Haiku-bugs] [Haiku] #3714: PANIC: ASSERT FAILED (headers/private/kernel/util/DoublyLinkedList.h:467): fFirst != __null &amp;&amp; fLast != __null &amp;&amp; (fFirst != fLast ||
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17083">[ date ]</a>
+              <a href="thread.html#17083">[ thread ]</a>
+              <a href="subject.html#17083">[ subject ]</a>
+              <a href="author.html#17083">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

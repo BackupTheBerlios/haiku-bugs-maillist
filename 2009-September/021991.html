@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4630: Mouse messaging via VMWare's VNC server do not get handled in Haiku events properly...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234630%3A%20Mouse%20messaging%20via%20VMWare%27s%20VNC%0A%20server%20do%20not%20get%20handled%20in%20Haiku%20events%20properly...&In-Reply-To=%3C063.6f4a68a5c9a5e646744ea27b1493a94b%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="021978.html">
+   <LINK REL="Next"  HREF="021993.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4630: Mouse messaging via VMWare's VNC server do not get handled in Haiku events properly...</H1>
+    <B>zooey</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234630%3A%20Mouse%20messaging%20via%20VMWare%27s%20VNC%0A%20server%20do%20not%20get%20handled%20in%20Haiku%20events%20properly...&In-Reply-To=%3C063.6f4a68a5c9a5e646744ea27b1493a94b%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4630: Mouse messaging via VMWare's VNC server do not get handled in Haiku events properly...">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Sep 25 12:00:20 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="021978.html">[Haiku-bugs] [Haiku] #4630: Mouse messaging via VMWare's VNC server do not get handled in Haiku events properly...
+</A></li>
+        <LI>Next message: <A HREF="021993.html">[Haiku-bugs] [Haiku] #4630: Mouse messaging via VMWare's VNC server do not get handled in Haiku events properly...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21991">[ date ]</a>
+              <a href="thread.html#21991">[ thread ]</a>
+              <a href="subject.html#21991">[ subject ]</a>
+              <a href="author.html#21991">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4630: Mouse messaging via VMWare's VNC server do not get handled in Haiku events
+properly...
+---------------------------------+------------------------------------------
+ Reporter:  Super Dave Osbourne  |       Owner:  stippi   
+     Type:  bug                  |      Status:  new      
+ Priority:  normal               |   Milestone:  R1       
+Component:  User Interface       |     Version:  R1/alpha1
+Blockedby:                       |    Platform:  x86      
+ Blocking:                       |  
+---------------------------------+------------------------------------------
+
+Comment(by zooey):
+
+ You can reproduce the problem with VMware-player on Linux, too, by adding
+ these two lines to the *.vmx file:
+
+ {{{
+ RemoteDisplay.vnc.enabled = true
+ RemoteDisplay.vnc.port = 5900
+ }}}
+
+ After starting the VM and using vncviewer to connect to localhost:5900,
+ the VNC viewer window comes up with the Haiku desktop. Mouse behaviour in
+ that window is indeed broken (while it works fine in the VMware-player
+ window).
+
+ No idea if this helps with tracking down the problem: haiku mouse
+ behaviour is ok when using the same image over VNC in qemu-kvm (with the
+ same VNC client). In that setup, the mouse is too fast (i.e. the VNC
+ cursor and haiku's cursor move at different speeds), but that can be
+ remedied by deactivating mouse acceleration in haiku's mouse prefs.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4630#comment:13">http://dev.haiku-os.org/ticket/4630#comment:13</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="021978.html">[Haiku-bugs] [Haiku] #4630: Mouse messaging via VMWare's VNC server do not get handled in Haiku events properly...
+</A></li>
+	<LI>Next message: <A HREF="021993.html">[Haiku-bugs] [Haiku] #4630: Mouse messaging via VMWare's VNC server do not get handled in Haiku events properly...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21991">[ date ]</a>
+              <a href="thread.html#21991">[ thread ]</a>
+              <a href="subject.html#21991">[ subject ]</a>
+              <a href="author.html#21991">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1534: Assert in DoublyLinkedList.h
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231534%3A%20Assert%20in%20DoublyLinkedList.h&In-Reply-To=%3C042.bdbb157f36ae9ade60917151ab3b2b56%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003027.html">
+   <LINK REL="Next"  HREF="003029.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1534: Assert in DoublyLinkedList.h</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231534%3A%20Assert%20in%20DoublyLinkedList.h&In-Reply-To=%3C042.bdbb157f36ae9ade60917151ab3b2b56%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1534: Assert in DoublyLinkedList.h">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Oct  5 17:29:25 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003027.html">[Haiku-bugs] [Haiku] #1444: SATA testing on real hardware -	fails to boot
+</A></li>
+        <LI>Next message: <A HREF="003029.html">[Haiku-bugs] [Haiku] #1534: Assert in DoublyLinkedList.h
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3028">[ date ]</a>
+              <a href="thread.html#3028">[ thread ]</a>
+              <a href="subject.html#3028">[ subject ]</a>
+              <a href="author.html#3028">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1534: Assert in DoublyLinkedList.h
+-----------------------+----------------------------------------------------
+ Reporter:  kaliber    |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+ Platform:  All        |  
+-----------------------+----------------------------------------------------
+ During shutdown:
+
+ {{{
+ list: 0x90810810, element: 0x908bc4e0
+ PANIC: ASSERT FAILED (headers/private/kernel/util/DoublyLinkedList.h:464):
+ fFirst != 0 &amp;&amp; fLast != 0 &amp;&amp; (fFirst != fLast || element ==
+ Welcome to Kernel Debugging Land...
+ Running on CPU 0
+ kdebug&gt; bt
+ stack trace for thread 0x49 &quot;Terminal&quot;
+     kernel stack: 0x90660000 to 0x90664000
+       user stack: 0x7efe7000 to 0x7ffe7000
+ frame            caller     &lt;image&gt;:function + offset
+ 90663ca0 (+  52) 8008e5c4   &lt;kernel&gt;:invoke_command + 0x0074
+ 90663cd4 (+  48) 8008e6e2   &lt;kernel&gt;:kernel_debugger_loop + 0x00de
+ 90663d04 (+  32) 8008f16e   &lt;kernel&gt;:kernel_debugger + 0x00b2
+ 90663d24 (+ 192) 8008f0b1   &lt;kernel&gt;:panic + 0x0029
+ 90663de4 (+  64) 8003ae40   &lt;kernel&gt;:team_set_job_control_state + 0x012c
+ 90663e24 (+ 128) 8003d7f4   &lt;kernel&gt;:thread_exit + 0x0168
+ 90663ea4 (+  64) 80034acc   &lt;kernel&gt;:handle_signals + 0x0328
+ 90663ee4 (+  48) 8003dcbd   &lt;kernel&gt;:thread_at_kernel_exit + 0x0015
+ 90663f14 (+ 144) 80097e16   &lt;kernel&gt;:i386_handle_trap + 0x0402
+ iframe at 0x90663fac (end = 0x90664000)
+  eax 0x0            ebx 0x830750        ecx 0x7ffe6e50   edx 0x0
+  esi 0x7ffef538     edi 0x7ffe7100      ebp 0x7ffe6f6c   esp 0x90663fdc
+  eip 0xffff0102  eflags 0x207
+  vector: 0x63, error code: 0x0
+ 90663fa4 (+   0) ffff0102
+ 7ffe6f6c -- read fault
+
+ }}}
+
+ BTW. Seems that assert line is truncated. Maybe it's another bug?
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1534">http://dev.haiku-os.org/ticket/1534</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003027.html">[Haiku-bugs] [Haiku] #1444: SATA testing on real hardware -	fails to boot
+</A></li>
+	<LI>Next message: <A HREF="003029.html">[Haiku-bugs] [Haiku] #1534: Assert in DoublyLinkedList.h
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3028">[ date ]</a>
+              <a href="thread.html#3028">[ thread ]</a>
+              <a href="subject.html#3028">[ subject ]</a>
+              <a href="author.html#3028">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1732: autodetecting resolution does not work for some grafix boards
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-January/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231732%3A%20autodetecting%20resolution%20does%20not%20work%0A%20for%20some%20grafix%20boards&In-Reply-To=%3C041.f80704f6eca5f056dca0e5ca1f18a602%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="004556.html">
+   <LINK REL="Next"  HREF="004492.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1732: autodetecting resolution does not work for some grafix boards</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231732%3A%20autodetecting%20resolution%20does%20not%20work%0A%20for%20some%20grafix%20boards&In-Reply-To=%3C041.f80704f6eca5f056dca0e5ca1f18a602%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1732: autodetecting resolution does not work for some grafix boards">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Jan 27 12:34:56 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="004556.html">[Haiku-bugs] [Haiku] #1731: unmounting partitions hangs
+</A></li>
+        <LI>Next message: <A HREF="004492.html">[Haiku-bugs] [Haiku] #1732: autodetecting resolution does not work for some grafix boards
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4490">[ date ]</a>
+              <a href="thread.html#4490">[ thread ]</a>
+              <a href="subject.html#4490">[ subject ]</a>
+              <a href="author.html#4490">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1732: autodetecting resolution does not work for some grafix boards
+--------------------------------+-------------------------------------------
+ Reporter:  stippi              |       Owner:  axeld         
+     Type:  bug                 |      Status:  new           
+ Priority:  normal              |   Milestone:  R1/alpha      
+Component:  Servers/app_server  |     Version:  R1 development
+ Platform:  x86                 |  
+--------------------------------+-------------------------------------------
+ I have an ATI X300 and a 1920x1200 LCD screen. A clean Haiku install boots
+ into the &quot;correct&quot; resolution, but the app_server is only half aware of
+ the resolution. The effect is that the screen and board seem to be in
+ 1920x1200, but the app_server resolution is 1600x1200. The missing part on
+ the right of the screen is filled with the contents of the left side, so
+ the screen is repeated like this:
+
+ {{{
+ +-------------+-----+
+ | ...        O| ... |
+ |             |     |
+ |             |     |
+ |             |     |
+ +-------------+-----+
+
+ ... -&gt; icons
+ O   -&gt; Deskbar
+
+ }}}
+
+ Another problem is that the 1920x1200 resolution is not in the list of
+ available resolutions in the Screen preflet. Interestingly, selecting
+ 1600x1200 does not change the setup. I would expect a true 1600x1200
+ resolution stretched on the screen.
+
+ I have another screen which has a native resolution of 1440x900, and with
+ that screen (on the X300), the effects are exactly the same. The
+ resolution of the screen and gfx board seem to be 1440x900 but the screen
+ width of app_server reflects 4:3 with the left side repeated in the
+ missing area.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1732">http://dev.haiku-os.org/ticket/1732</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="004556.html">[Haiku-bugs] [Haiku] #1731: unmounting partitions hangs
+</A></li>
+	<LI>Next message: <A HREF="004492.html">[Haiku-bugs] [Haiku] #1732: autodetecting resolution does not work for some grafix boards
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4490">[ date ]</a>
+              <a href="thread.html#4490">[ thread ]</a>
+              <a href="subject.html#4490">[ subject ]</a>
+              <a href="author.html#4490">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

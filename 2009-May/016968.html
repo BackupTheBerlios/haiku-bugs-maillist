@@ -1,0 +1,145 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3876: DHCP does not work.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233876%3A%20DHCP%20does%20not%20work.&In-Reply-To=%3C038.347e4edc8281c4e05b8c6297fe9ea074%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="017294.html">
+   <LINK REL="Next"  HREF="016970.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3876: DHCP does not work.</H1>
+    <B>bga</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233876%3A%20DHCP%20does%20not%20work.&In-Reply-To=%3C038.347e4edc8281c4e05b8c6297fe9ea074%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3876: DHCP does not work.">trac at haiku-os.org
+       </A><BR>
+    <I>Wed May  6 01:09:36 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="017294.html">[Haiku-bugs] [Haiku] #3875: &quot;copyattr -d -r&quot; results in attempts to write to read-only source partition.
+</A></li>
+        <LI>Next message: <A HREF="016970.html">[Haiku-bugs] [Haiku] #3876: DHCP does not work.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16968">[ date ]</a>
+              <a href="thread.html#16968">[ thread ]</a>
+              <a href="subject.html#16968">[ subject ]</a>
+              <a href="author.html#16968">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3876: DHCP does not work.
+-------------------------------------+--------------------------------------
+ Reporter:  bga                      |       Owner:  zooey         
+     Type:  bug                      |      Status:  new           
+ Priority:  normal                   |   Milestone:  R1            
+Component:  Network &amp; Internet/IPv4  |     Version:  R1 development
+Blockedby:                           |    Platform:  All           
+ Blocking:                           |  
+-------------------------------------+--------------------------------------
+ Since a long time ago, DHCP stopped working on my machine (it used to
+ work). I have worked this around by assigning a static IP but I decided to
+ open a ticket anyway. Here is what I see on syslog:
+
+ {{{
+ ~&gt; grep DAEMON /var/log/syslog
+ DAEMON 'DHCP': DHCP for /dev/net/marvell_yukon/1, status: Address already
+ in use
+ DAEMON 'DHCP': DHCP timeout shift: 4 secs (try 0)
+ DAEMON 'DHCP': DHCP timeout shift: 8 secs (try 0)
+ DAEMON 'DHCP': DHCP timeout shift: 2 secs (try 1)
+ DAEMON 'DHCP': DHCP timeout shift: 4 secs (try 1)
+ DAEMON 'DHCP': DHCP timeout shift: 8 secs (try 1)
+ DAEMON 'DHCP': DHCP timeout shift: 2 secs (try 2)
+ DAEMON 'DHCP': DHCP timeout shift: 4 secs (try 2)
+ DAEMON 'DHCP': DHCP timeout shift: 8 secs (try 2)
+ DAEMON 'DHCP': DHCP for /dev/net/marvell_yukon/0, status: Operation timed
+ out
+ 2009-05-05 19:30:46 DAEMON 'DHCP': DHCP for /dev/net/marvell_yukon/1,
+ status: Address already in use
+ 2009-05-05 19:30:46 DAEMON 'DHCP': DHCP timeout shift: 4 secs (try 0)
+ 2009-05-05 19:30:50 DAEMON 'DHCP': DHCP timeout shift: 8 secs (try 0)
+ 2009-05-05 19:30:58 DAEMON 'DHCP': DHCP timeout shift: 2 secs (try 1)
+ 2009-05-05 19:31:00 DAEMON 'DHCP': DHCP timeout shift: 4 secs (try 1)
+ 2009-05-05 19:31:04 DAEMON 'DHCP': DHCP timeout shift: 8 secs (try 1)
+ 2009-05-05 19:31:12 DAEMON 'DHCP': DHCP timeout shift: 2 secs (try 2)
+ 2009-05-05 19:31:14 DAEMON 'DHCP': DHCP timeout shift: 4 secs (try 2)
+ 2009-05-05 19:31:18 DAEMON 'DHCP': DHCP timeout shift: 8 secs (try 2)
+ 2009-05-05 19:31:26 DAEMON 'DHCP': DHCP for /dev/net/marvell_yukon/0,
+ status: Operation timed out
+ }}}
+
+ The line that says &quot;Address already in use&quot; is fishy. Specially
+ considering that /dev/net/marvell_yukon/1 is the card that is actually
+ plugged in to a cable while /dev/net/marvell_yukon/0 is disconnected (yes,
+ I have 2 network cards).
+
+ As a reference:
+
+ {{{
+ ~&gt; ifconfig
+ loop    Hardware Type: Local Loopback, Address: none
+         inet addr: 127.0.0.1, Mask: 255.0.0.0
+         MTU: 16384, Metric: 0, up loopback link
+         Receive: 0 packets, 0 errors, 0 bytes, 0 mcasts, 0 dropped
+         Transmit: 0 packets, 0 errors, 0 bytes, 0 mcasts, 0 dropped
+         Collisions: 0
+
+ /dev/net/marvell_yukon/0
+         Hardware Type: Ethernet, Address: 00:1e:8c:3a:6c:64
+         inet addr: 169.254.0.160, Bcast: 169.254.255.255, Mask:
+ 255.255.0.0
+         MTU: 1500, Metric: 0, up broadcast auto-configured
+         Receive: 0 packets, 0 errors, 0 bytes, 0 mcasts, 0 dropped
+         Transmit: 9 packets, 0 errors, 2664 bytes, 0 mcasts, 0 dropped
+         Collisions: 0
+
+ /dev/net/marvell_yukon/1
+         Hardware Type: Ethernet, Address: 00:1e:8c:3a:65:24
+         Media Type: 100 MBit, 100BASE-TX
+         inet addr: 192.168.0.2, Bcast: 192.168.0.255, Mask: 255.255.255.0
+         MTU: 1500, Metric: 0, up broadcast link auto-configured
+         Receive: 932 packets, 0 errors, 599744 bytes, 0 mcasts, 0 dropped
+         Transmit: 809 packets, 0 errors, 113448 bytes, 0 mcasts, 0 dropped
+         Collisions: 0
+ }}}
+
+ The card ending with a 0 has no cable connected to it so it is expected
+ that it gets a IP like the one it gets. The card ending with 1 has a cable
+ connected and has a valid IP only because it is statically configured.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3876">http://dev.haiku-os.org/ticket/3876</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="017294.html">[Haiku-bugs] [Haiku] #3875: &quot;copyattr -d -r&quot; results in attempts to write to read-only source partition.
+</A></li>
+	<LI>Next message: <A HREF="016970.html">[Haiku-bugs] [Haiku] #3876: DHCP does not work.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16968">[ date ]</a>
+              <a href="thread.html#16968">[ thread ]</a>
+              <a href="subject.html#16968">[ subject ]</a>
+              <a href="author.html#16968">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

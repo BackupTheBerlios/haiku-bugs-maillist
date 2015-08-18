@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4299: RTF DataTranslator Casts BPositionIO to	BNode
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234299%3A%20RTF%20DataTranslator%20Casts%20BPositionIO%20to%0A%09BNode&In-Reply-To=%3C049.5885a7e98a9f32d8de0e3addcb9c43f9%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="019887.html">
+   <LINK REL="Next"  HREF="019892.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4299: RTF DataTranslator Casts BPositionIO to	BNode</H1>
+    <B>GeneralMaximus</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234299%3A%20RTF%20DataTranslator%20Casts%20BPositionIO%20to%0A%09BNode&In-Reply-To=%3C049.5885a7e98a9f32d8de0e3addcb9c43f9%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4299: RTF DataTranslator Casts BPositionIO to	BNode">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Aug 21 15:30:45 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="019887.html">[Haiku-bugs] [Haiku] #3122: makebootable says invalid partition	index
+</A></li>
+        <LI>Next message: <A HREF="019892.html">[Haiku-bugs] [Haiku] #4299: RTF DataTranslator Casts	BPositionIO to BNode
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19888">[ date ]</a>
+              <a href="thread.html#19888">[ thread ]</a>
+              <a href="subject.html#19888">[ subject ]</a>
+              <a href="author.html#19888">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4299: RTF DataTranslator Casts BPositionIO to BNode
+----------------------------------+-----------------------------------------
+ Reporter:  GeneralMaximus        |       Owner:  axeld         
+     Type:  bug                   |      Status:  new           
+ Priority:  normal                |   Milestone:  R1            
+Component:  Kits/Translation Kit  |     Version:  R1 development
+Blockedby:                        |    Platform:  All           
+ Blocking:                        |  
+----------------------------------+-----------------------------------------
+ The context is the RTF DataTranslator, line 622 of convert.cpp in src/add-
+ ons/translators/rtf/
+
+ Instead of operating on BPositionIO, the translator casts it into a BNode.
+ The downside of this is that it is impossible to use any subclass of
+ BPositionIO except BFile with the translator. Using any subclass of
+ BPositionIO except for BFile returns I/O error (-2147483647).
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4299">http://dev.haiku-os.org/ticket/4299</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="019887.html">[Haiku-bugs] [Haiku] #3122: makebootable says invalid partition	index
+</A></li>
+	<LI>Next message: <A HREF="019892.html">[Haiku-bugs] [Haiku] #4299: RTF DataTranslator Casts	BPositionIO to BNode
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19888">[ date ]</a>
+              <a href="thread.html#19888">[ thread ]</a>
+              <a href="subject.html#19888">[ subject ]</a>
+              <a href="author.html#19888">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

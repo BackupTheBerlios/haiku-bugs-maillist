@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #985: IDE DMA problem under VMWare
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-February/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23985%3A%20IDE%20DMA%20problem%20under%20VMWare&In-Reply-To=%3C050.302fb6a6c88c9793d026e4ffbe5407bd%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000449.html">
+   <LINK REL="Next"  HREF="000452.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #985: IDE DMA problem under VMWare</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23985%3A%20IDE%20DMA%20problem%20under%20VMWare&In-Reply-To=%3C050.302fb6a6c88c9793d026e4ffbe5407bd%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #985: IDE DMA problem under VMWare">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Feb 15 15:01:23 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000449.html">[Haiku-bugs] [Haiku] #381: Bad port ID
+</A></li>
+        <LI>Next message: <A HREF="000452.html">[Haiku-bugs] [Haiku] #985: IDE DMA problem under VMWare
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#451">[ date ]</a>
+              <a href="thread.html#451">[ thread ]</a>
+              <a href="subject.html#451">[ subject ]</a>
+              <a href="author.html#451">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#985: IDE DMA problem under VMWare
+------------------------+---------------------------------------------------
+  Reporter:  aldeck     |       Owner:  axeld         
+      Type:  bug        |      Status:  new           
+  Priority:  normal     |   Milestone:  R1            
+ Component:  - General  |     Version:  R1 development
+Resolution:             |    Platform:  All           
+------------------------+---------------------------------------------------
+Comment (by jonas.kirilla):
+
+ I've compared syncing a fresh boot of Haiku (rev 20131 and some previous)
+ in VMware Player / Windows XP / 2.4GHz Celeron to the same in Q (Qemu) /
+ MacOS X / 1.4GHz G4, and while Haiku in VMware on the PC is a lot snappier
+ than Haiku in Q on the Mac, syncing takes &quot;normal&quot; time in Q, whereas in
+ VMware Player it takes much, much longer.
+
+ /bin/idestatus says:
+
+ Q on Mac:
+ dma_status: dma enabled
+ pio mode: 0
+ dma mode: 0x00
+
+ VMware Player on PC:
+ dma_status: dma disabled after dma failure
+ pio mode: 0
+ dma mode: 0x00
+
+ /bin/ideinfo:
+
+ Q:
+ FLUSH CACHE: supported
+ FLUSH CACHE EXT: supported
+
+ VMwarePlayer:
+ FLUSH CACHE: not supported
+ FLUSH CACHE EXT: not supported
+
+ There may be some other difference to the output of ideinfo that I haven't
+ spotted.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/985#comment:4">http://dev.haiku-os.org/ticket/985#comment:4</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000449.html">[Haiku-bugs] [Haiku] #381: Bad port ID
+</A></li>
+	<LI>Next message: <A HREF="000452.html">[Haiku-bugs] [Haiku] #985: IDE DMA problem under VMWare
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#451">[ date ]</a>
+              <a href="thread.html#451">[ thread ]</a>
+              <a href="subject.html#451">[ subject ]</a>
+              <a href="author.html#451">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

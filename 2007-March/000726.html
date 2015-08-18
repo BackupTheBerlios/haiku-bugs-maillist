@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1075: Wrong/Incomplete Data Read from Disk
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231075%3A%20Wrong/Incomplete%20Data%20Read%20from%20Disk&In-Reply-To=%3C052.da9812d384a35513566a54c447fb513f%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000687.html">
+   <LINK REL="Next"  HREF="000618.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1075: Wrong/Incomplete Data Read from Disk</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231075%3A%20Wrong/Incomplete%20Data%20Read%20from%20Disk&In-Reply-To=%3C052.da9812d384a35513566a54c447fb513f%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1075: Wrong/Incomplete Data Read from Disk">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Mar  9 23:20:03 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000687.html">[Haiku-bugs] [Haiku] #1075: Wrong/Incomplete Data Read from Disk
+</A></li>
+        <LI>Next message: <A HREF="000618.html">[Haiku-bugs] [Haiku] #1076: Error in Profile editor on Haiku website
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#726">[ date ]</a>
+              <a href="thread.html#726">[ thread ]</a>
+              <a href="subject.html#726">[ subject ]</a>
+              <a href="author.html#726">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1075: Wrong/Incomplete Data Read from Disk
+---------------------------+------------------------------------------------
+  Reporter:  bonefish      |       Owner:  axeld         
+      Type:  bug           |      Status:  closed        
+  Priority:  normal        |   Milestone:  R1            
+ Component:  Drivers/Disk  |     Version:  R1 development
+Resolution:  fixed         |    Platform:  All           
+---------------------------+------------------------------------------------
+Changes (by bonefish):
+
+  * status:  new =&gt; closed
+  * resolution:  =&gt; fixed
+
+Comment:
+
+ Spotted the bug in lock_memory(). Fixed in 20362.
+
+ I think get_memory_map() needs reviews, though. Since
+ vm_translation_map_ops::query() never returns an error (x86), but a NULL
+ address in what I would consider an error case (Huh, what's the point of a
+ return value, if it is constant?), get_memory_map() fills the respective
+ physical_entry() with NULL in such a case.
+
+ How about a get_memory_map_etc() with additional parameters returning the
+ number of physical entries set and the total amount of they cover?
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1075#comment:4">http://dev.haiku-os.org/ticket/1075#comment:4</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000687.html">[Haiku-bugs] [Haiku] #1075: Wrong/Incomplete Data Read from Disk
+</A></li>
+	<LI>Next message: <A HREF="000618.html">[Haiku-bugs] [Haiku] #1076: Error in Profile editor on Haiku website
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#726">[ date ]</a>
+              <a href="thread.html#726">[ thread ]</a>
+              <a href="subject.html#726">[ subject ]</a>
+              <a href="author.html#726">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

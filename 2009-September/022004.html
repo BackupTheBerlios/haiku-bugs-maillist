@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4636: Custom attributes not working in	filesystem queries
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234636%3A%20Custom%20attributes%20not%20working%20in%0A%09filesystem%20queries&In-Reply-To=%3C041.2e492f7424baddf238b084c8d5c25212%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="022002.html">
+   <LINK REL="Next"  HREF="022005.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4636: Custom attributes not working in	filesystem queries</H1>
+    <B>Knutsi</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234636%3A%20Custom%20attributes%20not%20working%20in%0A%09filesystem%20queries&In-Reply-To=%3C041.2e492f7424baddf238b084c8d5c25212%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4636: Custom attributes not working in	filesystem queries">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Sep 25 15:52:23 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="022002.html">[Haiku-bugs] [Haiku] #3744: Wacom Bamboo Fun (small) doesn't	work
+</A></li>
+        <LI>Next message: <A HREF="022005.html">[Haiku-bugs] [Haiku] #4636: Custom attributes not working in filesystem queries
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22004">[ date ]</a>
+              <a href="thread.html#22004">[ thread ]</a>
+              <a href="subject.html#22004">[ subject ]</a>
+              <a href="author.html#22004">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4636: Custom attributes not working in filesystem queries
+------------------------------+---------------------------------------------
+ Reporter:  Knutsi            |       Owner:  axeld    
+     Type:  bug               |      Status:  new      
+ Priority:  normal            |   Milestone:  R1       
+Component:  File Systems/BFS  |     Version:  R1/alpha1
+Blockedby:                    |    Platform:  x86      
+ Blocking:                    |  
+------------------------------+---------------------------------------------
+ I am trying to add a custom attribute called &quot;Follow-up/followup&quot; to files
+ of type E-mail.  I've added it as a boolean value in
+ Preferences-&gt;FileTypes, and I can edit it for emails in Tracker and set
+ them to &quot;true&quot; for a selection of emails.
+
+ However, when I create a filesystem query to find them, the emails are not
+ found.
+
+
+ '''Queries tested:'''
+
+ {{{
+ ((followup==1)&amp;&amp;(BEOS:TYPE==&quot;text/x-email&quot;))
+ (followup==true)
+ (followup==*)
+ }}}
+
+
+ The same appears to be true also for custom attributes of other types,
+ such as this example:
+ {{{
+ ((test==&quot;*[fF][iI][nN][dD][mM][eE]*&quot;)&amp;&amp;(BEOS:TYPE==&quot;text/x-email&quot;))
+ }}}
+  where &quot;test&quot; is an attribute of type string.
+
+ '''System details'''
+
+ OS version: Alpha 1 on virtual box
+ Hardware: Intel PC
+ History: Installed to a new partition inside virtual box after some use to
+ free up more space.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4636">http://dev.haiku-os.org/ticket/4636</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="022002.html">[Haiku-bugs] [Haiku] #3744: Wacom Bamboo Fun (small) doesn't	work
+</A></li>
+	<LI>Next message: <A HREF="022005.html">[Haiku-bugs] [Haiku] #4636: Custom attributes not working in filesystem queries
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22004">[ date ]</a>
+              <a href="thread.html#22004">[ thread ]</a>
+              <a href="subject.html#22004">[ subject ]</a>
+              <a href="author.html#22004">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

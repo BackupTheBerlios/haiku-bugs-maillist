@@ -1,0 +1,167 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1655: vm_page_fault on boot (probably because intel_extreme driver)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231655%3A%20vm_page_fault%20on%20boot%20%28probably%20because%0A%20intel_extreme%20driver%29&In-Reply-To=%3C046.9691dd7df16109140134e321a67e4696%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003766.html">
+   <LINK REL="Next"  HREF="003778.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1655: vm_page_fault on boot (probably because intel_extreme driver)</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231655%3A%20vm_page_fault%20on%20boot%20%28probably%20because%0A%20intel_extreme%20driver%29&In-Reply-To=%3C046.9691dd7df16109140134e321a67e4696%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1655: vm_page_fault on boot (probably because intel_extreme driver)">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Nov 29 09:25:39 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003766.html">[Haiku-bugs] [Haiku] #1654: Text file empty(?) after copying
+</A></li>
+        <LI>Next message: <A HREF="003778.html">[Haiku-bugs] [Haiku] #1655: vm_page_fault on boot (probably because intel_extreme driver)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3775">[ date ]</a>
+              <a href="thread.html#3775">[ thread ]</a>
+              <a href="subject.html#3775">[ subject ]</a>
+              <a href="author.html#3775">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1655: vm_page_fault on boot (probably because intel_extreme driver)
+--------------------------------------------+-------------------------------
+ Reporter:  mzunigag_mx                     |       Owner:  axeld         
+     Type:  bug                             |      Status:  new           
+ Priority:  normal                          |   Milestone:  R1            
+Component:  Drivers/Graphics/intel_extreme  |     Version:  R1 development
+ Platform:  x86                             |  
+--------------------------------------------+-------------------------------
+ When the SATA driver was added, it booted without any problems. Now, many
+ times the monitor just gets 'out of sync limit'. If the haiku logo
+ appears, after a little time, the following line appears:
+
+
+ {{{
+ PANIC: vm_page_fault: unhandled page fault in kernel space at 0x48000 ip
+ 0x8034be44
+
+ Welcome to KDL...
+ Running on CPU 0
+ kdebug&gt;
+ }}}
+
+
+ -----
+
+ The sc command displays:
+
+
+ {{{
+ stack trace for thread 0x25 &quot;app_server&quot;
+     kernel stack: 0x801fd000 to 0x80201000
+       user stack: 0x7efe7000 to 0x7ffe7000
+ frame            caller     &lt;image&gt;:function + offset
+ 8020089c (+  52) 8007b0dc   &lt;kernel&gt;:invoke_command + 0x0074
+ 802008d0 (+  48) 8007b1fa   &lt;kernel&gt;:kernel_debugger_loop + 0x80de
+ 80200900 (+  32) 8007bcce   &lt;kernel&gt;:kernel_debugger + 0x00b6
+ 80200920 (+ 192) 8007bc0d   &lt;kernel&gt;:panic + 0x0029
+ 802009e0 (+  64) 80055f3a   &lt;kernel&gt;:vm_page_fault + 0x00aa
+ 80200a20 (+ 176) 8008480b   &lt;kernel&gt;:i386_handle_trap + 0x0217
+ iframe at 0x80200ad8 (end = 0x80200b2c)
+  eax 0x41ae001      ebx 0x8034e470      ecx 0x8000       edx 0x40000
+  esi 0x8037808c     edi 0x80200b8c      ebp 0x80200b24   esp 0x80200b08
+  eip 0x8034be44  eflags 0x10202
+  vector: 0xe, error code: 0x2
+ 80200ad0 (+  84) 8034be44   &lt;/boot/beos/system/add-
+ ons/kernel/drivers/dev/graphics/intel_extreme&gt;:set_gtt_entry_FR10intel_infoU1PUc
+ + 0x0014
+ 80200b24 (+ 112) 8034c75e   &lt;/boot/beos/system/add-
+ ons/kernel/drivers/dev/graphics/intel_extreme&gt;:intel_extreme_init_FR10intel_info
+ + 0x070e
+ 80200b94 (+  48) 8034b848   &lt;/boot/beos/system/add-
+ ons/kernel/drivers/dev/graphics/intel_extreme&gt;:device_open_FPCcU1PPv +
+ 0x00a0
+ 80200bc4 (+ 320) 8003a8ad   &lt;kernel&gt;:devfs_open__FPvT0iPPv + 0x0089
+ 80200d04 (+  48) 80045102   &lt;kernel&gt;:open_vnode__FP5vnodeib + 0x002a
+ 80200d34 (+  64) 800454ca   &lt;kernel&gt;:file_open__FiPcib + 0x0062
+ 80200d74 (+  64) 8004a3b9   &lt;kernel&gt;:_user_open + 0x00a1
+ 80200db4 (+ 336) 8002ede8   &lt;kernel&gt;:syscall_dispatcher + 0x0810
+ 80200f04 (+ 160) 800848a4   &lt;kernel&gt;:i386_handle_trap + 0x02b0
+ iframe at 0x80200fac (end = 0x80201000)
+  eax 0x46           ebx 0x79b464        ecx 0x7ffe68a8   edx 0x2
+  esi 0x1806a5b7     edi 0x2b3bad        ebp 0x7ffe696c   esp 0x80200fdc
+  eip 0xffff0102  eflags 0x246
+  vector: 0x63, error code: 0x0
+ 80200fa4 (+   0) ffff0102
+ 7ffe696c (+1104) 00284d44
+ &lt;/boot/beos/system/servers/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">app_server at 0x00200000</A>&gt;:unknown + 0x84d44
+ 7ffe6dbc (+  48) 00284bd9
+ &lt;/boot/beos/system/servers/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">app_server at 0x00200000</A>&gt;:unknown + 0x84bd9
+ 7ffe6dec (+  48) 00270dc1
+ &lt;/boot/beos/system/servers/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">app_server at 0x00200000</A>&gt;:unknown + 0x70dc1
+ 7ffe6e1c (+  64) 0025f5d5
+ &lt;/boot/beos/system/servers/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">app_server at 0x00200000</A>&gt;:unknown + 0x5f5d5
+ 7ffe6e5c (+  48) 0025f4c7
+ &lt;/boot/beos/system/servers/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">app_server at 0x00200000</A>&gt;:unknown + 0x5f4c7
+ 7ffe6e8c (+ 112) 0025ef70
+ &lt;/boot/beos/system/servers/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">app_server at 0x00200000</A>&gt;:unknown + 0x5ef70
+ 7ffe6efc (+  80) 00239539
+ &lt;/boot/beos/system/servers/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">app_server at 0x00200000</A>&gt;:unknown + 0x38c79
+ 7ffe6f4c (+  48) 00239539
+ &lt;/boot/beos/system/servers/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">app_server at 0x00200000</A>&gt;:unknown + 0x39539
+ 7ffe6f7c (+  48) 00238133
+ &lt;/boot/beos/system/servers/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">app_server at 0x00200000</A>&gt;:unknown + 0x38133
+ 7ffe6fac (+  48) 001007be   373:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">runtime_loader_seg0ro at 0x00100000</A> + 0x7be
+ 7ffe6fdc (+   0) 7ffe6fec   372:/boot/beos/system/servers/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">app_s at 0x7efe7000</A>
+ + 0xffffec
+ }}}
+
+
+ ------
+
+ If selected the 'Use fail-safe video mode' option, sometimes it goes
+ through and everything else works fine, but sometimes it goes again 'out
+ of sync limit', but sometimes it does not. I guess it is the Intel extreme
+ driver, but you decide it.
+
+ The PC where i am running Haiku has an Intel 915 GAV motherboard, an Intel
+ Pentium 4 at 3.4 MHz, 2048 MB of RAM and only one SATA disk. Haiku is
+ installed on the third primary partition.
+
+ Anything else i can help with, please let me know.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1655">http://dev.haiku-os.org/ticket/1655</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003766.html">[Haiku-bugs] [Haiku] #1654: Text file empty(?) after copying
+</A></li>
+	<LI>Next message: <A HREF="003778.html">[Haiku-bugs] [Haiku] #1655: vm_page_fault on boot (probably because intel_extreme driver)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3775">[ date ]</a>
+              <a href="thread.html#3775">[ thread ]</a>
+              <a href="subject.html#3775">[ subject ]</a>
+              <a href="author.html#3775">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

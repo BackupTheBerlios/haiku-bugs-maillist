@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4390: boot fails after 4th icon is lit using default ata stack
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234390%3A%20boot%20fails%20after%204th%20icon%20is%20lit%0A%20using%20default%20ata%20stack&In-Reply-To=%3C051.7dd1699329b26c89d620c4ba270def20%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="020965.html">
+   <LINK REL="Next"  HREF="020967.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4390: boot fails after 4th icon is lit using default ata stack</H1>
+    <B>marcusoverhagen</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234390%3A%20boot%20fails%20after%204th%20icon%20is%20lit%0A%20using%20default%20ata%20stack&In-Reply-To=%3C051.7dd1699329b26c89d620c4ba270def20%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4390: boot fails after 4th icon is lit using default ata stack">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Sep  8 23:32:01 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="020965.html">[Haiku-bugs] [Haiku] #2084: ipro100 driver makes the system	crawl
+</A></li>
+        <LI>Next message: <A HREF="020967.html">[Haiku-bugs] [Haiku] #1667: Haiku runs dogslow on real hardware (kernel team hang)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20966">[ date ]</a>
+              <a href="thread.html#20966">[ thread ]</a>
+              <a href="subject.html#20966">[ subject ]</a>
+              <a href="author.html#20966">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4390: boot fails after 4th icon is lit using default ata stack
+--------------------------+-------------------------------------------------
+ Reporter:  rudolfc       |       Owner:  marcusoverhagen
+     Type:  bug           |      Status:  assigned       
+ Priority:  normal        |   Milestone:  R1/alpha1      
+Component:  Drivers/Disk  |     Version:  R1 development 
+Blockedby:                |    Platform:  All            
+ Blocking:                |  
+--------------------------+-------------------------------------------------
+
+Comment(by marcusoverhagen):
+
+ Perhaps it's easier if you check these things first.
+
+ step 1) Make sure that you are really using &quot;ata&quot; bus_manager AND
+ &quot;ata_adapter&quot; (generic kernel addon) from trunk, r32978 or anything newer.
+
+
+ step 2) Enable on screen debug output (serial output would be better) and
+ boot. When you reach the end that looks like:
+ {{{
+ 666     loaded driver /boot/system/add-ons/kernel/drivers/dev/zero
+ 667     [35mahci:[0m ahci_supports_device
+ 668     [35mahci:[0m ahci_supports_device
+ 669     ata 0 error: timeout waiting for interrupt
+ 670     ata 0 error: RecoverLostInterrupt: lost interrupt, status 0x50
+ }}}
+
+ enter KLD (ALT+S-Req+D) and use the ints command. then the continue
+ command.
+
+ Wait for a minute or two until you get a few other &quot;timeout waiting for
+ interrupt&quot; messages.
+
+ Then enter KDL again, use ints command again, and look where interrupts
+ happen. They should be on 14 and 15. if possible attach output to this
+ bugreport.
+
+
+ step 3)
+ in build/config_headers/tracing_config.h
+
+ #define ENABLE_TRACING 1
+ #define ATA_TRACING 1
+
+
+ get r33010 of ata_adapter.c and modify #define INTERRUPT_TRACING 1
+
+ rebuild and install. when boot stops with timeout, use KDL traced command
+ and
+ view the ata debug output the timeout.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4390#comment:17">http://dev.haiku-os.org/ticket/4390#comment:17</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="020965.html">[Haiku-bugs] [Haiku] #2084: ipro100 driver makes the system	crawl
+</A></li>
+	<LI>Next message: <A HREF="020967.html">[Haiku-bugs] [Haiku] #1667: Haiku runs dogslow on real hardware (kernel team hang)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20966">[ date ]</a>
+              <a href="thread.html#20966">[ thread ]</a>
+              <a href="subject.html#20966">[ subject ]</a>
+              <a href="author.html#20966">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,415 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4574: Haiku won't boot on Xen
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234574%3A%20Haiku%20won%27t%20boot%20on%20Xen&In-Reply-To=%3C049.af729c9cfbcc6539a602151888afefea%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="021643.html">
+   <LINK REL="Next"  HREF="021634.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4574: Haiku won't boot on Xen</H1>
+    <B>jackburton</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234574%3A%20Haiku%20won%27t%20boot%20on%20Xen&In-Reply-To=%3C049.af729c9cfbcc6539a602151888afefea%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4574: Haiku won't boot on Xen">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Sep 22 16:00:47 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="021643.html">[Haiku-bugs] [Haiku] #4574: Haiku won't boot on Xen
+</A></li>
+        <LI>Next message: <A HREF="021634.html">[Haiku-bugs] [Haiku] #4053: USB MIDI not recognized dynamically
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21838">[ date ]</a>
+              <a href="thread.html#21838">[ thread ]</a>
+              <a href="subject.html#21838">[ subject ]</a>
+              <a href="author.html#21838">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4574: Haiku won't boot on Xen
+------------------------+---------------------------------------------------
+  Reporter:  e1ven      |       Owner:  axeld    
+      Type:  bug        |      Status:  closed   
+  Priority:  normal     |   Milestone:  R1       
+ Component:  - General  |     Version:  R1/alpha1
+Resolution:  duplicate  |   Blockedby:  4500     
+  Platform:  All        |    Blocking:           
+------------------------+---------------------------------------------------
+
+Old description:
+
+&gt;<i> Possible dupe of ticket 4500?
+</I>&gt;<i>
+</I>&gt;<i> I am trying to boot the Haiku alpha on a Xen machine, running on Ubuntu
+</I>&gt;<i> 8.04
+</I>&gt;<i>
+</I>&gt;<i> Kernel is  2.6.24-24-xen   x86_64
+</I>&gt;<i>
+</I>&gt;<i> By default, when I try to boot the Haiku raw image file, the boot image
+</I>&gt;<i> appears but no lights light up.
+</I>&gt;<i>
+</I>&gt;<i> Adding apic=0 to my Xen config allows it boot to the point demonstrated
+</I>&gt;<i> in the screenshot.
+</I>&gt;<i> I have enabled all of the debug options in the boot menu, but they do not
+</I>&gt;<i> appear to help.
+</I>&gt;<i>
+</I>&gt;<i> lspci-
+</I>&gt;<i> 00:00.0 Host bridge: Advanced Micro Devices [AMD] RS780 Host Bridge
+</I>&gt;<i> 00:01.0 PCI bridge: Advanced Micro Devices [AMD] RS780 PCI to PCI bridge
+</I>&gt;<i> (int gfx)
+</I>&gt;<i> 00:02.0 PCI bridge: Advanced Micro Devices [AMD] RS780 PCI to PCI bridge
+</I>&gt;<i> (ext gfx port 0)
+</I>&gt;<i> 00:11.0 SATA controller: ATI Technologies Inc SB700/SB800 SATA Controller
+</I>&gt;<i> [IDE mode]
+</I>&gt;<i> 00:12.0 USB Controller: ATI Technologies Inc SB700/SB800 USB OHCI0
+</I>&gt;<i> Controller
+</I>&gt;<i> 00:12.1 USB Controller: ATI Technologies Inc SB700/SB800 USB OHCI1
+</I>&gt;<i> Controller
+</I>&gt;<i> 00:12.2 USB Controller: ATI Technologies Inc SB700/SB800 USB EHCI
+</I>&gt;<i> Controller
+</I>&gt;<i> 00:13.0 USB Controller: ATI Technologies Inc SB700/SB800 USB OHCI0
+</I>&gt;<i> Controller
+</I>&gt;<i> 00:13.1 USB Controller: ATI Technologies Inc SB700/SB800 USB OHCI1
+</I>&gt;<i> Controller
+</I>&gt;<i> 00:13.2 USB Controller: ATI Technologies Inc SB700/SB800 USB EHCI
+</I>&gt;<i> Controller
+</I>&gt;<i> 00:14.0 SMBus: ATI Technologies Inc SBx00 SMBus Controller (rev 3a)
+</I>&gt;<i> 00:14.1 IDE interface: ATI Technologies Inc SB700/SB800 IDE Controller
+</I>&gt;<i> 00:14.2 Audio device: ATI Technologies Inc SBx00 Azalia
+</I>&gt;<i> 00:14.3 ISA bridge: ATI Technologies Inc SB700/SB800 LPC host controller
+</I>&gt;<i> 00:14.4 PCI bridge: ATI Technologies Inc SBx00 PCI to PCI Bridge
+</I>&gt;<i> 00:14.5 USB Controller: ATI Technologies Inc SB700/SB800 USB OHCI2
+</I>&gt;<i> Controller
+</I>&gt;<i> 00:18.0 Host bridge: Advanced Micro Devices [AMD] Family 10h [Opteron,
+</I>&gt;<i> Athlon64, Sempron] HyperTransport Configuration
+</I>&gt;<i> 00:18.1 Host bridge: Advanced Micro Devices [AMD] Family 10h [Opteron,
+</I>&gt;<i> Athlon64, Sempron] Address Map
+</I>&gt;<i> 00:18.2 Host bridge: Advanced Micro Devices [AMD] Family 10h [Opteron,
+</I>&gt;<i> Athlon64, Sempron] DRAM Controller
+</I>&gt;<i> 00:18.3 Host bridge: Advanced Micro Devices [AMD] Family 10h [Opteron,
+</I>&gt;<i> Athlon64, Sempron] Miscellaneous Control
+</I>&gt;<i> 00:18.4 Host bridge: Advanced Micro Devices [AMD] Family 10h [Opteron,
+</I>&gt;<i> Athlon64, Sempron] Link Control
+</I>&gt;<i> 01:05.0 VGA compatible controller: ATI Technologies Inc Radeon HD 3300
+</I>&gt;<i> Graphics
+</I>&gt;<i> 01:05.1 Audio device: ATI Technologies Inc RS780 Azalia controller
+</I>&gt;<i> 02:00.0 Ethernet controller: Intel Corporation 82571EB Gigabit Ethernet
+</I>&gt;<i> Controller (rev 06)
+</I>&gt;<i> 02:00.1 Ethernet controller: Intel Corporation 82571EB Gigabit Ethernet
+</I>&gt;<i> Controller (rev 06)
+</I>&gt;<i>
+</I>&gt;<i> lsusb-
+</I>&gt;<i>
+</I>&gt;<i> Bus 007 Device 001: ID 0000:0000
+</I>&gt;<i> Bus 006 Device 001: ID 0000:0000
+</I>&gt;<i> Bus 005 Device 002: ID 03f9:0100 KeyTronic Corp.
+</I>&gt;<i> Bus 005 Device 001: ID 0000:0000
+</I>&gt;<i> Bus 004 Device 001: ID 0000:0000
+</I>&gt;<i> Bus 003 Device 002: ID 14dd:1005
+</I>&gt;<i> Bus 003 Device 001: ID 0000:0000
+</I>&gt;<i> Bus 002 Device 001: ID 0000:0000
+</I>&gt;<i> Bus 001 Device 001: ID 0000:0000
+</I>&gt;<i>
+</I>&gt;<i> lsdev-
+</I>&gt;<i> Device            DMA   IRQ  I/O Ports
+</I>&gt;<i> ------------------------------------------------
+</I>&gt;<i>   acpi                    9
+</I>&gt;<i>   ahci                   22
+</I>&gt;<i>   callfunc0             258
+</I>&gt;<i>   callfunc1             260
+</I>&gt;<i>   callfunc2             263
+</I>&gt;<i>   callfunc3             266
+</I>&gt;<i>   console               269
+</I>&gt;<i>   ehci_hcd:usb1          17
+</I>&gt;<i>   ehci_hcd:usb2          19
+</I>&gt;<i>   floppy                  6
+</I>&gt;<i>   i8042                1 12
+</I>&gt;<i>   libata              14 15
+</I>&gt;<i>   ohci_hcd:usb3, ohci_hcd:usb4, HDA Intel         16
+</I>&gt;<i>   ohci_hcd:usb5, ohci_hcd:usb6, ohci_hcd:usb7, peth0         18
+</I>&gt;<i>   parport0                7
+</I>&gt;<i>   resched0              257
+</I>&gt;<i>   resched1              259
+</I>&gt;<i>   resched2              262
+</I>&gt;<i>   resched3              265
+</I>&gt;<i>   rtc                     8
+</I>&gt;<i>   timer0                256
+</I>&gt;<i>   timer1                261
+</I>&gt;<i>   timer2                264
+</I>&gt;<i>   timer3                267
+</I>&gt;<i>   xenbus                268
+</I>&gt;<i> 0000:00:11.0                 8000-800f 9000-9003 a000-a007 b000-b003
+</I>&gt;<i> c000-c007
+</I>&gt;<i> 0000:00:14.1                 0170-0177 01f0-01f7 0376-0376 03f6-03f6
+</I>&gt;<i> ff00-ff0f
+</I>&gt;<i> 0000:01:05.0                   d000-d0ff
+</I>&gt;<i> 0000:02:00.0                   e800-e81f
+</I>&gt;<i> 0000:02:00.1                   e400-e41f
+</I>&gt;<i> ACPI                           0800-0803   0804-0805   0808-080b
+</I>&gt;<i> 0810-0815   0820-0827
+</I>&gt;<i> cascade             4
+</I>&gt;<i> dma                          0080-008f
+</I>&gt;<i> dma1                         0000-001f
+</I>&gt;<i> dma2                         00c0-00df
+</I>&gt;<i> e1000                            e400-e41f     e800-e81f
+</I>&gt;<i> floppy                       03f2-03f5 03f7-03f7
+</I>&gt;<i> fpu                          00f0-00ff
+</I>&gt;<i> keyboard                     0060-006f
+</I>&gt;<i> libata                         0170-0177   01f0-01f7   0376-0376
+</I>&gt;<i> 03f6-03f6   ff00-ff0f
+</I>&gt;<i> parport0                     0378-037a
+</I>&gt;<i> PCI                          0cf8-0cff d000-dfff e000-efff
+</I>&gt;<i> pic1                         0020-0021
+</I>&gt;<i> pic2                         00a0-00a1
+</I>&gt;<i> piix4_smbus                    0b00-0b07
+</I>&gt;<i> pnp                          040b-040b 04d0-04d1 04d6-04d6 0800-089f
+</I>&gt;<i> 0900-090f 0910-091f 0a30-0a3f 0b00-0b0f 0b20-0b3f 0c00-0c01 0c14-0c14
+</I>&gt;<i> 0c50-0c51 0c52-0c52 0c6c-0c6c 0c6f-0c6f 0cd0-0cd1 0cd2-0cd3 0cd4-0cd5
+</I>&gt;<i> 0cd6-0cd7 0cd8-0cdf 0e00-0e0f 0e80-0e8f 0f40-0f4f fe00-fefe
+</I>&gt;<i> rtc                          0070-0077
+</I>&gt;<i> serial                       03f8-03ff
+</I>&gt;<i> timer0                       0040-0043
+</I>&gt;<i> timer1                       0050-0053
+</I>&gt;<i> vga+                         03c0-03df
+</I>&gt;<i> xen               0 1 2 3 5 6 7
+</I>&gt;<i>
+</I>
+&gt;<i> Xen config file-
+</I>&gt;<i>
+</I>&gt;<i> kernel = '/usr/lib/xen/boot/hvmloader'
+</I>&gt;<i> builder = 'hvm'
+</I>&gt;<i> memory = '256'
+</I>&gt;<i> device_model='/usr/lib/xen/bin/qemu-dm'
+</I>&gt;<i>
+</I>&gt;<i> disk =  ['tap:aio:/home/xen/domains/test/test.image,hda,w']
+</I>&gt;<i>
+</I>&gt;<i> # Hostname
+</I>&gt;<i> name = 'test1'
+</I>&gt;<i>
+</I>&gt;<i> # Networking
+</I>&gt;<i> vif = ['type=ioemu, bridge=xenbr0']
+</I>&gt;<i>
+</I>&gt;<i> # Behaviour
+</I>&gt;<i> #boot='d'
+</I>&gt;<i> vnc=1
+</I>&gt;<i> vncviewer=1
+</I>&gt;<i> sdl=0
+</I>&gt;<i> vncconsole=1
+</I>&gt;<i> vnclisten=&quot;0.0.0.0&quot;
+</I>&gt;<i> pae=0
+</I>&gt;<i> #acpi=0
+</I>&gt;<i> apic=0
+</I>&gt;<i> vcpus=1
+</I>
+New description:
+
+ Possible dupe of ticket 4500?
+
+ I am trying to boot the Haiku alpha on a Xen machine, running on Ubuntu
+ 8.04
+
+ Kernel is  2.6.24-24-xen   x86_64
+
+ By default, when I try to boot the Haiku raw image file, the boot image
+ appears but no lights light up.
+
+ Adding apic=0 to my Xen config allows it boot to the point demonstrated in
+ the screenshot.
+ I have enabled all of the debug options in the boot menu, but they do not
+ appear to help.
+
+ lspci-
+ {{{
+ 00:00.0 Host bridge: Advanced Micro Devices [AMD] RS780 Host Bridge
+ 00:01.0 PCI bridge: Advanced Micro Devices [AMD] RS780 PCI to PCI bridge
+ (int gfx)
+ 00:02.0 PCI bridge: Advanced Micro Devices [AMD] RS780 PCI to PCI bridge
+ (ext gfx port 0)
+ 00:11.0 SATA controller: ATI Technologies Inc SB700/SB800 SATA Controller
+ [IDE mode]
+ 00:12.0 USB Controller: ATI Technologies Inc SB700/SB800 USB OHCI0
+ Controller
+ 00:12.1 USB Controller: ATI Technologies Inc SB700/SB800 USB OHCI1
+ Controller
+ 00:12.2 USB Controller: ATI Technologies Inc SB700/SB800 USB EHCI
+ Controller
+ 00:13.0 USB Controller: ATI Technologies Inc SB700/SB800 USB OHCI0
+ Controller
+ 00:13.1 USB Controller: ATI Technologies Inc SB700/SB800 USB OHCI1
+ Controller
+ 00:13.2 USB Controller: ATI Technologies Inc SB700/SB800 USB EHCI
+ Controller
+ 00:14.0 SMBus: ATI Technologies Inc SBx00 SMBus Controller (rev 3a)
+ 00:14.1 IDE interface: ATI Technologies Inc SB700/SB800 IDE Controller
+ 00:14.2 Audio device: ATI Technologies Inc SBx00 Azalia
+ 00:14.3 ISA bridge: ATI Technologies Inc SB700/SB800 LPC host controller
+ 00:14.4 PCI bridge: ATI Technologies Inc SBx00 PCI to PCI Bridge
+ 00:14.5 USB Controller: ATI Technologies Inc SB700/SB800 USB OHCI2
+ Controller
+ 00:18.0 Host bridge: Advanced Micro Devices [AMD] Family 10h [Opteron,
+ Athlon64, Sempron] HyperTransport Configuration
+ 00:18.1 Host bridge: Advanced Micro Devices [AMD] Family 10h [Opteron,
+ Athlon64, Sempron] Address Map
+ 00:18.2 Host bridge: Advanced Micro Devices [AMD] Family 10h [Opteron,
+ Athlon64, Sempron] DRAM Controller
+ 00:18.3 Host bridge: Advanced Micro Devices [AMD] Family 10h [Opteron,
+ Athlon64, Sempron] Miscellaneous Control
+ 00:18.4 Host bridge: Advanced Micro Devices [AMD] Family 10h [Opteron,
+ Athlon64, Sempron] Link Control
+ 01:05.0 VGA compatible controller: ATI Technologies Inc Radeon HD 3300
+ Graphics
+ 01:05.1 Audio device: ATI Technologies Inc RS780 Azalia controller
+ 02:00.0 Ethernet controller: Intel Corporation 82571EB Gigabit Ethernet
+ Controller (rev 06)
+ 02:00.1 Ethernet controller: Intel Corporation 82571EB Gigabit Ethernet
+ Controller (rev 06)
+ }}}
+ lsusb-
+ {{{
+ Bus 007 Device 001: ID 0000:0000
+ Bus 006 Device 001: ID 0000:0000
+ Bus 005 Device 002: ID 03f9:0100 KeyTronic Corp.
+ Bus 005 Device 001: ID 0000:0000
+ Bus 004 Device 001: ID 0000:0000
+ Bus 003 Device 002: ID 14dd:1005
+ Bus 003 Device 001: ID 0000:0000
+ Bus 002 Device 001: ID 0000:0000
+ Bus 001 Device 001: ID 0000:0000
+ }}}
+ lsdev-
+ {{{
+ Device            DMA   IRQ  I/O Ports
+ ------------------------------------------------
+   acpi                    9
+   ahci                   22
+   callfunc0             258
+   callfunc1             260
+   callfunc2             263
+   callfunc3             266
+   console               269
+   ehci_hcd:usb1          17
+   ehci_hcd:usb2          19
+   floppy                  6
+   i8042                1 12
+   libata              14 15
+   ohci_hcd:usb3, ohci_hcd:usb4, HDA Intel         16
+   ohci_hcd:usb5, ohci_hcd:usb6, ohci_hcd:usb7, peth0         18
+   parport0                7
+   resched0              257
+   resched1              259
+   resched2              262
+   resched3              265
+   rtc                     8
+   timer0                256
+   timer1                261
+   timer2                264
+   timer3                267
+   xenbus                268
+ 0000:00:11.0                 8000-800f 9000-9003 a000-a007 b000-b003
+ c000-c007
+ 0000:00:14.1                 0170-0177 01f0-01f7 0376-0376 03f6-03f6
+ ff00-ff0f
+ 0000:01:05.0                   d000-d0ff
+ 0000:02:00.0                   e800-e81f
+ 0000:02:00.1                   e400-e41f
+ ACPI                           0800-0803   0804-0805   0808-080b
+ 0810-0815   0820-0827
+ cascade             4
+ dma                          0080-008f
+ dma1                         0000-001f
+ dma2                         00c0-00df
+ e1000                            e400-e41f     e800-e81f
+ floppy                       03f2-03f5 03f7-03f7
+ fpu                          00f0-00ff
+ keyboard                     0060-006f
+ libata                         0170-0177   01f0-01f7   0376-0376
+ 03f6-03f6   ff00-ff0f
+ parport0                     0378-037a
+ PCI                          0cf8-0cff d000-dfff e000-efff
+ pic1                         0020-0021
+ pic2                         00a0-00a1
+ piix4_smbus                    0b00-0b07
+ pnp                          040b-040b 04d0-04d1 04d6-04d6 0800-089f
+ 0900-090f 0910-091f 0a30-0a3f 0b00-0b0f 0b20-0b3f 0c00-0c01 0c14-0c14
+ 0c50-0c51 0c52-0c52 0c6c-0c6c 0c6f-0c6f 0cd0-0cd1 0cd2-0cd3 0cd4-0cd5
+ 0cd6-0cd7 0cd8-0cdf 0e00-0e0f 0e80-0e8f 0f40-0f4f fe00-fefe
+ rtc                          0070-0077
+ serial                       03f8-03ff
+ timer0                       0040-0043
+ timer1                       0050-0053
+ vga+                         03c0-03df
+ xen               0 1 2 3 5 6 7
+ }}}
+
+ Xen config file-
+ {{{
+ kernel = '/usr/lib/xen/boot/hvmloader'
+ builder = 'hvm'
+ memory = '256'
+ device_model='/usr/lib/xen/bin/qemu-dm'
+
+ disk =  ['tap:aio:/home/xen/domains/test/test.image,hda,w']
+
+ # Hostname
+ name = 'test1'
+
+ # Networking
+ vif = ['type=ioemu, bridge=xenbr0']
+
+ # Behaviour
+ #boot='d'
+ vnc=1
+ vncviewer=1
+ sdl=0
+ vncconsole=1
+ vnclisten=&quot;0.0.0.0&quot;
+ pae=0
+ #acpi=0
+ apic=0
+ vcpus=1
+
+ }}}
+
+--
+
+Comment(by jackburton):
+
+ Better formatting of the description.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4574#comment:4">http://dev.haiku-os.org/ticket/4574#comment:4</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="021643.html">[Haiku-bugs] [Haiku] #4574: Haiku won't boot on Xen
+</A></li>
+	<LI>Next message: <A HREF="021634.html">[Haiku-bugs] [Haiku] #4053: USB MIDI not recognized dynamically
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21838">[ date ]</a>
+              <a href="thread.html#21838">[ thread ]</a>
+              <a href="subject.html#21838">[ subject ]</a>
+              <a href="author.html#21838">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

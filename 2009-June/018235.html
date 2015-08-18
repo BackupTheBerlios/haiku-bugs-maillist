@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4050: ATA driver cannot recognize 2nd HDD
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234050%3A%20ATA%20driver%20cannot%20recognize%202nd%20HDD&In-Reply-To=%3C046.71fb4a5d118504fbb95f6c99e7e24b6d%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="018234.html">
+   <LINK REL="Next"  HREF="018227.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4050: ATA driver cannot recognize 2nd HDD</H1>
+    <B>mmlr</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234050%3A%20ATA%20driver%20cannot%20recognize%202nd%20HDD&In-Reply-To=%3C046.71fb4a5d118504fbb95f6c99e7e24b6d%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4050: ATA driver cannot recognize 2nd HDD">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Jun 30 19:17:32 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="018234.html">[Haiku-bugs] [Haiku] #4050: ATA driver cannot recognize 2nd HDD
+</A></li>
+        <LI>Next message: <A HREF="018227.html">[Haiku-bugs] [Haiku] #4051: [patch] Change tab order in 'Tracker Preferences'-window
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18235">[ date ]</a>
+              <a href="thread.html#18235">[ thread ]</a>
+              <a href="subject.html#18235">[ subject ]</a>
+              <a href="author.html#18235">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4050: ATA driver cannot recognize 2nd HDD
+--------------------------+-------------------------------------------------
+ Reporter:  mt            |       Owner:  marcusoverhagen
+     Type:  bug           |      Status:  new            
+ Priority:  normal        |   Milestone:  R1/alpha1      
+Component:  Drivers/Disk  |     Version:  R1 development 
+Blockedby:                |    Platform:  x86            
+ Blocking:                |  
+--------------------------+-------------------------------------------------
+Changes (by mmlr):
+
+ * cc: mmrl (removed)
+
+
+Comment:
+
+ The relevant lines seem to be:
+ {{{
+ 686     KERN:
+ KDiskDeviceManager::_ScanPartition(/dev/disk/ata/4/slave/raw)
+ 687     KERN: intel: ep_std_ops(0x1)
+ 688     KERN:   trying: partitioning_systems/intel/extended/v1
+ 689     KERN:   returned: -1
+ 690     KERN: intel: ep_std_ops(0x2)
+ 691     KERN:   trying: partitioning_systems/intel/map/v1
+ 692     KERN: intel: pm_identify_partition(0, 1: 0, 80026361856, 512)
+ 694     KERN: das_read(): request.Wait() returned: Device timeout
+ 695     KERN:   returned: -1
+ 696     KERN:   trying: file_systems/bfs/v1
+ 697     KERN: das_read(): request.Wait() returned: Device timeout
+ }}}
+
+ Looks like a timeout or possibly a stall. Tuning some of the timeout
+ values could proof this.
+
+ It's mmlr btw. but I'm on the bugs-list anyway, so no CC is required.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4050#comment:4">http://dev.haiku-os.org/ticket/4050#comment:4</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="018234.html">[Haiku-bugs] [Haiku] #4050: ATA driver cannot recognize 2nd HDD
+</A></li>
+	<LI>Next message: <A HREF="018227.html">[Haiku-bugs] [Haiku] #4051: [patch] Change tab order in 'Tracker Preferences'-window
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18235">[ date ]</a>
+              <a href="thread.html#18235">[ thread ]</a>
+              <a href="subject.html#18235">[ subject ]</a>
+              <a href="author.html#18235">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2083: EHCI bus hanging at boot.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232083%3A%20EHCI%20bus%20hanging%20at%20boot.&In-Reply-To=%3C047.8ef38a135127e1cb6ba4b45270d9ff30%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010313.html">
+   <LINK REL="Next"  HREF="010315.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2083: EHCI bus hanging at boot.</H1>
+    <B>mmlr</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232083%3A%20EHCI%20bus%20hanging%20at%20boot.&In-Reply-To=%3C047.8ef38a135127e1cb6ba4b45270d9ff30%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2083: EHCI bus hanging at boot.">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Sep 15 13:29:20 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010313.html">[Haiku-bugs] [Haiku] #2083: EHCI bus hanging at boot.
+</A></li>
+        <LI>Next message: <A HREF="010315.html">[Haiku-bugs] [Haiku] #2599: Virtual Box networking detected,	not working
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10314">[ date ]</a>
+              <a href="thread.html#10314">[ thread ]</a>
+              <a href="subject.html#10314">[ subject ]</a>
+              <a href="author.html#10314">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2083: EHCI bus hanging at boot.
+--------------------------+-------------------------------------------------
+  Reporter:  bga          |       Owner:  mmlr          
+      Type:  bug          |      Status:  assigned      
+  Priority:  blocker      |   Milestone:  R1            
+ Component:  Drivers/USB  |     Version:  R1 development
+Resolution:               |   Blockedby:                
+  Platform:  All          |    Blocking:                
+--------------------------+-------------------------------------------------
+
+Comment(by mmlr):
+
+ Replying to [comment:18 Minoru-kun]:
+ &gt; I've got the same error on my BenQ A52-R20 laptop yesterday.:
+ &gt; ...
+ &gt; USB ControlPipe: timeout waiting for queued request to complete
+ &gt; usb_ehci: qtd (0x02ab7680) error: 0x00080248
+ &gt; ...
+ &gt; What can i do? I attach my lspci/lsusb logs.
+
+ Sadly it seems you have one of those boards that have broken
+ interrupt/timer routing. What most probably happens is that there is no
+ interrupt received when the transfer descriptors are done. USB (and most
+ other devices for that matter) cannot work without receiving these
+ interrupts however. Please see bug #2342 and #2335 for more details about
+ the IXP problems.
+
+ This shouldn't be an isolated problem though. If you manage to boot at
+ all, you should notice that other devices, most prominently network, will
+ probably not work. If you could verify whether or not this problem only
+ affects USB and no other device that'd be helpful.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2083#comment:19">http://dev.haiku-os.org/ticket/2083#comment:19</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010313.html">[Haiku-bugs] [Haiku] #2083: EHCI bus hanging at boot.
+</A></li>
+	<LI>Next message: <A HREF="010315.html">[Haiku-bugs] [Haiku] #2599: Virtual Box networking detected,	not working
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10314">[ date ]</a>
+              <a href="thread.html#10314">[ thread ]</a>
+              <a href="subject.html#10314">[ subject ]</a>
+              <a href="author.html#10314">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

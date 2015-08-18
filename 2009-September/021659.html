@@ -1,0 +1,158 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4581: Crash when dealing with many files in a	folder
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234581%3A%20Crash%20when%20dealing%20with%20many%20files%20in%20a%0A%09folder&In-Reply-To=%3C044.f9ba91c42be4b61b224adc9a0e509846%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="021687.html">
+   <LINK REL="Next"  HREF="021660.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4581: Crash when dealing with many files in a	folder</H1>
+    <B>humdinger</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234581%3A%20Crash%20when%20dealing%20with%20many%20files%20in%20a%0A%09folder&In-Reply-To=%3C044.f9ba91c42be4b61b224adc9a0e509846%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4581: Crash when dealing with many files in a	folder">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Sep 19 18:19:46 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="021687.html">[Haiku-bugs] [Haiku] #4580: Changing action when clicking mailbox icon in Deskbar
+</A></li>
+        <LI>Next message: <A HREF="021660.html">[Haiku-bugs] [Haiku] #4582: Include mboxtobemail in the image
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21659">[ date ]</a>
+              <a href="thread.html#21659">[ thread ]</a>
+              <a href="subject.html#21659">[ subject ]</a>
+              <a href="author.html#21659">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4581: Crash when dealing with many files in a folder
+----------------------------------+-----------------------------------------
+ Reporter:  humdinger             |       Owner:  axeld         
+     Type:  bug                   |      Status:  new           
+ Priority:  normal                |   Milestone:  R1            
+Component:  Applications/Tracker  |     Version:  R1/Development
+Blockedby:                        |    Platform:  All           
+ Blocking:                        |  
+----------------------------------+-----------------------------------------
+ This is r33154, native gcc4 hybrid.
+
+ I have an inbox folder with 21000+ emails. Attributes status, subject,
+ from, when are displayed. It takes quite some time to populate the folder,
+ naturally.
+
+ I had the following two Tracker crashes, the first after everything was
+ loaded and I scrolled about a bit; the second while populating the window.
+
+ {{{
+ [tcsetpgrp failed in terminal_inferior: Invalid Argument]
+ [Switching to team /boot/system/Tracker (102) thread w&gt;/HiQ-
+ Data/mail/googlemail/in (1845)]
+ 0x005fbf62 in BPrivate::superblock::superblock ()
+    from /boot/system/lib/libroot.so
+ (gdb) bt
+ #0  0x005fbf62 in BPrivate::superblock::superblock ()
+    from /boot/system/lib/libroot.so
+ #1  0x005fc5fe in BPrivate::superblock::makeSuperblock ()
+    from /boot/system/lib/libroot.so
+ #2  0x005fcc43 in BPrivate::threadHeap::malloc ()
+    from /boot/system/lib/libroot.so
+ #3  0x005fe0e9 in malloc () from /boot/system/lib/libroot.so
+ #4  0x005fe290 in realloc () from /boot/system/lib/libroot.so
+ #5  0x003a8ebc in BString::_Resize () from /boot/system/lib/libbe.so
+ #6  0x003a9d66 in BString::_MakeWritable () from /boot/system/lib/libbe.so
+ #7  0x003aa700 in BString::SetTo () from /boot/system/lib/libbe.so
+ #8  0x003aa790 in BString::operator= () from /boot/system/lib/libbe.so
+ #9  0x0057f13b in BPrivate::GenericAttributeText::ReadValue ()
+    from /boot/system/lib/libtracker.so
+ #10 0x0057e62a in BPrivate::GenericAttributeText::FitValue ()
+    from /boot/system/lib/libtracker.so
+ #11 0x0057e0d8 in BPrivate::WidgetAttributeText::CheckViewChanged ()
+    from /boot/system/lib/libtracker.so
+ #12 0x0057e1a9 in BPrivate::WidgetAttributeText::FittingText ()
+    from /boot/system/lib/libtracker.so
+ #13 0x0057e1e4 in BPrivate::WidgetAttributeText::Width ()
+    from /boot/system/lib/libtracker.so
+ #14 0x005628a5 in BPrivate::BTextWidget::CalcRect ()
+    from /boot/system/lib/libtracker.so
+ ---Type &lt;return&gt; to continue, or q &lt;return&gt; to quit---
+ #15 0x005296eb in BPrivate::BPose::Draw () from
+ /boot/system/lib/libtracker.so
+ #16 0x00538257 in BPrivate::BPoseView::DrawViewCommon ()
+    from /boot/system/lib/libtracker.so
+ #17 0x0053842f in BPrivate::BPoseView::Draw ()
+    from /boot/system/lib/libtracker.so
+ #18 0x003536cc in BView::_Draw () from /boot/system/lib/libbe.so
+ #19 0x0035dca5 in BWindow::DispatchMessage () from
+ /boot/system/lib/libbe.so
+ #20 0x00359b21 in BWindow::task_looper () from /boot/system/lib/libbe.so
+ #21 0x002a9eb0 in BLooper::_task0_ () from /boot/system/lib/libbe.so
+ #22 0x005ee00d in thread_entry () from /boot/system/lib/libroot.so
+ #23 0x78288fec in ?? ()
+
+
+ Second crash:
+
+ [tcsetpgrp failed in terminal_inferior: Invalid Argument]
+ [Switching to team /boot/system/Tracker (102) thread
+ w&gt;/boot/home/config/settings/Ma (441)]
+ 0x00515f60 in BPrivate::Model::StatChanged ()
+    from /boot/system/lib/libtracker.so
+ (gdb) bt
+ #0  0x00515f60 in BPrivate::Model::StatChanged ()
+    from /boot/system/lib/libtracker.so
+ #1  0x0053b3c7 in BPrivate::BPoseView::AttributeChanged ()
+    from /boot/system/lib/libtracker.so
+ #2  0x0053c0a4 in BPrivate::BPoseView::FSNotification ()
+    from /boot/system/lib/libtracker.so
+ #3  0x0054503a in BPrivate::BPoseView::MessageReceived ()
+    from /boot/system/lib/libtracker.so
+ #4  0x002a868d in BLooper::DispatchMessage () from
+ /boot/system/lib/libbe.so
+ #5  0x0035dee4 in BWindow::DispatchMessage () from
+ /boot/system/lib/libbe.so
+ #6  0x00359b21 in BWindow::task_looper () from /boot/system/lib/libbe.so
+ #7  0x002a9eb0 in BLooper::_task0_ () from /boot/system/lib/libbe.so
+ #8  0x005ee00d in thread_entry () from /boot/system/lib/libroot.so
+ #9  0x7003ffec in ?? ()
+ }}}
+
+ It's not really reproduceable. Could it be related to closed ticket #2760?
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4581">http://dev.haiku-os.org/ticket/4581</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="021687.html">[Haiku-bugs] [Haiku] #4580: Changing action when clicking mailbox icon in Deskbar
+</A></li>
+	<LI>Next message: <A HREF="021660.html">[Haiku-bugs] [Haiku] #4582: Include mboxtobemail in the image
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21659">[ date ]</a>
+              <a href="thread.html#21659">[ thread ]</a>
+              <a href="subject.html#21659">[ subject ]</a>
+              <a href="author.html#21659">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

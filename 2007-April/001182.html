@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1177: Input server dies on AT keyboard keymap IsDeadKey()
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231177%3A%20Input%20server%20dies%20on%20AT%20keyboard%0A%20keymap%20IsDeadKey%28%29&In-Reply-To=%3C057.30acbf3cf48060426792e2a96b0047ab%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001175.html">
+   <LINK REL="Next"  HREF="001183.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1177: Input server dies on AT keyboard keymap IsDeadKey()</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231177%3A%20Input%20server%20dies%20on%20AT%20keyboard%0A%20keymap%20IsDeadKey%28%29&In-Reply-To=%3C057.30acbf3cf48060426792e2a96b0047ab%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1177: Input server dies on AT keyboard keymap IsDeadKey()">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Apr 28 17:03:26 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001175.html">[Haiku-bugs] [Haiku] #1177: Input server dies on AT keyboard keymap IsDeadKey()
+</A></li>
+        <LI>Next message: <A HREF="001183.html">[Haiku-bugs] [Haiku] #1177: Input server dies on AT keyboard keymap IsDeadKey()
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1182">[ date ]</a>
+              <a href="thread.html#1182">[ thread ]</a>
+              <a href="subject.html#1182">[ subject ]</a>
+              <a href="author.html#1182">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1177: Input server dies on AT keyboard keymap IsDeadKey()
+-----------------------------------+----------------------------------------
+  Reporter:  jonas.kirilla         |       Owner:  korli         
+      Type:  bug                   |      Status:  new           
+  Priority:  normal                |   Milestone:  R1            
+ Component:  Servers/input_server  |     Version:  R1 development
+Resolution:                        |    Platform:  All           
+-----------------------------------+----------------------------------------
+Comment (by marcusoverhagen):
+
+ Please retest with r20883, enable TRACE-ing in ps2_common.h before
+ compiling,
+ and provide a syslog. Note that I don't expect this revision to fix your
+ problem,
+ but it should provide better debug output.
+
+ 1st test:
+ enter BIOS during boot and lookup (and report here) the current USB
+ keyboard/mouse legacy support setting, but don't change it. boot into
+ haiku and type a few (around 20) keys about 30 seconds after the desktop
+ appeared
+
+ 2nd test:
+ remove usb keyboard and mouse and reboot. does the ps2 keyboard work?
+ (ctrl+tab, etc)
+
+ 3nd test:
+ reattach usb keyboard + mouse, reboot and enter change bios setting of usb
+ legacy support, boot and repeat test 1.
+
+ 4th test:
+ remove/delete the usb bus manager from /boot/beos/system/add-
+ ons/kernel/bus_managers (or a similar path, can't verify right now) and
+ repeat test 1.
+
+ thanks
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1177#comment:10">http://dev.haiku-os.org/ticket/1177#comment:10</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001175.html">[Haiku-bugs] [Haiku] #1177: Input server dies on AT keyboard keymap IsDeadKey()
+</A></li>
+	<LI>Next message: <A HREF="001183.html">[Haiku-bugs] [Haiku] #1177: Input server dies on AT keyboard keymap IsDeadKey()
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1182">[ date ]</a>
+              <a href="thread.html#1182">[ thread ]</a>
+              <a href="subject.html#1182">[ subject ]</a>
+              <a href="author.html#1182">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

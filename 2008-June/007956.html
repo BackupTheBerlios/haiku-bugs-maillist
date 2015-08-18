@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2355: Incorrect BView::Draw() Update Rect after CopyBits()
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232355%3A%20Incorrect%20BView%3A%3ADraw%28%29%20Update%20Rect%0A%20after%20CopyBits%28%29&In-Reply-To=%3C052.05d51c05d6b3a66381eb269188bd155b%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007953.html">
+   <LINK REL="Next"  HREF="007966.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2355: Incorrect BView::Draw() Update Rect after CopyBits()</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232355%3A%20Incorrect%20BView%3A%3ADraw%28%29%20Update%20Rect%0A%20after%20CopyBits%28%29&In-Reply-To=%3C052.05d51c05d6b3a66381eb269188bd155b%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2355: Incorrect BView::Draw() Update Rect after CopyBits()">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Jun  9 11:37:20 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007953.html">[Haiku-bugs] [Haiku] #2355: Incorrect BView::Draw() Update Rect after CopyBits()
+</A></li>
+        <LI>Next message: <A HREF="007966.html">[Haiku-bugs] [Haiku] #2355: Incorrect BView::Draw() Update Rect after CopyBits()
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7956">[ date ]</a>
+              <a href="thread.html#7956">[ thread ]</a>
+              <a href="subject.html#7956">[ subject ]</a>
+              <a href="author.html#7956">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2355: Incorrect BView::Draw() Update Rect after CopyBits()
+---------------------------------+------------------------------------------
+  Reporter:  bonefish            |       Owner:  axeld         
+      Type:  bug                 |      Status:  new           
+  Priority:  normal              |   Milestone:  R1            
+ Component:  Servers/app_server  |     Version:  R1 development
+Resolution:                      |    Platform:  All           
+---------------------------------+------------------------------------------
+Comment (by stippi):
+
+ The fact that you cannot reproduce this in a test app is interesting.
+ Knowing how the update mechanism works, I would be tempted to say that
+ other views in the view hierarchy are being invalidated as well. But since
+ this is Terminal, it is hard to see which ones. The update rect is
+ unfortunately one and the same rect for all the views that are invalidated
+ in one &quot;session&quot; (the frame of the dirty region). It is clipped to the
+ respective view bounds on the client side. In another words, if there is a
+ view being redrawn to the top of the view you are interested in, you would
+ get an invalidation rect that extends to the top of that view no matter
+ what parts you invalidated. I could change this, so that each view gets
+ it's own update rect. I am looking at the clipping region of each
+ potentially affected view anyways to know whether or not it should be put
+ into the update session. However, the circumstances with the Terminal
+ might hint at another problem with CopyBits(). Have you already taken a
+ look at the update message that arrives at the window? Is the TermView the
+ only one being redrawn? BTW, I can see what you are trying to do and why
+ this behavior is definitely a problem.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2355#comment:4">http://dev.haiku-os.org/ticket/2355#comment:4</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007953.html">[Haiku-bugs] [Haiku] #2355: Incorrect BView::Draw() Update Rect after CopyBits()
+</A></li>
+	<LI>Next message: <A HREF="007966.html">[Haiku-bugs] [Haiku] #2355: Incorrect BView::Draw() Update Rect after CopyBits()
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7956">[ date ]</a>
+              <a href="thread.html#7956">[ thread ]</a>
+              <a href="subject.html#7956">[ subject ]</a>
+              <a href="author.html#7956">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

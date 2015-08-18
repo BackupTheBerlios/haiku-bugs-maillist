@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1369: Haiku corrupts vlc binary
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231369%3A%20Haiku%20corrupts%20vlc%20binary&In-Reply-To=%3C052.3ebd9483808646dd40c8661bf5b5ec7c%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002312.html">
+   <LINK REL="Next"  HREF="002317.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1369: Haiku corrupts vlc binary</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231369%3A%20Haiku%20corrupts%20vlc%20binary&In-Reply-To=%3C052.3ebd9483808646dd40c8661bf5b5ec7c%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1369: Haiku corrupts vlc binary">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Aug 15 20:38:50 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002312.html">[Haiku-bugs] [Haiku] #1369: Haiku corrupts vlc binary
+</A></li>
+        <LI>Next message: <A HREF="002317.html">[Haiku-bugs] [Haiku] #1369: Haiku corrupts vlc binary
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2314">[ date ]</a>
+              <a href="thread.html#2314">[ thread ]</a>
+              <a href="subject.html#2314">[ subject ]</a>
+              <a href="author.html#2314">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1369: Haiku corrupts vlc binary
+----------------------------+-----------------------------------------------
+  Reporter:  kaoutsis       |       Owner:  axeld         
+      Type:  bug            |      Status:  new           
+  Priority:  normal         |   Milestone:  R1            
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |    Platform:  All           
+----------------------------+-----------------------------------------------
+Comment (by bbjimmy):
+
+ The new file is corrupted if it is executed before a Restart. If it is not
+ executed until after a Restart the file is not corrupted and can be
+ executed any number of times.
+
+ ( simple quick test ... <A HREF="http://216.110.210.251/fatelk/TextSaver.zip">http://216.110.210.251/fatelk/TextSaver.zip</A>
+ unzip
+ copy TextSaver /boot/home/config/add-ons/Screen Savers/
+ execute the screensaver THEN reboot.
+
+ now the TextSaver file in /boot/home/config/add-ons/Screen Savers/ does
+ not match the file in the TextSaver folder.
+
+ re-copy the file and Restart THEN execute the file ... now the system can
+ re-boot and the file is not corrupted.
+
+ NOTE: the corruption is not limited to screensavers, this is just a quick
+ test case)
+
+
+ looks like something with a combination of copying the file and then
+ executing it.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1369#comment:7">http://dev.haiku-os.org/ticket/1369#comment:7</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002312.html">[Haiku-bugs] [Haiku] #1369: Haiku corrupts vlc binary
+</A></li>
+	<LI>Next message: <A HREF="002317.html">[Haiku-bugs] [Haiku] #1369: Haiku corrupts vlc binary
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2314">[ date ]</a>
+              <a href="thread.html#2314">[ thread ]</a>
+              <a href="subject.html#2314">[ subject ]</a>
+              <a href="author.html#2314">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

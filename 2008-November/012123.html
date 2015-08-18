@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3082: Double locking bug in kernel_daemon
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233082%3A%20Double%20locking%20bug%20in%20kernel_daemon&In-Reply-To=%3C044.5670cb13b84edaa190c28bb330e8d4dc%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012121.html">
+   <LINK REL="Next"  HREF="012175.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3082: Double locking bug in kernel_daemon</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233082%3A%20Double%20locking%20bug%20in%20kernel_daemon&In-Reply-To=%3C044.5670cb13b84edaa190c28bb330e8d4dc%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3082: Double locking bug in kernel_daemon">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Nov  6 00:29:05 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012121.html">[Haiku-bugs] [Haiku] #2878: Setting the time with the Time preferences is broken.
+</A></li>
+        <LI>Next message: <A HREF="012175.html">[Haiku-bugs] [Haiku] #3082: Double locking bug in kernel_daemon
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12123">[ date ]</a>
+              <a href="thread.html#12123">[ thread ]</a>
+              <a href="subject.html#12123">[ subject ]</a>
+              <a href="author.html#12123">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3082: Double locking bug in kernel_daemon
+---------------------------+------------------------------------------------
+ Reporter:  anevilyak      |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1/alpha1     
+Component:  System/Kernel  |     Version:  R1 development
+Blockedby:                 |    Platform:  All           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+ In various circumstances it is possible to run into a double lock panic in
+ the kernel daemon, such as the following:
+
+ {{{
+ PANIC: _mutex_lock(): double lock of 0x80120b00 by thread 3
+ Welcome to Kernel Debugging Land...
+ Thread 3 &quot;kernel daemon&quot; running on CPU 0
+ kdebug&gt; bt
+ stack trace for thread 3 &quot;kernel daemon&quot;
+     kernel stack: 0x8016e000 to 0x80172000
+ frame               caller     &lt;image&gt;:function + offset
+  0 80171a58 (+  48) 8005d96d   &lt;kernel_x86&gt;:invoke_debugger_command +
+ 0x00f5
+  1 80171a88 (+  64) 8005d75d   &lt;kernel_x86&gt;
+ invoke_pipe_segment(debugger_command_pipe*: 0x80126f40, int32: 0, 0x0
+ &quot;&lt;NULL&gt;&quot;) + 0x0079
+  2 80171ac8 (+  64) 8005dae4   &lt;kernel_x86&gt;:invoke_debugger_command_pipe +
+ 0x009c
+  3 80171b08 (+  48) 8005f06c   &lt;kernel_x86&gt;
+ ExpressionParser&lt;0x80171bbc&gt;::_ParseCommandPipe(0x80171bb8) + 0x0234
+  4 80171b38 (+  64) 8005e4a6   &lt;kernel_x86&gt;
+ ExpressionParser&lt;0x80171bbc&gt;::EvaluateCommand(0x80116aa0 &quot;bt&quot;, 0x80171bb8)
+ + 0x02ba
+  5 80171b78 (+ 224) 80060494   &lt;kernel_x86&gt;:evaluate_debug_command +
+ 0x0088
+  6 80171c58 (+  64) 8005b92e   &lt;kernel_x86&gt; kernel_debugger_loop() +
+ 0x01ae
+  7 80171c98 (+  32) 8005c799   &lt;kernel_x86&gt;:kernel_debugger + 0x004d
+  8 80171cb8 (+ 192) 8005c741   &lt;kernel_x86&gt;:panic + 0x0029
+  9 80171d78 (+  64) 8003ddc8   &lt;kernel_x86&gt;:_mutex_lock + 0x00f8
+ 10 80171db8 (+  64) 8003c8e1   &lt;kernel_x86&gt;
+ KernelDaemon&lt;0x80120b00&gt;::Register(0x9c5c8e44, int32: -1671643840, 0x5,
+ 0x80120eec, 0x9c5cbd40, 0x80171ed8, 0x9c5c826c, 0x9c5c8e44, 0x9c5cbd40,
+ 0x5, 0x9c5c816d, 0xd2c7, 0x81176b40, 0x0, 0x46, 0x8122fbb8, 0x0,
+ 0x80171e78, 0x800b6f42, 0x8122fbb8, 0xd2c7, 0x80171e98, 0x9c5cbc80,
+ 0x80116694, 0x9c5cbd00, 0x9c5c8e44, 0x80171eb0, 0x80171ea8, 0x9c5ca060,
+ 0x9c5ca02b, 0x80036b18, 0x8122fbb8, 0x0) + 0x007d
+ 11 80171df8 (+  32) 8003cc0c   &lt;kernel_x86&gt;:register_kernel_daemon +
+ 0x001c
+ 12 80171e18 (+ 192) 9c5c826c   &lt;/boot/beos/system/add-
+ ons/kernel/drivers/dev/disk/floppy/pc_floppy&gt;:init_driver + 0x0110
+ 13 80171ed8 (+  48) 80072441   &lt;kernel_x86&gt; load_driver(legacy_driver*:
+ 0x81176b40) + 0x0139
+ 14 80171f08 (+  48) 80072a1d   &lt;kernel_x86&gt; reload_driver(legacy_driver*:
+ 0x81176b40) + 0x0031
+ 15 80171f38 (+  64) 80072b61   &lt;kernel_x86&gt; handle_driver_events(NULL,
+ int32: 5629) + 0x0125
+ 16 80171f78 (+  64) 8003cbbc   &lt;kernel_x86&gt;
+ KernelDaemon&lt;0x80120b00&gt;::_DaemonThread(0x819b5000) + 0x006c
+ 17 80171fb8 (+  32) 8003cb4a   &lt;kernel_x86&gt;
+ KernelDaemon&lt;0x80120b00&gt;::_DaemonThreadEntry(NULL) + 0x0012
+ 18 80171fd8 (+  32) 800529b3   &lt;kernel_x86&gt; _create_kernel_thread_kentry()
+ + 0x001b
+ 19 80171ff8 (+2145968136) 80052950   &lt;kernel_x86&gt; thread_kthread_exit() +
+ 0x0000
+ }}}
+
+ According to Ingo this is due to:
+ {{{
+ This one is at least well understood -- a new kernel daemon is registered
+ while executing a kernel daemon -- it just needs to be fixed.
+ }}}
+
+ If needed an applicable serial log can be found in ticket #2923.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3082">http://dev.haiku-os.org/ticket/3082</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012121.html">[Haiku-bugs] [Haiku] #2878: Setting the time with the Time preferences is broken.
+</A></li>
+	<LI>Next message: <A HREF="012175.html">[Haiku-bugs] [Haiku] #3082: Double locking bug in kernel_daemon
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12123">[ date ]</a>
+              <a href="thread.html#12123">[ thread ]</a>
+              <a href="subject.html#12123">[ subject ]</a>
+              <a href="author.html#12123">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

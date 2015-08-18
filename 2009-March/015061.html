@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2389: [Terminal] Add a menu option to allow the user to give the terminal a custom name
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232389%3A%20%5BTerminal%5D%20Add%20a%20menu%20option%20to%0A%20allow%20the%20user%20to%20give%20the%20terminal%20a%20custom%20name&In-Reply-To=%3C051.73d977045a6a878123aca7ec9f6d6881%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="015057.html">
+   <LINK REL="Next"  HREF="015064.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2389: [Terminal] Add a menu option to allow the user to give the terminal a custom name</H1>
+    <B>hey68you</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232389%3A%20%5BTerminal%5D%20Add%20a%20menu%20option%20to%0A%20allow%20the%20user%20to%20give%20the%20terminal%20a%20custom%20name&In-Reply-To=%3C051.73d977045a6a878123aca7ec9f6d6881%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2389: [Terminal] Add a menu option to allow the user to give the terminal a custom name">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Mar 12 11:08:40 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="015057.html">[Haiku-bugs] [Haiku] #3549: Another Disks-Icon related issue in	Tracker
+</A></li>
+        <LI>Next message: <A HREF="015064.html">[Haiku-bugs] [Haiku] #3550: [mmap] Freezes when maping lots of	memory
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15061">[ date ]</a>
+              <a href="thread.html#15061">[ thread ]</a>
+              <a href="subject.html#15061">[ subject ]</a>
+              <a href="author.html#15061">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2389: [Terminal] Add a menu option to allow the user to give the terminal a
+custom name
+-----------------------------------+----------------------------------------
+ Reporter:  scottmc                |       Owner:  jackburton    
+     Type:  enhancement            |      Status:  new           
+ Priority:  low                    |   Milestone:  R1            
+Component:  Applications/Terminal  |     Version:  R1 development
+Blockedby:                         |    Platform:  All           
+ Blocking:                         |  
+-----------------------------------+----------------------------------------
+
+Comment(by hey68you):
+
+ If I'm not mistaken I think we do need to invalidate the container
+ BTabView (i.e. it's not a bug). Quoting the BeBook:
+
+ {{{
+ SetLabel()
+ Can be augmented to take notice when the tab's label is changed. You
+ should always call the inherited version of the function before your
+ implementation returns.
+ }}}
+
+ The existing Terminal code doesn't have an augmented version of the
+ BTab::SetLabel() method which I assume would do the invalidating of the
+ BTabview container view upon noticing a new text for the label.
+
+ So is it ok that I'm calling fTabView-&gt;Invalidate() on my own straight
+ after modifying the label text using the un-augmented BTab::SetLabel()
+ method ???
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2389#comment:17">http://dev.haiku-os.org/ticket/2389#comment:17</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="015057.html">[Haiku-bugs] [Haiku] #3549: Another Disks-Icon related issue in	Tracker
+</A></li>
+	<LI>Next message: <A HREF="015064.html">[Haiku-bugs] [Haiku] #3550: [mmap] Freezes when maping lots of	memory
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15061">[ date ]</a>
+              <a href="thread.html#15061">[ thread ]</a>
+              <a href="subject.html#15061">[ subject ]</a>
+              <a href="author.html#15061">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

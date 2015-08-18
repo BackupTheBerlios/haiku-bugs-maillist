@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1167: USB stack built for BONE crashes in UHCI finish thread
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231167%3A%20USB%20stack%20built%20for%20BONE%20crashes%20in%0A%20UHCI%20finish%20thread&In-Reply-To=%3C057.b83c3851837b4b85d7e99b3e8e8bc1c9%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001100.html">
+   <LINK REL="Next"  HREF="001102.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1167: USB stack built for BONE crashes in UHCI finish thread</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231167%3A%20USB%20stack%20built%20for%20BONE%20crashes%20in%0A%20UHCI%20finish%20thread&In-Reply-To=%3C057.b83c3851837b4b85d7e99b3e8e8bc1c9%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1167: USB stack built for BONE crashes in UHCI finish thread">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Apr 24 15:07:44 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001100.html">[Haiku-bugs] [Haiku] #1167: USB stack built for BONE crashes in UHCI finish thread
+</A></li>
+        <LI>Next message: <A HREF="001102.html">[Haiku-bugs] [Haiku] #1167: USB stack built for BONE crashes in UHCI finish thread
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1101">[ date ]</a>
+              <a href="thread.html#1101">[ thread ]</a>
+              <a href="subject.html#1101">[ subject ]</a>
+              <a href="author.html#1101">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1167: USB stack built for BONE crashes in UHCI finish thread
+----------------------------+-----------------------------------------------
+  Reporter:  jonas.kirilla  |       Owner:  mmlr          
+      Type:  bug            |      Status:  assigned      
+  Priority:  normal         |   Milestone:  R1            
+ Component:  Drivers/USB    |     Version:  R1 development
+Resolution:                 |    Platform:  x86           
+----------------------------+-----------------------------------------------
+Comment (by jonas.kirilla):
+
+ Haiku listdev:
+
+ {{{
+ device Bridge (Host bridge) [6|0|0]
+   vendor 8086: Intel Corporation
+   device 1a30: 82845 845 (Brookdale) Chipset Host Bridge
+
+ device Bridge (PCI bridge, Normal decode) [6|4|0]
+   vendor 8086: Intel Corporation
+   device 1a31: 82845 845 (Brookdale) Chipset AGP Bridge
+
+ device Display controller (VGA compatible controller, VGA) [3|0|0]
+   vendor 10de: nVidia Corporation
+   device 0326: NV34 [GeForce FX 5500]
+
+ device Bridge (PCI bridge, Normal decode) [6|4|0]
+   vendor 8086: Intel Corporation
+   device 244e: 82801 PCI Bridge
+
+ device Serial bus controller (USB Controller, UHCI) [c|3|0]
+   vendor 1106: VIA Technologies, Inc.
+   device 3038: VT82xxxxx UHCI USB 1.1 Controller
+
+ device Serial bus controller (USB Controller, UHCI) [c|3|0]
+   vendor 1106: VIA Technologies, Inc.
+   device 3038: VT82xxxxx UHCI USB 1.1 Controller
+
+ device Serial bus controller (USB Controller, EHCI) [c|3|20]
+   vendor 1106: VIA Technologies, Inc.
+   device 3104: USB 2.0
+
+ device Multimedia controller (Multimedia audio controller) [4|1|0]
+   vendor 1102: Creative Labs
+   device 0002: SB Live! EMU10k1
+
+ device Input device controller [9|80|0]
+   vendor 1102: Creative Labs
+   device 7002: SB Live! Game Port
+
+ device Network controller (Ethernet controller) [2|0|0]
+   vendor 10ec: Realtek Semiconductor Co., Ltd.
+   device 8139: RTL-8139/8139C/8139C+
+
+ device Communication controller (Serial controller, 16550) [7|0|2]
+   vendor 14d2: Titan Electronics Inc
+   device 8020: VScom 200L 1 port serial adaptor
+
+ device Bridge (ISA bridge) [6|1|0]
+   vendor 8086: Intel Corporation
+   device 2440: 82801BA ISA Bridge (LPC)
+
+ device Mass storage controller (IDE interface) [1|1|80]
+   vendor 8086: Intel Corporation
+   device 244b: 82801BA IDE U100
+      device [0|0]
+      vendor        ST312002     model              6A   type Direct Access
+      device [0|0]
+      vendor            _NEC     model DVD_RW ND-3520A   type CDROM
+
+ device Serial bus controller (USB Controller, UHCI) [c|3|0]
+   vendor 8086: Intel Corporation
+   device 2442: 82801BA/BAM USB (Hub #1)
+
+ device Serial bus controller (USB Controller, UHCI) [c|3|0]
+   vendor 8086: Intel Corporation
+   device 2444: 82801BA/BAM USB (Hub #2)
+
+ device Multimedia controller (Multimedia audio controller) [4|1|0]
+   vendor 8086: Intel Corporation
+   device 2445: 82801BA/BAM AC'97 Audio
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1167#comment:4">http://dev.haiku-os.org/ticket/1167#comment:4</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001100.html">[Haiku-bugs] [Haiku] #1167: USB stack built for BONE crashes in UHCI finish thread
+</A></li>
+	<LI>Next message: <A HREF="001102.html">[Haiku-bugs] [Haiku] #1167: USB stack built for BONE crashes in UHCI finish thread
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1101">[ date ]</a>
+              <a href="thread.html#1101">[ thread ]</a>
+              <a href="subject.html#1101">[ subject ]</a>
+              <a href="author.html#1101">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

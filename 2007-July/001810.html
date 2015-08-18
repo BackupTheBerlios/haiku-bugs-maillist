@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1293: External LCD on a second DVI
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-July/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231293%3A%20External%20LCD%20on%20a%20second%20DVI&In-Reply-To=%3C051.a7fc3bb9ec485d1a0eb7cfcb8ff5b165%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001808.html">
+   <LINK REL="Next"  HREF="001862.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1293: External LCD on a second DVI</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231293%3A%20External%20LCD%20on%20a%20second%20DVI&In-Reply-To=%3C051.a7fc3bb9ec485d1a0eb7cfcb8ff5b165%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1293: External LCD on a second DVI">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Jul 20 02:20:01 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001808.html">[Haiku-bugs] [Haiku] #1293: External LCD on a second DVI
+</A></li>
+        <LI>Next message: <A HREF="001862.html">[Haiku-bugs] [Haiku] #1293: External LCD on a second DVI
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1810">[ date ]</a>
+              <a href="thread.html#1810">[ thread ]</a>
+              <a href="subject.html#1810">[ subject ]</a>
+              <a href="author.html#1810">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1293: External LCD on a second DVI
+--------------------------------------+-------------------------------------
+  Reporter:  modeenf                  |       Owner:  euan          
+      Type:  bug                      |      Status:  assigned      
+  Priority:  normal                   |   Milestone:  R1            
+ Component:  Drivers/Graphics/radeon  |     Version:  R1 development
+Resolution:                           |    Platform:  x86           
+--------------------------------------+-------------------------------------
+Comment (by euan):
+
+ Here's a working beta patch.
+
+ Tested only on an X600 Dual DVI.  Needs particular testing with laptop +
+ DVI combination.
+
+  * Clone mode with resolutions below secondary DVI native resolution
+    Second screen with not stretch to screen.  Will display in top left
+ corner,
+    remaining unused screen space will be filled with garbage.  Plan to
+ center
+    and blank surrounding area.
+  * Clone mode with resolutions above secondary DVI resolution
+    screen will display decent looking screen except the extra area wraps
+ the
+    left hand side.  it shouldn't allow this.  Should probably change to
+ scroll
+    mode.
+  * Combine mode with resolution above or below secondary DVI native
+ resolution
+    Shouldn't allow it, will return &quot;general system error&quot; message box, or
+ will
+    change mode, but secondary screen shows same image as primary monitor.
+
+ patch is attached.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1293#comment:5">http://dev.haiku-os.org/ticket/1293#comment:5</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001808.html">[Haiku-bugs] [Haiku] #1293: External LCD on a second DVI
+</A></li>
+	<LI>Next message: <A HREF="001862.html">[Haiku-bugs] [Haiku] #1293: External LCD on a second DVI
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1810">[ date ]</a>
+              <a href="thread.html#1810">[ thread ]</a>
+              <a href="subject.html#1810">[ subject ]</a>
+              <a href="author.html#1810">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

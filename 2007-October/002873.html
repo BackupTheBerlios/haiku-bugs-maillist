@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1517: registrar crash during boot
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231517%3A%20registrar%20crash%20during%20boot&In-Reply-To=%3C050.7685cbe69c66ac2522eaba130b4c7202%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002871.html">
+   <LINK REL="Next"  HREF="002875.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1517: registrar crash during boot</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231517%3A%20registrar%20crash%20during%20boot&In-Reply-To=%3C050.7685cbe69c66ac2522eaba130b4c7202%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1517: registrar crash during boot">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Oct  1 23:04:43 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002871.html">[Haiku-bugs] [Haiku] #1509: Tracker Crashes When Starting /	Booting Haiku
+</A></li>
+        <LI>Next message: <A HREF="002875.html">[Haiku-bugs] [Haiku] #1517: registrar crash during boot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2873">[ date ]</a>
+              <a href="thread.html#2873">[ thread ]</a>
+              <a href="subject.html#2873">[ subject ]</a>
+              <a href="author.html#2873">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1517: registrar crash during boot
+-----------------------------+----------------------------------------------
+ Reporter:  marcusoverhagen  |       Owner:  axeld         
+     Type:  bug              |      Status:  new           
+ Priority:  normal           |   Milestone:  R1            
+Component:  System/Kernel    |     Version:  R1 development
+ Platform:  All              |  
+-----------------------------+----------------------------------------------
+ Application crashes during boot with gcc 2.95, on core 2 duo 2.4 GHz
+ Occured with r22394
+
+ INIT: Bootscript started
+ reading page from store 0x9098a940 (cache 0x90992b00) returned:
+ Device/File/Resource busy!
+ vm_page_fault: vm_soft_fault returned error 'Device/File/Resource busy' on
+ fault at 0x410f24, ip 0x410f24, write 0, user 1, thread 0x39
+ vm_page_fault: sending team &quot;/boot/beos/system/servers/regis&quot; 0x2f
+ SIGSEGV, ip 0x410f24 (&quot;libbe.so_seg0ro&quot; +0x1c8f24)
+ stack trace:
+   0x003f8213 (libbe.so_seg0ro + 0x1b0213)
+   0x003f796e (libbe.so_seg0ro + 0x1af96e)
+   0x003cbae1 (libbe.so_seg0ro + 0x183ae1)
+   0x003e7b3f (libbe.so_seg0ro + 0x19fb3f)
+   0x003eea78 (libbe.so_seg0ro + 0x1a6a78)
+   0x003ee6cf (libbe.so_seg0ro + 0x1a66cf)
+   0x00312138 (libbe.so_seg0ro + 0xca138)
+   0x0050fa40 (libroot.so_seg0ro + 0x20a40)
+   0x70143fec (create_app_meta_mime (s)_39_sta + 0x3ffec)
+ vm_soft_fault: va 0x0 not covered by area in address space
+ vm_page_fault: vm_soft_fault returned error 'Bad address' on fault at 0x0,
+ ip 0x80098b64, write 0, user 0, thread 0x39
+ user_debug_exception_occurred(): Failed to install debugger: thread: 57:
+ Bad port ID
+ 54: DEBUGGER: You need to have a valid app_server connection first!
+ debug_server: Thread 54 entered the debugger: Debugger call: `You need to
+ have a valid app_server connection first!'
+ stack trace, current PC 0xffff0102  :
+   (0x7ffe6cac)  0x2cd73b  __Q28BPrivate13AppServerLink + 0x73
+   (0x7ffe6cdc)  0x2c90a5  _._12BApplication + 0x69
+   (0x7ffe6d1c)  0x20d53d  _._9NetServer + 0xa9
+   (0x7ffe6d4c)  0x20c484  main + 0x6c
+   (0x7ffe6f7c)  0x209267  _start + 0x5b
+   (0x7ffe6fac)  0x1007ae  (runtime_loader_seg0ro + 0x7ae)
+ debug_server: Killing team 54 (/boot/beos/system/servers/net_server)
+ debug_server: TeamDebugHandler::Init(): Failed to get info for team 54:
+ Operation on invalid team
+ debug_server: KillTeam(): Error getting info for team 54: Operation on
+ invalid team
+ debug_server: Killing team 54 ()
+ intel_extreme: init_hardware()
+ intel_extreme: init_hardware() failed: No such file or directory
+ matrox: init_hardware() failed: General system error
+ neomagic: init_hardware() failed: General system error
+ Radeon - init_hardware: Version: 5.1.6.0
+ Radeon - Radeon_CardDetect: no supported devices found
+ radeon: init_hardware() failed: General system error
+ savage: init_hardware - no supported devices
+ s3savage: init_hardware() failed: General system error
+ vesa: init_hardware()
+ vesa: init_driver()
+ vesa: publish_devices()
+ vesa: find_device()
+ loaded driver /boot/beos/system/add-ons/kernel/drivers/dev/graphics/vesa
+ via: init_hardware() failed: General system error
+ vesa: vesa_init() completed successfully!
+ vesa: acc: vesa.accelerant
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1517">http://dev.haiku-os.org/ticket/1517</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002871.html">[Haiku-bugs] [Haiku] #1509: Tracker Crashes When Starting /	Booting Haiku
+</A></li>
+	<LI>Next message: <A HREF="002875.html">[Haiku-bugs] [Haiku] #1517: registrar crash during boot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2873">[ date ]</a>
+              <a href="thread.html#2873">[ thread ]</a>
+              <a href="subject.html#2873">[ subject ]</a>
+              <a href="author.html#2873">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

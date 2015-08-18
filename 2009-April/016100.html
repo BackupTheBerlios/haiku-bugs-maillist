@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2827: [Pe] Save As dialog box has over lapping button (easy)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232827%3A%20%5BPe%5D%20Save%20As%20dialog%20box%20has%20over%0A%20lapping%20button%20%28easy%29&In-Reply-To=%3C051.538e48416dcd1eca796c9d7f101ff779%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="016246.html">
+   <LINK REL="Next"  HREF="016102.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2827: [Pe] Save As dialog box has over lapping button (easy)</H1>
+    <B>zooey</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232827%3A%20%5BPe%5D%20Save%20As%20dialog%20box%20has%20over%0A%20lapping%20button%20%28easy%29&In-Reply-To=%3C051.538e48416dcd1eca796c9d7f101ff779%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2827: [Pe] Save As dialog box has over lapping button (easy)">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Apr 13 19:31:28 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="016246.html">[Haiku-bugs] [Haiku] #3760: partition 'out of space' when	building
+</A></li>
+        <LI>Next message: <A HREF="016102.html">[Haiku-bugs] [Haiku] #2827: [Pe] Save As dialog box has over lapping button (easy)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16100">[ date ]</a>
+              <a href="thread.html#16100">[ thread ]</a>
+              <a href="subject.html#16100">[ subject ]</a>
+              <a href="author.html#16100">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2827: [Pe] Save As dialog box has over lapping button (easy)
+------------------------+---------------------------------------------------
+  Reporter:  scottmc    |       Owner:  axeld         
+      Type:  bug        |      Status:  closed        
+  Priority:  normal     |   Milestone:  R1            
+ Component:  - General  |     Version:  R1 development
+Resolution:  fixed      |   Blockedby:                
+  Platform:  All        |    Blocking:                
+------------------------+---------------------------------------------------
+Changes (by zooey):
+
+  * status:  new =&gt; closed
+  * resolution:  =&gt; fixed
+
+
+Comment:
+
+ Applied Maxime's patch in r555 of Pe's repo - thanks!
+
+ Maxime: as given, your patch did not work at all under BeOS R5 and it took
+ me some time of debugging to find out that it was simply using an
+ uninitialized font-height structure. Haiku just happens to have some
+ appropriate value on the stack then, while R5 does not ;-)
+ I took the liberty to fix that by initializing the struct via
+ be_plain_font-&gt;GetHeight().
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2827#comment:4">http://dev.haiku-os.org/ticket/2827#comment:4</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="016246.html">[Haiku-bugs] [Haiku] #3760: partition 'out of space' when	building
+</A></li>
+	<LI>Next message: <A HREF="016102.html">[Haiku-bugs] [Haiku] #2827: [Pe] Save As dialog box has over lapping button (easy)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16100">[ date ]</a>
+              <a href="thread.html#16100">[ thread ]</a>
+              <a href="subject.html#16100">[ subject ]</a>
+              <a href="author.html#16100">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

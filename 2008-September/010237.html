@@ -1,0 +1,155 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2720: AppServer deadlock
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232720%3A%20AppServer%20deadlock&In-Reply-To=%3C042.583d15c6b5b428f989a3b9d958e15af4%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010236.html">
+   <LINK REL="Next"  HREF="010245.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2720: AppServer deadlock</H1>
+    <B>emitrax</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232720%3A%20AppServer%20deadlock&In-Reply-To=%3C042.583d15c6b5b428f989a3b9d958e15af4%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2720: AppServer deadlock">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Sep 11 20:27:34 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010236.html">[Haiku-bugs] [Haiku] #1641: KDL:  rtl8139
+</A></li>
+        <LI>Next message: <A HREF="010245.html">[Haiku-bugs] [Haiku] #2720: AppServer deadlock
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10237">[ date ]</a>
+              <a href="thread.html#10237">[ thread ]</a>
+              <a href="subject.html#10237">[ subject ]</a>
+              <a href="author.html#10237">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2720: AppServer deadlock
+--------------------------------+-------------------------------------------
+ Reporter:  emitrax             |       Owner:  axeld         
+     Type:  bug                 |      Status:  new           
+ Priority:  high                |   Milestone:  R1/alpha1     
+Component:  Servers/app_server  |     Version:  R1 development
+Blockedby:                      |    Platform:  All           
+ Blocking:                      |  
+--------------------------------+-------------------------------------------
+ I selected a fairly large amount of emails (maybe 700), right click, get
+ info to see what would happen and I got a nice deadlock almost
+ immediately.
+
+ No threads were in the ready queue.
+
+ {{{
+ kdebug&gt; sem 1142
+ SEM: 0x923bf7f8
+ id:      1142 (0x476)
+ name:    'AppServerLink_sLock'
+ owner:   81
+ count:   -23
+ queue:   6122 5555 6098 6107 6130 5587 5589 5567 5600 5593 5557 5565 6111
+ 5595 5583 81 5591 5608 5559 5626 5624 6038 158
+ last acquired by: 5561, count: 1
+ last released by: 5624, count: 1
+ kdebug&gt; thread 81
+ THREAD: 0x9311f000
+ id:                 81 (0x51)
+ name:               &quot;Tracker&quot;
+ all_next:           0x913a7800
+ team_next:          0x00000000
+ q_next:             0x80113dc0
+ priority:           10 (next 10)
+ state:              waiting
+ next_state:         waiting
+ cpu:                0x00000000
+ sig_pending:        0x0 (blocked: 0x0)
+ in_kernel:          1
+ waiting for:        semaphore 1142
+ ...
+
+ kdebug&gt; thread 5661
+ THREAD: 0x931c8800
+ id:                 5661 (0x161d)
+ name:               &quot;w&gt;InfoWindow&quot;
+ all_next:           0x931a7000
+ team_next:          0x931b6800
+ q_next:             0x80113dc0
+ priority:           15 (next 15)
+ state:              waiting
+ next_state:         waiting
+ cpu:                0x00000000
+ sig_pending:        0x0 (blocked: 0x0)
+ in_kernel:          1
+ waiting for:        semaphore 61236
+ fault_handler:      0x00000000
+ args:               0x002b1d4c 0x18304b98
+ entry:              0x00657688
+ team:               0x90b7fd14, &quot;Tracker&quot;
+   exit.sem:         56765
+   exit.status:      0x0 (No error)
+   exit.reason:      0x0
+   exit.signal:      0x0
+   exit.waiters:
+ kernel_stack_area:  113944
+ kernel_stack_base:  0x9594c000
+ user_stack_area:    113945
+ user_stack_base:    0x78bef000
+ user_local_storage: 0x78c2f000
+ kernel_errno:       0x0 (No error)
+ kernel_time:        30256
+
+ user_time:          36408
+ flags:              0x0
+ architecture dependant section:
+     esp: 0x9594fd38
+     ss: 0x00000010
+     fpu_state at 0x931c8b80
+ kdebug&gt; sem 61236
+ SEM: 0x9251a690
+ id:      61236 (0xef34)
+ name:    'tmp_reply_port'
+ owner:   -1
+ count:   -1
+ queue:   5661
+ last acquired by: 0, count: 0
+ last released by: 0, count: 0
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2720">http://dev.haiku-os.org/ticket/2720</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010236.html">[Haiku-bugs] [Haiku] #1641: KDL:  rtl8139
+</A></li>
+	<LI>Next message: <A HREF="010245.html">[Haiku-bugs] [Haiku] #2720: AppServer deadlock
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10237">[ date ]</a>
+              <a href="thread.html#10237">[ thread ]</a>
+              <a href="subject.html#10237">[ subject ]</a>
+              <a href="author.html#10237">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

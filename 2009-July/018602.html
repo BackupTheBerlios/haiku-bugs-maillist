@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4116: Unable to build libroot.so: Unexpected	end of input.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-July/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234116%3A%20Unable%20to%20build%20libroot.so%3A%20Unexpected%0A%09end%20of%20input.&In-Reply-To=%3C041.49719b3fdc46b97d7b63c1ffd27c3885%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="018901.html">
+   <LINK REL="Next"  HREF="018620.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4116: Unable to build libroot.so: Unexpected	end of input.</H1>
+    <B>idefix</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234116%3A%20Unable%20to%20build%20libroot.so%3A%20Unexpected%0A%09end%20of%20input.&In-Reply-To=%3C041.49719b3fdc46b97d7b63c1ffd27c3885%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4116: Unable to build libroot.so: Unexpected	end of input.">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Jul 23 22:00:52 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="018901.html">[Haiku-bugs] [Haiku] #4115: Failed to relocate error when attempting to boot PPC kernel.
+</A></li>
+        <LI>Next message: <A HREF="018620.html">[Haiku-bugs] [Haiku] #4116: Unable to build libroot.so: Unexpected end of input.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18602">[ date ]</a>
+              <a href="thread.html#18602">[ thread ]</a>
+              <a href="subject.html#18602">[ subject ]</a>
+              <a href="author.html#18602">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4116: Unable to build libroot.so: Unexpected end of input.
+--------------------------+-------------------------------------------------
+ Reporter:  idefix        |       Owner:  bonefish      
+     Type:  bug           |      Status:  new           
+ Priority:  normal        |   Milestone:  R1            
+Component:  Build System  |     Version:  R1 development
+Blockedby:                |    Platform:  All           
+ Blocking:                |  
+--------------------------+-------------------------------------------------
+ Recently, I'm unable to build libroot.so on Haiku. It always stops at the
+ following error:
+ {{{
+ MkDir1 generated/objects/haiku/x86/common/system/libroot/os
+ MkDir1 generated/objects/haiku_host/x86/release/tools/gensyscalls
+ MkDir1 generated/objects/haiku/x86/common/tools/gensyscalls
+ PreprocessSyscalls
+ generated/objects/haiku/x86/common/tools/gensyscalls/syscalls.h.pp
+ C++
+ generated/objects/haiku_host/x86/release/tools/gensyscalls/gensyscalls.o
+ C++
+ generated/objects/haiku_host/x86/release/tools/gensyscalls/gensyscallinfos.o
+ Link
+ generated/objects/haiku_host/x86/release/tools/gensyscalls/gensyscallinfos
+ Chmod1
+ generated/objects/haiku_host/x86/release/tools/gensyscalls/gensyscallinfos
+ PreprocessSyscalls
+ generated/objects/haiku/x86/common/tools/gensyscalls/syscalls.h.pp.parsable
+ GenSyscallInfos1
+ generated/objects/haiku/x86/common/tools/gensyscalls/gensyscalls_infos.cpp
+ Unexpected end of input.
+
+ generated/objects/haiku_host/x86/release/tools/gensyscalls/gensyscallinfos
+ generated/objects/haiku/x86/common/tools/gensyscalls/syscalls.h.pp.parsable
+ generated/objects/haiku/x86/common/tools/gensyscalls/gensyscalls_infos.cpp
+
+ ...failed GenSyscallInfos1
+ generated/objects/haiku/x86/common/tools/gensyscalls/gensyscalls_infos.cpp
+ ...
+ ...skipped &lt;src!tools!gensyscalls&gt;gensyscalls_infos.o for lack of
+ &lt;src!tools!gensyscalls&gt;gensyscalls_infos.cpp...
+ ...skipped gensyscalls for lack of
+ &lt;src!tools!gensyscalls&gt;gensyscalls_infos.o...
+ ...skipped &lt;syscalls&gt;syscalls.S.inc for lack of gensyscalls...
+ ...skipped &lt;src!system!libroot!os&gt;syscalls.o for lack of
+ &lt;syscalls&gt;syscalls.S.inc...
+ ...skipped os_main.o for lack of &lt;src!system!libroot!os&gt;syscalls.o...
+ ...skipped libroot.so for lack of os_main.o...
+ ...failed updating 1 target(s)...
+ ...skipped 6 target(s)...
+ ...updated 128 target(s)...
+ }}}
+
+ I'm experiencing this error in both of my build-environments: Haiku
+ running in VMware and Haiku running on real hardware. Both of them using
+ the gcc2 nightly builds from [<A HREF="http://haiku-files.org/">http://haiku-files.org/</A> haiku-files.org]. In
+ both cases, I checked out a full tree before building.
+
+ Steps to reproduce in VMware:
+  - Start an Haiku VMware environment with 2 virtual disks: an Haiku gcc2
+ VMware image from [<A HREF="http://haiku-files.org/vm/">http://haiku-files.org/vm/</A> haiku-files.org] and a 4 GB
+ empty disk
+  - Boot into the Haiku image and initialise the 4 GB disk with a block
+ size of 1024 and no index
+  - Checkout the Haiku tree to the 4 GB disk
+  - Run configure and then build libroot.so
+
+ You should get the same build output as in [attachment:builderror.txt this
+ file].
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4116">http://dev.haiku-os.org/ticket/4116</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="018901.html">[Haiku-bugs] [Haiku] #4115: Failed to relocate error when attempting to boot PPC kernel.
+</A></li>
+	<LI>Next message: <A HREF="018620.html">[Haiku-bugs] [Haiku] #4116: Unable to build libroot.so: Unexpected end of input.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18602">[ date ]</a>
+              <a href="thread.html#18602">[ thread ]</a>
+              <a href="subject.html#18602">[ subject ]</a>
+              <a href="author.html#18602">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

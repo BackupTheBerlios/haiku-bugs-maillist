@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #917: mouse pointer does not move,	when it shows up
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-December/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23917%3A%20mouse%20pointer%20does%20not%20move%2C%0A%09when%20it%20shows%20up&In-Reply-To=%3C052.e07021617e904ce74fdbb0b4282a9804%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="013128.html">
+   <LINK REL="Next"  HREF="013131.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #917: mouse pointer does not move,	when it shows up</H1>
+    <B>Adek336</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23917%3A%20mouse%20pointer%20does%20not%20move%2C%0A%09when%20it%20shows%20up&In-Reply-To=%3C052.e07021617e904ce74fdbb0b4282a9804%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #917: mouse pointer does not move,	when it shows up">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Dec 10 23:22:20 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="013128.html">[Haiku-bugs] [Haiku] #3176: swapping control and caps lock keys makes Menu and Team Monitor do weird things
+</A></li>
+        <LI>Next message: <A HREF="013131.html">[Haiku-bugs] [Haiku] #3176: swapping control and caps lock keys makes Menu and Team Monitor do weird things
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13130">[ date ]</a>
+              <a href="thread.html#13130">[ thread ]</a>
+              <a href="subject.html#13130">[ subject ]</a>
+              <a href="author.html#13130">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#917: mouse pointer does not move, when it shows up
+-----------------------------------+----------------------------------------
+  Reporter:  kaoutsis              |       Owner:  korli         
+      Type:  bug                   |      Status:  new           
+  Priority:  low                   |   Milestone:  R1            
+ Component:  Servers/input_server  |     Version:  R1 development
+Resolution:                        |   Blockedby:                
+  Platform:  x86                   |    Blocking:                
+-----------------------------------+----------------------------------------
+
+Comment(by Adek336):
+
+ The problem turned out to come from an unexpected place.[[br]]
+ The patch mouse.1.diff reduces mouse initialization time from 2 secs to 1
+ sec after desktop initialization. The desktop also needs one second to
+ become visible (hardware latencies) so the mouse and the desktop are
+ available to the user at the same time.
+
+ The patch also points out three important places in the code- when a blank
+ screen replaces the boot screen, when the blank screen is replaced with
+ the desktop and when the mouse is finally usable.
+
+ The fix is to avoid snooze()ing in the ps2 bus manager, is this
+ acceptable? Also could the snooze() during device_republish be removed?
+
+ time between blanking the screen and showing the desktop - 400 ms (note
+ that it isn't visible for another 1 second because of hardware
+ latencies)[[br]]
+ time needed to initialize the mouse after showing the desktop - 1 second
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/917#comment:6">http://dev.haiku-os.org/ticket/917#comment:6</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="013128.html">[Haiku-bugs] [Haiku] #3176: swapping control and caps lock keys makes Menu and Team Monitor do weird things
+</A></li>
+	<LI>Next message: <A HREF="013131.html">[Haiku-bugs] [Haiku] #3176: swapping control and caps lock keys makes Menu and Team Monitor do weird things
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13130">[ date ]</a>
+              <a href="thread.html#13130">[ thread ]</a>
+              <a href="subject.html#13130">[ subject ]</a>
+              <a href="author.html#13130">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

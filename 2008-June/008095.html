@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1106: Port USB mass storage driver to new SCSI module API
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231106%3A%20Port%20USB%20mass%20storage%20driver%20to%20new%0A%20SCSI%20module%20API&In-Reply-To=%3C049.0fc06347332c6ff634f770e2d1953f18%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008094.html">
+   <LINK REL="Next"  HREF="008096.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1106: Port USB mass storage driver to new SCSI module API</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231106%3A%20Port%20USB%20mass%20storage%20driver%20to%20new%0A%20SCSI%20module%20API&In-Reply-To=%3C049.0fc06347332c6ff634f770e2d1953f18%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1106: Port USB mass storage driver to new SCSI module API">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Jun 12 15:49:47 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008094.html">[Haiku-bugs] [Haiku] #1155: Screen Saver Pref -- Settings aren't detected on-the-fly (easy)
+</A></li>
+        <LI>Next message: <A HREF="008096.html">[Haiku-bugs] [Haiku] #1919: Cursor hangs on startup
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8095">[ date ]</a>
+              <a href="thread.html#8095">[ thread ]</a>
+              <a href="subject.html#8095">[ subject ]</a>
+              <a href="author.html#8095">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1106: Port USB mass storage driver to new SCSI module API
+--------------------------+-------------------------------------------------
+  Reporter:  axeld        |       Owner:  siarzhuk      
+      Type:  enhancement  |      Status:  new           
+  Priority:  normal       |   Milestone:  R1            
+ Component:  Drivers/USB  |     Version:  R1 development
+Resolution:               |    Platform:  All           
+--------------------------+-------------------------------------------------
+Comment (by mmlr):
+
+ The difference is that usb_disk does the minimal SCSI that is required
+ itself and directly publishes a block device to the system. The usb_scsi
+ on the other hand is a bridge between the SCSI subsystem and the USB
+ device. It takes SCSI commands from the SCSI subsystem and pushes them to
+ the USB driver and back. So usb_scsi does not publish the drive itself, it
+ gets published by the SCSI subsystem (or rather scsi_disk / scsi_cd) and
+ then looks like a normal SCSI device to the rest of the system. This
+ approach has a more of an overhead and generally is more complexity, but
+ essentially reduces the amount of work usb_scsi has to do (as it is more
+ like a pass through - not counting having to work around device bugs and
+ translating incompatible protocols). The advantage of it being that for
+ example a USB CD writer could be supported by the existing SCSI system and
+ transparently through scsi_cd. When not using usb_scsi you would have to
+ write an individual usb_cd driver that would then be publishing the CD
+ drive and export this functionality.
+
+ On the subject of the new driver architecture. That it is in place does
+ not change much directly. First the USB stack has also to be ported to it
+ (while leaving the existing API intact). This alone poses a few, not yet
+ solved, problems though. It is not yet clear to me what the best way to
+ publish devices through the new architecture is, as there is no real model
+ on how multi function devices are supposed to be presented.
+
+ When the USB stack is available through the new driver architecture this
+ does still not mean that usb_scsi is available. It only solves the problem
+ of when it gets loaded and by whom. The real work is still, as would be
+ right now, porting the usb_scsi driver to the new SCSI interface.
+ Incidentally moving to the new driver architecture makes it more work, as
+ also the USB part has to be ported (the USB interface would have been the
+ same with the old model, avoiding the need to port).
+
+ Since usb_disk works good enough for now (and in fact, as other protocols
+ are not too common in newer devices anymore because they are discouraged
+ by Microsoft for example, it should be pretty future proof), I don't think
+ that this task is highly urgent. Eventually it will make sense to port it
+ for the aforementioned advantages it brings though.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1106#comment:12">http://dev.haiku-os.org/ticket/1106#comment:12</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008094.html">[Haiku-bugs] [Haiku] #1155: Screen Saver Pref -- Settings aren't detected on-the-fly (easy)
+</A></li>
+	<LI>Next message: <A HREF="008096.html">[Haiku-bugs] [Haiku] #1919: Cursor hangs on startup
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8095">[ date ]</a>
+              <a href="thread.html#8095">[ thread ]</a>
+              <a href="subject.html#8095">[ subject ]</a>
+              <a href="author.html#8095">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

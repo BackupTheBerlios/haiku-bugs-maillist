@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1032: BGLView::DirectConnected() badly	implemented
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231032%3A%20BGLView%3A%3ADirectConnected%28%29%20badly%0A%09implemented&In-Reply-To=%3C049.56cf93613d812d19a93e62e6ec57385a%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001005.html">
+   <LINK REL="Next"  HREF="001010.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1032: BGLView::DirectConnected() badly	implemented</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231032%3A%20BGLView%3A%3ADirectConnected%28%29%20badly%0A%09implemented&In-Reply-To=%3C049.56cf93613d812d19a93e62e6ec57385a%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1032: BGLView::DirectConnected() badly	implemented">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Apr 16 16:26:38 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001005.html">[Haiku-bugs] [Haiku] #739: Haiku bootloader does not detect	boot volume
+</A></li>
+        <LI>Next message: <A HREF="001010.html">[Haiku-bugs] [Haiku] #845: Build system &quot;ignores&quot; arch parameter on x86_64 hosts
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1009">[ date ]</a>
+              <a href="thread.html#1009">[ thread ]</a>
+              <a href="subject.html#1009">[ subject ]</a>
+              <a href="author.html#1009">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1032: BGLView::DirectConnected() badly implemented
+------------------------------+---------------------------------------------
+  Reporter:  korli            |       Owner:  jackburton    
+      Type:  bug              |      Status:  new           
+  Priority:  high             |   Milestone:  R1            
+ Component:  Kits/OpenGL Kit  |     Version:  R1 development
+Resolution:                   |    Platform:  All           
+------------------------------+---------------------------------------------
+Comment (by jackburton):
+
+ Replying to [comment:9 jackburton]:
+ &gt; Replying to [comment:8 phoudoin]:
+ &gt;
+ &gt; I uncommented and changed the implementation of
+ BGLView::DirectConnected() (in r20636) to clip the data to the view's
+ bounds before passing it to the renderer. Note that I don't know if it'll
+ work correctly, because the test app GLDirectMode crashes on startup
+ (BWindow-&gt;Show()) with a debugger call (looper should be locked before
+ proceeding) (also before my changes).
+
+ That crash was fixed in r20725.
+ I think we can close this bug because BGLView::DirectConnected() is
+ implemented correctly now. The mesa gl renderer add-on, though, doesn't
+ take into account that it can write directly to the framebuffer instead of
+ to a bitmap. I think a new bug should be opened for that.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1032#comment:10">http://dev.haiku-os.org/ticket/1032#comment:10</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001005.html">[Haiku-bugs] [Haiku] #739: Haiku bootloader does not detect	boot volume
+</A></li>
+	<LI>Next message: <A HREF="001010.html">[Haiku-bugs] [Haiku] #845: Build system &quot;ignores&quot; arch parameter on x86_64 hosts
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1009">[ date ]</a>
+              <a href="thread.html#1009">[ thread ]</a>
+              <a href="subject.html#1009">[ subject ]</a>
+              <a href="author.html#1009">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

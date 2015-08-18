@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1238: ftp only downloads filess smaller than 1447 bytes. Sometimes appears 'hung' on larger files.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231238%3A%20ftp%20only%20downloads%20filess%20smaller%0A%20than%201447%20bytes.%20Sometimes%20appears%20%27hung%27%20on%20larger%20files.&In-Reply-To=%3C051.dd413dd5a737af9ee3c858f6c3dbb91a%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001482.html">
+   <LINK REL="Next"  HREF="001538.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1238: ftp only downloads filess smaller than 1447 bytes. Sometimes appears 'hung' on larger files.</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231238%3A%20ftp%20only%20downloads%20filess%20smaller%0A%20than%201447%20bytes.%20Sometimes%20appears%20%27hung%27%20on%20larger%20files.&In-Reply-To=%3C051.dd413dd5a737af9ee3c858f6c3dbb91a%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1238: ftp only downloads filess smaller than 1447 bytes. Sometimes appears 'hung' on larger files.">trac at haiku-os.org
+       </A><BR>
+    <I>Sun May 27 02:41:15 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001482.html">[Haiku-bugs] [Haiku] #1238: ftp only downloads filess smaller than 1447 bytes. Sometimes appears 'hung' on larger files.
+</A></li>
+        <LI>Next message: <A HREF="001538.html">[Haiku-bugs] [Haiku] #1238: ftp only downloads filess smaller than 1447 bytes. Sometimes appears 'hung' on larger files.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1537">[ date ]</a>
+              <a href="thread.html#1537">[ thread ]</a>
+              <a href="subject.html#1537">[ subject ]</a>
+              <a href="author.html#1537">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1238: ftp only downloads filess smaller than 1447 bytes. Sometimes appears 'hung'
+on larger files.
+---------------------------------------+------------------------------------
+  Reporter:  bouncer                   |       Owner:  hugosantos    
+      Type:  bug                       |      Status:  reopened      
+  Priority:  normal                    |   Milestone:  R1            
+ Component:  - Network &amp; Internet/TCP  |     Version:  R1 development
+Resolution:                            |    Platform:  All           
+---------------------------------------+------------------------------------
+Comment (by bouncer):
+
+ Hugo - Sorry it took me so long. But here is the syslog that you asked
+ for.
+ I am attaching two text files and a screenshot. The big text file is the
+ syslog of 'everything' leading up to the bad ftp transfer.
+ The shorter text file, if I trimmed it down correctly, is the syslog for
+ when I issued the ftp get' up until just after it finished its transfer.
+ But it had only transfered some  61300 bytes.
+ The third attachment. The screen image. Is of what the ftp transfer looked
+ like.
+
+ Additional observations:
+ - Enabling the FTP_TRACE made the  ftp process behave differently.
+ - About half the time now - it transfers the full file. It does its
+ 'partial' file trick only rarely.
+ - A different behaviour has now manifested. The ftp file transfers are now
+ really slow. Only About  2 - 4 Kilobytes per second.  On some of my ftp
+ transfer attempts it just slows down and stops. 0 kb per second. This can
+ happen at any file size.
+ - Don't know if this has any meaning. But I observed the syslog file with
+ a 'tail -f' while downloading. There was a definate rythym to the
+ operation of the ftp. A bunch of lines would go by ending more or less
+ with 'Received(): All inflight data ack'd'. Then the logs would pause for
+ about 1 or two seconds while 3 or four lines of &quot;ReadData(65535 bytes,
+ flags 0x0)&quot; would be printed out.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1238#comment:13">http://dev.haiku-os.org/ticket/1238#comment:13</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001482.html">[Haiku-bugs] [Haiku] #1238: ftp only downloads filess smaller than 1447 bytes. Sometimes appears 'hung' on larger files.
+</A></li>
+	<LI>Next message: <A HREF="001538.html">[Haiku-bugs] [Haiku] #1238: ftp only downloads filess smaller than 1447 bytes. Sometimes appears 'hung' on larger files.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1537">[ date ]</a>
+              <a href="thread.html#1537">[ thread ]</a>
+              <a href="subject.html#1537">[ subject ]</a>
+              <a href="author.html#1537">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

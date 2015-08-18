@@ -1,0 +1,165 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3148: select() returns too early when reading from a tty with line editing enabled, in blocking mode
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233148%3A%20select%28%29%20returns%20too%20early%20when%0A%20reading%20from%20a%20tty%20with%20line%20editing%20enabled%2C%20in%20blocking%20mode&In-Reply-To=%3C051.f807586e156792c16c469a11d4f12c1c%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012574.html">
+   <LINK REL="Next"  HREF="012647.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3148: select() returns too early when reading from a tty with line editing enabled, in blocking mode</H1>
+    <B>korli</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233148%3A%20select%28%29%20returns%20too%20early%20when%0A%20reading%20from%20a%20tty%20with%20line%20editing%20enabled%2C%20in%20blocking%20mode&In-Reply-To=%3C051.f807586e156792c16c469a11d4f12c1c%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3148: select() returns too early when reading from a tty with line editing enabled, in blocking mode">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Nov 16 13:48:41 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012574.html">[Haiku-bugs] [Haiku] #3148: select() returns too early when reading from a tty with line editing enabled, in blocking mode
+</A></li>
+        <LI>Next message: <A HREF="012647.html">[Haiku-bugs] [Haiku] #3148: select() returns too early when reading from a tty with line editing enabled, in blocking mode
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12581">[ date ]</a>
+              <a href="thread.html#12581">[ thread ]</a>
+              <a href="subject.html#12581">[ subject ]</a>
+              <a href="author.html#12581">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3148: select() returns too early when reading from a tty with line editing
+enabled, in blocking mode
+--------------------------+-------------------------------------------------
+  Reporter:  bhaible      |       Owner:  bonefish      
+      Type:  bug          |      Status:  new           
+  Priority:  normal       |   Milestone:  R1            
+ Component:  Drivers/TTY  |     Version:  R1 development
+Resolution:               |   Blockedby:                
+  Platform:  All          |    Blocking:                
+--------------------------+-------------------------------------------------
+Description changed by korli:
+
+Old description:
+
+&gt;<i> The select() function, when used to detect whether a tty is ready
+</I>&gt;<i> for reading, returns too early.
+</I>&gt;<i>
+</I>&gt;<i> According to POSIX <A HREF="http://www.opengroup.org/susv3/functions/select.html,">http://www.opengroup.org/susv3/functions/select.html,</A>
+</I>&gt;<i> &quot;the ... select() function shall modify the objects pointed to by
+</I>&gt;<i> the readfds, writefds, and errorfds arguments to indicate which file
+</I>&gt;<i> descriptors are ready for reading, ready for writing&quot;.
+</I>&gt;<i> And:
+</I>&gt;<i> &quot;A descriptor shall be considered ready for reading when a call to
+</I>&gt;<i> an input function with O_NONBLOCK clear would not block&quot;
+</I>&gt;<i>
+</I>&gt;<i> Run the attached test program in a terminal. It reads from stdin.
+</I>&gt;<i> After 3 seconds, type an 'x'. After a few more seconds, type
+</I>&gt;<i> 'y', 'z' and 'Return'. The output should be something like this;
+</I>&gt;<i>
+</I>&gt;<i> Applying select() from standard input. Press Ctrl-C to abort.
+</I>&gt;<i> ......x........y...z..
+</I>&gt;<i> Input available! Trying to read 1 byte...
+</I>&gt;<i> Input available! Trying to read 1 byte...
+</I>&gt;<i> Input available! Trying to read 1 byte...
+</I>&gt;<i> Input available! Trying to read 1 byte...
+</I>&gt;<i> .......
+</I>&gt;<i>
+</I>&gt;<i> The actual output is like this:
+</I>&gt;<i>
+</I>&gt;<i> Applying select() from standard input. Press Ctrl-C to abort.
+</I>&gt;<i> ......x.Input available! Trying to read 1 byte...
+</I>&gt;<i> [Here no progressing dots any more, the program is blocked]yz
+</I>&gt;<i> Input available! Trying to read 1 byte...
+</I>&gt;<i> Input available! Trying to read 1 byte...
+</I>&gt;<i> Input available! Trying to read 1 byte...
+</I>&gt;<i>
+</I>&gt;<i> This means, select() pretends that the stdin descriptor is ready
+</I>&gt;<i> for reading as soon as the user types the first character in the
+</I>&gt;<i> line. But the tty has line editing enabled, and read() therefore
+</I>&gt;<i> blocks until the user has pressed 'Return'.
+</I>&gt;<i>
+</I>&gt;<i> The fix should be that when the tty has line editing enabled,
+</I>&gt;<i> select() waits until the 'Return' at the end of the line has been
+</I>&gt;<i> pressed (or the timeout occurs).
+</I>
+New description:
+
+ The select() function, when used to detect whether a tty is ready
+ for reading, returns too early.
+
+ According to POSIX <A HREF="http://www.opengroup.org/susv3/functions/select.html,">http://www.opengroup.org/susv3/functions/select.html,</A>
+ &quot;the ... select() function shall modify the objects pointed to by
+ the readfds, writefds, and errorfds arguments to indicate which file
+ descriptors are ready for reading, ready for writing&quot;.
+ And:
+ &quot;A descriptor shall be considered ready for reading when a call to
+ an input function with O_NONBLOCK clear would not block&quot;
+
+ Run the attached test program in a terminal. It reads from stdin.
+ After 3 seconds, type an 'x'. After a few more seconds, type
+ 'y', 'z' and 'Return'. The output should be something like this;
+ {{{
+ Applying select() from standard input. Press Ctrl-C to abort.
+ ......x........y...z..
+ Input available! Trying to read 1 byte...
+ Input available! Trying to read 1 byte...
+ Input available! Trying to read 1 byte...
+ Input available! Trying to read 1 byte...
+ .......
+ }}}
+ The actual output is like this:
+ {{{
+ Applying select() from standard input. Press Ctrl-C to abort.
+ ......x.Input available! Trying to read 1 byte...
+ [Here no progressing dots any more, the program is blocked]yz
+ Input available! Trying to read 1 byte...
+ Input available! Trying to read 1 byte...
+ Input available! Trying to read 1 byte...
+ }}}
+ This means, select() pretends that the stdin descriptor is ready
+ for reading as soon as the user types the first character in the
+ line. But the tty has line editing enabled, and read() therefore
+ blocks until the user has pressed 'Return'.
+
+ The fix should be that when the tty has line editing enabled,
+ select() waits until the 'Return' at the end of the line has been
+ pressed (or the timeout occurs).
+
+--
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3148#comment:3">http://dev.haiku-os.org/ticket/3148#comment:3</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012574.html">[Haiku-bugs] [Haiku] #3148: select() returns too early when reading from a tty with line editing enabled, in blocking mode
+</A></li>
+	<LI>Next message: <A HREF="012647.html">[Haiku-bugs] [Haiku] #3148: select() returns too early when reading from a tty with line editing enabled, in blocking mode
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12581">[ date ]</a>
+              <a href="thread.html#12581">[ thread ]</a>
+              <a href="subject.html#12581">[ subject ]</a>
+              <a href="author.html#12581">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,253 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2388: deadlock between kernel heap and kernel	vm
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232388%3A%20deadlock%20between%20kernel%20heap%20and%20kernel%0A%09vm&In-Reply-To=%3C040.e6d01376ce690a177a4a918c28aac325%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008210.html">
+   <LINK REL="Next"  HREF="008269.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2388: deadlock between kernel heap and kernel	vm</H1>
+    <B>korli</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232388%3A%20deadlock%20between%20kernel%20heap%20and%20kernel%0A%09vm&In-Reply-To=%3C040.e6d01376ce690a177a4a918c28aac325%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2388: deadlock between kernel heap and kernel	vm">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Jun 16 19:50:40 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008210.html">[Haiku-bugs] [Haiku] #655: [Tracker] Changing disks icon setting lets stuff disappear
+</A></li>
+        <LI>Next message: <A HREF="008269.html">[Haiku-bugs] [Haiku] #2388: deadlock between kernel heap and	kernel vm
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8214">[ date ]</a>
+              <a href="thread.html#8214">[ thread ]</a>
+              <a href="subject.html#8214">[ subject ]</a>
+              <a href="author.html#8214">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2388: deadlock between kernel heap and kernel vm
+---------------------------+------------------------------------------------
+ Reporter:  korli          |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1 development
+Blockedby:                 |    Platform:  All           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+ The heap grower thread is trying to acquire the kernel aspace lock.
+ The net_server thread is trying to use memalign() which waits for the heap
+ grower, while holding the kernel aspace lock.
+
+ Here is the dump of the debug session:
+
+ {{{
+ kdebug&gt; bt 8
+ stack trace for thread 8 &quot;heap grower&quot;
+     kernel stack: 0x80147000 to 0x8014b000
+ frame            caller     &lt;image&gt;:function + offset
+ 8014ad88 (+  32) 80037d1e   &lt;kernel&gt;:context_switch__FP6threadT0 + 0x0026
+ 8014ada8 (+  64) 80037f88   &lt;kernel&gt;:scheduler_reschedule + 0x0248
+ 8014ade8 (+  64) 80039270   &lt;kernel&gt;:switch_sem_etc + 0x0368
+ 8014ae28 (+  64) 80038eda   &lt;kernel&gt;:acquire_sem_etc + 0x0026
+ 8014ae68 (+  64) 8009154e   &lt;kernel&gt;:SetTo__23AddressSpaceWriteLockerl +
+ 0x0036
+ 8014aea8 (+ 144) 80092d81   &lt;kernel&gt;:vm_create_anonymous_area + 0x00c1
+ 8014af38 (+  96) 80098a7f   &lt;kernel&gt;:create_area + 0x0047
+ 8014af98 (+  64) 8002f964   &lt;kernel&gt;:heap_grow_thread__FPv + 0x0060
+ 8014afd8 (+  32) 80042993   &lt;kernel&gt;:_create_kernel_thread_kentry__Fv +
+ 0x001b
+ 8014aff8 (+2146127880) 80042928   &lt;kernel&gt;:thread_kthread_exit__Fv +
+ 0x0000
+ kdebug&gt;
+ kdebug&gt; bt 76
+ stack trace for thread 76 &quot;net_server&quot;
+     kernel stack: 0x80250000 to 0x80254000
+       user stack: 0x7efe7000 to 0x7ffe7000
+ frame            caller     &lt;image&gt;:function + offset
+ 802537d4 (+  32) 80037d1e   &lt;kernel&gt;:context_switch__FP6threadT0 + 0x0026
+ 802537f4 (+  64) 80037f88   &lt;kernel&gt;:scheduler_reschedule + 0x0248
+ 80253834 (+  64) 80039270   &lt;kernel&gt;:switch_sem_etc + 0x0368
+ 80253874 (+  48) 80038f02   &lt;kernel&gt;:switch_sem + 0x001e
+ 802538a4 (+  48) 8002fc56   &lt;kernel&gt;:memalign + 0x00d6
+ 802538d4 (+  32) 8002fcac   &lt;kernel&gt;:malloc + 0x0014
+ 802538f4 (+  48) 80091f4f
+ &lt;kernel&gt;:create_area_struct__FP16vm_address_spacePCcUlUl + 0x002f
+ 80253924 (+  64) 8009288d
+ &lt;kernel&gt;:map_backing_store__FP16vm_address_spaceP8vm_cachePPvxUlUliiiPP7vm_areaPCcbT11_
+ + 0x0021
+ 80253964 (+ 176) 80092edf   &lt;kernel&gt;:vm_create_anonymous_area + 0x021f
+ 80253a14 (+  96) 80098a7f   &lt;kernel&gt;:create_area + 0x0047
+ 80253a74 (+  80) 80678365   &lt;usb&gt;:__23PhysicalMemoryAllocatorPCcUlUlUl +
+ 0x0161
+ 80253ac4 (+  80) 80674496   &lt;usb&gt;:__5Stack + 0x00b2
+ 80253b14 (+  48) 80673640   &lt;usb&gt;:bus_std_ops__Fle + 0x00a8
+ 80253b44 (+  64) 8003405b   &lt;kernel&gt;:get_module + 0x013f
+ 80253b84 (+  48) 802c48da   &lt;/boot/beos/system/add-
+ ons/kernel/drivers/dev/net/pegasus&gt;:init_driver + 0x002a
+ 80253bb4 (+  48) 8005a229   &lt;kernel&gt;:load_driver__FP13legacy_driver +
+ 0x0139
+ 80253be4 (+ 128) 8005a6e1   &lt;kernel&gt;:add_driver__FPCcl + 0x022d
+ 80253c64 (+  32) 8005c2b0   &lt;kernel&gt;:legacy_driver_add + 0x0014
+ 80253c84 (+  48) 8005b994
+ &lt;kernel&gt;:try_drivers__FRt16DoublyLinkedList2Z12driver_entryZt31DoublyLinkedListStandardGetLink1Z12driver_entry
+ + 0x00a4
+ 80253cb4 (+ 192) 8005bde3   &lt;kernel&gt;:probe_for_drivers__FPCc + 0x03ff
+ 80253d74 (+ 144) 8005c75e   &lt;kernel&gt;:legacy_driver_probe + 0x0172
+ 80253e04 (+  96) 800565fd   &lt;kernel&gt;:scan_for_drivers__FP11devfs_vnode +
+ 0x0085
+ 80253e64 (+  64) 80058135
+ &lt;kernel&gt;:devfs_open_dir__FP9fs_volumeP8fs_vnodePPv + 0x0081
+ 80253ea4 (+  48) 8007c3d2   &lt;kernel&gt;:open_dir_vnode__FP5vnodeb + 0x0022
+ 80253ed4 (+  48) 8007ccbd   &lt;kernel&gt;:dir_open__FiPcb + 0x0051
+ 80253f04 (+  64) 80081a6b   &lt;kernel&gt;:_user_open_dir + 0x0093
+ 80253f44 (+ 100) 800a47e2   &lt;kernel&gt;:pre_syscall_debug_done + 0x0002
+ (nearest)
+ iframe at 0x80253fa8 (end = 0x80254000)
+  eax 0x5a           ebx 0x444a28        ecx 0x7ffe6720   edx 0xffff0104
+  esi 0x214107       edi 0x7ffe6948      ebp 0x7ffe674c   esp 0x80253fdc
+  eip 0xffff0104  eflags 0x203
+  vector: 0x63, error code: 0x0
+ 80253fa8 (+   0) ffff0104
+ 7ffe674c (+  48) 00382c19   &lt;libbe.so&gt;:__10BDirectoryPCc + 0x0055
+ 7ffe677c (+ 544) 0020b988
+ &lt;_APP_&gt;:_ConfigureDevices__9NetServeriPCcP8BMessage + 0x0028
+ 7ffe699c (+ 272) 0020c02d   &lt;_APP_&gt;:_BringUpInterfaces__9NetServer +
+ 0x0211
+ 7ffe6aac (+  80) 00209a7a   &lt;_APP_&gt;:ReadyToRun__9NetServer + 0x005e
+ 7ffe6afc (+ 496) 002bd309
+ &lt;libbe.so&gt;:DispatchMessage__12BApplicationP8BMessageP8BHandler + 0x02f9
+ 7ffe6cec (+  64) 002c791d   &lt;libbe.so&gt;:task_looper__7BLooper + 0x0211
+ 7ffe6d2c (+  64) 002bbb81   &lt;libbe.so&gt;:Run__12BApplication + 0x0075
+ 7ffe6d6c (+ 528) 0020c2df   &lt;_APP_&gt;:main + 0x0083
+ 7ffe6f7c (+  48) 00209267   &lt;_APP_&gt;:_start + 0x005b
+ 7ffe6fac (+  48) 0010084a   3991:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">runtime_loader_seg0ro at 0x00100000</A> + 0x84a
+ 7ffe6fdc (+   0) 7ffe6fec   3990:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">net_server_main_stack at 0x7efe7000</A> +
+ 0xffffec
+ kdebug&gt;
+ kdebug&gt; sem 5
+ SEM: 0x9209b104
+ id:      5 (0x5)
+ name:    'heap_grown_notify'
+ owner:   0
+ count:   -1
+ queue:   76
+ last acquired by: 0, count: 0
+ last released by: 0, count: 0
+ kdebug&gt;
+ kdebug&gt; sem 1
+ SEM: 0x9209b034
+ id:      1 (0x1)
+ name:    'kernel_aspacelock'
+ owner:   0
+ count:   -1025
+ queue:   8 77
+ last acquired by: 76, count: 1024
+ last released by: 77, count: 1
+ kdebug&gt;
+ kdebug&gt;
+ kdebug&gt; threads
+ thread         id  state     wait for  object  cpu pri  stack      team
+ name
+ 0x800e64e0      1  running          -            0   0  0x80201000    1
+ idle thread 1
+ 0x90b4d000      2  waiting   cvar  0x800e64c8    -  15  0x800ff000    1
+ undertaker
+ 0x90b4d800      3  zzz                           -   5  0x80133000    1
+ kernel daemon
+ 0x90b4e000      4  zzz                           -   1  0x80137000    1
+ page scrubber
+ 0x90b4e800      5  waiting   sem           18    -  11  0x8013b000    1
+ page writer
+ 0x919ed800     68  waiting   sem          671    -  10  0x80150000   68
+ _roster_thread_
+ 0x90b4f000      6  waiting   sem           22    -  10  0x8013f000    1
+ page daemon
+ 0x90b4f800      7  waiting   sem           26    -   5  0x80143000    1
+ low memory handler
+ 0x919fb000     70  zzz                           -  10  0x801fa000   68
+ message deliverer
+ 0x90b50000      8  waiting   sem            1    - 110  0x80147000    1
+ heap grower
+ 0x919fb800     71  waiting   sem          678    -  10  0x8023c000   68
+ timer_thread
+ 0x90b61000      9  waiting   mutex 0x90b2a38c    -   5  0x8014c000    1
+ block notifier/writer
+ 0x90b6f000     72  waiting   sem          682    -  10  0x80240000   68
+ authentication manager
+ 0x90b6f800     73  waiting   sem          695    -  10  0x80244000   68
+ main_mime
+ 0x90b66000     11  waiting   sem           41    -  10  0x80154000    1
+ acpi_task
+ 0x91a07000     74  waiting   sem          706    -  15  0x80248000   68
+ messaging command processor
+ 0x90b61800     75  waiting   sem          784    -  10  0x801f6000   75
+ debug_server
+ 0x91a0d800     76  waiting   sem            5    -  10  0x80250000   76
+ net_server
+ 0x91a14000     77  waiting   sem            1    -  10  0x80254000   77
+ app_server
+ 0x91a1f000     78  zzz                           -  10  0x80258000   78
+ waitfor
+ 0x90b6b000     48  zzz                           -  10  0x8015a000    1
+ media checker
+ 0x91a32000     80  waiting   sem          817    -  10  0x80260000   75
+ kernel listener
+ 0x91a29800     82  waiting   sem          834    -  10  0x8025c000   76
+ PathMonitor looper
+ 0x91a32800     83  waiting   sem          841    -  10  0x80264000   76
+ PathMonitor looper
+ 0x91a41800     84  waiting   sem          870    -  10  0x8027e000    1
+ net timer
+ 0x91a69800     85  waiting   sem          915    -  15  0x802ba000    1
+ loop consumer
+ 0x90b6b800     54  waiting   sem          225    -  10  0x80162000    1
+ locked_pool_enlarger
+ 0x90b66800     55  waiting   sem          233    -  20  0x80166000    1
+ scsi_bus_service
+ 0x90ba8000     56  waiting   sem          267    -  20  0x8016f000    1
+ scsi_bus_service
+ 0x90ba8800     58  waiting   sem          476    -   5  0x801ec000    1
+ syslog sender
+ 0x919ec000     59  waiting   cvar  0x90c6ded8    -  10  0x801f0000   59
+ sh
+ kdebug&gt;
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2388">http://dev.haiku-os.org/ticket/2388</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008210.html">[Haiku-bugs] [Haiku] #655: [Tracker] Changing disks icon setting lets stuff disappear
+</A></li>
+	<LI>Next message: <A HREF="008269.html">[Haiku-bugs] [Haiku] #2388: deadlock between kernel heap and	kernel vm
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8214">[ date ]</a>
+              <a href="thread.html#8214">[ thread ]</a>
+              <a href="subject.html#8214">[ subject ]</a>
+              <a href="author.html#8214">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

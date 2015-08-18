@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2962: clicking rec button in	Soundrecorder crashes it
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232962%3A%20clicking%20rec%20button%20in%0A%09Soundrecorder%20crashes%20it&In-Reply-To=%3C050.b574ca938628679845ac77e702b587d9%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011570.html">
+   <LINK REL="Next"  HREF="011785.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2962: clicking rec button in	Soundrecorder crashes it</H1>
+    <B>nutela</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232962%3A%20clicking%20rec%20button%20in%0A%09Soundrecorder%20crashes%20it&In-Reply-To=%3C050.b574ca938628679845ac77e702b587d9%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2962: clicking rec button in	Soundrecorder crashes it">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Oct 26 19:46:05 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011570.html">[Haiku-bugs] [Haiku] #2962: clicking rec button in Soundrecorder	crashes it
+</A></li>
+        <LI>Next message: <A HREF="011785.html">[Haiku-bugs] [Haiku] #2962: clicking rec button in	Soundrecorder crashes it
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11571">[ date ]</a>
+              <a href="thread.html#11571">[ thread ]</a>
+              <a href="subject.html#11571">[ subject ]</a>
+              <a href="author.html#11571">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2962: clicking rec button in Soundrecorder crashes it
+-----------------------------------------+----------------------------------
+  Reporter:  nutela                      |       Owner:  korli         
+      Type:  bug                         |      Status:  new           
+  Priority:  normal                      |   Milestone:  R1            
+ Component:  Applications/SoundRecorder  |     Version:  R1 development
+Resolution:                              |   Blockedby:                
+  Platform:  x86                         |    Blocking:                
+-----------------------------------------+----------------------------------
+Changes (by nutela):
+
+  * owner:  axeld =&gt; korli
+  * platform:  All =&gt; x86
+  * component:  - General =&gt; Applications/SoundRecorder
+
+
+Comment:
+
+ GNU gdb 6.3
+ Copyright 2004 Free Software Foundation, Inc.
+ GDB is free software, covered by the GNU General Public License, and you
+ are
+ welcome to change it and/or distribute copies of it under certain
+ conditions.
+ Type &quot;show copying&quot; to see the conditions.
+ There is absolutely no warranty for GDB.  Type &quot;show warranty&quot; for
+ details.
+ This GDB was configured as &quot;i586-pc-haiku&quot;...(no debugging symbols found)
+
+ [tcsetpgrp failed in terminal_inferior: Invalid Argument]
+ Reading symbols from /boot/beos/system/runtime_loader...done.
+ Loaded symbols for /boot/beos/system/runtime_loader
+ Reading symbols from /boot/beos/system/lib/libbe.so...done.
+ Loaded symbols for /boot/beos/system/lib/libbe.so
+ Reading symbols from /boot/beos/system/lib/libmedia.so...done.
+ Loaded symbols for /boot/beos/system/lib/libmedia.so
+ Reading symbols from /boot/beos/system/lib/libtracker.so...done.
+ Loaded symbols for /boot/beos/system/lib/libtracker.so
+ Reading symbols from /boot/beos/system/lib/libstdc++.r4.so...done.
+ Loaded symbols for /boot/beos/system/lib/libstdc++.r4.so
+ Reading symbols from /boot/beos/system/lib/libroot.so...done.
+ Loaded symbols for /boot/beos/system/lib/libroot.so
+ Reading symbols from /boot/beos/system/lib/libtranslation.so...done.
+ Loaded symbols for /boot/beos/system/lib/libtranslation.so
+ Reading symbols from /boot/beos/system/lib/libtextencoding.so...done.
+ Loaded symbols for /boot/beos/system/lib/libtextencoding.so
+ [tcsetpgrp failed in terminal_inferior: Invalid Argument]
+ [Switching to team /boot/beos/apps/SoundRecorder (1953) thread
+ SoundRecorder (1953)]
+ 0xffff0104 in ?? ()
+ (gdb) bt
+ #0  0xffff0104 in ?? ()
+ #1  0x007685be in port_buffer_size_etc () from
+ /boot/beos/system/lib/libroot.so
+ #2  0x002e79de in BLooper::ReadRawFromPort ()
+    from /boot/beos/system/lib/libbe.so
+ #3  0x002e7a6a in BLooper::ReadMessageFromPort ()
+    from /boot/beos/system/lib/libbe.so
+ #4  0x002e713b in BLooper::MessageFromPort ()
+    from /boot/beos/system/lib/libbe.so
+ #5  0x002e7c03 in BLooper::task_looper () from
+ /boot/beos/system/lib/libbe.so
+ #6  0x002db9fa in BApplication::Run () from /boot/beos/system/lib/libbe.so
+ #7  0x00213046 in main ()
+ (gdb)
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2962#comment:1">http://dev.haiku-os.org/ticket/2962#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011570.html">[Haiku-bugs] [Haiku] #2962: clicking rec button in Soundrecorder	crashes it
+</A></li>
+	<LI>Next message: <A HREF="011785.html">[Haiku-bugs] [Haiku] #2962: clicking rec button in	Soundrecorder crashes it
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11571">[ date ]</a>
+              <a href="thread.html#11571">[ thread ]</a>
+              <a href="subject.html#11571">[ subject ]</a>
+              <a href="author.html#11571">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

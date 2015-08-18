@@ -1,0 +1,158 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2789: writing to usb disks fail after 10-100Mb of writing files
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232789%3A%20writing%20to%20usb%20disks%20fail%20after%0A%2010-100Mb%20of%20writing%20files&In-Reply-To=%3C051.585cda6405faf8e92c8449d06dbda4fb%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="022612.html">
+   <LINK REL="Next"  HREF="022617.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2789: writing to usb disks fail after 10-100Mb of writing files</H1>
+    <B>mmlr</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232789%3A%20writing%20to%20usb%20disks%20fail%20after%0A%2010-100Mb%20of%20writing%20files&In-Reply-To=%3C051.585cda6405faf8e92c8449d06dbda4fb%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2789: writing to usb disks fail after 10-100Mb of writing files">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Oct 10 22:26:50 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="022612.html">[Haiku-bugs] [Haiku] #4759: Touchpad won't work on Acer Aspire 1640	laptop
+</A></li>
+        <LI>Next message: <A HREF="022617.html">[Haiku-bugs] [Haiku] #4760: Crash on query code.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22613">[ date ]</a>
+              <a href="thread.html#22613">[ thread ]</a>
+              <a href="subject.html#22613">[ subject ]</a>
+              <a href="author.html#22613">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2789: writing to usb disks fail after 10-100Mb of writing files
+----------------------+-----------------------------------------------------
+  Reporter:  rudolfc  |       Owner:  mmlr         
+      Type:  bug      |      Status:  closed       
+  Priority:  normal   |   Milestone:  R1           
+ Component:  Drivers  |     Version:  R1/pre-alpha1
+Resolution:  fixed    |   Blockedby:               
+  Platform:  x86      |    Blocking:               
+----------------------+-----------------------------------------------------
+
+Comment(by mmlr):
+
+ Hi Rudolf
+
+ &gt; It was the way you wrote that and the just partly response I got that
+ triggered me this way.
+
+ Understandable, sorry for that again.
+
+ &gt; Well, I still have my original feeling: there is not one problem, but
+ two. (Of course, that can just be my own stupidity in not recognizing
+ something, but I want to understand the reason anyhow.) Because, if I run
+ dd in windows, on 4kb blocks, I get 8Mb/sec reading speed. If stuff
+ performed reasonably well on Haiku, with 4kB blocks because of
+ B_PAGE_SIZE, I would expect not 8MB read speed, but also not 1Mb read
+ speed. say 3-5Mb would be reasonably well performance in my eyes.
+
+ I'm not sure if the dd on Windows will actually directly access the device
+ with that block size. If it writes into a cache then that'd skew the
+ numbers.
+
+ &gt; BTW With dd in Haiku, using 4kb blocks, I get the same read and write
+ speed as if I were just plain copying files using Tracker.
+
+ Yes, that verifies the fact that either transfer ends up using 4K blocks,
+ even though Tracker uses a far larger block size.
+
+ &gt; About cache in general: I don't agree per se that you are correct that
+ there should only be one cache. Looking at PC hardware there are more than
+ one as well. I am convinced they exist only because it makes sense to have
+ them. (level1, 2, and 3 cache between CPU en memory, another is MTRR-WC
+ I'd say).
+
+ Well, those caches do all have different purposes, where level one is near
+ and fast, level two is shared across cores but still nearer than RAM and
+ so forth. The cache we are talking about is only file and block caches and
+ always resides in RAM. There should only be one single representation of a
+ file in memory. All reads and writes to or from should then be mere
+ &quot;pointers&quot; to that memory with a corresponding base address and length to
+ describe the section. This is exactly what iovecs do and how the
+ IORequests work. In the end, there is a single cache to hold the data and
+ populating it and writing it back is done on this set of physical pages
+ through the use of optimized IORequests (holding optimized iovecs) that
+ describe the wanted sections with the least possible descriptors. Then all
+ layers operate on these requests, adjusting offsets and lengths only
+ instead of copying stuff. That's pretty much how the IO path already works
+ for disks right now. The requests aren't yet fully optimized, i.e. they
+ aren't combined at some places where they could be. But file reads for
+ example are described using IORequests, the filesystem provides vectors to
+ map the scattered file to partition offsets, the devfs then adjusts
+ offsets to compensate for partition to disk offsets. All this happens
+ without any data copying, so in the end the disk driver directly DMA reads
+ into the physical pages provided for the cache. That's as good as it can
+ get and is the long term goal for USB as well.
+
+ &gt; So I am not that convinced yet that in the end you will not end up using
+ some sort of a second cache on the lower levels to deal with the quirks of
+ hardware (to minimize bottlenecks specific to certain kind of hardware).
+
+ The upper layers should always provide the longest contiguous
+ buffers/vectors. The drivers down the IO path can then chop that up as
+ needed to accommodate for the different hardware. While flash media is
+ certainly an extreme example, the general rule of long burst reads/writes
+ being faster than small transfers holds true for pretty much all other
+ storage as well. Due to the latency differences you just notice it more on
+ some hardware.
+
+ &gt; Well, I suggest to forget about my tests now since it seems from your
+ words you got it all fully under control.
+
+ Feel free to continue with testing, just be sure to wait for the imminent
+ changes to happen first. Before these are in, pretty much all benchmark
+ results will simply show that it sucks and all the numbers are invalidated
+ as soon as a change happens.
+
+ &gt; For instance you already mentioned 'change the mapping strategy'. Which
+ revision should I look at for playing with that?
+
+ That'd be r33503 from just a few minutes ago. It should bring read speeds,
+ while yet not fully optimized, to acceptable levels. As mentioned, the
+ write side is a bit more involved, but I'm working on integrating those
+ changes as well.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2789#comment:27">http://dev.haiku-os.org/ticket/2789#comment:27</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="022612.html">[Haiku-bugs] [Haiku] #4759: Touchpad won't work on Acer Aspire 1640	laptop
+</A></li>
+	<LI>Next message: <A HREF="022617.html">[Haiku-bugs] [Haiku] #4760: Crash on query code.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22613">[ date ]</a>
+              <a href="thread.html#22613">[ thread ]</a>
+              <a href="subject.html#22613">[ subject ]</a>
+              <a href="author.html#22613">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4926: Konatu Tohaba isn't usable in the	Terminal
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234926%3A%20Konatu%20Tohaba%20isn%27t%20usable%20in%20the%0A%09Terminal&In-Reply-To=%3C054.fb8965faa5d8375261ee41d44922e241%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="023636.html">
+   <LINK REL="Next"  HREF="023643.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4926: Konatu Tohaba isn't usable in the	Terminal</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234926%3A%20Konatu%20Tohaba%20isn%27t%20usable%20in%20the%0A%09Terminal&In-Reply-To=%3C054.fb8965faa5d8375261ee41d44922e241%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4926: Konatu Tohaba isn't usable in the	Terminal">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Nov 10 19:07:35 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="023636.html">[Haiku-bugs] [Haiku] #4926: Konatu Tohaba isn't usable in the	Terminal
+</A></li>
+        <LI>Next message: <A HREF="023643.html">[Haiku-bugs] [Haiku] #4926: Konatu Tohaba isn't usable in the	Terminal
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#23637">[ date ]</a>
+              <a href="thread.html#23637">[ thread ]</a>
+              <a href="subject.html#23637">[ subject ]</a>
+              <a href="author.html#23637">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4926: Konatu Tohaba isn't usable in the Terminal
+-----------------------------------+----------------------------------------
+ Reporter:  jackburton             |       Owner:  jackburton    
+     Type:  bug                    |      Status:  new           
+ Priority:  normal                 |   Milestone:  R1            
+Component:  Applications/Terminal  |     Version:  R1/Development
+Blockedby:                         |    Platform:  All           
+ Blocking:                         |  
+-----------------------------------+----------------------------------------
+
+Comment(by anevilyak):
+
+ Replying to [comment:13 koki]:
+ &gt; Forgive my ignorance, but if a text view is capable of displaying
+ proportional fonts with various characters widths (which they are), then
+ why should displaying font sets with only 2 character widths be a problem?
+
+ Because not every textview is. The one used in things like StyledEdit,
+ etc. (aka BTextView) does, but things like editors and terminals tend to
+ use a significantly simplified variant that only knows how to handle a
+ fixed width font for a number of reasons, mostly pertaining to
+ performance. Handling proportional fonts, especially with line wrapping
+ comes at a relatively significant computational cost, so that overhead is
+ avoided where not necessary. In such a case, the assumption that every
+ character is the same width is used is relied upon to be able to quickly
+ calculate all kinds of things, including which character is under the
+ cursor, what character to line break at, etc. Even having one alternative
+ width in the font will completely break these assumptions and consequently
+ all the functionality that relies on them.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4926#comment:14">http://dev.haiku-os.org/ticket/4926#comment:14</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="023636.html">[Haiku-bugs] [Haiku] #4926: Konatu Tohaba isn't usable in the	Terminal
+</A></li>
+	<LI>Next message: <A HREF="023643.html">[Haiku-bugs] [Haiku] #4926: Konatu Tohaba isn't usable in the	Terminal
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#23637">[ date ]</a>
+              <a href="thread.html#23637">[ thread ]</a>
+              <a href="subject.html#23637">[ subject ]</a>
+              <a href="author.html#23637">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2413: [Interface kit] enlarging menus (was: [Interface kit] enlarging menus (easy))
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232413%3A%20%5BInterface%20kit%5D%20enlarging%20menus%0A%20%28was%3A%20%5BInterface%20kit%5D%20enlarging%20menus%20%28easy%29%29&In-Reply-To=%3C049.bf6b758a6393b2b73f43ead462d4500f%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="015367.html">
+   <LINK REL="Next"  HREF="015371.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2413: [Interface kit] enlarging menus (was: [Interface kit] enlarging menus (easy))</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232413%3A%20%5BInterface%20kit%5D%20enlarging%20menus%0A%20%28was%3A%20%5BInterface%20kit%5D%20enlarging%20menus%20%28easy%29%29&In-Reply-To=%3C049.bf6b758a6393b2b73f43ead462d4500f%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2413: [Interface kit] enlarging menus (was: [Interface kit] enlarging menus (easy))">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Mar 27 11:11:49 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="015367.html">[Haiku-bugs] [Haiku] #2413: [Interface kit] enlarging menus	(easy)
+</A></li>
+        <LI>Next message: <A HREF="015371.html">[Haiku-bugs] [Haiku] #2891: [DiskUsage] &quot;?&quot; button is always	disabled (easy)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15368">[ date ]</a>
+              <a href="thread.html#15368">[ thread ]</a>
+              <a href="subject.html#15368">[ subject ]</a>
+              <a href="author.html#15368">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2413: [Interface kit] enlarging menus
+--------------------------------+-------------------------------------------
+ Reporter:  diver               |       Owner:  axeld         
+     Type:  bug                 |      Status:  new           
+ Priority:  normal              |   Milestone:  R1            
+Component:  Kits/Interface Kit  |     Version:  R1 development
+ Keywords:                      |   Blockedby:                
+ Platform:  All                 |    Blocking:  3051          
+--------------------------------+-------------------------------------------
+
+Comment(by stippi):
+
+ Both of these solutions just fix a symptom of a bug in the class framework
+ of BMenu &lt;-&gt; BMenuBar &lt;-&gt; _BMCPrivate_ (the BMenuBar subclass used in the
+ BMenuField control). If the BMenu has a certain resizing mode
+ (B_FOLLOW_LEFT_RIGHT), then the minimum size calculation is buggy. The
+ size calculation is different for some (BeOS-) backwards compatibility
+ reasons, but either BMenuField should not use it at all (always layout
+ it's BMenuBar in FrameResized()) or the calculation is simply buggy and
+ can be fixed. In any case, this bug should not have been marked &quot;easy&quot;,
+ since it requires a good overview of the involved classes as well as some
+ knowledge how to approach the backwards-compatibility requirement and test
+ it correctly across a number of apps. Sorry.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2413#comment:5">http://dev.haiku-os.org/ticket/2413#comment:5</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="015367.html">[Haiku-bugs] [Haiku] #2413: [Interface kit] enlarging menus	(easy)
+</A></li>
+	<LI>Next message: <A HREF="015371.html">[Haiku-bugs] [Haiku] #2891: [DiskUsage] &quot;?&quot; button is always	disabled (easy)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15368">[ date ]</a>
+              <a href="thread.html#15368">[ thread ]</a>
+              <a href="subject.html#15368">[ subject ]</a>
+              <a href="author.html#15368">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

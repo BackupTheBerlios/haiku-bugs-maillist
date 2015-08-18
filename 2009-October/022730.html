@@ -1,0 +1,143 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4776: VNC server and use of remote clipboard paste size bug limit to 63.9 Kilobytes of text.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234776%3A%20VNC%20server%20and%20use%20of%20remote%0A%20clipboard%20paste%20size%20bug%20limit%20to%2063.9%20Kilobytes%20of%20text.&In-Reply-To=%3C063.6fafaf10762de323163837db675a8ef2%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="022711.html">
+   <LINK REL="Next"  HREF="022745.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4776: VNC server and use of remote clipboard paste size bug limit to 63.9 Kilobytes of text.</H1>
+    <B>mmlr</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234776%3A%20VNC%20server%20and%20use%20of%20remote%0A%20clipboard%20paste%20size%20bug%20limit%20to%2063.9%20Kilobytes%20of%20text.&In-Reply-To=%3C063.6fafaf10762de323163837db675a8ef2%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4776: VNC server and use of remote clipboard paste size bug limit to 63.9 Kilobytes of text.">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Oct 14 01:40:50 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="022711.html">[Haiku-bugs] [Haiku] #4776: VNC server and use of remote clipboard paste size bug limit to 63.9 Kilobytes of text.
+</A></li>
+        <LI>Next message: <A HREF="022745.html">[Haiku-bugs] [Haiku] #4776: VNC server and use of remote clipboard paste size bug limit to 63.9 Kilobytes of text.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22730">[ date ]</a>
+              <a href="thread.html#22730">[ thread ]</a>
+              <a href="subject.html#22730">[ subject ]</a>
+              <a href="author.html#22730">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4776: VNC server and use of remote clipboard paste size bug limit to 63.9
+Kilobytes of text.
+----------------------------------+-----------------------------------------
+  Reporter:  Super Dave Osbourne  |       Owner:  nobody   
+      Type:  bug                  |      Status:  closed   
+  Priority:  normal               |   Milestone:  R1       
+ Component:  Servers              |     Version:  R1/alpha1
+Resolution:  invalid              |   Blockedby:           
+  Platform:  All                  |    Blocking:           
+----------------------------------+-----------------------------------------
+Changes (by mmlr):
+
+  * status:  new =&gt; closed
+  * resolution:  =&gt; invalid
+
+
+Old description:
+
+&gt;<i> Have verified with tests driving Pe and Styled Edit that getting
+</I>&gt;<i> data/text larger than 63.9 K i size from the clipboard to a application
+</I>&gt;<i> as well as from and onto the clipboard is the size limit regardless of
+</I>&gt;<i> various larger than 63.9 K copy and paste attempts.  The VNC server
+</I>&gt;<i> should be able to get whatever sized data is on the system clipboard, and
+</I>&gt;<i> also provide that same data to a remote VNC client.
+</I>&gt;<i>
+</I>&gt;<i> 1.  Install and run the server of VNC for haiku, only the server.
+</I>&gt;<i> 2.  Install and run a VNC client on your host.
+</I>&gt;<i> 3.  Make a connection to the Haiku VM VNC server.
+</I>&gt;<i> 4.  On local host open 1.5 meg file and copy all the text.
+</I>&gt;<i> 5.  In connection window to the VM VNC server, open the Pe or StyledEdit
+</I>&gt;<i> apps.
+</I>&gt;<i> 6.  In either app opened in #5, paste.
+</I>&gt;<i> 7.  Witness the size limit, about 63.9K of text is pasted.
+</I>&gt;<i>
+</I>&gt;<i> Please fix this bug, it hampers remote boundary testing that I'm doing.
+</I>
+New description:
+
+ Have verified with tests driving Pe and Styled Edit that getting data/text
+ larger than 63.9 K i size from the clipboard to a application as well as
+ from and onto the clipboard is the size limit regardless of various larger
+ than 63.9 K copy and paste attempts.  The VNC server should be able to get
+ whatever sized data is on the system clipboard, and also provide that same
+ data to a remote VNC client.
+
+ {{{
+ 1.  Install and run the server of VNC for haiku, only the server.
+ 2.  Install and run a VNC client on your host.
+ 3.  Make a connection to the Haiku VM VNC server.
+ 4.  On local host open 1.5 meg file and copy all the text.
+ 5.  In connection window to the VM VNC server, open the Pe or StyledEdit
+ apps.
+ 6.  In either app opened in #5, paste.
+ 7.  Witness the size limit, about 63.9K of text is pasted.
+ }}}
+
+ Please fix this bug, it hampers remote boundary testing that I'm doing.
+
+--
+
+Comment:
+
+ Replying to [ticket:4776 Super Dave Osbourne]:
+ &gt; The VNC server should be able to get whatever sized data is on the
+ system clipboard, and also provide that same data to a remote VNC client.
+
+ Whatever VNC server you installed, it is not a part of Haiku. You should
+ report the bug to either the VNC server or client developer, as the limit
+ is imposed somewhere there. At least there is no such limit to be
+ reproduced on a normal system.
+
+ &gt; Please fix this bug, it hampers remote boundary testing that I'm doing.
+
+ Please drop this demanding attitude. Most bugs hamper with someones plans
+ or work, that doesn't mean that there's anyone owing anyone else a bugfix
+ because of that. I certainly admire the efforts you put into the testing
+ automation, but this attitude just comes off pretty rude.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4776#comment:1">http://dev.haiku-os.org/ticket/4776#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="022711.html">[Haiku-bugs] [Haiku] #4776: VNC server and use of remote clipboard paste size bug limit to 63.9 Kilobytes of text.
+</A></li>
+	<LI>Next message: <A HREF="022745.html">[Haiku-bugs] [Haiku] #4776: VNC server and use of remote clipboard paste size bug limit to 63.9 Kilobytes of text.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22730">[ date ]</a>
+              <a href="thread.html#22730">[ thread ]</a>
+              <a href="subject.html#22730">[ subject ]</a>
+              <a href="author.html#22730">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

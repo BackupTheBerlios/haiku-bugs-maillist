@@ -1,0 +1,140 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2691: TemplateNotFound: Template &quot;macros.rss&quot;	not found
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232691%3A%20TemplateNotFound%3A%20Template%20%22macros.rss%22%0A%09not%20found&In-Reply-To=%3C043.fbd5d6e013d5429bd03c2677a09b035e%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010012.html">
+   <LINK REL="Next"  HREF="010016.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2691: TemplateNotFound: Template &quot;macros.rss&quot;	not found</H1>
+    <B>andreasf</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232691%3A%20TemplateNotFound%3A%20Template%20%22macros.rss%22%0A%09not%20found&In-Reply-To=%3C043.fbd5d6e013d5429bd03c2677a09b035e%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2691: TemplateNotFound: Template &quot;macros.rss&quot;	not found">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Aug 31 11:50:15 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010012.html">[Haiku-bugs] [Haiku] #2690: PANIC: ASSERT FAILED (headers/private/kernel/util/DoublyLinkedList.h:464): fFirst != __null &amp;&amp; fLast != _ ... )
+</A></li>
+        <LI>Next message: <A HREF="010016.html">[Haiku-bugs] [Haiku] #2691: TemplateNotFound: Template	&quot;macros.rss&quot; not found
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10015">[ date ]</a>
+              <a href="thread.html#10015">[ thread ]</a>
+              <a href="subject.html#10015">[ subject ]</a>
+              <a href="author.html#10015">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2691: TemplateNotFound: Template &quot;macros.rss&quot; not found
+--------------------------+-------------------------------------------------
+ Reporter:  andreasf      |       Owner:  haiku-web     
+     Type:  bug           |      Status:  new           
+ Priority:  normal        |   Milestone:  R1            
+Component:  Website/Trac  |     Version:  R1 development
+Blockedby:                |    Platform:  All           
+ Blocking:                |  
+--------------------------+-------------------------------------------------
+ ==== How to Reproduce ====
+
+ While doing a GET operation on `/log/`, Trac issued an internal error.
+
+ ''This I got when checking why the log feed (the one we're supposed to use
+ instead of shortened Timeline) doesn't refresh:''
+ <A HREF="http://dev.haiku-os.org/log/?verbose=on&amp;format=rss&amp;limit=50">http://dev.haiku-os.org/log/?verbose=on&amp;format=rss&amp;limit=50</A>
+
+
+ Request parameters:
+ {{{
+ {'format': u'rss', 'limit': u'50', 'path': u'/', 'verbose': u'on'}
+ }}}
+
+
+ User Agent was: `Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10_5_4; de-de)
+ AppleWebKit/525.18 (KHTML, like Gecko) Version/3.1.2 Safari/525.20.1`
+
+ ==== System Information ====
+
+ || '''Trac''' || `0.11.1` ||
+ || '''Python''' || `2.5.1 (r251:54863, Nov  3 2007, 02:54:36) [C]` ||
+ || '''setuptools''' || `0.6c8` ||
+ || '''psycopg2''' || `2.0.6` ||
+ || '''Genshi''' || `0.5` ||
+ || '''Pygments''' || `0.10` ||
+ || '''Subversion''' || `1.4.5 (r25188)` ||
+ || '''jQuery:''' || `1.2.6` ||
+
+ ==== Python Traceback ====
+ {{{
+ Traceback (most recent call last):
+   File &quot;/opt/csw/lib/python/site-
+ packages/Trac-0.11.1-py2.5.egg/trac/web/main.py&quot;, line 423, in
+ _dispatch_request
+     dispatcher.dispatch(req)
+   File &quot;/opt/csw/lib/python/site-
+ packages/Trac-0.11.1-py2.5.egg/trac/web/main.py&quot;, line 219, in dispatch
+     data, content_type)
+   File &quot;/opt/csw/lib/python/site-
+ packages/Trac-0.11.1-py2.5.egg/trac/web/chrome.py&quot;, line 683, in
+ render_template
+     template = self.load_template(filename, method=method)
+   File &quot;/opt/csw/lib/python/site-
+ packages/Trac-0.11.1-py2.5.egg/trac/web/chrome.py&quot;, line 667, in
+ load_template
+     return self.templates.load(filename, cls=cls)
+   File &quot;build/bdist.solaris-2.10-i86pc/egg/genshi/template/loader.py&quot;,
+ line 221, in load
+     filename, encoding=encoding)
+   File &quot;build/bdist.solaris-2.10-i86pc/egg/genshi/template/loader.py&quot;,
+ line 259, in _instantiate
+     allow_exec=self.allow_exec)
+   File &quot;build/bdist.solaris-2.10-i86pc/egg/genshi/template/base.py&quot;, line
+ 377, in __init__
+     self.stream = list(self._prepare(self._parse(source, encoding)))
+   File &quot;build/bdist.solaris-2.10-i86pc/egg/genshi/template/base.py&quot;, line
+ 444, in _prepare
+     cls=cls or self.__class__)
+   File &quot;build/bdist.solaris-2.10-i86pc/egg/genshi/template/loader.py&quot;,
+ line 231, in load
+     raise TemplateNotFound(filename, search_path)
+ TemplateNotFound: Template &quot;macros.rss&quot; not found
+
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2691">http://dev.haiku-os.org/ticket/2691</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010012.html">[Haiku-bugs] [Haiku] #2690: PANIC: ASSERT FAILED (headers/private/kernel/util/DoublyLinkedList.h:464): fFirst != __null &amp;&amp; fLast != _ ... )
+</A></li>
+	<LI>Next message: <A HREF="010016.html">[Haiku-bugs] [Haiku] #2691: TemplateNotFound: Template	&quot;macros.rss&quot; not found
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10015">[ date ]</a>
+              <a href="thread.html#10015">[ thread ]</a>
+              <a href="subject.html#10015">[ subject ]</a>
+              <a href="author.html#10015">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

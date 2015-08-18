@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4064: [patch]cond_wait always return EAGAIN with an unitialized pthread_cond_t (pthread_cond.c)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-July/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234064%3A%20%5Bpatch%5Dcond_wait%20always%20return%20EAGAIN%0A%20with%20an%20unitialized%20pthread_cond_t%20%28pthread_cond.c%29&In-Reply-To=%3C038.41dacccbe9163cc4c5a940ad4d12102d%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="018276.html">
+   <LINK REL="Next"  HREF="018278.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4064: [patch]cond_wait always return EAGAIN with an unitialized pthread_cond_t (pthread_cond.c)</H1>
+    <B>oco</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234064%3A%20%5Bpatch%5Dcond_wait%20always%20return%20EAGAIN%0A%20with%20an%20unitialized%20pthread_cond_t%20%28pthread_cond.c%29&In-Reply-To=%3C038.41dacccbe9163cc4c5a940ad4d12102d%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4064: [patch]cond_wait always return EAGAIN with an unitialized pthread_cond_t (pthread_cond.c)">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Jul  5 23:46:14 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="018276.html">[Haiku-bugs] [Haiku] #2041: In some cases, __mbrtowc can enter in an infinite loop
+</A></li>
+        <LI>Next message: <A HREF="018278.html">[Haiku-bugs] [Haiku] #4005: Higher job count parallel builds (jam -j 4 for example) don't work
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18277">[ date ]</a>
+              <a href="thread.html#18277">[ thread ]</a>
+              <a href="subject.html#18277">[ subject ]</a>
+              <a href="author.html#18277">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4064: [patch]cond_wait always return EAGAIN with an unitialized pthread_cond_t
+(pthread_cond.c)
+-----------------------+----------------------------------------------------
+ Reporter:  oco        |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+Blockedby:             |    Platform:  All           
+ Blocking:             |  
+-----------------------+----------------------------------------------------
+ cond_wait always return EAGAIN with an unitialized pthread_cond_t
+ (pthread_cond.c).
+ This function is used by pthread_cond_wait and
+ pthread_cond_timedwait.[[BR]]
+ I discover the problem while trying to compile current ruby trunk (1.9).
+ miniruby (a reduced version of ruby used in the build process)  stop while
+ calling pthread_cond_timedwait. The return value is always EAGAIN. I use
+ r31395 of haiku.[[BR]]
+ After looking at the source code, i think we should check the return value
+ of create_sem instead of cond-&gt;sem. This is what is in the first
+ patch.[[BR]]
+ I found similar code in mutex_lock (pthread_mutex.c). Maybe, we should
+ also use atomic_test_and_set to assign cond-&gt;sem. This is what is added in
+ the second patch. But, as i am not sure of what i am proposing (i am a
+ newbie with threads), careful revue is needed.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4064">http://dev.haiku-os.org/ticket/4064</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="018276.html">[Haiku-bugs] [Haiku] #2041: In some cases, __mbrtowc can enter in an infinite loop
+</A></li>
+	<LI>Next message: <A HREF="018278.html">[Haiku-bugs] [Haiku] #4005: Higher job count parallel builds (jam -j 4 for example) don't work
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18277">[ date ]</a>
+              <a href="thread.html#18277">[ thread ]</a>
+              <a href="subject.html#18277">[ subject ]</a>
+              <a href="author.html#18277">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

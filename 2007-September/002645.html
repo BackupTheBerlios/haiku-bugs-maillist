@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1465: Assert in kernel/fs/vfs.cpp
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231465%3A%20Assert%20in%20kernel/fs/vfs.cpp&In-Reply-To=%3C042.f7567ca62e8dc95c46574f6adf2319bd%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002644.html">
+   <LINK REL="Next"  HREF="002646.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1465: Assert in kernel/fs/vfs.cpp</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231465%3A%20Assert%20in%20kernel/fs/vfs.cpp&In-Reply-To=%3C042.f7567ca62e8dc95c46574f6adf2319bd%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1465: Assert in kernel/fs/vfs.cpp">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Sep  8 15:56:03 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002644.html">[Haiku-bugs] [Haiku] #1464: Broken filesystem
+</A></li>
+        <LI>Next message: <A HREF="002646.html">[Haiku-bugs] [Haiku] #1465: Assert in kernel/fs/vfs.cpp
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2645">[ date ]</a>
+              <a href="thread.html#2645">[ thread ]</a>
+              <a href="subject.html#2645">[ subject ]</a>
+              <a href="author.html#2645">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1465: Assert in kernel/fs/vfs.cpp
+--------------------------+-------------------------------------------------
+ Reporter:  kaliber       |       Owner:  axeld         
+     Type:  bug           |      Status:  new           
+ Priority:  normal        |   Milestone:  R1            
+Component:  File Systems  |     Version:  R1 development
+ Platform:  All           |  
+--------------------------+-------------------------------------------------
+ Before that crash there was about 4MB memory free and I was untaring a big
+ file. I'm not sure if it is a real bug.
+
+ {{{
+ PANIC: ASSERT FAILED (src/system/kernel/fs/vfs.cpp:672): vnode-&gt;ref_count
+ == 0 &amp;&amp; vnode-&gt;busy
+
+ Welcome to Kernel Debugging Land...
+ Running on CPU 0
+ kdebug&gt; bt
+ stack trace for thread 0x5 &quot;low memory handler&quot;
+     kernel stack: 0x800e7000 to 0x800eb000
+ frame            caller     &lt;image&gt;:function + offset
+ 800eadc4 (+  52) 8008ac40   &lt;kernel&gt;:invoke_command + 0x0074
+ 800eadf8 (+  48) 8008ad5e   &lt;kernel&gt;:kernel_debugger_loop + 0x00de
+ 800eae28 (+  32) 8008b7ea   &lt;kernel&gt;:kernel_debugger + 0x00b2
+ 800eae48 (+ 192) 8008b72d   &lt;kernel&gt;:panic + 0x0029
+ 800eaf08 (+  48) 800463b9   &lt;kernel&gt;:free_vnode__FP5vnodeb + 0x0031
+ 800eaf38 (+  64) 80046871   &lt;kernel&gt;:vnode_low_memory_handler__FPvl +
+ 0x00c5
+ 800eaf78 (+  64) 8005f22e   &lt;kernel&gt;:call_handlers__Fl + 0x0072
+ 800eafb8 (+  32) 8005f2c9   &lt;kernel&gt;:low_memory__FPv + 0x0031
+ 800eafd8 (+  32) 8003b8c3   &lt;kernel&gt;:_create_kernel_thread_kentry__Fv +
+ 0x001b
+ 800eaff8 (+2146521096) 8003b858   &lt;kernel&gt;:thread_kthread_exit__Fv +
+ 0x0000
+ kdebug&gt;
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1465">http://dev.haiku-os.org/ticket/1465</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002644.html">[Haiku-bugs] [Haiku] #1464: Broken filesystem
+</A></li>
+	<LI>Next message: <A HREF="002646.html">[Haiku-bugs] [Haiku] #1465: Assert in kernel/fs/vfs.cpp
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2645">[ date ]</a>
+              <a href="thread.html#2645">[ thread ]</a>
+              <a href="subject.html#2645">[ subject ]</a>
+              <a href="author.html#2645">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

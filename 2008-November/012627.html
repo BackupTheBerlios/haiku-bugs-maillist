@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3158: USB Card Reader (VIA Technologies) does not work under Haiku, works partially under Zeta
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233158%3A%20USB%20Card%20Reader%20%28VIA%20Technologies%29%20does%0A%20not%20work%20under%20Haiku%2C%20works%20partially%20under%20Zeta&In-Reply-To=%3C043.1a9517cf3a20043b03218344e1f20eec%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012626.html">
+   <LINK REL="Next"  HREF="012629.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3158: USB Card Reader (VIA Technologies) does not work under Haiku, works partially under Zeta</H1>
+    <B>tigerdog</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233158%3A%20USB%20Card%20Reader%20%28VIA%20Technologies%29%20does%0A%20not%20work%20under%20Haiku%2C%20works%20partially%20under%20Zeta&In-Reply-To=%3C043.1a9517cf3a20043b03218344e1f20eec%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3158: USB Card Reader (VIA Technologies) does not work under Haiku, works partially under Zeta">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Nov 17 18:57:06 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012626.html">[Haiku-bugs] [Haiku] #2948: No nVidia accelerated video on 7600GS analog output
+</A></li>
+        <LI>Next message: <A HREF="012629.html">[Haiku-bugs] [Haiku] #3158: USB Card Reader (VIA Technologies) does not work under Haiku, works partially under Zeta
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12627">[ date ]</a>
+              <a href="thread.html#12627">[ thread ]</a>
+              <a href="subject.html#12627">[ subject ]</a>
+              <a href="author.html#12627">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3158: USB Card Reader (VIA Technologies) does not work under Haiku, works
+partially under Zeta
+-------------------------+--------------------------------------------------
+ Reporter:  tigerdog     |       Owner:  mmlr          
+     Type:  bug          |      Status:  new           
+ Priority:  normal       |   Milestone:  R1            
+Component:  Drivers/USB  |     Version:  R1 development
+Blockedby:               |    Platform:  All           
+ Blocking:               |  
+-------------------------+--------------------------------------------------
+ Combination floppy/card reader built into CPU case.  Card reader reports
+ as VIA Technologies Inc vendor ID 0x040d, product ID 0x6205.  Connects
+ through internal USB cable to header on motherboard.
+
+ This card reader does not work at all under Haiku.[[BR]]
+ Under BeOS or Zeta (using USB Storage Module from BeBits), the 1st slot
+ works, 2nd slot does not.[[BR]]
+
+ Under Windows and Linux, both slots work fine.[[BR]]
+
+
+ This particular chipset has a known, documented, fixed bug under Linux.  A
+ patch to the Linux kernel driver was needed:[[BR]]
+
+
+ {{{
+ /* Patch submitted by Mihnea-Costin Grigore &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">mihnea at zulu.ro</A>&gt; */
+ UNUSUAL_DEV(  0x040d, 0x6205, 0x0003, 0x0003,
+                 &quot;VIA Technologies Inc.&quot;,
+                 &quot;USB 2.0 Card Reader&quot;,
+                 US_SC_DEVICE, US_PR_DEVICE, NULL,
+                 US_FL_IGNORE_RESIDUE ),
+
+
+ }}}
+
+
+
+ Not sure if Haiku shares Linux code, but maybe this will be helpful.  I
+ will also attach excerpts from the syslog file showing the failed device
+ initialization at boot, also ongoing messages that fill the log file.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3158">http://dev.haiku-os.org/ticket/3158</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012626.html">[Haiku-bugs] [Haiku] #2948: No nVidia accelerated video on 7600GS analog output
+</A></li>
+	<LI>Next message: <A HREF="012629.html">[Haiku-bugs] [Haiku] #3158: USB Card Reader (VIA Technologies) does not work under Haiku, works partially under Zeta
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12627">[ date ]</a>
+              <a href="thread.html#12627">[ thread ]</a>
+              <a href="subject.html#12627">[ subject ]</a>
+              <a href="author.html#12627">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

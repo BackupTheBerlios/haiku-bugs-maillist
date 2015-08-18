@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4053: USB MIDI not recognized dynamically
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234053%3A%20USB%20MIDI%20not%20recognized%20dynamically&In-Reply-To=%3C048.a09eff5a269168ea8b384b78481c7d62%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="022025.html">
+   <LINK REL="Next"  HREF="022027.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4053: USB MIDI not recognized dynamically</H1>
+    <B>bonefish</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234053%3A%20USB%20MIDI%20not%20recognized%20dynamically&In-Reply-To=%3C048.a09eff5a269168ea8b384b78481c7d62%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4053: USB MIDI not recognized dynamically">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Sep 26 06:27:58 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="022025.html">[Haiku-bugs] [Haiku] #3185: Device Manager Application
+</A></li>
+        <LI>Next message: <A HREF="022027.html">[Haiku-bugs] [Haiku] #4641: No return from screen saver / turn off	screen
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22026">[ date ]</a>
+              <a href="thread.html#22026">[ thread ]</a>
+              <a href="subject.html#22026">[ subject ]</a>
+              <a href="author.html#22026">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4053: USB MIDI not recognized dynamically
+---------------------------------+------------------------------------------
+ Reporter:  Pete                 |       Owner:  phoudoin     
+     Type:  bug                  |      Status:  assigned     
+ Priority:  normal               |   Milestone:  R1           
+Component:  Servers/midi_server  |     Version:  R1/pre-alpha1
+Blockedby:                       |    Platform:  All          
+ Blocking:                       |  
+---------------------------------+------------------------------------------
+
+Comment(by bonefish):
+
+ Replying to [comment:24 Pete]:
+ &gt; Replying to [comment:23 Pete]:
+ &gt; &gt; OK, I'm foxed...  The usb_midi_close function in usb_midi.c is just
+ not getting called!
+ &gt;
+ &gt; Eventually had the brilliant idea (:-/) of checking the return value of
+ the close!  Of course it is an error -- &quot;Bad File Descriptor&quot;.
+ &gt;
+ &gt; Now the question is, why?
+
+ There are two obvious reasons: It is really the wrong FD index, or it has
+ already been closed before (via close() or dup2()).
+
+ I can only wholeheartedly recommend getting familiar with the kernel
+ debugger and kernel tracing. E.g. the &quot;iocontext&quot; command can tell you
+ what file descriptors are currently open in a team. Syscall tracing (the
+ kernel tracing option) will allow you to examine what happened to the FD
+ (open()/close()/dup[2]() calls). There are even (hardware) breakpoints
+ available in the kernel debugger.
+
+
+ Replying to [comment:32 Pete]:
+ &gt; Replying to [comment:31 phoudoin]:
+ &gt; &gt;
+ &gt; &gt; Could we have an issue related to USB remove hook &amp; node deletion
+ while it's still opened!?
+ &gt;
+ &gt; We actually have something of a logical gotcha here!  We are watching
+ for the '/dev/midi/usb/0' node to be removed, and ''then'' we go to close
+ it!  Ouch...
+
+ There's nothing wrong with first removing a file/unpublishing a device and
+ then closing still open FDs to that file/device. File systems and drivers
+ must handle this situation gracefully. If they don't, they are buggy.
+
+
+ Replying to [comment:33 Pete]:
+ &gt; [And I'm afraid I'm getting tired of eternal 20-minute &quot;edit source; jam
+ -q; copy object file; start tests; pull USB cable; KDL; reboot;
+ repeat...&quot;]
+
+ If that cycle takes 20 minutes you either have a very slow machine or
+ you're doing something suboptimally. Rebuilding the kernel and/or a driver
+ should take only a minute or so (the most time being spent for the initial
+ jam startup and header scanning).
+
+ Regarding the &quot;waiting on a semaphore and still being interruptable by a
+ close()&quot; issue: If something like deleting the semaphore is not an option,
+ the experimental wait_for_objects() API (&lt;OS.h&gt;) introduced in Haiku might
+ be a good alternative to timeout polling. It allows for waiting for events
+ on any number of FDs, semaphores, ports, or threads. I.e. one could
+ monitor the semaphore one is interested in and a second semaphore
+ indicating a close.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4053#comment:34">http://dev.haiku-os.org/ticket/4053#comment:34</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="022025.html">[Haiku-bugs] [Haiku] #3185: Device Manager Application
+</A></li>
+	<LI>Next message: <A HREF="022027.html">[Haiku-bugs] [Haiku] #4641: No return from screen saver / turn off	screen
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22026">[ date ]</a>
+              <a href="thread.html#22026">[ thread ]</a>
+              <a href="subject.html#22026">[ subject ]</a>
+              <a href="author.html#22026">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

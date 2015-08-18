@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3030: [Playground] font corruption
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233030%3A%20%5BPlayground%5D%20font%20corruption&In-Reply-To=%3C049.acb55c5d66a0bca5968e1fea43daa20c%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011926.html">
+   <LINK REL="Next"  HREF="011932.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3030: [Playground] font corruption</H1>
+    <B>mmlr</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233030%3A%20%5BPlayground%5D%20font%20corruption&In-Reply-To=%3C049.acb55c5d66a0bca5968e1fea43daa20c%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3030: [Playground] font corruption">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Nov  2 13:14:24 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011926.html">[Haiku-bugs] [Haiku] #3030: [Playground] font corruption
+</A></li>
+        <LI>Next message: <A HREF="011932.html">[Haiku-bugs] [Haiku] #3030: [Playground] font corruption
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11929">[ date ]</a>
+              <a href="thread.html#11929">[ thread ]</a>
+              <a href="subject.html#11929">[ subject ]</a>
+              <a href="author.html#11929">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3030: [Playground] font corruption
+---------------------------------+------------------------------------------
+  Reporter:  diver               |       Owner:  stippi        
+      Type:  bug                 |      Status:  new           
+  Priority:  normal              |   Milestone:  R1            
+ Component:  Kits/Interface Kit  |     Version:  R1 development
+Resolution:                      |   Blockedby:                
+  Platform:  All                 |    Blocking:                
+---------------------------------+------------------------------------------
+Changes (by mmlr):
+
+  * owner:  axeld =&gt; stippi
+
+
+Comment:
+
+ That is actually expected behaviour. The B_OP_SELECT mode switches the
+ high with the low color where the source is not transparent/has the low
+ color. The source is straight high color (blue) and the low color is the
+ background gray. Since B_OP_SELECT only affects the exactly matching low
+ color, the antialiasing of the font isn't taken into account. I think
+ there is no way of changing that without changing the meaning of
+ B_OP_SELECT itself. See [<A HREF="http://www.haiku-os.org/legacy-">http://www.haiku-os.org/legacy-</A>
+ docs/bebook/TheInterfaceKit_Drawing.html#TheInterfaceKit_Drawing_Mode_Definitions_Transparency
+ The BeBook text] for reference to B_OP_SELECT. I'll leave it to Stephan to
+ decide on that one though.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3030#comment:1">http://dev.haiku-os.org/ticket/3030#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011926.html">[Haiku-bugs] [Haiku] #3030: [Playground] font corruption
+</A></li>
+	<LI>Next message: <A HREF="011932.html">[Haiku-bugs] [Haiku] #3030: [Playground] font corruption
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11929">[ date ]</a>
+              <a href="thread.html#11929">[ thread ]</a>
+              <a href="subject.html#11929">[ subject ]</a>
+              <a href="author.html#11929">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

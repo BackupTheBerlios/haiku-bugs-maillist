@@ -1,0 +1,252 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1504: Enable USB -&gt; RS-232 Serial port adapter on startup to allow for serial debugging
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231504%3A%20Enable%20USB%20-%3E%20RS-232%20Serial%20port%0A%20adapter%20on%20startup%20to%20allow%20for%20serial%20debugging&In-Reply-To=%3C051.59b1f9dd8ff07262a32778392826707f%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006006.html">
+   <LINK REL="Next"  HREF="006008.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1504: Enable USB -&gt; RS-232 Serial port adapter on startup to allow for serial debugging</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231504%3A%20Enable%20USB%20-%3E%20RS-232%20Serial%20port%0A%20adapter%20on%20startup%20to%20allow%20for%20serial%20debugging&In-Reply-To=%3C051.59b1f9dd8ff07262a32778392826707f%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1504: Enable USB -&gt; RS-232 Serial port adapter on startup to allow for serial debugging">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Apr  1 21:04:00 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006006.html">[Haiku-bugs] [Haiku] #1945: [marvell yukon] 11ab:4320 not	detected
+</A></li>
+        <LI>Next message: <A HREF="006008.html">[Haiku-bugs] [Haiku] #1222: check if AboutHaiku lists an acknowledgment for all packages
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6007">[ date ]</a>
+              <a href="thread.html#6007">[ thread ]</a>
+              <a href="subject.html#6007">[ subject ]</a>
+              <a href="author.html#6007">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1504: Enable USB -&gt; RS-232 Serial port adapter on startup to allow for serial
+debugging
+--------------------------+-------------------------------------------------
+  Reporter:  scottmc      |       Owner:  mmlr          
+      Type:  enhancement  |      Status:  new           
+  Priority:  normal       |   Milestone:  R1            
+ Component:  Drivers/USB  |     Version:  R1 development
+Resolution:               |    Platform:  All           
+--------------------------+-------------------------------------------------
+Comment (by scottmc):
+
+ Another possibility here might be to add support for mini-pci serial
+ cards.  An example would be from Oxford Semiconductor.  I found this in
+ freebsd code.  I have a couple of these mini-pci boards that I can
+ experiment with, one is the GPS version which is seen as three serial
+ ports, the other is a 4 port serial card.
+
+ The original need for the USB -&gt; RS-232 on startup was to have an
+ alternate form of serial debugging, but with the new pause on each screen
+ using the boot up on-screen debugger this isn't a high priority anymore,
+ and might not even be considered a need for R1 even as an enhancement?
+
+ From: <A HREF="http://opengrok.creo.hu/openbsd/xref/src/sys/dev/pci/pucdata.c">http://opengrok.creo.hu/openbsd/xref/src/sys/dev/pci/pucdata.c</A>
+
+     833         /*
+     834          * Boards with an Oxford Semiconductor chip.
+     835          *
+     836          * Oxford Semiconductor provides documentation for their
+ chip at:
+     837          * &lt;URL:<A HREF="http://www.oxsemi.com/products/uarts/index.html">http://www.oxsemi.com/products/uarts/index.html</A>&gt;
+     838          *
+     839          * As sold by Kouwell &lt;URL:<A HREF="http://www.kouwell.com/">http://www.kouwell.com/</A>&gt;.
+     840          * I/O Flex PCI I/O Card Model-223 with 4 serial and 1
+ parallel ports.
+     841          */
+     842
+     843         /* Oxford Semiconductor OX16PCI952 PCI `950 UARTs - 128
+ byte FIFOs */
+     844         {   /* &quot;Oxford Semiconductor OX16PCI952 UARTs&quot;, */
+     845             {   PCI_VENDOR_OXFORD2,
+ PCI_PRODUCT_OXFORD2_OX16PCI952,     0, 0 },
+     846             {   0xffff, 0xffff,
+ 0, 0 },
+     847             {
+     848                 { PUC_PORT_TYPE_COM, 0x10, 0x00, COM_FREQ },
+     849                 { PUC_PORT_TYPE_COM, 0x14, 0x00, COM_FREQ },
+     850             },
+     851         },
+     852
+     853         /* Oxford Semiconductor OX16PCI952 PCI Parallel port */
+     854         {   /* &quot;Oxford Semiconductor OX16PCI952 Parallel port&quot;, */
+     855             {   PCI_VENDOR_OXFORD2,
+ PCI_PRODUCT_OXFORD2_OX16PCI952P,    0, 0 },
+     856             {   0xffff, 0xffff,
+ 0, 0 },
+     857             {
+     858                 { PUC_PORT_TYPE_LPT, 0x10, 0x00, 0x00 },
+     859             },
+     860         },
+     861
+     862         /* SIIG 2050 (uses Oxford 16PCI954 and a 10x clock) */
+     863         {   /* &quot;Oxford Semiconductor OX16PCI954 UARTs&quot;, */
+     864             {   PCI_VENDOR_OXFORD2,
+ PCI_PRODUCT_OXFORD2_OX16PCI954,
+     865                 PCI_VENDOR_SIIG, PCI_PRODUCT_SIIG_2050 },
+     866             {   0xffff, 0xffff, 0xffff, 0xffff },
+     867             {
+     868                 { PUC_PORT_TYPE_COM, 0x10, 0x00, COM_FREQ * 10 },
+     869                 { PUC_PORT_TYPE_COM, 0x10, 0x08, COM_FREQ * 10 },
+     870                 { PUC_PORT_TYPE_COM, 0x10, 0x10, COM_FREQ * 10 },
+     871                 { PUC_PORT_TYPE_COM, 0x10, 0x18, COM_FREQ * 10 },
+     872             },
+     873         },
+     874
+     875         /* Oxford Semiconductor OX16PCI954 PCI UARTs */
+     876         {   /* &quot;Oxford Semiconductor OX16PCI954 UARTs&quot;, */
+     877             {   PCI_VENDOR_OXFORD2,
+ PCI_PRODUCT_OXFORD2_OX16PCI954,     0, 0 },
+     878             {   0xffff, 0xffff,
+ 0, 0 },
+     879             {
+     880                 { PUC_PORT_TYPE_COM, 0x10, 0x00, COM_FREQ },
+     881                 { PUC_PORT_TYPE_COM, 0x10, 0x08, COM_FREQ },
+     882                 { PUC_PORT_TYPE_COM, 0x10, 0x10, COM_FREQ },
+     883                 { PUC_PORT_TYPE_COM, 0x10, 0x18, COM_FREQ },
+     884             },
+     885         },
+     886
+     887         /* Commell MP-954GPS, GPS and 2 COM */
+     888         {   /* &quot;Oxford Semiconductor OX16mPCI954 UARTs&quot;, */
+     889             {   PCI_VENDOR_OXFORD2, PCI_PRODUCT_OXFORD2_OXMPCI954,
+ 0, 0 },
+     890             {   0xffff, 0xffff,
+ 0, 0 },
+     891             {
+     892                 { PUC_PORT_TYPE_COM, 0x10, 0x00, COM_FREQ*4 },
+     893                 { PUC_PORT_TYPE_COM, 0x10, 0x08, COM_FREQ*4 },
+     894                 { PUC_PORT_TYPE_COM, 0x10, 0x10, COM_FREQ*4 },
+     895             },
+     896         },
+     897
+     898         /* Oxford Semiconductor OX16PCI954K PCI UARTs */
+     899         {   /* &quot;Oxford Semiconductor OX16PCI954K UARTs&quot;, */
+     900             {   PCI_VENDOR_OXFORD2,
+ PCI_PRODUCT_OXFORD2_OX16PCI954K,    0, 0 },
+     901             {   0xffff, 0xffff,
+ 0, 0 },
+     902             {
+     903                 { PUC_PORT_TYPE_COM, 0x10, 0x00, COM_FREQ },
+     904                 { PUC_PORT_TYPE_COM, 0x14, 0x00, COM_FREQ },
+     905                 { PUC_PORT_TYPE_COM, 0x18, 0x00, COM_FREQ },
+     906                 { PUC_PORT_TYPE_COM, 0x1c, 0x00, COM_FREQ },
+     907             },
+     908         },
+     909
+     910         /* Oxford Semiconductor OX16PCI954 PCI Parallel port */
+     911         {   /* &quot;Oxford Semiconductor OX16PCI954 Parallel port&quot;, */
+     912             {   PCI_VENDOR_OXFORD2,
+ PCI_PRODUCT_OXFORD2_OX16PCI954P,    0, 0 },
+     913             {   0xffff, 0xffff,
+ 0, 0 },
+     914             {
+     915                 { PUC_PORT_TYPE_LPT, 0x10, 0x00, 0x00 },
+     916             },
+     917         },
+     918
+
+
+
+
+
+
+ From:
+ <A HREF="http://opengrok.creo.hu/openbsd/xref/src/sys/dev/pci/pcidevs.h#PCI_PRODUCT_OXFORD2_OX16PCI954K">http://opengrok.creo.hu/openbsd/xref/src/sys/dev/pci/pcidevs.h#PCI_PRODUCT_OXFORD2_OX16PCI954K</A>
+
+
+     242 #define PCI_VENDOR_OXFORD2      0x1415          /* Oxford */
+
+    3407 /* Oxford/ VScom */
+    3408 #define PCI_PRODUCT_OXFORD_VSCOM_PCI010L        0x8001          /*
+ 010L */
+    3409 #define PCI_PRODUCT_OXFORD_VSCOM_PCI100L        0x8010          /*
+ 100L */
+    3410 #define PCI_PRODUCT_OXFORD_VSCOM_PCI110L        0x8011          /*
+ 110L */
+    3411 #define PCI_PRODUCT_OXFORD_VSCOM_PCI200L        0x8020          /*
+ 200L */
+    3412 #define PCI_PRODUCT_OXFORD_VSCOM_PCI210L        0x8021          /*
+ 210L */
+    3413 #define PCI_PRODUCT_MOLEX_VSCOM_PCI400L 0x8040          /* 400L */
+    3414 #define PCI_PRODUCT_OXFORD_VSCOM_PCI800L        0x8080          /*
+ 800L */
+    3415 #define PCI_PRODUCT_OXFORD_VSCOM_PCIx10H        0xa000          /*
+ x10H */
+    3416 #define PCI_PRODUCT_OXFORD_VSCOM_PCI100H        0xa001          /*
+ 100H */
+    3417 #define PCI_PRODUCT_OXFORD_VSCOM_PCI200H        0xa005          /*
+ 200H */
+    3418 #define PCI_PRODUCT_OXFORD_VSCOM_PCI800H_0      0xa003          /*
+ 400H/800H */
+    3419 #define PCI_PRODUCT_OXFORD_VSCOM_PCI800H_1      0xa004          /*
+ 800H */
+    3420 #define PCI_PRODUCT_OXFORD_VSCOM_PCI200HV2      0xe020          /*
+ 200HV2 */
+    3421 #define PCI_PRODUCT_OXFORD2_VSCOM_PCI011H       0x8403          /*
+ 011H */
+    3422 #define PCI_PRODUCT_OXFORD2_OX16PCI954  0x9501          /*
+ OX16PCI954 */
+    3423 #define PCI_PRODUCT_OXFORD2_OX16PCI954K 0x9504          /*
+ OX16PCI954K */
+    3424 #define PCI_PRODUCT_OXFORD2_EXSYS_EX41092       0x950a          /*
+ Exsys EX-41092 */
+    3425 #define PCI_PRODUCT_OXFORD2_OXCB950     0x950b          /* OXCB950
+ */
+    3426 #define PCI_PRODUCT_OXFORD2_OXMPCI954   0x950c          /*
+ OXmPCI954 */
+    3427 #define PCI_PRODUCT_OXFORD2_OXMPCI954D  0x9510          /*
+ OXmPCI954 Disabled */
+    3428 #define PCI_PRODUCT_OXFORD2_EXSYS_EX41098       0x9511          /*
+ Exsys EX-41098 */
+    3429 #define PCI_PRODUCT_OXFORD2_OX16PCI954P 0x9513          /*
+ OX16PCI954 Parallel */
+    3430 #define PCI_PRODUCT_OXFORD2_OX16PCI952  0x9521          /*
+ OX16PCI952 */
+    3431 #define PCI_PRODUCT_OXFORD2_OX16PCI952P 0x9523          /*
+ OX16PCI952 Parallel */
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1504#comment:7">http://dev.haiku-os.org/ticket/1504#comment:7</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006006.html">[Haiku-bugs] [Haiku] #1945: [marvell yukon] 11ab:4320 not	detected
+</A></li>
+	<LI>Next message: <A HREF="006008.html">[Haiku-bugs] [Haiku] #1222: check if AboutHaiku lists an acknowledgment for all packages
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6007">[ date ]</a>
+              <a href="thread.html#6007">[ thread ]</a>
+              <a href="subject.html#6007">[ subject ]</a>
+              <a href="author.html#6007">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

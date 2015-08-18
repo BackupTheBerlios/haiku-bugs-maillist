@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2757: regression: r27665 broke booting, panics at the red rocket
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232757%3A%20regression%3A%20r27665%20broke%20booting%2C%0A%20panics%20at%20the%20red%20rocket&In-Reply-To=%3C049.30f1a83e6e870935fc38e63ca727a9a0%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010472.html">
+   <LINK REL="Next"  HREF="010474.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2757: regression: r27665 broke booting, panics at the red rocket</H1>
+    <B>bonefish</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232757%3A%20regression%3A%20r27665%20broke%20booting%2C%0A%20panics%20at%20the%20red%20rocket&In-Reply-To=%3C049.30f1a83e6e870935fc38e63ca727a9a0%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2757: regression: r27665 broke booting, panics at the red rocket">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Sep 22 04:15:22 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010472.html">[Haiku-bugs] [Haiku] #2757: regression: r27665 broke booting, panics at the red rocket
+</A></li>
+        <LI>Next message: <A HREF="010474.html">[Haiku-bugs] [Haiku] #2757: regression: r27665 broke booting, panics at the red rocket
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10473">[ date ]</a>
+              <a href="thread.html#10473">[ thread ]</a>
+              <a href="subject.html#10473">[ subject ]</a>
+              <a href="author.html#10473">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2757: regression: r27665 broke booting, panics at the red rocket
+----------------------------+-----------------------------------------------
+  Reporter:  luroh          |       Owner:  axeld         
+      Type:  bug            |      Status:  new           
+  Priority:  normal         |   Milestone:  R1            
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |   Blockedby:                
+  Platform:  All            |    Blocking:                
+----------------------------+-----------------------------------------------
+
+Comment(by bonefish):
+
+ I suppose some debug output in the kernel's module code
+ (src/system/kernel/module.cpp) would allow to track it down. It is
+ particularly interesting that image 1585 has a name that looks like it has
+ been loaded by the boot loader (starting with &quot;/Haiku/&quot;), but has an ID
+ greater than modules that have been loaded by the kernel (&quot;/boot/&quot;).
+
+ I guess for some reason the kernel loads the image again, although it had
+ been pre-loaded by the boot loader. Obviously it has something to do with
+ my change that the modules pre-loaded by the boot loader do now have paths
+ that can be resolved to actual files. No idea why I can't reproduce the
+ problem over here, though.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2757#comment:20">http://dev.haiku-os.org/ticket/2757#comment:20</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010472.html">[Haiku-bugs] [Haiku] #2757: regression: r27665 broke booting, panics at the red rocket
+</A></li>
+	<LI>Next message: <A HREF="010474.html">[Haiku-bugs] [Haiku] #2757: regression: r27665 broke booting, panics at the red rocket
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10473">[ date ]</a>
+              <a href="thread.html#10473">[ thread ]</a>
+              <a href="subject.html#10473">[ subject ]</a>
+              <a href="author.html#10473">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

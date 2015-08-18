@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1392: [Terminal] app_server could freeze on tab creation
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231392%3A%20%5BTerminal%5D%20app_server%20could%20freeze%0A%20on%20tab%20creation&In-Reply-To=%3C049.2e4c79ae7c18bba9eb0bda743c40a42b%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002238.html">
+   <LINK REL="Next"  HREF="002333.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1392: [Terminal] app_server could freeze on tab creation</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231392%3A%20%5BTerminal%5D%20app_server%20could%20freeze%0A%20on%20tab%20creation&In-Reply-To=%3C049.2e4c79ae7c18bba9eb0bda743c40a42b%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1392: [Terminal] app_server could freeze on tab creation">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Aug 12 17:45:09 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002238.html">[Haiku-bugs] [Haiku] #1392: [Terminal] app_server could freeze on tab creation
+</A></li>
+        <LI>Next message: <A HREF="002333.html">[Haiku-bugs] [Haiku] #1392: [Terminal] app_server could freeze on tab creation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2239">[ date ]</a>
+              <a href="thread.html#2239">[ thread ]</a>
+              <a href="subject.html#2239">[ subject ]</a>
+              <a href="author.html#2239">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1392: [Terminal] app_server could freeze on tab creation
+--------------------------------------+-------------------------------------
+  Reporter:  diver                    |       Owner:  jackburton    
+      Type:  bug                      |      Status:  new           
+  Priority:  normal                   |   Milestone:  R1            
+ Component:  - Applications/Terminal  |     Version:  R1 development
+Resolution:                           |    Platform:  All           
+--------------------------------------+-------------------------------------
+Changes (by diver):
+
+ * cc: axeld, stippi (added)
+
+Comment:
+
+ I'm even managed to crash terminal this way.
+
+ {{{
+ vm_soft_fault: va 0x2000 not covered by area in address space
+ vm_page_fault: vm_soft_fault returned error 'Bad address' on fault at
+ 0x2000, ip 0x7df79d, write 1, user 1, thread 0x146
+ vm_page_fault: sending team &quot;/boot/beos/apps/Terminal&quot; 0x13e SIGSEGV, ip
+ 0x7df79d (&quot;libroot.so_seg0ro&quot; +0x2979d)
+ stack trace:
+   0x007dfd65 (libroot.so_seg0ro + 0x29d65)
+   0x007e0867 (libroot.so_seg0ro + 0x2a867)
+   0x007e0ce1 (libroot.so_seg0ro + 0x2ace1)
+   0x00219843 (Terminal_seg0ro + 0x19843)
+   0x0021c25c (Terminal_seg0ro + 0x1c25c)
+   0x0021bda2 (Terminal_seg0ro + 0x1bda2)
+   0x00225ffd (Terminal_seg0ro + 0x25ffd)
+   0x00225be5 (Terminal_seg0ro + 0x25be5)
+   0x00224156 (Terminal_seg0ro + 0x24156)
+   0x002f7f0f (libbe.so_seg0ro + 0xc2f0f)
+   0x003a2889 (libbe.so_seg0ro + 0x16d889)
+   0x003a5d80 (libbe.so_seg0ro + 0x170d80)
+   0x002f944f (libbe.so_seg0ro + 0xc444f)
+   0x007d67d0 (libroot.so_seg0ro + 0x207d0)
+   0x70102fec (Terminal 1_146_stack + 0x3ffec)
+ vm_soft_fault: va 0x0 not covered by area in address space
+ vm_page_fault: vm_soft_fault returned error 'Bad address' on fault at 0x0,
+ ip 0x800959b8, write 0, user 0, thread 0x146
+ debug_server: Thread 326 entered the debugger: Segment violation
+ stack trace, current PC 0x7df79d
+ __Q28BPrivate10superblockiiPQ28BPrivate9hoardHeap + 0x21:
+   (0x7010293c)  0x7dfd65
+ makeSuperblock__Q28BPrivate10superblockiPQ28BPrivate11processHeap + 0x2f9
+   (0x7010296c)  0x7e0867  malloc__Q28BPrivate10threadHeapUl + 0xabf
+   (0x701029bc)  0x7e0ce1  calloc + 0x149
+   (0x701029ec)  0x219843  __10TermBufferiii + 0xd7
+   (0x70102a1c)  0x21c25c  _InitObject__8TermViewPCc + 0x74
+   (0x70102a6c)  0x21bda2  __8TermViewiiPCcl + 0x276
+   (0x70102aac)  0x225ffd  __14CustomTermViewllPCcl + 0x31
+   (0x70102aec)  0x225be5  _AddTab__10TermWindowPCc + 0x165
+   (0x70102bcc)  0x224156  MessageReceived__10TermWindowP8BMessage + 0x2da
+   (0x70102d9c)  0x2f7f0f  DispatchMessage__7BLooperP8BMessageP8BHandler +
+ 0x5b
+   (0x70102dcc)  0x3a2889  DispatchMessage__7BWindowP8BMessageP8BHandler +
+ 0x1391
+   (0x70102f1c)  0x3a5d80  task_looper__7BWindow + 0x270
+ }}}
+
+ I found this test case very useful to find all sorts of bad thing (zombie
+ deskbar, empty task in team monitor, unkillable windows, shifted context
+ menus, focus lost, etc, etc).
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1392#comment:3">http://dev.haiku-os.org/ticket/1392#comment:3</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002238.html">[Haiku-bugs] [Haiku] #1392: [Terminal] app_server could freeze on tab creation
+</A></li>
+	<LI>Next message: <A HREF="002333.html">[Haiku-bugs] [Haiku] #1392: [Terminal] app_server could freeze on tab creation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2239">[ date ]</a>
+              <a href="thread.html#2239">[ thread ]</a>
+              <a href="subject.html#2239">[ subject ]</a>
+              <a href="author.html#2239">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

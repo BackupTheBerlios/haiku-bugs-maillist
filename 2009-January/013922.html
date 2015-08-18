@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3356: intermittant and out of order audio
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-January/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233356%3A%20intermittant%20and%20out%20of%20order%20audio&In-Reply-To=%3C051.a2a5d57ab5f9b191764658006b174c35%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="013921.html">
+   <LINK REL="Next"  HREF="013925.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3356: intermittant and out of order audio</H1>
+    <B>rudolfc</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233356%3A%20intermittant%20and%20out%20of%20order%20audio&In-Reply-To=%3C051.a2a5d57ab5f9b191764658006b174c35%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3356: intermittant and out of order audio">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Jan 23 14:25:49 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="013921.html">[Haiku-bugs] [Haiku] #3356: intermittant and out of order audio
+</A></li>
+        <LI>Next message: <A HREF="013925.html">[Haiku-bugs] [Haiku] #3356: intermittant and out of order audio
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13922">[ date ]</a>
+              <a href="thread.html#13922">[ thread ]</a>
+              <a href="subject.html#13922">[ subject ]</a>
+              <a href="author.html#13922">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3356: intermittant and out of order audio
+-----------------------+----------------------------------------------------
+ Reporter:  rudolfc    |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+Blockedby:             |    Platform:  All           
+ Blocking:             |  
+-----------------------+----------------------------------------------------
+Description changed by rudolfc:
+
+Old description:
+
+&gt;<i> On my Asus P5E3 mainboard audio plays back distorted. It sounds like some
+</I>&gt;<i> buffers are played correctly, then a brief silence is heard, and a few
+</I>&gt;<i> buffers are played out of order or in incorrect speed (metallic sound
+</I>&gt;<i> like effect).
+</I>&gt;<i> This sequence is repeated for ever.
+</I>&gt;<i>
+</I>&gt;<i> I tested with MediaPlayer, vlc and CLamp. CLamp on lower or higher speeds
+</I>&gt;<i> gives the same effect (no influence).
+</I>&gt;<i> This behaviour exists on my system ever since I first installed Haiku,
+</I>&gt;<i> some 6 months ago or so..
+</I>&gt;<i>
+</I>&gt;<i> The mainboard has a HDA chipset, so I tested with this one with the
+</I>&gt;<i> driver that currently gets updated from time to time (no effect), and I
+</I>&gt;<i> compiled ES1370 in the haiku source tree and tested with a SB64
+</I>&gt;<i> soundcard: same symptoms.
+</I>&gt;<i>
+</I>&gt;<i> I recompiled MediaEventLooper.cpp, and enabled debugprinting (three lines
+</I>&gt;<i> in function BMediaEventLooper::ControlLoop().
+</I>&gt;<i>
+</I>&gt;<i> From the looks of it the Timestamps on the buffers are OK but Getting
+</I>&gt;<i> realtime for performance time messes up. I'll attach a small file with
+</I>&gt;<i> the shell debug output from MediaPlayer.
+</I>&gt;<i>
+</I>&gt;<i> I am using a Core2Duo E8400 CPU, which is a 45nm Intel CPU. It's
+</I>&gt;<i> recognized as a Pentium4 Extreme edition BTW.
+</I>&gt;<i> Memory is DDR3 running at 1066Mhz.
+</I>
+New description:
+
+ On my Asus P5E3 mainboard audio plays back distorted. It sounds like some
+ buffers are played correctly, then a brief silence is heard, and a few
+ buffers are played out of order or in incorrect speed (metallic sound like
+ effect).
+ This sequence is repeated for ever.
+
+ I tested with MediaPlayer, vlc and CLamp. CLamp on lower or higher speeds
+ gives the same effect (no influence).
+ This behaviour exists on my system ever since I first installed Haiku,
+ some 6 months ago or so..
+
+ The mainboard has a HDA chipset, so I tested with this one with the driver
+ that currently gets updated from time to time (no effect), and I compiled
+ ES1370 in the haiku source tree and tested with a SB64 soundcard: same
+ symptoms.
+
+ I recompiled MediaEventLooper.cpp, and enabled debugprinting (three lines
+ in function BMediaEventLooper::ControlLoop().
+
+ From the looks of it the Timestamps on the buffers are OK but Getting
+ realtime for performance time messes up. I'll attach a small file with the
+ shell debug output from MediaPlayer.
+
+ I am using a Core2Duo E8200 CPU @ 2.66Ghz, which is a 45nm Intel CPU. It's
+ recognized as a Pentium4 Extreme edition BTW.
+ Memory is DDR3 running at 1066Mhz.
+
+--
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3356#comment:2">http://dev.haiku-os.org/ticket/3356#comment:2</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="013921.html">[Haiku-bugs] [Haiku] #3356: intermittant and out of order audio
+</A></li>
+	<LI>Next message: <A HREF="013925.html">[Haiku-bugs] [Haiku] #3356: intermittant and out of order audio
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13922">[ date ]</a>
+              <a href="thread.html#13922">[ thread ]</a>
+              <a href="subject.html#13922">[ subject ]</a>
+              <a href="author.html#13922">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

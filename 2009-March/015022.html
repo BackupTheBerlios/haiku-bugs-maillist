@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3308: Possible floating point failures in IEEE 754 tests
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233308%3A%20Possible%20floating%20point%20failures%20in%0A%20IEEE%20754%20tests&In-Reply-To=%3C051.c38c000ed410871f91f016cb4e862fd6%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="015021.html">
+   <LINK REL="Next"  HREF="015023.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3308: Possible floating point failures in IEEE 754 tests</H1>
+    <B>oco</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233308%3A%20Possible%20floating%20point%20failures%20in%0A%20IEEE%20754%20tests&In-Reply-To=%3C051.c38c000ed410871f91f016cb4e862fd6%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3308: Possible floating point failures in IEEE 754 tests">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Mar 11 02:29:12 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="015021.html">[Haiku-bugs] [Haiku] #2643: Black screen when DVI connected
+</A></li>
+        <LI>Next message: <A HREF="015023.html">[Haiku-bugs] [Haiku] #3541: Core 2 Duo shows as Core 2 Extreme
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15022">[ date ]</a>
+              <a href="thread.html#15022">[ thread ]</a>
+              <a href="subject.html#15022">[ subject ]</a>
+              <a href="author.html#15022">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3308: Possible floating point failures in IEEE 754 tests
+-------------------------------+--------------------------------------------
+ Reporter:  scottmc            |       Owner:  axeld         
+     Type:  bug                |      Status:  new           
+ Priority:  critical           |   Milestone:  R1/alpha1     
+Component:  System/libroot.so  |     Version:  R1 development
+Blockedby:                     |    Platform:  All           
+ Blocking:                     |  
+-------------------------------+--------------------------------------------
+Changes (by oco):
+
+ * cc: olivier.coursiere@&#8230; (added)
+
+
+Comment:
+
+ After checking Freepascal about floating point (it seems ok), i have
+ started looking at the difference beetween fpc and gcc.
+
+ I have called scanf from fpc passing a pointer to a buffer initialized
+ with 0xFF.
+
+ It seems there is at least two problems in the current implementation :
+
+  - special values like nan, inf and -inf are not recognized by scanf (or
+ some other internal functions). The buffer remain unchanged in this case.
+ It should explain rwinfnan2 test results : the value 999 remain unchanged
+ after reading some special values.
+
+  - when using the long double format, scanf write only the 10 first bytes
+ of the buffer, despite a long double size of 12 bytes. The last 2 bytes
+ remains to 0xFF.
+
+ For example, reading &quot;-4.5&quot; with scanf(&quot;%Lg&quot;, buffer) write this in the
+ buffer :
+
+ 0x 00 00 00 00 00 00 00 90 01 C0 FF FF
+
+ Maybe writing only 10 bytes is OK because it is the maximum size of FPU
+ registers in x86. But is it OK to keep 2 bytes in case the memory was not
+ initialized ? At least, if i am not wrong, the sign should be in the last
+ one, no ?
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3308#comment:10">http://dev.haiku-os.org/ticket/3308#comment:10</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="015021.html">[Haiku-bugs] [Haiku] #2643: Black screen when DVI connected
+</A></li>
+	<LI>Next message: <A HREF="015023.html">[Haiku-bugs] [Haiku] #3541: Core 2 Duo shows as Core 2 Extreme
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15022">[ date ]</a>
+              <a href="thread.html#15022">[ thread ]</a>
+              <a href="subject.html#15022">[ subject ]</a>
+              <a href="author.html#15022">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

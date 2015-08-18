@@ -1,0 +1,145 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1266: Unrecognised Partition Table errors
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231266%3A%20Unrecognised%20Partition%20Table%20errors&In-Reply-To=%3C048.48a9174c37a276cfdbb6e61a7cbdf8f8%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001616.html">
+   <LINK REL="Next"  HREF="001621.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1266: Unrecognised Partition Table errors</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231266%3A%20Unrecognised%20Partition%20Table%20errors&In-Reply-To=%3C048.48a9174c37a276cfdbb6e61a7cbdf8f8%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1266: Unrecognised Partition Table errors">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Jun  7 22:02:10 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001616.html">[Haiku-bugs] [Haiku] #1266: Unrecognised Partition Table errors
+</A></li>
+        <LI>Next message: <A HREF="001621.html">[Haiku-bugs] [Haiku] #1266: Unrecognised Partition Table errors
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1617">[ date ]</a>
+              <a href="thread.html#1617">[ thread ]</a>
+              <a href="subject.html#1617">[ subject ]</a>
+              <a href="author.html#1617">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1266: Unrecognised Partition Table errors
+---------------------------+------------------------------------------------
+  Reporter:  euan          |       Owner:  axeld         
+      Type:  bug           |      Status:  new           
+  Priority:  normal        |   Milestone:  R1            
+ Component:  File Systems  |     Version:  R1 development
+Resolution:                |    Platform:  All           
+---------------------------+------------------------------------------------
+Comment (by euan):
+
+ Sorry, posted linux info from wrong HD, must have been past my bedtime
+ last night...
+
+ Disk is 40GB. (41174138880 bytes)
+
+ Partition Table for /dev/hda
+ {{{
+          ---Starting---      ----Ending----    Start     Number of
+  # Flags Head Sect Cyl   ID  Head Sect Cyl     Sector    Sectors
+ -- ----- ---- ---- ---- ---- ---- ---- ---- ----------- -----------
+  1  0x80    1    1    0 0xEB   15   63 1023          63     3068352
+  2  0x00   15   63 1023 0x83   15   63 1023     3068415    60950610
+  3  0x00   15   63 1023 0x06   15   63 1023    64019025     3068415
+  4  0x00    0    0    0 0x00    0    0    0           0           0
+
+ Partition Table for /dev/hda
+
+                First       Last
+  # Type       Sector      Sector   Offset    Length   Filesystem Type (ID)
+ Flag
+ -- ------- ----------- ----------- ------ ----------- --------------------
+ ----
+  1 Primary           0     3068414*    63     3068415*BeOS fs (EB)
+ Boot
+  2 Primary     3068415*   64019024*     0    60950610*Linux (83)
+ None
+  3 Primary    64019025*   67087439      0     3068415*FAT16 (06)
+ None
+    Pri/Log    67087440    80418239      0    13330800 Free Space
+ None
+
+ Disk Drive: /dev/hda
+ Sector 0:
+ 0x000: EB 48 90 8E D0 89 C4 EA 60 7D 00 00 0D 54 6F 6F
+ 0x010: 20 6D 61 6E 79 20 72 65 61 64 20 65 72 72 6F 72
+ 0x020: 73 2E 00 0D 42 6F 6F 74 20 4D 61 6E 61 67 65 72
+ 0x030: 20 73 69 67 6E 61 74 75 72 65 20 6E 6F 74 03 02
+ 0x040: FF 00 00 20 01 00 00 00 00 02 FA 90 90 F6 C2 80
+ 0x050: 75 02 B2 80 EA 59 7C 00 00 31 C0 8E D8 8E D0 BC
+ 0x060: 00 20 FB A0 40 7C 3C FF 74 02 88 C2 52 BE 7F 7D
+ 0x070: E8 34 01 F6 C2 80 74 54 B4 41 BB AA 55 CD 13 5A
+ 0x080: 52 72 49 81 FB 55 AA 75 43 A0 41 7C 84 C0 75 05
+ 0x090: 83 E1 01 74 37 66 8B 4C 10 BE 05 7C C6 44 FF 01
+ 0x0A0: 66 8B 1E 44 7C C7 04 10 00 C7 44 02 01 00 66 89
+ 0x0B0: 5C 08 C7 44 06 00 70 66 31 C0 89 44 04 66 89 44
+ 0x0C0: 0C B4 42 CD 13 72 05 BB 00 70 EB 7D B4 08 CD 13
+ 0x0D0: 73 0A F6 C2 80 0F 84 EA 00 E9 8D 00 BE 05 7C C6
+ 0x0E0: 44 FF 00 66 31 C0 88 F0 40 66 89 44 04 31 D2 88
+ 0x0F0: CA C1 E2 02 88 E8 88 F4 40 89 44 08 31 C0 88 D0
+ 0x100: C0 E8 02 66 89 04 66 A1 44 7C 66 31 D2 66 F7 34
+ 0x110: 88 54 0A 66 31 D2 66 F7 74 04 88 54 0B 89 44 0C
+ 0x120: 3B 44 08 7D 3C 8A 54 0D C0 E2 06 8A 4C 0A FE C1
+ 0x130: 08 D1 8A 6C 0C 5A 8A 74 0B BB 00 70 8E C3 31 DB
+ 0x140: B8 01 02 CD 13 72 2A 8C C3 8E 06 48 7C 60 1E B9
+ 0x150: 00 01 8E DB 31 F6 31 FF FC F3 A5 1F 61 FF 26 42
+ 0x160: 7C BE 85 7D E8 40 00 EB 0E BE 8A 7D E8 38 00 EB
+ 0x170: 06 BE 94 7D E8 30 00 BE 99 7D E8 2A 00 EB FE 47
+ 0x180: 52 55 42 20 00 47 65 6F 6D 00 48 61 72 64 20 44
+ 0x190: 69 73 6B 00 52 65 61 64 00 20 45 72 72 6F 72 00
+ 0x1A0: BB 01 00 B4 0E CD 10 AC 3C 00 75 F4 C3 00 00 00
+ 0x1B0: 00 00 00 00 00 00 00 00 3D 7F 05 00 00 00 80 01
+ 0x1C0: 01 00 EB 0F FF FF 3F 00 00 00 C0 D1 2E 00 00 0F
+ 0x1D0: FF FF 83 0F FF FF FF D1 2E 00 52 08 A2 03 00 0F
+ 0x1E0: FF FF 06 0F FF FF 51 DA D0 03 FF D1 2E 00 00 00
+ 0x1F0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 55 AA
+
+ }}}
+
+ syslog and MBR files attached
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1266#comment:2">http://dev.haiku-os.org/ticket/1266#comment:2</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001616.html">[Haiku-bugs] [Haiku] #1266: Unrecognised Partition Table errors
+</A></li>
+	<LI>Next message: <A HREF="001621.html">[Haiku-bugs] [Haiku] #1266: Unrecognised Partition Table errors
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1617">[ date ]</a>
+              <a href="thread.html#1617">[ thread ]</a>
+              <a href="subject.html#1617">[ subject ]</a>
+              <a href="author.html#1617">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

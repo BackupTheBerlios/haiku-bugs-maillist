@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3122: makebootable says invalid partition	index
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233122%3A%20makebootable%20says%20invalid%20partition%0A%09index&In-Reply-To=%3C053.c9748dd873251531c7e32c4f6df853ad%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="019971.html">
+   <LINK REL="Next"  HREF="019973.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3122: makebootable says invalid partition	index</H1>
+    <B>begasus</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233122%3A%20makebootable%20says%20invalid%20partition%0A%09index&In-Reply-To=%3C053.c9748dd873251531c7e32c4f6df853ad%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3122: makebootable says invalid partition	index">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Aug 22 21:27:51 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="019971.html">[Haiku-bugs] [Haiku] #4315: PS/2 mouse and keyboard won't work on HP530 laptop
+</A></li>
+        <LI>Next message: <A HREF="019973.html">[Haiku-bugs] [Haiku] #3122: makebootable says invalid partition	index
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19972">[ date ]</a>
+              <a href="thread.html#19972">[ thread ]</a>
+              <a href="subject.html#19972">[ subject ]</a>
+              <a href="author.html#19972">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3122: makebootable says invalid partition index
+--------------------------+-------------------------------------------------
+ Reporter:  plfiorini     |       Owner:  bonefish      
+     Type:  bug           |      Status:  new           
+ Priority:  normal        |   Milestone:  R1            
+Component:  Build System  |     Version:  R1 development
+Blockedby:                |    Platform:  All           
+ Blocking:                |  
+--------------------------+-------------------------------------------------
+
+Comment(by begasus):
+
+ I've got the same problem when trying to write the image to disk with &quot;jam
+ -q @disk&quot;
+ This is in a freshly partitioned (partition magic) disk where atm ZETA and
+ Debian are installed.
+ Debian is the system I use to build the image on and try to write it to
+ disk.
+ Output of fdisk /dev/hdb is:
+
+ {{{
+ Disk /dev/hdb: 81.9 GB, 81964302336 bytes
+ 255 heads, 63 sectors/track, 9964 cylinders
+ Units = cylinders of 16065 * 512 = 8225280 bytes
+ Disk identifier: 0x43056cb6
+
+    Device Boot      Start         End      Blocks   Id  System
+ /dev/hdb1               1        2550    20482843+  83  Linux
+ /dev/hdb2            2551        5100    20482875   eb  BeOS fs
+ /dev/hdb3            5101        9964    39070080    f  W95 Ext'd (LBA)
+ /dev/hdb5            5101        6375    10241406   eb  BeOS fs
+ /dev/hdb6            6376        8288    15366141   eb  BeOS fs
+ /dev/hdb7            8289        9702    11357923+   b  W95 FAT32
+ /dev/hdb8            9703        9964     2104483+  82  Linux swap /
+ Solaris
+
+ }}}
+
+ the partition I try to write to is /dev/hdb6 and Debian is giving me:
+ {{{
+ Creating image ...
+ Error: Invalid partition index 6.
+ }}}
+ when I try to write it to disk.
+
+ First primary partitions are for Debian and ZETA, the other eb partitions
+ where created as fat32 at first, afterwards I changed those to eb while I
+ installed Debian (opened a seperate console terminal for fdisk to do this
+ and rebooted to actualy install Debian after that). The 2 logical
+ partitions where formatted as bfs with ZETA (don't think this should be an
+ issue as I've never had problems with that before). No changes where made
+ after the initial partitioning with partition magic.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3122#comment:8">http://dev.haiku-os.org/ticket/3122#comment:8</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="019971.html">[Haiku-bugs] [Haiku] #4315: PS/2 mouse and keyboard won't work on HP530 laptop
+</A></li>
+	<LI>Next message: <A HREF="019973.html">[Haiku-bugs] [Haiku] #3122: makebootable says invalid partition	index
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19972">[ date ]</a>
+              <a href="thread.html#19972">[ thread ]</a>
+              <a href="subject.html#19972">[ subject ]</a>
+              <a href="author.html#19972">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

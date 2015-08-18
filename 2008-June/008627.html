@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2465: nvidia driver does not work with	GeForce 7600GT
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232465%3A%20nvidia%20driver%20does%20not%20work%20with%0A%09GeForce%207600GT&In-Reply-To=%3C038.0de46c7c697ad8843caf1de95d1ecb34%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008664.html">
+   <LINK REL="Next"  HREF="008636.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2465: nvidia driver does not work with	GeForce 7600GT</H1>
+    <B>n3s</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232465%3A%20nvidia%20driver%20does%20not%20work%20with%0A%09GeForce%207600GT&In-Reply-To=%3C038.0de46c7c697ad8843caf1de95d1ecb34%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2465: nvidia driver does not work with	GeForce 7600GT">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Jun 28 20:07:58 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008664.html">[Haiku-bugs] [Haiku] #2464: PANIC on  a AMD64 machine
+</A></li>
+        <LI>Next message: <A HREF="008636.html">[Haiku-bugs] [Haiku] #2465: nvidia driver does not work with	GeForce 7600GT
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8627">[ date ]</a>
+              <a href="thread.html#8627">[ thread ]</a>
+              <a href="subject.html#8627">[ subject ]</a>
+              <a href="author.html#8627">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2465: nvidia driver does not work with GeForce 7600GT
+-------------------------------------+--------------------------------------
+ Reporter:  n3s                      |       Owner:  axeld         
+     Type:  bug                      |      Status:  new           
+ Priority:  normal                   |   Milestone:  R1            
+Component:  Drivers/Graphics/nVidia  |     Version:  R1 development
+Blockedby:                           |    Platform:  All           
+ Blocking:                           |  
+-------------------------------------+--------------------------------------
+ The MSI NX7600GT (nvidia GeForce 7600GT) has vendor id 0x10de and device
+ id 0x02e0, which is not in the device list, so I manually added it to the
+ driver.c
+
+ Zeta 1.2 will reject the driver (&quot;Your card is currently not supported&quot;)
+ and boot in grey scale or VESA.
+
+ Haiku crashes (SEGFAULT in app_server) and leaves the system unuasable at
+ the last icon of the boot screen. (KDL over serial works).
+ Using &quot;fail-safe video mode&quot; Haiku boots and the Vesa-mode works fine (a
+ bit slow though).
+
+ Tested with R26149 and R26151, serial output is almost identical each
+ time.
+
+ May be related to #1518 and #2071.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2465">http://dev.haiku-os.org/ticket/2465</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008664.html">[Haiku-bugs] [Haiku] #2464: PANIC on  a AMD64 machine
+</A></li>
+	<LI>Next message: <A HREF="008636.html">[Haiku-bugs] [Haiku] #2465: nvidia driver does not work with	GeForce 7600GT
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8627">[ date ]</a>
+              <a href="thread.html#8627">[ thread ]</a>
+              <a href="subject.html#8627">[ subject ]</a>
+              <a href="author.html#8627">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

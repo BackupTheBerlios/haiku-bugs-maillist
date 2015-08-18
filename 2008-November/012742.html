@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3169: [bootman] Default partition is not set correctly when some partitions are masked
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233169%3A%20%5Bbootman%5D%20Default%20partition%20is%20not%20set%0A%20correctly%20when%20some%20partitions%20are%20masked&In-Reply-To=%3C038.fcd534fe72a6a8d2f6b33a100dcb23f5%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012734.html">
+   <LINK REL="Next"  HREF="012743.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3169: [bootman] Default partition is not set correctly when some partitions are masked</H1>
+    <B>oco</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233169%3A%20%5Bbootman%5D%20Default%20partition%20is%20not%20set%0A%20correctly%20when%20some%20partitions%20are%20masked&In-Reply-To=%3C038.fcd534fe72a6a8d2f6b33a100dcb23f5%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3169: [bootman] Default partition is not set correctly when some partitions are masked">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Nov 24 21:22:30 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012734.html">[Haiku-bugs] [Haiku] #2949: Missing freetype2 headers, the freetype-config tool and its pkg-config files are missing.
+</A></li>
+        <LI>Next message: <A HREF="012743.html">[Haiku-bugs] [Haiku] #3170: Firefox wont load home page haikuware.com after navigating from home page
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12742">[ date ]</a>
+              <a href="thread.html#12742">[ thread ]</a>
+              <a href="subject.html#12742">[ subject ]</a>
+              <a href="author.html#12742">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3169: [bootman] Default partition is not set correctly when some partitions are
+masked
+--------------------------+-------------------------------------------------
+ Reporter:  oco           |       Owner:  axeld         
+     Type:  bug           |      Status:  new           
+ Priority:  normal        |   Milestone:  R1            
+Component:  Applications  |     Version:  R1 development
+Blockedby:                |    Platform:  All           
+ Blocking:                |  
+--------------------------+-------------------------------------------------
+ Here is my partition layout :
+
+  - Windows pre-install partition
+  - Windows partition
+  - Haiku partition
+
+ If i uncheck the pre-install partition in the partition list and if i
+ select Haiku as the default partition, no selector is shown on boot. I
+ have to use up arrow key to finally see the selector.
+
+ The default partition index is relative to the plain partition list, but
+ should be relative to visible partitions only when written on the boot
+ sector.
+
+ Here is a patch to fix this small problem.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3169">http://dev.haiku-os.org/ticket/3169</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012734.html">[Haiku-bugs] [Haiku] #2949: Missing freetype2 headers, the freetype-config tool and its pkg-config files are missing.
+</A></li>
+	<LI>Next message: <A HREF="012743.html">[Haiku-bugs] [Haiku] #3170: Firefox wont load home page haikuware.com after navigating from home page
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12742">[ date ]</a>
+              <a href="thread.html#12742">[ thread ]</a>
+              <a href="subject.html#12742">[ subject ]</a>
+              <a href="author.html#12742">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

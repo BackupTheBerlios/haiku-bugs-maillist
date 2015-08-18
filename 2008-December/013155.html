@@ -1,0 +1,180 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3217: Network very slow with 2 CPUs	enabled
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-December/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233217%3A%20Network%20very%20slow%20with%202%20CPUs%0A%09enabled&In-Reply-To=%3C051.2f5d4555eb71c9ffa9991ff36576ed0d%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="013151.html">
+   <LINK REL="Next"  HREF="013156.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3217: Network very slow with 2 CPUs	enabled</H1>
+    <B>scottmc</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233217%3A%20Network%20very%20slow%20with%202%20CPUs%0A%09enabled&In-Reply-To=%3C051.2f5d4555eb71c9ffa9991ff36576ed0d%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3217: Network very slow with 2 CPUs	enabled">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Dec 12 16:51:29 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="013151.html">[Haiku-bugs] [Haiku] #3217: Network very slow with 2 CPUs	enabled
+</A></li>
+        <LI>Next message: <A HREF="013156.html">[Haiku-bugs] [Haiku] #3217: Network very slow with 2 CPUs	enabled
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13155">[ date ]</a>
+              <a href="thread.html#13155">[ thread ]</a>
+              <a href="subject.html#13155">[ subject ]</a>
+              <a href="author.html#13155">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3217: Network very slow with 2 CPUs enabled
+------------------------+---------------------------------------------------
+  Reporter:  scottmc    |       Owner:  axeld         
+      Type:  bug        |      Status:  new           
+  Priority:  normal     |   Milestone:  R1            
+ Component:  - General  |     Version:  R1 development
+Resolution:             |   Blockedby:                
+  Platform:  All        |    Blocking:                
+------------------------+---------------------------------------------------
+
+Comment(by scottmc):
+
+ seems attachments are still broken, so I'll cut and paste my listdev here
+ for my compaq cq-50-215nr laptop:
+
+ {{{
+ device Bridge (Host bridge) [6|0|0]
+   vendor 1022: Advanced Micro Devices [AMD]
+   device 1304: Family 11h Link Control
+
+ device Bridge (Host bridge) [6|0|0]
+   vendor 1022: Advanced Micro Devices [AMD]
+   device 1303: Family 11h Miscellaneous Control
+
+ device Bridge (Host bridge) [6|0|0]
+   vendor 1022: Advanced Micro Devices [AMD]
+   device 1302: Family 11h DRAM Controller
+
+ device Bridge (Host bridge) [6|0|0]
+   vendor 1022: Advanced Micro Devices [AMD]
+   device 1301: Family 11h Address Map
+
+ device Bridge (Host bridge) [6|0|0]
+   vendor 1022: Advanced Micro Devices [AMD]
+   device 1300: Family 11h HyperTransport Configuration
+
+ device Network controller (Ethernet controller) [2|0|0]
+   vendor 168c: Atheros Communications Inc.
+   device 001c: AR242x 802.11abg Wireless PCI Express Adapter
+
+ device Bridge (PCI bridge, Normal decode) [6|4|0]
+   vendor 10de: nVidia Corporation
+   device 077a: MCP78S [GeForce 8200] PCI Bridge
+
+ device Display controller (VGA compatible controller, VGA controller)
+ [3|0|0]
+   vendor 10de: nVidia Corporation
+   device 0845: Unknown
+
+ device Bridge (PCI bridge, Normal decode) [6|4|0]
+   vendor 10de: nVidia Corporation
+   device 0569: MCP78S [GeForce 8200] PCI Express Bridge
+
+ device Network controller (Ethernet controller) [2|0|0]
+   vendor 10de: nVidia Corporation
+   device 0760: MCP78S [GeForce 8200] Ethernet
+
+ device Mass storage controller (IDE interface) [1|1|85]
+   vendor 10de: nVidia Corporation
+   device 0ad0: MCP78S [GeForce 8200] SATA Controller (non-AHCI mode)
+
+ device Bridge (PCI bridge, Subtractive decode) [6|4|1]
+   vendor 10de: nVidia Corporation
+   device 075a: MCP78S [GeForce 8200] PCI Bridge
+
+ device Multimedia controller (Audio device) [4|3|0]
+   vendor 10de: nVidia Corporation
+   device 0774: MCP78S [GeForce 8200] High Definition Audio
+
+ device Mass storage controller (IDE interface) [1|1|8a]
+   vendor 10de: nVidia Corporation
+   device 0759: MCP78S [GeForce 8200] IDE
+
+ device Serial bus controller (USB Controller, EHCI) [c|3|20]
+   vendor 10de: nVidia Corporation
+   device 077e: MCP78S [GeForce 8200] EHCI USB 2.0 Controller
+
+ device Serial bus controller (USB Controller, OHCI) [c|3|10]
+   vendor 10de: nVidia Corporation
+   device 077d: MCP78S [GeForce 8200] OHCI USB 1.1 Controller
+
+ device Serial bus controller (USB Controller, EHCI) [c|3|20]
+   vendor 10de: nVidia Corporation
+   device 077c: MCP78S [GeForce 8200] EHCI USB 2.0 Controller
+
+ device Serial bus controller (USB Controller, OHCI) [c|3|10]
+   vendor 10de: nVidia Corporation
+   device 077b: MCP78S [GeForce 8200] OHCI USB 1.1 Controller
+
+ device Memory controller (RAM memory) [5|0|0]
+   vendor 10de: nVidia Corporation
+   device 0568: MCP78S [GeForce 8200] Memory Controller
+
+ device Processor (Co-processor) [b|40|0]
+   vendor 10de: nVidia Corporation
+   device 0753: MCP78S [GeForce 8200] Co-Processor
+
+ device Serial bus controller (SMBus) [c|5|0]
+   vendor 10de: nVidia Corporation
+   device 0752: MCP78S [GeForce 8200] SMBus
+
+ device Bridge (ISA bridge) [6|1|0]
+   vendor 10de: nVidia Corporation
+   device 075e: Unknown
+
+ device Memory controller (RAM memory) [5|0|0]
+   vendor 10de: nVidia Corporation
+   device 0754: MCP78S [GeForce 8200] Memory Controller
+ ~&gt;
+ }}}
+
+ I'm not using wireless, but don't see any other network device listed, but
+ the wired network is working since I am writing this on said laptop in
+ Haiku.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3217#comment:4">http://dev.haiku-os.org/ticket/3217#comment:4</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="013151.html">[Haiku-bugs] [Haiku] #3217: Network very slow with 2 CPUs	enabled
+</A></li>
+	<LI>Next message: <A HREF="013156.html">[Haiku-bugs] [Haiku] #3217: Network very slow with 2 CPUs	enabled
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13155">[ date ]</a>
+              <a href="thread.html#13155">[ thread ]</a>
+              <a href="subject.html#13155">[ subject ]</a>
+              <a href="author.html#13155">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

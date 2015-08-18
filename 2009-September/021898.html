@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4631: Two Haiku partitions cannot change settings independently
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234631%3A%20Two%20Haiku%20partitions%20cannot%20change%0A%20settings%20independently&In-Reply-To=%3C038.0bb855dd9b17fcdecbdbce6cb555edd8%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="021896.html">
+   <LINK REL="Next"  HREF="021899.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4631: Two Haiku partitions cannot change settings independently</H1>
+    <B>HAL</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234631%3A%20Two%20Haiku%20partitions%20cannot%20change%0A%20settings%20independently&In-Reply-To=%3C038.0bb855dd9b17fcdecbdbce6cb555edd8%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4631: Two Haiku partitions cannot change settings independently">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Sep 23 11:45:35 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="021896.html">[Haiku-bugs] [Haiku] #4053: USB MIDI not recognized dynamically
+</A></li>
+        <LI>Next message: <A HREF="021899.html">[Haiku-bugs] [Haiku] #4631: Two Haiku partitions cannot change settings independently
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21898">[ date ]</a>
+              <a href="thread.html#21898">[ thread ]</a>
+              <a href="subject.html#21898">[ subject ]</a>
+              <a href="author.html#21898">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4631: Two Haiku partitions cannot change settings independently
+-----------------------+----------------------------------------------------
+ Reporter:  HAL        |       Owner:  axeld    
+     Type:  bug        |      Status:  new      
+ Priority:  normal     |   Milestone:  R1       
+Component:  - General  |     Version:  R1/alpha1
+Blockedby:             |    Platform:  x86      
+ Blocking:             |  
+-----------------------+----------------------------------------------------
+ If I boot up Haiku r33234 and the other HD with Haiku R1/alpha1 enabled
+ from the BIOS, it takes on all the settings of Haiku R1/alpha1. The About
+ This System says R1/alpha1 r33109. The partition size is slightly larger
+ for Haiku on the other partition and when I right click the Haiku drive
+ desktop icon then click get info it shows the drive size as if it was the
+ other partition.
+ If I boot with the the other HD that has Haiku, disabled from the BIOS, in
+ About this system it shows r33234. I can then change the settings
+ independently.
+ If I booted up with Haiku r1 alpha1 on the other enabled and then tried to
+ change settings in r33234 then rebooted into Haiku r1 alpha1, I would find
+ the changes reflected there.
+ I tried to get a screenshot of DriveSetup in R1/alpha1, but could not save
+ it anywhere because the partition with r33234 was enabled. Clicking the
+ save button would not do anything.
+ To see this bug:
+ 1. Have two SATA (or maybe PATA) drives and one PATA drive
+ 2. Have Haiku r33243 on first partition of second SATA drive.
+ 3. Have Haiku R1/alpha1 on first partition of PATA drive
+ 4. Boot up r33234 PATA drive/R1alpha1 enabled.
+ Result is:
+ Haiku has exactly the same setting as Haiku R1/alpha1 r33109. Have a look
+ in DriveSetup and there is no partitions shown for the second SATA drive.
+ Partitions are shown for the PATA drive as if it is the one booted but it
+ is not.
+ Expected:
+ after booting Haiku on Second SATA drive to have different colors settings
+ and its own partition info in DriveSetup.
+ Also all the other partions are missing on second SATA drive:: linux
+ reiser partitions and a swap partition.
+ If I do the same steps above with the PATA drive disabled from BIOS,
+ everything behaves as expected. The proper Haiku partition is visible in
+ DriveSetup along with the Linux partitions.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4631">http://dev.haiku-os.org/ticket/4631</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="021896.html">[Haiku-bugs] [Haiku] #4053: USB MIDI not recognized dynamically
+</A></li>
+	<LI>Next message: <A HREF="021899.html">[Haiku-bugs] [Haiku] #4631: Two Haiku partitions cannot change settings independently
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21898">[ date ]</a>
+              <a href="thread.html#21898">[ thread ]</a>
+              <a href="subject.html#21898">[ subject ]</a>
+              <a href="author.html#21898">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

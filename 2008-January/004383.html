@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1701: [BColorControl] Various selector	bugs
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-January/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231701%3A%20%5BBColorControl%5D%20Various%20selector%0A%09bugs&In-Reply-To=%3C050.559bf4e01f60224f66847cdf1db89da4%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="004382.html">
+   <LINK REL="Next"  HREF="004384.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1701: [BColorControl] Various selector	bugs</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231701%3A%20%5BBColorControl%5D%20Various%20selector%0A%09bugs&In-Reply-To=%3C050.559bf4e01f60224f66847cdf1db89da4%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1701: [BColorControl] Various selector	bugs">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Jan 21 00:59:24 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="004382.html">[Haiku-bugs] [Haiku] #1701: [BColorControl] Various selector	bugs
+</A></li>
+        <LI>Next message: <A HREF="004384.html">[Haiku-bugs] [Haiku] #1701: [BColorControl] Various selector	bugs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4383">[ date ]</a>
+              <a href="thread.html#4383">[ thread ]</a>
+              <a href="subject.html#4383">[ subject ]</a>
+              <a href="author.html#4383">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1701: [BColorControl] Various selector bugs
+---------------------------------+------------------------------------------
+  Reporter:  aldeck              |       Owner:  jackburton    
+      Type:  bug                 |      Status:  closed        
+  Priority:  normal              |   Milestone:  R1            
+ Component:  Kits/Interface Kit  |     Version:  R1 development
+Resolution:  fixed               |    Platform:  All           
+---------------------------------+------------------------------------------
+Comment (by aldeck):
+
+ Thanks for your time! I'm affraid, but there are a few minor issues with
+ your modifications :)
+
+ You forgot to apply the changes to prefs/Backgrounds, the old calculation
+ made it look the right size but it was wrong.
+
+ Concerning fPaletteFrame in palette mode, it needs one more pixel in
+ height to account for the last horizontal line of the grid (touching the
+ bottom bevel). Thats why i did put an if. But we'd have to call
+ _LayoutView() after we know the colorspace, after AttachedToWindow() ...
+ I'll think about that.
+
+ Concerning the rampHeight, Height()/4 is wrong, because,
+ Height()==4*cellSize-1 so there's a rounding error. We can see there's one
+ pixel line missing at the bottom. I think tracker preferences calls it
+ with a different layout, wich i don't handle in &quot;ramp&quot; mode. I'll patch
+ this.
+
+ BTW i've just been granted commit access by the dev team! I admit a bit
+ scared to use it right now, but will soon :) I won't hesitate to ask
+ questions on the dev mailing list and trac when needed, and hope we can
+ have fun making haiku!
+
+ Thanks Stefano,
+ Alex
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1701#comment:8">http://dev.haiku-os.org/ticket/1701#comment:8</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="004382.html">[Haiku-bugs] [Haiku] #1701: [BColorControl] Various selector	bugs
+</A></li>
+	<LI>Next message: <A HREF="004384.html">[Haiku-bugs] [Haiku] #1701: [BColorControl] Various selector	bugs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4383">[ date ]</a>
+              <a href="thread.html#4383">[ thread ]</a>
+              <a href="subject.html#4383">[ subject ]</a>
+              <a href="author.html#4383">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

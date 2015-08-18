@@ -1,0 +1,153 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3726: Can't build USB drivers for target	R5
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233726%3A%20Can%27t%20build%20USB%20drivers%20for%20target%0A%09R5&In-Reply-To=%3C049.1bf37562dcbb36381e6bd63e549828a6%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="015944.html">
+   <LINK REL="Next"  HREF="016021.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3726: Can't build USB drivers for target	R5</H1>
+    <B>haiqu</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233726%3A%20Can%27t%20build%20USB%20drivers%20for%20target%0A%09R5&In-Reply-To=%3C049.1bf37562dcbb36381e6bd63e549828a6%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3726: Can't build USB drivers for target	R5">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Apr 12 02:17:04 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="015944.html">[Haiku-bugs] [Haiku] #3726: Can't build USB drivers for target	R5
+</A></li>
+        <LI>Next message: <A HREF="016021.html">[Haiku-bugs] [Haiku] #3726: Can't build USB drivers for target	R5
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15995">[ date ]</a>
+              <a href="thread.html#15995">[ thread ]</a>
+              <a href="subject.html#15995">[ subject ]</a>
+              <a href="author.html#15995">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3726: Can't build USB drivers for target R5
+---------------------------+------------------------------------------------
+  Reporter:  haiqu         |       Owner:  axeld         
+      Type:  bug           |      Status:  reopened      
+  Priority:  normal        |   Milestone:  R1            
+ Component:  Build System  |     Version:  R1 development
+Resolution:                |   Blockedby:                
+  Platform:  x86           |    Blocking:                
+---------------------------+------------------------------------------------
+
+Comment(by haiqu):
+
+ System:
+
+ BeOS 5.0.3 Pro
+ GCC from Oliver Tappe at <A HREF="http://www.bebits.com/app/4011">http://www.bebits.com/app/4011</A> (the 2.95 build)
+
+ {{{
+ $ TARGET_PLATFORM=r5 jam usb \&lt;usb\&gt;ehci \&lt;usb\&gt;uhci
+ ...found 419 target(s)...
+ ...updating 4 target(s)...
+ C++ generated/objects/r5/x86/release/add-ons/kernel/bus_managers/usb/usb.o
+ In file included from /boot/src/haiku/src/add-
+ ons/kernel/bus_managers/usb/usbspec_p.h:13,
+                  from /boot/src/haiku/src/add-
+ ons/kernel/bus_managers/usb/usb_p.h:14,
+                  from /boot/src/haiku/src/add-
+ ons/kernel/bus_managers/usb/usb.cpp:11:
+ /boot/src/haiku/headers/os/drivers/KernelExport.h:91: warning:
+ `B_KERNEL_READ_AREA' redefined
+ /boot/src/haiku/src/add-
+ ons/kernel/bus_managers/usb/BeOSCompatibility.h:106: warning: this is the
+ location of the previous definition
+ /boot/src/haiku/headers/os/drivers/KernelExport.h:92: warning:
+ `B_KERNEL_WRITE_AREA' redefined
+ /boot/src/haiku/src/add-
+ ons/kernel/bus_managers/usb/BeOSCompatibility.h:108: warning: this is the
+ location of the previous definition
+ /boot/src/haiku/src/add-ons/kernel/bus_managers/usb/usb.cpp: In function
+ `int32 bus_std_ops(long int, ...)':
+ /boot/src/haiku/src/add-ons/kernel/bus_managers/usb/usb.cpp:89: `shared'
+ undeclared (first use this function)
+ /boot/src/haiku/src/add-ons/kernel/bus_managers/usb/usb.cpp:89: (Each
+ undeclared identifier is reported only once
+ /boot/src/haiku/src/add-ons/kernel/bus_managers/usb/usb.cpp:89: for each
+ function it appears in.)
+ /boot/src/haiku/src/add-ons/kernel/bus_managers/usb/usb.cpp:89: `address'
+ undeclared (first use this function)
+
+ gcc -c &quot;src/add-ons/kernel/bus_managers/usb/usb.cpp&quot; -O2 -Wall -Wno-
+ trigraphs -Wno-multichar -include headers/build/HaikuBuildCompatibility.h
+ -fno-rtti -D_ZETA_USING_DEPRECATED_API_=1 -D_ZETA_TS_FIND_DIR_=1 -finline
+ -fno-builtin -fno-exceptions -DBOCHS_DEBUG_HACK=0 -D_KERNEL_MODE
+ -D_KERNEL_MODE -DARCH_x86 -D_NO_INLINE_ASM -DCOMPILE_FOR_R5
+ -DHAIKU_TARGET_PLATFORM_BEOS -Ibuild/user_config_headers
+ -Ibuild/config_headers -Isrc/add-ons/kernel/bus_managers/usb
+ -Igenerated/objects/common/add-ons/kernel/bus_managers/usb
+ -Igenerated/objects/r5/x86/common/add-ons/kernel/bus_managers/usb
+ -Igenerated/objects/r5/x86/common/add-ons/kernel/bus_managers/usb -I-
+ -Isrc/add-ons/kernel/bus_managers/usb -Iheaders/private/kernel
+ -Iheaders/os/drivers -Iheaders/build/host/r5
+ -Iheaders/build/host/beos_common -o &quot;generated/objects/r5/x86/release/add-
+ ons/kernel/bus_managers/usb/usb.o&quot; ;
+
+ ...failed C++ generated/objects/r5/x86/release/add-
+ ons/kernel/bus_managers/usb/usb.o ...
+ ...skipped usb for lack of &lt;src!add-ons!kernel!bus_managers!usb&gt;usb.o...
+ ...failed updating 1 target(s)...
+ ...skipped 1 target(s)...
+ Link generated/objects/r5/x86/release/add-ons/kernel/busses/usb/ehci
+ XRes1 generated/objects/r5/x86/release/add-ons/kernel/busses/usb/ehci
+ SetType1 generated/objects/r5/x86/release/add-ons/kernel/busses/usb/ehci
+ MimeSet1 generated/objects/r5/x86/release/add-ons/kernel/busses/usb/ehci
+ SetVersion1 generated/objects/r5/x86/release/add-
+ ons/kernel/busses/usb/ehci
+ Chmod1 generated/objects/r5/x86/release/add-ons/kernel/busses/usb/ehci
+ ...updated 1 target(s)...
+ Link generated/objects/r5/x86/release/add-ons/kernel/busses/usb/uhci
+ XRes1 generated/objects/r5/x86/release/add-ons/kernel/busses/usb/uhci
+ SetType1 generated/objects/r5/x86/release/add-ons/kernel/busses/usb/uhci
+ MimeSet1 generated/objects/r5/x86/release/add-ons/kernel/busses/usb/uhci
+ SetVersion1 generated/objects/r5/x86/release/add-
+ ons/kernel/busses/usb/uhci
+ Chmod1 generated/objects/r5/x86/release/add-ons/kernel/busses/usb/uhci
+ ...updated 1 target(s)...
+ $
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3726#comment:6">http://dev.haiku-os.org/ticket/3726#comment:6</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="015944.html">[Haiku-bugs] [Haiku] #3726: Can't build USB drivers for target	R5
+</A></li>
+	<LI>Next message: <A HREF="016021.html">[Haiku-bugs] [Haiku] #3726: Can't build USB drivers for target	R5
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15995">[ date ]</a>
+              <a href="thread.html#15995">[ thread ]</a>
+              <a href="subject.html#15995">[ subject ]</a>
+              <a href="author.html#15995">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

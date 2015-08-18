@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1111: media_server can't find media_addon_server from its signature.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231111%3A%20media_server%20can%27t%20find%0A%20media_addon_server%20from%20its%20signature.&In-Reply-To=%3C050.b9feaebe2f505042923efeb45ed9bf83%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000784.html">
+   <LINK REL="Next"  HREF="000807.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1111: media_server can't find media_addon_server from its signature.</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231111%3A%20media_server%20can%27t%20find%0A%20media_addon_server%20from%20its%20signature.&In-Reply-To=%3C050.b9feaebe2f505042923efeb45ed9bf83%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1111: media_server can't find media_addon_server from its signature.">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Mar 18 23:36:11 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000784.html">[Haiku-bugs] [Haiku] #1111: media_server can't find media_addon_server from its signature.
+</A></li>
+        <LI>Next message: <A HREF="000807.html">[Haiku-bugs] [Haiku] #1111: media_server can't find media_addon_server from its signature.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#796">[ date ]</a>
+              <a href="thread.html#796">[ thread ]</a>
+              <a href="subject.html#796">[ subject ]</a>
+              <a href="author.html#796">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1111: media_server can't find media_addon_server from its signature.
+-------------------------------+--------------------------------------------
+  Reporter:  gotaku            |       Owner:  axeld         
+      Type:  bug               |      Status:  new           
+  Priority:  normal            |   Milestone:  R1            
+ Component:  File Systems/BFS  |     Version:  R1 development
+Resolution:                    |    Platform:  All           
+-------------------------------+--------------------------------------------
+Comment (by bonefish):
+
+ Replying to [comment:14 gotaku]:
+ &gt; Here is the output of those two commands:
+ &gt;
+ &gt; ~&gt;catattr BEOS:APP_SIG /system/servers/media_addon_server
+ &gt; /system/servers/media_addon_server : string : application/x-vnd.Be
+ .addon-host
+ &gt;
+ &gt; ~&gt;query BEOS:APP_SIG=application/x-vnd.Be.addon-host
+
+ Thanks for your clarification.
+
+ &gt; Like I said, only application/x-vnd.Be.addon-host seems to cause
+ problems for example:
+ &gt;
+ &gt; ~&gt;query BEOS:APP_SIG=application/x-vnd.Be.media-server
+ &gt; /boot/beos/system/servers/media_server
+
+ Yep, the index seems to be OK in principle, but it does either not contain
+ the media_addon_server's attribute value (respectively an incorrect value)
+ or the query mechanism is somehow broken. You could try:
+
+ {{{
+ query BEOS:APP_SIG=*
+ }}}
+
+ This should list all files that have the attribute and are in the index.
+ For comparison, here 74 entries are listed (you can count them by piping
+ the command through wc, i.e. append &quot; | wc -l&quot; to the above command line),
+ the last ones being print add-ons (PCL5/6, PS, Preview). The
+ media_addon_server is at position 13.
+
+ &gt; Why does it seem that only I am experiencing this bug? Could it be some
+ subtle distro specific problem? I'm using Debian Etch.
+
+ I would consider this relatively unlikely. We're not using that many
+ features of the host platform (basically a bit of standard POSIX API). I
+ guess the most likely thing to happen when something like a header changes
+ in a problematic way would be that the build breaks, the image becomes
+ unbootable, or some feature breaks completely (like attributes). But I
+ wouldn't rule out any possibility. :-)
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1111#comment:15">http://dev.haiku-os.org/ticket/1111#comment:15</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000784.html">[Haiku-bugs] [Haiku] #1111: media_server can't find media_addon_server from its signature.
+</A></li>
+	<LI>Next message: <A HREF="000807.html">[Haiku-bugs] [Haiku] #1111: media_server can't find media_addon_server from its signature.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#796">[ date ]</a>
+              <a href="thread.html#796">[ thread ]</a>
+              <a href="subject.html#796">[ subject ]</a>
+              <a href="author.html#796">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

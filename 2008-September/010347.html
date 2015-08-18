@@ -1,0 +1,223 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2737: ActivityMonitor: Deadlock on Window	Close
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232737%3A%20ActivityMonitor%3A%20Deadlock%20on%20Window%0A%09Close&In-Reply-To=%3C043.232d91ece89a8d9f716531d2ad8f3078%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010340.html">
+   <LINK REL="Next"  HREF="010372.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2737: ActivityMonitor: Deadlock on Window	Close</H1>
+    <B>bonefish</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232737%3A%20ActivityMonitor%3A%20Deadlock%20on%20Window%0A%09Close&In-Reply-To=%3C043.232d91ece89a8d9f716531d2ad8f3078%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2737: ActivityMonitor: Deadlock on Window	Close">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Sep 17 02:19:26 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010340.html">[Haiku-bugs] [Haiku] #2477: Haiku's bootman doesn't show the same partitions as BeOS's
+</A></li>
+        <LI>Next message: <A HREF="010372.html">[Haiku-bugs] [Haiku] #2737: ActivityMonitor: Deadlock on Window	Close
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10347">[ date ]</a>
+              <a href="thread.html#10347">[ thread ]</a>
+              <a href="subject.html#10347">[ subject ]</a>
+              <a href="author.html#10347">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2737: ActivityMonitor: Deadlock on Window Close
+------------------------------------------+---------------------------------
+ Reporter:  bonefish                      |       Owner:  axeld         
+     Type:  bug                           |      Status:  new           
+ Priority:  normal                        |   Milestone:  R1            
+Component:  Applications/ActivityMonitor  |     Version:  R1 development
+Blockedby:                                |    Platform:  All           
+ Blocking:                                |  
+------------------------------------------+---------------------------------
+ r27518
+
+ ActivityMonitor sometimes deadlocks when closing with Command-W:
+ {{{
+ kdebug&gt; threads 161
+ thread         id  state     wait for   object  cpu pri  stack      team
+ name
+ 0x999d5800    161  waiting   sem          1952    -  10  0x91fd2000  161
+ ActivityMonitor
+ 0x999d8000    162  waiting   sem          1887    -  10  0x92022000  161
+ team 161 debug task
+ 0x99a32000    166  waiting   sem          1970    -  20  0x920a9000  161
+ _BMediaRoster_
+ 0x99a33000    168  waiting   sem          1952    -  10  0x920b1000  161
+ source refresh
+ 0x99a33800    169  waiting   sem          1989    -  15  0x920b5000  161
+ w&gt;ActivityMonitor
+ kdebug&gt; sc 161
+ stack trace for thread 161 &quot;ActivityMonitor&quot;
+     kernel stack: 0x91fd2000 to 0x91fd6000
+       user stack: 0x7efef000 to 0x7ffef000
+ frame            caller     &lt;image&gt;:function + offset
+  0 91fd5e54 (+  48) 80046d35   &lt;kernel&gt;:context_switch__FP6threadT0 +
+ 0x0039
+  1 91fd5e84 (+  64) 80047041   &lt;kernel&gt;:scheduler_reschedule + 0x02d5
+  2 91fd5ec4 (+  64) 80049bfc   &lt;kernel&gt;:switch_sem_etc + 0x0368
+  3 91fd5f04 (+  64) 8004a7c2   &lt;kernel&gt;:_user_acquire_sem_etc + 0x0096
+  4 91fd5f44 (+ 100) 800cfe41   &lt;kernel&gt;:pre_syscall_debug_done + 0x0002
+ (nearest)
+ user iframe at 0x91fd5fa8 (end = 0x91fd6000)
+  eax 0xc            ebx 0x81351c        ecx 0x7ffee980   edx 0xffff0104
+  esi 0xffffffff     edi 0x7fffffff      ebp 0x7ffee9bc   esp 0x91fd5fdc
+  eip 0xffff0104  eflags 0x203      user esp 0x7ffee980
+  vector: 0x63, error code: 0x0
+  5 91fd5fa8 (+   0) ffff0104
+  6 7ffee9bc (+  64) 002cfb1a
+ &lt;libbe.so&gt;:_LockComplete__7BLooperP7BLooperlllx + 0x003e
+  7 7ffee9fc (+  80) 002cfa75   &lt;libbe.so&gt;:_Lock__7BLooperP7BLooperlx +
+ 0x0191
+  8 7ffeea4c (+  48) 002ced80   &lt;libbe.so&gt;:Lock__7BLooper + 0x002c
+  9 7ffeea7c (+  48) 002c6e3f
+ &lt;libbe.so&gt;:_WindowQuitLoop__12BApplicationbT1 + 0x003b
+ 10 7ffeeaac (+  48) 002c6f37   &lt;libbe.so&gt;:_QuitAllWindows__12BApplicationb
+ + 0x0043
+ 11 7ffeeadc (+  48) 002c42f9   &lt;libbe.so&gt;:QuitRequested__12BApplication +
+ 0x0025
+ 12 7ffeeb0c (+ 128) 002d029c
+ &lt;libbe.so&gt;:_QuitRequested__7BLooperP8BMessage + 0x0030
+ 13 7ffeeb8c (+  48) 002ce86e
+ &lt;libbe.so&gt;:DispatchMessage__7BLooperP8BMessageP8BHandler + 0x0046
+ 14 7ffeebbc (+ 496) 002c5a3d
+ &lt;libbe.so&gt;:DispatchMessage__12BApplicationP8BMessageP8BHandler + 0x0401
+ 15 7ffeedac (+  64) 002d01f1   &lt;libbe.so&gt;:task_looper__7BLooper + 0x0211
+ 16 7ffeedec (+  64) 002c41ad   &lt;libbe.so&gt;:Run__12BApplication + 0x0075
+ 17 7ffeee2c (+ 336) 0020decb   &lt;_APP_&gt;:main + 0x002f
+ 18 7ffeef7c (+  48) 0020da8b   &lt;_APP_&gt;:_start + 0x005b
+ 19 7ffeefac (+  48) 001008ea   17843:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">runtime_loader_seg0ro at 0x00100000</A> +
+ 0x8ea
+ 20 7ffeefdc (+   0) 7ffeefec   17842:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">ActivityMonitor_main_stack at 0x7efef000</A>
+ + 0xffffec
+ kdebug&gt; sc 169
+ stack trace for thread 169 &quot;w&gt;ActivityMonitor&quot;
+     kernel stack: 0x920b5000 to 0x920b9000
+       user stack: 0x700c3000 to 0x70103000
+ frame            caller     &lt;image&gt;:function + offset
+  0 920b8d94 (+  48) 80046d35   &lt;kernel&gt;:context_switch__FP6threadT0 +
+ 0x0039
+  1 920b8dc4 (+  64) 80047041   &lt;kernel&gt;:scheduler_reschedule + 0x02d5
+  2 920b8e04 (+  64) 80049bfc   &lt;kernel&gt;:switch_sem_etc + 0x0368
+  3 920b8e44 (+  64) 80049866   &lt;kernel&gt;:acquire_sem_etc + 0x0026
+  4 920b8e84 (+ 128) 80055b1e   &lt;kernel&gt;:wait_for_thread_etc + 0x01ba
+  5 920b8f04 (+  64) 800571a3   &lt;kernel&gt;:_user_wait_for_thread + 0x0027
+  6 920b8f44 (+ 100) 800cfe41   &lt;kernel&gt;:pre_syscall_debug_done + 0x0002
+ (nearest)
+ user iframe at 0x920b8fa8 (end = 0x920b9000)
+  eax 0x35           ebx 0x81351c        ecx 0x70102a30   edx 0xffff0104
+  esi 0x18025ea0     edi 0x18025ea0      ebp 0x70102a5c   esp 0x920b8fdc
+  eip 0xffff0104  eflags 0x207      user esp 0x70102a30
+  vector: 0x63, error code: 0x0
+  7 920b8fa8 (+   0) ffff0104
+  8 70102a5c (+  64) 0021059d   &lt;_APP_&gt;:DetachedFromWindow__12ActivityView
+ + 0x0065
+  9 70102a9c (+  48) 00371a2c   &lt;libbe.so&gt;:_Detach__5BView + 0x0030
+ 10 70102acc (+  48) 00371a45   &lt;libbe.so&gt;:_Detach__5BView + 0x0049
+ 11 70102afc (+  48) 00371a45   &lt;libbe.so&gt;:_Detach__5BView + 0x0049
+ 12 70102b2c (+  80) 0036ec16   &lt;libbe.so&gt;:_RemoveSelf__5BView + 0x0042
+ 13 70102b7c (+  48) 0036ebc9   &lt;libbe.so&gt;:RemoveSelf__5BView + 0x0055
+ 14 70102bac (+  80) 003734ee   &lt;libbe.so&gt;:_._7BWindow + 0x00d6
+ 15 70102bfc (+  48) 0021485c   &lt;_APP_&gt;:_._14ActivityWindow + 0x002c
+ 16 70102c2c (+  48) 002cecea   &lt;libbe.so&gt;:Quit__7BLooper + 0x00de
+ 17 70102c5c (+  48) 00373c26   &lt;libbe.so&gt;:Quit__7BWindow + 0x00c6
+ 18 70102c8c (+ 128) 002d0373
+ &lt;libbe.so&gt;:_QuitRequested__7BLooperP8BMessage + 0x0107
+ 19 70102d0c (+  48) 002ce86e
+ &lt;libbe.so&gt;:DispatchMessage__7BLooperP8BMessageP8BHandler + 0x0046
+ 20 70102d3c (+ 480) 003764b9
+ &lt;libbe.so&gt;:DispatchMessage__7BWindowP8BMessageP8BHandler + 0x174d
+ 21 70102f1c (+  96) 00379c84   &lt;libbe.so&gt;:task_looper__7BWindow + 0x0270
+ 22 70102f7c (+  48) 002cfddf   &lt;libbe.so&gt;:_task0___7BLooperPv + 0x003f
+ 23 70102fac (+  48) 00787718   &lt;libroot.so&gt;:_get_next_team_info + 0x005c
+ (nearest)
+ 24 70102fdc (+   0) 70102fec
+ 17909:w&gt;<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">ActivityMonitor_169_stack at 0x700c3000</A> + 0x3ffec
+ kdebug&gt; sem 1989
+ SEM: 0x986c6404
+ id:      1989 (0x7c5)
+ name:    'thread_168_retcode_sem'
+ owner:   1
+ count:   -1
+ queue:   169
+ last acquired by: 0, count: 0
+ last released by: 0, count: 0
+ kdebug&gt; sc 168
+ stack trace for thread 168 &quot;source refresh&quot;
+     kernel stack: 0x920b1000 to 0x920b5000
+       user stack: 0x70082000 to 0x700c2000
+ frame            caller     &lt;image&gt;:function + offset
+  0 920b4e54 (+  48) 80046d35   &lt;kernel&gt;:context_switch__FP6threadT0 +
+ 0x0039
+  1 920b4e84 (+  64) 80047041   &lt;kernel&gt;:scheduler_reschedule + 0x02d5
+  2 920b4ec4 (+  64) 80049bfc   &lt;kernel&gt;:switch_sem_etc + 0x0368
+  3 920b4f04 (+  64) 8004a7c2   &lt;kernel&gt;:_user_acquire_sem_etc + 0x0096
+  4 920b4f44 (+ 100) 800cfe41   &lt;kernel&gt;:pre_syscall_debug_done + 0x0002
+ (nearest)
+ user iframe at 0x920b4fa8 (end = 0x920b5000)
+  eax 0xc            ebx 0x81351c        ecx 0x700c1be0   edx 0xffff0104
+  esi 0xffffffff     edi 0x7fffffff      ebp 0x700c1c1c   esp 0x920b4fdc
+  eip 0xffff0104  eflags 0x203      user esp 0x700c1be0
+  vector: 0x63, error code: 0x0
+  5 920b4fa8 (+   0) ffff0104
+  6 700c1c1c (+  64) 002cfb1a
+ &lt;libbe.so&gt;:_LockComplete__7BLooperP7BLooperlllx + 0x003e
+  7 700c1c5c (+  80) 002cfa75   &lt;libbe.so&gt;:_Lock__7BLooperP7BLooperlx +
+ 0x0191
+  8 700c1cac (+  48) 002ced80   &lt;libbe.so&gt;:Lock__7BLooper + 0x002c
+  9 700c1cdc (+  48) 002ca3fc   &lt;libbe.so&gt;:LockLooper__8BHandler + 0x0028
+ 10 700c1d0c (+ 624) 00212e55   &lt;_APP_&gt;:_Refresh__12ActivityView + 0x01c1
+ 11 700c1f7c (+  48) 00212f13   &lt;_APP_&gt;:_RefreshThread__12ActivityViewPv +
+ 0x001f
+ 12 700c1fac (+  48) 00787718   &lt;libroot.so&gt;:_get_next_team_info + 0x005c
+ (nearest)
+ 13 700c1fdc (+   0) 700c1fec   17907:source <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">refresh_168_stack at 0x70082000</A> +
+ 0x3ffec
+ }}}
+
+ The main thread tries to lock the window while holding the app looper
+ lock. The window thread holds the window lock while waiting for the
+ &quot;source refresh&quot; thread, which in turn tries to lock the application.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2737">http://dev.haiku-os.org/ticket/2737</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010340.html">[Haiku-bugs] [Haiku] #2477: Haiku's bootman doesn't show the same partitions as BeOS's
+</A></li>
+	<LI>Next message: <A HREF="010372.html">[Haiku-bugs] [Haiku] #2737: ActivityMonitor: Deadlock on Window	Close
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10347">[ date ]</a>
+              <a href="thread.html#10347">[ thread ]</a>
+              <a href="subject.html#10347">[ subject ]</a>
+              <a href="author.html#10347">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

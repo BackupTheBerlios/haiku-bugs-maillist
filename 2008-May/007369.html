@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1950: Garbled screen contents with true colour mode on nvidia gf2mx
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231950%3A%20Garbled%20screen%20contents%20with%20true%0A%20colour%20mode%20on%20nvidia%20gf2mx&In-Reply-To=%3C051.93fa6b68c0a2a54afef6461119454b85%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007368.html">
+   <LINK REL="Next"  HREF="007370.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1950: Garbled screen contents with true colour mode on nvidia gf2mx</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231950%3A%20Garbled%20screen%20contents%20with%20true%0A%20colour%20mode%20on%20nvidia%20gf2mx&In-Reply-To=%3C051.93fa6b68c0a2a54afef6461119454b85%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1950: Garbled screen contents with true colour mode on nvidia gf2mx">trac at haiku-os.org
+       </A><BR>
+    <I>Sat May 17 12:05:15 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007368.html">[Haiku-bugs] [Haiku] #2059: KDL during svn checkout in block	notifier/writer
+</A></li>
+        <LI>Next message: <A HREF="007370.html">[Haiku-bugs] [Haiku] #2059: KDL during svn checkout in block	notifier/writer
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7369">[ date ]</a>
+              <a href="thread.html#7369">[ thread ]</a>
+              <a href="subject.html#7369">[ subject ]</a>
+              <a href="author.html#7369">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1950: Garbled screen contents with true colour mode on nvidia gf2mx
+------------------------+---------------------------------------------------
+  Reporter:  jopadan    |       Owner:  axeld         
+      Type:  bug        |      Status:  new           
+  Priority:  normal     |   Milestone:  R1            
+ Component:  - General  |     Version:  R1 development
+Resolution:             |    Platform:  x86           
+------------------------+---------------------------------------------------
+Comment (by rudolfc):
+
+ Update:
+
+ To be really sure about that AGP problem I decided to test my old driver
+ V0.80 combined with AGP busmanager V0.02 (both on bebits).
+
+ The same behaviour applies. In other words: The rewritten AGP busmanager
+ is probably not the problem after all! (sorry :)
+
+ So: in conclusion for now (I'll test other cards later on): the bootscreen
+ introduced the problem? Please tell me: is the gfx driver used in any way
+ to create this bootscreen?
+
+ It's known (by me) for nvidia that it's unwise to use the driver before
+ AGP mode is enabled. If the driver is used for the bootscreen while AGP is
+ still down (I don't know how this could be though since the driver's
+ accelerant calls the manager itself, unless loading and starting the
+ kernel driver already causes the malfunction) that might cause the
+ problem.
+
+ The problem is in fact a communications problem with the AGP bus. Comms is
+ partially lost. I've had this problem before (but then even worse) when I
+ did a few things out of correct order in the AGP busmanager (diff between
+ V0.01 and 0.02).
+
+ MTRR is not the problem BTW.
+
+ OK, back to work ;-)
+
+ Bye!
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1950#comment:18">http://dev.haiku-os.org/ticket/1950#comment:18</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007368.html">[Haiku-bugs] [Haiku] #2059: KDL during svn checkout in block	notifier/writer
+</A></li>
+	<LI>Next message: <A HREF="007370.html">[Haiku-bugs] [Haiku] #2059: KDL during svn checkout in block	notifier/writer
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7369">[ date ]</a>
+              <a href="thread.html#7369">[ thread ]</a>
+              <a href="subject.html#7369">[ subject ]</a>
+              <a href="author.html#7369">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

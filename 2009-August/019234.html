@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4194: fuse (userlandfs) causes a page fault - user access in kernel area
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234194%3A%20fuse%20%28userlandfs%29%20causes%20a%20page%0A%20fault%20-%20user%20access%20in%20kernel%20area&In-Reply-To=%3C048.da0fb0c63b01e16428948531f3b6175b%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="019218.html">
+   <LINK REL="Next"  HREF="019235.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4194: fuse (userlandfs) causes a page fault - user access in kernel area</H1>
+    <B>bonefish</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234194%3A%20fuse%20%28userlandfs%29%20causes%20a%20page%0A%20fault%20-%20user%20access%20in%20kernel%20area&In-Reply-To=%3C048.da0fb0c63b01e16428948531f3b6175b%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4194: fuse (userlandfs) causes a page fault - user access in kernel area">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Aug  9 15:37:13 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="019218.html">[Haiku-bugs] [Haiku] #4194: fuse (userlandfs) causes a page fault - user access in kernel area
+</A></li>
+        <LI>Next message: <A HREF="019235.html">[Haiku-bugs] [Haiku] #4194: fuse (userlandfs) causes a page fault - user access in kernel area
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19234">[ date ]</a>
+              <a href="thread.html#19234">[ thread ]</a>
+              <a href="subject.html#19234">[ subject ]</a>
+              <a href="author.html#19234">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4194: fuse (userlandfs) causes a page fault - user access in kernel area
+---------------------------+------------------------------------------------
+  Reporter:  Blub          |       Owner:  bonefish      
+      Type:  bug           |      Status:  closed        
+  Priority:  normal        |   Milestone:  R1            
+ Component:  File Systems  |     Version:  R1 development
+Resolution:  invalid       |   Blockedby:                
+  Platform:  All           |    Blocking:                
+---------------------------+------------------------------------------------
+
+Comment(by bonefish):
+
+ Replying to [comment:16 Blub]:
+ &gt; I was wondering if it would make sense to move the fuse-fs
+ initialization from FUSEFileSystem to FUSEVolume, and instead of having
+ one server per fuse-fs linked to the fuse library, a fuse-userlandfs which
+ would instantiate the fuse programs for each volumes. Of course then the
+ mount command would look something like &quot;mount -t userlandfs -p 'fuse
+ sshfs <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">user at host</A>:' mntpt&quot;.
+ &gt; What do you think about that?
+
+ That would be quite a bit of work. At least the solution I have in mind is
+ significantly simpler. The userlandfs kernel module maintains a map from
+ file system name to userlandfs server instance, so the same instance can
+ be reused for mounting more volumes. I was thinking of introducing a FS
+ capability flag indicating that only one volume can be mounted by a server
+ instance, which would cause the kernel module to forget previous
+ instances. A minor problem is, that the mechanism to start a userlandfs
+ server first and mount the volume afterwards requires the kernel module to
+ actively look for a server instance for the respective file system (via
+ find_port()). This can be solved by adjusting the handshake protocol
+ respectively, though
+
+ &gt; For the password input, I'll do the necessary porting there then :)
+ Maybe a pop-up box would do, although, would it be possible to get the
+ terminal of the process which executes mount? Such that if you use mount
+ from a terminal, you could type in the password there, and if it is no
+ terminal at all, a popup-box could appear? Would there be any sane way of
+ getting the mount-process' terminal?
+
+ I don't think so. The mounting process is known, but I don't think there's
+ a way to get a process' controlling terminal ATM. I wouldn't find that
+ particularly clean either. I'm pretty sure at some point we will introduce
+ auto mounting and some kind of server that mounts volumes from previous
+ session (currently done by Tracker) and then there probably isn't a
+ terminal at hand anyway. I don't think ssh can be used via pipes, so I
+ guess one has to open a new tty for communicating with ssh. Maybe ssh has
+ helpful options...
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4194#comment:17">http://dev.haiku-os.org/ticket/4194#comment:17</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="019218.html">[Haiku-bugs] [Haiku] #4194: fuse (userlandfs) causes a page fault - user access in kernel area
+</A></li>
+	<LI>Next message: <A HREF="019235.html">[Haiku-bugs] [Haiku] #4194: fuse (userlandfs) causes a page fault - user access in kernel area
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19234">[ date ]</a>
+              <a href="thread.html#19234">[ thread ]</a>
+              <a href="subject.html#19234">[ subject ]</a>
+              <a href="author.html#19234">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

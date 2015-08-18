@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2243: KDL upon boot (before Tracker loads)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232243%3A%20KDL%20upon%20boot%20%28before%20Tracker%20loads%29&In-Reply-To=%3C048.dd9e328fe493e74867fa010f18b97e5b%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007472.html">
+   <LINK REL="Next"  HREF="007474.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2243: KDL upon boot (before Tracker loads)</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232243%3A%20KDL%20upon%20boot%20%28before%20Tracker%20loads%29&In-Reply-To=%3C048.dd9e328fe493e74867fa010f18b97e5b%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2243: KDL upon boot (before Tracker loads)">trac at haiku-os.org
+       </A><BR>
+    <I>Tue May 20 16:37:53 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007472.html">[Haiku-bugs] [Haiku] #2243: KDL upon boot (before Tracker loads)
+</A></li>
+        <LI>Next message: <A HREF="007474.html">[Haiku-bugs] [Haiku] #2243: KDL upon boot (before Tracker loads)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7473">[ date ]</a>
+              <a href="thread.html#7473">[ thread ]</a>
+              <a href="subject.html#7473">[ subject ]</a>
+              <a href="author.html#7473">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2243: KDL upon boot (before Tracker loads)
+-------------------------------+--------------------------------------------
+  Reporter:  koki              |       Owner:  absabs        
+      Type:  bug               |      Status:  new           
+  Priority:  high              |   Milestone:  R1            
+ Component:  Drivers/FireWire  |     Version:  R1 development
+Resolution:                    |    Platform:  All           
+-------------------------------+--------------------------------------------
+Comment (by marcusoverhagen):
+
+ Some more info.
+
+ With r25550 I enabled the PCI-PCI bridge reporting of parity errors on
+ it's secondary side. That means, when a PCI device attached to the bridge
+ generates a parity error, the bridge will report it as SERR, usually
+ generating an NMI.
+
+ PCI bridge configuration happens here:
+ 97 KERN: PCI: dom 0, bus 0, dev 10, func 0, changed PCI bridge control
+ from 0x0200 to 0x0823
+ 98 KERN: PCI: dom 0, bus 0, dev 11, func 0, changed PCI bridge control
+ from 0x000f to 0x082f
+
+ The bridge is:
+ 243 KERN: PCI: [dom 0, bus  0] bus   0, device 10, function  0: vendor
+ 10de, device 00dd, revision a2
+
+ and the secondary bus is number 2
+ 250 KERN: PCI:   primary_bus 00, secondary_bus 02, subordinate_bus 02,
+ secondary_latency 80
+
+ Where the firewire controller is located:
+ 262 KERN: PCI: [dom 0, bus  2] bus   2, device  0, function  0: vendor
+ 104c, device 8026, revision 00
+ 264 KERN: PCI:   vendor 104c: Texas Instruments
+ 265 KERN: PCI:   device 8026: TSB43AB21 IEEE-1394a-2000 Controller
+ (PHY/Link)
+
+
+ While it might be possible to not enable parity error reporting at all, or
+ to disable it for a blacklist of broken devices, I'm not sure if it isn't
+ the firewire driver that is guilty here.
+ Masquerading of errors usually only leads to undetected data corruption.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2243#comment:7">http://dev.haiku-os.org/ticket/2243#comment:7</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007472.html">[Haiku-bugs] [Haiku] #2243: KDL upon boot (before Tracker loads)
+</A></li>
+	<LI>Next message: <A HREF="007474.html">[Haiku-bugs] [Haiku] #2243: KDL upon boot (before Tracker loads)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7473">[ date ]</a>
+              <a href="thread.html#7473">[ thread ]</a>
+              <a href="subject.html#7473">[ subject ]</a>
+              <a href="author.html#7473">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

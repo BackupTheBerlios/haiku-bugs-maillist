@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4520: Tracker's &quot;Low Space&quot; warning has	bizarre criteria.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234520%3A%20Tracker%27s%20%22Low%20Space%22%20warning%20has%0A%09bizarre%20criteria.&In-Reply-To=%3C048.36d1f99b1096f43db8cb6a457eef1097%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="021327.html">
+   <LINK REL="Next"  HREF="021966.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4520: Tracker's &quot;Low Space&quot; warning has	bizarre criteria.</H1>
+    <B>dustin howett</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234520%3A%20Tracker%27s%20%22Low%20Space%22%20warning%20has%0A%09bizarre%20criteria.&In-Reply-To=%3C048.36d1f99b1096f43db8cb6a457eef1097%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4520: Tracker's &quot;Low Space&quot; warning has	bizarre criteria.">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Sep 15 04:11:16 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="021327.html">[Haiku-bugs] [Haiku] #4519: [patch] updated and additional .vmx
+</A></li>
+        <LI>Next message: <A HREF="021966.html">[Haiku-bugs] [Haiku] #4520: Tracker's &quot;Low Space&quot; warning has bizarre criteria.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21328">[ date ]</a>
+              <a href="thread.html#21328">[ thread ]</a>
+              <a href="subject.html#21328">[ subject ]</a>
+              <a href="author.html#21328">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4520: Tracker's &quot;Low Space&quot; warning has bizarre criteria.
+----------------------------------+-----------------------------------------
+ Reporter:  dustin howett         |       Owner:  axeld    
+     Type:  enhancement           |      Status:  new      
+ Priority:  normal                |   Milestone:  R1       
+Component:  Applications/Tracker  |     Version:  R1/alpha1
+Blockedby:                        |    Platform:  All      
+ Blocking:                        |  
+----------------------------------+-----------------------------------------
+ I notice, looking through the code, that Tracker only warns that a volume
+ is running critically low on space if it's got &lt;20 MB free AND that &lt;20MB
+ is &lt;10% of the disk's capacity. I stumbled across this when I was looking
+ at a volume (ext2) with 0.1% free disk space (about 100MB out of 100GB),
+ and I considered this to be a very low disk space condition.
+
+ I've attached a (very simple) patch to rectify the situation (make the
+ criteria a hard 9%-or-lower (&lt;10%)), but might not fully understand the
+ reasoning behind the original criteria.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4520">http://dev.haiku-os.org/ticket/4520</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="021327.html">[Haiku-bugs] [Haiku] #4519: [patch] updated and additional .vmx
+</A></li>
+	<LI>Next message: <A HREF="021966.html">[Haiku-bugs] [Haiku] #4520: Tracker's &quot;Low Space&quot; warning has bizarre criteria.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21328">[ date ]</a>
+              <a href="thread.html#21328">[ thread ]</a>
+              <a href="subject.html#21328">[ subject ]</a>
+              <a href="author.html#21328">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4443: Deleting image file does not free	up space
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234443%3A%20Deleting%20image%20file%20does%20not%20free%0A%09up%20space&In-Reply-To=%3C057.7f1bf6e17406447f367c87192b289415%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="021144.html">
+   <LINK REL="Next"  HREF="020854.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4443: Deleting image file does not free	up space</H1>
+    <B>psycho_killer</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234443%3A%20Deleting%20image%20file%20does%20not%20free%0A%09up%20space&In-Reply-To=%3C057.7f1bf6e17406447f367c87192b289415%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4443: Deleting image file does not free	up space">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Sep 12 14:46:19 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="021144.html">[Haiku-bugs] [Haiku] #4443: Deleting image file does not free	up space
+</A></li>
+        <LI>Next message: <A HREF="020854.html">[Haiku-bugs] [Haiku] #4340: nVidia HDA chipset seen,	but no sound
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21179">[ date ]</a>
+              <a href="thread.html#21179">[ thread ]</a>
+              <a href="subject.html#21179">[ subject ]</a>
+              <a href="author.html#21179">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4443: Deleting image file does not free up space
+------------------------------+---------------------------------------------
+ Reporter:  psycho_killer     |       Owner:  axeld         
+     Type:  bug               |      Status:  new           
+ Priority:  normal            |   Milestone:  R1            
+Component:  File Systems/BFS  |     Version:  R1 development
+Blockedby:                    |    Platform:  All           
+ Blocking:                    |  
+------------------------------+---------------------------------------------
+
+Comment(by psycho_killer):
+
+ Yes! checkfs frees up the lost space. But only AFTER you have rebooted,
+ mmdadia. Have a look at the attached screenshots. Thanks for the tip about
+ /dev/disk/virtual -- that was helpful to understand what is going on.
+
+ Screenshot 0 is before reboot, checkfs can not do anything and there are
+ several images I have mounted-&gt;unmounted-&gt;deleted that is listed in the
+ /dev/disk/virtual folder. The others are after the reboot, first just
+ checking (1), then fixing (2), and checking again (3). Note the space left
+ on the volume in the info box down to the right.
+
+ I hope this is helpful and that it is possible to fix someday. As I said
+ earlier, the typical user mounting an image will loose the space without
+ knowing how to regain it, both through Tracker and Terminal. As you
+ probably figure out by now the case of space actually being freed up
+ described in my earlier comment (using Terminal after Tracker) is due to
+ that the file in the virtual folder is reused instead of a new one being
+ created.
+
+ A little usability side note: Have a look at screenshot checkfs-2.png and
+ notice how the checkfs command says &quot;33011 blocks could be freed&quot; while
+ the haiku info box shows that the space now has been freed. This confused
+ me the first time I ran the procedure, and I discovered later that the
+ space actually had been freed in that step. The solution is obviously to
+ print &quot;could be freed&quot; when using the '-c' option, and print &quot;has been
+ freed&quot; when successfully running the command to fix.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4443#comment:6">http://dev.haiku-os.org/ticket/4443#comment:6</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="021144.html">[Haiku-bugs] [Haiku] #4443: Deleting image file does not free	up space
+</A></li>
+	<LI>Next message: <A HREF="020854.html">[Haiku-bugs] [Haiku] #4340: nVidia HDA chipset seen,	but no sound
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21179">[ date ]</a>
+              <a href="thread.html#21179">[ thread ]</a>
+              <a href="subject.html#21179">[ subject ]</a>
+              <a href="author.html#21179">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

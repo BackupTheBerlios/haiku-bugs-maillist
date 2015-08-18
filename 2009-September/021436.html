@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4547: copy a new file on a NFS mount -&gt;	&quot;PANIC&quot;
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234547%3A%20copy%20a%20new%20file%20on%20a%20NFS%20mount%20-%3E%0A%09%22PANIC%22&In-Reply-To=%3C040.18e416f7e3727040abf71fa981b79ff5%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="021433.html">
+   <LINK REL="Next"  HREF="021437.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4547: copy a new file on a NFS mount -&gt;	&quot;PANIC&quot;</H1>
+    <B>jedie</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234547%3A%20copy%20a%20new%20file%20on%20a%20NFS%20mount%20-%3E%0A%09%22PANIC%22&In-Reply-To=%3C040.18e416f7e3727040abf71fa981b79ff5%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4547: copy a new file on a NFS mount -&gt;	&quot;PANIC&quot;">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Sep 16 14:45:13 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="021433.html">[Haiku-bugs] [Haiku] #3500: mount_nfs crashes Haiku
+</A></li>
+        <LI>Next message: <A HREF="021437.html">[Haiku-bugs] [Haiku] #3500: mount_nfs crashes Haiku
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21436">[ date ]</a>
+              <a href="thread.html#21436">[ thread ]</a>
+              <a href="subject.html#21436">[ subject ]</a>
+              <a href="author.html#21436">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4547: copy a new file on a NFS mount -&gt; &quot;PANIC&quot;
+------------------------------+---------------------------------------------
+ Reporter:  jedie             |       Owner:  mmu_man  
+     Type:  bug               |      Status:  new      
+ Priority:  normal            |   Milestone:  R1       
+Component:  File Systems/NFS  |     Version:  R1/alpha1
+Blockedby:                    |    Platform:  All      
+ Blocking:                    |  
+------------------------------+---------------------------------------------
+ I get a &quot;PANIC&quot; if i copy a new file on a NFS mount (Ubuntu Linux).
+
+ Here the last syslog lines:
+ {{{
+ KERN: nfs: mount(5, &lt;NULL&gt;, 00000000)
+ KERN: nfs: nfs_params:
+ nfs:192.168.3.200:/home/jens/NFS,uid=0,gid=0,hostname=shredder
+ KERN: nfs:ip!
+ KERN: IP:192.168.3.200
+ KERN: nfs:hn!
+ KERN: nfs:uid!
+ KERN: nfs:gid!
+ KERN: nfs: ip:c0a80714 server:'192.168.3.200' export:'/home/jens/NFS'
+ hostname:'shredder' uid=0 gid=0
+ KERN: nfs: postoffice: can't find pending call to remove for xid 0
+ Last message repeated 1 time
+ KERN: nfs: mountd at 1407a8c0:52042
+ KERN: nfs: nfsd at 1407a8c0:2049
+ KERN: vnode 5:6695488 is not becoming unbusy!
+ KERN: vm_soft_fault: va 0x0 not covered by area in address space
+ KERN: vm_page_fault: vm_soft_fault returned error 'Bad address' on fault
+ at 0x10, ip 0x58fbc9, write 0, user 1, thread 0xba
+ KERN: vm_page_fault: thread &quot;w&gt;/boot/home/NFS&quot; (186) in team &quot;Tracker&quot;
+ (91) tried to read address 0x10, ip 0x58fbc9 (&quot;libtracker.so_seg0ro&quot;
+ +0x114bc9)
+ KERN: bfs: bfs_create_index:2040: File or Directory already exists
+ Last message repeated 1 time
+ }}}
+
+ (Ticket moved from: ticket:3500#comment:3 )
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4547">http://dev.haiku-os.org/ticket/4547</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="021433.html">[Haiku-bugs] [Haiku] #3500: mount_nfs crashes Haiku
+</A></li>
+	<LI>Next message: <A HREF="021437.html">[Haiku-bugs] [Haiku] #3500: mount_nfs crashes Haiku
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21436">[ date ]</a>
+              <a href="thread.html#21436">[ thread ]</a>
+              <a href="subject.html#21436">[ subject ]</a>
+              <a href="author.html#21436">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

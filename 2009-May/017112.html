@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3883: [patch] please implement	pthread_attr_getstack()
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233883%3A%20%5Bpatch%5D%20please%20implement%0A%09pthread_attr_getstack%28%29&In-Reply-To=%3C047.49649d6b5830a2ad1f24e72469f0fea1%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="017079.html">
+   <LINK REL="Next"  HREF="017161.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3883: [patch] please implement	pthread_attr_getstack()</H1>
+    <B>bonefish</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233883%3A%20%5Bpatch%5D%20please%20implement%0A%09pthread_attr_getstack%28%29&In-Reply-To=%3C047.49649d6b5830a2ad1f24e72469f0fea1%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3883: [patch] please implement	pthread_attr_getstack()">trac at haiku-os.org
+       </A><BR>
+    <I>Fri May  8 01:15:44 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="017079.html">[Haiku-bugs] [Haiku] #3883: [patch] please implement	pthread_attr_getstack()
+</A></li>
+        <LI>Next message: <A HREF="017161.html">[Haiku-bugs] [Haiku] #3883: [patch] please implement	pthread_attr_getstack()
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17112">[ date ]</a>
+              <a href="thread.html#17112">[ thread ]</a>
+              <a href="subject.html#17112">[ subject ]</a>
+              <a href="author.html#17112">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3883: [patch] please implement pthread_attr_getstack()
+-------------------------------+--------------------------------------------
+ Reporter:  mjw                |       Owner:  axeld         
+     Type:  enhancement        |      Status:  new           
+ Priority:  normal             |   Milestone:  R1            
+Component:  System/libroot.so  |     Version:  R1 development
+Blockedby:                     |    Platform:  All           
+ Blocking:                     |  
+-------------------------------+--------------------------------------------
+
+Comment(by bonefish):
+
+ Replying to [comment:2 mjw]:
+ &gt; Not quite an absolute &quot;no&quot;, then.
+ &gt;
+ &gt; Would it be more acceptable if I were to re-work the patch, removing
+ pthread_getattr_np() and not caching the pthread_attr in pthread_create()?
+
+ Sure. Even better, if you also implemented the other stack-related
+ attribute functions.
+
+ &gt; So, the following would be valid:
+ &gt; pthread_attr_init(attr)
+ &gt; pthread_create(..., &amp;attr, ...)
+ &gt; pthread_attr_getstack(&amp;attr)
+
+ It would be valid, but I'm not sure that it would do what you expect. That
+ is if you expect, that the pthread_attr_getstack() returns the stack
+ address of the newly created thread. pthread_create() doesn't modify the
+ supplied attributes -- it must not do that, since they are &quot;const&quot; and
+ can't do that anyway, since that would prevent the attributes to be used
+ for creating multiple threads. So, unless one explicitly sets the stack
+ address, pthread_attr_getstack() should return NULL or some other
+ placeholder.
+
+ Is there a special use case/ported software where the stack address and/or
+ size is needed?
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3883#comment:3">http://dev.haiku-os.org/ticket/3883#comment:3</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="017079.html">[Haiku-bugs] [Haiku] #3883: [patch] please implement	pthread_attr_getstack()
+</A></li>
+	<LI>Next message: <A HREF="017161.html">[Haiku-bugs] [Haiku] #3883: [patch] please implement	pthread_attr_getstack()
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17112">[ date ]</a>
+              <a href="thread.html#17112">[ thread ]</a>
+              <a href="subject.html#17112">[ subject ]</a>
+              <a href="author.html#17112">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4903: Media checked KDL on	get_cache_blocked
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234903%3A%20Media%20checked%20KDL%20on%0A%09get_cache_blocked&In-Reply-To=%3C051.fa54ce62a7c820f55113daf08d9850fa%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="023622.html">
+   <LINK REL="Next"  HREF="023627.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4903: Media checked KDL on	get_cache_blocked</H1>
+    <B>emitrax</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234903%3A%20Media%20checked%20KDL%20on%0A%09get_cache_blocked&In-Reply-To=%3C051.fa54ce62a7c820f55113daf08d9850fa%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4903: Media checked KDL on	get_cache_blocked">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Nov 10 13:14:00 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="023622.html">[Haiku-bugs] [Haiku] #4903: Media checked KDL on	get_cache_blocked
+</A></li>
+        <LI>Next message: <A HREF="023627.html">[Haiku-bugs] [Haiku] #4903: Media checked KDL on	get_cache_blocked
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#23625">[ date ]</a>
+              <a href="thread.html#23625">[ thread ]</a>
+              <a href="subject.html#23625">[ subject ]</a>
+              <a href="author.html#23625">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4903: Media checked KDL on get_cache_blocked
+------------------------------+---------------------------------------------
+ Reporter:  emitrax           |       Owner:  axeld    
+     Type:  bug               |      Status:  new      
+ Priority:  normal            |   Milestone:  R1       
+Component:  File Systems/BFS  |     Version:  R1/alpha1
+Blockedby:                    |    Platform:  All      
+ Blocking:                    |  
+------------------------------+---------------------------------------------
+
+Comment(by emitrax):
+
+ Replying to [comment:2 axeld]:
+ &gt; From what I can tell this seem to be 3 different bugs:
+ &gt;
+ &gt; 1) the first bug is the originally reported one; this seems to be a BFS
+ bug. Please use the &quot;bfs_allocator&quot;, and &quot;bfs&quot; command next time you
+ stumble across that one (you get the pointer-to-volume from the &quot;mount&quot;
+ KDL command).
+ &gt;
+
+ Ok. Thanks.
+
+ &gt; 2) Writing back block 5 failed - this seems to be a problem of the
+ underlying device, ie. probably a USB problem (you may want to have a look
+ into your syslog for hints). I guess it's something similar to #4901.
+
+ I just remembered I had serial output enabled and found an hint on this
+ one.
+
+  42 usb error control pipe 16: timeout waiting for queued request to
+ complete
+  43 usb error hub 15: error updating port status
+
+ But this is probably related to the fact that I was on KDL.
+
+ &gt;
+ &gt; 3) The block/notifier crash - there already seems to be a ticket for
+ that one (see #2690), also reported by you. Are you sure you don't have
+ local changes on that file? ;-))
+
+ 100% sure. The image I'm using at work is basically the same as the trunk
+ one. Not local
+ changes on that area. BTW: I didn't remember about that bug at all. :-)
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4903#comment:3">http://dev.haiku-os.org/ticket/4903#comment:3</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="023622.html">[Haiku-bugs] [Haiku] #4903: Media checked KDL on	get_cache_blocked
+</A></li>
+	<LI>Next message: <A HREF="023627.html">[Haiku-bugs] [Haiku] #4903: Media checked KDL on	get_cache_blocked
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#23625">[ date ]</a>
+              <a href="thread.html#23625">[ thread ]</a>
+              <a href="subject.html#23625">[ subject ]</a>
+              <a href="author.html#23625">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

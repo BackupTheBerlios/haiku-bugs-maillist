@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3133: Broken macro definition TRACE
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233133%3A%20Broken%20macro%20definition%20TRACE&In-Reply-To=%3C042.4850cad3055b9734ff86408381441ac6%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012510.html">
+   <LINK REL="Next"  HREF="012512.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3133: Broken macro definition TRACE</H1>
+    <B>Adek336</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233133%3A%20Broken%20macro%20definition%20TRACE&In-Reply-To=%3C042.4850cad3055b9734ff86408381441ac6%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3133: Broken macro definition TRACE">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Nov 15 03:16:26 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012510.html">[Haiku-bugs] [Haiku] #3055: Bundle the vmdk and vmx files	together
+</A></li>
+        <LI>Next message: <A HREF="012512.html">[Haiku-bugs] [Haiku] #3133: Broken macro definition TRACE
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12511">[ date ]</a>
+              <a href="thread.html#12511">[ thread ]</a>
+              <a href="subject.html#12511">[ subject ]</a>
+              <a href="author.html#12511">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3133: Broken macro definition TRACE
+-----------------------+----------------------------------------------------
+ Reporter:  Adek336    |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+Blockedby:             |    Platform:  All           
+ Blocking:             |  
+-----------------------+----------------------------------------------------
+ patch
+ {{{
+ Index: MouseInputDevice.cpp
+ ===================================================================
+ --- MouseInputDevice.cpp        (revision 28655)
+ +++ MouseInputDevice.cpp        (working copy)
+ @@ -76,10 +76,10 @@
+ __FUNCTION__, sFunctionDepth)
+  #      define MID_CALLED(x...) FunctionTracer _ft(this,
+ &quot;MouseInputDevice&quot;, \
+ __FUNCTION__, sFunctionDepth)
+ -#      define TRACE(x...)      { BString _to; \
+ +#      define TRACE(x...)      do { BString _to; \
+                                                         _to.Append(' ',
+ (sFunctionDepth + 1) * 2); \
+                                                         debug_printf(&quot;%p
+ -&gt; %s&quot;, this, _to.String()); \
+ -                                                       debug_printf(x); }
+ +                                                       debug_printf(x); }
+ while(0)
+  #      define LOG_EVENT(text...) do {} while (0)
+  #      define LOG_ERR(text...) TRACE(text)
+  #else
+
+ }}}
+
+ the current definition breaks build for when TRACE_MOUSE_DEVICE is
+ enabled.
+
+ Similar problem is for add-
+ ons/input_server/devices/keyboard/KeyboardInputDevice.cpp and perhaps more
+ files.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3133">http://dev.haiku-os.org/ticket/3133</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012510.html">[Haiku-bugs] [Haiku] #3055: Bundle the vmdk and vmx files	together
+</A></li>
+	<LI>Next message: <A HREF="012512.html">[Haiku-bugs] [Haiku] #3133: Broken macro definition TRACE
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12511">[ date ]</a>
+              <a href="thread.html#12511">[ thread ]</a>
+              <a href="subject.html#12511">[ subject ]</a>
+              <a href="author.html#12511">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

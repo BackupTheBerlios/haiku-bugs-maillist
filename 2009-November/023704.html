@@ -1,0 +1,141 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1026: Black screen when Haiku switch to graphical mode after bootscreen GeForce 6150
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231026%3A%20Black%20screen%20when%20Haiku%20switch%20to%0A%20graphical%20mode%20after%20bootscreen%20GeForce%206150&In-Reply-To=%3C048.aff048209f0345aab62780a951c84fff%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="023688.html">
+   <LINK REL="Next"  HREF="023689.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1026: Black screen when Haiku switch to graphical mode after bootscreen GeForce 6150</H1>
+    <B>fano</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231026%3A%20Black%20screen%20when%20Haiku%20switch%20to%0A%20graphical%20mode%20after%20bootscreen%20GeForce%206150&In-Reply-To=%3C048.aff048209f0345aab62780a951c84fff%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1026: Black screen when Haiku switch to graphical mode after bootscreen GeForce 6150">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Nov 11 17:03:48 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="023688.html">[Haiku-bugs] [Haiku] #3846: Intel_extreme driver problem on	i855g
+</A></li>
+        <LI>Next message: <A HREF="023689.html">[Haiku-bugs] [Haiku] #1026: Black screen when Haiku switch to graphical mode after bootscreen GeForce 6150
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#23704">[ date ]</a>
+              <a href="thread.html#23704">[ thread ]</a>
+              <a href="subject.html#23704">[ subject ]</a>
+              <a href="author.html#23704">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1026: Black screen when Haiku switch to graphical mode after bootscreen GeForce
+6150
+-------------------------------------+--------------------------------------
+ Reporter:  acca                     |       Owner:  rudolfc      
+     Type:  bug                      |      Status:  new          
+ Priority:  normal                   |   Milestone:  R1           
+Component:  Drivers/Graphics/nVidia  |     Version:  R1/pre-alpha1
+Blockedby:                           |    Platform:  x86          
+ Blocking:                           |  
+-------------------------------------+--------------------------------------
+
+Comment(by fano):
+
+ Hi Rudolf!
+ Good news VGA out now works!
+
+ I've done a lot of test today:
+
+ VGA connected to Monitor / DVI disconnected screen is not black now Haiku
+ desktop is showed but the resolution is not the monitor &quot;preferred&quot; is
+ 1024x768 instead of 1280x1024 (see  &quot;1 -
+ nvidia.10de_0240_000500.0.log.1024x768&quot; )
+
+ I can select <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">1280x1024 at 60</A> Hz and all is good (but there are some strange
+ refresh rates... &gt; 75 Hz does &quot;out of range&quot;)
+
+ After reboot the selected resolution is correctly maintained as you can
+ see in &quot;2 - nvidia.10de_0240_000500.0.log.1280x1024&quot;.
+
+ Then I've shutdown the system and connected the HDTV display via DVI/HDMI
+ connector, too.
+ During the bios and Haiku boot all the screens show the same image but
+ after boot ends the Monitor is black and only on HDTV image is showed!
+ The selected resolution is 800x600 @ 72.4 Hz (?) I can select 640x480
+ only... only a part of the screen is covered!
+ I've no way to set dual head (it must to appear in the &quot;screen preference
+ or is an applet separated?) maybe if I can set it something happens...
+ See &quot;3 - nvidia.10de_0240_000500.0.log.HDTV on DVI-HDMI &amp; MONITOR on VGA&quot;
+ and
+ HDTV strange refreshrate.png
+
+ The 4th test: I changed the nvdia.settings to say &quot;switchhead true&quot; and
+ rebooted.
+ The desktop is now showed on monitor only BUT IS FLIKERING (800x600 @ 60
+ Hz... nothing strange), HDTV has no signal if I select 640x480 @ 60 Hz all
+ turns right.
+ See &quot;4 - nvidia.10de_0240_000500.0.log.switchhead true SCREEN WAS
+ FLIKERING @ 800x600 60Hz!!! I HAD TO SELECT 640x480 60 Hz. Nothingh Showed
+ on HDTV&quot;
+
+ Then I've changed &quot;switchead = false&quot; again and rebooted with HDTV only
+ (connected via DVI/HDMI) the screen was at 800*600 (but I thought the
+ refresh rate was more correctly 60 Hz), I can select 1280*<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">720 at 60</A> Hz but
+ not its preferred resolution 1920*1080 (and if understand well log stated
+ wrongly &quot;1920*1080 is not supported&quot;!).
+ 24p / Hz is not present (in &quot;other&quot; it starts at 48 Hz) but my HDTV
+ supports this refresh rate, too... strangely enough I can select 48 and 72
+ Hz... on Windows I tried a lot to create &quot;custom resolution&quot; at this
+ refresh rate: but only black screen!
+ In windows the only allowed resolutions are 24-50-60 Hz nothing more!
+
+ I don't have a way to know if Haiku screen preference selects really these
+ refresh rate (HDTV OSD no say nothing regarding used refresh rate)... ahh
+ I could select 100 Hz too and the HDTV was happy (my HDTV is KDL-46W4500
+ is a formally 100/120 Hz screen but I though was only internally for
+ motionflow usage!!!) I've not tried if I can select 120 Hz too...
+
+ If it is right really good! In this case is best of the Windows Nvidia
+ Driver (I always had the impression was in some way software &quot;blocked&quot;.)
+
+ See &quot;5 - nvidia.10de_0240_000500.0.log.800x600 selected, 1280x720
+ selectable 1920x1080 not selected&quot; for reference.
+
+ If you want some more tests not hesitate to say,
+ fano.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1026#comment:64">http://dev.haiku-os.org/ticket/1026#comment:64</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="023688.html">[Haiku-bugs] [Haiku] #3846: Intel_extreme driver problem on	i855g
+</A></li>
+	<LI>Next message: <A HREF="023689.html">[Haiku-bugs] [Haiku] #1026: Black screen when Haiku switch to graphical mode after bootscreen GeForce 6150
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#23704">[ date ]</a>
+              <a href="thread.html#23704">[ thread ]</a>
+              <a href="subject.html#23704">[ subject ]</a>
+              <a href="author.html#23704">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

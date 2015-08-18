@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1389: [FlattenPictureTest] Not all tests	succeed
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231389%3A%20%5BFlattenPictureTest%5D%20Not%20all%20tests%0A%09succeed&In-Reply-To=%3C051.f842df5743473e2d0bc13e2f50659eff%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002284.html">
+   <LINK REL="Next"  HREF="002233.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1389: [FlattenPictureTest] Not all tests	succeed</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231389%3A%20%5BFlattenPictureTest%5D%20Not%20all%20tests%0A%09succeed&In-Reply-To=%3C051.f842df5743473e2d0bc13e2f50659eff%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1389: [FlattenPictureTest] Not all tests	succeed">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Aug 14 09:08:13 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002284.html">[Haiku-bugs] [Haiku] #1389: [FlattenPictureTest] Not all tests	succeed
+</A></li>
+        <LI>Next message: <A HREF="002233.html">[Haiku-bugs] [Haiku] #1390: [app_server] Invalid opcode exception
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2285">[ date ]</a>
+              <a href="thread.html#2285">[ thread ]</a>
+              <a href="subject.html#2285">[ subject ]</a>
+              <a href="author.html#2285">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1389: [FlattenPictureTest] Not all tests succeed
+---------------------------------+------------------------------------------
+  Reporter:  laplace             |       Owner:  jackburton    
+      Type:  bug                 |      Status:  assigned      
+  Priority:  normal              |   Milestone:  R1            
+ Component:  Kits/Interface Kit  |     Version:  R1 development
+Resolution:                      |    Platform:  All           
+---------------------------------+------------------------------------------
+Comment (by laplace):
+
+ Replying to [comment:7 jackburton]:
+ &gt; Replying to [comment:5 laplace]:
+ &gt; &gt; - SetPenSize: Pen size of 0 is not drawn as if it had size of 1
+ &gt;
+ &gt; I read the documentation, but I'm not sure where we should handle that.
+ &gt; The docs say:
+ &gt; &quot;The default pen size is 1.0 coordinate unit. It can be set to any
+ nonnegative value, including 0.0. If set to 0.0, the size is translated to
+ one pixel for all devices. This guarantees that it will always draw the
+ thinnest possible line no matter what the resolution of the device.
+ &gt;
+ &gt; Thus, lines drawn with pen sizes of 1.0 and 0.0 will look alike on the
+ screen (one pixel thick), but the line drawn with a pen size of 1.0 will
+ be 1/72 of an inch thick when printed, however many printer pixels that
+ takes, while the line drawn with a 0.0 pen size will be just one pixel
+ thick. &quot;
+
+ OK, forgot about that.
+
+ &gt; &gt; - SetPenSize2: Scaling is not applied to the pen size
+ &gt;
+ &gt; &gt; - TestPattern: pattern seems not to be taken into account
+ &gt;
+ &gt; This is fixed in r21937.
+
+ Great!
+ &gt; I have another question:
+ &gt; I've noticed that the colors of the test results change in a weird way,
+ when I click on them. For example, the pattern test looks like it has only
+ the central rect filled with pattern.
+ &gt; Since this happens also with the &quot;direct&quot; drawing, I don't think it's a
+ bug in the picture implementation. What do you think ?
+
+ Yes, I have realized that too. I did want to create a ticket after further
+ examination. The rendering results are stored in BBitmaps and drawn to the
+ window with DrawBitmap(), so I suppose either there is a bug or the bitmap
+ is not setup correctly (color_space?) or drawn with wrong drawing mode
+ etc... however it works fine under BeOS.
+
+ There is also another issue (will also create a ticket later). The header
+ line in the window is truncated. If you maximize the window not the
+ complete text is displayed.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1389#comment:8">http://dev.haiku-os.org/ticket/1389#comment:8</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002284.html">[Haiku-bugs] [Haiku] #1389: [FlattenPictureTest] Not all tests	succeed
+</A></li>
+	<LI>Next message: <A HREF="002233.html">[Haiku-bugs] [Haiku] #1390: [app_server] Invalid opcode exception
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2285">[ date ]</a>
+              <a href="thread.html#2285">[ thread ]</a>
+              <a href="subject.html#2285">[ subject ]</a>
+              <a href="author.html#2285">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

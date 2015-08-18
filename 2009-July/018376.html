@@ -1,0 +1,242 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4087: Building ZooLib ButtonMessage sample crashes Haiku when run under VirtualBox
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-July/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234087%3A%20Building%20ZooLib%20ButtonMessage%0A%20sample%20crashes%20Haiku%20when%20run%20under%20VirtualBox&In-Reply-To=%3C059.7dbdf3bb9c7b68e90316eb4ab6e96196%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="018375.html">
+   <LINK REL="Next"  HREF="018377.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4087: Building ZooLib ButtonMessage sample crashes Haiku when run under VirtualBox</H1>
+    <B>scottmc</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234087%3A%20Building%20ZooLib%20ButtonMessage%0A%20sample%20crashes%20Haiku%20when%20run%20under%20VirtualBox&In-Reply-To=%3C059.7dbdf3bb9c7b68e90316eb4ab6e96196%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4087: Building ZooLib ButtonMessage sample crashes Haiku when run under VirtualBox">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Jul  9 20:27:16 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="018375.html">[Haiku-bugs] [Haiku] #4087: Building ZooLib ButtonMessage sample crashes Haiku when run under VirtualBox
+</A></li>
+        <LI>Next message: <A HREF="018377.html">[Haiku-bugs] [Haiku] #4087: Building ZooLib ButtonMessage sample crashes Haiku when run under VirtualBox
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18376">[ date ]</a>
+              <a href="thread.html#18376">[ thread ]</a>
+              <a href="subject.html#18376">[ subject ]</a>
+              <a href="author.html#18376">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4087: Building ZooLib ButtonMessage sample crashes Haiku when run under
+VirtualBox
+-----------------------------+----------------------------------------------
+ Reporter:  MichaelCrawford  |       Owner:  axeld         
+     Type:  bug              |      Status:  new           
+ Priority:  normal           |   Milestone:  R1            
+Component:  - General        |     Version:  R1 development
+Blockedby:                   |    Platform:  All           
+ Blocking:                   |  
+-----------------------------+----------------------------------------------
+
+Comment(by scottmc):
+
+ Here's what I get on real hardware (AMD Geode 500MHz, been running for 47
+ days 18 hours and still not crashed) with gcc2 and Haiku r30665:
+
+ {{{
+ ~/develop/zoolib/samples/buttonmessage/buttonmessage_build_be&gt; make
+ g++  -I../../../samples/buttonmessage/buttonmessage_src  -I./
+ -I../../../src/_deprecated  -I../../../src/asset  -I../../../src/compat
+ -I../../../src/config  -I../../../src/config_choices  -I../../../src/file
+ -I../../../src/foundation  -I../../../src/graphics  -I../../../src/net
+ -I../../../src/platform/beos  -I../../../src/platform/macos
+ -I../../../src/platform/posix  -I../../../src/platform/win32
+ -I../../../src/printing  -I../../../src/stream  -I../../../src/text
+ -I../../../src/thread  -I../../../src/uicore  -I../../../src/uiextra
+ -pipe -D_REENTRANT -g -DDEBUG -c
+ ../../../samples/buttonmessage/buttonmessage_src/BMApp.cpp -o objects-
+ debug/BMApp.o
+ g++  -I../../../samples/buttonmessage/buttonmessage_src  -I./
+ -I../../../src/_deprecated  -I../../../src/asset  -I../../../src/compat
+ -I../../../src/config  -I../../../src/config_choices  -I../../../src/file
+ -I../../../src/foundation  -I../../../src/graphics  -I../../../src/net
+ -I../../../src/platform/beos  -I../../../src/platform/macos
+ -I../../../src/platform/posix  -I../../../src/platform/win32
+ -I../../../src/printing  -I../../../src/stream  -I../../../src/text
+ -I../../../src/thread  -I../../../src/uicore  -I../../../src/uiextra
+ -pipe -D_REENTRANT -g -DDEBUG -c
+ ../../../samples/buttonmessage/buttonmessage_src/BMButtonWindow.cpp -o
+ objects-debug/BMButtonWindow.o
+ g++  -I../../../samples/buttonmessage/buttonmessage_src  -I./
+ -I../../../src/_deprecated  -I../../../src/asset  -I../../../src/compat
+ -I../../../src/config  -I../../../src/config_choices  -I../../../src/file
+ -I../../../src/foundation  -I../../../src/graphics  -I../../../src/net
+ -I../../../src/platform/beos  -I../../../src/platform/macos
+ -I../../../src/platform/posix  -I../../../src/platform/win32
+ -I../../../src/printing  -I../../../src/stream  -I../../../src/text
+ -I../../../src/thread  -I../../../src/uicore  -I../../../src/uiextra
+ -pipe -D_REENTRANT -g -DDEBUG -c
+ ../../../samples/buttonmessage/buttonmessage_src/BMDisplayWindow.cpp -o
+ objects-debug/BMDisplayWindow.o
+ g++  -I../../../samples/buttonmessage/buttonmessage_src  -I./
+ -I../../../src/_deprecated  -I../../../src/asset  -I../../../src/compat
+ -I../../../src/config  -I../../../src/config_choices  -I../../../src/file
+ -I../../../src/foundation  -I../../../src/graphics  -I../../../src/net
+ -I../../../src/platform/beos  -I../../../src/platform/macos
+ -I../../../src/platform/posix  -I../../../src/platform/win32
+ -I../../../src/printing  -I../../../src/stream  -I../../../src/text
+ -I../../../src/thread  -I../../../src/uicore  -I../../../src/uiextra
+ -pipe -D_REENTRANT -g -DDEBUG -c
+ ../../../samples/buttonmessage/buttonmessage_src/BMMain.cpp -o objects-
+ debug/BMMain.o
+ g++  -I../../../samples/buttonmessage/buttonmessage_src  -I./
+ -I../../../src/_deprecated  -I../../../src/asset  -I../../../src/compat
+ -I../../../src/config  -I../../../src/config_choices  -I../../../src/file
+ -I../../../src/foundation  -I../../../src/graphics  -I../../../src/net
+ -I../../../src/platform/beos  -I../../../src/platform/macos
+ -I../../../src/platform/posix  -I../../../src/platform/win32
+ -I../../../src/printing  -I../../../src/stream  -I../../../src/text
+ -I../../../src/thread  -I../../../src/uicore  -I../../../src/uiextra
+ -pipe -D_REENTRANT -g -DDEBUG -c
+ ../../../samples/buttonmessage/buttonmessage_src/MessageButtonPane.cpp -o
+ objects-debug/MessageButtonPane.o
+ g++  -I../../../samples/buttonmessage/buttonmessage_src  -I./
+ -I../../../src/_deprecated  -I../../../src/asset  -I../../../src/compat
+ -I../../../src/config  -I../../../src/config_choices  -I../../../src/file
+ -I../../../src/foundation  -I../../../src/graphics  -I../../../src/net
+ -I../../../src/platform/beos  -I../../../src/platform/macos
+ -I../../../src/platform/posix  -I../../../src/platform/win32
+ -I../../../src/printing  -I../../../src/stream  -I../../../src/text
+ -I../../../src/thread  -I../../../src/uicore  -I../../../src/uiextra
+ -pipe -D_REENTRANT -g -DDEBUG -c ../../../src/foundation/ZUnicode.cpp -o
+ objects-debug/ZUnicode.o
+ /boot/home/develop/zoolib/src/foundation/ZUnicode.cpp:326: explicit
+ instantiation of `struct ZUnicode::Functions_CountCU_T&lt;const long unsigned
+ int *&gt;' after
+ /boot/home/develop/zoolib/src/foundation/ZUnicodePriv.h:58: explicit
+ specialization here
+ /boot/home/develop/zoolib/src/foundation/ZUnicode.cpp:327: explicit
+ instantiation of `struct ZUnicode::Functions_CountCU_T&lt;const __wchar_t *&gt;'
+ after
+ /boot/home/develop/zoolib/src/foundation/ZUnicodePriv.h:71: explicit
+ specialization here
+ /boot/home/develop/zoolib/src/foundation/ZUnicode.cpp:328: explicit
+ instantiation of `struct ZUnicode::Functions_CountCU_T&lt;const char *&gt;'
+ after
+ /boot/home/develop/zoolib/src/foundation/ZUnicodePriv.h:84: explicit
+ specialization here
+ /boot/home/develop/zoolib/src/foundation/ZUnicode.cpp:330: explicit
+ instantiation of `struct ZUnicode::Functions_CountCU_T&lt;long unsigned int
+ *&gt;' after
+ /boot/home/develop/zoolib/src/foundation/ZUnicodePriv.h:97: explicit
+ specialization here
+ /boot/home/develop/zoolib/src/foundation/ZUnicode.cpp:331: explicit
+ instantiation of `struct ZUnicode::Functions_CountCU_T&lt;__wchar_t *&gt;' after
+ /boot/home/develop/zoolib/src/foundation/ZUnicodePriv.h:110: explicit
+ specialization here
+ /boot/home/develop/zoolib/src/foundation/ZUnicode.cpp:332: explicit
+ instantiation of `struct ZUnicode::Functions_CountCU_T&lt;char *&gt;' after
+ /boot/home/develop/zoolib/src/foundation/ZUnicodePriv.h:123: explicit
+ specialization here
+ /boot/home/develop/zoolib/src/foundation/ZUnicode.cpp:343: duplicate
+ explicit instantiation of `struct ZUnicode::Functions_Count_T&lt;const long
+ unsigned int *&gt;'
+ /boot/home/develop/zoolib/src/foundation/ZUnicode.cpp:344: duplicate
+ explicit instantiation of `struct ZUnicode::Functions_Count_T&lt;const
+ __wchar_t *&gt;'
+ /boot/home/develop/zoolib/src/foundation/ZUnicode.cpp:345: duplicate
+ explicit instantiation of `struct ZUnicode::Functions_Count_T&lt;const char
+ *&gt;'
+ /boot/home/develop/zoolib/src/foundation/ZUnicode.cpp:347: duplicate
+ explicit instantiation of `struct ZUnicode::Functions_Count_T&lt;long
+ unsigned int *&gt;'
+ /boot/home/develop/zoolib/src/foundation/ZUnicode.cpp:348: duplicate
+ explicit instantiation of `struct ZUnicode::Functions_Count_T&lt;__wchar_t
+ *&gt;'
+ /boot/home/develop/zoolib/src/foundation/ZUnicode.cpp:349: duplicate
+ explicit instantiation of `struct ZUnicode::Functions_Count_T&lt;char *&gt;'
+ /boot/home/develop/zoolib/src/foundation/ZUnicode.cpp:360: duplicate
+ explicit instantiation of `struct ZUnicode::Functions_Read_T&lt;const long
+ unsigned int *,long unsigned int&gt;'
+ /boot/home/develop/zoolib/src/foundation/ZUnicode.cpp:361: duplicate
+ explicit instantiation of `struct ZUnicode::Functions_Read_T&lt;const
+ __wchar_t *,__wchar_t&gt;'
+ /boot/home/develop/zoolib/src/foundation/ZUnicode.cpp:362: duplicate
+ explicit instantiation of `struct ZUnicode::Functions_Read_T&lt;const char
+ *,char&gt;'
+ /boot/home/develop/zoolib/src/foundation/ZUnicode.cpp:364: duplicate
+ explicit instantiation of `struct ZUnicode::Functions_Read_T&lt;long unsigned
+ int *,long unsigned int&gt;'
+ /boot/home/develop/zoolib/src/foundation/ZUnicode.cpp:365: duplicate
+ explicit instantiation of `struct ZUnicode::Functions_Read_T&lt;__wchar_t
+ *,__wchar_t&gt;'
+ /boot/home/develop/zoolib/src/foundation/ZUnicode.cpp:366: duplicate
+ explicit instantiation of `struct ZUnicode::Functions_Read_T&lt;char *,char&gt;'
+ /boot/home/develop/zoolib/src/foundation/ZUnicode.cpp:373: duplicate
+ explicit instantiation of `struct ZUnicode::Functions_Write_T&lt;long
+ unsigned int *,long unsigned int&gt;'
+ /boot/home/develop/zoolib/src/foundation/ZUnicode.cpp:374: duplicate
+ explicit instantiation of `struct ZUnicode::Functions_Write_T&lt;__wchar_t
+ *,__wchar_t&gt;'
+ /boot/home/develop/zoolib/src/foundation/ZUnicode.cpp:375: duplicate
+ explicit instantiation of `struct ZUnicode::Functions_Write_T&lt;char
+ *,char&gt;'
+ /boot/home/develop/zoolib/src/foundation/ZUnicode.cpp:386: duplicate
+ explicit instantiation of `struct ZUnicode::Functions_Convert_T&lt;const long
+ unsigned int *&gt;'
+ /boot/home/develop/zoolib/src/foundation/ZUnicode.cpp:387: duplicate
+ explicit instantiation of `struct ZUnicode::Functions_Convert_T&lt;const
+ __wchar_t *&gt;'
+ /boot/home/develop/zoolib/src/foundation/ZUnicode.cpp:388: duplicate
+ explicit instantiation of `struct ZUnicode::Functions_Convert_T&lt;const char
+ *&gt;'
+ /boot/home/develop/zoolib/src/foundation/ZUnicode.cpp:390: duplicate
+ explicit instantiation of `struct ZUnicode::Functions_Convert_T&lt;long
+ unsigned int *&gt;'
+ /boot/home/develop/zoolib/src/foundation/ZUnicode.cpp:391: duplicate
+ explicit instantiation of `struct ZUnicode::Functions_Convert_T&lt;__wchar_t
+ *&gt;'
+ /boot/home/develop/zoolib/src/foundation/ZUnicode.cpp:392: duplicate
+ explicit instantiation of `struct ZUnicode::Functions_Convert_T&lt;char *&gt;'
+ make: *** [objects-debug/ZUnicode.o] Error 1
+ ~/develop/zoolib/samples/buttonmessage/buttonmessage_build_be&gt;
+ }}}
+
+ It errors out but didn't crash.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4087#comment:3">http://dev.haiku-os.org/ticket/4087#comment:3</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="018375.html">[Haiku-bugs] [Haiku] #4087: Building ZooLib ButtonMessage sample crashes Haiku when run under VirtualBox
+</A></li>
+	<LI>Next message: <A HREF="018377.html">[Haiku-bugs] [Haiku] #4087: Building ZooLib ButtonMessage sample crashes Haiku when run under VirtualBox
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18376">[ date ]</a>
+              <a href="thread.html#18376">[ thread ]</a>
+              <a href="subject.html#18376">[ subject ]</a>
+              <a href="author.html#18376">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

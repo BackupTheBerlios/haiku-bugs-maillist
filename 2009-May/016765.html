@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3841: USB Keyboard Loses Shift State When Changing Shift Keys
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233841%3A%20USB%20Keyboard%20Loses%20Shift%20State%20When%0A%20Changing%20Shift%20Keys&In-Reply-To=%3C052.b2498306e48fe9769944b469c796c1f5%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="016764.html">
+   <LINK REL="Next"  HREF="016766.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3841: USB Keyboard Loses Shift State When Changing Shift Keys</H1>
+    <B>mmlr</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233841%3A%20USB%20Keyboard%20Loses%20Shift%20State%20When%0A%20Changing%20Shift%20Keys&In-Reply-To=%3C052.b2498306e48fe9769944b469c796c1f5%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3841: USB Keyboard Loses Shift State When Changing Shift Keys">trac at haiku-os.org
+       </A><BR>
+    <I>Fri May  1 19:45:58 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="016764.html">[Haiku-bugs] [Haiku] #3838: Add Vmware Addons?
+</A></li>
+        <LI>Next message: <A HREF="016766.html">[Haiku-bugs] [Haiku] #3841: USB Keyboard Loses Shift State When Changing Shift Keys
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16765">[ date ]</a>
+              <a href="thread.html#16765">[ thread ]</a>
+              <a href="subject.html#16765">[ subject ]</a>
+              <a href="author.html#16765">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3841: USB Keyboard Loses Shift State When Changing Shift Keys
+----------------------------------+-----------------------------------------
+ Reporter:  bonefish              |       Owner:  mmlr          
+     Type:  bug                   |      Status:  assigned      
+ Priority:  normal                |   Milestone:  R1            
+Component:  Servers/input_server  |     Version:  R1 development
+Blockedby:                        |    Platform:  All           
+ Blocking:                        |  
+----------------------------------+-----------------------------------------
+Changes (by mmlr):
+
+  * component:  Drivers/Keyboard/USB =&gt; Servers/input_server
+
+
+Comment:
+
+ Actually this is not a problem of usb_hid. The keyboard input_server add-
+ on handles the modifier changes incorrectly. The reported modifier state
+ looks about as follows:
+
+ {{{
+ left shift down:  0x0000 -&gt; 0x0101 = B_SHIFT_KEY | B_LEFT_SHIFT_KEY
+ right shift down: 0x0101 -&gt; 0x0301 = B_SHIFT_KEY | B_LEFT_SHIFT_KEY |
+ B_RIGHT_SHIFT_KEY
+ left shift up:    0x0301 -&gt; 0x0200 = B_RIGHT_SHIFT_KEY
+ }}}
+
+ So when the left shift key is released it will not only remove the
+ B_LEFT_SHIFT_KEY flag, but also incorrectly remove the B_SHIFT_KEY flag.
+ You can see this pretty well in the Keymap preferences where the correct
+ shift key is always displayed as pressed, but the keymap changes from
+ shifted to unshifted when releasing the first modifier key.
+
+ The reason why you don't see it for PS/2 is a behavioural difference. The
+ PS/2 keyboard driver includes modifiers in repeat key handling, meaning
+ that a pressed shift key will constantly fire B_UNMAPPED_KEY_DOWN and
+ B_MODIFIERS_CHANGED messages. For usb_hid this isn't the case, as it only
+ repeats actual keys and no modifiers. What you get is that the B_SHIFT_KEY
+ flag is removed (incorrectly) as above, but on the next repeat it'll get
+ set again. You can see that in the Keymap prefs as well, as when you
+ release one of the shift keys, the keymap will switch to the unshifted one
+ for a short time and then be shifted again.
+
+ I'm looking into fixing the lost B_SHIFT_KEY flag now, but I'm not sure
+ about the behaviour difference. I personally find it more sensible to
+ exclude the modifiers from repeat handling as in the usb_hid case as they
+ don't actually need to be repeated.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3841#comment:3">http://dev.haiku-os.org/ticket/3841#comment:3</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="016764.html">[Haiku-bugs] [Haiku] #3838: Add Vmware Addons?
+</A></li>
+	<LI>Next message: <A HREF="016766.html">[Haiku-bugs] [Haiku] #3841: USB Keyboard Loses Shift State When Changing Shift Keys
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16765">[ date ]</a>
+              <a href="thread.html#16765">[ thread ]</a>
+              <a href="subject.html#16765">[ subject ]</a>
+              <a href="author.html#16765">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

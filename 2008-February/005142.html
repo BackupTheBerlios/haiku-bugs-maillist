@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1852: Menubar navigation bugs
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-February/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231852%3A%20Menubar%20navigation%20bugs&In-Reply-To=%3C038.ad547efd7f51f6dbca25d841969d96a8%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005136.html">
+   <LINK REL="Next"  HREF="005145.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1852: Menubar navigation bugs</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231852%3A%20Menubar%20navigation%20bugs&In-Reply-To=%3C038.ad547efd7f51f6dbca25d841969d96a8%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1852: Menubar navigation bugs">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Feb 25 04:28:55 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005136.html">[Haiku-bugs] [Haiku] #1595: Refcounted BString implementation
+</A></li>
+        <LI>Next message: <A HREF="005145.html">[Haiku-bugs] [Haiku] #1852: Menubar navigation bugs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5142">[ date ]</a>
+              <a href="thread.html#5142">[ thread ]</a>
+              <a href="subject.html#5142">[ subject ]</a>
+              <a href="author.html#5142">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1852: Menubar navigation bugs
+----------------------------+-----------------------------------------------
+ Reporter:  hma             |       Owner:  stippi        
+     Type:  bug             |      Status:  new           
+ Priority:  normal          |   Milestone:  R1            
+Component:  User Interface  |     Version:  R1 development
+ Platform:  All             |  
+----------------------------+-----------------------------------------------
+ Menubar navigation bugs in revision 24105
+
+ If the menubar widget behavior is work in progress, these are mostly
+ unnecessary to report, but here goes. If nothing else, these  may be
+ useful as a check list. I have to also comment that I was really pleased
+ when Haiku's menus started to open when hovered over instead of clicking
+ each one open separately. Great work.
+
+ Click a menu open (e.g. Edit) and leave the cursor on top of the menu.
+ Now press arrow-key-left or arrow-key-right. This should open the
+ neighboring menu on left or right. It looks like it tries to do that, but
+ seems like the hovering cursor prevents it.
+
+ Click a menu open and leave the cursor where it is.
+ Now press arrow-key-down. The first item on the menu should get focus, but
+ the focus goes directly to the second item. Same happens with sub-menus.
+
+ Click a menu open and leave the cursor where it is. Pressing esc-key
+ should close the menu, but it doesn't.
+
+ Click a menu open and click again. The second click should close the menu,
+ but it doesn't.
+
+ Open a menu and leave the cursor anywhere on the opened menu. Using arrow
+ keys to navigate should work but it doesn't.
+
+ Open a menu that has sub-menus e.g., Terminal Settings menu, Use arrow
+ keys to move focus to Window Size. A sub-menu should open automatically
+ but it doesn't. Pressing arrow-key-left opens the menu, but needing a key
+ press to open a sub-menu is inconsistent with how mouse navigation works.
+  Automatically opening or not opening  sub-menus could be a convention
+ decision, but Haiku's Deskbar design requires automatically opening sub-
+ menus. Otherwise keyboard navigating Deskbar becomes confusing (if sub-
+ menus are opened with arrow-key-right, but Desbar sub-menus open to the
+ left side of the menu).
+
+ Open a menu and use arrow keys to navigate into a sub-menu. It is not
+ possible to get out of the sub-menu using only arrow keys (arrow-key-right
+ should move to the sub-menu and arrow-key-left should move back to the
+ parent menu).
+
+ Open a menu that has a sub-menu and that is not the last menu on the
+ menubar e.g., StyleEdit Font menu. Use arrow-keys to navigate into the
+ sub-menu. Pressing arrow-key-left in the deepest sub-menu should move the
+ focus to the next menu on on the menubar. E.g., in StyleEdit, when focus
+ is on Font menu's Color sub-menu and user presses arrow-key-left, the
+ Document menu should open.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1852">http://dev.haiku-os.org/ticket/1852</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005136.html">[Haiku-bugs] [Haiku] #1595: Refcounted BString implementation
+</A></li>
+	<LI>Next message: <A HREF="005145.html">[Haiku-bugs] [Haiku] #1852: Menubar navigation bugs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5142">[ date ]</a>
+              <a href="thread.html#5142">[ thread ]</a>
+              <a href="subject.html#5142">[ subject ]</a>
+              <a href="author.html#5142">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

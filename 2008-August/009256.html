@@ -1,0 +1,354 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2562: Occasional hang
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232562%3A%20Occasional%20hang&In-Reply-To=%3C043.25830970a02c582c2a9cb7076cd123f5%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009326.html">
+   <LINK REL="Next"  HREF="009260.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2562: Occasional hang</H1>
+    <B>andreasf</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232562%3A%20Occasional%20hang&In-Reply-To=%3C043.25830970a02c582c2a9cb7076cd123f5%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2562: Occasional hang">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Aug  3 18:55:48 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009326.html">[Haiku-bugs] [Haiku] #2561: bfs_shell no more sems
+</A></li>
+        <LI>Next message: <A HREF="009260.html">[Haiku-bugs] [Haiku] #2562: Occasional hang
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9256">[ date ]</a>
+              <a href="thread.html#9256">[ thread ]</a>
+              <a href="subject.html#9256">[ subject ]</a>
+              <a href="author.html#9256">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2562: Occasional hang
+-----------------------+----------------------------------------------------
+ Reporter:  andreasf   |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+Blockedby:             |    Platform:  x86           
+ Blocking:             |  
+-----------------------+----------------------------------------------------
+ As reported in #2558, I'm experiencing occasional hangs with high CPU
+ activity on both HT &quot;cores&quot; while compiling software on gcc2 Haiku on real
+ hardware.
+
+ Here's serial output from r26754:
+ {{{
+ Welcome to Kernel Debugging Land...
+ Thread 37881 &quot;sh&quot; running on CPU 0
+ kdebug&gt; teams
+ team           id  parent      name
+ 0x90c0c000     94  0x90b80000  Terminal
+ 0x90b80000      1  0x00000000  kernel_team
+ 0x90c0c174     95  0x90b80000  media_server
+ 0x90c0c45c     97  0x90b80000  midi_server
+ 0x90c0c5d0     98  0x90b80000  print_server
+ 0x90fa1000  21675  0x90b80a2c  pe
+ 0x90fa1174  37460  0x90fa145c  sh
+ 0x90b80e88  24502  0x90c0cba0  sh
+ 0x90fa1744  37461  0x90fa1174  make
+ 0x90fa12e8  33557  0x90c0ce88  make
+ 0x90b808b8     77  0x90b80000  syslog_daemon
+ 0x90fa145c  33558  0x90fa12e8  sh
+ 0x90b80174  33434  0x90b80e88  make
+ 0x90c0c744  33436  0x90b80174  make
+ 0x90c0c2e8  33437  0x90c0c744  sh
+ 0x90b80ba0     81  0x90b80744  input_server
+ 0x90c0cba0    144  0x90c0c000  sh
+ 0x90b802e8     53  0x90b80000  registrar
+ 0x90c0ca2c  33441  0x90c0c2e8  sh
+ 0x90c0ce88  33442  0x90c0ca2c  make
+ 0x90c0c8b8    117  0x90c0c174  media_addon_server
+ 0x90b8045c     58  0x90b80000  debug_server
+ 0x90b805d0     59  0x90b80000  net_server
+ 0x90b80a2c     91  0x90b80000  Tracker
+ 0x90b80744     60  0x90b80000  app_server
+ 0x90fa15d0  37881  0x90fa1744  sh
+ 0x90b80d14     92  0x90b80000  Deskbar
+ kdebug&gt; threads 37460
+ thread         id  state     wait for   object  cpu pri  stack      team
+ name
+ 0x914dd000  37460  waiting   cvar   0x90b818a8    -  10  0x957ea00037460
+ sh
+ kdebug&gt; threads 37881
+ thread         id  state     wait for   object  cpu pri  stack      team
+ name
+ 0x914ab800  37881  running           -            0  10  0x957f200037881
+ sh
+ kdebug&gt; sc 37881
+ stack trace for thread 37881 &quot;sh&quot;
+     kernel stack: 0x957f2000 to 0x957f6000
+       user stack: 0x7efef000 to 0x7ffef000
+ frame            caller     &lt;image&gt;:function + offset
+  0 957f5584 (+  48) 80053e0d   &lt;kernel&gt;:invoke_debugger_command + 0x00ed
+  1 957f55b4 (+  64) 80053c05
+ &lt;kernel&gt;:invoke_pipe_segment__FP21debugger_comma9
+  2 957f55f4 (+  64) 80053f4d   &lt;kernel&gt;:invoke_debugger_command_pipe +
+ 0x009d
+  3 957f5634 (+  48) 80054e28
+ &lt;kernel&gt;:_ParseCommandPipe__16ExpressionParserRi4
+  4 957f5664 (+  48) 800547de
+ &lt;kernel&gt;:EvaluateCommand__16ExpressionParserPCcRe
+  5 957f5694 (+ 224) 800561f4   &lt;kernel&gt;:evaluate_debug_command + 0x0088
+  6 957f5774 (+  64) 80052286   &lt;kernel&gt;:kernel_debugger_loop__Fv + 0x01ae
+  7 957f57b4 (+  48) 80052e1b   &lt;kernel&gt;:kernel_debugger + 0x0117
+  8 957f57e4 (+ 192) 80052cf9   &lt;kernel&gt;:panic + 0x0029
+  9 957f58a4 (+  48) 807a4df5   &lt;/boot/beos/system/add-
+ ons/kernel/bus_managers/pd
+ 10 957f58d4 (+  64) 80035ba8   &lt;kernel&gt;:int_io_interrupt_handler + 0x00e0
+ 11 957f5914 (+  48) 800b2950   &lt;kernel&gt;:hardware_interrupt + 0x006c
+ 12 957f5944 (+  12) 800b5df6   &lt;kernel&gt;:int_bottom + 0x0036 (nearest)
+ iframe at 0x957f5950 (end = 0x957f59a8)
+  eax 0x200          ebx 0x90b71030      ecx 0x0          edx 0x246
+  esi 0x1            edi 0x91bada10      ebp 0x957f59a0   esp 0x957f5984
+  eip 0x800b25bc  eflags 0x246
+  vector: 0x21, error code: 0x0
+ 13 957f5950 (+  80) 800b25bc   &lt;kernel&gt;:arch_int_restore_interrupts +
+ 0x0020
+ 14 957f59a0 (+  32) 80035d32   &lt;kernel&gt;:restore_interrupts + 0x0012
+ 15 957f59c0 (+  48) 800b5384   &lt;kernel&gt;:flush_tmap__FP18vm_translation_map
+ + 0x0
+ 16 957f59f0 (+  48) 800b4b0b
+ &lt;kernel&gt;:unlock_tmap__FP18vm_translation_map + 07
+ 17 957f5a20 (+  64) 800a5640   &lt;kernel&gt;:vm_map_page + 0x0078
+ 18 957f5a60 (+ 256) 800a7f07
+ &lt;kernel&gt;:vm_soft_fault__FP16vm_address_spaceUlbTf
+ 19 957f5b60 (+  64) 800a7028   &lt;kernel&gt;:vm_page_fault + 0x0080
+ 20 957f5ba0 (+  64) 800b28cd   &lt;kernel&gt;:page_fault_exception + 0x00b1
+ 21 957f5be0 (+  12) 800b5df6   &lt;kernel&gt;:int_bottom + 0x0036 (nearest)
+ iframe at 0x957f5bec (end = 0x957f5c44)
+  eax 0x0            ebx 0xffff00d6      ecx 0x1          edx 0x914abaec
+  esi 0x957f5ca4     edi 0xffff00d6      ebp 0x957f5c70   esp 0x957f5c20
+  eip 0x800b5a94  eflags 0x10202
+  vector: 0xe, error code: 0x3
+ 22 957f5bec (+ 132) 800b5a94   &lt;kernel&gt;:arch_cpu_user_memcpy + 0x001e
+ (nearest)
+ 23 957f5c70 (+ 640) 800b3b83   &lt;kernel&gt;:arch_setup_signal_frame + 0x004f
+ 24 957f5ef0 (+  96) 800427d2   &lt;kernel&gt;:handle_signals + 0x03ce
+ 25 957f5f50 (+  64) 8004c9e6   &lt;kernel&gt;:thread_at_kernel_exit + 0x0076
+ 26 957f5f90 (+  12) 800b60fb   &lt;kernel&gt;:kernel_exit_handle_signals +
+ 0x0006 (ne)
+ iframe at 0x957f5f9c (end = 0x957f5ff4)
+  eax 0x0            ebx 0x341ac8        ecx 0x1          edx 0x4
+  esi 0x18030188     edi 0x18000000      ebp 0x7ffecc9c   esp 0x957f5fd0
+  eip 0x800b5f50  eflags 0x212
+  vector: 0xfd, error code: 0x0
+ 27 957f5f9c (+   0) 800b5f50   &lt;kernel&gt;:trap99 + 0x0000 (nearest)
+ 28 7ffecc9c (+  32) 002c92a4   &lt;libroot.so&gt;:malloc + 0x01a4
+ 29 7ffeccbc (+  48) 00248ab5   &lt;_APP_&gt;:xrealloc + 0x0035
+ 30 7ffeccec (+ 192) 00233729   &lt;_APP_&gt;:unlink_fifo_list + 0x0459 (nearest)
+ 31 7ffecdac (+  80) 00233b6d   &lt;_APP_&gt;:command_substitute + 0x0345
+ 32 7ffecdfc (+ 112) 002368c7   &lt;_APP_&gt;:pat_subst + 0x1bd7 (nearest)
+ 33 7ffece6c (+  64) 00231e79   &lt;_APP_&gt;:cond_expand_word + 0x0129 (nearest)
+ 34 7ffeceac (+  96) 00231f47   &lt;_APP_&gt;:cond_expand_word + 0x01f7 (nearest)
+ 35 7ffecf0c (+  48) 00231fa7   &lt;_APP_&gt;:expand_string_unsplit + 0x003b
+ 36 7ffecf3c (+  48) 00231ba5   &lt;_APP_&gt;:string_rest_of_args + 0x01d5
+ (nearest)
+ 37 7ffecf6c (+  64) 0023163a   &lt;_APP_&gt;:strip_trailing_ifs_whitespace +
+ 0x01f6 ()
+ 38 7ffecfac (+  48) 002317f1   &lt;_APP_&gt;:do_assignment + 0x0021
+ 39 7ffecfdc (+  48) 00237896   &lt;_APP_&gt;:expand_words_shellexp + 0x05da
+ (nearest)
+ 40 7ffed00c (+  48) 0023728d   &lt;_APP_&gt;:expand_words + 0x0021
+ 41 7ffed03c (+ 112) 00226d09   &lt;_APP_&gt;:execute_command_internal + 0x2f65
+ (neare)
+ 42 7ffed0ac (+  96) 00224262   &lt;_APP_&gt;:execute_command_internal + 0x04be
+ 43 7ffed10c (+  80) 00223bed   &lt;_APP_&gt;:execute_command + 0x0065
+ 44 7ffed15c (+  48) 00225362   &lt;_APP_&gt;:execute_command_internal + 0x15be
+ (neare)
+ 45 7ffed18c (+  96) 002244e4   &lt;_APP_&gt;:execute_command_internal + 0x0740
+ 46 7ffed1ec (+  80) 00223bed   &lt;_APP_&gt;:execute_command + 0x0065
+ 47 7ffed23c (+  80) 0022632a   &lt;_APP_&gt;:execute_command_internal + 0x2586
+ (neare)
+ 48 7ffed28c (+  80) 002243ec   &lt;_APP_&gt;:execute_command_internal + 0x0648
+ 49 7ffed2dc (+  64) 002253df   &lt;_APP_&gt;:execute_command_internal + 0x163b
+ (neare)
+ 50 7ffed31c (+  96) 002244e4   &lt;_APP_&gt;:execute_command_internal + 0x0740
+ 51 7ffed37c (+  80) 00223bed   &lt;_APP_&gt;:execute_command + 0x0065
+ 52 7ffed3cc (+  48) 00225362   &lt;_APP_&gt;:execute_command_internal + 0x15be
+ (neare)
+ 53 7ffed3fc (+  96) 002244e4   &lt;_APP_&gt;:execute_command_internal + 0x0740
+ 54 7ffed45c (+  80) 00223bed   &lt;_APP_&gt;:execute_command + 0x0065
+ 55 7ffed4ac (+  48) 00225362   &lt;_APP_&gt;:execute_command_internal + 0x15be
+ (neare)
+ 56 7ffed4dc (+  96) 002244e4   &lt;_APP_&gt;:execute_command_internal + 0x0740
+ 57 7ffed53c (+  80) 00223bed   &lt;_APP_&gt;:execute_command + 0x0065
+ 58 7ffed58c (+  48) 00225362   &lt;_APP_&gt;:execute_command_internal + 0x15be
+ (neare)
+ 59 7ffed5bc (+  96) 002244e4   &lt;_APP_&gt;:execute_command_internal + 0x0740
+ 60 7ffed61c (+  80) 00223bed   &lt;_APP_&gt;:execute_command + 0x0065
+ 61 7ffed66c (+  48) 00225362   &lt;_APP_&gt;:execute_command_internal + 0x15be
+ (neare)
+ 62 7ffed69c (+  96) 002244e4   &lt;_APP_&gt;:execute_command_internal + 0x0740
+ 63 7ffed6fc (+  80) 00223bed   &lt;_APP_&gt;:execute_command + 0x0065
+ 64 7ffed74c (+  48) 00225362   &lt;_APP_&gt;:execute_command_internal + 0x15be
+ (neare)
+ 65 7ffed77c (+  96) 002244e4   &lt;_APP_&gt;:execute_command_internal + 0x0740
+ 66 7ffed7dc (+  80) 00223bed   &lt;_APP_&gt;:execute_command + 0x0065
+ 67 7ffed82c (+  48) 00225362   &lt;_APP_&gt;:execute_command_internal + 0x15be
+ (neare)
+ 68 7ffed85c (+  96) 002244e4   &lt;_APP_&gt;:execute_command_internal + 0x0740
+ 69 7ffed8bc (+  80) 00223bed   &lt;_APP_&gt;:execute_command + 0x0065
+ 70 7ffed90c (+  48) 00225362   &lt;_APP_&gt;:execute_command_internal + 0x15be
+ (neare)
+ 71 7ffed93c (+  96) 002244e4   &lt;_APP_&gt;:execute_command_internal + 0x0740
+ 72 7ffed99c (+  80) 00223bed   &lt;_APP_&gt;:execute_command + 0x0065
+ 73 7ffed9ec (+  48) 00225362   &lt;_APP_&gt;:execute_command_internal + 0x15be
+ (neare)
+ 74 7ffeda1c (+  96) 002244e4   &lt;_APP_&gt;:execute_command_internal + 0x0740
+ 75 7ffeda7c (+  80) 00223bed   &lt;_APP_&gt;:execute_command + 0x0065
+ 76 7ffedacc (+  48) 00225362   &lt;_APP_&gt;:execute_command_internal + 0x15be
+ (neare)
+ 77 7ffedafc (+  96) 002244e4   &lt;_APP_&gt;:execute_command_internal + 0x0740
+ 78 7ffedb5c (+  80) 00223bed   &lt;_APP_&gt;:execute_command + 0x0065
+ 79 7ffedbac (+  48) 00225362   &lt;_APP_&gt;:execute_command_internal + 0x15be
+ (neare)
+ 80 7ffedbdc (+  96) 002244e4   &lt;_APP_&gt;:execute_command_internal + 0x0740
+ 81 7ffedc3c (+  80) 00223bed   &lt;_APP_&gt;:execute_command + 0x0065
+ 82 7ffedc8c (+  48) 00225362   &lt;_APP_&gt;:execute_command_internal + 0x15be
+ (neare)
+ 83 7ffedcbc (+  96) 002244e4   &lt;_APP_&gt;:execute_command_internal + 0x0740
+ 84 7ffedd1c (+  80) 00223bed   &lt;_APP_&gt;:execute_command + 0x0065
+ 85 7ffedd6c (+  48) 00225362   &lt;_APP_&gt;:execute_command_internal + 0x15be
+ (neare)
+ 86 7ffedd9c (+  96) 002244e4   &lt;_APP_&gt;:execute_command_internal + 0x0740
+ 87 7ffeddfc (+  80) 00223bed   &lt;_APP_&gt;:execute_command + 0x0065
+ 88 7ffede4c (+  64) 00225614   &lt;_APP_&gt;:execute_command_internal + 0x1870
+ (neare)
+ 89 7ffede8c (+  80) 00224380   &lt;_APP_&gt;:execute_command_internal + 0x05dc
+ 90 7ffededc (+  64) 002253df   &lt;_APP_&gt;:execute_command_internal + 0x163b
+ (neare)
+ 91 7ffedf1c (+  96) 002244e4   &lt;_APP_&gt;:execute_command_internal + 0x0740
+ 92 7ffedf7c (+  80) 00223bed   &lt;_APP_&gt;:execute_command + 0x0065
+ 93 7ffedfcc (+  48) 00225362   &lt;_APP_&gt;:execute_command_internal + 0x15be
+ (neare)
+ 94 7ffedffc (+  96) 002244e4   &lt;_APP_&gt;:execute_command_internal + 0x0740
+ 95 7ffee05c (+  80) 00223bed   &lt;_APP_&gt;:execute_command + 0x0065
+ 96 7ffee0ac (+  48) 00225362   &lt;_APP_&gt;:execute_command_internal + 0x15be
+ (neare)
+ 97 7ffee0dc (+  96) 002244e4   &lt;_APP_&gt;:execute_command_internal + 0x0740
+ 98 7ffee13c (+  80) 00223bed   &lt;_APP_&gt;:execute_command + 0x0065
+ 99 7ffee18c (+  48) 00225362   &lt;_APP_&gt;:execute_command_internal + 0x15be
+ (neare)
+ 100 7ffee1bc (+  96) 002244e4   &lt;_APP_&gt;:execute_command_internal + 0x0740
+ 101 7ffee21c (+  80) 00223bed   &lt;_APP_&gt;:execute_command + 0x0065
+ 102 7ffee26c (+  48) 00225362   &lt;_APP_&gt;:execute_command_internal + 0x15be
+ (near)
+ 103 7ffee29c (+  96) 002244e4   &lt;_APP_&gt;:execute_command_internal + 0x0740
+ 104 7ffee2fc (+  80) 00223bed   &lt;_APP_&gt;:execute_command + 0x0065
+ 105 7ffee34c (+  48) 00225362   &lt;_APP_&gt;:execute_command_internal + 0x15be
+ (near)
+ 106 7ffee37c (+  96) 002244e4   &lt;_APP_&gt;:execute_command_internal + 0x0740
+ 107 7ffee3dc (+  80) 00223bed   &lt;_APP_&gt;:execute_command + 0x0065
+ 108 7ffee42c (+  48) 00225362   &lt;_APP_&gt;:execute_command_internal + 0x15be
+ (near)
+ 109 7ffee45c (+  96) 002244e4   &lt;_APP_&gt;:execute_command_internal + 0x0740
+ 110 7ffee4bc (+  80) 00223bed   &lt;_APP_&gt;:execute_command + 0x0065
+ 111 7ffee50c (+  64) 00225614   &lt;_APP_&gt;:execute_command_internal + 0x1870
+ (near)
+ 112 7ffee54c (+  80) 00224380   &lt;_APP_&gt;:execute_command_internal + 0x05dc
+ 113 7ffee59c (+  64) 002253df   &lt;_APP_&gt;:execute_command_internal + 0x163b
+ (near)
+ 114 7ffee5dc (+  96) 002244e4   &lt;_APP_&gt;:execute_command_internal + 0x0740
+ 115 7ffee63c (+  80) 00223bed   &lt;_APP_&gt;:execute_command + 0x0065
+ 116 7ffee68c (+  48) 00225362   &lt;_APP_&gt;:execute_command_internal + 0x15be
+ (near)
+ 117 7ffee6bc (+  96) 002244e4   &lt;_APP_&gt;:execute_command_internal + 0x0740
+ 118 7ffee71c (+  80) 00223bed   &lt;_APP_&gt;:execute_command + 0x0065
+ 119 7ffee76c (+  48) 00225362   &lt;_APP_&gt;:execute_command_internal + 0x15be
+ (near)
+ 120 7ffee79c (+  96) 002244e4   &lt;_APP_&gt;:execute_command_internal + 0x0740
+ 121 7ffee7fc (+  80) 00223bed   &lt;_APP_&gt;:execute_command + 0x0065
+ 122 7ffee84c (+  48) 00225362   &lt;_APP_&gt;:execute_command_internal + 0x15be
+ (near)
+ 123 7ffee87c (+  96) 002244e4   &lt;_APP_&gt;:execute_command_internal + 0x0740
+ 124 7ffee8dc (+  80) 00223bed   &lt;_APP_&gt;:execute_command + 0x0065
+ 125 7ffee92c (+  48) 00225362   &lt;_APP_&gt;:execute_command_internal + 0x15be
+ (near)
+ 126 7ffee95c (+  96) 002244e4   &lt;_APP_&gt;:execute_command_internal + 0x0740
+ 127 7ffee9bc (+  80) 00223bed   &lt;_APP_&gt;:execute_command + 0x0065
+ 128 7ffeea0c (+  48) 00225362   &lt;_APP_&gt;:execute_command_internal + 0x15be
+ (near)
+ 129 7ffeea3c (+  96) 002244e4   &lt;_APP_&gt;:execute_command_internal + 0x0740
+ 130 7ffeea9c (+  80) 00223bed   &lt;_APP_&gt;:execute_command + 0x0065
+ 131 7ffeeaec (+  48) 00225362   &lt;_APP_&gt;:execute_command_internal + 0x15be
+ (near)
+ 132 7ffeeb1c (+  96) 002244e4   &lt;_APP_&gt;:execute_command_internal + 0x0740
+ 133 7ffeeb7c (+  80) 00223bed   &lt;_APP_&gt;:execute_command + 0x0065
+ 134 7ffeebcc (+  80) 0022632a   &lt;_APP_&gt;:execute_command_internal + 0x2586
+ (near)
+ 135 7ffeec1c (+  80) 002243ec   &lt;_APP_&gt;:execute_command_internal + 0x0648
+ 136 7ffeec6c (+  64) 002253df   &lt;_APP_&gt;:execute_command_internal + 0x163b
+ (near)
+ 137 7ffeecac (+  96) 002244e4   &lt;_APP_&gt;:execute_command_internal + 0x0740
+ 138 7ffeed0c (+  80) 00223bed   &lt;_APP_&gt;:execute_command + 0x0065
+ 139 7ffeed5c (+  48) 00225362   &lt;_APP_&gt;:execute_command_internal + 0x15be
+ (near)
+ 140 7ffeed8c (+  96) 002244e4   &lt;_APP_&gt;:execute_command_internal + 0x0740
+ 141 7ffeedec (+  80) 00223bed   &lt;_APP_&gt;:execute_command + 0x0065
+ 142 7ffeee3c (+  48) 00226556   &lt;_APP_&gt;:execute_command_internal + 0x27b2
+ (near)
+ 143 7ffeee6c (+  80) 00224458   &lt;_APP_&gt;:execute_command_internal + 0x06b4
+ 144 7ffeeebc (+  80) 00223bed   &lt;_APP_&gt;:execute_command + 0x0065
+ 145 7ffeef0c (+  48) 0021f8a5   &lt;_APP_&gt;:reader_loop + 0x01d1
+ 146 7ffeef3c (+  64) 0021dae2   &lt;_APP_&gt;:main + 0x07b2
+ 147 7ffeef7c (+  48) 0021679f   &lt;_APP_&gt;:_start + 0x005b
+ 148 7ffeefac (+  48) 001008ea   839631:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">runtime_loader_seg0ro at 0x00100000</A> +
+ 0x8ea
+ 149 7ffeefdc (+   0) 7ffeefec   839630:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">sh_main_stack at 0x7efef000</A> + 0xffffec
+ kdebug&gt;
+ }}}
+ This is while executing
+ {{{
+ /bin/sh ../libtool --mode=link gcc  -g -O2 -Wall  -D_REENTRANT   -o node-
+ test  node-test.o ../libglib.la
+ }}}
+ as part of pkg-config 0.23's {{{make}}}.
+
+ Ctrl+C is unable to kill the running application, neither does {{{kill -9
+ &lt;pid&gt;}}}. Restarting the system works without problems though.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2562">http://dev.haiku-os.org/ticket/2562</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009326.html">[Haiku-bugs] [Haiku] #2561: bfs_shell no more sems
+</A></li>
+	<LI>Next message: <A HREF="009260.html">[Haiku-bugs] [Haiku] #2562: Occasional hang
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9256">[ date ]</a>
+              <a href="thread.html#9256">[ thread ]</a>
+              <a href="subject.html#9256">[ subject ]</a>
+              <a href="author.html#9256">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

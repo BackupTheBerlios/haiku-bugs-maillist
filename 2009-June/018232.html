@@ -1,0 +1,179 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4050: ATA driver cannot recognize 2nd HDD
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234050%3A%20ATA%20driver%20cannot%20recognize%202nd%20HDD&In-Reply-To=%3C046.bd7b6431cb6f85616f20a832ccc13371%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="018226.html">
+   <LINK REL="Next"  HREF="018233.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4050: ATA driver cannot recognize 2nd HDD</H1>
+    <B>marcusoverhagen</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234050%3A%20ATA%20driver%20cannot%20recognize%202nd%20HDD&In-Reply-To=%3C046.bd7b6431cb6f85616f20a832ccc13371%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4050: ATA driver cannot recognize 2nd HDD">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Jun 30 19:03:37 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="018226.html">[Haiku-bugs] [Haiku] #4050: ATA driver cannot recognize 2nd HDD
+</A></li>
+        <LI>Next message: <A HREF="018233.html">[Haiku-bugs] [Haiku] #4050: ATA driver cannot recognize 2nd HDD
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18232">[ date ]</a>
+              <a href="thread.html#18232">[ thread ]</a>
+              <a href="subject.html#18232">[ subject ]</a>
+              <a href="author.html#18232">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4050: ATA driver cannot recognize 2nd HDD
+--------------------------+-------------------------------------------------
+ Reporter:  mt            |       Owner:  marcusoverhagen
+     Type:  bug           |      Status:  new            
+ Priority:  normal        |   Milestone:  R1             
+Component:  Drivers/Disk  |     Version:  R1 development 
+Blockedby:                |    Platform:  x86            
+ Blocking:                |  
+--------------------------+-------------------------------------------------
+Changes (by marcusoverhagen):
+
+ * cc: mmrl (added)
+
+
+Comment:
+
+ The jmicron controller is running in  IDE/ATA compatibility mode, so AHCI
+ is not relevant here. Also partition type being BFS is not relevant.
+
+ It looks like we properly detect the harddisk, but then fail whenever
+ trying a read access.
+
+ Relevant parts from logfile:
+ {{{
+ 208 KERN: PCI: [dom 0, bus  3] bus   3, device  0, function  0: vendor
+ 197b, device 2363, revision 02
+ 209 KERN: PCI:   class_base 01, class_function 01, class_api 85
+ 210 KERN: PCI:   vendor 197b: JMicron Technologies, Inc.
+ 211 KERN: PCI:   device 2363: JMicron 20360/20363 AHCI Controller
+ 212 KERN: PCI:   info: Mass storage controller (IDE interface)
+ 213 KERN: PCI:   line_size 04, latency 00, header_type 00, BIST 00
+ 214 KERN: PCI:   ROM base host edfe0000, pci edfe0000, size 00010000
+ 215 KERN: PCI:   cardbus_CIS 00000000, subsystem_id 2363,
+ subsystem_vendor_id 197b
+ 216 KERN: PCI:   interrupt_line 0a, interrupt_pin 01, min_grant 00,
+ max_latency 00
+ 217 KERN: PCI:   base reg 0: host 0000e800, pci 0000e800, size 00000010,
+ flags 09
+ 218 KERN: PCI:   base reg 1: host 0000e400, pci 0000e400, size 00000010,
+ flags 0d
+ 219 KERN: PCI:   base reg 2: host 0000e000, pci 0000e000, size 00000010,
+ flags 09
+ 220 KERN: PCI:   base reg 3: host 0000d800, pci 0000d800, size 00000010,
+ flags 0d
+ 221 KERN: PCI:   base reg 4: host 0000d400, pci 0000d400, size 00000010,
+ flags 01
+ 222 KERN: PCI:   base reg 5: host edffe000, pci edffe000, size 00002000,
+ flags 00
+ 223 KERN: PCI:   Capabilities: PM, PCIe
+
+
+ 556 KERN: PCI-IDE: Controller in native mode: cmd 0xe800, ctrl 0xe402, irq
+ 10
+ 557 KERN: PCI-IDE: init channel...
+ 558 KERN: PCI-IDE: channel index 0
+ 559 KERN: PCI-IDE: bus master base 0xd400
+ 560 KERN: PCI-IDE: init channel done
+ 561 KERN: usb hub 2: port 0: new device connected
+ 562 KERN: ata 4: signature of device 0: 0x0000
+ 563 KERN: ata 4: signature of device 1: 0x0000
+ 564 KERN: ata 4-0: using DMA mode 0x16
+ 565 KERN: ata 4: identified ATA device 0
+ 566 KERN: ata 4-1: using DMA mode 0x16
+ 567 KERN: ata 4: identified ATA device 1
+ 568 KERN: ata 4 error: command failed, error bit is set: 0x04
+ 569 KERN: publish device: node 0x80fbdf50, path disk/ata/4/master/raw,
+ module drivers/disk/scsi/scsi_disk/device_v1
+ 570 KERN: ata 4 error: command failed, error bit is set: 0x04
+ 571 KERN: publish device: node 0x80fc4190, path disk/ata/4/slave/raw,
+ module drivers/disk/scsi/scsi_disk/device_v1
+ 572 KERN: ata 4 error: invalid target device
+ 573 KERN: Last message repeated 12 times.
+
+
+ 686 KERN: KDiskDeviceManager::_ScanPartition(/dev/disk/ata/4/slave/raw)
+ 687 KERN: intel: ep_std_ops(0x1)
+ 688 KERN:   trying: partitioning_systems/intel/extended/v1
+ 689 KERN:   returned: -1
+ 690 KERN: intel: ep_std_ops(0x2)
+ 691 KERN:   trying: partitioning_systems/intel/map/v1
+ 692 KERN: intel: pm_identify_partition(0, 1: 0, 80026361856, 512)
+ 693 KERN: usb hub 22: port 0: device removed
+ 694 KERN: das_read(): request.Wait() returned: Device timeout
+ 695 KERN:   returned: -1
+ 696 KERN:   trying: file_systems/bfs/v1
+ 697 KERN: das_read(): request.Wait() returned: Device timeout
+ 698 KERN:   returned: -1
+ 699 KERN:   trying: file_systems/devfs/v1
+ 700 KERN:   returned: -1
+ 701 KERN:   trying: file_systems/rootfs/v1
+ 702 KERN:   returned: -1
+
+
+ 790 KERN: device 1: /dev/disk/ata/4/slave/raw
+ 791 KERN:   media status:      No error
+ 792 KERN:   device flags:      2
+ 793 KERN:   offset:            0
+ 794 KERN:   size:              80026361856 (76319.85 MB)
+ 795 KERN:   content size:      0
+ 796 KERN:   block size:        512
+ 797 KERN:   child count:       0
+ 798 KERN:   index:             -1
+ 799 KERN:   status:            2
+ 800 KERN:   flags:             1
+ 801 KERN:   volume:            -1
+ 802 KERN:   disk system:       &lt;NULL&gt;
+ 803 KERN:   name:              &lt;NULL&gt;
+ 804 KERN:   content name:      &lt;NULL&gt;
+ 805 KERN:   type:              &lt;NULL&gt;
+ 806 KERN:   content type:      &lt;NULL&gt;
+ 807 KERN:   params:            &lt;NULL&gt;
+ 808 KERN:   content params:    &lt;NULL&gt;
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4050#comment:1">http://dev.haiku-os.org/ticket/4050#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="018226.html">[Haiku-bugs] [Haiku] #4050: ATA driver cannot recognize 2nd HDD
+</A></li>
+	<LI>Next message: <A HREF="018233.html">[Haiku-bugs] [Haiku] #4050: ATA driver cannot recognize 2nd HDD
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18232">[ date ]</a>
+              <a href="thread.html#18232">[ thread ]</a>
+              <a href="subject.html#18232">[ subject ]</a>
+              <a href="author.html#18232">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

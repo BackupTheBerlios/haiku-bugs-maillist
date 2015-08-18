@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3444: Failing to boot on SATA - ICH7	82801GB/GR/GH
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-February/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233444%3A%20Failing%20to%20boot%20on%20SATA%20-%20ICH7%0A%0982801GB/GR/GH&In-Reply-To=%3C052.a91ae22a37f26fbab1c0680fc700f11f%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="014416.html">
+   <LINK REL="Next"  HREF="014418.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3444: Failing to boot on SATA - ICH7	82801GB/GR/GH</H1>
+    <B>umccullough</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233444%3A%20Failing%20to%20boot%20on%20SATA%20-%20ICH7%0A%0982801GB/GR/GH&In-Reply-To=%3C052.a91ae22a37f26fbab1c0680fc700f11f%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3444: Failing to boot on SATA - ICH7	82801GB/GR/GH">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Feb 12 20:11:55 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="014416.html">[Haiku-bugs] [Haiku] #3444: Failing to boot on SATA - ICH7	82801GB/GR/GH
+</A></li>
+        <LI>Next message: <A HREF="014418.html">[Haiku-bugs] [Haiku] #3444: Failing to boot on SATA - ICH7	82801GB/GR/GH
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14417">[ date ]</a>
+              <a href="thread.html#14417">[ thread ]</a>
+              <a href="subject.html#14417">[ subject ]</a>
+              <a href="author.html#14417">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3444: Failing to boot on SATA - ICH7 82801GB/GR/GH
+--------------------------+-------------------------------------------------
+ Reporter:  moochris      |       Owner:  marcusoverhagen
+     Type:  bug           |      Status:  new            
+ Priority:  normal        |   Milestone:  R1             
+Component:  Drivers/Disk  |     Version:  R1 development 
+Blockedby:                |    Platform:  x86            
+ Blocking:                |  
+--------------------------+-------------------------------------------------
+
+Comment(by umccullough):
+
+ Have you tried swapping the bus_manager from &quot;ide&quot; to &quot;ata&quot; yet?
+
+ In order to do this, you'll need to building your own images, and you'll
+ want to edit this file:
+
+ <A HREF="http://dev.haiku-os.org/browser/haiku/trunk/src/add-">http://dev.haiku-os.org/browser/haiku/trunk/src/add-</A>
+ ons/kernel/bus_managers/Jamfile#L7
+
+ comment out the line ending in &quot;ide&quot; and uncomment the line ending in
+ &quot;ata&quot;
+
+ Rebuilding your image, and it should pick up the other bus manager and
+ build it instead.
+
+ It's a bit slower, and doesn't yet support ATAPI afaik, and may take a
+ while to boot (i have to wait several minutes on the disk icon personally)
+ - but it might give you better results as the &quot;ide&quot; bus_manager has some
+ known issues.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3444#comment:2">http://dev.haiku-os.org/ticket/3444#comment:2</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="014416.html">[Haiku-bugs] [Haiku] #3444: Failing to boot on SATA - ICH7	82801GB/GR/GH
+</A></li>
+	<LI>Next message: <A HREF="014418.html">[Haiku-bugs] [Haiku] #3444: Failing to boot on SATA - ICH7	82801GB/GR/GH
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14417">[ date ]</a>
+              <a href="thread.html#14417">[ thread ]</a>
+              <a href="subject.html#14417">[ subject ]</a>
+              <a href="author.html#14417">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

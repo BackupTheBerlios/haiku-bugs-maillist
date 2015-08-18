@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2021: AHCI fatal error when checking out the SVN tree on Haiku r24735
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232021%3A%20AHCI%20fatal%20error%20when%20checking%20out%0A%20the%20SVN%20tree%20on%20Haiku%20r24735&In-Reply-To=%3C048.6f8b9019a92689764653827027b8909d%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007366.html">
+   <LINK REL="Next"  HREF="007368.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2021: AHCI fatal error when checking out the SVN tree on Haiku r24735</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232021%3A%20AHCI%20fatal%20error%20when%20checking%20out%0A%20the%20SVN%20tree%20on%20Haiku%20r24735&In-Reply-To=%3C048.6f8b9019a92689764653827027b8909d%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2021: AHCI fatal error when checking out the SVN tree on Haiku r24735">trac at haiku-os.org
+       </A><BR>
+    <I>Sat May 17 11:32:16 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007366.html">[Haiku-bugs] [Haiku] #2021: AHCI fatal error when checking out the SVN tree on Haiku r24735
+</A></li>
+        <LI>Next message: <A HREF="007368.html">[Haiku-bugs] [Haiku] #2059: KDL during svn checkout in block	notifier/writer
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7367">[ date ]</a>
+              <a href="thread.html#7367">[ thread ]</a>
+              <a href="subject.html#7367">[ subject ]</a>
+              <a href="author.html#7367">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2021: AHCI fatal error when checking out the SVN tree on Haiku r24735
+---------------------------+------------------------------------------------
+  Reporter:  ddew          |       Owner:  marcusoverhagen
+      Type:  bug           |      Status:  assigned       
+  Priority:  blocker       |   Milestone:  R1             
+ Component:  Drivers/Disk  |     Version:  R1 development 
+Resolution:                |    Platform:  All            
+---------------------------+------------------------------------------------
+Comment (by marcusoverhagen):
+
+ This at least confirms that the ahci controler experiences a PCI master
+ abort.
+ {{{
+ KERN: PCI: [dom 0, bus  0] bus   0, device 31, function  2: vendor 8086,
+ device 2922, revision 02
+ 632     KERN: PCI:   class_base 01, class_function 06, class_api 01
+ 633     KERN: PCI:   vendor 8086: Intel Corporation
+ 634     KERN: PCI:   device 2922: 82801IR/IO/IH (ICH9R/DO/DH) 6 port SATA
+ AHCI Controller
+ 635     KERN: PCI:   info: Mass storage controller (SATA controller, AHCI
+ 1.0)
+ 636     KERN: PCI:   line_size 00, latency 00, header_type 00, BIST 00
+ 637     KERN: PCI:   ROM base host 00000000, pci 00000000, size 00000000
+ 638     KERN: PCI:   cardbus_CIS 00000000, subsystem_id 8277,
+ subsystem_vendor_id 1043
+ 639     KERN: PCI:   interrupt_line 03, interrupt_pin 02, min_grant 00,
+ max_latency 00
+ 640     KERN: PCI:   base reg 0: host 00007c00, pci 00007c00, size
+ 00000010, flags 09
+ 641     KERN: PCI:   base reg 1: host 00007880, pci 00007880, size
+ 00000010, flags 0d
+ 642     KERN: PCI:   base reg 2: host 00007800, pci 00007800, size
+ 00000010, flags 09
+ 643     KERN: PCI:   base reg 3: host 00007480, pci 00007480, size
+ 00000010, flags 0d
+ 644     KERN: PCI:   base reg 4: host 00007400, pci 00007400, size
+ 00000020, flags 01
+ 645     KERN: PCI:   base reg 5: host fe5fe800, pci fe5fe800, size
+ 00000800, flags 00
+ 646     KERN: PCI:   Capabilities: MSI, PM, SATA, vendspec
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2021#comment:28">http://dev.haiku-os.org/ticket/2021#comment:28</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007366.html">[Haiku-bugs] [Haiku] #2021: AHCI fatal error when checking out the SVN tree on Haiku r24735
+</A></li>
+	<LI>Next message: <A HREF="007368.html">[Haiku-bugs] [Haiku] #2059: KDL during svn checkout in block	notifier/writer
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7367">[ date ]</a>
+              <a href="thread.html#7367">[ thread ]</a>
+              <a href="subject.html#7367">[ subject ]</a>
+              <a href="author.html#7367">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

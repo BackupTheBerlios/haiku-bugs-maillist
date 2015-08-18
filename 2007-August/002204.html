@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1381: [Unflatten Picture] Pixel values differ in vertical line drawing
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231381%3A%20%5BUnflatten%20Picture%5D%20Pixel%20values%20differ%0A%20in%20vertical%20line%20drawing&In-Reply-To=%3C042.6a676d87ed248ac5430b0156369344df%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002230.html">
+   <LINK REL="Next"  HREF="002208.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1381: [Unflatten Picture] Pixel values differ in vertical line drawing</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231381%3A%20%5BUnflatten%20Picture%5D%20Pixel%20values%20differ%0A%20in%20vertical%20line%20drawing&In-Reply-To=%3C042.6a676d87ed248ac5430b0156369344df%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1381: [Unflatten Picture] Pixel values differ in vertical line drawing">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Aug 11 10:24:52 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002230.html">[Haiku-bugs] [Haiku] #1380: BBitmap that accepts views is not	cleared
+</A></li>
+        <LI>Next message: <A HREF="002208.html">[Haiku-bugs] [Haiku] #1381: [Unflatten Picture] Pixel values differ in vertical line drawing
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2204">[ date ]</a>
+              <a href="thread.html#2204">[ thread ]</a>
+              <a href="subject.html#2204">[ subject ]</a>
+              <a href="author.html#2204">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1381: [Unflatten Picture] Pixel values differ in vertical line drawing
+--------------------------------+-------------------------------------------
+ Reporter:  laplace             |       Owner:  axeld         
+     Type:  bug                 |      Status:  new           
+ Priority:  normal              |   Milestone:  R1            
+Component:  Kits/Interface Kit  |     Version:  R1 development
+ Platform:  All                 |  
+--------------------------------+-------------------------------------------
+ The following line is recorded in a BPicture:
+
+ BRect frame(0, 0, 100, 30);
+ view-&gt;StrokeLine(BPoint(frame.left, frame.top), BPoint(frame.right,
+ frame.bottom));
+
+ The picture is then drawn into a bitmap. Then the flattened and
+ unflattened picture is also drawn into another bitmap.
+ The two bitmaps are not pixel identical.
+
+ See FlattenPictureTest test application in
+ src/tests/kits/interface/unflatten_picture/PictureTestCases.cpp
+ <A HREF="http://svn.berlios.de/viewcvs/haiku/haiku/trunk/src/tests/kits/interface/flatten_picture/PictureTestCases.cpp?rev=21888&amp;view=markup">http://svn.berlios.de/viewcvs/haiku/haiku/trunk/src/tests/kits/interface/flatten_picture/PictureTestCases.cpp?rev=21888&amp;view=markup</A>
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1381">http://dev.haiku-os.org/ticket/1381</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002230.html">[Haiku-bugs] [Haiku] #1380: BBitmap that accepts views is not	cleared
+</A></li>
+	<LI>Next message: <A HREF="002208.html">[Haiku-bugs] [Haiku] #1381: [Unflatten Picture] Pixel values differ in vertical line drawing
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2204">[ date ]</a>
+              <a href="thread.html#2204">[ thread ]</a>
+              <a href="subject.html#2204">[ subject ]</a>
+              <a href="author.html#2204">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

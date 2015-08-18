@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4101: nVidia CK804 OHCI USB controller detects only 1 connected device
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234101%3A%20nVidia%20CK804%20OHCI%20USB%20controller%0A%20detects%20only%201%20connected%20device&In-Reply-To=%3C049.5fab5230ccd8e2d2f403281a6ef04455%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="020160.html">
+   <LINK REL="Next"  HREF="020166.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4101: nVidia CK804 OHCI USB controller detects only 1 connected device</H1>
+    <B>oruizdorantes</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234101%3A%20nVidia%20CK804%20OHCI%20USB%20controller%0A%20detects%20only%201%20connected%20device&In-Reply-To=%3C049.5fab5230ccd8e2d2f403281a6ef04455%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4101: nVidia CK804 OHCI USB controller detects only 1 connected device">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Aug 25 21:31:11 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="020160.html">[Haiku-bugs] [Haiku] #3965: DriveSetup: reversed behavior for (un)mounted volumes
+</A></li>
+        <LI>Next message: <A HREF="020166.html">[Haiku-bugs] [Haiku] #4004: Haiku booting hangs at the 5th icon	on Intel ICH9
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20162">[ date ]</a>
+              <a href="thread.html#20162">[ thread ]</a>
+              <a href="subject.html#20162">[ subject ]</a>
+              <a href="author.html#20162">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4101: nVidia CK804 OHCI USB controller detects only 1 connected device
+-------------------------+--------------------------------------------------
+ Reporter:  monni        |       Owner:  mmlr          
+     Type:  bug          |      Status:  assigned      
+ Priority:  normal       |   Milestone:  R1            
+Component:  Drivers/USB  |     Version:  R1 development
+Blockedby:               |    Platform:  All           
+ Blocking:               |  
+-------------------------+--------------------------------------------------
+
+Comment(by oruizdorantes):
+
+ &gt; What transfer length do you use when doing mentioned transfer?
+
+
+ For that pipe the reported max_packet_size.
+
+ You can check in kernel/drivers/bluetooth/h2/h2generic/h2generic.c line
+ 307
+
+ new_bt_dev-&gt;max_packet_size_intr_in = ep-&gt;descr-&gt;max_packet_size;
+
+ &gt;Just to verify that, could you try the same on a UHCI controller instead
+ and see if it behaves differently?
+
+
+ Hmm, I developed the stack with a similar device to that one
+ BCM2035(product ID is different) in a UHCI, &amp; always size was a coherent
+ value with valid data. But Monni could confirm that for his particular
+ dongle.
+
+ My concern is not that I get 0's at end(driver &quot;could&quot; somehow discard it
+ or realize is invalid), but after that buffer, next one comming valid,
+ data but incomplete, therefore blocks the stack waiting for the remaining
+ part. So maybe those 0's might give a clue...
+
+
+ &gt; I really have no idea of the bluetooth side of things, so I'm just
+ pointing out what I can tell from this info. In any case, if you could
+ tell me the exact way you scheduled that transfer (transfer type and
+ length basically), I will look over OHCI in that regard.
+
+
+ It is a simple incoming Interrupt one:
+
+ kernel/drivers/bluetooth/h2/h2generic/h2transactions.c
+
+ 254     status = usb-&gt;queue_interrupt(bdev-&gt;intr_in_ep-&gt;handle, buf, size,
+ 255             event_complete, (void*)bdev);
+
+ Although this one is triggered because we issued a control transfer
+ previously.
+ In ohter words, this incoming interrupt is a reply of a previous ongoing
+ control transfer. But in a USB side would not matter, would it?
+ (submit_tx_command() in same file)
+
+ In the meanwhile I remember Monni's dongle has some special flags in Linux
+ driver which I will review, but I think 90% we have that covered
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4101#comment:11">http://dev.haiku-os.org/ticket/4101#comment:11</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="020160.html">[Haiku-bugs] [Haiku] #3965: DriveSetup: reversed behavior for (un)mounted volumes
+</A></li>
+	<LI>Next message: <A HREF="020166.html">[Haiku-bugs] [Haiku] #4004: Haiku booting hangs at the 5th icon	on Intel ICH9
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20162">[ date ]</a>
+              <a href="thread.html#20162">[ thread ]</a>
+              <a href="subject.html#20162">[ subject ]</a>
+              <a href="author.html#20162">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

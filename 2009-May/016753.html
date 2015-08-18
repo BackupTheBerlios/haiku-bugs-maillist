@@ -1,0 +1,170 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3823: Haiku has trouble to connect to	some webservers
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233823%3A%20Haiku%20has%20trouble%20to%20connect%20to%0A%09some%20webservers&In-Reply-To=%3C052.3170fb3901b453231f61ab3071b181c5%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="016752.html">
+   <LINK REL="Next"  HREF="016754.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3823: Haiku has trouble to connect to	some webservers</H1>
+    <B>bga</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233823%3A%20Haiku%20has%20trouble%20to%20connect%20to%0A%09some%20webservers&In-Reply-To=%3C052.3170fb3901b453231f61ab3071b181c5%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3823: Haiku has trouble to connect to	some webservers">trac at haiku-os.org
+       </A><BR>
+    <I>Fri May  1 15:16:05 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="016752.html">[Haiku-bugs] [Haiku] #3583: listusb not find some USB-devices connected to USB hub
+</A></li>
+        <LI>Next message: <A HREF="016754.html">[Haiku-bugs] [Haiku] #3040: [DeskCalc] font size is not	consistent
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16753">[ date ]</a>
+              <a href="thread.html#16753">[ thread ]</a>
+              <a href="subject.html#16753">[ subject ]</a>
+              <a href="author.html#16753">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3823: Haiku has trouble to connect to some webservers
+--------------------------------+-------------------------------------------
+ Reporter:  HaiColon            |       Owner:  axeld         
+     Type:  bug                 |      Status:  new           
+ Priority:  normal              |   Milestone:  R1            
+Component:  Network &amp; Internet  |     Version:  R1 development
+Blockedby:                      |    Platform:  x86           
+ Blocking:                      |  
+--------------------------------+-------------------------------------------
+
+Comment(by bga):
+
+ It is definitly MTU related, but changing the MTU does not help:
+
+ {{{
+ [/boot/home]&gt; ifconfig /dev/net/marvell_yukon/1 mtu 1448
+ [/boot/home]&gt; ifconfig
+ /dev/net/marvell_yukon/1
+         Hardware Type: Ethernet, Address: 00:1e:8c:3a:65:24
+         Media Type: 100 MBit, 100BASE-TX
+         inet addr: 192.168.0.2, Bcast: 192.168.0.255, Mask: 255.255.255.0
+         MTU: 1448, Metric: 0, up broadcast link
+         Receive: 9356 packets, 0 errors, 7580362 bytes, 0 mcasts, 0
+ dropped
+         Transmit: 8814 packets, 0 errors, 746182 bytes, 0 mcasts, 0
+ dropped
+         Collisions: 0
+
+ loop    Hardware Type: Local Loopback, Address: none
+         inet addr: 127.0.0.1, Mask: 255.0.0.0
+         MTU: 16384, Metric: 0, up loopback link
+         Receive: 0 packets, 0 errors, 0 bytes, 0 mcasts, 0 dropped
+         Transmit: 0 packets, 0 errors, 0 bytes, 0 mcasts, 0 dropped
+         Collisions: 0
+ }}}
+
+ The first time I tried to download a problematic image with this, it
+ worked. But then I tried again:
+
+ {{{
+ [/boot/home]&gt; wget -vvv <A HREF="http://www.bug-br.org.br/img/menu/menu_beos.gif">http://www.bug-br.org.br/img/menu/menu_beos.gif</A>
+ --2009-05-01 10:06:24--  <A HREF="http://www.bug-br.org.br/img/menu/menu_beos.gif">http://www.bug-br.org.br/img/menu/menu_beos.gif</A>
+ Resolving www.bug-br.org.br... 69.73.189.194
+ Connecting to www.bug-br.org.br|69.73.189.194|:80... connected.
+ HTTP request sent, awaiting response... 200 OK
+ Length: 2063 (2.0K) [image/gif]
+ Saving to: `menu_beos.gif.2'
+
+ 67% [=========================&gt;             ] 1,396       --.-K/s   in 0s
+
+ 2009-05-01 10:06:25 (25.1 MB/s) - Connection closed at byte 1396.
+ Retrying.
+ }}}
+
+ Then I changed the MTU again, just in case:
+
+ {{{
+ [/boot/home]&gt; ifconfig /dev/net/marvell_yukon/1 mtu 1300
+ [/boot/home]&gt; ifconfig
+ /dev/net/marvell_yukon/1
+         Hardware Type: Ethernet, Address: 00:1e:8c:3a:65:24
+         Media Type: 100 MBit, 100BASE-TX
+         inet addr: 192.168.0.2, Bcast: 192.168.0.255, Mask: 255.255.255.0
+         MTU: 1300, Metric: 0, up broadcast link
+         Receive: 9569 packets, 0 errors, 7685679 bytes, 0 mcasts, 0
+ dropped
+         Transmit: 9018 packets, 0 errors, 769910 bytes, 0 mcasts, 0
+ dropped
+         Collisions: 0
+
+ loop    Hardware Type: Local Loopback, Address: none
+         inet addr: 127.0.0.1, Mask: 255.0.0.0
+         MTU: 16384, Metric: 0, up loopback link
+         Receive: 0 packets, 0 errors, 0 bytes, 0 mcasts, 0 dropped
+         Transmit: 0 packets, 0 errors, 0 bytes, 0 mcasts, 0 dropped
+         Collisions: 0
+ }}}
+
+ And tried again:
+
+ {{{
+ [/boot/home]&gt; wget -vvv <A HREF="http://www.bug-br.org.br/img/menu/menu_beos.gif">http://www.bug-br.org.br/img/menu/menu_beos.gif</A>
+ --2009-05-01 10:07:35--  <A HREF="http://www.bug-br.org.br/img/menu/menu_beos.gif">http://www.bug-br.org.br/img/menu/menu_beos.gif</A>
+ Resolving www.bug-br.org.br... 69.73.189.194
+ Connecting to www.bug-br.org.br|69.73.189.194|:80... connected.
+ HTTP request sent, awaiting response... 200 OK
+ Length: 2063 (2.0K) [image/gif]
+ Saving to: `menu_beos.gif.3'
+
+ 60% [======================&gt;                ] 1,248       --.-K/s   in 0s
+
+ 2009-05-01 10:07:35 (10.2 MB/s) - Connection closed at byte 1248.
+ Retrying.
+ }}}
+
+ As you can see, the failure point is always some bytes before the MTU
+ size.
+
+ Other than that, I am connected to a cable connection so there is no
+ framing involved  (protocol is straight ATM/Ethernet), so the MTU size of
+ 1500 should be fine.
+
+ Anyway, decreasing the MTU file seems to have improved things a bit as
+ wget tries to download the files 3 or four times and then succeeds.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3823#comment:10">http://dev.haiku-os.org/ticket/3823#comment:10</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="016752.html">[Haiku-bugs] [Haiku] #3583: listusb not find some USB-devices connected to USB hub
+</A></li>
+	<LI>Next message: <A HREF="016754.html">[Haiku-bugs] [Haiku] #3040: [DeskCalc] font size is not	consistent
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16753">[ date ]</a>
+              <a href="thread.html#16753">[ thread ]</a>
+              <a href="subject.html#16753">[ subject ]</a>
+              <a href="author.html#16753">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

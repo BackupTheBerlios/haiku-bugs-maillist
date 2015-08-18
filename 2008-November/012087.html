@@ -1,0 +1,196 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2535: Deadlock discovered: usb explore (legacy mutex) - sh (devfs mutex)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232535%3A%20Deadlock%20discovered%3A%20usb%20explore%0A%20%28legacy%20mutex%29%20-%20sh%20%28devfs%20mutex%29&In-Reply-To=%3C051.7b8b610f250f35151e49274cdfb700d6%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012086.html">
+   <LINK REL="Next"  HREF="012088.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2535: Deadlock discovered: usb explore (legacy mutex) - sh (devfs mutex)</H1>
+    <B>bonefish</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232535%3A%20Deadlock%20discovered%3A%20usb%20explore%0A%20%28legacy%20mutex%29%20-%20sh%20%28devfs%20mutex%29&In-Reply-To=%3C051.7b8b610f250f35151e49274cdfb700d6%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2535: Deadlock discovered: usb explore (legacy mutex) - sh (devfs mutex)">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Nov  5 16:34:41 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012086.html">[Haiku-bugs] [Haiku] #2662: FAT USB stick problem: &quot;PANIC: could not write back block 7908 (General system error)&quot;
+</A></li>
+        <LI>Next message: <A HREF="012088.html">[Haiku-bugs] [Haiku] #2923: install-haiku target hangs when trying to install to /boot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12087">[ date ]</a>
+              <a href="thread.html#12087">[ thread ]</a>
+              <a href="subject.html#12087">[ subject ]</a>
+              <a href="author.html#12087">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2535: Deadlock discovered: usb explore (legacy mutex) - sh (devfs mutex)
+----------------------------+-----------------------------------------------
+  Reporter:  emitrax        |       Owner:  axeld         
+      Type:  bug            |      Status:  new           
+  Priority:  high           |   Milestone:  R1/alpha1     
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |   Blockedby:                
+  Platform:  All            |    Blocking:                
+----------------------------+-----------------------------------------------
+Changes (by bonefish):
+
+  * priority:  normal =&gt; high
+  * component:  - General =&gt; System/Kernel
+  * milestone:  R1 =&gt; R1/alpha1
+
+
+Comment:
+
+ Just ran into the same problem (unplugging/replugging my USB keyboard).
+ This is a locking order reversal issue between the devfs lock and the
+ legacy driver lock.
+
+ {{{
+ thread -s 12828
+ thread         id  state     wait for   object  cpu pri  stack      team
+ name
+ 0x818ea000  12828  waiting   mutex  0x8012cf44    - 104  0x8a7b8000   95
+ USB Keyboard 1 watcher
+ kdebug&gt; mutex 0x8012cf44
+ mutex 0x8012cf44:
+   name:            legacy driver
+   flags:           0x0
+   holder:          39
+   waiting threads: 12828
+ kdebug&gt; thread -s 39
+ thread         id  state     wait for   object  cpu pri  stack      team
+ name
+ 0x817f0000     39  waiting   mutex  0x80f875f8    -   5  0x802bf000    1
+ usb explore
+ kdebug&gt; mutex 0x80f875f8
+ mutex 0x80f875f8:
+   name:            devfs lock
+   flags:           0x0
+   holder:          12828
+   waiting threads: 39 241146 241158
+ kdebug&gt; sc 12828
+ stack trace for thread 12828 &quot;USB Keyboard 1 watcher&quot;
+     kernel stack: 0x8a7b8000 to 0x8a7bc000
+       user stack: 0x70104000 to 0x70144000
+ frame               caller     &lt;image&gt;:function + offset
+  0 8a7bbd24 (+  48) 80059c28   &lt;kernel_x86&gt; context_switch(thread*:
+ 0x818ea000, thread*: 0x817f0000) + 0x003c
+  1 8a7bbd54 (+  64) 80059f0f   &lt;kernel_x86&gt; simple_reschedule() + 0x029f
+  2 8a7bbd94 (+  48) 8003e421   &lt;kernel_x86&gt;:_mutex_lock + 0x01b1
+  3 8a7bbdc4 (+  48) 8003d42b   &lt;kernel_x86&gt;:recursive_lock_lock + 0x0053
+  4 8a7bbdf4 (+  48) 80075374   &lt;kernel_x86&gt;
+ LegacyDevice&lt;0x81199460&gt;::UninitDevice(0x0, 0x8a7bbe54, 0x835b805c) +
+ 0x0028
+  5 8a7bbe24 (+  64) 8006e021   &lt;kernel_x86&gt; devfs_free_cookie(fs_volume*:
+ 0x80f77284, fs_vnode*: 0x81269cc0, 0x8101ebd0) + 0x0071
+  6 8a7bbe64 (+  48) 8009be42   &lt;kernel_x86&gt; file_free_fd(file_descriptor*:
+ 0x812bbd48) + 0x002e
+  7 8a7bbe94 (+  48) 8008a7d0   &lt;kernel_x86&gt;:put_fd + 0x0038
+  8 8a7bbec4 (+  64) 8008a8ba   &lt;kernel_x86&gt;:close_fd_index + 0x0032
+  9 8a7bbf04 (+  32) 8008b3b5   &lt;kernel_x86&gt; common_close(int32: 12, false)
+ + 0x0031
+ 10 8a7bbf24 (+  32) 8008bc8c   &lt;kernel_x86&gt;:_user_close + 0x0018
+ 11 8a7bbf44 (+ 100) 800d2491   &lt;kernel_x86&gt;:handle_syscall + 0x00be
+ user iframe at 0x8a7bbfa8 (end = 0x8a7bc000)
+  eax 0x8a           ebx 0x573240        ecx 0x5bb800     edx 0x1800fc30
+  esi 0x18060f80     edi 0x4             ebp 0x70143d2c   esp 0x8a7bbfdc
+  eip 0xffff0102  eflags 0x203      user esp 0x70143d00
+  vector: 0x63, error code: 0x0
+ 12 8a7bbfa8 (+   0) ffff0102   &lt;commpage&gt;:commpage_syscall + 0x0002
+ 13 70143d2c (+  48) 005b3929   &lt;keyboard&gt;
+ KeyboardDevice&lt;0x18060f80&gt;::Stop(0x1, 0x5b4a3c70143d9c, 0x22cf5c,
+ 0x18060f80, int32: 402717744, int8: 125, 0x0, 0x18060ec0) + 0x002d
+ 14 70143d5c (+  48) 005b4a4f   &lt;keyboard&gt;
+ KeyboardInputDevice&lt;0x1800fc30&gt;::Stop(0x1806b428 &quot;USB Keyboard 1&quot;,
+ 0x18060f80) + 0x001f
+ 15 70143d8c (+  48) 00211fc3   &lt;_APP_&gt;
+ InputDeviceListItem&lt;0x18060ec0&gt;::Stop(0x1806b440, 0x1802c420, 0x21549a) +
+ 0x0033
+ 16 70143dbc (+  80) 00215544   &lt;_APP_&gt;
+ InputServer&lt;0x1802c420&gt;::UnregisterDevices(BInputServerDevice&amp;:
+ 0x1800fc30, input_device_ref*: 0x70143e74) + 0x00b8
+ 17 70143e0c (+  48) 00217b18   &lt;_APP_&gt;
+ BInputServerDevice&lt;0x1800fc30&gt;::UnregisterDevices(input_device_ref*:
+ 0x70143e74) + 0x002c
+ 18 70143e3c (+  64) 005b4d14   &lt;keyboard&gt;
+ KeyboardInputDevice&lt;0x1800fc30&gt;::_RemoveDevice(0x18060fc0
+ &quot;/dev/input/keyboard/usb/0&quot;) + 0x0048
+ 19 70143e7c (+ 256) 005b3c93   &lt;keyboard&gt;
+ KeyboardDevice&lt;0x18060f80&gt;::_Thread(0x0, 0x0, 0x5b3bd8, 0x573240) + 0x009f
+ 20 70143f7c (+  48) 005b3beb   &lt;keyboard&gt;
+ KeyboardDevice&lt;0x18060f80&gt;::_ThreadEntry(NULL) + 0x001f
+ 21 70143fac (+  48) 004e697c   &lt;libroot.so&gt;:_get_next_team_info (nearest)
+ + 0x005c
+ 22 70143fdc (+   0) 70143fec   259800:USB Keyboard 1
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">watcher_12828_st at 0x70104000</A> + 0x3ffec
+ kdebug&gt; sc 39
+ stack trace for thread 39 &quot;usb explore&quot;
+     kernel stack: 0x802bf000 to 0x802c3000
+ frame               caller     &lt;image&gt;:function + offset
+  0 802c2cf8 (+  48) 80059c28   &lt;kernel_x86&gt; context_switch(thread*:
+ 0x817f0000, thread*: 0x80123870) + 0x003c
+  1 802c2d28 (+  64) 80059f0f   &lt;kernel_x86&gt; simple_reschedule() + 0x029f
+  2 802c2d68 (+  48) 8003e421   &lt;kernel_x86&gt;:_mutex_lock + 0x01b1
+  3 802c2d98 (+  48) 8003d42b   &lt;kernel_x86&gt;:recursive_lock_lock + 0x0053
+  4 802c2dc8 (+  48) 8006da48   &lt;kernel_x86&gt; devfs_get_vnode(fs_volume*:
+ 0x80f77284, int64: 212, fs_vnode*: 0xbbf33e14, 0x802c2e3c, 0x802c2e40,
+ true) + 0x0028
+  5 802c2df8 (+  80) 800954a8   &lt;kernel_x86&gt; get_vnode(int32: 2, int64:
+ 212, vnode*: 0x802c2e94, true, int32: 1) + 0x0168
+  6 802c2e48 (+  80) 80099023   &lt;kernel_x86&gt;:get_vnode + 0x003f
+  7 802c2e98 (+  48) 8006f50b   &lt;kernel_x86&gt;
+ devfs_unpublish_device(BaseDevice*: 0x811993f0, true) + 0x0023
+  8 802c2ec8 (+  80) 80073095   &lt;kernel_x86&gt;
+ republish_driver(legacy_driver*: 0x810b4d20) + 0x02ed
+  9 802c2f18 (+  48) 80075721   &lt;kernel_x86&gt;:legacy_driver_rescan + 0x0075
+ 10 802c2f48 (+  32) 8006f592   &lt;kernel_x86&gt;:devfs_rescan_driver + 0x0012
+ 11 802c2f68 (+  48) 80748f73   &lt;usb&gt;
+ Stack&lt;0x80f99690&gt;::RescanDrivers(rescan_item*: 0x8101eb68) + 0x001b
+ 12 802c2f98 (+  64) 80748d07   &lt;usb&gt;
+ Stack&lt;0x80f99690&gt;::ExploreThread(NULL) + 0x0107
+ 13 802c2fd8 (+  32) 800532ab   &lt;kernel_x86&gt; _create_kernel_thread_kentry()
+ + 0x001b
+ 14 802c2ff8 (+2144587784) 80053248   &lt;kernel_x86&gt; thread_kthread_exit() +
+ 0x0000
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2535#comment:3">http://dev.haiku-os.org/ticket/2535#comment:3</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012086.html">[Haiku-bugs] [Haiku] #2662: FAT USB stick problem: &quot;PANIC: could not write back block 7908 (General system error)&quot;
+</A></li>
+	<LI>Next message: <A HREF="012088.html">[Haiku-bugs] [Haiku] #2923: install-haiku target hangs when trying to install to /boot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12087">[ date ]</a>
+              <a href="thread.html#12087">[ thread ]</a>
+              <a href="subject.html#12087">[ subject ]</a>
+              <a href="author.html#12087">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

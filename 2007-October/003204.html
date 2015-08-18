@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1542: [GLDirectMode] Crashes when resized to mininial dimension
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231542%3A%20%5BGLDirectMode%5D%20Crashes%20when%20resized%0A%20to%20mininial%20dimension&In-Reply-To=%3C050.d9669182dc4f062f61042658a899945a%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003059.html">
+   <LINK REL="Next"  HREF="003231.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1542: [GLDirectMode] Crashes when resized to mininial dimension</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231542%3A%20%5BGLDirectMode%5D%20Crashes%20when%20resized%0A%20to%20mininial%20dimension&In-Reply-To=%3C050.d9669182dc4f062f61042658a899945a%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1542: [GLDirectMode] Crashes when resized to mininial dimension">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Oct 14 16:55:54 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003059.html">[Haiku-bugs] [Haiku] #1542: [GLDirectMode] Crashes when resized to mininial dimension
+</A></li>
+        <LI>Next message: <A HREF="003231.html">[Haiku-bugs] [Haiku] #1542: [GLDirectMode] Crashes when resized to mininial dimension
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3204">[ date ]</a>
+              <a href="thread.html#3204">[ thread ]</a>
+              <a href="subject.html#3204">[ subject ]</a>
+              <a href="author.html#3204">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1542: [GLDirectMode] Crashes when resized to mininial dimension
+-----------------------------+----------------------------------------------
+  Reporter:  hauser          |       Owner:  phoudoin      
+      Type:  bug             |      Status:  new           
+  Priority:  normal          |   Milestone:  R1            
+ Component:  - Applications  |     Version:  R1 development
+Resolution:                  |    Platform:  x86           
+-----------------------------+----------------------------------------------
+Comment (by diver):
+
+ app_server freeze wile trying to reproduce this bug.
+
+ {{{
+ vm_soft_fault: va 0xffffffff not covered by area in address space
+ vm_page_fault: vm_soft_fault returned error 'Bad address' on fault at
+ 0xffffffff, ip 0x80097592, write 0, user 0, thread 0x110
+ vm_soft_fault: va 0xffffffff not covered by area in address space
+ vm_page_fault: vm_soft_fault returned error 'Bad address' on fault at
+ 0xffffffff, ip 0x80097592, write 0, user 0, thread 0x113
+ vm_soft_fault: va 0xc not covered by area in address space
+ vm_page_fault: vm_soft_fault returned error 'Bad address' on fault at 0xc,
+ ip 0x2e5e17, write 0, user 1, thread 0x1ff
+ vm_page_fault: sending team &quot;/boot/beos/demos/GLDirectMode&quot; 0x1fa SIGSEGV,
+ ip 0x2e5e17 (&quot;libbe.so_seg0ro&quot; +0xdee17)
+ stack trace:
+   0x002e4588 (libbe.so_seg0ro + 0xdd588)
+   0x007340cf (Mesa Software Renderer_seg0ro + 0x170cf)
+   0x004cd0ab (libGL.so_seg0ro + 0x320ab)
+   0x00204383 (GLDirectMode_seg0ro + 0x4383)
+   0x0036bf1a (libbe.so_seg0ro + 0x164f1a)
+   0x004cd7d3 (libGL.so_seg0ro + 0x327d3)
+   0x002049ea (GLDirectMode_seg0ro + 0x49ea)
+   0x002c5abf (libbe.so_seg0ro + 0xbeabf)
+   0x00372645 (libbe.so_seg0ro + 0x16b645)
+   0x004897df (libgame.so_seg0ro + 0xf7df)
+   0x00375dcc (libbe.so_seg0ro + 0x16edcc)
+   0x00489b33 (libgame.so_seg0ro + 0xfb33)
+   0x002c6fff (libbe.so_seg0ro + 0xbffff)
+   0x005986a0 (libroot.so_seg0ro + 0x216a0)
+   0x70080fec (w&gt;OpenGL Test_1ff_stack + 0x3ffec)
+ vm_soft_fault: va 0x0 not covered by area in address space
+ vm_page_fault: vm_soft_fault returned error 'Bad address' on fault at 0x0,
+ ip 0x8009b7c8, write 0, user 0, thread 0x1ff
+ debug_server: Thread 511 entered the debugger: Segment violation
+ stack trace, current PC 0x2e5e17  _AssertPointer__7BBitmap + 0x17:
+   (0x70080a1c)  0x2e4588  Bits__C7BBitmap + 0x20
+   (0x70080a4c)  0x7340cf  LockGL__20MesaSoftwareRenderer + 0x3bb
+   (0x70080acc)  0x4cd0ab  LockGL__7BGLView + 0x37
+   (0x70080afc)  0x204383  FrameResized__12SampleGLViewff + 0x2f
+   (0x70080b3c)  0x36bf1a  MessageReceived__5BViewP8BMessage + 0x8a
+   (0x70080c5c)  0x4cd7d3  MessageReceived__7BGLViewP8BMessage + 0x23
+   (0x70080c8c)  0x2049ea  MessageReceived__12SampleGLViewP8BMessage + 0x46
+   (0x70080cbc)  0x2c5abf  DispatchMessage__7BLooperP8BMessageP8BHandler +
+ 0x5b
+   (0x70080cec)  0x372645  DispatchMessage__7BWindowP8BMessageP8BHandler +
+ 0x155d
+   (0x70080ebc)  0x4897df
+ DispatchMessage__13BDirectWindowP8BMessageP8BHandler + 0x27
+   (0x70080eec)  0x375dcc  task_looper__7BWindow + 0x270
+   (0x70080f4c)  0x489b33  task_looper__13BDirectWindow + 0x1f
+   (0x70080f7c)  0x2c6fff  _task0___7BLooperPv + 0x3f
+   (0x70080fac)  0x5986a0  _get_next_team_info + 0x5c (closest symbol)
+
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1542#comment:3">http://dev.haiku-os.org/ticket/1542#comment:3</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003059.html">[Haiku-bugs] [Haiku] #1542: [GLDirectMode] Crashes when resized to mininial dimension
+</A></li>
+	<LI>Next message: <A HREF="003231.html">[Haiku-bugs] [Haiku] #1542: [GLDirectMode] Crashes when resized to mininial dimension
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3204">[ date ]</a>
+              <a href="thread.html#3204">[ thread ]</a>
+              <a href="subject.html#3204">[ subject ]</a>
+              <a href="author.html#3204">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

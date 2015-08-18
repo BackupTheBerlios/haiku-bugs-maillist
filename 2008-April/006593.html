@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2106: pthread_sigmask relocation issue
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232106%3A%20pthread_sigmask%20relocation%20issue&In-Reply-To=%3C043.744005ad3e1a6eed5673259e84d36e59%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006591.html">
+   <LINK REL="Next"  HREF="006594.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2106: pthread_sigmask relocation issue</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232106%3A%20pthread_sigmask%20relocation%20issue&In-Reply-To=%3C043.744005ad3e1a6eed5673259e84d36e59%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2106: pthread_sigmask relocation issue">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Apr 20 16:01:02 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006591.html">[Haiku-bugs] [Haiku] #1739: Include a build system script to generate a proper 'develop' directory on Haiku
+</A></li>
+        <LI>Next message: <A HREF="006594.html">[Haiku-bugs] [Haiku] #2106: pthread_sigmask not implemented
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6593">[ date ]</a>
+              <a href="thread.html#6593">[ thread ]</a>
+              <a href="subject.html#6593">[ subject ]</a>
+              <a href="author.html#6593">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2106: pthread_sigmask relocation issue
+-----------------------+----------------------------------------------------
+ Reporter:  andreasf   |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+ Platform:  x86        |  
+-----------------------+----------------------------------------------------
+ Ever since updating my apr 0.9.x builds for i586-pc-haiku (and thus
+ getting libapr.so) I get this whenever something's trying to use
+ libapr.so:
+
+ {{{
+ elf_resolve_symbol: could not resolve symbol 'pthread_sigmask'
+ resolve symbol &quot;pthread_sigmask&quot; returned: -2147478780
+ runtime_loader: troubles relocating: 0x80001304 (image: libapr.so.0)
+ }}}
+
+ I cannot remember seeing such an issue while using my own patched libtool
+ with {{{--build=i586-pc-beos}}}, some time before the Optional Packages. I
+ checked for occurrences of beos in configure.in etc. so I don't think it's
+ something I've forgotten.
+
+ {{{pthread_sigmask}}} is being declared in the {{{signal.h}}} header but
+ apparently only referenced in the Posix test suite; I cannot find an
+ implementation anywhere. Is it missing or some magic going wrong here?
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2106">http://dev.haiku-os.org/ticket/2106</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006591.html">[Haiku-bugs] [Haiku] #1739: Include a build system script to generate a proper 'develop' directory on Haiku
+</A></li>
+	<LI>Next message: <A HREF="006594.html">[Haiku-bugs] [Haiku] #2106: pthread_sigmask not implemented
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6593">[ date ]</a>
+              <a href="thread.html#6593">[ thread ]</a>
+              <a href="subject.html#6593">[ subject ]</a>
+              <a href="author.html#6593">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

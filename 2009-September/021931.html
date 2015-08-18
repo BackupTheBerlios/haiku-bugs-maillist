@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4239: msk driver network connection quickly becomes unresponsive
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234239%3A%20msk%20driver%20network%20connection%0A%20quickly%20becomes%20unresponsive&In-Reply-To=%3C050.2bbe81008e6a3db0237e350f4088dbaa%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="021926.html">
+   <LINK REL="Next"  HREF="021932.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4239: msk driver network connection quickly becomes unresponsive</H1>
+    <B>jmpetre</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234239%3A%20msk%20driver%20network%20connection%0A%20quickly%20becomes%20unresponsive&In-Reply-To=%3C050.2bbe81008e6a3db0237e350f4088dbaa%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4239: msk driver network connection quickly becomes unresponsive">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Sep 24 02:04:04 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="021926.html">[Haiku-bugs] [Haiku] #4053: USB MIDI not recognized dynamically
+</A></li>
+        <LI>Next message: <A HREF="021932.html">[Haiku-bugs] [Haiku] #2948: No nVidia accelerated video on 7600GS analog output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21931">[ date ]</a>
+              <a href="thread.html#21931">[ thread ]</a>
+              <a href="subject.html#21931">[ subject ]</a>
+              <a href="author.html#21931">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4239: msk driver network connection quickly becomes unresponsive
+-----------------------------+----------------------------------------------
+ Reporter:  Keifer           |       Owner:  axeld    
+     Type:  bug              |      Status:  new      
+ Priority:  normal           |   Milestone:  R1       
+Component:  Drivers/Network  |     Version:  R1/alpha1
+Blockedby:                   |    Platform:  All      
+ Blocking:                   |  
+-----------------------------+----------------------------------------------
+Changes (by jmpetre):
+
+ * cc: jmpetre@&#8230; (added)
+  * version:  R1/pre-alpha1 =&gt; R1/alpha1
+
+
+Comment:
+
+ Replying to [ticket:4239 Keifer]:
+ &gt; how to reproduce: 1) with plug in Ethernet cable 2) Launch browser 3)
+ Attempt to load multiple sites
+ &gt;
+ &gt; experienced behavior: 1) the browser loads the home page from
+ mozilla.org 2) trying to load additional sites results in the browser
+ reporting the the connection has timed out 3) pinging urls from the
+ terminal also fails to report back
+ &gt;
+ &gt; expected behavior: 1) the network connection continues to function
+ normally after the first 60 seconds
+ &gt;
+ &gt; additional notes: this is occurring with r32290 running a HP mini 1000
+ netbook with a marvell yukon 88e8040 device.
+
+
+ Same thing happens to me on Alpha.  I have attached a few logs.  Running
+ R33109.  The attached ifconfig.txt shows a ping I was sending to my local
+ gateway, then it stopped working and shows the failed packets.  Ifconfig
+ output follows that.  Syslog showed some errors on marvell_yukon, so I did
+ a 'grep marvell' on it to filter any related messages.
+ {{{
+ KERN: [marvell_yukon] (msk) Rx FIFO overrun!
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4239#comment:5">http://dev.haiku-os.org/ticket/4239#comment:5</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="021926.html">[Haiku-bugs] [Haiku] #4053: USB MIDI not recognized dynamically
+</A></li>
+	<LI>Next message: <A HREF="021932.html">[Haiku-bugs] [Haiku] #2948: No nVidia accelerated video on 7600GS analog output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21931">[ date ]</a>
+              <a href="thread.html#21931">[ thread ]</a>
+              <a href="subject.html#21931">[ subject ]</a>
+              <a href="author.html#21931">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

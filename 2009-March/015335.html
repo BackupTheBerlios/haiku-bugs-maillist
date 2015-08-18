@@ -1,0 +1,197 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3604: [Trac Bug] AttributeError: 'NoneType' object has no attribute 'split'
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233604%3A%20%5BTrac%20Bug%5D%20AttributeError%3A%20%27NoneType%27%0A%20object%20has%20no%20attribute%20%27split%27&In-Reply-To=%3C045.2175ad0317533c904381422bd1409b92%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="015332.html">
+   <LINK REL="Next"  HREF="015336.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3604: [Trac Bug] AttributeError: 'NoneType' object has no attribute 'split'</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233604%3A%20%5BTrac%20Bug%5D%20AttributeError%3A%20%27NoneType%27%0A%20object%20has%20no%20attribute%20%27split%27&In-Reply-To=%3C045.2175ad0317533c904381422bd1409b92%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3604: [Trac Bug] AttributeError: 'NoneType' object has no attribute 'split'">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Mar 24 20:25:48 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="015332.html">[Haiku-bugs] [Haiku] #3603: BuildSetup : check for correct version of jam (was: [patch] configure : check for correct version of jam)
+</A></li>
+        <LI>Next message: <A HREF="015336.html">[Haiku-bugs] [Haiku] #3605: Template to restore customizations &amp; missing author info to blog teasers
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15335">[ date ]</a>
+              <a href="thread.html#15335">[ thread ]</a>
+              <a href="subject.html#15335">[ subject ]</a>
+              <a href="author.html#15335">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3604: [Trac Bug] AttributeError: 'NoneType' object has no attribute 'split'
+--------------------------+-------------------------------------------------
+ Reporter:  leavengood    |       Owner:  haiku-web     
+     Type:  bug           |      Status:  new           
+ Priority:  normal        |   Milestone:  R1            
+Component:  Website/Trac  |     Version:  R1 development
+ Keywords:                |   Blockedby:                
+ Platform:  All           |    Blocking:                
+--------------------------+-------------------------------------------------
+ This came up when I tried to do what is below.
+
+ ==== How to Reproduce ====
+
+ While doing a POST operation on `/ticket/3420`, Trac issued an internal
+ error.
+
+ ''(please provide additional details here)''
+
+
+ Request parameters:
+ {{{
+ {'__FORM_TOKEN': u'3df7ed8e8400de20682ca6c5',
+  'action': u'reassign',
+  'action_reassign_reassign_owner': u'leavengood',
+  'cnum': u'1',
+  'comment': u&quot;I support this ticket and will take ownership. I'll need
+ more cursors to properly port WebKit. Maybe not all the cursors needed by
+ WebKit should be standard, but a lot could be. Here is a list from
+ WebKit's Cursor.h
+ (<A HREF="http://trac.webkit.org/browser/trunk/WebCore/platform/Cursor.h">http://trac.webkit.org/browser/trunk/WebCore/platform/Cursor.h</A>):\r\n\r\n\r\n{{{\r\nconst
+ Cursor&amp; pointerCursor();\r\nconst Cursor&amp; crossCursor();\r\nconst Cursor&amp;
+ handCursor();\r\nconst Cursor&amp; moveCursor();\r\nconst Cursor&amp;
+ iBeamCursor();\r\nconst Cursor&amp; waitCursor();\r\nconst Cursor&amp;
+ helpCursor();\r\nconst Cursor&amp; eastResizeCursor();\r\nconst Cursor&amp;
+ northResizeCursor();\r\nconst Cursor&amp; northEastResizeCursor();\r\nconst
+ Cursor&amp; northWestResizeCursor();\r\nconst Cursor&amp;
+ southResizeCursor();\r\nconst Cursor&amp; southEastResizeCursor();\r\nconst
+ Cursor&amp; southWestResizeCursor();\r\nconst Cursor&amp;
+ westResizeCursor();\r\nconst Cursor&amp; northSouthResizeCursor();\r\nconst
+ Cursor&amp; eastWestResizeCursor();\r\nconst Cursor&amp;
+ northEastSouthWestResizeCursor();\r\nconst Cursor&amp;
+ northWestSouthEastResizeCursor();\r\nconst Cursor&amp;
+ columnResizeCursor();\r\nconst Cursor&amp; rowResizeCursor();\r\nconst Cursor&amp;
+ middlePanningCursor();\r\nconst Cursor&amp; eastPanningCursor();\r\nconst
+ Cursor&amp; northPanningCursor();\r\nconst Cursor&amp;
+ northEastPanningCursor();\r\nconst Cursor&amp;
+ northWestPanningCursor();\r\nconst Cursor&amp; southPanningCursor();\r\nconst
+ Cursor&amp; southEastPanningCursor();\r\nconst Cursor&amp;
+ southWestPanningCursor();\r\nconst Cursor&amp; westPanningCursor();\r\nconst
+ Cursor&amp; verticalTextCursor();\r\nconst Cursor&amp; cellCursor();\r\nconst
+ Cursor&amp; contextMenuCursor();\r\nconst Cursor&amp; noDropCursor();\r\nconst
+ Cursor&amp; notAllowedCursor();\r\nconst Cursor&amp; progressCursor();\r\nconst
+ Cursor&amp; aliasCursor();\r\nconst Cursor&amp; zoomInCursor();\r\nconst Cursor&amp;
+ zoomOutCursor();\r\nconst Cursor&amp; copyCursor();\r\nconst Cursor&amp;
+ noneCursor();\r\nconst Cursor&amp; grabCursor();\r\nconst Cursor&amp;
+ grabbingCursor();\r\n}}}\r\n&quot;,
+  'field_blockedby': u'',
+  'field_blocking': u'',
+  'field_component': u'Kits/Application Kit',
+  'field_description': u'It would be nice, if the Application Kit would
+ provide more standard cursors, in order to prevent every app developer to
+ come up with its own variation of cursors (e.g. cross-hair, grab,
+ ...).\r\n\r\nThis would help to keep consistency and easy of use, as users
+ don\'t have to learn new cursors for every application.\r\n\r\nThe cursors
+ defined in the various Haiku applications like Icon-O-Matic could be used
+ as a starting point. of course not all make sense as &quot;standard&quot;, but I
+ trust you to know which ones should be common among applications.',
+  'field_keywords': u'',
+  'field_milestone': u'R1',
+  'field_platform': u'All',
+  'field_priority': u'normal',
+  'field_summary': u'Provide more standard cursors (etc. cross hair, grab,
+ ...)',
+  'field_type': u'enhancement',
+  'field_version': u'R1 development',
+  'id': u'3420',
+  'preview': u'Preview',
+  'replyto': u'',
+  'ts': u'2009-02-08 10:54:23+00:00'}
+ }}}
+
+
+ User Agent was: `Mozilla/5.0 (X11; U; Linux i686; en; rv:1.9.0.7)
+ Gecko/20080528 Epiphany/2.22 Firefox/3.0`
+
+ ==== System Information ====
+
+ || '''Trac''' || `0.11.3` ||
+ || '''Python''' || `2.4.3 (#1, Mar 14 2007, 18:51:08) ` [[br]] `[GCC 4.1.1
+ 20070105 (Red Hat 4.1.1-52)]` ||
+ || '''setuptools''' || `0.6c9` ||
+ || '''psycopg2''' || `2.0.6 (dec dt ext pq3)` ||
+ || '''Genshi''' || `0.5.1` ||
+ || '''mod_python''' || `3.3.1` ||
+ || '''Pygments''' || `1.0` ||
+ || '''Subversion''' || `1.4.2 (r22196)` ||
+ || '''jQuery:''' || `1.2.6` ||
+
+ ==== Python Traceback ====
+ {{{
+ Traceback (most recent call last):
+   File &quot;/home/haiku/lib/python2.4/site-
+ packages/Trac-0.11.3-py2.4.egg/trac/web/main.py&quot;, line 435, in
+ _dispatch_request
+     dispatcher.dispatch(req)
+   File &quot;/home/haiku/lib/python2.4/site-
+ packages/Trac-0.11.3-py2.4.egg/trac/web/main.py&quot;, line 205, in dispatch
+     resp = chosen_handler.process_request(req)
+   File &quot;/home/haiku/lib/python2.4/site-
+ packages/Trac-0.11.3-py2.4.egg/trac/ticket/web_ui.py&quot;, line 182, in
+ process_request
+     return self._process_ticket_request(req)
+   File &quot;/home/haiku/lib/python2.4/site-
+ packages/Trac-0.11.3-py2.4.egg/trac/ticket/web_ui.py&quot;, line 531, in
+ _process_ticket_request
+     get_reporter_id(req, 'author'), field_changes)
+   File &quot;/home/haiku/lib/python2.4/site-
+ packages/Trac-0.11.3-py2.4.egg/trac/ticket/web_ui.py&quot;, line 1260, in
+ _insert_ticket_data
+     self._render_property_changes(req, ticket, field_changes)
+   File &quot;/home/haiku/lib/python2.4/site-
+ packages/Trac-0.11.3-py2.4.egg/trac/ticket/web_ui.py&quot;, line 1310, in
+ _render_property_changes
+     resource_new)
+   File &quot;/home/haiku/lib/python2.4/site-
+ packages/Trac-0.11.3-py2.4.egg/trac/ticket/web_ui.py&quot;, line 1344, in
+ _render_property_diff
+     old_list, new_list = old.split(), new.split()
+ AttributeError: 'NoneType' object has no attribute 'split'
+
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3604">http://dev.haiku-os.org/ticket/3604</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="015332.html">[Haiku-bugs] [Haiku] #3603: BuildSetup : check for correct version of jam (was: [patch] configure : check for correct version of jam)
+</A></li>
+	<LI>Next message: <A HREF="015336.html">[Haiku-bugs] [Haiku] #3605: Template to restore customizations &amp; missing author info to blog teasers
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15335">[ date ]</a>
+              <a href="thread.html#15335">[ thread ]</a>
+              <a href="subject.html#15335">[ subject ]</a>
+              <a href="author.html#15335">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

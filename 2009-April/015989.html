@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3734: BFS formatted USB memory stick not	found
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233734%3A%20BFS%20formatted%20USB%20memory%20stick%20not%0A%09found&In-Reply-To=%3C049.25f9d20ecdd950760bac9dd8bb0d04d4%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="015945.html">
+   <LINK REL="Next"  HREF="015991.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3734: BFS formatted USB memory stick not	found</H1>
+    <B>haiqu</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233734%3A%20BFS%20formatted%20USB%20memory%20stick%20not%0A%09found&In-Reply-To=%3C049.25f9d20ecdd950760bac9dd8bb0d04d4%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3734: BFS formatted USB memory stick not	found">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Apr 12 02:37:08 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="015945.html">[Haiku-bugs] [Haiku] #3734: BFS formatted USB memory stick not	found
+</A></li>
+        <LI>Next message: <A HREF="015991.html">[Haiku-bugs] [Haiku] #3734: BFS formatted USB memory stick not	found
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15989">[ date ]</a>
+              <a href="thread.html#15989">[ thread ]</a>
+              <a href="subject.html#15989">[ subject ]</a>
+              <a href="author.html#15989">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3734: BFS formatted USB memory stick not found
+-------------------------+--------------------------------------------------
+ Reporter:  haiqu        |       Owner:  mmlr          
+     Type:  bug          |      Status:  assigned      
+ Priority:  normal       |   Milestone:  R1            
+Component:  Drivers/USB  |     Version:  R1 development
+Blockedby:               |    Platform:  x86           
+ Blocking:               |  
+-------------------------+--------------------------------------------------
+
+Comment(by haiqu):
+
+ Sure, no problem. I just took my 2Gb stick and did the following:
+
+ 1. Formatted it to FAT32 under WinXP
+ 2. Booted Haiku and inserted it into the onboard USB slots, and into the
+ slots on a USB card I have in my development computer, and ensured that it
+ mounted on both.
+ 3. Initialized the stick to BFS.
+ 4. Rebooted. NO STICK.
+
+ {{{
+ ~&gt; tail /var/log/syslog
+ KERN: loaded driver /boot/home/config/add-
+ ons/kernel/drivers/dev/oss/oss_loader
+ KERN: bfs: bfs_create_index:1981: File or Directory already exists
+ Last message repeated 1 time
+ KERN: oss_contig_malloc: area 4192 @ va 0x8567c000, pa 0x00264000, sz
+ 32768
+ KERN: oss_contig_malloc: area 4193 @ va 0x8567c000, pa 0x00264000, sz
+ 32768
+ KERN: bfs: mounted &quot;BeOS 5.0.3 Pro&quot; (root node at 131072, device =
+ /dev/disk/ata/0/master/0)
+ KERN: bfs: mounted &quot;Image&quot; (root node at 131072, device =
+ /dev/disk/ata/1/slave/0)
+ KERN: bfs: bfs_create_index:1981: File or Directory already exists
+ KERN: bfs: bfs_open:1178: Read-only file system
+ KERN: bfs: bfs_create_index:1981: File or Directory already exists
+ ~&gt;
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3734#comment:3">http://dev.haiku-os.org/ticket/3734#comment:3</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="015945.html">[Haiku-bugs] [Haiku] #3734: BFS formatted USB memory stick not	found
+</A></li>
+	<LI>Next message: <A HREF="015991.html">[Haiku-bugs] [Haiku] #3734: BFS formatted USB memory stick not	found
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15989">[ date ]</a>
+              <a href="thread.html#15989">[ thread ]</a>
+              <a href="subject.html#15989">[ subject ]</a>
+              <a href="author.html#15989">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

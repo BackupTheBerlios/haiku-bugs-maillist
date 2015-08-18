@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3845: S3 Virge graphics card recognised, but driver is not used
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233845%3A%20S3%20Virge%20graphics%20card%20recognised%2C%0A%20but%20driver%20is%20not%20used&In-Reply-To=%3C053.b73269059f64496e24c76c99f934b6ba%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="016718.html">
+   <LINK REL="Next"  HREF="016720.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3845: S3 Virge graphics card recognised, but driver is not used</H1>
+    <B>umccullough</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233845%3A%20S3%20Virge%20graphics%20card%20recognised%2C%0A%20but%20driver%20is%20not%20used&In-Reply-To=%3C053.b73269059f64496e24c76c99f934b6ba%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3845: S3 Virge graphics card recognised, but driver is not used">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Apr 30 21:01:32 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="016718.html">[Haiku-bugs] [Haiku] #3845: S3 Virge graphics card recognised, but driver is not used
+</A></li>
+        <LI>Next message: <A HREF="016720.html">[Haiku-bugs] [Haiku] #3845: S3 Virge graphics card recognised, but driver is not used
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16719">[ date ]</a>
+              <a href="thread.html#16719">[ thread ]</a>
+              <a href="subject.html#16719">[ subject ]</a>
+              <a href="author.html#16719">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3845: S3 Virge graphics card recognised, but driver is not used
+------------------------------+---------------------------------------------
+ Reporter:  BenoitRen         |       Owner:  axeld         
+     Type:  bug               |      Status:  new           
+ Priority:  normal            |   Milestone:  R1            
+Component:  Drivers/Graphics  |     Version:  R1 development
+Blockedby:                    |    Platform:  x86           
+ Blocking:                    |  
+------------------------------+---------------------------------------------
+Changes (by umccullough):
+
+  * owner:  marcusoverhagen =&gt; axeld
+  * component:  Audio &amp; Video =&gt; Drivers/Graphics
+
+
+Comment:
+
+ First, a card of that era isn't going to be super-fast ;) And I believe
+ Haiku's app_server double-buffers so it will still use a fair amount of
+ CPU.
+
+ I do see that the s3 driver loaded, and found your card - strange that it
+ didn't stay loaded.
+
+ When running ls /dev/graphics, you should see at least &quot;vesa&quot; there (it
+ always loads, even if the card is supported by a driver) - if you also see
+ another node there, then a native drive may also have loaded. If you see a
+ node with a bunch of random looking numbers, those are likely the
+ vendor/deviceid of the card detected by a driver.
+
+ The best way to find out what native drivers are loaded and being used by
+ the app_server is usually this:
+
+ listimage | grep accel
+
+ Which will locate and display any binaries loaded with accel in their name
+ (currently all Haiku provided accelerants are called &lt;driver&gt;.accelerant)
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3845#comment:2">http://dev.haiku-os.org/ticket/3845#comment:2</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="016718.html">[Haiku-bugs] [Haiku] #3845: S3 Virge graphics card recognised, but driver is not used
+</A></li>
+	<LI>Next message: <A HREF="016720.html">[Haiku-bugs] [Haiku] #3845: S3 Virge graphics card recognised, but driver is not used
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16719">[ date ]</a>
+              <a href="thread.html#16719">[ thread ]</a>
+              <a href="subject.html#16719">[ subject ]</a>
+              <a href="author.html#16719">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #505: First click on BMenuBar will show	empty MenuWindow
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23505%3A%20First%20click%20on%20BMenuBar%20will%20show%0A%09empty%20MenuWindow&In-Reply-To=%3C049.c40a7511dbe980ba5448738541b3e394%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003120.html">
+   <LINK REL="Next"  HREF="003121.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #505: First click on BMenuBar will show	empty MenuWindow</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23505%3A%20First%20click%20on%20BMenuBar%20will%20show%0A%09empty%20MenuWindow&In-Reply-To=%3C049.c40a7511dbe980ba5448738541b3e394%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #505: First click on BMenuBar will show	empty MenuWindow">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Oct 11 21:49:58 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003120.html">[Haiku-bugs] [Haiku] #1551: r22509: no boot
+</A></li>
+        <LI>Next message: <A HREF="003121.html">[Haiku-bugs] [Haiku] #1288: StyledEdit does not print when there is only one line of text
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3118">[ date ]</a>
+              <a href="thread.html#3118">[ thread ]</a>
+              <a href="subject.html#3118">[ subject ]</a>
+              <a href="author.html#3118">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#505: First click on BMenuBar will show empty MenuWindow
+------------------------+---------------------------------------------------
+  Reporter:  diver      |       Owner:  jackburton
+      Type:  bug        |      Status:  closed    
+  Priority:  low        |   Milestone:  R1        
+ Component:  - General  |     Version:            
+Resolution:  fixed      |    Platform:  All       
+------------------------+---------------------------------------------------
+Comment (by bonefish):
+
+ Replying to [comment:23 jackburton]:
+ &gt; Replying to [comment:22 bonefish]:
+ &gt; &gt; I don't think sharing the palette data even for apps without an app
+ server connection should be all that big of a problem. The app server
+ could put it into a separate area that could be cloned (read-only) by
+ clients, regardless of whether they have a app server connection or not.
+ &gt;
+ &gt; Note, though, that that code is also used by the app_server, and that
+ one can't obviously use BScreen::ColorMap() to get the palette (it would
+ deadlock).
+
+ That depends on the implementation of BScreen::ColorMap(), and as I wrote,
+ I wouldn't use an app server connection at all (sending 32 KB through a
+ port doesn't sound that nice anyway). The app server would do a manual
+ initialization, everyone else would clone the app server's area lazily.
+ The code for the app server's manual initialization could be reused as a
+ fallback in clients (i.e. for the unlikely case that there's no app
+ server).
+
+ &gt; &gt; Regarding the algorithm computing the index mapping: It's absolutely
+ brute force. I didn't think that it would survive for such a long time,
+ when I wrote it. It could be replaced by something more intelligent.
+ &gt;
+ &gt; BTW I copied the same code to generate the palette within the
+ app_server, so remember to change it there too :P
+
+ Don't worry, I'm not going to change anything in this area anytime soon.
+ :-)
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/505#comment:24">http://dev.haiku-os.org/ticket/505#comment:24</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003120.html">[Haiku-bugs] [Haiku] #1551: r22509: no boot
+</A></li>
+	<LI>Next message: <A HREF="003121.html">[Haiku-bugs] [Haiku] #1288: StyledEdit does not print when there is only one line of text
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3118">[ date ]</a>
+              <a href="thread.html#3118">[ thread ]</a>
+              <a href="subject.html#3118">[ subject ]</a>
+              <a href="author.html#3118">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

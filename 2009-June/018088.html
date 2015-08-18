@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4037: Tracker crash post-initialization
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234037%3A%20Tracker%20crash%20post-initialization&In-Reply-To=%3C038.43ea1e4769efbd07f9578b1063c0f9fc%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="018087.html">
+   <LINK REL="Next"  HREF="018089.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4037: Tracker crash post-initialization</H1>
+    <B>dvh</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234037%3A%20Tracker%20crash%20post-initialization&In-Reply-To=%3C038.43ea1e4769efbd07f9578b1063c0f9fc%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4037: Tracker crash post-initialization">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Jun 23 18:31:10 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="018087.html">[Haiku-bugs] [Haiku] #3231: File type problems with Paladin in Haiku, not BeOS
+</A></li>
+        <LI>Next message: <A HREF="018089.html">[Haiku-bugs] [Haiku] #4037: Tracker crash post-initialization
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18088">[ date ]</a>
+              <a href="thread.html#18088">[ thread ]</a>
+              <a href="subject.html#18088">[ subject ]</a>
+              <a href="author.html#18088">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4037: Tracker crash post-initialization
+------------------------------+---------------------------------------------
+ Reporter:  dvh               |       Owner:  axeld         
+     Type:  bug               |      Status:  new           
+ Priority:  normal            |   Milestone:  R1            
+Component:  File Systems/BFS  |     Version:  R1 development
+Blockedby:                    |    Platform:  x86           
+ Blocking:                    |  
+------------------------------+---------------------------------------------
+ Sometimes immediately, sometimes with some coaxing, browsing directories
+ with Tracker on a gcc4-r31095 build results in Tracker crash to gdb, under
+ the following conditions:
+
+ 1) Running Haiku from a nightly test image as primary master, under
+ VirtualBox 2.2.4, either Ubuntu Jaunty or Windows XP Hosts.
+ 2) Primary slave is mapped to a partition on disk
+ 3) Partition is initialized to BFS block size 2048 using DiskSetup
+ 4) Files from the disk image are copied to the host partition using cp
+ -rf, rather than using Tracker
+
+ Copying the contents of the system disk image to the host partition using
+ Tracker preserves metadata and does not cause crashes during directory
+ browsing.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4037">http://dev.haiku-os.org/ticket/4037</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="018087.html">[Haiku-bugs] [Haiku] #3231: File type problems with Paladin in Haiku, not BeOS
+</A></li>
+	<LI>Next message: <A HREF="018089.html">[Haiku-bugs] [Haiku] #4037: Tracker crash post-initialization
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18088">[ date ]</a>
+              <a href="thread.html#18088">[ thread ]</a>
+              <a href="subject.html#18088">[ subject ]</a>
+              <a href="author.html#18088">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

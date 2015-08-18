@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1516: Various file operations fail when the filename is the empty string.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231516%3A%20Various%20file%20operations%20fail%20when%20the%0A%20filename%20is%20the%20empty%20string.&In-Reply-To=%3C038.53b6e67d746aa701a16fd438b12abd23%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002867.html">
+   <LINK REL="Next"  HREF="003036.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1516: Various file operations fail when the filename is the empty string.</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231516%3A%20Various%20file%20operations%20fail%20when%20the%0A%20filename%20is%20the%20empty%20string.&In-Reply-To=%3C038.53b6e67d746aa701a16fd438b12abd23%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1516: Various file operations fail when the filename is the empty string.">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Oct  1 20:48:50 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002867.html">[Haiku-bugs] [Haiku] #1515: Pagefault in	arch_thread_init_kthread_stack
+</A></li>
+        <LI>Next message: <A HREF="003036.html">[Haiku-bugs] [Haiku] #1516: Various file operations fail when the filename is the empty string.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2869">[ date ]</a>
+              <a href="thread.html#2869">[ thread ]</a>
+              <a href="subject.html#2869">[ subject ]</a>
+              <a href="author.html#2869">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1516: Various file operations fail when the filename is the empty string.
+-----------------------+----------------------------------------------------
+ Reporter:  mjw        |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+ Platform:  All        |  
+-----------------------+----------------------------------------------------
+ Various file operations fail when the filename is the empty string.  For
+ example, stat( &quot;&quot;, &amp;statbuf ) should return -1 with errno set to ENOENT,
+ however on Haiku it returns 0.  I assume statbuf will be filled with
+ random stuff.
+
+ Other things I have tried, access( &quot;&quot;, F_OK ) returns 0, whereas I would
+ expect it to return -1 with errno set to ENOENT.
+
+ Things such as stat( NULL, &amp;statbuf ) work correctly.
+
+ fopen( &quot;&quot;, &quot;r&quot; ) returns a valid open FILE *, but the file can not be read
+ from.
+
+ I assume there are other operations (like open()) that exhibit the same
+ symptoms.  I traced the code down to vnode_path_to_vnode in
+ haiku/src/system/kernel/fs/vfs.cpp, but decided that a fix should come
+ from somebody who knows what they are doing.
+
+ I have a noddy test case to attach to the bug.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1516">http://dev.haiku-os.org/ticket/1516</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002867.html">[Haiku-bugs] [Haiku] #1515: Pagefault in	arch_thread_init_kthread_stack
+</A></li>
+	<LI>Next message: <A HREF="003036.html">[Haiku-bugs] [Haiku] #1516: Various file operations fail when the filename is the empty string.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2869">[ date ]</a>
+              <a href="thread.html#2869">[ thread ]</a>
+              <a href="subject.html#2869">[ subject ]</a>
+              <a href="author.html#2869">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3957: Building on OS X fails from tools not finding libroot_build.so
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233957%3A%20Building%20on%20OS%20X%20fails%20from%20tools%20not%0A%20finding%20libroot_build.so&In-Reply-To=%3C040.0e6fad1721cd47f20ab1eb6e474a4276%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="017510.html">
+   <LINK REL="Next"  HREF="017518.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3957: Building on OS X fails from tools not finding libroot_build.so</H1>
+    <B>titer</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233957%3A%20Building%20on%20OS%20X%20fails%20from%20tools%20not%0A%20finding%20libroot_build.so&In-Reply-To=%3C040.0e6fad1721cd47f20ab1eb6e474a4276%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3957: Building on OS X fails from tools not finding libroot_build.so">trac at haiku-os.org
+       </A><BR>
+    <I>Sun May 24 22:16:40 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="017510.html">[Haiku-bugs] [Haiku] #3956: kernel PANIC free() when booting	off a install CD
+</A></li>
+        <LI>Next message: <A HREF="017518.html">[Haiku-bugs] [Haiku] #3957: Building on OS X fails from tools not finding libroot_build.so
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17512">[ date ]</a>
+              <a href="thread.html#17512">[ thread ]</a>
+              <a href="subject.html#17512">[ subject ]</a>
+              <a href="author.html#17512">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3957: Building on OS X fails from tools not finding libroot_build.so
+--------------------------+-------------------------------------------------
+ Reporter:  titer         |       Owner:  bonefish      
+     Type:  bug           |      Status:  new           
+ Priority:  normal        |   Milestone:  R1            
+Component:  Build System  |     Version:  R1 development
+Blockedby:                |    Platform:  All           
+ Blocking:                |  
+--------------------------+-------------------------------------------------
+ For example:
+ {{{
+ SetType1 generated/objects/haiku/x86/release/add-
+ ons/kernel/network/protocols/unix/unix
+
+ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:generated/objects/darwin/lib
+ generated/objects/darwin/x86/release/tools/settype -t application/x-vnd
+ .Be-elfexecutable &quot;generated/objects/haiku/x86/release/add-
+ ons/kernel/network/protocols/unix/unix&quot; ;
+
+ dyld: Library not loaded:
+ ../../../../../../generated/objects/darwin/lib/libroot_build.so
+   Referenced from:
+ /Volumes/Haiku/haiku/generated/objects/darwin/x86/release/tools/settype
+   Reason: image not found
+ ...failed SetType1 generated/objects/haiku/x86/release/add-
+ ons/kernel/network/protocols/unix/unix ...
+ }}}
+
+ Note that the tools load fine if run from inside
+ generated/objects/darwin/x86/release/tools/, but jam runs them from the
+ source root directory.
+
+ I am attaching a patch for build/jam/BuildSetup that sets
+ DYLD_LIBRARY_PATH on Darwin the same way it sets LD_LIBRARY_PATH on Linux,
+ which fixes the problem for me.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3957">http://dev.haiku-os.org/ticket/3957</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="017510.html">[Haiku-bugs] [Haiku] #3956: kernel PANIC free() when booting	off a install CD
+</A></li>
+	<LI>Next message: <A HREF="017518.html">[Haiku-bugs] [Haiku] #3957: Building on OS X fails from tools not finding libroot_build.so
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17512">[ date ]</a>
+              <a href="thread.html#17512">[ thread ]</a>
+              <a href="subject.html#17512">[ subject ]</a>
+              <a href="author.html#17512">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

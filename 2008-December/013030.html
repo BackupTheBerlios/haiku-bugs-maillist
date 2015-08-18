@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3191: glut programs with single buffer display a black window
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-December/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233191%3A%20glut%20programs%20with%20single%20buffer%0A%20display%20a%20black%20window&In-Reply-To=%3C054.23bcd301167c52defff69da25e3eb6e7%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012932.html">
+   <LINK REL="Next"  HREF="013037.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3191: glut programs with single buffer display a black window</H1>
+    <B>phoudoin</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233191%3A%20glut%20programs%20with%20single%20buffer%0A%20display%20a%20black%20window&In-Reply-To=%3C054.23bcd301167c52defff69da25e3eb6e7%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3191: glut programs with single buffer display a black window">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Dec  5 16:40:59 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012932.html">[Haiku-bugs] [Haiku] #3191: glut programs with single buffer display a black window
+</A></li>
+        <LI>Next message: <A HREF="013037.html">[Haiku-bugs] [Haiku] #3191: glut programs with single buffer display a black window
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13030">[ date ]</a>
+              <a href="thread.html#13030">[ thread ]</a>
+              <a href="subject.html#13030">[ subject ]</a>
+              <a href="author.html#13030">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3191: glut programs with single buffer display a black window
+------------------------------+---------------------------------------------
+  Reporter:  mysticmike       |       Owner:  korli         
+      Type:  bug              |      Status:  new           
+  Priority:  normal           |   Milestone:  R1            
+ Component:  Kits/OpenGL Kit  |     Version:  R1 development
+Resolution:                   |   Blockedby:                
+  Platform:  All              |    Blocking:                
+------------------------------+---------------------------------------------
+
+Comment(by phoudoin):
+
+ Current GLUT implementation we designed for the BeOS R4.5+ targets.
+ At this time, BGLView didn't support single buffer mode, enforcing
+ silently ''BGL_DOUBLE'' flag.
+
+ GLUT implementation knows that, and I guess that why GLUT_SINGLE flag is
+ ignored and never passed to the BGLView below: see
+ src/kits/opengl/glut/glutWindow.cpp, ''glutConvertDisplayMode()''.
+ Being silently working in double buffer mode means that, indeed, calling
+ glutSwapBuffers() is mandatory to see something/anything.
+
+ I see two solutions here:
+
+ 1) A short-term fix :
+ When ''GLUT_SINGLE'' were set - a good hint code wont call
+ glutSwapBuffers() - we could automagically call ''glutSwapBuffers()''
+ after each call to the registered display callback.
+
+ 2) A longer-term solution :
+ Honor ''GLUT_SINGLE'' and pass it to BGLView (''BGL_SINGLE'' flag). This
+ solution needs to have '''actual''' support of single buffer mode in
+ GLRenderer(s).
+
+ ----
+
+ Anyway, I'm not for honoring '''actual''' single buffer mode: in OpenGL
+ lingua single buffer is supposed to be the mode where every drawning
+ primitive is visible on screen ASAP, so one after one (flickering !). The
+ single buffer is supposed to be (part of) the screen frame buffer.
+
+ To support such mode under BeOS, that can be only accomplished by calling
+ BView's methods to draw single (ouch!) or span of pixels. When
+ BDirectWindow mode is enabled, that can be done by clipping every
+ primitives draws (ouch!) before applying to the screen frame buffer. While
+ it's obvious performance will suffers a lot compared to a one-shot bitmap
+ draw (clipping done only once), I fail to see what kind of benefit an
+ actual single buffer mode give us (flickering? Who wants that!?), except
+ for the lower memory footprint - an issue far more worrying 15 years ago
+ than now.
+
+ BTW, our current Mesa Software Renderer don't do '''actual''' single
+ buffer mode. Primitives are drawn in a BBitmap first, and this bitmap is
+ made visible at ''SwapBuffers()'' time, either by calling ''DrawBitmap()''
+ or by clipping &amp; blitting when BDirectWindow mode is enabled. That's the
+ double buffer mode as defined in OpenGL lingua...
+
+ Let's try simply fix GLUT, aka 1).
+
+ And, yes, Axel, GLUT '''is''' a mess ;-)
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3191#comment:3">http://dev.haiku-os.org/ticket/3191#comment:3</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012932.html">[Haiku-bugs] [Haiku] #3191: glut programs with single buffer display a black window
+</A></li>
+	<LI>Next message: <A HREF="013037.html">[Haiku-bugs] [Haiku] #3191: glut programs with single buffer display a black window
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13030">[ date ]</a>
+              <a href="thread.html#13030">[ thread ]</a>
+              <a href="subject.html#13030">[ subject ]</a>
+              <a href="author.html#13030">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

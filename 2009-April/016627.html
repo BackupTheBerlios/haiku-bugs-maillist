@@ -1,0 +1,149 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3832: KDL on NFS Mount
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233832%3A%20KDL%20on%20NFS%20Mount&In-Reply-To=%3C041.9f4d6ec0ca5e6518be6e2a5063b20c94%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="016660.html">
+   <LINK REL="Next"  HREF="016629.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3832: KDL on NFS Mount</H1>
+    <B>egrath</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233832%3A%20KDL%20on%20NFS%20Mount&In-Reply-To=%3C041.9f4d6ec0ca5e6518be6e2a5063b20c94%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3832: KDL on NFS Mount">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Apr 27 13:49:13 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="016660.html">[Haiku-bugs] [Haiku] #3831: Right-click to see Copy / Paste context Menu in BTextControl (text box control) and BTextView (text view used by StyledEdit)
+</A></li>
+        <LI>Next message: <A HREF="016629.html">[Haiku-bugs] [Haiku] #3523: mail_daemon crash after retrieving ~20000 messages
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16627">[ date ]</a>
+              <a href="thread.html#16627">[ thread ]</a>
+              <a href="subject.html#16627">[ subject ]</a>
+              <a href="author.html#16627">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3832: KDL on NFS Mount
+------------------------------+---------------------------------------------
+ Reporter:  egrath            |       Owner:  mmu_man       
+     Type:  bug               |      Status:  new           
+ Priority:  normal            |   Milestone:  R1            
+Component:  File Systems/NFS  |     Version:  R1 development
+Blockedby:                    |    Platform:  All           
+ Blocking:                    |  
+------------------------------+---------------------------------------------
+ When mounting a remote NFS share you immediatly get into KDL:
+
+ {{{
+ nfs: mount(4, &lt;NULL&gt;, 00000000)
+ nfs: nfs_params: nfs:10.138.23.214:/shared,uid=0,gid=0,hostname=haiku
+ nfs:ip!
+ IP:10.138.23.214
+ nfs:hn!
+ nfs:uid!
+ nfs:gid!
+ nfs: ip:0a8a17d6 server:'10.138.23.214' export:'/shared'
+ hostname:'shredder' uid=0 gid=0
+ nfs: mountd at d6178a0a:53010
+ nfs: nfsd at d6178a0a:2049
+ vm_soft_fault: va 0x0 not covered by area in address space
+ vm_page_fault: vm_soft_fault returned error 'Bad address' on fault at
+ 0x15, ip 0x84b54d93, write 0, user 0, thread 0x8b
+ PANIC: vm_page_fault: unhandled page fault in kernel space at 0x15, ip
+ 0x84b54d93
+
+ Welcome to Kernel Debugging Land...
+ Thread 139 &quot;w&gt;Desktop&quot; running on CPU 0
+ }}}
+
+ This occurs on a fresh installation of Haiku R30452 (also tested on older
+ builds). The command used to mount was:
+
+ mkdir /shared[[BR]]
+ mount_nfs linux:/shared /shared 0 0
+
+ When doing a TCPDUMP on the Server side, the following is sent before
+ crashing:
+
+ {{{
+ 13:42:11.319722 IP haiku.1023 &gt; nelson.health.local.sunrpc: UDP, length 92
+ 13:42:11.319845 IP nelson.health.local.sunrpc &gt; haiku.1023: UDP, length 28
+ 13:42:11.323176 IP haiku.1023 &gt; nelson.health.local.sunrpc: UDP, length 92
+ 13:42:11.323570 IP nelson.health.local.sunrpc &gt; haiku.1023: UDP, length 28
+ 13:42:11.326250 IP haiku.1023 &gt; nelson.health.local.53010: UDP, length 88
+ 13:42:11.327197 IP nelson.health.local.53010 &gt; haiku.1023: UDP, length 60
+ 13:42:11.327568 IP haiku.3 &gt; nelson.health.local.nfs: 108 getattr [|nfs]
+ 13:42:11.327662 IP nelson.health.local.nfs &gt; haiku.3: reply ok 96 getattr
+ DIR 40755 ids 0/0 [|nfs]
+ 13:42:11.328308 IP haiku.4 &gt; nelson.health.local.nfs: 108 fsstat [|nfs]
+ 13:42:11.328387 IP nelson.health.local.nfs &gt; haiku.4: reply ok 48 fsstat
+ tsize 8192 bsize 4096 blocks 18123552 bfree 10902307 bavail 9981683
+ 13:42:11.328499 IP haiku.5 &gt; nelson.health.local.nfs: 108 fsstat [|nfs]
+ 13:42:11.328575 IP nelson.health.local.nfs &gt; haiku.5: reply ok 48 fsstat
+ tsize 8192 bsize 4096 blocks 18123552 bfree 10902307 bavail 9981683
+ 13:42:11.328917 IP haiku.6 &gt; nelson.health.local.nfs: 108 fsstat [|nfs]
+ 13:42:11.328992 IP nelson.health.local.nfs &gt; haiku.6: reply ok 48 fsstat
+ tsize 8192 bsize 4096 blocks 18123552 bfree 10902307 bavail 9981683
+ 13:42:11.329174 IP haiku.7 &gt; nelson.health.local.nfs: 108 fsstat [|nfs]
+ 13:42:11.329249 IP nelson.health.local.nfs &gt; haiku.7: reply ok 48 fsstat
+ tsize 8192 bsize 4096 blocks 18123552 bfree 10902307 bavail 9981683
+ 13:42:11.335511 IP haiku.8 &gt; nelson.health.local.nfs: 108 fsstat [|nfs]
+ 13:42:11.335587 IP nelson.health.local.nfs &gt; haiku.8: reply ok 48 fsstat
+ tsize 8192 bsize 4096 blocks 18123552 bfree 10902307 bavail 9981683
+ 13:42:11.336748 IP haiku.9 &gt; nelson.health.local.nfs: 108 fsstat [|nfs]
+ 13:42:11.336824 IP nelson.health.local.nfs &gt; haiku.9: reply ok 48 fsstat
+ tsize 8192 bsize 4096 blocks 18123552 bfree 10902307 bavail 9981683
+ 13:42:11.337496 IP haiku.10 &gt; nelson.health.local.nfs: 108 fsstat [|nfs]
+ 13:42:11.337573 IP nelson.health.local.nfs &gt; haiku.10: reply ok 48 fsstat
+ tsize 8192 bsize 4096 blocks 18123552 bfree 10902307 bavail 9981683
+ 13:42:11.338642 IP haiku.11 &gt; nelson.health.local.nfs: 108 fsstat [|nfs]
+ 13:42:11.338719 IP nelson.health.local.nfs &gt; haiku.11: reply ok 48 fsstat
+ tsize 8192 bsize 4096 blocks 18123552 bfree 10902307 bavail 9981683
+ }}}
+
+ The configuration of the NFS server (/etc/exports):
+
+ {{{
+ /shared         haiku(rw,no_root_squash,no_subtree_check)
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3832">http://dev.haiku-os.org/ticket/3832</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="016660.html">[Haiku-bugs] [Haiku] #3831: Right-click to see Copy / Paste context Menu in BTextControl (text box control) and BTextView (text view used by StyledEdit)
+</A></li>
+	<LI>Next message: <A HREF="016629.html">[Haiku-bugs] [Haiku] #3523: mail_daemon crash after retrieving ~20000 messages
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16627">[ date ]</a>
+              <a href="thread.html#16627">[ thread ]</a>
+              <a href="subject.html#16627">[ subject ]</a>
+              <a href="author.html#16627">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

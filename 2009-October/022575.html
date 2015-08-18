@@ -1,0 +1,240 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4752: BSlider chasing its tail
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234752%3A%20BSlider%20chasing%20its%20tail&In-Reply-To=%3C039.0176fa4498d2f2a7fb07ad6235cdf396%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="022572.html">
+   <LINK REL="Next"  HREF="022576.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4752: BSlider chasing its tail</H1>
+    <B>Pete</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234752%3A%20BSlider%20chasing%20its%20tail&In-Reply-To=%3C039.0176fa4498d2f2a7fb07ad6235cdf396%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4752: BSlider chasing its tail">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Oct  9 04:34:58 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="022572.html">[Haiku-bugs] [Haiku] #4625: locale preflet windows size to large
+</A></li>
+        <LI>Next message: <A HREF="022576.html">[Haiku-bugs] [Haiku] #4752: BSlider chasing its tail
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22575">[ date ]</a>
+              <a href="thread.html#22575">[ thread ]</a>
+              <a href="subject.html#22575">[ subject ]</a>
+              <a href="author.html#22575">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4752: BSlider chasing its tail
+-----------------------+----------------------------------------------------
+ Reporter:  Pete       |       Owner:  nobody   
+     Type:  bug        |      Status:  new      
+ Priority:  normal     |   Milestone:  R1       
+Component:  - General  |     Version:  R1/alpha1
+Blockedby:             |    Platform:  All      
+ Blocking:             |  
+-----------------------+----------------------------------------------------
+ I am getting a crash from MusicWeaver (that I don't see in BeOS) when I do
+ SetValue() in a class derived from BSlider.  Notably this doesn't happen
+ until a few seconds after the SetValue() is called!
+ (There is nothing odd as far as I can see in the way I derive my class
+ &quot;LControlSlider&quot;, and the first thing its SetValue() does is to call
+ BSlider::SetValue().)
+
+ Looking at both the gdb stack trace and serial output, there seems to be a
+ very strange loop that repeats for those several seconds until finally for
+ some reason (stack space?) check_lock hits a page fault.
+
+ Here's the gdb output:
+
+ {{{
+ #0  0x002fb338 in BLooper::check_lock () from /boot/system/lib/libbe.so
+ #1  0x003b0498 in BView::_CheckLock () from /boot/system/lib/libbe.so
+ #2  0x003a5b08 in BView::Bounds () from /boot/system/lib/libbe.so
+ #3  0x00384520 in BSlider::BarFrame () from /boot/system/lib/libbe.so
+ #4  0x003871b0 in BSlider::_MaxPosition () from /boot/system/lib/libbe.so
+ #5  0x0038228b in BSlider::SetValue () from /boot/system/lib/libbe.so
+ #6  0x00a6bcae in LControlSlider::SetValue ()
+    from /Haiku50GB/home/Weaver/MusicWeaver/KeyRange
+ #7  0x00385336 in BSlider::SetLimits () from /boot/system/lib/libbe.so
+ #8  0x00387693 in BSlider::_ReservedSlider4 () from
+ /boot/system/lib/libbe.so
+ #9  0x003844b5 in BSlider::UpdateTextChanged () from
+ /boot/system/lib/libbe.so
+ #10 0x003824ac in BSlider::SetValue () from /boot/system/lib/libbe.so
+ #11 0x00a6bcae in LControlSlider::SetValue ()
+    from /Haiku50GB/home/Weaver/MusicWeaver/KeyRange
+ #12 0x00385336 in BSlider::SetLimits () from /boot/system/lib/libbe.so
+ #13 0x00387693 in BSlider::_ReservedSlider4 () from
+ /boot/system/lib/libbe.so
+ #14 0x003844b5 in BSlider::UpdateTextChanged () from
+ /boot/system/lib/libbe.so
+ #15 0x003824ac in BSlider::SetValue () from /boot/system/lib/libbe.so
+ #16 0x00a6bcae in LControlSlider::SetValue ()
+    from /Haiku50GB/home/Weaver/MusicWeaver/KeyRange
+ #17 0x00385336 in BSlider::SetLimits () from /boot/system/lib/libbe.so
+ .... and so on, as far as I cared to look into the stack (&gt;#100)
+ }}}
+
+ Here's the equivalent serial output:
+
+ {{{
+ vm_page_fault: vm_soft_fault returned error 'Bad address' on fault at
+ 0x7eff2ffc
+ , ip 0x2fb338, write 1, user 1, thread 0x6d6
+ vm_page_fault: thread &quot;Weaver&quot; (1750) in team &quot;Weaver&quot; (1750) tried to
+ write add
+ ress 0x7eff2ffc, ip 0x2fb338 (&quot;libbe.so_seg0ro&quot; +0xb8338)
+ stack trace:
+   0x003b0498 (libbe.so_seg0ro + 0x16d498)
+   0x003a5b08 (libbe.so_seg0ro + 0x162b08)
+   0x00384520 (libbe.so_seg0ro + 0x141520)
+   0x003871b0 (libbe.so_seg0ro + 0x1441b0)
+   0x0038228b (libbe.so_seg0ro + 0x13f28b)
+   0x00a6bcae (KeyRange_seg0ro + 0x6cae)
+   0x00385336 (libbe.so_seg0ro + 0x142336)
+   0x00387693 (libbe.so_seg0ro + 0x144693)
+   0x003844b5 (libbe.so_seg0ro + 0x1414b5)
+   0x003824ac (libbe.so_seg0ro + 0x13f4ac)
+   0x00a6bcae (KeyRange_seg0ro + 0x6cae)
+   0x00385336 (libbe.so_seg0ro + 0x142336)
+   0x00387693 (libbe.so_seg0ro + 0x144693)
+   0x003844b5 (libbe.so_seg0ro + 0x1414b5)
+   0x003824ac (libbe.so_seg0ro + 0x13f4ac)
+   0x00a6bcae (KeyRange_seg0ro + 0x6cae)
+   0x00385336 (libbe.so_seg0ro + 0x142336)
+   0x00387693 (libbe.so_seg0ro + 0x144693)
+   0x003844b5 (libbe.so_seg0ro + 0x1414b5)
+   0x003824ac (libbe.so_seg0ro + 0x13f4ac)
+   0x00a6bcae (KeyRange_seg0ro + 0x6cae)
+   0x00385336 (libbe.so_seg0ro + 0x142336)
+   0x00387693 (libbe.so_seg0ro + 0x144693)
+   0x003844b5 (libbe.so_seg0ro + 0x1414b5)
+   0x003824ac (libbe.so_seg0ro + 0x13f4ac)
+   0x00a6bcae (KeyRange_seg0ro + 0x6cae)
+   0x00385336 (libbe.so_seg0ro + 0x142336)
+   0x00387693 (libbe.so_seg0ro + 0x144693)
+   0x003844b5 (libbe.so_seg0ro + 0x1414b5)
+   0x003824ac (libbe.so_seg0ro + 0x13f4ac)
+   0x00a6bcae (KeyRange_seg0ro + 0x6cae)
+   0x00385336 (libbe.so_seg0ro + 0x142336)
+   0x00387693 (libbe.so_seg0ro + 0x144693)
+   0x003844b5 (libbe.so_seg0ro + 0x1414b5)
+   0x003824ac (libbe.so_seg0ro + 0x13f4ac)
+   0x00a6bcae (KeyRange_seg0ro + 0x6cae)
+   0x00385336 (libbe.so_seg0ro + 0x142336)
+   0x00387693 (libbe.so_seg0ro + 0x144693)
+   0x003844b5 (libbe.so_seg0ro + 0x1414b5)
+   0x003824ac (libbe.so_seg0ro + 0x13f4ac)
+   0x00a6bcae (KeyRange_seg0ro + 0x6cae)
+   0x00385336 (libbe.so_seg0ro + 0x142336)
+   0x00387693 (libbe.so_seg0ro + 0x144693)
+   0x003844b5 (libbe.so_seg0ro + 0x1414b5)
+   0x003824ac (libbe.so_seg0ro + 0x13f4ac)
+   0x00a6bcae (KeyRange_seg0ro + 0x6cae)
+   0x00385336 (libbe.so_seg0ro + 0x142336)
+   0x00387693 (libbe.so_seg0ro + 0x144693)
+   0x003844b5 (libbe.so_seg0ro + 0x1414b5)
+   0x003824ac (libbe.so_seg0ro + 0x13f4ac)
+ debug_server: Thread 1750 entered the debugger: Segment violation
+ stack trace, current PC 0x2fb338  check_lock__7BLooper + 0x8:
+   (0x7eff3018)  0x3b0498  _CheckLock__C5BView + 0x28
+   (0x7eff3048)  0x3a5b08  Bounds__C5BView + 0x24
+   (0x7eff3078)  0x384520  BarFrame__C7BSlider + 0x28
+   (0x7eff30e8)  0x3871b0  _MaxPosition__C7BSlider + 0x60
+   (0x7eff3128)  0x38228b  SetValue__7BSliderl + 0x9f
+   (0x7eff31a8)  0xa6bcae  SetValue__14LControlSliderl + 0x22
+   (0x7eff322c)  0x385336  SetLimits__7BSliderll + 0x7e
+   (0x7eff325c)  0x387693  _ReservedSlider4__7BSlider + 0x27
+   (0x7eff328c)  0x3844b5  UpdateTextChanged__7BSlider + 0x205
+   (0x7eff330c)  0x3824ac  SetValue__7BSliderl + 0x2c0
+   (0x7eff339c)  0xa6bcae  SetValue__14LControlSliderl + 0x22
+   (0x7eff3420)  0x385336  SetLimits__7BSliderll + 0x7e
+   (0x7eff3450)  0x387693  _ReservedSlider4__7BSlider + 0x27
+   (0x7eff3480)  0x3844b5  UpdateTextChanged__7BSlider + 0x205
+   (0x7eff3500)  0x3824ac  SetValue__7BSliderl + 0x2c0
+   (0x7eff3590)  0xa6bcae  SetValue__14LControlSliderl + 0x22
+   (0x7eff3614)  0x385336  SetLimits__7BSliderll + 0x7e
+   (0x7eff3644)  0x387693  _ReservedSlider4__7BSlider + 0x27
+   (0x7eff3674)  0x3844b5  UpdateTextChanged__7BSlider + 0x205
+   (0x7eff36f4)  0x3824ac  SetValue__7BSliderl + 0x2c0
+   (0x7eff3784)  0xa6bcae  SetValue__14LControlSliderl + 0x22
+   (0x7eff3808)  0x385336  SetLimits__7BSliderll + 0x7e
+   (0x7eff3838)  0x387693  _ReservedSlider4__7BSlider + 0x27
+   (0x7eff3868)  0x3844b5  UpdateTextChanged__7BSlider + 0x205
+   (0x7eff38e8)  0x3824ac  SetValue__7BSliderl + 0x2c0
+   (0x7eff3978)  0xa6bcae  SetValue__14LControlSliderl + 0x22
+   (0x7eff39fc)  0x385336  SetLimits__7BSliderll + 0x7e
+   (0x7eff3a2c)  0x387693  _ReservedSlider4__7BSlider + 0x27
+   (0x7eff3a5c)  0x3844b5  UpdateTextChanged__7BSlider + 0x205
+   (0x7eff3adc)  0x3824ac  SetValue__7BSliderl + 0x2c0
+   (0x7eff3b6c)  0xa6bcae  SetValue__14LControlSliderl + 0x22
+   (0x7eff3bf0)  0x385336  SetLimits__7BSliderll + 0x7e
+   (0x7eff3c20)  0x387693  _ReservedSlider4__7BSlider + 0x27
+   (0x7eff3c50)  0x3844b5  UpdateTextChanged__7BSlider + 0x205
+   (0x7eff3cd0)  0x3824ac  SetValue__7BSliderl + 0x2c0
+   (0x7eff3d60)  0xa6bcae  SetValue__14LControlSliderl + 0x22
+   (0x7eff3de4)  0x385336  SetLimits__7BSliderll + 0x7e
+   (0x7eff3e14)  0x387693  _ReservedSlider4__7BSlider + 0x27
+   (0x7eff3e44)  0x3844b5  UpdateTextChanged__7BSlider + 0x205
+   (0x7eff3ec4)  0x3824ac  SetValue__7BSliderl + 0x2c0
+   (0x7eff3f54)  0xa6bcae  SetValue__14LControlSliderl + 0x22
+   (0x7eff3fd8)  0x385336  SetLimits__7BSliderll + 0x7e
+   (0x7eff4008)  0x387693  _ReservedSlider4__7BSlider + 0x27
+   (0x7eff4038)  0x3844b5  UpdateTextChanged__7BSlider + 0x205
+   (0x7eff40b8)  0x3824ac  SetValue__7BSliderl + 0x2c0
+   (0x7eff4148)  0xa6bcae  SetValue__14LControlSliderl + 0x22
+   (0x7eff41cc)  0x385336  SetLimits__7BSliderll + 0x7e
+   (0x7eff41fc)  0x387693  _ReservedSlider4__7BSlider + 0x27
+   (0x7eff422c)  0x3844b5  UpdateTextChanged__7BSlider + 0x205
+   (0x7eff42ac)  0x3824ac  SetValue__7BSliderl + 0x2c0
+ }}}
+
+ Note the call of _ReservedSlider4()!!!  Looking at the source, I can't see
+ how this is getting invoked, but the loop is I guess then inevitable as it
+ calls SetLimits(), which calls SetValue() (in the derived class), and
+ round and round.
+
+ I don't quite understand the presence of ReservedSlider4... It has been
+ superseded in Slider.h by ConstrainPoint (I guess), but it still appears
+ in Slider.cpp (for 'compatibility' it says, but it was reserved in BeOS,
+ wasn't it?).
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4752">http://dev.haiku-os.org/ticket/4752</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="022572.html">[Haiku-bugs] [Haiku] #4625: locale preflet windows size to large
+</A></li>
+	<LI>Next message: <A HREF="022576.html">[Haiku-bugs] [Haiku] #4752: BSlider chasing its tail
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22575">[ date ]</a>
+              <a href="thread.html#22575">[ thread ]</a>
+              <a href="subject.html#22575">[ subject ]</a>
+              <a href="author.html#22575">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

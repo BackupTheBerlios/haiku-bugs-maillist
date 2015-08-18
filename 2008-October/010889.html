@@ -1,0 +1,184 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1852: Menubar navigation bugs
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231852%3A%20Menubar%20navigation%20bugs&In-Reply-To=%3C047.4025887091d33537897d20d395234d94%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010887.html">
+   <LINK REL="Next"  HREF="010891.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1852: Menubar navigation bugs</H1>
+    <B>jackburton</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231852%3A%20Menubar%20navigation%20bugs&In-Reply-To=%3C047.4025887091d33537897d20d395234d94%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1852: Menubar navigation bugs">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Oct  9 16:17:41 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010887.html">[Haiku-bugs] [Haiku] #1711: Haiku stops booting at allocate_commpage_entry(4, 34)
+</A></li>
+        <LI>Next message: <A HREF="010891.html">[Haiku-bugs] [Haiku] #2598: sshd occasionally segfaults on connect (possibly when forking)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10889">[ date ]</a>
+              <a href="thread.html#10889">[ thread ]</a>
+              <a href="subject.html#10889">[ subject ]</a>
+              <a href="author.html#10889">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1852: Menubar navigation bugs
+-----------------------------+----------------------------------------------
+  Reporter:  hma             |       Owner:  jackburton    
+      Type:  bug             |      Status:  assigned      
+  Priority:  normal          |   Milestone:  R1            
+ Component:  User Interface  |     Version:  R1 development
+Resolution:                  |   Blockedby:                
+  Platform:  All             |    Blocking:                
+-----------------------------+----------------------------------------------
+
+Old description:
+
+&gt;<i> Menubar navigation bugs in revision 24105
+</I>&gt;<i>
+</I>&gt;<i> If the menubar widget behavior is work in progress, these are mostly
+</I>&gt;<i> unnecessary to report, but here goes. If nothing else, these  may be
+</I>&gt;<i> useful as a check list. I have to also comment that I was really pleased
+</I>&gt;<i> when Haiku's menus started to open when hovered over instead of clicking
+</I>&gt;<i> each one open separately. Great work.
+</I>&gt;<i>
+</I>&gt;<i> Click a menu open (e.g. Edit) and leave the cursor on top of the menu.
+</I>&gt;<i> Now press arrow-key-left or arrow-key-right. This should open the
+</I>&gt;<i> neighboring menu on left or right. It looks like it tries to do that, but
+</I>&gt;<i> seems like the hovering cursor prevents it.
+</I>&gt;<i>
+</I>&gt;<i> Click a menu open and leave the cursor where it is.
+</I>&gt;<i> Now press arrow-key-down. The first item on the menu should get focus,
+</I>&gt;<i> but the focus goes directly to the second item. Same happens with sub-
+</I>&gt;<i> menus.
+</I>&gt;<i>
+</I>&gt;<i> Click a menu open and leave the cursor where it is. Pressing esc-key
+</I>&gt;<i> should close the menu, but it doesn't.
+</I>&gt;<i>
+</I>&gt;<i> Click a menu open and click again. The second click should close the
+</I>&gt;<i> menu, but it doesn't.
+</I>&gt;<i>
+</I>&gt;<i> Open a menu and leave the cursor anywhere on the opened menu. Using arrow
+</I>&gt;<i> keys to navigate should work but it doesn't.
+</I>&gt;<i>
+</I>&gt;<i> Open a menu that has sub-menus e.g., Terminal Settings menu, Use arrow
+</I>&gt;<i> keys to move focus to Window Size. A sub-menu should open automatically
+</I>&gt;<i> but it doesn't. Pressing arrow-key-left opens the menu, but needing a key
+</I>&gt;<i> press to open a sub-menu is inconsistent with how mouse navigation works.
+</I>&gt;<i>  Automatically opening or not opening  sub-menus could be a convention
+</I>&gt;<i> decision, but Haiku's Deskbar design requires automatically opening sub-
+</I>&gt;<i> menus. Otherwise keyboard navigating Deskbar becomes confusing (if sub-
+</I>&gt;<i> menus are opened with arrow-key-right, but Desbar sub-menus open to the
+</I>&gt;<i> left side of the menu).
+</I>&gt;<i>
+</I>&gt;<i> Open a menu and use arrow keys to navigate into a sub-menu. It is not
+</I>&gt;<i> possible to get out of the sub-menu using only arrow keys (arrow-key-
+</I>&gt;<i> right should move to the sub-menu and arrow-key-left should move back to
+</I>&gt;<i> the parent menu).
+</I>&gt;<i>
+</I>&gt;<i> Open a menu that has a sub-menu and that is not the last menu on the
+</I>&gt;<i> menubar e.g., StyleEdit Font menu. Use arrow-keys to navigate into the
+</I>&gt;<i> sub-menu. Pressing arrow-key-left in the deepest sub-menu should move the
+</I>&gt;<i> focus to the next menu on on the menubar. E.g., in StyleEdit, when focus
+</I>&gt;<i> is on Font menu's Color sub-menu and user presses arrow-key-left, the
+</I>&gt;<i> Document menu should open.
+</I>
+New description:
+
+ Menubar navigation bugs in revision 24105
+
+ If the menubar widget behavior is work in progress, these are mostly
+ unnecessary to report, but here goes. If nothing else, these  may be
+ useful as a check list. I have to also comment that I was really pleased
+ when Haiku's menus started to open when hovered over instead of clicking
+ each one open separately. Great work.
+
+ Click a menu open (e.g. Edit) and leave the cursor on top of the menu.
+ Now press arrow-key-left or arrow-key-right. This should open the
+ neighboring menu on left or right. It looks like it tries to do that, but
+ seems like the hovering cursor prevents it.
+
+ Click a menu open and leave the cursor where it is.
+ Now press arrow-key-down. The first item on the menu should get focus, but
+ the focus goes directly to the second item. Same happens with sub-menus.
+
+ Click a menu open and leave the cursor where it is. Pressing esc-key
+ should close the menu, but it doesn't.
+
+ Open a menu and leave the cursor anywhere on the opened menu. Using arrow
+ keys to navigate should work but it doesn't.
+
+ Open a menu that has sub-menus e.g., Terminal Settings menu, Use arrow
+ keys to move focus to Window Size. A sub-menu should open automatically
+ but it doesn't. Pressing arrow-key-left opens the menu, but needing a key
+ press to open a sub-menu is inconsistent with how mouse navigation works.
+  Automatically opening or not opening  sub-menus could be a convention
+ decision, but Haiku's Deskbar design requires automatically opening sub-
+ menus. Otherwise keyboard navigating Deskbar becomes confusing (if sub-
+ menus are opened with arrow-key-right, but Desbar sub-menus open to the
+ left side of the menu).
+
+ Open a menu and use arrow keys to navigate into a sub-menu. It is not
+ possible to get out of the sub-menu using only arrow keys (arrow-key-right
+ should move to the sub-menu and arrow-key-left should move back to the
+ parent menu).
+
+ Open a menu that has a sub-menu and that is not the last menu on the
+ menubar e.g., StyleEdit Font menu. Use arrow-keys to navigate into the
+ sub-menu. Pressing arrow-key-left in the deepest sub-menu should move the
+ focus to the next menu on on the menubar. E.g., in StyleEdit, when focus
+ is on Font menu's Color sub-menu and user presses arrow-key-left, the
+ Document menu should open.
+
+--
+
+Comment(by jackburton):
+
+ Changed a bit the description, since that part was already fixed and
+ tracked in another ticket (can't find the number right now, sorry).
+ For the keyboard navigation behaviour, bugs apart, this should be more or
+ less how beos worked. We can change that if it doesn't work well for most
+ people though.
+ Let's discuss this.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1852#comment:3">http://dev.haiku-os.org/ticket/1852#comment:3</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010887.html">[Haiku-bugs] [Haiku] #1711: Haiku stops booting at allocate_commpage_entry(4, 34)
+</A></li>
+	<LI>Next message: <A HREF="010891.html">[Haiku-bugs] [Haiku] #2598: sshd occasionally segfaults on connect (possibly when forking)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10889">[ date ]</a>
+              <a href="thread.html#10889">[ thread ]</a>
+              <a href="subject.html#10889">[ subject ]</a>
+              <a href="author.html#10889">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

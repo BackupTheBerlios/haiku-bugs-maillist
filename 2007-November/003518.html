@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #834: Disconnecting USB mouse/keyboard	problem
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23834%3A%20Disconnecting%20USB%20mouse/keyboard%0A%09problem&In-Reply-To=%3C059.061e403bfe208c991292c61676cc9f36%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003517.html">
+   <LINK REL="Next"  HREF="003519.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #834: Disconnecting USB mouse/keyboard	problem</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23834%3A%20Disconnecting%20USB%20mouse/keyboard%0A%09problem&In-Reply-To=%3C059.061e403bfe208c991292c61676cc9f36%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #834: Disconnecting USB mouse/keyboard	problem">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Nov 10 18:41:02 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003517.html">[Haiku-bugs] [Haiku] #1611: Choosing file format when	right-drag&amp;drop
+</A></li>
+        <LI>Next message: <A HREF="003519.html">[Haiku-bugs] [Haiku] #1612: A Visible Formula attribute in Queries
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3518">[ date ]</a>
+              <a href="thread.html#3518">[ thread ]</a>
+              <a href="subject.html#3518">[ subject ]</a>
+              <a href="author.html#3518">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#834: Disconnecting USB mouse/keyboard problem
+------------------------------+---------------------------------------------
+  Reporter:  marcusoverhagen  |       Owner:  mmlr          
+      Type:  bug              |      Status:  assigned      
+  Priority:  normal           |   Milestone:  R1            
+ Component:  - General        |     Version:  R1 development
+Resolution:                   |    Platform:  All           
+------------------------------+---------------------------------------------
+Comment (by marcusoverhagen):
+
+ When switching from Haiku to a different computer with the KVM switch,
+ in Haiku this happens:
+
+ usb_uhci: td (0x0501bfa0) error: status: 0x254507ff; token: 0x00608469;
+ usb_hid: bus status -2147442668
+ USB ControlPipe: timeout waiting for queued request to complete
+ usb_hid: clear_feature() error -2147483639
+ usb_uhci: td (0x0501e180) error: status: 0x04450007; token: 0x00e0042d;
+ usb_uhci: td (0x0501e220) error: status: 0x254507ff; token: 0x00608469;
+ usb_hid: bus status -2147442668
+ USB ControlPipe: timeout waiting for queued request to complete
+ USB ControlPipe: timeout waiting for queued request to complete
+ USB Hub 2: error updating port status
+ usb_hid: clear_feature() error -2147483639
+ usb_uhci: td (0x0501e2c0) error: status: 0x04450007; token: 0x00e0042d;
+ usb_uhci: td (0x0501e360) error: status: 0x254507ff; token: 0x00608469;
+ usb_hid: bus status -2147442668
+ USB ControlPipe: timeout waiting for queued request to complete
+ USB ControlPipe: timeout waiting for queued request to complete
+ usb_hid: clear_feature() error -2147483639
+ usb_uhci: td (0x0501e400) error: status: 0x04450007; token: 0x00e0042d;
+ USB Hub 2: error updating port status
+ usb_uhci: td (0x0501e440) error: status: 0x254507ff; token: 0x00608469;
+ usb_hid: bus status -2147442668
+ USB ControlPipe: timeout waiting for queued request to complete
+ usb_hid: clear_feature() error -2147483639
+ usb_uhci: td (0x0501e480) error: status: 0x04450007; token: 0x00e0042d;
+ usb_uhci: td (0x0501e520) error: status: 0x254507ff; token: 0x00608469;
+ usb_hid: bus status -2147442668
+ USB ControlPipe: timeout waiting for queued request to complete
+ USB ControlPipe: timeout waiting for queued request to complete
+ usb_hid: clear_feature() error -2147483639
+ USB Hub 2: error updating port status
+ usb_uhci: td (0x0501e5c0) error: status: 0x04450007; token: 0x00e0042d;
+ usb_uhci: td (0x0501e600) error: status: 0x254507ff; token: 0x00608469;
+ usb_hid: bus status -2147442668
+ USB ControlPipe: timeout waiting for queued request to complete
+ USB Hub 2: error updating port status
+ USB ControlPipe: timeout waiting for queued request to complete
+ usb_hid: clear_feature() error -2147483639
+ usb_uhci: td (0x0501e6a0) error: status: 0x04450007; token: 0x00e0042d;
+ usb_uhci: td (0x0501e740) error: status: 0x254507ff; token: 0x00608469;
+ usb_hid: bus status -2147442668
+ USB ControlPipe: timeout waiting for queued request to complete
+ USB ControlPipe: timeout waiting for queued request to complete
+ usb_hid: clear_feature() error -2147483639
+ CPU 0 halted!
+ PANIC: free(): address 0x909e4160 already exists in bin free list
+
+ Welcome to Kernel Debugging Land...
+ Running on CPU 1
+ kdebug&gt;
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/834#comment:9">http://dev.haiku-os.org/ticket/834#comment:9</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003517.html">[Haiku-bugs] [Haiku] #1611: Choosing file format when	right-drag&amp;drop
+</A></li>
+	<LI>Next message: <A HREF="003519.html">[Haiku-bugs] [Haiku] #1612: A Visible Formula attribute in Queries
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3518">[ date ]</a>
+              <a href="thread.html#3518">[ thread ]</a>
+              <a href="subject.html#3518">[ subject ]</a>
+              <a href="author.html#3518">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

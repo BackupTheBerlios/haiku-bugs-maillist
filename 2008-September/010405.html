@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1609: NetworkStatus -&gt; No Link
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231609%3A%20NetworkStatus%20-%3E%20No%20Link&In-Reply-To=%3C053.e9ff86890245b9ffe12fb4b5792b50d5%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010404.html">
+   <LINK REL="Next"  HREF="010406.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1609: NetworkStatus -&gt; No Link</H1>
+    <B>siarzhuk</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231609%3A%20NetworkStatus%20-%3E%20No%20Link&In-Reply-To=%3C053.e9ff86890245b9ffe12fb4b5792b50d5%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1609: NetworkStatus -&gt; No Link">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Sep 18 22:27:18 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010404.html">[Haiku-bugs] [Haiku] #1641: KDL:  rtl8139
+</A></li>
+        <LI>Next message: <A HREF="010406.html">[Haiku-bugs] [Haiku] #1661: KDL:: rtl8139:: thread 0x2f &quot;rl	intr handler&quot;
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10405">[ date ]</a>
+              <a href="thread.html#10405">[ thread ]</a>
+              <a href="subject.html#10405">[ subject ]</a>
+              <a href="author.html#10405">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1609: NetworkStatus -&gt; No Link
+------------------------------+---------------------------------------------
+  Reporter:  atomozero        |       Owner:  axeld         
+      Type:  bug              |      Status:  reopened      
+  Priority:  normal           |   Milestone:  R1            
+ Component:  Drivers/Network  |     Version:  R1 development
+Resolution:                   |   Blockedby:                
+  Platform:  All              |    Blocking:                
+------------------------------+---------------------------------------------
+
+Comment(by siarzhuk):
+
+ 2 Axel:
+
+ This problem is reproducible on r27627 with rtl8139. Looks like your
+ suspection about &quot;missing&quot; PHY is right. Where can I trace more detailed
+ information about this problem? :-)
+
+ {{{
+ ...
+ KERN: nforce: init_hardware(0x806f8cb8)
+ KERN: nforce: no hardware found.
+ KERN: rtl8139: init_hardware(0x806f4d6c)
+ KERN: [rtl8139] (rl) bus_alloc_resource(4, [16], 0x0, 0xffffffff, 0x1,
+ 0x2)
+ KERN: rtl8139, found RealTek 8139 10/100BaseTX at 9
+ KERN: rtl8139: init_driver(0x806f4d6c)
+ KERN: [rtl8139] (rl) bus_alloc_resource(4, [16], 0x0, 0xffffffff, 0x1,
+ 0x2)
+ Last message repeated 1 time
+ KERN: [rtl8139] (rl) bus_alloc_resource(1, [0], 0x0, 0xffffffff, 0x1, 0x6)
+ KERN: [rtl8139] (miibus) No PHY module found (0/0)!
+ KERN: if_initname(0x91371ba0, rl, 3)
+ KERN: [rtl8139] rtl8139: /dev/net/rtl8139/0
+ KERN: loaded driver /boot/beos/system/add-
+ ons/kernel/drivers/dev/net/rtl8139
+ KERN: syskonnect: init_hardware(0x8079f2b8)
+ KERN: syskonnect: no hardware found.
+ KERN: [33musb_asix:[0m54.38.737:init_driver
+ KERN: [33musb_asix:[0m54.38.737:usb_asix_device_added
+ KERN: Last message repeated 3 times.
+ KERN: [33musb_asix:[0m54.38.737:publish_devices
+ KERN: [33musb_asix:[0m54.38.738:uninit_driver
+ KERN: loaded driver /boot/beos/system/add-
+ ons/kernel/drivers/dev/net/usb_asix
+ KERN: loaded driver /boot/beos/system/add-
+ ons/kernel/drivers/dev/net/usb_ecm
+ KERN: via_rhine: init_hardware(0x807991f8)
+ KERN: via_rhine: no hardware found.
+ KERN: bfs: bfs_open_dir:1499: Invalid Argument
+ KERN: get_device_interface: ask &quot;network/devices/ethernet/v1&quot; for
+ /dev/net/rtl8139/0
+ KERN: ipv4_datalink_init(/dev/net/rtl8139/0)
+ KERN: [net/rtl8139/0] compat_open(0x2)
+ KERN: ifmedia_ioctl: no media found for 0x20
+ KERN: /dev/net/rtl8139/0: media change, media 0x22 quality 1000 speed
+ 10000
+ KERN: get_device_interface: ask &quot;network/devices/ethernet/v1&quot; for loop
+ KERN: get_device_interface: ask &quot;network/devices/loopback/v1&quot; for loop
+ ...
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1609#comment:8">http://dev.haiku-os.org/ticket/1609#comment:8</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010404.html">[Haiku-bugs] [Haiku] #1641: KDL:  rtl8139
+</A></li>
+	<LI>Next message: <A HREF="010406.html">[Haiku-bugs] [Haiku] #1661: KDL:: rtl8139:: thread 0x2f &quot;rl	intr handler&quot;
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10405">[ date ]</a>
+              <a href="thread.html#10405">[ thread ]</a>
+              <a href="subject.html#10405">[ subject ]</a>
+              <a href="author.html#10405">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

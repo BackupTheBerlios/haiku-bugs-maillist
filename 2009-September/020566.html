@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4385: blocking boot on powerbook G4
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234385%3A%20blocking%20boot%20on%20powerbook%20G4&In-Reply-To=%3C050.192fbe4675adf8a2a1f7174695475980%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="020565.html">
+   <LINK REL="Next"  HREF="020567.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4385: blocking boot on powerbook G4</H1>
+    <B>kallisti5</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234385%3A%20blocking%20boot%20on%20powerbook%20G4&In-Reply-To=%3C050.192fbe4675adf8a2a1f7174695475980%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4385: blocking boot on powerbook G4">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Sep  1 17:49:50 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="020565.html">[Haiku-bugs] [Haiku] #4363: patch to add updated packages to	OptionalPackages
+</A></li>
+        <LI>Next message: <A HREF="020567.html">[Haiku-bugs] [Haiku] #4385: blocking boot on powerbook G4
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20566">[ date ]</a>
+              <a href="thread.html#20566">[ thread ]</a>
+              <a href="subject.html#20566">[ subject ]</a>
+              <a href="author.html#20566">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4385: blocking boot on powerbook G4
+--------------------------------+-------------------------------------------
+ Reporter:  rayman              |       Owner:  axeld         
+     Type:  bug                 |      Status:  new           
+ Priority:  normal              |   Milestone:  R1            
+Component:  System/Boot Loader  |     Version:  R1 development
+Blockedby:                      |    Platform:  PowerPC       
+ Blocking:                      |  
+--------------------------------+-------------------------------------------
+
+Comment(by kallisti5):
+
+ sorry, function is of_open(path) not of_path.
+
+ boot/platform/openfirmware/network.cpp: fHandle = of_open(device);
+ boot/platform/openfirmware/devices.cpp: int kernel = of_open(name);
+ boot/platform/openfirmware/devices.cpp: int handle = of_open(sBootPath);
+ boot/platform/openfirmware/devices.cpp:         int handle =
+ of_open(path);
+ kernel/arch/ppc/arch_platform.cpp:      fRTC =
+ of_open(kernelArgs-&gt;platform_args.rtc_path);
+ kernel/platform/openfirmware/openfirmware.c:of_open(const char *nodeName)
+
+ of_open calls gCallOpenFirmware... where the heck is gCallOpenFirmware
+ defined?
+
+
+ /develop/haiku/src$ grep -R &quot;CallOpenFirmware&quot; * | grep -v svn
+ system/kernel/platform/openfirmware/openfirmware.c:static int
+ (*gCallOpenFirmware)(void *) = 0;
+ system/kernel/platform/openfirmware/openfirmware.c:     gCallOpenFirmware
+ = openFirmwareEntry;
+ system/kernel/platform/openfirmware/openfirmware.c:     if
+ (gCallOpenFirmware(&amp;args) == OF_FAILED)
+ system/kernel/platform/openfirmware/openfirmware.c:     if
+ (gCallOpenFirmware(&amp;args) == OF_FAILED || args.args[numArgs])
+ system/kernel/platform/openfirmware/openfirmware.c:     if
+ (gCallOpenFirmware(&amp;args) == OF_FAILED || args.args[numArgs])
+ system/kernel/platform/openfirmware/openfirmware.c:     if
+ (gCallOpenFirmware(&amp;args) == OF_FAILED)
+ system/kernel/platform/openfirmware/openfirmware.c:     if
+ (gCallOpenFirmware(&amp;args) == OF_FAILED)
+ system/kernel/platform/openfirmware/openfirmware.c:     if
+ (gCallOpenFirmware(&amp;args) == OF_FAILED)
+ system/kernel/platform/openfirmware/openfirmware.c:     if
+ (gCallOpenFirmware(&amp;args) == OF_FAILED)
+ system/kernel/platform/openfirmware/openfirmware.c:     if
+ (gCallOpenFirmware(&amp;args) == OF_FAILED)
+ system/kernel/platform/openfirmware/openfirmware.c:     if
+ (gCallOpenFirmware(&amp;args) == OF_FAILED)
+ system/kernel/platform/openfirmware/openfirmware.c:     if
+ (gCallOpenFirmware(&amp;args) == OF_FAILED)
+ system/kernel/platform/openfirmware/openfirmware.c:     if
+ (gCallOpenFirmware(&amp;args) == OF_FAILED)
+ system/kernel/platform/openfirmware/openfirmware.c:     if
+ (gCallOpenFirmware(&amp;args) == OF_FAILED)
+ system/kernel/platform/openfirmware/openfirmware.c:     if
+ (gCallOpenFirmware(&amp;args) == OF_FAILED)
+ system/kernel/platform/openfirmware/openfirmware.c:     if
+ (gCallOpenFirmware(&amp;args) == OF_FAILED)
+ system/kernel/platform/openfirmware/openfirmware.c:     if
+ (gCallOpenFirmware(&amp;args) == OF_FAILED || args.handle == 0)
+ system/kernel/platform/openfirmware/openfirmware.c:
+ gCallOpenFirmware(&amp;args);
+ system/kernel/platform/openfirmware/openfirmware.c:     if
+ (gCallOpenFirmware(&amp;args) == OF_FAILED)
+ system/kernel/platform/openfirmware/openfirmware.c:     if
+ (gCallOpenFirmware(&amp;args) == OF_FAILED)
+ system/kernel/platform/openfirmware/openfirmware.c:     if
+ (gCallOpenFirmware(&amp;args) == OF_FAILED)
+ system/kernel/platform/openfirmware/openfirmware.c:     return
+ gCallOpenFirmware(&amp;args);
+ system/kernel/platform/openfirmware/openfirmware.c:     if
+ (gCallOpenFirmware(&amp;args) == OF_FAILED)
+ system/kernel/platform/openfirmware/openfirmware.c:     if
+ (gCallOpenFirmware(&amp;args) == OF_FAILED)
+ system/kernel/platform/openfirmware/openfirmware.c:
+ gCallOpenFirmware(&amp;args);
+ system/kernel/platform/openfirmware/openfirmware.c:
+ gCallOpenFirmware(&amp;args);
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4385#comment:2">http://dev.haiku-os.org/ticket/4385#comment:2</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="020565.html">[Haiku-bugs] [Haiku] #4363: patch to add updated packages to	OptionalPackages
+</A></li>
+	<LI>Next message: <A HREF="020567.html">[Haiku-bugs] [Haiku] #4385: blocking boot on powerbook G4
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20566">[ date ]</a>
+              <a href="thread.html#20566">[ thread ]</a>
+              <a href="subject.html#20566">[ subject ]</a>
+              <a href="author.html#20566">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

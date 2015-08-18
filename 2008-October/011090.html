@@ -1,0 +1,359 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2866: PANIC: vm_page_fault: unhandled page fault in kernel space at 0x8003cf20, ip 0x800d46b3
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232866%3A%20PANIC%3A%20vm_page_fault%3A%20unhandled%20page%0A%20fault%20in%20kernel%20space%20at%200x8003cf20%2C%20ip%200x800d46b3&In-Reply-To=%3C044.c62497ebaeffb71c66fad66d9af7147f%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011097.html">
+   <LINK REL="Next"  HREF="011116.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2866: PANIC: vm_page_fault: unhandled page fault in kernel space at 0x8003cf20, ip 0x800d46b3</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232866%3A%20PANIC%3A%20vm_page_fault%3A%20unhandled%20page%0A%20fault%20in%20kernel%20space%20at%200x8003cf20%2C%20ip%200x800d46b3&In-Reply-To=%3C044.c62497ebaeffb71c66fad66d9af7147f%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2866: PANIC: vm_page_fault: unhandled page fault in kernel space at 0x8003cf20, ip 0x800d46b3">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Oct 18 06:46:13 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011097.html">[Haiku-bugs] [Haiku] #2865: [ssh] load_public_identity_files: gethostname: No such file or directory
+</A></li>
+        <LI>Next message: <A HREF="011116.html">[Haiku-bugs] [Haiku] #2866: PANIC: vm_page_fault: unhandled page fault in kernel space at 0x8003cf20, ip 0x800d46b3
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11090">[ date ]</a>
+              <a href="thread.html#11090">[ thread ]</a>
+              <a href="subject.html#11090">[ subject ]</a>
+              <a href="author.html#11090">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2866: PANIC: vm_page_fault: unhandled page fault in kernel space at 0x8003cf20,
+ip 0x800d46b3
+---------------------------+------------------------------------------------
+ Reporter:  anevilyak      |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  critical       |   Milestone:  R1/alpha1     
+Component:  System/Kernel  |     Version:  R1 development
+Blockedby:                 |    Platform:  All           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+ I got this panic while doing a build with the latest revision.
+
+ backtrace is as follows:
+ {{{
+ stack trace for thread 15980 &quot;cpp0&quot;
+     kernel stack: 0xc32d5000 to 0xc32d9000
+       user stack: 0x7efee000 to 0x7ffee000
+ frame               caller     &lt;image&gt;:function + offset
+  0 c32d89a4 (+  48) 8005c8c9   &lt;kernel_x86&gt;:invoke_debugger_command +
+ 0x00f5
+  1 c32d89d4 (+  64) 8005c6b9   &lt;kernel_x86&gt;
+ invoke_pipe_segment(debugger_command_pipe*: 0x80123de0, int32: 0, 0x0
+ &quot;&lt;NULL&gt;&quot;) + 0x0079
+  2 c32d8a14 (+  64) 8005ca40   &lt;kernel_x86&gt;:invoke_debugger_command_pipe +
+ 0x009c
+  3 c32d8a54 (+  48) 8005dfc8   &lt;kernel_x86&gt;
+ ExpressionParser&lt;0xc32d8b08&gt;::_ParseCommandPipe(0xc32d8b04) + 0x0234
+  4 c32d8a84 (+  64) 8005d402   &lt;kernel_x86&gt;
+ ExpressionParser&lt;0xc32d8b08&gt;::EvaluateCommand(0x80114680 &quot;bt&quot;, 0xc32d8b04)
+ + 0x02ba
+  5 c32d8ac4 (+ 224) 8005f3f0   &lt;kernel_x86&gt;:evaluate_debug_command +
+ 0x0088
+  6 c32d8ba4 (+  64) 8005a8da   &lt;kernel_x86&gt; kernel_debugger_loop() +
+ 0x01ae
+  7 c32d8be4 (+  32) 8005b705   &lt;kernel_x86&gt;:kernel_debugger + 0x004d
+  8 c32d8c04 (+ 192) 8005b6ad   &lt;kernel_x86&gt;:panic + 0x0029
+  9 c32d8cc4 (+  80) 800bc8c9   &lt;kernel_x86&gt;:vm_page_fault + 0x0139
+ 10 c32d8d14 (+  64) 800cc855   &lt;kernel_x86&gt;:page_fault_exception + 0x00d9
+ 11 c32d8d54 (+  12) 800cfe66   &lt;kernel_x86&gt;:int_bottom + 0x0036
+ kernel iframe at 0xc32d8d60 (end = 0xc32d8db0)
+  eax 0xc610c483     ebx 0xc610c483      ecx 0xf01f845    edx 0xf01f845
+  esi 0x8003cf20     edi 0xc32d8efc      ebp 0xc32d8dd4   esp 0xc32d8d94
+  eip 0x800d46b3  eflags 0x10297
+  vector: 0xe, error code: 0x3
+ 12 c32d8d60 (+ 116) 800d46b3   &lt;kernel_x86&gt;:atomic_get64 + 0x000f
+ 13 c32d8dd4 (+  48) 800458ce   &lt;kernel_x86&gt;:real_time_clock + 0x0016
+ 14 c32d8e04 (+  32) 800d8e8f   &lt;kernel_x86&gt;:time + 0x000f
+ 15 c32d8e24 (+  48) 807dbc42   &lt;bfs&gt; fill_stat_buffer(Inode*: 0xae168550,
+ stat&amp;: 0xc32d8efc) + 0x0076
+ 16 c32d8e54 (+  48) 807dd109   &lt;bfs&gt; bfs_read_stat(fs_volume*: 0x90f03d04,
+ fs_vnode*: 0xae169000, stat*: 0xc32d8efc) + 0x0025
+ 17 c32d8e84 (+  48) 8009b5cb   &lt;kernel_x86&gt;
+ common_read_stat(file_descriptor*: 0x913c4e60, stat*: 0xc32d8efc) + 0x002b
+ 18 c32d8eb4 (+ 144) 800a0b2a   &lt;kernel_x86&gt;:_user_read_stat + 0x0142
+ 19 c32d8f44 (+ 100) 800d00a1   &lt;kernel_x86&gt;:handle_syscall + 0x00be
+ user iframe at 0xc32d8fa8 (end = 0xc32d9000)
+  eax 0x88           ebx 0x2d371c        ecx 0x7ffed5f0   edx 0xffff0104
+  esi 0x18015328     edi 0x18059400      ebp 0x7ffed62c   esp 0xc32d8fdc
+  eip 0xffff0104  eflags 0x203      user esp 0x7ffed5f0
+  vector: 0x63, error code: 0x0
+ 20 c32d8fa8 (+   0) ffff0104   &lt;commpage&gt;:commpage_syscall + 0x0004
+ 21 7ffed62c (+  80) 00208edb   &lt;cpp0&gt;:main (nearest) + 0x6a43
+ 22 7ffed67c (+ 272) 0020839e   &lt;cpp0&gt;:main (nearest) + 0x5f06
+ 23 7ffed78c (+ 128) 002076f9   &lt;cpp0&gt;:main (nearest) + 0x5261
+ 24 7ffed80c (+ 144) 0020576c   &lt;cpp0&gt;:main (nearest) + 0x32d4
+ 25 7ffed89c (+  96) 0020940d   &lt;cpp0&gt;:main (nearest) + 0x6f75
+ 26 7ffed8fc (+ 352) 00208839   &lt;cpp0&gt;:main (nearest) + 0x63a1
+ 27 7ffeda5c (+ 128) 002076f9   &lt;cpp0&gt;:main (nearest) + 0x5261
+ 28 7ffedadc (+ 144) 0020576c   &lt;cpp0&gt;:main (nearest) + 0x32d4
+ 29 7ffedb6c (+  96) 0020940d   &lt;cpp0&gt;:main (nearest) + 0x6f75
+ 30 7ffedbcc (+ 352) 00208839   &lt;cpp0&gt;:main (nearest) + 0x63a1
+ 31 7ffedd2c (+ 128) 002076f9   &lt;cpp0&gt;:main (nearest) + 0x5261
+ 32 7ffeddac (+ 144) 0020576c   &lt;cpp0&gt;:main (nearest) + 0x32d4
+ 33 7ffede3c (+ 320) 00204a1f   &lt;cpp0&gt;:main + 0x2587
+ 34 7ffedf7c (+  48) 00201d7f   &lt;cpp0&gt;:_start + 0x005b
+ 35 7ffedfac (+  48) 001008ea
+ &lt;/boot/beos/system/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">runtime_loader at 0x00100000</A>&gt;:unknown + 0x08ea
+ 36 7ffedfdc (+   0) 7ffedfec   520414:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">cpp0_main_stack at 0x7efee000</A> +
+ 0xffffec
+
+ kdebug&gt; call 15980 12 -1
+ thread 15980, cpp0
+ c32d8d60 800d46b3   &lt;kernel_x86&gt;:atomic_get64(0x8003cf20)
+
+ }}}
+
+ thread information:
+ {{{
+ THREAD: 0x9fc5c000
+ id:                 15980 (0x3e6c)
+ name:               &quot;cpp0&quot;
+ all_next:           0x9fcf5000
+ team_next:          0x00000000
+ q_next:             0x9fcfe000
+ priority:           5 (next 5, I/O: -1)
+ state:              running
+ next_state:         ready
+ cpu:                0x80133f00 (0)
+ sig_pending:        0x0 (blocked: 0x0)
+ in_kernel:          1
+ fault_handler:      0x8005c8e4
+ args:               0xc120a4b0 0x00000000
+ entry:              0x8004e97c
+ team:               0x90e96b28, &quot;cpp0&quot;
+   exit.sem:         324959
+   exit.status:      0x0 (No error)
+   exit.reason:      0x0
+   exit.signal:      0x0
+   exit.waiters:
+ kernel_stack_area:  520382
+ kernel_stack_base:  0xc32d5000
+ user_stack_area:    520414
+ user_stack_base:    0x7efee000
+ user_local_storage: 0x7ffee000
+ kernel_errno:       0x0 (No error)
+ kernel_time:        28660
+ user_time:          5011
+ flags:              0x0
+ architecture dependant section:
+         esp: 0xc32d8b14
+         ss: 0x00000010
+         fpu_state at 0x9fc5c3d0
+ }}}
+
+ build revision information:
+ {{{
+ kernel build: Oct 17 2008 17:38:45
+ SVN revision: 28225
+
+ cpu count: 1, active times:
+   [1] 1645054130
+ pages:          243853 (262128 max)
+ sems:           1416 (131072 max)
+ ports:          131 (4096 max)
+ threads:        127 (4096 max)
+ teams:          21 (2048 max)
+ }}}
+
+ In case it's relevant, the inode:
+ {{{
+ INODE 0xae168550
+   file cache:        0xae160898
+   file map:          0xae167690
+   old size:          866
+   old last modified: 80183673150336
+ inode:
+   magic1             = 3bbe0ad9 (;...) valid
+   inode_num          = (64, 2425, 1)
+   uid                = 0
+   gid                = 0
+   mode               = 000081a4
+   flags              = 00000001
+   create_time        = 80183673094144 (1223505754)
+   last_modified_time = 80183673150336 (1223505754)
+   parent             = (48, 576, 1)
+   attributes         = (0, 0, 0)
+   type               = 0
+   inode_size         = 2048
+   etc                = 0x000000
+   short_symlink      = -
+ data_stream:
+   direct[00]                = (65, 3114, 1)
+   max_direct_range          = 2048
+   max_indirect_range        = 0
+   max_double_indirect_range = 0
+   size                      = 866
+   --
+   pad[0]             = 00000000
+   pad[1]             = 00000000
+   pad[2]             = 00000000
+   pad[3]             = 00000000
+
+ file_map 0xae167690
+ FileMap 0xae167690
+   size    866
+   count   1
+ }}}
+
+ last few entries in syslog:
+ {{{
+ heap_add_area: area 6280 added to small heap 0x90da4000 - usable range
+ 0xa5007000 - 0xa5400000
+ heap_add_area: area 6442 added to small heap 0x90da4000 - usable range
+ 0xa6c07000 - 0xa7000000
+ heap_add_area: area 6544 added to small heap 0x90da4000 - usable range
+ 0xa8807000 - 0xa8c00000
+ heap_add_area: area 6574 added to large heap 0x91a70ccc - usable range
+ 0xa9401000 - 0xa9800000
+ heap_add_area: area 6643 added to small heap 0x90da4000 - usable range
+ 0xaa807000 - 0xaac00000
+ heap_add_area: area 6743 added to small heap 0x90da4000 - usable range
+ 0xac407000 - 0xac800000
+ heap_add_area: area 6844 added to small heap 0x90da4000 - usable range
+ 0xae007000 - 0xae400000
+ heap_add_area: area 7031 added to small heap 0x90da4000 - usable range
+ 0xc1007000 - 0xc1400000
+ bfs: bfs_open_dir:1515: Invalid Argument
+ heap_add_area: area 7228 added to small heap 0x90da4000 - usable range
+ 0xc3c07000 - 0xc4000000
+ bfs: bfs_open_dir:1515: Invalid Argument
+ bfs: bfs_open_dir:1515: Invalid Argument
+ write access attempted on read-only area 0x15 at 0x8003c000
+ write access attempted on read-only area 0x15 at 0x8003c000
+ vm_page_fault: vm_soft_fault returned error 'Permission denied' on fault
+ at 0x8003cf20, ip 0x800d46b3, write 1, user 0, thread 0x3e6c
+ write access attempted on read-only area 0x15 at 0x80060000
+ vm_page_fault: vm_soft_fault returned error 'Permission denied' on fault
+ at 0x8003cd41, ip 0x800d46b3, write 1, user 0, thread 0x3e6e
+ }}}
+
+ based off that, thread information for thread 0x3e6c:
+ {{{
+ THREAD: 0x9fcf6000
+ id:                 15982 (0x3e6e)
+ name:               &quot;as&quot;
+ all_next:           0x9fcf7000
+ team_next:          0x00000000
+ q_next:             0x8011e020
+ priority:           5 (next 5, I/O: -1)
+ state:              ready
+ next_state:         ready
+ cpu:                0x00000000
+ sig_pending:        0x0 (blocked: 0x0)
+ in_kernel:          1
+ fault_handler:      0x00000000
+ args:               0xc12780f0 0x00000000
+ entry:              0x8004e97c
+ team:               0x90e96cc0, &quot;as&quot;
+   exit.sem:         324974
+   exit.status:      0x0 (No error)
+   exit.reason:      0x0
+   exit.signal:      0x0
+   exit.waiters:
+ kernel_stack_area:  520412
+ kernel_stack_base:  0xc32dd000
+ user_stack_area:    520428
+ user_stack_base:    0x7efee000
+ user_local_storage: 0x7ffee000
+ kernel_errno:       0x0 (No error)
+ kernel_time:        27749
+ user_time:          1078
+ flags:              0x0
+ architecture dependant section:
+         esp: 0xc32e0774
+         ss: 0x00000010
+         fpu_state at 0x9fcf63d0
+
+ and its backtrace (at least as much as possible):
+
+ stack trace for thread 15982 &quot;as&quot;
+     kernel stack: 0xc32dd000 to 0xc32e1000
+       user stack: 0x7efee000 to 0x7ffee000
+ frame               caller     &lt;image&gt;:function + offset
+  0 c32e07d0 (+  48) 8004612c   &lt;kernel_x86&gt; context_switch(thread*:
+ 0x9fcf6000, thread*: 0x9fce7800) + 0x003c
+  1 c32e0800 (+  64) 80046413   &lt;kernel_x86&gt;:scheduler_reschedule + 0x029f
+  2 c32e0840 (+  48) 800cc91f   &lt;kernel_x86&gt;:hardware_interrupt + 0x00b3
+  3 c32e0870 (+  12) 800cfe66   &lt;kernel_x86&gt;:int_bottom + 0x0036
+ kernel iframe at 0xc32e087c (end = 0xc32e08cc)
+  eax 0x200          ebx 0x8             ecx 0x0          edx 0x246
+  esi 0x86           edi 0x801219c0      ebp 0xc32e08f4   esp 0xc32e08b0
+  eip 0x8005bb65  eflags 0x246
+  vector: 0x25, error code: 0x0
+  4 c32e087c (+ 120) 8005bb65   &lt;kernel_x86&gt; dprintf_args(0x8010a9c0
+ &quot;vm_page_fault: vm_soft_fault returned error '%s' on fault at 0x%lx, ip
+ 0x%lx, write %d, user %d, thread 0x%lx
+ &quot;, 0xc32e0920 &quot;rA&#205;&#179;F&quot;, true) + 0x0191
+  5 c32e08f4 (+  32) 8005bbac   &lt;kernel_x86&gt;:dprintf + 0x003c
+  6 c32e0914 (+  96) 800bc88b   &lt;kernel_x86&gt;:vm_page_fault + 0x00fb
+  7 c32e0974 (+  64) 800cc855   &lt;kernel_x86&gt;:page_fault_exception + 0x00d9
+  8 c32e09b4 (+  12) 800cfe66   &lt;kernel_x86&gt;:int_bottom + 0x0036
+ kernel iframe at 0xc32e09c0 (end = 0xc32e0a10)
+  eax 0xc610c483     ebx 0xc610c483      ecx 0x8301f845   edx 0x8301f845
+  esi 0x8003cd41     edi 0xae3cb2a8      ebp 0xc32e0a34   esp 0xc32e09f4
+  eip 0x800d46b3  eflags 0x10293
+  vector: 0xe, error code: 0x3
+  9 c32e09c0 (+ 116) 800d46b3   &lt;kernel_x86&gt;:atomic_get64 + 0x000f
+ 10 c32e0a34 (+  48) 800458ce   &lt;kernel_x86&gt;:real_time_clock + 0x0016
+ 11 c32e0a64 (+  32) 800d8e8f   &lt;kernel_x86&gt;:time + 0x000f
+ 12 c32e0a84 (+  96) 807cefc6
+ &lt;bfs&gt;:__5InodeP6VolumeR11TransactionxUiR9block_run + 0x011e
+ 13 c32e0ae4 (+  80) 807ce79b   &lt;bfs&gt;
+ InodeAllocator&lt;0xc32e0bcc&gt;::New(block_run*: 0xc32e0b94, uint32: 0x81a4
+ (33188), block_run&amp;: 0xc32e0b9c, fs_vnode_ops*: NULL, Inode*: 0xc32e0ba4)
+ + 0x00eb
+ 14 c32e0b34 (+ 176) 807d4c79   &lt;bfs&gt;
+ Inode&lt;0xc32e0c4c&gt;::Create(Transaction&amp;: 0xc10b13fc, Inode*: 0xc32e0df4,
+ 0x81a4
+ [*** READ FAULT at 0x81a4, pc: 0x800db2bf ***]
+ }}}
+
+ Not sure what else would be helpful at this point, and not yet certain if
+ this is consistently reproducible. Hope this is enough to get started.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2866">http://dev.haiku-os.org/ticket/2866</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011097.html">[Haiku-bugs] [Haiku] #2865: [ssh] load_public_identity_files: gethostname: No such file or directory
+</A></li>
+	<LI>Next message: <A HREF="011116.html">[Haiku-bugs] [Haiku] #2866: PANIC: vm_page_fault: unhandled page fault in kernel space at 0x8003cf20, ip 0x800d46b3
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11090">[ date ]</a>
+              <a href="thread.html#11090">[ thread ]</a>
+              <a href="subject.html#11090">[ subject ]</a>
+              <a href="author.html#11090">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

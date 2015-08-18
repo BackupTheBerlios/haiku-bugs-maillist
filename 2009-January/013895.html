@@ -1,0 +1,237 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3347: PANIC: IORequest::_CopyData(): invalid range: (1837760000, 16320)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-January/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233347%3A%20PANIC%3A%20IORequest%3A%3A_CopyData%28%29%3A%20invalid%0A%20range%3A%20%281837760000%2C%2016320%29&In-Reply-To=%3C041.5aeee006867e0a2518a8da274439da6e%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="013894.html">
+   <LINK REL="Next"  HREF="013896.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3347: PANIC: IORequest::_CopyData(): invalid range: (1837760000, 16320)</H1>
+    <B>idefix</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233347%3A%20PANIC%3A%20IORequest%3A%3A_CopyData%28%29%3A%20invalid%0A%20range%3A%20%281837760000%2C%2016320%29&In-Reply-To=%3C041.5aeee006867e0a2518a8da274439da6e%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3347: PANIC: IORequest::_CopyData(): invalid range: (1837760000, 16320)">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Jan 22 19:27:56 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="013894.html">[Haiku-bugs] [Haiku] #2789: writing to usb disks fail after 10-100Mb of writing files
+</A></li>
+        <LI>Next message: <A HREF="013896.html">[Haiku-bugs] [Haiku] #2789: writing to usb disks fail after 10-100Mb of writing files
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13895">[ date ]</a>
+              <a href="thread.html#13895">[ thread ]</a>
+              <a href="subject.html#13895">[ subject ]</a>
+              <a href="author.html#13895">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3347: PANIC: IORequest::_CopyData(): invalid range: (1837760000, 16320)
+---------------------------+------------------------------------------------
+ Reporter:  idefix         |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1 development
+Blockedby:                 |    Platform:  All           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+ Did a 'jam -sDEBUG=1 wacom' in Haiku pre-alpha r28911.[[BR]]
+ KDL'd after 'Link generated/objects/haiku_host/x86/debug_1/tools/mimeset';
+ looked a lot like bug #2595 so I followed the debugging steps from that
+ ticket (although I don't really understand what they do ;) ):
+ {{{
+ PANIC: IORequest::_CopyData(): invalid range: (1837760000, 16320)
+ Welcome to Kernel Debugging Land...
+ Thread 27 &quot;scsi scheduler&quot; running on CPU 0
+ kdebug&gt; sc
+ stack trace for thread 27 &quot;scsi scheduler&quot;
+     kernel stack: 0x80524000 to 0x80528000
+ frame               caller     &lt;image&gt;:function + offset
+  0 80527a98 (+  48) 8005bd55   &lt;kernel_x86&gt;:invoke_debugger_command +
+ 0x00f5
+  1 80527ac8 (+  64) 8005bb45   &lt;kernel_x86&gt;
+ invoke_pipe_segment(debugger_command_pipe*: [34m0x80122a60[0m, int32:
+ [34m0[0m, [34m0x0[0m [31m&quot;&lt;NULL&gt;&quot;[0m) + 0x0079
+  2 80527b08 (+  64) 8005becc   &lt;kernel_x86&gt;:invoke_debugger_command_pipe +
+ 0x009c
+  3 80527b48 (+  48) 8005d454   &lt;kernel_x86&gt;
+ ExpressionParser&lt;[32m0x80527bfc[0m&gt;::_ParseCommandPipe([34m0x80527bf8[0m)
+ + 0x0234
+  4 80527b78 (+  64) 8005c88e   &lt;kernel_x86&gt;
+ ExpressionParser&lt;[32m0x80527bfc[0m&gt;::EvaluateCommand([34m0x801128a0[0m
+ [36m&quot;sc&quot;[0m, [34m0x80527bf8[0m) + 0x02ba
+  5 80527bb8 (+ 224) 8005e87c   &lt;kernel_x86&gt;:evaluate_debug_command +
+ 0x0088
+  6 80527c98 (+  64) 80059c52   &lt;kernel_x86&gt; kernel_debugger_loop() +
+ 0x01ae
+  7 80527cd8 (+  32) 8005aad5   &lt;kernel_x86&gt;:kernel_debugger + 0x004d
+  8 80527cf8 (+ 192) 8005aa7d   &lt;kernel_x86&gt;:panic + 0x0029
+  9 80527db8 (+  64) 80074a13   &lt;kernel_x86&gt;
+ IORequest&lt;[32m0x80fcccc0[0m&gt;::_CopyData([34m0x802e9040[0m, int64:
+ [34m1837760000[0m, uint32: [34m0x3fc0[0m ([34m16320[0m),
+ [34mfalse[0m) + 0x006b
+ 10 80527df8 (+  64) 800749a1   &lt;kernel_x86&gt;
+ IORequest&lt;[32m0x80fcccc0[0m&gt;::CopyData([34m0x802e9040[0m, int64:
+ [34m1837760000[0m, uint32: [34m0x3fc0[0m ([34m16320[0m)) + 0x0029
+ 11 80527e38 (+ 112) 800731c6   &lt;kernel_x86&gt;
+ IOOperation&lt;[32m0x80fb1460[0m&gt;::Finish([34m0x1[0m,
+ [34m0x80527ef8[0m, [34m0x200246[0m, [34m0x80fb1460[0m) + 0x0242
+ 12 80527ea8 (+  64) 8006caad   &lt;kernel_x86&gt;
+ IOScheduler&lt;[32m0x80f967f8[0m&gt;::_Finisher([34m0x4000[0m,
+ [34m0x80527fb8[0m, [34m0x8006e1c8[0m, [34m0x80f86758[0m, IORequest:
+ [34m0x80fb1460[0m) + 0x0151
+ 13 80527ee8 (+ 208) 8006e1d1   &lt;kernel_x86&gt;
+ IOScheduler&lt;[32m0x80f967f8[0m&gt;::_Scheduler([34m0x811d9000[0m,
+ [34m0x80051441[0m, [34m0x80112694[0m, [34m0x0[0m, [34m0x0[0m,
+ [34m0x80527ff8[0m, [34m0x800514bb[0m, [34m0x80f967f8[0m,
+ [34m0x0[0m, [34m0x0[0m, int32: [34m0[0m, [34m0x0[0m, [34m0x0[0m,
+ int32: [34m-2147150760[0m,
+ [*** READ FAULT at 0x80528000, pc: 0x800c8010 ***]
+ kdebug&gt; call 11 -1
+ thread 27, scsi scheduler
+ 80527e38 800731c6   &lt;kernel_x86&gt;:Finish__11IOOperation(0x80fb1460)
+ kdebug&gt; io_
+   io_buffer         io_context        io_operation      io_request
+   io_request_owner  io_scheduler
+ kdebug&gt; io_operation _arg1
+ io_operation at 0x80fb1460
+   parent:           0x80fcccc0
+   status:           No error
+   dma buffer:       0x82329000
+   offset:           1837760000 (original: 1837760064)
+   length:           16384    (original: 16320)
+   transferred:      16320
+   block size:       512
+   saved vec index:  52428
+   saved vec length: 52428
+   r/w:              read
+   phase:            do all
+   partial begin:    yes
+   partial end:      no
+   bounce buffer:    yes
+ kdebug&gt; io_request _parent
+ io_request at 0x80fcccc0
+   owner:             0x82424694
+   parent:            0x81d78bf0
+   status:            No Error (1)
+   mutex:             0x80fcccdc
+   IOBuffer:          0x81002c60
+   offset:            1837760064
+   length:            57280
+   transfer size:     57280
+   relative offset:   0
+   pending children:  1
+   flags:             0x0
+   team:              358
+   thread:            358
+   r/w:               read
+   partial transfer:  no
+   finished cvar:     0x80fccd34
+   iteration:
+     vec index:       0
+     vec offset:      57280
+     remaining bytes: 0
+   callbacks:
+     finished 0x00000000, cookie 0x00000000
+     iteration 0x00000000, cookie 0x00000000
+   children:
+     0x80fb1460
+ kdebug&gt; dma_buffer 0x82329000
+ DMABuffer at 0x82329000
+   bounce buffer:      0x802e9000 (physical 0x1f64000)
+   bounce buffer size: 16384
+   vecs:               1
+     [0] 0x01f64000, 16384
+ kdebug&gt; io_buffer _buffer
+ IOBuffer at 0x81002c60
+   origin:     user
+   kind:       virtual
+   length:     57280
+   capacity:   1
+   vecs:       1
+     [0] 0x1825ea5f, 73728
+ kdebug&gt; io_request _parent
+ io_request at 0x81d78bf0
+   owner:             0x00000000
+   parent:            0x00000000
+   status:            No Error (1)
+   mutex:             0x81d78c0c
+   IOBuffer:          0x81002a20
+   offset:            8256
+   length:            73728
+   transfer size:     73728
+   relative offset:   0
+   pending children:  1
+   flags:             0x0
+   team:              358
+   thread:            358
+   r/w:               read
+   partial transfer:  no
+   finished cvar:     0x81d78c64
+   iteration:
+     vec index:       1
+     vec offset:      0
+     remaining bytes: 0
+   callbacks:
+     finished 0x8009f374, cookie 0x81116758
+     iteration 0x8009f0f4, cookie 0x81116758
+   children:
+     0x80fcccc0
+     0x80fccb28
+ kdebug&gt; child1=0x80fb1460
+ kdebug&gt; io_operation child1
+ io_operation at 0x80fb1460
+   parent:           0x80fcccc0
+   status:           No error
+   dma buffer:       0x82329000
+   offset:           1837760000 (original: 1837760064)
+   length:           16384    (original: 16320)
+   transferred:      16320
+   block size:       512
+   saved vec index:  52428
+   saved vec length: 52428
+   r/w:              read
+   phase:            do all
+   partial begin:    yes
+   partial end:      no
+   bounce buffer:    yes
+ kdebug&gt; continue
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3347">http://dev.haiku-os.org/ticket/3347</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="013894.html">[Haiku-bugs] [Haiku] #2789: writing to usb disks fail after 10-100Mb of writing files
+</A></li>
+	<LI>Next message: <A HREF="013896.html">[Haiku-bugs] [Haiku] #2789: writing to usb disks fail after 10-100Mb of writing files
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13895">[ date ]</a>
+              <a href="thread.html#13895">[ thread ]</a>
+              <a href="subject.html#13895">[ subject ]</a>
+              <a href="author.html#13895">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

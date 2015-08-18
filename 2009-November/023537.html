@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4919: PANIC - got an in use page from the	free pages list
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234919%3A%20PANIC%20-%20got%20an%20in%20use%20page%20from%20the%0A%09free%20pages%20list&In-Reply-To=%3C048.176ee0e0ac8b70db961e2dd24af026f2%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="023536.html">
+   <LINK REL="Next"  HREF="023554.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4919: PANIC - got an in use page from the	free pages list</H1>
+    <B>jonas.kirilla</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234919%3A%20PANIC%20-%20got%20an%20in%20use%20page%20from%20the%0A%09free%20pages%20list&In-Reply-To=%3C048.176ee0e0ac8b70db961e2dd24af026f2%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4919: PANIC - got an in use page from the	free pages list">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Nov  8 00:42:54 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="023536.html">[Haiku-bugs] [Haiku] #4918: USB causing slow boot
+</A></li>
+        <LI>Next message: <A HREF="023554.html">[Haiku-bugs] [Haiku] #4919: PANIC - got an in use page from the free pages list
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#23537">[ date ]</a>
+              <a href="thread.html#23537">[ thread ]</a>
+              <a href="subject.html#23537">[ subject ]</a>
+              <a href="author.html#23537">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4919: PANIC - got an in use page from the free pages list
+---------------------------+------------------------------------------------
+ Reporter:  jonas.kirilla  |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1/Development
+Blockedby:                 |    Platform:  All           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+ KDL at startup, with r33940 on a quad core.
+
+
+ {{{
+  ...
+ 12 80226cf4 (+ 192) 800678c5   &lt;kernel_x86&gt;:panic + 0x0029
+ 13 80226db4 (+  64) 8003ddf3   &lt;kernel_x86&gt;
+ heap_raw_alloc(heap_allocator_s*: 0x8612c000, uint32: 0x114 (276), uint32:
+ 0x13 (19)) + 0x01d7
+ 14 80226df4 (+  48) 8003dfe7   &lt;kernel_x86&gt;:heap_memalign + 0x0057
+ 15 80226e24 (+  96) 8004a9c4   &lt;kernel_x86&gt; get_port_message(int32:
+ 1886023792, uint32: 0xf8 (248), uint32: 0x9 (9), int64: 0, port_message*:
+ 0x80226ed4) + 0x01f4
+ 16 80226e84 (+ 112) 8004c9c2   &lt;kernel_x86&gt;:writev_port_etc + 0x02ce
+ 17 80226ef4 (+  80) 8004d29c   &lt;kernel_x86&gt;:_user_write_port_etc + 0x00dc
+ 18 80226f44 (+ 100) 800e0f32   &lt;kernel_x86&gt;:handle_syscall + 0x00af
+ user iframe at 0x80226fa8 (end = 0x80227000)
+  eax 0xca           ebx 0x5fefa0        ecx 0x70102980   edx 0xffff0114
+  esi 0x0            edi 0x706a7070      ebp 0x701029bc   esp 0x80226fdc
+  eip 0xffff0114  eflags 0x217      user esp 0x70102980
+  vector: 0x63, error code: 0x0
+ 19 80226fa8 (+   0) ffff0114   &lt;commpage&gt;:commpage_syscall + 0x0004
+  ...
+ }}}
+
+ See attached file.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4919">http://dev.haiku-os.org/ticket/4919</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="023536.html">[Haiku-bugs] [Haiku] #4918: USB causing slow boot
+</A></li>
+	<LI>Next message: <A HREF="023554.html">[Haiku-bugs] [Haiku] #4919: PANIC - got an in use page from the free pages list
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#23537">[ date ]</a>
+              <a href="thread.html#23537">[ thread ]</a>
+              <a href="subject.html#23537">[ subject ]</a>
+              <a href="author.html#23537">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

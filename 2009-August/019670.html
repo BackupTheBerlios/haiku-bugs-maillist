@@ -1,0 +1,172 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4271: [Tracker] crash in BNode::GetAttrInfo ()
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234271%3A%20%5BTracker%5D%20crash%20in%20BNode%3A%3AGetAttrInfo%20%28%29&In-Reply-To=%3C040.0c25e17a5fd63e8e86788facf200554c%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="019669.html">
+   <LINK REL="Next"  HREF="019672.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4271: [Tracker] crash in BNode::GetAttrInfo ()</H1>
+    <B>diver</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234271%3A%20%5BTracker%5D%20crash%20in%20BNode%3A%3AGetAttrInfo%20%28%29&In-Reply-To=%3C040.0c25e17a5fd63e8e86788facf200554c%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4271: [Tracker] crash in BNode::GetAttrInfo ()">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Aug 18 00:31:23 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="019669.html">[Haiku-bugs] [Haiku] #4270: [Terminal] crash in	TermView::FrameResized
+</A></li>
+        <LI>Next message: <A HREF="019672.html">[Haiku-bugs] [Haiku] #4271: [Tracker] crash in	BNode::GetAttrInfo ()
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19670">[ date ]</a>
+              <a href="thread.html#19670">[ thread ]</a>
+              <a href="subject.html#19670">[ subject ]</a>
+              <a href="author.html#19670">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4271: [Tracker] crash in BNode::GetAttrInfo ()
+----------------------------------+-----------------------------------------
+ Reporter:  diver                 |       Owner:  axeld         
+     Type:  bug                   |      Status:  new           
+ Priority:  normal                |   Milestone:  R1            
+Component:  Applications/Tracker  |     Version:  R1 development
+Blockedby:                        |    Platform:  All           
+ Blocking:                        |  
+----------------------------------+-----------------------------------------
+ Press Alt+F, type webdings.ttf and hit return to create a query for that
+ file. Open BeZillaBrowser and download
+ [<A HREF="http://root.cern.ch/viewvc/trunk/fonts/webdings.ttf">http://root.cern.ch/viewvc/trunk/fonts/webdings.ttf</A> webdings.ttf] to the
+ Desktop. Tracker should crash.[[BR]]
+ Tested with r32481 in VirtualBox 3.0.4
+
+ {{{
+ Thread 417 caused an exception: Segment violation
+ Reading symbols from /boot/system/runtime_loader...done.
+ Loaded symbols for /boot/system/runtime_loader
+ Reading symbols from /boot/system/lib/libbe.so...done.
+ Loaded symbols for /boot/system/lib/libbe.so
+ Reading symbols from /boot/system/lib/libtracker.so...done.
+ Loaded symbols for /boot/system/lib/libtracker.so
+ Reading symbols from /boot/system/lib/libroot.so...done.
+ Loaded symbols for /boot/system/lib/libroot.so
+ Reading symbols from /boot/system/lib/libstdc++.r4.so...done.
+ Loaded symbols for /boot/system/lib/libstdc++.r4.so
+ Reading symbols from /boot/system/lib/libtranslation.so...done.
+ Loaded symbols for /boot/system/lib/libtranslation.so
+ Reading symbols from /boot/system/lib/libtextencoding.so...done.
+ Loaded symbols for /boot/system/lib/libtextencoding.so
+ Reading symbols from /boot/system/apps/Workspaces...done.
+ Loaded symbols for /boot/system/apps/Workspaces
+ Reading symbols from /boot/system/add-
+ ons/Translators/BMPTranslator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/BMPTranslator
+ Reading symbols from /boot/system/add-
+ ons/Translators/EXRTranslator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/EXRTranslator
+ Reading symbols from /boot/system/lib/libilmimf.so...done.
+ Loaded symbols for /boot/system/lib/libilmimf.so
+ Reading symbols from /boot/system/lib/libz.so...done.
+ Loaded symbols for /boot/system/lib/libz.so
+ Reading symbols from /boot/system/add-
+ ons/Translators/GIFTranslator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/GIFTranslator
+ Reading symbols from /boot/system/add-
+ ons/Translators/JPEG2000Translator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/JPEG2000Translator
+ Reading symbols from /boot/system/add-
+ ons/Translators/JPEGTranslator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/JPEGTranslator
+ Reading symbols from /boot/system/add-
+ ons/Translators/PCXTranslator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/PCXTranslator
+ Reading symbols from /boot/system/add-
+ ons/Translators/PNGTranslator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/PNGTranslator
+ Reading symbols from /boot/system/add-
+ ons/Translators/PPMTranslator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/PPMTranslator
+ Reading symbols from /boot/system/add-
+ ons/Translators/RAWTranslator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/RAWTranslator
+ Reading symbols from /boot/system/add-ons/Translators/RTF-
+ Translator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/RTF-Translator
+ Reading symbols from /boot/system/add-
+ ons/Translators/SGITranslator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/SGITranslator
+ Reading symbols from /boot/system/add-
+ ons/Translators/STXTTranslator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/STXTTranslator
+ Reading symbols from /boot/system/add-
+ ons/Translators/TGATranslator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/TGATranslator
+ Reading symbols from /boot/system/add-
+ ons/Translators/TIFFTranslator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/TIFFTranslator
+ Reading symbols from /boot/system/add-
+ ons/Translators/WonderBrushTranslator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/WonderBrushTranslator
+ [tcsetpgrp failed in terminal_inferior: Invalid Argument]
+ [Switching to team /boot/system/Tracker (86) thread
+ w&gt;/boot/home/queries/Name = web (417)]
+ 0x003a85e8 in BNode::GetAttrInfo () from /boot/system/lib/libbe.so
+ (gdb) bt
+ #0  0x003a85e8 in BNode::GetAttrInfo () from /boot/system/lib/libbe.so
+ #1  0x005befe5 in BPrivate::BPoseView::AttributeChanged ()
+    from /boot/system/lib/libtracker.so
+ #2  0x005bdeb9 in BPrivate::BPoseView::FSNotification ()
+    from /boot/system/lib/libtracker.so
+ #3  0x005b3b9c in BPrivate::BPoseView::MessageReceived ()
+    from /boot/system/lib/libtracker.so
+ #4  0x005d3afa in BPrivate::BQueryPoseView::MessageReceived ()
+    from /boot/system/lib/libtracker.so
+ #5  0x002c51e7 in BLooper::DispatchMessage () from
+ /boot/system/lib/libbe.so
+ #6  0x003854d1 in BWindow::DispatchMessage () from
+ /boot/system/lib/libbe.so
+ #7  0x003890cc in BWindow::task_looper () from /boot/system/lib/libbe.so
+ #8  0x002c6743 in BLooper::_task0_ () from /boot/system/lib/libbe.so
+ #9  0x0069e124 in thread_entry () from /boot/system/lib/libroot.so
+ #10 0x7003ffec in ?? ()
+ (gdb)
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4271">http://dev.haiku-os.org/ticket/4271</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="019669.html">[Haiku-bugs] [Haiku] #4270: [Terminal] crash in	TermView::FrameResized
+</A></li>
+	<LI>Next message: <A HREF="019672.html">[Haiku-bugs] [Haiku] #4271: [Tracker] crash in	BNode::GetAttrInfo ()
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19670">[ date ]</a>
+              <a href="thread.html#19670">[ thread ]</a>
+              <a href="subject.html#19670">[ subject ]</a>
+              <a href="author.html#19670">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

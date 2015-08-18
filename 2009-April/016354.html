@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3795: Kinesis USB Keyboard on Non-Root Hub Doesn't Work in KDL
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233795%3A%20Kinesis%20USB%20Keyboard%20on%20Non-Root%20Hub%0A%20Doesn%27t%20Work%20in%20KDL&In-Reply-To=%3C043.ee78843840e0d4d5c12db1392f144a51%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="016353.html">
+   <LINK REL="Next"  HREF="016357.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3795: Kinesis USB Keyboard on Non-Root Hub Doesn't Work in KDL</H1>
+    <B>bonefish</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233795%3A%20Kinesis%20USB%20Keyboard%20on%20Non-Root%20Hub%0A%20Doesn%27t%20Work%20in%20KDL&In-Reply-To=%3C043.ee78843840e0d4d5c12db1392f144a51%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3795: Kinesis USB Keyboard on Non-Root Hub Doesn't Work in KDL">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Apr 19 17:21:55 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="016353.html">[Haiku-bugs] [Haiku] #2389: [Terminal] Add a menu option to allow the user to give the terminal a custom name
+</A></li>
+        <LI>Next message: <A HREF="016357.html">[Haiku-bugs] [Haiku] #3795: Kinesis USB Keyboard on Non-Root Hub Doesn't Work in KDL
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16354">[ date ]</a>
+              <a href="thread.html#16354">[ thread ]</a>
+              <a href="subject.html#16354">[ subject ]</a>
+              <a href="author.html#16354">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3795: Kinesis USB Keyboard on Non-Root Hub Doesn't Work in KDL
+-------------------------+--------------------------------------------------
+ Reporter:  bonefish     |       Owner:  mmlr          
+     Type:  bug          |      Status:  new           
+ Priority:  normal       |   Milestone:  R1            
+Component:  Drivers/USB  |     Version:  R1 development
+Blockedby:               |    Platform:  All           
+ Blocking:               |  
+-------------------------+--------------------------------------------------
+ Setup: Haiku r30247, gcc 4 build, Lenovo T61 with docking station, Kinesis
+ USB keyboard plugged into non-root hub (in docking station).
+
+ When entering KDL via F12, neither the USB keyboard nor the PS/2 keyboard
+ work. The USB keyboard works fine in KDL when plugged into a root hub,
+ though.
+
+ {{{
+ ~&gt; listusb
+ 0483:2016 /dev/bus/usb/0/1 &quot;STMicroelectronics&quot; &quot;Biometric Coprocessor&quot;
+ ver. 0001
+ 0000:0000 /dev/bus/usb/0/hub &quot;HAIKU Inc.&quot; &quot;UHCI RootHub&quot; ver. 0110
+ 0000:0000 /dev/bus/usb/1/hub &quot;HAIKU Inc.&quot; &quot;UHCI RootHub&quot; ver. 0110
+ 0000:0000 /dev/bus/usb/2/hub &quot;HAIKU Inc.&quot; &quot;UHCI RootHub&quot; ver. 0110
+ 0000:0000 /dev/bus/usb/3/hub &quot;HAIKU Inc.&quot; &quot;UHCI RootHub&quot; ver. 0110
+ 0000:0000 /dev/bus/usb/4/hub &quot;HAIKU Inc.&quot; &quot;UHCI RootHub&quot; ver. 0110
+ 046d:c03d /dev/bus/usb/5/3/1 &quot;Logitech&quot; &quot;USB-PS/2 Optical Mouse&quot; ver. 2000
+ 05f3:0007 /dev/bus/usb/5/3/3/1 &quot;&quot; &quot;&quot; ver. 0310
+ 05f3:0081 /dev/bus/usb/5/3/3/hub &quot;&quot; &quot;&quot; ver. 0310
+ 04b3:4485 /dev/bus/usb/5/3/hub &quot;&quot; &quot;&quot; ver. 0001
+ 0000:0000 /dev/bus/usb/5/hub &quot;HAIKU Inc.&quot; &quot;EHCI RootHub&quot; ver. 0200
+ 0000:0000 /dev/bus/usb/6/hub &quot;HAIKU Inc.&quot; &quot;EHCI RootHub&quot; ver. 0200
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3795">http://dev.haiku-os.org/ticket/3795</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="016353.html">[Haiku-bugs] [Haiku] #2389: [Terminal] Add a menu option to allow the user to give the terminal a custom name
+</A></li>
+	<LI>Next message: <A HREF="016357.html">[Haiku-bugs] [Haiku] #3795: Kinesis USB Keyboard on Non-Root Hub Doesn't Work in KDL
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16354">[ date ]</a>
+              <a href="thread.html#16354">[ thread ]</a>
+              <a href="subject.html#16354">[ subject ]</a>
+              <a href="author.html#16354">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

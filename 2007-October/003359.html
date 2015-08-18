@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1427: Firefox crashes on start
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231427%3A%20Firefox%20crashes%20on%20start&In-Reply-To=%3C054.02a95cc124d50652f2e3fe0c51105656%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003357.html">
+   <LINK REL="Next"  HREF="003372.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1427: Firefox crashes on start</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231427%3A%20Firefox%20crashes%20on%20start&In-Reply-To=%3C054.02a95cc124d50652f2e3fe0c51105656%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1427: Firefox crashes on start">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Oct 25 22:09:40 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003357.html">[Haiku-bugs] [Haiku] #1479: Laptops fail to shutdown or restart	properly
+</A></li>
+        <LI>Next message: <A HREF="003372.html">[Haiku-bugs] [Haiku] #757: [app_server] deadlock on workspace	switching
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3359">[ date ]</a>
+              <a href="thread.html#3359">[ thread ]</a>
+              <a href="subject.html#3359">[ subject ]</a>
+              <a href="author.html#3359">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1427: Firefox crashes on start
+-------------------------+--------------------------------------------------
+  Reporter:  tangobravo  |       Owner:  axeld         
+      Type:  bug         |      Status:  new           
+  Priority:  normal      |   Milestone:  R1            
+ Component:  - General   |     Version:  R1 development
+Resolution:              |    Platform:  All           
+-------------------------+--------------------------------------------------
+Comment (by tqh):
+
+ Most libs in Firefox are loaded by absolute path by Firefox itself, so
+ shouldn't be moved. The ones that may be moved are the ones linked by the
+ executable (firefox-bin) itself and the ones linked by those libs (and so
+ on).
+
+ The stubs are an 'ugly hack' to get around BeOS R5's poor handling of
+ addon memory. The stubs are just libs that link to the real lib, the stub
+ gets loaded in addon memory and the libs in ordinary. In Haiku and Zeta
+ I'd recommend to delete the stubs as the loading mechanism will fallback
+ to loading the real lib instead.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1427#comment:10">http://dev.haiku-os.org/ticket/1427#comment:10</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003357.html">[Haiku-bugs] [Haiku] #1479: Laptops fail to shutdown or restart	properly
+</A></li>
+	<LI>Next message: <A HREF="003372.html">[Haiku-bugs] [Haiku] #757: [app_server] deadlock on workspace	switching
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3359">[ date ]</a>
+              <a href="thread.html#3359">[ thread ]</a>
+              <a href="subject.html#3359">[ subject ]</a>
+              <a href="author.html#3359">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

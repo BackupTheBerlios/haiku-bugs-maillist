@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2906: Mail should BRoster::AddToRecentDocuments() when moving to another email via up/down arrows
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232906%3A%20Mail%20should%0A%20BRoster%3A%3AAddToRecentDocuments%28%29%20when%20moving%20to%20another%20email%20via%20up/down%0A%20arrows&In-Reply-To=%3C057.cfc36fef2029dfacc00b1b3f620c2e1d%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="015426.html">
+   <LINK REL="Next"  HREF="015428.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2906: Mail should BRoster::AddToRecentDocuments() when moving to another email via up/down arrows</H1>
+    <B>jonas.kirilla</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232906%3A%20Mail%20should%0A%20BRoster%3A%3AAddToRecentDocuments%28%29%20when%20moving%20to%20another%20email%20via%20up/down%0A%20arrows&In-Reply-To=%3C057.cfc36fef2029dfacc00b1b3f620c2e1d%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2906: Mail should BRoster::AddToRecentDocuments() when moving to another email via up/down arrows">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Mar 29 12:53:45 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="015426.html">[Haiku-bugs] [Haiku] #3170: Firefox wont load home page haikuware.com after navigating from home page
+</A></li>
+        <LI>Next message: <A HREF="015428.html">[Haiku-bugs] [Haiku] #2330: [bootman] GUI should have size	limits (easy)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15427">[ date ]</a>
+              <a href="thread.html#15427">[ thread ]</a>
+              <a href="subject.html#15427">[ subject ]</a>
+              <a href="author.html#15427">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2906: Mail should BRoster::AddToRecentDocuments() when moving to another email
+via up/down arrows
+-------------------------------+--------------------------------------------
+ Reporter:  jonas.kirilla      |       Owner:  axeld         
+     Type:  enhancement        |      Status:  new           
+ Priority:  normal             |   Milestone:  R1            
+Component:  Applications/Mail  |     Version:  R1 development
+Blockedby:                     |    Platform:  All           
+ Blocking:                     |  
+-------------------------------+--------------------------------------------
+
+Comment(by jonas.kirilla):
+
+ Replying to [comment:2 stippi]:
+ &gt; shouldn't Mail always add an opened mail to the recent documents?
+
+ There was no call to BRoster::AddToRecentDocuments() from Mail. Tracker
+ adds the files you open in Tracker, and I believe also files that get
+ opened from BFilePanels (in applications).
+
+ I suspect there are many applications that don't call
+ AddToRecentDocuments() - in cases where Tracker code is not involved -
+ like when opening recent documents from within an application's local
+ recent-menu, or when skipping between files by Command-Up/Down.
+
+ (In the first case, where files are opened from an application's local
+ recent menu, the file is already in the list, but it should be added again
+ anyway, IMO, to have it moved to the top of the list. These lists should
+ reflect what I did and in what order.)
+
+ Replying to [comment:2 stippi]:
+ &gt; The only problem I see is that it will just flood your recent documents,
+ and after reading some mails, you will have none of your &quot;real documents&quot;
+ in the recent list anymore.
+
+ These -are- my real documents.
+
+ IMO there's conceptually not much difference between opening files from
+ Tracker, Deskbar, a file panel, from an application's file history widget
+ or by Command-Up/Down.
+
+ I see Command-Up/Down as a shortcut to Command-W + Command-Up/Down +
+ Command-O, which adds to recent documents.
+
+ One could perceive the flooding as one file type crowding out all the
+ other file types one might be interested in, and approach the problem from
+ that angle instead. (E.g. never allow one file type to hold more than
+ 2/3'rds of the limited spots in the recent documents menu, in the presence
+ of other file types.)
+
+ Replying to [comment:2 stippi]:
+ &gt; (BTW, I can recommend Beam, it's an awesome mail reader. :-)
+
+ I used PostMaster before switching to the MDR, and BeatWare Mail-It long
+ before that. The Beam colors don't agree with me, so I will have to
+ investigate a different Beam theme. :))
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2906#comment:3">http://dev.haiku-os.org/ticket/2906#comment:3</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="015426.html">[Haiku-bugs] [Haiku] #3170: Firefox wont load home page haikuware.com after navigating from home page
+</A></li>
+	<LI>Next message: <A HREF="015428.html">[Haiku-bugs] [Haiku] #2330: [bootman] GUI should have size	limits (easy)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15427">[ date ]</a>
+              <a href="thread.html#15427">[ thread ]</a>
+              <a href="subject.html#15427">[ subject ]</a>
+              <a href="author.html#15427">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

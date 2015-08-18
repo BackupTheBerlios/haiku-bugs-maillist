@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1773: $0 is set incorrectly
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-February/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231773%3A%20%240%20is%20set%20incorrectly&In-Reply-To=%3C043.03b20d0d4676b65d98596232f2ed1e17%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005060.html">
+   <LINK REL="Next"  HREF="004770.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1773: $0 is set incorrectly</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231773%3A%20%240%20is%20set%20incorrectly&In-Reply-To=%3C043.03b20d0d4676b65d98596232f2ed1e17%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1773: $0 is set incorrectly">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Feb  8 17:39:41 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005060.html">[Haiku-bugs] [Haiku] #1772: Terminal always scrolls to the last	output
+</A></li>
+        <LI>Next message: <A HREF="004770.html">[Haiku-bugs] [Haiku] #1773: $0 is set incorrectly
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4759">[ date ]</a>
+              <a href="thread.html#4759">[ thread ]</a>
+              <a href="subject.html#4759">[ subject ]</a>
+              <a href="author.html#4759">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1773: $0 is set incorrectly
+----------------------+-----------------------------------------------------
+ Reporter:  andreasf  |       Owner:  axeld         
+     Type:  bug       |      Status:  new           
+ Priority:  normal    |   Milestone:  R1            
+Component:  System    |     Version:  R1 development
+ Platform:  All       |  
+----------------------+-----------------------------------------------------
+ $0 should contain the (relative) path to the executable, not the command
+ used to call it.
+
+ The following test script:
+ {{{
+ #!/bin/sh
+ echo $0
+ }}}
+ called with `test.sh` prints {{{./test.sh}}} on BeOS but {{{test.sh}}} on
+ Haiku.
+
+ This seems to keep aclocal et al. from working, since $0 returns
+ {{{aclocal}}} but the path to call itself is e.g.
+ {{{config/bin/aclocal}}}.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1773">http://dev.haiku-os.org/ticket/1773</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005060.html">[Haiku-bugs] [Haiku] #1772: Terminal always scrolls to the last	output
+</A></li>
+	<LI>Next message: <A HREF="004770.html">[Haiku-bugs] [Haiku] #1773: $0 is set incorrectly
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4759">[ date ]</a>
+              <a href="thread.html#4759">[ thread ]</a>
+              <a href="subject.html#4759">[ subject ]</a>
+              <a href="author.html#4759">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

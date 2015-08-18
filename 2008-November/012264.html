@@ -1,0 +1,216 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3087: r28361 broke replicant handling	functionality.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233087%3A%20r28361%20broke%20replicant%20handling%0A%09functionality.&In-Reply-To=%3C052.a8bd6c24a5228f73af80e3355355f8e6%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012226.html">
+   <LINK REL="Next"  HREF="012266.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3087: r28361 broke replicant handling	functionality.</H1>
+    <B>siarzhuk</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233087%3A%20r28361%20broke%20replicant%20handling%0A%09functionality.&In-Reply-To=%3C052.a8bd6c24a5228f73af80e3355355f8e6%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3087: r28361 broke replicant handling	functionality.">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Nov  9 21:25:57 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012226.html">[Haiku-bugs] [Haiku] #3087: r28361 broke replicant handling	functionality.
+</A></li>
+        <LI>Next message: <A HREF="012266.html">[Haiku-bugs] [Haiku] #3087: r28361 broke replicant handling	functionality.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12264">[ date ]</a>
+              <a href="thread.html#12264">[ thread ]</a>
+              <a href="subject.html#12264">[ subject ]</a>
+              <a href="author.html#12264">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3087: r28361 broke replicant handling functionality.
+---------------------------------+------------------------------------------
+  Reporter:  siarzhuk            |       Owner:  anevilyak     
+      Type:  bug                 |      Status:  assigned      
+  Priority:  normal              |   Milestone:  R1            
+ Component:  Kits/Interface Kit  |     Version:  R1 development
+Resolution:                      |   Blockedby:                
+  Platform:  All                 |    Blocking:                
+---------------------------------+------------------------------------------
+
+Comment(by siarzhuk):
+
+ on r28572 I have observed following behavior:
+
+ Note that I have 2 replicants in Deskbar: 1) Process controller and 2)
+ Switcher indicator.
+
+ SwitchFilter::GetReplicantAt() returns uid 1 for &quot;Process Controller&quot; and
+ uid 2 for &quot;Switcher indicator&quot;. The names of both replicants are obtained
+ by SwitchFilter::GetReplicantName for corespondent uids correctly. But an
+ attempt to call SwitchFilter::GetReplicantView fails with error 80002008
+ &quot;Bad script syntax&quot; in &quot;result&quot; filed of returned BMessage.
+
+ {{{
+ // Gets Indicator's BMessenger
+ BMessenger* SwitchFilter::GetIndicatorMessenger() {
+         const char *REPLICANT_NAME = &quot;Switcher/Deskbar&quot;;
+         BMessenger *indicator = 0;
+
+         BMessage        request(B_GET_PROPERTY);
+         BMessenger      to;
+         BMessenger      status;
+
+         request.AddSpecifier(&quot;Messenger&quot;);
+         request.AddSpecifier(&quot;Shelf&quot;);
+
+         // In the Deskbar the Shelf is in the View &quot;Status&quot; in Window
+ &quot;Deskbar&quot;
+ //      request.AddSpecifier(&quot;View&quot;, REPLICANT_NAME);
+         request.AddSpecifier(&quot;View&quot;, &quot;Status&quot;);
+         request.AddSpecifier(&quot;Window&quot;, &quot;Deskbar&quot;);
+         to = BMessenger(&quot;application/x-vnd.Be-TSKB&quot;, -1);
+
+         BMessage        reply;
+
+         if (to.SendMessage(&amp;request, &amp;reply) == B_OK) {
+                 if(reply.FindMessenger(&quot;result&quot;, &amp;status) == B_OK) {
+
+                         // enum replicant in Status view
+                         int32   index = 0;
+                         int32   uid;
+                         while ((uid = GetReplicantAt(status, index++)) &gt;=
+ B_OK) {
+                                 BMessage        rep_info;
+                                 if (GetReplicantName(status, uid,
+ &amp;rep_info) != B_OK) {
+                                         continue;
+                                 }
+                                 const char *name;
+                                 if (rep_info.FindString(&quot;result&quot;, &amp;name)
+ == B_OK) {
+                                         if(strcmp(name,
+ REPLICANT_NAME)==0) {
+                                                 BMessage rep_view;
+                                                 if
+ (GetReplicantView(status, uid, &amp;rep_view)==0) {
+                                                         BMessenger result;
+                                                         if
+ (rep_view.FindMessenger(&quot;result&quot;, &amp;result) == B_OK) {
+                                                                 indicator
+ = new BMessenger(result);
+                                                         }
+                                                 }
+                                         }
+                                 }
+                         }
+                 }
+         }
+         return indicator;
+ }
+
+ //
+ status_t SwitchFilter::GetReplicantName(BMessenger target, int32 uid,
+ BMessage *reply) const
+ {
+         /*
+          We send a message to the target shelf, asking it for the Name of
+ the
+          replicant with the given unique id.
+          */
+
+         BMessage        request(B_GET_PROPERTY);
+         BMessage        uid_specifier(B_ID_SPECIFIER);  // specifying via
+ ID
+         status_t        err;
+         status_t        e;
+
+         request.AddSpecifier(&quot;Name&quot;);           // ask for the Name of the
+ replicant
+
+         // IDs are specified using code like the following 3 lines:
+         uid_specifier.AddInt32(&quot;id&quot;, uid);
+         uid_specifier.AddString(&quot;property&quot;, &quot;Replicant&quot;);
+         request.AddSpecifier(&amp;uid_specifier);
+
+         if ((err = target.SendMessage(&amp;request, reply)) != B_OK)
+                 return err;
+
+         if (((err = reply-&gt;FindInt32(&quot;error&quot;, &amp;e)) != B_OK) || (e !=
+ B_OK))
+                 return err ? err : e;
+
+         return B_OK;
+ }
+
+ //
+ status_t SwitchFilter::GetReplicantView(BMessenger target, int32 uid,
+ BMessage *reply) const
+ {
+         /*
+          We send a message to the target shelf, asking it for the Name of
+ the
+          replicant with the given unique id.
+          */
+
+         BMessage        request(B_GET_PROPERTY);
+         BMessage        uid_specifier(B_ID_SPECIFIER);  // specifying via
+ ID
+         status_t        err;
+         status_t        e;
+
+         request.AddSpecifier(&quot;View&quot;);           // ask for the Name of the
+ replicant
+
+         // IDs are specified using code like the following 3 lines:
+         uid_specifier.AddInt32(&quot;id&quot;, uid);
+         uid_specifier.AddString(&quot;property&quot;, &quot;Replicant&quot;);
+         request.AddSpecifier(&amp;uid_specifier);
+
+         if ((err = target.SendMessage(&amp;request, reply)) != B_OK)
+                 return err;
+
+         if (((err = reply-&gt;FindInt32(&quot;error&quot;, &amp;e)) != B_OK) || (e !=
+ B_OK))
+                 return err ? err : e;
+
+         return B_OK;
+ }
+
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3087#comment:4">http://dev.haiku-os.org/ticket/3087#comment:4</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012226.html">[Haiku-bugs] [Haiku] #3087: r28361 broke replicant handling	functionality.
+</A></li>
+	<LI>Next message: <A HREF="012266.html">[Haiku-bugs] [Haiku] #3087: r28361 broke replicant handling	functionality.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12264">[ date ]</a>
+              <a href="thread.html#12264">[ thread ]</a>
+              <a href="subject.html#12264">[ subject ]</a>
+              <a href="author.html#12264">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3356: intermittant and out of order audio
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-January/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233356%3A%20intermittant%20and%20out%20of%20order%20audio&In-Reply-To=%3C051.59bb5ff76ac71f68f8fe9a7cd296fa9e%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="013941.html">
+   <LINK REL="Next"  HREF="013949.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3356: intermittant and out of order audio</H1>
+    <B>rudolfc</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233356%3A%20intermittant%20and%20out%20of%20order%20audio&In-Reply-To=%3C051.59bb5ff76ac71f68f8fe9a7cd296fa9e%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3356: intermittant and out of order audio">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Jan 24 14:08:47 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="013941.html">[Haiku-bugs] [Haiku] #3356: intermittant and out of order audio
+</A></li>
+        <LI>Next message: <A HREF="013949.html">[Haiku-bugs] [Haiku] #3356: intermittant and out of order audio
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13947">[ date ]</a>
+              <a href="thread.html#13947">[ thread ]</a>
+              <a href="subject.html#13947">[ subject ]</a>
+              <a href="author.html#13947">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3356: intermittant and out of order audio
+-----------------------+----------------------------------------------------
+ Reporter:  rudolfc    |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+Blockedby:             |    Platform:  All           
+ Blocking:             |  
+-----------------------+----------------------------------------------------
+
+Comment(by rudolfc):
+
+ Hi Guys,
+
+ I copied over drift averaging (locally here) from the oss multimedia-addon
+ to the default multimedia-addon and retested on my system. Drift is
+ nolonger jumping, looks a lot better. However, the sound still skips in
+ more or less the same way. I added two new files:
+
+  BTimeSource-avg-drift-oss-1 shows only the control-loop 'debug' messages:
+ nolonger late messages it seems, though there are still skips in realtime
+ moments for the buffers.
+
+ In  BTimeSource-avg-drift-oss-2 the gettime function dumps stuff as well,
+ here you can see the drift nolonger jumping as before.
+
+ Anyhow, this by itself is no solution apparantly.
+
+
+ I've got a few questions:
+
+ In the OSS node I saw a lock being held during updating the timesource:
+ fDevice-&gt;Locker()-&gt;Lock()
+
+ This is not done in the default hmulti_audio_addon. (?)
+ Could that be a problem?
+
+ And another question: I stated I tested with HDA hardware but also with
+ SB64 (ES1370) hardware, resulting in the same distorted output. Does this
+ rule out your hardware interrupt time-lagging?
+
+ (I could retest to see if different lines are used?)
+
+ Thanks and Bye!
+
+ Rudolf.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3356#comment:8">http://dev.haiku-os.org/ticket/3356#comment:8</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="013941.html">[Haiku-bugs] [Haiku] #3356: intermittant and out of order audio
+</A></li>
+	<LI>Next message: <A HREF="013949.html">[Haiku-bugs] [Haiku] #3356: intermittant and out of order audio
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13947">[ date ]</a>
+              <a href="thread.html#13947">[ thread ]</a>
+              <a href="subject.html#13947">[ subject ]</a>
+              <a href="author.html#13947">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

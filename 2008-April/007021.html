@@ -1,0 +1,238 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2186: PANIC: vm_page_fault: unhandled page fault in kernel space (rev25270)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232186%3A%20PANIC%3A%20vm_page_fault%3A%20unhandled%20page%0A%20fault%20in%20kernel%20space%20%28rev25270%29&In-Reply-To=%3C042.c8ab1e455ce8f7b50db46cbca7fd81d9%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007018.html">
+   <LINK REL="Next"  HREF="007022.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2186: PANIC: vm_page_fault: unhandled page fault in kernel space (rev25270)</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232186%3A%20PANIC%3A%20vm_page_fault%3A%20unhandled%20page%0A%20fault%20in%20kernel%20space%20%28rev25270%29&In-Reply-To=%3C042.c8ab1e455ce8f7b50db46cbca7fd81d9%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2186: PANIC: vm_page_fault: unhandled page fault in kernel space (rev25270)">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Apr 30 16:49:28 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007018.html">[Haiku-bugs] [Haiku] #676: Click ing on video picture and dragging Mediaplayer dissapears off screen
+</A></li>
+        <LI>Next message: <A HREF="007022.html">[Haiku-bugs] [Haiku] #676: Click ing on video picture and dragging Mediaplayer dissapears off screen
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7021">[ date ]</a>
+              <a href="thread.html#7021">[ thread ]</a>
+              <a href="subject.html#7021">[ subject ]</a>
+              <a href="author.html#7021">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2186: PANIC: vm_page_fault: unhandled page fault in kernel space (rev25270)
+-----------------------+----------------------------------------------------
+ Reporter:  kaliber    |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+ Platform:  All        |  
+-----------------------+----------------------------------------------------
+ During &quot;svn up&quot;
+
+ {{{
+ bfs: Insert:1306: Name in use
+
+ vm_soft_fault: va 0x0 not covered by area in address space
+
+ vm_page_fault: vm_soft_fault returned error 'Bad address' on fault at 0x0,
+ ip 0x805b8393, write 0, user 0, thread 0xd5
+
+ PANIC: vm_page_fault: unhandled page fault in kernel space at 0x0, ip
+ 0x805b8393
+
+
+
+ Welcome to Kernel Debugging Land...
+
+ Running on CPU 0
+
+ kdebug&gt; bt
+
+ stack trace for thread 213 &quot;svn&quot;
+
+     kernel stack: 0x90aeb000 to 0x90aef000
+
+       user stack: 0x7efe7000 to 0x7ffe7000
+
+ frame            caller     &lt;image&gt;:function + offset
+
+ 90aee088 (+  52) 8008aea7   &lt;kernel&gt;:invoke_debugger_command + 0x00cf
+
+ 90aee0bc (+  64) 8008bc50   &lt;kernel&gt;:_ParseCommand__16ExpressionParserRi +
+ 0x01f8
+
+ 90aee0fc (+  48) 8008b642
+ &lt;kernel&gt;:EvaluateCommand__16ExpressionParserPCcRi + 0x01de
+
+ 90aee12c (+ 228) 8008cd64   &lt;kernel&gt;:evaluate_debug_command + 0x0088
+
+ 90aee210 (+  64) 800899e2   &lt;kernel&gt;:kernel_debugger_loop__Fv + 0x017a
+
+ 90aee250 (+  48) 8008a695   &lt;kernel&gt;:kernel_debugger + 0x010d
+
+ 90aee280 (+ 192) 8008a57d   &lt;kernel&gt;:panic + 0x0029
+
+ 90aee340 (+  64) 80061bd3   &lt;kernel&gt;:vm_page_fault + 0x00ab
+
+ 90aee380 (+  64) 80097651   &lt;kernel&gt;:page_fault_exception + 0x00b1
+
+ 90aee3c0 (+  12) 8009ad2d   &lt;kernel&gt;:int_bottom + 0x001d (nearest)
+
+ iframe at 0x90aee3cc (end = 0x90aee424)
+
+  eax 0x0            ebx 0x805bde24      ecx 0x90b99000   edx 0x246
+
+  esi 0x1            edi 0x90b9b000      ebp 0x90aee434   esp 0x90aee400
+
+  eip 0x805b8393  eflags 0x10282
+
+  vector: 0xe, error code: 0x0
+
+ 90aee3cc (+ 104) 805b8393   &lt;ide&gt;:sim_scsi_io + 0x0123
+
+ 90aee434 (+  64) 8069bb01   &lt;scsi&gt;:scsi_async_io + 0x0245
+
+ 90aee474 (+  96) 806ade4f   &lt;scsi_periph&gt;:periph_read_write + 0x01fb
+
+ 90aee4d4 (+  80) 806adbfb   &lt;scsi_periph&gt;:periph_read + 0x003f
+
+ 90aee524 (+  64) 806a9d3e   &lt;scsi_dsk&gt;:das_read + 0x0042
+
+ 90aee564 (+ 160) 805a4bb4   &lt;block_io&gt;:block_io_readv_int + 0x042c
+
+ 90aee604 (+  80) 805a5390   &lt;block_io&gt;:block_io_read + 0x0040
+
+ 90aee654 (+  64) 80046a2e   &lt;kernel&gt;:Process__11IOSchedulerR9IORequest +
+ 0x0052
+
+ 90aee694 (+ 112) 80041f25
+ &lt;kernel&gt;:devfs_read__FP9fs_volumeP8fs_vnodePvxT2PUl + 0x0141
+
+ 90aee704 (+  64) 800534f2   &lt;kernel&gt;:file_read__FP15file_descriptorxPvPUl
+ + 0x0036
+
+ 90aee744 (+  96) 80044db5   &lt;kernel&gt;:_kern_read + 0x0145
+
+ 90aee7a4 (+  64) 800a3062   &lt;kernel&gt;:read_pos + 0x0036
+
+ 90aee7e4 (+  80) 8006a467   &lt;kernel&gt;:get_cached_block__FP11block_cachexPbb
+ + 0x010b
+
+ 90aee834 (+  80) 8006d173   &lt;kernel&gt;:block_cache_get_etc + 0x004b
+
+ 90aee884 (+  48) 8006d21c   &lt;kernel&gt;:block_cache_get + 0x0020
+
+ 90aee8b4 (+  96) 8057f599
+ &lt;bfs&gt;:InternalSetTo__10CachedNodeP11Transactionx + 0x0151
+
+ 90aee914 (+  48) 8057f025   &lt;bfs&gt;:SetTo__10CachedNodexb + 0x00d1
+
+ 90aee944 (+ 112) 80580858
+ &lt;bfs&gt;:_SeekDown__9BPlusTreeRt5Stack1Z12node_and_keyPCUcUs + 0x01e4
+
+ 90aee9b4 (+ 464) 805819b6   &lt;bfs&gt;:Insert__9BPlusTreeR11TransactionPCUcUsx
+ + 0x00d6
+
+ 90aeeb84 (+  80) 80586ae9
+ &lt;bfs&gt;:Update__5IndexR11TransactionPCclPCUcUsT4UsP5Inode + 0x0235
+
+ 90aeebd4 (+  80) 80586c4b
+ &lt;bfs&gt;:UpdateName__5IndexR11TransactionPCcT2P5Inode + 0x00bb
+
+ 90aeec24 (+  64) 80586b4e
+ &lt;bfs&gt;:InsertName__5IndexR11TransactionPCcP5Inode + 0x002e
+
+ 90aeec64 (+ 144) 8058dd1d
+ &lt;bfs&gt;:Create__5InodeR11TransactionP5InodePCcliUlPbPxPP5InodeP12fs_vnode_opsUl
+ + 0x07dd
+
+ 90aeecf4 (+  96) 80596829
+ &lt;bfs&gt;:bfs_create__FP9fs_volumeP8fs_vnodePCciiPPvPx + 0x0125
+
+ 90aeed54 (+  96) 80052f0d   &lt;kernel&gt;:create_vnode__FP5vnodePCciib + 0x00b5
+
+ 90aeedb4 (+ 320) 8005325a   &lt;kernel&gt;:file_create__FiPciib + 0x005a
+
+ 90aeeef4 (+  80) 8005856c   &lt;kernel&gt;:_user_open + 0x00bc
+
+ 90aeef44 (+ 100) 8009aea2   &lt;kernel&gt;:pre_syscall_debug_done + 0x0002
+ (nearest)
+
+ iframe at 0x90aeefa8 (end = 0x90aef000)
+
+  eax 0x4f           ebx 0x462c30        ecx 0x7ffe63d4   edx 0xffff0104
+
+  esi 0x18d70fc8     edi 0x18d71ee0      ebp 0x7ffe6400   esp 0x90aeefdc
+
+  eip 0xffff0104  eflags 0x202
+
+  vector: 0x63, error code: 0x0
+
+ 90aeefa8 (+   0) ffff0104
+
+ 7ffe6400 (+  64) 003293be   &lt;libapr-1.so&gt;:apr_file_open + 0x0136
+
+ 7ffe6440 (+  64) 002c7ff5   &lt;libsvn_subr-1.so&gt;:svn_io_file_open + 0x0049
+
+ 7ffe6480 (+  64) 0023ad85   &lt;libsvn_wc-1.so&gt;:svn_wc__prop_base_path +
+ 0x00e1 (nearest)
+
+ 7ffe64c0 (+  64) 0023af23   &lt;libsvn_wc-1.so&gt;:svn_wc__open_adm_file +
+ 0x0037
+
+ 7ffe6500 (+  64) 0023b8e5   &lt;libsvn_wc-1.so&gt;:svn_wc__sync_props + 0x03fd
+ (nearest)
+
+ 7ffe6540 (+  64) 0023bb99   &lt;libsvn_wc-1.so&gt;:svn_wc__sync_props + 0x06b1
+ (nearest)
+
+ 7ffe6580 (+  64) 0023bc46   &lt;libsvn_wc-1.so&gt;:svn_wc_ensure_adm + 0x005a
+
+ 7ffe65c0 (+  64) 0024d480   &lt;libsvn_wc-1.so&gt;:svn_wc__maybe_set_executable
+ + 0x0884 (nearest)
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2186">http://dev.haiku-os.org/ticket/2186</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007018.html">[Haiku-bugs] [Haiku] #676: Click ing on video picture and dragging Mediaplayer dissapears off screen
+</A></li>
+	<LI>Next message: <A HREF="007022.html">[Haiku-bugs] [Haiku] #676: Click ing on video picture and dragging Mediaplayer dissapears off screen
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7021">[ date ]</a>
+              <a href="thread.html#7021">[ thread ]</a>
+              <a href="subject.html#7021">[ subject ]</a>
+              <a href="author.html#7021">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

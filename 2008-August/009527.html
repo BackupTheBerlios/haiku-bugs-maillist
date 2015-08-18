@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2598: sshd occasionally segfaults on connect (possibly when forking)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232598%3A%20sshd%20occasionally%20segfaults%20on%0A%20connect%20%28possibly%20when%20forking%29&In-Reply-To=%3C053.b6f940013ebd677df55b83cabf03ed04%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009521.html">
+   <LINK REL="Next"  HREF="009512.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2598: sshd occasionally segfaults on connect (possibly when forking)</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232598%3A%20sshd%20occasionally%20segfaults%20on%0A%20connect%20%28possibly%20when%20forking%29&In-Reply-To=%3C053.b6f940013ebd677df55b83cabf03ed04%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2598: sshd occasionally segfaults on connect (possibly when forking)">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Aug 15 23:45:34 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009521.html">[Haiku-bugs] [Haiku] #2607: Unable to check emails using MDR
+</A></li>
+        <LI>Next message: <A HREF="009512.html">[Haiku-bugs] [Haiku] #2613: Calling Minimize() in Window constructor does not work.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9527">[ date ]</a>
+              <a href="thread.html#9527">[ thread ]</a>
+              <a href="subject.html#9527">[ subject ]</a>
+              <a href="author.html#9527">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2598: sshd occasionally segfaults on connect (possibly when forking)
+----------------------------+-----------------------------------------------
+  Reporter:  anevilyak      |       Owner:  bonefish      
+      Type:  bug            |      Status:  assigned      
+  Priority:  normal         |   Milestone:  R1            
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |   Blockedby:                
+  Platform:  All            |    Blocking:                
+----------------------------+-----------------------------------------------
+
+Comment(by anevilyak):
+
+ Hi Ingo,
+
+ I tried this test again but using sshd -ddd, and got slightly different
+ but still interesting behavior. This time it didn't actually segfault, but
+ sshd did somehow completely exit after I logged out the session: last few
+ lines of debugging output from sshd:
+
+ {{{
+ debug2: channel 0: rcvd adjust 32778
+ debug1: server_input_channel_req: channel 0 request window-change reply 0
+ debug1: session_by_channel: session 0 channel 0
+ debug1: session_input_channel_req: session 0 req window-change
+ debug1: server_input_channel_req: channel 0 request window-change reply 0
+ debug1: session_by_channel: session 0 channel 0
+ debug1: session_input_channel_req: session 0 req window-change
+ debug1: Received SIGCHLD.
+ debug1: session_by_pid: pid 231
+ debug1: session_exit_message: session 0 channel 0 pid 231
+ debug2: channel 0: request exit-status confirm 0
+ debug1: session_exit_message: release channel 0
+ debug2: channel 0: write failed
+ debug2: channel 0: close_write
+ debug2: channel 0: output open -&gt; closed
+ debug1: session_pty_cleanup: session 0 release /dev/tt/p1
+ debug2: channel 0: read&lt;=0 rfd 7 len 0
+ debug2: channel 0: read failed
+ debug2: channel 0: close_read
+ debug2: channel 0: input open -&gt; drain
+ debug2: channel 0: ibuf empty
+ debug2: channel 0: send eof
+ debug2: channel 0: input drain -&gt; closed
+ debug2: channel 0: send close
+ debug2: notify_done: reading
+ debug3: channel 0: will not send data after close
+ debug2: channel 0: rcvd close
+ debug3: channel 0: will not send data after close
+ debug2: channel 0: is dead
+ debug2: channel 0: gc: notify user
+ debug1: session_by_channel: session 0 channel 0
+ debug1: session_close_by_channel: channel 0 child 0
+ debug1: session_close: session 0 pid 0
+ debug2: channel 0: gc: user detached
+ debug2: channel 0: is dead
+ debug2: channel 0: garbage collecting
+ debug1: channel 0: free: server-session, nchannels 1
+ debug3: channel 0: status: The following connections are open:
+   #0 server-session (t4 r0 i3/0 o3/0 fd -1/-1 cfd -1)
+
+ debug3: channel 0: close_fds r -1 w -1 e -1 c -1
+ Connection closed by 192.168.1.126
+ debug1: do_cleanup
+ Closing connection to 192.168.1.126
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2598#comment:14">http://dev.haiku-os.org/ticket/2598#comment:14</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009521.html">[Haiku-bugs] [Haiku] #2607: Unable to check emails using MDR
+</A></li>
+	<LI>Next message: <A HREF="009512.html">[Haiku-bugs] [Haiku] #2613: Calling Minimize() in Window constructor does not work.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9527">[ date ]</a>
+              <a href="thread.html#9527">[ thread ]</a>
+              <a href="subject.html#9527">[ subject ]</a>
+              <a href="author.html#9527">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

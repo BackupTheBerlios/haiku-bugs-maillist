@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1908: page_fault in network stack (using	Firefox)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231908%3A%20page_fault%20in%20network%20stack%20%28using%0A%09Firefox%29&In-Reply-To=%3C041.6791160cc3e1d20aeb33f16337318daa%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005485.html">
+   <LINK REL="Next"  HREF="005476.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1908: page_fault in network stack (using	Firefox)</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231908%3A%20page_fault%20in%20network%20stack%20%28using%0A%09Firefox%29&In-Reply-To=%3C041.6791160cc3e1d20aeb33f16337318daa%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1908: page_fault in network stack (using	Firefox)">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Mar 11 19:04:58 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005485.html">[Haiku-bugs] [Haiku] #1907: Replace GNU C library and utilities with BSD-licensed equivalents
+</A></li>
+        <LI>Next message: <A HREF="005476.html">[Haiku-bugs] [Haiku] #1909: emuxki/midi related KDLs?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5474">[ date ]</a>
+              <a href="thread.html#5474">[ thread ]</a>
+              <a href="subject.html#5474">[ subject ]</a>
+              <a href="author.html#5474">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1908: page_fault in network stack (using Firefox)
+--------------------------------------+-------------------------------------
+ Reporter:  stippi                    |       Owner:  axeld         
+     Type:  bug                       |      Status:  new           
+ Priority:  critical                  |   Milestone:  R1            
+Component:  Network &amp; Internet/Stack  |     Version:  R1 development
+ Platform:  All                       |  
+--------------------------------------+-------------------------------------
+ I just booted Haiku and launched Firefox without much delay. Next thing I
+ know, I was in KDL:
+
+ {{{
+
+ ...
+ &lt;kernel&gt; page_fault_exception
+ &lt;kernel&gt; int_bottom
+
+ iframe...
+
+ &lt;kernel&gt; list_remove_link
+ &lt;kernel&gt; list_remove_head_item
+ &lt;/boot/.../netstack&gt; delete_children
+ &lt;/boot/.../netstack&gt; socket_delete
+ &lt;/boot/.../netstack&gt; socket_free
+ &lt;/boot/.../netstack&gt; net_stack_free_cookie
+ &lt;kernel&gt; devfs_free_cookie
+ &lt;kernel&gt; file_free_fd
+ &lt;kernel&gt; put_fd
+ &lt;kernel&gt; common_close
+ &lt;kernel&gt; _user_close
+ &lt;kernel&gt; pre_syscall_debug_done
+
+ iframe...
+
+ &lt;libnetwork.so&gt; closesocket
+
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1908">http://dev.haiku-os.org/ticket/1908</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005485.html">[Haiku-bugs] [Haiku] #1907: Replace GNU C library and utilities with BSD-licensed equivalents
+</A></li>
+	<LI>Next message: <A HREF="005476.html">[Haiku-bugs] [Haiku] #1909: emuxki/midi related KDLs?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5474">[ date ]</a>
+              <a href="thread.html#5474">[ thread ]</a>
+              <a href="subject.html#5474">[ subject ]</a>
+              <a href="author.html#5474">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

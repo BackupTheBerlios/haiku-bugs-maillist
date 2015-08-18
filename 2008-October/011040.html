@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2849: app_server not saving settings correctly
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232849%3A%20app_server%20not%20saving%20settings%20correctly&In-Reply-To=%3C044.5cc3897bd26ee9fc0b7820ed459dcf66%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011034.html">
+   <LINK REL="Next"  HREF="011041.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2849: app_server not saving settings correctly</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232849%3A%20app_server%20not%20saving%20settings%20correctly&In-Reply-To=%3C044.5cc3897bd26ee9fc0b7820ed459dcf66%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2849: app_server not saving settings correctly">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Oct 17 03:27:33 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011034.html">[Haiku-bugs] [Haiku] #2231: [Pe] Find / Replace text entry box is only 3-4 pixels high
+</A></li>
+        <LI>Next message: <A HREF="011041.html">[Haiku-bugs] [Haiku] #2849: app_server not saving settings	correctly
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11040">[ date ]</a>
+              <a href="thread.html#11040">[ thread ]</a>
+              <a href="subject.html#11040">[ subject ]</a>
+              <a href="author.html#11040">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2849: app_server not saving settings correctly
+--------------------------------+-------------------------------------------
+ Reporter:  anevilyak           |       Owner:  stippi        
+     Type:  bug                 |      Status:  new           
+ Priority:  normal              |   Milestone:  R1            
+Component:  Servers/app_server  |     Version:  R1 development
+Blockedby:                      |    Platform:  All           
+ Blocking:                      |  
+--------------------------------+-------------------------------------------
+ Suppose you do something very simple, like open Screen and change the
+ number of workspaces. Restart, and app_server will not have actually saved
+ this setting, it reverts back to 4. Looking at ~/config/settings, the
+ system/app_server subdir where the settings file is supposed to be getting
+ stored has been created, but no settings file is present. Haven't yet
+ managed to track down why, but in case I don't determine it tonight,
+ logging it here. I tried adding an fSettings-&gt;Save(kAllSettings); to
+ Desktop::~Desktop() but that had no effect.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2849">http://dev.haiku-os.org/ticket/2849</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011034.html">[Haiku-bugs] [Haiku] #2231: [Pe] Find / Replace text entry box is only 3-4 pixels high
+</A></li>
+	<LI>Next message: <A HREF="011041.html">[Haiku-bugs] [Haiku] #2849: app_server not saving settings	correctly
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11040">[ date ]</a>
+              <a href="thread.html#11040">[ thread ]</a>
+              <a href="subject.html#11040">[ subject ]</a>
+              <a href="author.html#11040">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

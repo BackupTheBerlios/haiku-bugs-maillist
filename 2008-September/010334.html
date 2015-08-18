@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2342: No system timer interrupt on some	ATI chipsets
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232342%3A%20No%20system%20timer%20interrupt%20on%20some%0A%09ATI%20chipsets&In-Reply-To=%3C048.c058db577229ed6b0d69ad4849648d66%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010333.html">
+   <LINK REL="Next"  HREF="010335.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2342: No system timer interrupt on some	ATI chipsets</H1>
+    <B>Minoru-kun</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232342%3A%20No%20system%20timer%20interrupt%20on%20some%0A%09ATI%20chipsets&In-Reply-To=%3C048.c058db577229ed6b0d69ad4849648d66%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2342: No system timer interrupt on some	ATI chipsets">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Sep 16 17:49:55 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010333.html">[Haiku-bugs] [Haiku] #2682: Network instability issues since net_timer changes
+</A></li>
+        <LI>Next message: <A HREF="010335.html">[Haiku-bugs] [Haiku] #2477: Haiku's bootman doesn't show the same partitions as BeOS's
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10334">[ date ]</a>
+              <a href="thread.html#10334">[ thread ]</a>
+              <a href="subject.html#10334">[ subject ]</a>
+              <a href="author.html#10334">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2342: No system timer interrupt on some ATI chipsets
+----------------------------+-----------------------------------------------
+  Reporter:  euan           |       Owner:  mmu_man       
+      Type:  bug            |      Status:  assigned      
+  Priority:  high           |   Milestone:  R1            
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |   Blockedby:                
+  Platform:  All            |    Blocking:                
+----------------------------+-----------------------------------------------
+
+Comment(by Minoru-kun):
+
+ Booting on my laptop with ATI IXP still fails reporting an error (in debug
+ mode) like this:
+ {{{
+ usb_ohci: successfully started the controller.
+ usb_ehci: the host controller is bios-owned
+ usb_ehci: claiming ownership of the host controller
+ usb_ehci: controller is still bios-owned, waiting
+ Last message repeated 19 times
+ usb_ehci: successfully started the controller
+ USB ControlPipe: timeout waiting for queued request to complete
+ USB ControlPipe: timeout waiting for queued request to complete
+ usb_ehci: qtd (0x02ab7680) error: 0x00080248
+ USB ControlPipe: timeout waiting for queued request to complete
+ usb_ehci: qtd (0x02ab7680) error: 0x00080248
+ USB BusManager: error while setting device address
+ usb_ehci: lowspeed device connected, giving up
+ get_boot_partitions(): boot volume message:
+ &lt;...&gt;
+ }}}
+ (I've already reported this problem in #2083).
+
+ But Linux works fine.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2342#comment:22">http://dev.haiku-os.org/ticket/2342#comment:22</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010333.html">[Haiku-bugs] [Haiku] #2682: Network instability issues since net_timer changes
+</A></li>
+	<LI>Next message: <A HREF="010335.html">[Haiku-bugs] [Haiku] #2477: Haiku's bootman doesn't show the same partitions as BeOS's
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10334">[ date ]</a>
+              <a href="thread.html#10334">[ thread ]</a>
+              <a href="subject.html#10334">[ subject ]</a>
+              <a href="author.html#10334">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

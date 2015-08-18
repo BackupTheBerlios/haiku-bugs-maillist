@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3128: sh leaks memory
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233128%3A%20sh%20leaks%20memory&In-Reply-To=%3C042.c155747b75de706f9c1a4ddbf29a0b57%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012486.html">
+   <LINK REL="Next"  HREF="012469.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3128: sh leaks memory</H1>
+    <B>bhaible</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233128%3A%20sh%20leaks%20memory&In-Reply-To=%3C042.c155747b75de706f9c1a4ddbf29a0b57%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3128: sh leaks memory">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Nov 13 04:12:55 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012486.html">[Haiku-bugs] [Haiku] #3127: NULL pointer access inside fork()
+</A></li>
+        <LI>Next message: <A HREF="012469.html">[Haiku-bugs] [Haiku] #3128: sh leaks memory
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12452">[ date ]</a>
+              <a href="thread.html#12452">[ thread ]</a>
+              <a href="subject.html#12452">[ subject ]</a>
+              <a href="author.html#12452">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3128: sh leaks memory
+-----------------------+----------------------------------------------------
+ Reporter:  bhaible    |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+Blockedby:             |    Platform:  All           
+ Blocking:             |  
+-----------------------+----------------------------------------------------
+ When executing large configure scripts, the 'sh' process gets
+ bigger and bigger.
+
+ While running a configure script in tight memory situation, I got an
+ application crash. Clicking on the &quot;Debug&quot; button of the error dialog,
+ I was presented a gdb session the shell that was executing the
+ configure script. At the top, function fork().
+
+ To reproduce:
+
+ 0. Start Haiku in QEMU with 256 MB RAM allocated to it,
+
+ 1. Open a Terminal.
+
+ 2. $ wget <A HREF="http://www.haible.de/bruno/gnu/testdir3.tar.gz">http://www.haible.de/bruno/gnu/testdir3.tar.gz</A>
+
+ 3. $ tar xvfz testdir3.tar.gz
+
+ 4. $ cd testdir3
+
+ 5. $ ./configure --host=i586-pc-haiku --build=i586-pc-haiku
+ --prefix=/boot/home/config CPPFLAGS=&quot;-Wall&quot; 2&gt;&amp;1 | tee log1
+
+ 6. Repeatedly do &quot;ps&quot;. After some time, the &quot;sh&quot; process uses
+ 40 MB user memory and 100 MB kernel memory. And it gets more and
+ more... Until either a message &quot;Out of memory&quot; or a crash.
+ Such a shell script should be executable in 10 MB.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3128">http://dev.haiku-os.org/ticket/3128</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012486.html">[Haiku-bugs] [Haiku] #3127: NULL pointer access inside fork()
+</A></li>
+	<LI>Next message: <A HREF="012469.html">[Haiku-bugs] [Haiku] #3128: sh leaks memory
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12452">[ date ]</a>
+              <a href="thread.html#12452">[ thread ]</a>
+              <a href="subject.html#12452">[ subject ]</a>
+              <a href="author.html#12452">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

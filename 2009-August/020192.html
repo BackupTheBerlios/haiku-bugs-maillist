@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4101: nVidia CK804 OHCI USB controller detects only 1 connected device
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234101%3A%20nVidia%20CK804%20OHCI%20USB%20controller%0A%20detects%20only%201%20connected%20device&In-Reply-To=%3C049.88182544767913bc175762778afee706%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="020190.html">
+   <LINK REL="Next"  HREF="020194.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4101: nVidia CK804 OHCI USB controller detects only 1 connected device</H1>
+    <B>oruizdorantes</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234101%3A%20nVidia%20CK804%20OHCI%20USB%20controller%0A%20detects%20only%201%20connected%20device&In-Reply-To=%3C049.88182544767913bc175762778afee706%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4101: nVidia CK804 OHCI USB controller detects only 1 connected device">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Aug 26 11:12:48 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="020190.html">[Haiku-bugs] [Haiku] #4074: eMachines 19&quot; WS LCD monitor native resolution not avail. using AGP Geforce 2/3
+</A></li>
+        <LI>Next message: <A HREF="020194.html">[Haiku-bugs] [Haiku] #4101: nVidia CK804 OHCI USB controller detects only 1 connected device
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20192">[ date ]</a>
+              <a href="thread.html#20192">[ thread ]</a>
+              <a href="subject.html#20192">[ subject ]</a>
+              <a href="author.html#20192">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4101: nVidia CK804 OHCI USB controller detects only 1 connected device
+-------------------------+--------------------------------------------------
+ Reporter:  monni        |       Owner:  mmlr          
+     Type:  bug          |      Status:  assigned      
+ Priority:  normal       |   Milestone:  R1            
+Component:  Drivers/USB  |     Version:  R1 development
+Blockedby:               |    Platform:  All           
+ Blocking:               |  
+-------------------------+--------------------------------------------------
+
+Comment(by oruizdorantes):
+
+ &gt; So it's like the first one is too long with useless data and the second
+ one is too short?
+
+ First is too long with usefull data(even complete packet) and 0's.
+ Second one is again with useful data, but too short 2 bytes, missing 12
+ more... I am able to say I miss 12 because, the incoming 2 bytes already
+ contained information about the size.
+
+ &gt; What lengths are we talking about,
+
+ These bluetooth packets on UCHI use to go from 3 to 256 bytes.
+ And they dont use to come splitted in any way.
+
+ &gt; do they make any sense, like is the extra bytes matching what is missing
+ on the second one or something similar?
+
+ From the example I had, I could not extract any further matching.
+
+ &gt; * The files need a _serious_ review concerning coding style
+
+ Feel free to comment the most appearing ones. I guess this is the
+ Identifier rule for functions and var names(underscores), But I expected
+ it was ok in a C file.
+
+ &gt; * You may want to think about locking the device structures [...]
+
+ Yep, this is in the TODO list once the number of threads in the playground
+ is clear.
+
+ &gt; Meaning that if there is a max packet size of 8 bytes this does by no
+ means mean that you can or should only schedule 8 bytes at a time. The
+ only thing it means is that if you schedule more bytes that those it will
+ (internally) split these up into multiple USB packets.
+
+ So would be fine to schedule the size just as the biggest packet I am
+ expecting to receive?
+
+ &gt; With that context, is it possible that the event you are receiving
+ simply doesn't fit into that buffer?
+
+ I remember those interrupt endpoints use to be 16, but I have been
+ receiving completelly in one hook buffers of 256.
+ So being honest never understood the size parameter in the queue call, as
+ I could get bigger or smaller buffers.
+
+ Well lets wait Monni's test.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4101#comment:15">http://dev.haiku-os.org/ticket/4101#comment:15</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="020190.html">[Haiku-bugs] [Haiku] #4074: eMachines 19&quot; WS LCD monitor native resolution not avail. using AGP Geforce 2/3
+</A></li>
+	<LI>Next message: <A HREF="020194.html">[Haiku-bugs] [Haiku] #4101: nVidia CK804 OHCI USB controller detects only 1 connected device
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20192">[ date ]</a>
+              <a href="thread.html#20192">[ thread ]</a>
+              <a href="subject.html#20192">[ subject ]</a>
+              <a href="author.html#20192">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

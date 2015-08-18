@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2344: Hang when booting with USB Mass Storage device connected.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-January/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232344%3A%20Hang%20when%20booting%20with%20USB%20Mass%0A%20Storage%20device%20connected.&In-Reply-To=%3C057.b3e826c41b349afb8bd0a92a43e2e3a5%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="013926.html">
+   <LINK REL="Next"  HREF="013931.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2344: Hang when booting with USB Mass Storage device connected.</H1>
+    <B>idefix</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232344%3A%20Hang%20when%20booting%20with%20USB%20Mass%0A%20Storage%20device%20connected.&In-Reply-To=%3C057.b3e826c41b349afb8bd0a92a43e2e3a5%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2344: Hang when booting with USB Mass Storage device connected.">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Jan 23 21:12:26 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="013926.html">[Haiku-bugs] [Haiku] #1588: Geforce 8xxx support in Nvidia	driver
+</A></li>
+        <LI>Next message: <A HREF="013931.html">[Haiku-bugs] [Haiku] #2344: Hang when booting with USB Mass Storage device connected.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13929">[ date ]</a>
+              <a href="thread.html#13929">[ thread ]</a>
+              <a href="subject.html#13929">[ subject ]</a>
+              <a href="author.html#13929">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2344: Hang when booting with USB Mass Storage device connected.
+---------------------------+------------------------------------------------
+ Reporter:  dustin howett  |       Owner:  mmlr          
+     Type:  bug            |      Status:  assigned      
+ Priority:  normal         |   Milestone:  R1            
+Component:  Drivers/USB    |     Version:  R1 development
+Blockedby:                 |    Platform:  x86           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+
+Comment(by idefix):
+
+ Tested with r28974:
+ The seriallog looks the same as r28911, only with r28974 the sd-card
+ appears in the mount-menu (as 'no-name'). I can mount it and it's folder
+ appears on the desktop (as 'canon-dc'). When I open the folder and open a
+ text-file in that folder, I get KDL'd.
+ See 'Booting with USB cardreader + writelocked SDcard (r28974).txt'.
+
+ When I boot with the Wacom tablet also attached, the cardreader won't work
+ at all.
+ See 'Booting with USB cardreader + writelocked SDcard (r28974) and
+ Wacom.txt'.
+
+ Connecting and disconnecting my Wacom changes the error-messages:
+ {{{
+ usb_disk: operation 0x00 failed at the SCSI level
+ Last message repeated 11 times.
+ Last message repeated 12 times.
+ Last message repeated 12 times.
+ Last message repeated 9 times.
+ Last message repeated 6 times.
+ wacom: add_device() - wacom detected
+ wacom:  ... success!
+ void AddOnManager::MessageReceived(BMessage *) what: NMP_
+ wacom: device_open() open: 2
+ usb_disk: operation 0x00 failed at the SCSI level
+ Last message repeated 11 times.
+ Last message repeated 12 times.
+ Last message repeated 3 times.
+ usb_disk: acquire_sem failed while waiting for data transfer
+ Media removed from /dev/disk/usb/0/0/raw
+ usb_disk: acquire_sem failed while waiting for data transfer
+ usb_disk: acquire_sem failed while waiting for data transfer
+ usb_disk: acquire_sem failed while waiting for data transfer
+ usb_disk: acquire_sem failed while waiting for data transfer
+ usb_uhci: td (0x01a21480) error: status: 0x254507ff; token: 0x00e88369;
+ wacom: interrupt transfer - failure: -2147442668
+ usb_uhci: td (0x01a214a0) error: status: 0x254507ff; token: 0x00e88369;
+ usb_uhci: td (0x01a21820) error: status: 0x254507ff; token: 0x00e88369;
+ [...]
+ usb_uhci: td (0x01a239a0) error: status: 0x254507ff; token: 0x00e88369;
+ usb_uhci: td (0x01a239c0) error: status: 0x254507ff; token: 0x00e88369;
+ usb_disk: operation 0x00 failed at the SCSI level
+ Last message repeated 2 times.
+ USB Hub 1: port 1 disabled
+ wacom: device_removed() open: 1
+ wacom: device /dev/input/wacom/usb/0 still open -- marked for removal
+ void AddOnManager::MessageReceived(BMessage *) what: NMP_
+ usb_disk: operation 0x00 failed at the SCSI level
+ Last message repeated 11 times.
+ Last message repeated 12 times.
+ Last message repeated 12 times.
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2344#comment:14">http://dev.haiku-os.org/ticket/2344#comment:14</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="013926.html">[Haiku-bugs] [Haiku] #1588: Geforce 8xxx support in Nvidia	driver
+</A></li>
+	<LI>Next message: <A HREF="013931.html">[Haiku-bugs] [Haiku] #2344: Hang when booting with USB Mass Storage device connected.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13929">[ date ]</a>
+              <a href="thread.html#13929">[ thread ]</a>
+              <a href="subject.html#13929">[ subject ]</a>
+              <a href="author.html#13929">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

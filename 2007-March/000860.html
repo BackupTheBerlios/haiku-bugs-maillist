@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1126: sync and ide DMA problem
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231126%3A%20sync%20and%20ide%20DMA%20problem&In-Reply-To=%3C042.cdebac5eeb8d20e8250a6ea6c9766015%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000891.html">
+   <LINK REL="Next"  HREF="000861.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1126: sync and ide DMA problem</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231126%3A%20sync%20and%20ide%20DMA%20problem&In-Reply-To=%3C042.cdebac5eeb8d20e8250a6ea6c9766015%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1126: sync and ide DMA problem">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Mar 25 20:21:28 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000891.html">[Haiku-bugs] [Haiku] #1125: &lt;poll.h&gt; should be available also under &lt;sys/poll.h&gt;
+</A></li>
+        <LI>Next message: <A HREF="000861.html">[Haiku-bugs] [Haiku] #1126: sync and ide DMA problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#860">[ date ]</a>
+              <a href="thread.html#860">[ thread ]</a>
+              <a href="subject.html#860">[ subject ]</a>
+              <a href="author.html#860">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1126: sync and ide DMA problem
+-----------------------+----------------------------------------------------
+ Reporter:  kaliber    |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+ Platform:  All        |  
+-----------------------+----------------------------------------------------
+ I'm using vmware. After sync command I get this message in serial output:
+
+ ide: ide_timeout() bus 0x907bf800
+ ide: ide_timeout_dpc() bus 0x907bf800, decide 0x907a0c00
+ ide: reset_device() device 0x907a0c00
+ ide: reset_device() device 0x907a0c00 failed, calling reset_bus
+ ide: reset_bus() device 0x907a0c00, bus 0x907bf800
+ ide: reset_bus() device 0x907a0c00, bus 0x907bf800 success
+ ide: ide_timeout() bus 0x907bf800
+ ide: ide_timeout_dpc() bus 0x907bf800, decide 0x907a0c00
+ ide: reset_device() device 0x907a0c00
+ ide: reset_device() device 0x907a0c00 failed, calling reset_bus
+ ide: reset_bus() device 0x907a0c00, bus 0x907bf800
+ ide: reset_bus() device 0x907a0c00, bus 0x907bf800 success
+ ide: ide_timeout() bus 0x907bf800
+ ide: ide_timeout_dpc() bus 0x907bf800, decide 0x907a0c00
+ ide: reset_device() device 0x907a0c00
+ ide: reset_device() device 0x907a0c00 failed, calling reset_bus
+ ide: reset_bus() device 0x907a0c00, bus 0x907bf800
+ ide: reset_bus() device 0x907a0c00, bus 0x907bf800 success
+ Disabling DMA because of too many errors
+ SCSI_DSK -- synchronize_cache:
+
+
+ I created a new bug because I'm not sure this is the same problem as in
+ ticket 985
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1126">http://dev.haiku-os.org/ticket/1126</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000891.html">[Haiku-bugs] [Haiku] #1125: &lt;poll.h&gt; should be available also under &lt;sys/poll.h&gt;
+</A></li>
+	<LI>Next message: <A HREF="000861.html">[Haiku-bugs] [Haiku] #1126: sync and ide DMA problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#860">[ date ]</a>
+              <a href="thread.html#860">[ thread ]</a>
+              <a href="subject.html#860">[ subject ]</a>
+              <a href="author.html#860">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

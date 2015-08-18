@@ -1,0 +1,169 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2894: Input server crashes at boot on	Amilo Li2735
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232894%3A%20Input%20server%20crashes%20at%20boot%20on%0A%09Amilo%20Li2735&In-Reply-To=%3C054.322af82b76dd0c790e6d96efbae2659e%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011370.html">
+   <LINK REL="Next"  HREF="011417.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2894: Input server crashes at boot on	Amilo Li2735</H1>
+    <B>stippi</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232894%3A%20Input%20server%20crashes%20at%20boot%20on%0A%09Amilo%20Li2735&In-Reply-To=%3C054.322af82b76dd0c790e6d96efbae2659e%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2894: Input server crashes at boot on	Amilo Li2735">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Oct 24 14:27:08 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011370.html">[Haiku-bugs] [Haiku] #2894: Input server crashes at boot on	Amilo Li2735
+</A></li>
+        <LI>Next message: <A HREF="011417.html">[Haiku-bugs] [Haiku] #2894: Input server crashes at boot on	Amilo Li2735
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11416">[ date ]</a>
+              <a href="thread.html#11416">[ thread ]</a>
+              <a href="subject.html#11416">[ subject ]</a>
+              <a href="author.html#11416">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2894: Input server crashes at boot on Amilo Li2735
+-----------------------------------+----------------------------------------
+  Reporter:  jackburton            |       Owner:  axeld         
+      Type:  bug                   |      Status:  new           
+  Priority:  critical              |   Milestone:  R1/alpha1     
+ Component:  Servers/input_server  |     Version:  R1 development
+Resolution:                        |   Blockedby:                
+  Platform:  All                   |    Blocking:                
+-----------------------------------+----------------------------------------
+
+Old description:
+
+&gt;<i> After haiku completes the boot proces, the tracker and deskbar starts up,
+</I>&gt;<i> then after one/two seconds the input server crashes. 100% reproducible,
+</I>&gt;<i> although the stack trace changed once or twice.
+</I>&gt;<i> I think this started happening after r28241.
+</I>&gt;<i> I'm testing with r28244.
+</I>
+New description:
+
+ After haiku completes the boot process, the Tracker and Deskbar starts up,
+ then after one/two seconds the input server crashes. 100% reproducible,
+ although the stack trace changed once or twice.
+ I think this started happening after r28241.
+ I'm testing with r28244.
+
+--
+
+Comment(by stippi):
+
+ I am currently investigating this. Publishing my findings so far:
+
+ herdemir is correct: Somehow, the PS/2 driver publishes a mouse twice,
+ even when no PS/2 mouse is attached at all. On the input_server side there
+ will be an InputDeviceListItem created in _RegisterDevices(). Such objects
+ have a member &quot;fDevice&quot; which is constructed in such a way that its &quot;name&quot;
+ member points to memory by the original input_device_ref provided by the
+ MouseDevice. Later, strcmp() to find the device is then called with the
+ same pointers for the name, I don't know if that even works.
+
+ I've fixed this in my local tree, but I can still reproduce corrupted
+ memory when I unplug my USB mouse. It always crashes in the heap
+ management asserts the second time I re-plug the mouse (in
+ _RegisterDevices()).
+
+ What also happens is that InputServer::_RegisterDevices() will not let you
+ register the same device name twice. This is documented and correct
+ behavior. But at least with the current implementation, if two devices are
+ added with the same name, and the input_device_ref is deleted for the
+ second instance in the MouseDevice, there will be a mix up and the
+ InputDeviceListItem::fDevice::name member will point to freed memory. I
+ don't know if that is what's actually happening though, because I don't
+ see the output I added when removing devices. Here is some syslog output,
+ stripped of unrelated messages:
+
+ {{{
+
+ KERN: loaded driver /boot/beos/system/add-
+ ons/kernel/drivers/dev/input/ps2_hid
+ KERN: loaded driver /boot/beos/system/add-
+ ons/kernel/drivers/dev/input/usb_hid
+
+ KERN: InputServer::RegisterDevices() device_ref: USB Keyboard 1
+
+ KERN: MouseInputDevice::_AddDevice(/dev/input/mouse/usb/0), name: Usb
+ Mouse 1
+
+ KERN: InputServer::RegisterDevices() device_ref: Usb Mouse 1
+ KERN: InputServer::RegisterDevices() device_ref: Wacom Tablets
+
+ KERN: wacom: device_open() open: 2
+
+ KERN: ps2: devfs_publish_device input/mouse/ps2/0, status = 0x00000000
+ KERN: void AddOnManager::MessageReceived(BMessage *) what: NMP_
+ KERN: MouseInputDevice::_AddDevice(/dev/input/mouse/ps2/0), name: PS/2
+ Mouse 1
+ KERN: InputServer::RegisterDevices() device_ref: PS/2 Mouse 1
+
+ KERN: ps2: probe_mouse reset failed
+ KERN: ps2: probing mouse input/mouse/ps2/0 failed
+ KERN: void AddOnManager::MessageReceived(BMessage *) what: NMP_
+ KERN: MouseInputDevice::_AddDevice(/dev/input/mouse/ps2/0), name: PS/2
+ Mouse 1
+ KERN: InputServer::RegisterDevices() device_ref already exists: PS/2 Mouse
+ 1
+
+ KERN: ps2: devfs_publish_device input/keyboard/at/0, status = 0x00000000
+ KERN: void AddOnManager::MessageReceived(BMessage *) what: NMP_
+
+ KERN: ps2: devfs_unpublish_device input/mouse/ps2/0, status = 0x00000000
+ KERN: InputServer::RegisterDevices() device_ref: AT Keyboard 1
+
+ KERN: ps2: keyboard found
+ KERN: void AddOnManager::MessageReceived(BMessage *) what: NMP_
+ KERN: InputServer::RegisterDevices() device_ref already exists: AT
+ Keyboard 1
+
+ KERN: void AddOnManager::MessageReceived(BMessage *) what: NMP_
+ KERN: MouseInputDevice::_RemoveDevice(/dev/input/mouse/ps2/0), name: PS/2
+ Mouse 1
+ KERN: InputServer::UnregisterDevices() device_ref: PS/2 Mouse 1
+
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2894#comment:18">http://dev.haiku-os.org/ticket/2894#comment:18</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011370.html">[Haiku-bugs] [Haiku] #2894: Input server crashes at boot on	Amilo Li2735
+</A></li>
+	<LI>Next message: <A HREF="011417.html">[Haiku-bugs] [Haiku] #2894: Input server crashes at boot on	Amilo Li2735
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11416">[ date ]</a>
+              <a href="thread.html#11416">[ thread ]</a>
+              <a href="subject.html#11416">[ subject ]</a>
+              <a href="author.html#11416">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

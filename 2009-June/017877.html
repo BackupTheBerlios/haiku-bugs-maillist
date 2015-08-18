@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4002: volume control replicant does not function after reboot
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234002%3A%20volume%20control%20replicant%20does%20not%0A%20function%20after%20reboot&In-Reply-To=%3C054.56a3cfb09d6e4c497c20524e60b8e964%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="017864.html">
+   <LINK REL="Next"  HREF="018221.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4002: volume control replicant does not function after reboot</H1>
+    <B>stippi</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234002%3A%20volume%20control%20replicant%20does%20not%0A%20function%20after%20reboot&In-Reply-To=%3C054.56a3cfb09d6e4c497c20524e60b8e964%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4002: volume control replicant does not function after reboot">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Jun  6 11:58:53 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="017864.html">[Haiku-bugs] [Haiku] #4002: volume control replicant does not function after reboot
+</A></li>
+        <LI>Next message: <A HREF="018221.html">[Haiku-bugs] [Haiku] #4002: volume control replicant does not function after reboot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17877">[ date ]</a>
+              <a href="thread.html#17877">[ thread ]</a>
+              <a href="subject.html#17877">[ subject ]</a>
+              <a href="author.html#17877">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4002: volume control replicant does not function after reboot
+----------------------------+-----------------------------------------------
+ Reporter:  agildehaus      |       Owner:  marcusoverhagen
+     Type:  bug             |      Status:  new            
+ Priority:  normal          |   Milestone:  R1             
+Component:  Kits/Media Kit  |     Version:  R1 development 
+Blockedby:                  |    Platform:  All            
+ Blocking:                  |  
+----------------------------+-----------------------------------------------
+
+Comment(by stippi):
+
+ If you restart Tracker (open a Terminal, type '''hey Tracker quit''', type
+ '''/system/Tracker &amp;'''), does the replicant suddenly work? If so it
+ sounds like the timing between launching Tracker and media_server during
+ boot could be the problem. Then you just need to add &quot;polling&quot; to the
+ replicant. In another words, it would recheck the availability of the
+ BMediaRoster from time to time until it is there. You could do this for
+ example with a BMessageRunner that sends a message about every 2 seconds
+ which causes the replicant to re-run the code that connects to the
+ media_server.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4002#comment:1">http://dev.haiku-os.org/ticket/4002#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="017864.html">[Haiku-bugs] [Haiku] #4002: volume control replicant does not function after reboot
+</A></li>
+	<LI>Next message: <A HREF="018221.html">[Haiku-bugs] [Haiku] #4002: volume control replicant does not function after reboot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17877">[ date ]</a>
+              <a href="thread.html#17877">[ thread ]</a>
+              <a href="subject.html#17877">[ subject ]</a>
+              <a href="author.html#17877">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

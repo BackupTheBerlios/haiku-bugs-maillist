@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3541: Core 2 Duo shows as Core 2 Extreme
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233541%3A%20Core%202%20Duo%20shows%20as%20Core%202%20Extreme&In-Reply-To=%3C053.8f24eee6dd4c737db3f627a101cc6c64%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="022302.html">
+   <LINK REL="Next"  HREF="022323.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3541: Core 2 Duo shows as Core 2 Extreme</H1>
+    <B>v</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233541%3A%20Core%202%20Duo%20shows%20as%20Core%202%20Extreme&In-Reply-To=%3C053.8f24eee6dd4c737db3f627a101cc6c64%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3541: Core 2 Duo shows as Core 2 Extreme">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Oct  4 02:58:24 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="022302.html">[Haiku-bugs] [Haiku] #4697: &quot;raw_char&quot; keyboard problems in	latest SVN
+</A></li>
+        <LI>Next message: <A HREF="022323.html">[Haiku-bugs] [Haiku] #4714: profile crashes with General Exception	Fault 0x0
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22297">[ date ]</a>
+              <a href="thread.html#22297">[ thread ]</a>
+              <a href="subject.html#22297">[ subject ]</a>
+              <a href="author.html#22297">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3541: Core 2 Duo shows as Core 2 Extreme
+-----------------------+----------------------------------------------------
+ Reporter:  j_freeman  |       Owner:  axeld        
+     Type:  bug        |      Status:  new          
+ Priority:  normal     |   Milestone:  R1           
+Component:  - General  |     Version:  R1/pre-alpha1
+Blockedby:             |    Platform:  All          
+ Blocking:             |  
+-----------------------+----------------------------------------------------
+
+Comment(by v):
+
+ re: new patch
+ It still needs work, but shows approach I've chosen.
+ Instead of using the stored model string from the kernel, cpuid is read
+ again as this does not seem to warrant introducing a new syscall.
+
+ I've tested the principle on my PC, but as its cpu doesn't identify as a
+ Core 2 Extreme, I'd appreciate it if it's tested on one of the 45nm
+ Core2-based cpu's. I haven't tested it on r33411 as that resulted in build
+ failure.
+
+ get_cpuid_model_string() was in part taken from src/bin/sysinfo.c
+
+ Still left to do:
+ -I will have to compare it to the coding style guide.
+ -I'm not happy with introducing 3 free(cpu) calls in
+ get_cpu_model_string(system_info *info).
+ -It's quite bulky so I'll try to rework it into a reusable function or
+ macro, but at least shows the principle of it and the direction I'm
+ taking.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3541#comment:11">http://dev.haiku-os.org/ticket/3541#comment:11</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="022302.html">[Haiku-bugs] [Haiku] #4697: &quot;raw_char&quot; keyboard problems in	latest SVN
+</A></li>
+	<LI>Next message: <A HREF="022323.html">[Haiku-bugs] [Haiku] #4714: profile crashes with General Exception	Fault 0x0
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22297">[ date ]</a>
+              <a href="thread.html#22297">[ thread ]</a>
+              <a href="subject.html#22297">[ subject ]</a>
+              <a href="author.html#22297">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

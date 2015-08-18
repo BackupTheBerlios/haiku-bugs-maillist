@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2227: Devices connected to a JMicron PATA controller are not detected.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232227%3A%20Devices%20connected%20to%20a%20JMicron%20PATA%0A%20controller%20are%20not%20detected.&In-Reply-To=%3C047.46ba1c1b9c0b4d7d896c3384db448f3d%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007277.html">
+   <LINK REL="Next"  HREF="007279.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2227: Devices connected to a JMicron PATA controller are not detected.</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232227%3A%20Devices%20connected%20to%20a%20JMicron%20PATA%0A%20controller%20are%20not%20detected.&In-Reply-To=%3C047.46ba1c1b9c0b4d7d896c3384db448f3d%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2227: Devices connected to a JMicron PATA controller are not detected.">trac at haiku-os.org
+       </A><BR>
+    <I>Tue May 20 15:38:53 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007277.html">[Haiku-bugs] [Haiku] #2227: Devices connected to a JMicron PATA controller are not detected.
+</A></li>
+        <LI>Next message: <A HREF="007279.html">[Haiku-bugs] [Haiku] #947: Konatu Tohaba isn't recognized as	monospaced font
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7468">[ date ]</a>
+              <a href="thread.html#7468">[ thread ]</a>
+              <a href="subject.html#7468">[ subject ]</a>
+              <a href="author.html#7468">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2227: Devices connected to a JMicron PATA controller are not detected.
+---------------------------+------------------------------------------------
+  Reporter:  bga           |       Owner:  marcusoverhagen
+      Type:  bug           |      Status:  new            
+  Priority:  high          |   Milestone:  R1             
+ Component:  Drivers/Disk  |     Version:  R1 development 
+Resolution:                |    Platform:  All            
+---------------------------+------------------------------------------------
+Comment (by bga):
+
+ With Marcus help, it became obviously that the problem was a result of bug
+ #5 and happened like this:
+
+ 1 - The BIOS had PNP OS enabled so it would not try to configure the
+ devices leaving it to the OS to do that.
+ 2 - The JMicron controller reported itself as 2 different devices but one
+ of them had no interrupt line assigned to it.
+ 3 - So the IDE stack would load, find the PATA controller but fail to work
+ with it as it had no IRQ assigned.
+
+ I changed my BIOS settings so the PNP OS option is now disabled (which
+ means that the BIOS itself would configure the devices) and this resulted
+ in better results (I am at work now, will post the syslog when I am back
+ at home later today):
+
+ 1 - The controller gets an IRQ.
+ 2 - It seems to be correctly initialized and the attached drives (a DVR-RW
+ drive and an HD) are detected and identified as an atapi and an ata
+ device.
+ 3 - But then send_command() fails on both devices and they are ignored.
+
+ A side effect of whatever happens is that the HD light in the tower case
+ keeps lit up all the time but the devices are not published to /dev/disk.
+
+ Ideas?
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2227#comment:2">http://dev.haiku-os.org/ticket/2227#comment:2</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007277.html">[Haiku-bugs] [Haiku] #2227: Devices connected to a JMicron PATA controller are not detected.
+</A></li>
+	<LI>Next message: <A HREF="007279.html">[Haiku-bugs] [Haiku] #947: Konatu Tohaba isn't recognized as	monospaced font
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7468">[ date ]</a>
+              <a href="thread.html#7468">[ thread ]</a>
+              <a href="subject.html#7468">[ subject ]</a>
+              <a href="author.html#7468">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

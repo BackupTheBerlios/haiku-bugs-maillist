@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1320: KDL on /bin/listarea
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-July/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231320%3A%20KDL%20on%20/bin/listarea&In-Reply-To=%3C048.1375ed38810a5a524325f1537d48b0dc%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001857.html">
+   <LINK REL="Next"  HREF="001881.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1320: KDL on /bin/listarea</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231320%3A%20KDL%20on%20/bin/listarea&In-Reply-To=%3C048.1375ed38810a5a524325f1537d48b0dc%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1320: KDL on /bin/listarea">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Jul 21 19:09:24 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001857.html">[Haiku-bugs] [Haiku] #1201: Random memory trashing
+</A></li>
+        <LI>Next message: <A HREF="001881.html">[Haiku-bugs] [Haiku] #1320: KDL on /bin/listarea
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1858">[ date ]</a>
+              <a href="thread.html#1858">[ thread ]</a>
+              <a href="subject.html#1858">[ subject ]</a>
+              <a href="author.html#1858">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1320: KDL on /bin/listarea
+---------------------------+------------------------------------------------
+ Reporter:  jonas.kirilla  |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1 development
+ Platform:  All            |  
+---------------------------+------------------------------------------------
+ Having a script loop on /bin/listarea crashes reproducibly if there's some
+ other activity on the system.
+
+ A KDL sample:
+
+ vm_delete_areas() did not delete area 0x90acc380
+ PANIC: page fault, but interrupts were disabled. Touching address
+ 0x00000038 from eip 0x8008be9d
+
+ Welcome to Kernel Debugging Land...
+ Running on CPU 0
+ kdebug&gt; bt
+ stack trace for thread 0x2b5 &quot;listarea&quot;
+     kernel stack: 0x9c7f2000 to 0x9c7f6000
+       user stack: 0x7efe7000 to 0x7ffe7000
+ frame            caller     &lt;image&gt;:function + offset
+ 9c7f5aa0 (+  52) 8007c9cb   &lt;kernel&gt;:invoke_command + 0x0073
+ 9c7f5ad4 (+  48) 8007cb12   &lt;kernel&gt;:kernel_debugger_loop + 0x0102
+ 9c7f5b04 (+  32) 8007d56a   &lt;kernel&gt;:kernel_debugger + 0x00b2
+ 9c7f5b24 (+ 192) 8007d4ad   &lt;kernel&gt;:panic + 0x0029
+ 9c7f5be4 (+ 160) 80085c98   &lt;kernel&gt;:i386_handle_trap + 0x01e8
+ iframe at 0x9c7f5c8c (end = 0x9c7f5ce0)
+  eax 0x1            ebx 0x90ab3e00      ecx 0x10         edx 0x38
+  esi 0x1            edi 0x9c7f5d30      ebp 0x9c7f5d04   esp 0x9c7f5cbc
+  eip 0x8008be9d  eflags 0x10002
+  vector: 0xe, error code: 0x2
+ 9c7f5c84 (+ 128) 8008be9d   &lt;kernel&gt;:atomic_add + 0x0008 (nearest)
+ 9c7f5d04 (+  48) 80053f32   &lt;kernel&gt;:_get_next_area_info + 0x0042
+ 9c7f5d34 (+ 128) 8005478e   &lt;kernel&gt;:_user_get_next_area_info + 0x003e
+ 9c7f5db4 (+ 336) 80031c2b   &lt;kernel&gt;:syscall_dispatcher + 0x0def
+ 9c7f5f04 (+ 160) 80085d71   &lt;kernel&gt;:i386_handle_trap + 0x02c1
+ iframe at 0x9c7f5fac (end = 0x9c7f6000)
+  eax 0x80           ebx 0x29d4a0        ecx 0x2b9        edx 0x7ffe6e2c
+  esi 0x7ffe6e2c     edi 0x7ffe6e30      ebp 0x7ffe6dfc   esp 0x9c7f5fdc
+  eip 0xffff0102  eflags 0x213
+  vector: 0x63, error code: 0x0
+ 9c7f5fa4 (+   0) ffff0102
+ 7ffe6dfc (+ 224) 00200c1d   &lt;/bin/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">listarea at 0x00200000</A>&gt;:unknown + 0x0c1d
+ 7ffe6edc (+ 160) 00200cdd   &lt;/bin/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">listarea at 0x00200000</A>&gt;:unknown + 0x0cdd
+ 7ffe6f7c (+  48) 0020096f   &lt;/bin/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">listarea at 0x00200000</A>&gt;:unknown + 0x096f
+ 7ffe6fac (+  48) 001007c8   11221:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">runtime_loader_seg0ro at 0x00100000</A> + 0x7c8
+ 7ffe6fdc (+   0) 7ffe6fec   11220:/bin/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">listarea_main_stack at 0x7efe7000</A> +
+ 0xffffec
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1320">http://dev.haiku-os.org/ticket/1320</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001857.html">[Haiku-bugs] [Haiku] #1201: Random memory trashing
+</A></li>
+	<LI>Next message: <A HREF="001881.html">[Haiku-bugs] [Haiku] #1320: KDL on /bin/listarea
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1858">[ date ]</a>
+              <a href="thread.html#1858">[ thread ]</a>
+              <a href="subject.html#1858">[ subject ]</a>
+              <a href="author.html#1858">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

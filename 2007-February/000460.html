@@ -1,0 +1,143 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #545: Static library dependencies are not (always?) resolved
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-February/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23545%3A%20Static%20library%20dependencies%20are%20not%0A%20%28always%3F%29%20resolved&In-Reply-To=%3C049.eb007662133392ff9eb9676bfd1fc854%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000459.html">
+   <LINK REL="Next"  HREF="000467.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #545: Static library dependencies are not (always?) resolved</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23545%3A%20Static%20library%20dependencies%20are%20not%0A%20%28always%3F%29%20resolved&In-Reply-To=%3C049.eb007662133392ff9eb9676bfd1fc854%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #545: Static library dependencies are not (always?) resolved">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Feb 18 00:43:53 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000459.html">[Haiku-bugs] [Haiku] #1025: KDL deleting and retriving sizes of directories in FAT disk
+</A></li>
+        <LI>Next message: <A HREF="000467.html">[Haiku-bugs] [Haiku] #1026: Black screen when Haiku switch to graphical mode after bootscreen GeForce 6150
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#460">[ date ]</a>
+              <a href="thread.html#460">[ thread ]</a>
+              <a href="subject.html#460">[ subject ]</a>
+              <a href="author.html#460">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#545: Static library dependencies are not (always?) resolved
+---------------------------+------------------------------------------------
+  Reporter:  axeld         |       Owner:  bonefish
+      Type:  bug           |      Status:  new     
+  Priority:  normal        |   Milestone:  R1      
+ Component:  Build System  |     Version:          
+Resolution:                |    Platform:  All     
+---------------------------+------------------------------------------------
+Changes (by bonefish):
+
+  * platform:  =&gt; All
+
+Old description:
+
+&gt;<i> When I change an object in a static library (like memory_manager.c in
+</I>&gt;<i> src/add-ons/kernel/drivers/graphics/common/), the libgraphicscommon.a is
+</I>&gt;<i> not
+</I>&gt;<i> rebuilt when I build a driver (for example radeon.driver or
+</I>&gt;<i> intel_extreme) that
+</I>&gt;<i> uses it.
+</I>
+New description:
+
+ When I change an object in a static library (like memory_manager.c in
+ src/add-ons/kernel/drivers/graphics/common/), the libgraphicscommon.a is
+ not
+ rebuilt when I build a driver (for example radeon.driver or intel_extreme)
+ that
+ uses it.
+
+Comment:
+
+ Is there a particular method to reproduce it? With r20147 it works for me
+ at least:
+
+ {{{
+ $ jam -q radeon.driver
+ ...patience...
+ ...patience...
+ ...found 2041 target(s)...
+ ...updating 144 target(s)...
+ [...]
+ Link generated/objects/haiku/x86/release/add-
+ ons/kernel/drivers/graphics/radeon/radeon.driver
+ Chmod1 generated/objects/haiku/x86/release/add-
+ ons/kernel/drivers/graphics/radeon/radeon.driver
+ SetType1 generated/objects/haiku/x86/release/add-
+ ons/kernel/drivers/graphics/radeon/radeon.driver
+ MimeSet1 generated/objects/haiku/x86/release/add-
+ ons/kernel/drivers/graphics/radeon/radeon.driver
+ SetVersion1 generated/objects/haiku/x86/release/add-
+ ons/kernel/drivers/graphics/radeon/radeon.driver
+ ...updated 144 target(s)...
+ $ touch src/add-ons/kernel/drivers/graphics/common/memory_manager.c
+ $ jam -q radeon.driver
+ ...patience...
+ ...patience...
+ ...found 2041 target(s)...
+ ...updating 3 target(s)...
+ Cc generated/objects/haiku/x86/release/add-
+ ons/kernel/drivers/graphics/common/memory_manager.o
+ Archive generated/objects/haiku/x86/release/add-
+ ons/kernel/drivers/graphics/common/libgraphicscommon.a
+ Ranlib generated/objects/haiku/x86/release/add-
+ ons/kernel/drivers/graphics/common/libgraphicscommon.a
+ Link generated/objects/haiku/x86/release/add-
+ ons/kernel/drivers/graphics/radeon/radeon.driver
+ Chmod1 generated/objects/haiku/x86/release/add-
+ ons/kernel/drivers/graphics/radeon/radeon.driver
+ SetType1 generated/objects/haiku/x86/release/add-
+ ons/kernel/drivers/graphics/radeon/radeon.driver
+ MimeSet1 generated/objects/haiku/x86/release/add-
+ ons/kernel/drivers/graphics/radeon/radeon.driver
+ SetVersion1 generated/objects/haiku/x86/release/add-
+ ons/kernel/drivers/graphics/radeon/radeon.driver
+ ...updated 3 target(s)...
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/545#comment:2">http://dev.haiku-os.org/ticket/545#comment:2</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000459.html">[Haiku-bugs] [Haiku] #1025: KDL deleting and retriving sizes of directories in FAT disk
+</A></li>
+	<LI>Next message: <A HREF="000467.html">[Haiku-bugs] [Haiku] #1026: Black screen when Haiku switch to graphical mode after bootscreen GeForce 6150
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#460">[ date ]</a>
+              <a href="thread.html#460">[ thread ]</a>
+              <a href="subject.html#460">[ subject ]</a>
+              <a href="author.html#460">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

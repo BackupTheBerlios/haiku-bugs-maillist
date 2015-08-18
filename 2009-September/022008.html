@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4637: Haiku Files - Binary Diffs
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234637%3A%20Haiku%20Files%20-%20Binary%20Diffs&In-Reply-To=%3C046.4cae8887d472976e65c3dbd8b0a9eece%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="022039.html">
+   <LINK REL="Next"  HREF="022010.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4637: Haiku Files - Binary Diffs</H1>
+    <B>tonestone57</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234637%3A%20Haiku%20Files%20-%20Binary%20Diffs&In-Reply-To=%3C046.4cae8887d472976e65c3dbd8b0a9eece%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4637: Haiku Files - Binary Diffs">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Sep 25 18:56:24 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="022039.html">[Haiku-bugs] [Haiku] #4636: Custom attributes not working in filesystem queries
+</A></li>
+        <LI>Next message: <A HREF="022010.html">[Haiku-bugs] [Haiku] #4637: Haiku Files - Binary Diffs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22008">[ date ]</a>
+              <a href="thread.html#22008">[ thread ]</a>
+              <a href="subject.html#22008">[ subject ]</a>
+              <a href="author.html#22008">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4637: Haiku Files - Binary Diffs
+-------------------------+--------------------------------------------------
+ Reporter:  tonestone57  |       Owner:  haiku-web     
+     Type:  enhancement  |      Status:  new           
+ Priority:  normal       |   Milestone:  R1            
+Component:  Website      |     Version:  R1/Development
+Blockedby:               |    Platform:  All           
+ Blocking:               |  
+-------------------------+--------------------------------------------------
+ Haiku Files should offer binary diffs (using xdelta) for Haiku ISOs ( and
+ if it works with RAW &amp; VMDK, then these too ) based off Alpha1
+ ISO/RAW/VMDK with instructions to patch.
+
+ Reasons for binary diffs are: 1) Lot smaller file size ( binary patch file
+ ), 2) Reduce bandwidth consumption
+
+ I concluded Haiku could do this and offer binary diffs from my testing.
+ Here is what I discovered.  I only tested ISOs ( binary diffs of zip &amp;
+ bzip2 do not work ) but RAW &amp; VMDK may work too I believe ( untested ).
+
+ Reference image should be: Haiku Alpha1 ( diffs based off this version ).
+ Also, all nightly post-Alpha1 images should be built with same set of
+ optional packages included in Alpha1 to create smaller diffs (ie: same
+ type of packages ).
+
+ I ran my initial tests with Firefox because it was smaller.  I downloaded
+ Firefox 3.5.2 &amp; 3.5.3.  Unzipped &amp; created ISOs ( using genisoimage ).
+
+ The two diff programs I tested with were: 1) bsdiff ( really small
+ patches, uses lots &amp; lots of RAM, takes very long time ), 2) xdelta (
+ larger patch files, uses very little RAM, very fast )
+
+ NOTE: bsdiff does not work with Alpha ISOs because it requires massive
+ amounts of RAM.  xdelta worked great &amp; what I suggest to use.
+
+ I was able to create binary diffs for Firefox with both programs &amp; patch
+ the original ISO to match the latest version.  I checked by using &quot;cmp&quot;
+ command.  I will mention that bsdiff used about 150 MB RAM &amp; took a few
+ minutes to do Firefox patch with a resulting 531 KB patch file.  xdelta
+ was fast &amp; used little RAM and produced larger 2.9 MB patch file.  For
+ comparison, the ISOs were 28 MB in size.
+
+ For Alpha ISOs.  I luckily happened to have a Sept 9, Pre-Alpha &amp; the
+ Alpha ISOs.  bsdiff failed because it did not have enough RAM ( 2 GB
+ physical + 16 GB swap ).  xdelta worked great and created a 2.3 MB patch
+ for a 398 MB Alpha1 ISO.  I then created a new version with the xdelta
+ patch &amp; used cmp to test against Alpha ISO.  Both were binary identical (
+ no differences ) telling me it worked successfully.
+
+ NOTES2: 1) binary diffs appear to be compressed because have close to same
+ size after using zip on them 2) I use Alpha image for reference because
+ everyone will have this but a different Haiku image could be reference
+ image.  3) there are other diff programs which I did not test but I
+ believe xdelta is the best choice because the images are huge ( to create
+ very small diffs takes lots of RAM &amp; CPU time ).  The table on page 3 here
+ is interesting to look over for comparison &amp; further testing ( most
+ programs are under 1MB in uncompressed size so better to look at average
+ compression for each or the larger sized ones ):
+ <A HREF="http://www.daemonology.net/papers/bsdiff.pdf">http://www.daemonology.net/papers/bsdiff.pdf</A>
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4637">http://dev.haiku-os.org/ticket/4637</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="022039.html">[Haiku-bugs] [Haiku] #4636: Custom attributes not working in filesystem queries
+</A></li>
+	<LI>Next message: <A HREF="022010.html">[Haiku-bugs] [Haiku] #4637: Haiku Files - Binary Diffs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22008">[ date ]</a>
+              <a href="thread.html#22008">[ thread ]</a>
+              <a href="subject.html#22008">[ subject ]</a>
+              <a href="author.html#22008">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

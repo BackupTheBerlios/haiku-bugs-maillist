@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1900: PANIC: page fault,	but interrupts were disabled, ...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231900%3A%20PANIC%3A%20page%20fault%2C%0A%09but%20interrupts%20were%20disabled%2C%20...&In-Reply-To=%3C041.d22ef3f2e64866831498841e104bf80a%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005440.html">
+   <LINK REL="Next"  HREF="005576.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1900: PANIC: page fault,	but interrupts were disabled, ...</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231900%3A%20PANIC%3A%20page%20fault%2C%0A%09but%20interrupts%20were%20disabled%2C%20...&In-Reply-To=%3C041.d22ef3f2e64866831498841e104bf80a%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1900: PANIC: page fault,	but interrupts were disabled, ...">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Mar  8 19:22:26 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005440.html">[Haiku-bugs] [Haiku] #1899: Baron's home should be /home/baron
+</A></li>
+        <LI>Next message: <A HREF="005576.html">[Haiku-bugs] [Haiku] #1900: PANIC: page fault, but interrupts were disabled, ...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5444">[ date ]</a>
+              <a href="thread.html#5444">[ thread ]</a>
+              <a href="subject.html#5444">[ subject ]</a>
+              <a href="author.html#5444">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1900: PANIC: page fault, but interrupts were disabled, ...
+---------------------------+------------------------------------------------
+ Reporter:  stippi         |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  critical       |   Milestone:  R1/alpha1     
+Component:  System/Kernel  |     Version:  R1 development
+ Platform:  All            |  
+---------------------------+------------------------------------------------
+ ... Touching address 0x00000005 from eip 0x8005f5b6
+
+ stack crawl as follows:
+
+ ...
+ panic
+ page_fault_exception
+ int_bottom
+
+ iframe...
+
+ insert_page_after
+ find_page_candidate
+ steal_pages
+ vm_pages_reserve_pages
+ reserve_pages
+ cache_io
+ &lt;kernel&gt;file_cache_read
+ &lt;bfs&gt;ReadAt
+ &lt;bfs&gt;bfs_read
+ &lt;kernel&gt;file_read
+ common_user_io
+ _user_read
+ pre_syscall_debug_done
+
+ iframe...
+
+ &lt;wav_reader&gt;GetNextChunk
+ &lt;libmedia.so&gt;ExtractorThread
+ &lt;libmedia.so&gt;extractor_thread
+ &lt;libroot.so&gt;_get_next_team_info
+ media extractor thread_
+
+
+ Happened while testing certain Mindwork software under Haiku. At the
+ point, the system was running for over 7 hours and downloaded over 4 GB of
+ playback objects. The caches were utilising a good chunk of the 2 GB of
+ memory, the player was just launching, so I guess the system was trying to
+ free no more used cached pages to make room for the player.
+
+ Don't know yet if it is easily reproducable.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1900">http://dev.haiku-os.org/ticket/1900</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005440.html">[Haiku-bugs] [Haiku] #1899: Baron's home should be /home/baron
+</A></li>
+	<LI>Next message: <A HREF="005576.html">[Haiku-bugs] [Haiku] #1900: PANIC: page fault, but interrupts were disabled, ...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5444">[ date ]</a>
+              <a href="thread.html#5444">[ thread ]</a>
+              <a href="subject.html#5444">[ subject ]</a>
+              <a href="author.html#5444">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

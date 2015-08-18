@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4053: USB MIDI not recognized dynamically
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234053%3A%20USB%20MIDI%20not%20recognized%20dynamically&In-Reply-To=%3C048.e31419d54052f06d474f0a10d77758a9%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="021905.html">
+   <LINK REL="Next"  HREF="021910.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4053: USB MIDI not recognized dynamically</H1>
+    <B>phoudoin</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234053%3A%20USB%20MIDI%20not%20recognized%20dynamically&In-Reply-To=%3C048.e31419d54052f06d474f0a10d77758a9%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4053: USB MIDI not recognized dynamically">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Sep 23 13:52:59 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="021905.html">[Haiku-bugs] [Haiku] #1026: Black screen when Haiku switch to graphical mode after bootscreen GeForce 6150
+</A></li>
+        <LI>Next message: <A HREF="021910.html">[Haiku-bugs] [Haiku] #4287: Haiku Crashes With ATA Stack
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21907">[ date ]</a>
+              <a href="thread.html#21907">[ thread ]</a>
+              <a href="subject.html#21907">[ subject ]</a>
+              <a href="author.html#21907">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4053: USB MIDI not recognized dynamically
+---------------------------------+------------------------------------------
+ Reporter:  Pete                 |       Owner:  phoudoin     
+     Type:  bug                  |      Status:  assigned     
+ Priority:  normal               |   Milestone:  R1           
+Component:  Servers/midi_server  |     Version:  R1/pre-alpha1
+Blockedby:                       |    Platform:  All          
+ Blocking:                       |  
+---------------------------------+------------------------------------------
+
+Comment(by phoudoin):
+
+ Replying to [comment:19 stippi]:
+ &gt; Or you could close the FD that the reader thread is read()ing from. That
+ should also wake up the thread and seems like the cleanest solution.
+
+ The file descriptor is open once (twice is not available, as /dev/midi/*
+ devices will allow only one) and shared between MidiPortProducer and
+ MidiPortConsumer. I don't like the idea that MidiPortProducer could close
+ it behind MidiPortConsumer's back.
+
+ Anyway, on device remove, we already close the FD in
+ DeviceWatcher::_RemoveDevice().
+ Seems it's not enough, thought, to wake up MidiPortProducer reader.
+ Dunno why, but I'm getting old and have a flu.
+ Yes, that's shame excuses ;-)
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4053#comment:20">http://dev.haiku-os.org/ticket/4053#comment:20</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="021905.html">[Haiku-bugs] [Haiku] #1026: Black screen when Haiku switch to graphical mode after bootscreen GeForce 6150
+</A></li>
+	<LI>Next message: <A HREF="021910.html">[Haiku-bugs] [Haiku] #4287: Haiku Crashes With ATA Stack
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21907">[ date ]</a>
+              <a href="thread.html#21907">[ thread ]</a>
+              <a href="subject.html#21907">[ subject ]</a>
+              <a href="author.html#21907">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

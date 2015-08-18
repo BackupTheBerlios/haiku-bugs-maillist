@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3898: Add a close tab menu item and	shortcut
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233898%3A%20Add%20a%20close%20tab%20menu%20item%20and%0A%09shortcut&In-Reply-To=%3C049.70bfcb7ce7692cdd35f8f6be3af882b7%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="017167.html">
+   <LINK REL="Next"  HREF="017177.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3898: Add a close tab menu item and	shortcut</H1>
+    <B>stippi</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233898%3A%20Add%20a%20close%20tab%20menu%20item%20and%0A%09shortcut&In-Reply-To=%3C049.70bfcb7ce7692cdd35f8f6be3af882b7%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3898: Add a close tab menu item and	shortcut">trac at haiku-os.org
+       </A><BR>
+    <I>Sat May  9 09:55:17 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="017167.html">[Haiku-bugs] [Haiku] #3898: Add a close tab menu item and	shortcut
+</A></li>
+        <LI>Next message: <A HREF="017177.html">[Haiku-bugs] [Haiku] #3898: Add a close tab menu item and	shortcut
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17174">[ date ]</a>
+              <a href="thread.html#17174">[ thread ]</a>
+              <a href="subject.html#17174">[ subject ]</a>
+              <a href="author.html#17174">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3898: Add a close tab menu item and shortcut
+-----------------------------------+----------------------------------------
+ Reporter:  axeld                  |       Owner:  jackburton    
+     Type:  enhancement            |      Status:  new           
+ Priority:  normal                 |   Milestone:  R1            
+Component:  Applications/Terminal  |     Version:  R1 development
+Blockedby:                         |    Platform:  All           
+ Blocking:                         |  
+-----------------------------------+----------------------------------------
+
+Comment(by stippi):
+
+ Ok, let me try one more time, then I will shut up... The implementation of
+ Command-W in the BWindow is of course also a convenience. For the vast
+ amount of situations it will do exactly what the intention is, so it makes
+ sense to implement it there already. Most interfaces/panels/windows shown
+ by applications will be one &quot;entity&quot; you can close. BeOS was designed that
+ one window was supposed to map to one document. Now we have multiple
+ applications were the designers thought a single application window which
+ holds multiple documents is also pretty convenient. So isn't it a logical
+ consequence to &quot;tweak&quot; a default behavior/implementation in way that it
+ still makes sense and offers the same convenience in the changed
+ situation? If I have a single window app, Command-W could either still
+ close the window and thereby the whole app, making it essentially useless,
+ because that's what Command-Q already does, or I could tweak the default
+ behavior, which was not designed to accomodate this situation, and offer
+ the same thing semantically. It's only logical that I do it this way
+ around, not the other way which would mean I drop single window
+ applications completely and stick to the original intention of having one
+ document per window. Designing interfaces and behavior in applications
+ allows to think about what the user most likely meant to do. I realize the
+ difference here is how you look at it: Command-W to you means strictly to
+ close &quot;a window&quot; and that was your intention and you want it to do always
+ this for consistency. My argument is simply that I find it more likely
+ that the intention of the user is to close the document, whatever it is,
+ not necessarily a window -- *if* we are in the respective context. And on
+ top of that, Command-W would duplicate Command-Q anyways, and implementing
+ it to close only the active document also means it's less destructive for
+ a viewing application like a browser which doesn't (need to) ask you if
+ you have unsaved changes. Same holds true for the Terminal, it has no
+ mechanism to figure out if closing other tabs means something destructive.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3898#comment:9">http://dev.haiku-os.org/ticket/3898#comment:9</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="017167.html">[Haiku-bugs] [Haiku] #3898: Add a close tab menu item and	shortcut
+</A></li>
+	<LI>Next message: <A HREF="017177.html">[Haiku-bugs] [Haiku] #3898: Add a close tab menu item and	shortcut
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17174">[ date ]</a>
+              <a href="thread.html#17174">[ thread ]</a>
+              <a href="subject.html#17174">[ subject ]</a>
+              <a href="author.html#17174">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

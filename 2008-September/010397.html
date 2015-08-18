@@ -1,0 +1,141 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2661: bfs : 1397 : Name in use.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232661%3A%20bfs%20%3A%201397%20%3A%20Name%20in%20use.&In-Reply-To=%3C047.d7c41e686490427cb7e93ef2b637c374%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010396.html">
+   <LINK REL="Next"  HREF="010398.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2661: bfs : 1397 : Name in use.</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232661%3A%20bfs%20%3A%201397%20%3A%20Name%20in%20use.&In-Reply-To=%3C047.d7c41e686490427cb7e93ef2b637c374%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2661: bfs : 1397 : Name in use.">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Sep 18 19:11:54 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010396.html">[Haiku-bugs] [Haiku] #2661: bfs : 1397 : Name in use.
+</A></li>
+        <LI>Next message: <A HREF="010398.html">[Haiku-bugs] [Haiku] #2752: Define CALLOUT_MPSAFE for	freebsd_network
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10397">[ date ]</a>
+              <a href="thread.html#10397">[ thread ]</a>
+              <a href="subject.html#10397">[ subject ]</a>
+              <a href="author.html#10397">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2661: bfs : 1397 : Name in use.
+-------------------------------+--------------------------------------------
+  Reporter:  bga               |       Owner:  axeld         
+      Type:  bug               |      Status:  new           
+  Priority:  normal            |   Milestone:  R1            
+ Component:  File Systems/BFS  |     Version:  R1 development
+Resolution:                    |   Blockedby:                
+  Platform:  All               |    Blocking:                
+-------------------------------+--------------------------------------------
+
+Comment(by anevilyak):
+
+ The index dir itself, for reference:
+
+ {{{
+ /HaikuData/home/devel/BFS-tools&gt; ./bfsinfo -ib /dev/disk/ata/3/master/2 0
+ 8841
+ Copyright (c) 2001-2008 pinc Software.
+
+ Inode at block 8841:
+ -----------------------------------------
+ inode &quot;(null)&quot;:
+   magic1             = 3bbe0ad9 (;...) valid
+   inode_num          = (0, 8841, 1)
+   uid                = 0
+   gid                = 0
+   mode               = 4100040700 (octal)
+   flags              = 00000001
+   create_time        = Fri Aug 29 19:22:08 2008
+   last_modified_time = Fri Aug 29 19:22:08 2008
+   parent             = (0, 8841, 1)
+   attributes         = (0, 0, 0)
+   type               = 0
+   inode_size         = 2048
+   etc                = 00000000
+   short_symlink      = -
+ data_stream:
+   direct[00]                = (0, 8842, 32)
+   max_direct_range          = 65536
+   max_indirect_range        = 0
+   max_double_indirect_range = 0
+   size                      = 2048
+   --
+ small data section (max. 1816 bytes):
+
+ B+Tree at block 8841:
+ -----------------------------------------
+ bplustree_header:
+   magic                = 0x69f6c2e8 (i...) valid
+   node_size            = 1024
+   max_number_of_levels = 1
+   data_type            = 0
+   root_node_pointer    = 1024
+   free_node_pointer    = -1
+   maximum_size         = 2048
+
+
+ -------------------
+ ** node at offset: 1024
+ ** used: 190 bytes
+ bplustree_node (leaf node):
+   left_link      = -1
+   right_link     = -1
+   overflow_link  = -1
+   all_key_count  = 7
+   all_key_length = 89
+
+    0. &quot;BEOS:APP_SIG&quot; (12 bytes) -&gt; 15641 (0, 15641)
+    1. &quot;_trk/qrylastchange&quot; (18 bytes) -&gt; 15770 (0, 15770)
+    2. &quot;_trk/recentQuery&quot; (16 bytes) -&gt; 15803 (0, 15803)
+    3. &quot;be:deskbar_item_status&quot; (22 bytes) -&gt; 15836 (0, 15836)
+    4. &quot;last_modified&quot; (13 bytes) -&gt; 8907 (0, 8907)
+    5. &quot;name&quot; (4 bytes) -&gt; 8874 (0, 8874)
+    6. &quot;size&quot; (4 bytes) -&gt; 8940 (0, 8940)
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2661#comment:8">http://dev.haiku-os.org/ticket/2661#comment:8</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010396.html">[Haiku-bugs] [Haiku] #2661: bfs : 1397 : Name in use.
+</A></li>
+	<LI>Next message: <A HREF="010398.html">[Haiku-bugs] [Haiku] #2752: Define CALLOUT_MPSAFE for	freebsd_network
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10397">[ date ]</a>
+              <a href="thread.html#10397">[ thread ]</a>
+              <a href="subject.html#10397">[ subject ]</a>
+              <a href="author.html#10397">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

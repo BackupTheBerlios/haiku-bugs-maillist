@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3011: Filling Tracker windows with many files takes too long
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-January/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233011%3A%20Filling%20Tracker%20windows%20with%20many%0A%20files%20takes%20too%20long&In-Reply-To=%3C050.0b2635b73293bed02bf3567a1df9a886%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="013649.html">
+   <LINK REL="Next"  HREF="013653.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3011: Filling Tracker windows with many files takes too long</H1>
+    <B>stippi</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233011%3A%20Filling%20Tracker%20windows%20with%20many%0A%20files%20takes%20too%20long&In-Reply-To=%3C050.0b2635b73293bed02bf3567a1df9a886%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3011: Filling Tracker windows with many files takes too long">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Jan 13 15:20:50 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="013649.html">[Haiku-bugs] [Haiku] #3011: Filling Tracker windows with many files takes too long
+</A></li>
+        <LI>Next message: <A HREF="013653.html">[Haiku-bugs] [Haiku] #3011: Filling Tracker windows with many files takes too long
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13651">[ date ]</a>
+              <a href="thread.html#13651">[ thread ]</a>
+              <a href="subject.html#13651">[ subject ]</a>
+              <a href="author.html#13651">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3011: Filling Tracker windows with many files takes too long
+----------------------------------+-----------------------------------------
+ Reporter:  stippi                |       Owner:  aldeck        
+     Type:  enhancement           |      Status:  assigned      
+ Priority:  normal                |   Milestone:  Unscheduled   
+Component:  Applications/Tracker  |     Version:  R1 development
+Blockedby:                        |    Platform:  All           
+ Blocking:                        |  
+----------------------------------+-----------------------------------------
+
+Old description:
+
+&gt;<i> If you don't have a folder with many files (like 30000+), you can
+</I>&gt;<i> reproduce it by running a query for all files (Alt-F + Enter). I have at
+</I>&gt;<i> least over 58000 files on both partitions and I am still watching the
+</I>&gt;<i> files dripple into the list as of now. The first couple thousands will go
+</I>&gt;<i> in quickly enough, although it could be argued it should be faster. But
+</I>&gt;<i> after 20000 files, it becomes apparent that something somewhere doesn't
+</I>&gt;<i> scale very well, and I am strongly guessing that it's the list insertion
+</I>&gt;<i> in Tracker. The sorting to find the right index is probably binary search
+</I>&gt;<i> based and fast enough, but then I suppose (without having looked at the
+</I>&gt;<i> code), that it updates the vertical position of all the following items.
+</I>&gt;<i> If that's indeed what's happening, one could also mark the position as
+</I>&gt;<i> invalid until encountering the first item with an invalid position (which
+</I>&gt;<i> would result in items with invalid positions starting at some index until
+</I>&gt;<i> the last item). The correct position could then be retrieved once it's
+</I>&gt;<i> needed (when drawing). Maybe there is even more room for optimization in
+</I>&gt;<i> the code. (Now my list contains 66500 entries and the harddrive LED is
+</I>&gt;<i> barely flashing with lots of CPU usage inbetween.)
+</I>
+New description:
+
+ It looks to me like a paranoid check, but maybe it prevents a corner case
+ because of some stuff happening asynchronously. I can't really tell. Maybe
+ turn it into an assert which is not compiled in in release mode?
+
+--
+
+Comment(by stippi):
+
+ Replying to [comment:13 aldeck]:
+ &gt; For reference, the AddMimeType issue has been fixed in r28891 .
+ &gt;
+ &gt;
+ &gt; Now i'd like to address the 'FindPose' issue, see this check before each
+ Pose creation:
+ &gt;
+ &gt; line 1610 in PoseView.cpp :
+ &gt; {{{
+ &gt; if (FindPose(model) || FindZombie(model-&gt;NodeRef())) {
+ &gt;                       // we already have this pose, don't add it
+ &gt;                       watch_node(model-&gt;NodeRef(), B_STOP_WATCHING,
+ this);
+ &gt;                       delete model;
+ &gt;                       if (resultingPoses)
+ &gt;                               resultingPoses[modelIndex] = NULL;
+ &gt;                       continue;
+ &gt;               }
+ &gt; }}}
+ &gt;
+ &gt; The FindPose search being o(n) this hurts performance a lot. Searching
+ the ZombieList should be ok as it should be quite small if not empty most
+ of the time.
+ &gt;
+ &gt; Now i've reviewed a lot the code and i can't imagine a case where a
+ Model could be added two times... I added debug output here and it never
+ happens with my tests. Was this a mistake or a paranoid check? Ideas
+ welcomed :)
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3011#comment:15">http://dev.haiku-os.org/ticket/3011#comment:15</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="013649.html">[Haiku-bugs] [Haiku] #3011: Filling Tracker windows with many files takes too long
+</A></li>
+	<LI>Next message: <A HREF="013653.html">[Haiku-bugs] [Haiku] #3011: Filling Tracker windows with many files takes too long
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13651">[ date ]</a>
+              <a href="thread.html#13651">[ thread ]</a>
+              <a href="subject.html#13651">[ subject ]</a>
+              <a href="author.html#13651">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

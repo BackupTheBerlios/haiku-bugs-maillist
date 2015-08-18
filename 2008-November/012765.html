@@ -1,0 +1,443 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3172: registrar creating huge amounts of worker threads over time
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233172%3A%20registrar%20creating%20huge%20amounts%20of%0A%20worker%20threads%20over%20time&In-Reply-To=%3C044.04567f1ce1d59ec67f84448f4293b803%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012764.html">
+   <LINK REL="Next"  HREF="012766.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3172: registrar creating huge amounts of worker threads over time</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233172%3A%20registrar%20creating%20huge%20amounts%20of%0A%20worker%20threads%20over%20time&In-Reply-To=%3C044.04567f1ce1d59ec67f84448f4293b803%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3172: registrar creating huge amounts of worker threads over time">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Nov 26 06:04:21 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012764.html">[Haiku-bugs] [Haiku] #3171: Better prompting in Tracker file	operations
+</A></li>
+        <LI>Next message: <A HREF="012766.html">[Haiku-bugs] [Haiku] #3172: registrar creating huge amounts of worker threads over time
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12765">[ date ]</a>
+              <a href="thread.html#12765">[ thread ]</a>
+              <a href="subject.html#12765">[ subject ]</a>
+              <a href="author.html#12765">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3172: registrar creating huge amounts of worker threads over time
+-------------------------------+--------------------------------------------
+ Reporter:  anevilyak          |       Owner:  bonefish      
+     Type:  bug                |      Status:  new           
+ Priority:  normal             |   Milestone:  R1            
+Component:  Servers/registrar  |     Version:  R1 development
+Blockedby:                     |    Platform:  All           
+ Blocking:                     |  
+-------------------------------+--------------------------------------------
+ On my Haiku install that I've had running for close to a week now, I just
+ noticed that registrar has an absolutely massive number of threads active
+ that probably shouldn't be. I'm uncertain if I did anything specific to
+ trigger this, or if it's due to a periodic task of some kind right now.
+ They're mostly in state suspended, see as follows:
+
+ {{{
+  thread           name      state prio   user  kernel semaphore
+ -----------------------------------------------------------------------
+ /boot/beos/system/servers/registrar (team 52) (uid 0) (gid 0)
+      52      _roster_thread_ wait  10   11179   18453
+ _haiku_roster_port_(489)
+      54    message deliverer  zzz  10   10754   13757
+      55         timer_thread wait  10  339113  105504 timer_thread
+ control(496)
+      56 authentication manager wait  10     233      68 registrar: auth
+ manager(500)
+      57            main_mime wait  10     279     261 main_mime(510)
+      58 messaging command processor wait  15      44      21 messaging
+ counter(520)
+   55953 update_mime_info (s)  sus  10       0       0
+   56042 update_mime_info (s)  sus  10       0       0
+   56043 update_mime_info (s)  sus  10       0       0
+   56044 update_mime_info (s)  sus  10       0       0
+   56045 update_mime_info (s)  sus  10       0       0
+   56046 update_mime_info (s)  sus  10       0       0
+   56047 update_mime_info (s)  sus  10       0       0
+   56048 update_mime_info (s)  sus  10       0       0
+   56049 update_mime_info (s)  sus  10       0       0
+   56050 update_mime_info (s)  sus  10       0       0
+   56051 update_mime_info (s)  sus  10       0       0
+   56052 update_mime_info (s)  sus  10       0       0
+   56053 update_mime_info (s)  sus  10       0       0
+   56054 update_mime_info (s)  sus  10       0       0
+   56056 update_mime_info (s)  sus  10       0       0
+   56057 update_mime_info (s)  sus  10       0       0
+   56058 update_mime_info (s)  sus  10       0       0
+   56059 create_app_meta_mime (s)  sus  10       0       0
+   56060 update_mime_info (s)  sus  10       0       0
+   56061 update_mime_info (s)  sus  10       0       0
+   56062 update_mime_info (s)  sus  10       0       0
+   56063 update_mime_info (s)  sus  10       0       0
+   56064 update_mime_info (s)  sus  10       0       0
+   56065 update_mime_info (s)  sus  10       0       0
+   56066 update_mime_info (s)  sus  10       0       0
+   56067 update_mime_info (s)  sus  10       0       0
+   56068 create_app_meta_mime (s)  sus  10       0       0
+   56069 update_mime_info (s)  sus  10       0       0
+   56070 update_mime_info (s)  sus  10       0       0
+   56071 update_mime_info (s)  sus  10       0       0
+   56072 update_mime_info (s)  sus  10       0       0
+   56073 update_mime_info (s)  sus  10       0       0
+   56074 update_mime_info (s)  sus  10       0       0
+   56075 update_mime_info (s)  sus  10       0       0
+   56076 update_mime_info (s)  sus  10       0       0
+   56077 update_mime_info (s)  sus  10       0       0
+   56078 create_app_meta_mime (s)  sus  10       0       0
+   56079 update_mime_info (s)  sus  10       0       0
+   56081 update_mime_info (s)  sus  10       0       0
+   56082 update_mime_info (s)  sus  10       0       0
+   56083 update_mime_info (s)  sus  10       0       0
+   56085 update_mime_info (s)  sus  10       0       0
+   56086 update_mime_info (s)  sus  10       0       0
+   56087 update_mime_info (s)  sus  10       0       0
+   56088 update_mime_info (s)  sus  10       0       0
+   56089 update_mime_info (s)  sus  10       0       0
+   56091 update_mime_info (s)  sus  10       0       0
+   56092 update_mime_info (s)  sus  10       0       0
+   56093 update_mime_info (s)  sus  10       0       0
+   56094 update_mime_info (s)  sus  10       0       0
+   56095 update_mime_info (s)  sus  10       0       0
+   56097 create_app_meta_mime (s)  sus  10       0       0
+   56098 update_mime_info (s)  sus  10       0       0
+   56099 update_mime_info (s)  sus  10       0       0
+   56100 update_mime_info (s)  sus  10       0       0
+   56101 create_app_meta_mime (s)  sus  10       0       0
+   56103 update_mime_info (s)  sus  10       0       0
+   56104 update_mime_info (s)  sus  10       0       0
+   56105 update_mime_info (s)  sus  10       0       0
+   56106 update_mime_info (s)  sus  10       0       0
+   56107 update_mime_info (s)  sus  10       0       0
+   56108 create_app_meta_mime (s)  sus  10       0       0
+   56109 update_mime_info (s)  sus  10       0       0
+   56110 create_app_meta_mime (s)  sus  10       0       0
+   56111 update_mime_info (s)  sus  10       0       0
+   56112 update_mime_info (s)  sus  10       0       0
+   56113 create_app_meta_mime (s)  sus  10       0       0
+   56114 create_app_meta_mime (s)  sus  10       0       0
+   56115 create_app_meta_mime (s)  sus  10       0       0
+   56116 create_app_meta_mime (s)  sus  10       0       0
+   56117 update_mime_info (s)  sus  10       0       0
+   56121 create_app_meta_mime (s)  sus  10       0       0
+   56145 create_app_meta_mime (s)  sus  10       0       0
+   56146 update_mime_info (s)  sus  10       0       0
+   56163 update_mime_info (s)  sus  10       0       0
+   56172 create_app_meta_mime (s)  sus  10       0       0
+   56173 update_mime_info (s)  sus  10       0       0
+   56174 create_app_meta_mime (s)  sus  10       0       0
+   56175 create_app_meta_mime (s)  sus  10       0       0
+   56176 create_app_meta_mime (s)  sus  10       0       0
+   56177 create_app_meta_mime (s)  sus  10       0       0
+   56178 create_app_meta_mime (s)  sus  10       0       0
+   56179 update_mime_info (s)  sus  10       0       0
+   56180 create_app_meta_mime (s)  sus  10       0       0
+   56181 update_mime_info (s)  sus  10       0       0
+   56182 update_mime_info (s)  sus  10       0       0
+   56183 update_mime_info (s)  sus  10       0       0
+   56184 update_mime_info (s)  sus  10       0       0
+   56185 create_app_meta_mime (s)  sus  10       0       0
+   56186 create_app_meta_mime (s)  sus  10       0       0
+   56187 create_app_meta_mime (s)  sus  10       0       0
+   56188 create_app_meta_mime (s)  sus  10       0       0
+   56189 update_mime_info (s)  sus  10       0       0
+   56190 create_app_meta_mime (s)  sus  10       0       0
+   56191 create_app_meta_mime (s)  sus  10       0       0
+   56192 create_app_meta_mime (s)  sus  10       0       0
+   56193 update_mime_info (s)  sus  10       0       0
+   56194 update_mime_info (s)  sus  10       0       0
+   56210 update_mime_info (s)  sus  10       0       0
+   56211 create_app_meta_mime (s)  sus  10       0       0
+   56213 update_mime_info (s)  sus  10       0       0
+   56214 create_app_meta_mime (s)  sus  10       0       0
+   56215 create_app_meta_mime (s)  sus  10       0       0
+   56216 update_mime_info (s)  sus  10       0       0
+   56217 update_mime_info (s)  sus  10       0       0
+   56218 create_app_meta_mime (s)  sus  10       0       0
+   56219 update_mime_info (s)  sus  10       0       0
+   56220 update_mime_info (s)  sus  10       0       0
+   56221 update_mime_info (s)  sus  10       0       0
+   56222 create_app_meta_mime (s)  sus  10       0       0
+   56223 update_mime_info (s)  sus  10       0       0
+   56224 update_mime_info (s)  sus  10       0       0
+   56225 create_app_meta_mime (s)  sus  10       0       0
+   56226 update_mime_info (s)  sus  10       0       0
+   56227 create_app_meta_mime (s)  sus  10       0       0
+   56228 update_mime_info (s)  sus  10       0       0
+   56229 update_mime_info (s)  sus  10       0       0
+   56230 create_app_meta_mime (s)  sus  10       0       0
+   56231 update_mime_info (s)  sus  10       0       0
+   56232 update_mime_info (s)  sus  10       0       0
+   56233 create_app_meta_mime (s)  sus  10       0       0
+   56234 update_mime_info (s)  sus  10       0       0
+   56235 create_app_meta_mime (s)  sus  10       0       0
+   56236 update_mime_info (s)  sus  10       0       0
+   56237 update_mime_info (s)  sus  10       0       0
+   56238 create_app_meta_mime (s)  sus  10       0       0
+   56239 update_mime_info (s)  sus  10       0       0
+   56240 create_app_meta_mime (s)  sus  10       0       0
+   56241 update_mime_info (s)  sus  10       0       0
+   56242 create_app_meta_mime (s)  sus  10       0       0
+   56243 update_mime_info (s)  sus  10       0       0
+   56244 update_mime_info (s)  sus  10       0       0
+   56245 create_app_meta_mime (s)  sus  10       0       0
+   56246 update_mime_info (s)  sus  10       0       0
+   56247 create_app_meta_mime (s)  sus  10       0       0
+   56248 update_mime_info (s)  sus  10       0       0
+   56249 update_mime_info (s)  sus  10       0       0
+   56250 create_app_meta_mime (s)  sus  10       0       0
+   56251 update_mime_info (s)  sus  10       0       0
+   56252 create_app_meta_mime (s)  sus  10       0       0
+   56253 update_mime_info (s)  sus  10       0       0
+   56254 update_mime_info (s)  sus  10       0       0
+   56255 create_app_meta_mime (s)  sus  10       0       0
+   56256 update_mime_info (s)  sus  10       0       0
+   56257 create_app_meta_mime (s)  sus  10       0       0
+   56258 update_mime_info (s)  sus  10       0       0
+   56259 update_mime_info (s)  sus  10       0       0
+   56260 create_app_meta_mime (s)  sus  10       0       0
+   56261 update_mime_info (s)  sus  10       0       0
+   56262 create_app_meta_mime (s)  sus  10       0       0
+   56263 update_mime_info (s)  sus  10       0       0
+   56264 update_mime_info (s)  sus  10       0       0
+   56265 create_app_meta_mime (s)  sus  10       0       0
+   56266 update_mime_info (s)  sus  10       0       0
+   56267 create_app_meta_mime (s)  sus  10       0       0
+   56268 update_mime_info (s)  sus  10       0       0
+   56269 create_app_meta_mime (s)  sus  10       0       0
+   56270 update_mime_info (s)  sus  10       0       0
+   56271 create_app_meta_mime (s)  sus  10       0       0
+   56272 create_app_meta_mime (s)  sus  10       0       0
+   56273 create_app_meta_mime (s)  sus  10       0       0
+   56274 create_app_meta_mime (s)  sus  10       0       0
+   56275 create_app_meta_mime (s)  sus  10       0       0
+   56276 create_app_meta_mime (s)  sus  10       0       0
+   56277 create_app_meta_mime (s)  sus  10       0       0
+   56278 create_app_meta_mime (s)  sus  10       0       0
+   56279 create_app_meta_mime (s)  sus  10       0       0
+   56280 create_app_meta_mime (s)  sus  10       0       0
+   56281 create_app_meta_mime (s)  sus  10       0       0
+   56282 create_app_meta_mime (s)  sus  10       0       0
+   56283 create_app_meta_mime (s)  sus  10       0       0
+   56284 create_app_meta_mime (s)  sus  10       0       0
+   56285 create_app_meta_mime (s)  sus  10       0       0
+   56286 create_app_meta_mime (s)  sus  10       0       0
+   56287 create_app_meta_mime (s)  sus  10       0       0
+   56288 create_app_meta_mime (s)  sus  10       0       0
+   56290 create_app_meta_mime (s)  sus  10       0       0
+   56291 create_app_meta_mime (s)  sus  10       0       0
+   56292 create_app_meta_mime (s)  sus  10       0       0
+   56293 create_app_meta_mime (s)  sus  10       0       0
+   56294 create_app_meta_mime (s)  sus  10       0       0
+   56295 create_app_meta_mime (s)  sus  10       0       0
+   56296 create_app_meta_mime (s)  sus  10       0       0
+   56297 create_app_meta_mime (s)  sus  10       0       0
+   56298 create_app_meta_mime (s)  sus  10       0       0
+   56299 create_app_meta_mime (s)  sus  10       0       0
+   56300 create_app_meta_mime (s)  sus  10       0       0
+   56301 create_app_meta_mime (s)  sus  10       0       0
+   56302 create_app_meta_mime (s)  sus  10       0       0
+   56303 create_app_meta_mime (s)  sus  10       0       0
+   56304 create_app_meta_mime (s)  sus  10       0       0
+   56305 create_app_meta_mime (s)  sus  10       0       0
+   56306 create_app_meta_mime (s)  sus  10       0       0
+   56307 create_app_meta_mime (s)  sus  10       0       0
+   56308 create_app_meta_mime (s)  sus  10       0       0
+   56309 create_app_meta_mime (s)  sus  10       0       0
+   56310 create_app_meta_mime (s)  sus  10       0       0
+   56311 create_app_meta_mime (s)  sus  10       0       0
+   56312 create_app_meta_mime (s)  sus  10       0       0
+   56313 create_app_meta_mime (s)  sus  10       0       0
+   56326 create_app_meta_mime (s)  sus  10       0       0
+   56327 create_app_meta_mime (s)  sus  10       0       0
+   56328 create_app_meta_mime (s)  sus  10       0       0
+   56329 create_app_meta_mime (s)  sus  10       0       0
+   56330 create_app_meta_mime (s)  sus  10       0       0
+   56331 create_app_meta_mime (s)  sus  10       0       0
+   56332 create_app_meta_mime (s)  sus  10       0       0
+   56333 create_app_meta_mime (s)  sus  10       0       0
+   56334 create_app_meta_mime (s)  sus  10       0       0
+   56335 create_app_meta_mime (s)  sus  10       0       0
+   56336 create_app_meta_mime (s)  sus  10       0       0
+   56337 create_app_meta_mime (s)  sus  10       0       0
+   56338 create_app_meta_mime (s)  sus  10       0       0
+   56339 create_app_meta_mime (s)  sus  10       0       0
+   56340 create_app_meta_mime (s)  sus  10       0       0
+   56341 create_app_meta_mime (s)  sus  10       0       0
+   56342 create_app_meta_mime (s)  sus  10       0       0
+   56343 create_app_meta_mime (s)  sus  10       0       0
+   56344 create_app_meta_mime (s)  sus  10       0       0
+   56345 create_app_meta_mime (s)  sus  10       0       0
+   56346 create_app_meta_mime (s)  sus  10       0       0
+   56347 create_app_meta_mime (s)  sus  10       0       0
+   56348 create_app_meta_mime (s)  sus  10       0       0
+   56349 create_app_meta_mime (s)  sus  10       0       0
+   56350 create_app_meta_mime (s)  sus  10       0       0
+   56351 create_app_meta_mime (s)  sus  10       0       0
+   56352 create_app_meta_mime (s)  sus  10       0       0
+   56353 create_app_meta_mime (s)  sus  10       0       0
+   56354 create_app_meta_mime (s)  sus  10       0       0
+   56355 create_app_meta_mime (s)  sus  10       0       0
+   56356 create_app_meta_mime (s)  sus  10       0       0
+   56357 create_app_meta_mime (s)  sus  10       0       0
+   56358 create_app_meta_mime (s)  sus  10       0       0
+   56359 create_app_meta_mime (s)  sus  10       0       0
+   56360 create_app_meta_mime (s)  sus  10       0       0
+   56361 create_app_meta_mime (s)  sus  10       0       0
+   56362 create_app_meta_mime (s)  sus  10       0       0
+   56363 create_app_meta_mime (s)  sus  10       0       0
+   56364 create_app_meta_mime (s)  sus  10       0       0
+   56365 create_app_meta_mime (s)  sus  10       0       0
+   56366 create_app_meta_mime (s)  sus  10       0       0
+   56367 create_app_meta_mime (s)  sus  10       0       0
+   56368 create_app_meta_mime (s)  sus  10       0       0
+   56369 create_app_meta_mime (s)  sus  10       0       0
+   56370 create_app_meta_mime (s)  sus  10       0       0
+   56374 create_app_meta_mime (s)  sus  10       0       0
+   56375 create_app_meta_mime (s)  sus  10       0       0
+   56376 create_app_meta_mime (s)  sus  10       0       0
+   56377 create_app_meta_mime (s)  sus  10       0       0
+   56378 create_app_meta_mime (s)  sus  10       0       0
+   56379 create_app_meta_mime (s)  sus  10       0       0
+   56385 create_app_meta_mime (s)  sus  10       0       0
+   56386 create_app_meta_mime (s)  sus  10       0       0
+   56387 create_app_meta_mime (s)  sus  10       0       0
+   56388 create_app_meta_mime (s)  sus  10       0       0
+   56389 create_app_meta_mime (s)  sus  10       0       0
+   56390 create_app_meta_mime (s)  sus  10       0       0
+   56391 create_app_meta_mime (s)  sus  10       0       0
+   56414 create_app_meta_mime (s)  sus  10       0       0
+   56415 create_app_meta_mime (s)  sus  10       0       0
+   56433 create_app_meta_mime (s)  sus  10       0       0
+   56434 create_app_meta_mime (s)  sus  10       0       0
+   56436 create_app_meta_mime (s)  sus  10       0       0
+   56437 create_app_meta_mime (s)  sus  10       0       0
+   56438 create_app_meta_mime (s)  sus  10       0       0
+   56439 create_app_meta_mime (s)  sus  10       0       0
+   56442 create_app_meta_mime (s)  sus  10       0       0
+   56443 create_app_meta_mime (s)  sus  10       0       0
+   56444 create_app_meta_mime (s)  sus  10       0       0
+   56446 create_app_meta_mime (s)  sus  10       0       0
+   56447 create_app_meta_mime (s)  sus  10       0       0
+   56448 create_app_meta_mime (s)  sus  10       0       0
+   56449 create_app_meta_mime (s)  sus  10       0       0
+   56450 create_app_meta_mime (s)  sus  10       0       0
+   56451 create_app_meta_mime (s)  sus  10       0       0
+   56452 create_app_meta_mime (s)  sus  10       0       0
+   56453 create_app_meta_mime (s)  sus  10       0       0
+   56454 create_app_meta_mime (s)  sus  10       0       0
+   56480 create_app_meta_mime (s)  sus  10       0       0
+   56483 create_app_meta_mime (s)  sus  10       0       0
+   56484 update_mime_info (s)  sus  10       0       0
+   56485 update_mime_info (s)  sus  10       0       0
+   56491 update_mime_info (s)  sus  10       0       0
+   56492 update_mime_info (s)  sus  10       0       0
+   56495 create_app_meta_mime (s)  sus  10       0       0
+   56496 create_app_meta_mime (s)  sus  10       0       0
+   56497 create_app_meta_mime (s)  sus  10       0       0
+   56498 create_app_meta_mime (s)  sus  10       0       0
+   56499 create_app_meta_mime (s)  sus  10       0       0
+   56512 create_app_meta_mime (s)  sus  10       0       0
+   56521 create_app_meta_mime (s)  sus  10       0       0
+   56522 create_app_meta_mime (s)  sus  10       0       0
+   56523 create_app_meta_mime (s)  sus  10       0       0
+   56524 create_app_meta_mime (s)  sus  10       0       0
+   56525 create_app_meta_mime (s)  sus  10       0       0
+   56526 create_app_meta_mime (s)  sus  10       0       0
+   56527 create_app_meta_mime (s)  sus  10       0       0
+   56528 create_app_meta_mime (s)  sus  10       0       0
+   56533 create_app_meta_mime (s)  sus  10       0       0
+   56534 create_app_meta_mime (s)  sus  10       0       0
+   56535 create_app_meta_mime (s)  sus  10       0       0
+   56536 create_app_meta_mime (s)  sus  10       0       0
+   56537 create_app_meta_mime (s)  sus  10       0       0
+   56538 create_app_meta_mime (s)  sus  10       0       0
+   56539 create_app_meta_mime (s)  sus  10       0       0
+   56540 create_app_meta_mime (s)  sus  10       0       0
+   56541 create_app_meta_mime (s)  sus  10       0       0
+   56542 create_app_meta_mime (s)  sus  10       0       0
+   56549 create_app_meta_mime (s)  sus  10       0       0
+   56550 create_app_meta_mime (s)  sus  10       0       0
+   56551 create_app_meta_mime (s)  sus  10       0       0
+   56552 create_app_meta_mime (s)  sus  10       0       0
+   56553 create_app_meta_mime (s)  sus  10       0       0
+   56559 create_app_meta_mime (s)  sus  10       0       0
+   56560 create_app_meta_mime (s)  sus  10       0       0
+   56561 create_app_meta_mime (s)  sus  10       0       0
+   56566 create_app_meta_mime (s)  sus  10       0       0
+   56575 create_app_meta_mime (s)  sus  10       0       0
+   56580 create_app_meta_mime (s)  sus  10       0       0
+   56582 create_app_meta_mime (s)  sus  10       0       0
+   56605 create_app_meta_mime (s)  sus  10       0       0
+   56616 create_app_meta_mime (s)  sus  10       0       0
+   56618 create_app_meta_mime (s)  sus  10       0       0
+   56621 create_app_meta_mime (s)  sus  10       0       0
+   56630 create_app_meta_mime (s)  sus  10       0       0
+   56634 create_app_meta_mime (s)  sus  10       0       0
+   56640 create_app_meta_mime (s)  sus  10       0       0
+   56641 create_app_meta_mime (s)  sus  10       0       0
+   56652 create_app_meta_mime (s)  sus  10       0       0
+   56654 create_app_meta_mime (s)  sus  10       0       0
+   56659 create_app_meta_mime (s)  sus  10       0       0
+   56660 create_app_meta_mime (s)  sus  10       0       0
+   56661 create_app_meta_mime (s)  sus  10       0       0
+   56666 create_app_meta_mime (s)  sus  10       0       0
+   56673 create_app_meta_mime (s)  sus  10       0       0
+   56675 create_app_meta_mime (s)  sus  10       0       0
+   56680 create_app_meta_mime (s)  sus  10       0       0
+   56684 create_app_meta_mime (s)  sus  10       0       0
+   56685 create_app_meta_mime (s)  sus  10       0       0
+   56687 create_app_meta_mime (s)  sus  10       0       0
+   56696 create_app_meta_mime (s)  sus  10       0       0
+   56701 create_app_meta_mime (s)  sus  10       0       0
+   56706 create_app_meta_mime (s)  sus  10       0       0
+   56707 create_app_meta_mime (s)  sus  10       0       0
+ }}}
+
+ I still have the system running, so please let me know if there's any
+ extra info I can gather.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3172">http://dev.haiku-os.org/ticket/3172</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012764.html">[Haiku-bugs] [Haiku] #3171: Better prompting in Tracker file	operations
+</A></li>
+	<LI>Next message: <A HREF="012766.html">[Haiku-bugs] [Haiku] #3172: registrar creating huge amounts of worker threads over time
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12765">[ date ]</a>
+              <a href="thread.html#12765">[ thread ]</a>
+              <a href="subject.html#12765">[ subject ]</a>
+              <a href="author.html#12765">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

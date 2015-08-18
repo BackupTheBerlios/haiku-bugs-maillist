@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3541: Core 2 Duo shows as Core 2 Extreme
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233541%3A%20Core%202%20Duo%20shows%20as%20Core%202%20Extreme&In-Reply-To=%3C053.a41987ac77fd041144ac32cc3619c047%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="021579.html">
+   <LINK REL="Next"  HREF="021582.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3541: Core 2 Duo shows as Core 2 Extreme</H1>
+    <B>v</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233541%3A%20Core%202%20Duo%20shows%20as%20Core%202%20Extreme&In-Reply-To=%3C053.a41987ac77fd041144ac32cc3619c047%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3541: Core 2 Duo shows as Core 2 Extreme">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Sep 17 19:23:27 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="021579.html">[Haiku-bugs] [Haiku] #3541: Core 2 Duo shows as Core 2 Extreme
+</A></li>
+        <LI>Next message: <A HREF="021582.html">[Haiku-bugs] [Haiku] #4565: Inconsistent search dirs between gcc2	and gcc4.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21580">[ date ]</a>
+              <a href="thread.html#21580">[ thread ]</a>
+              <a href="subject.html#21580">[ subject ]</a>
+              <a href="author.html#21580">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3541: Core 2 Duo shows as Core 2 Extreme
+-----------------------+----------------------------------------------------
+ Reporter:  j_freeman  |       Owner:  axeld        
+     Type:  bug        |      Status:  new          
+ Priority:  normal     |   Milestone:  R1           
+Component:  - General  |     Version:  R1/pre-alpha1
+Blockedby:             |    Platform:  All          
+ Blocking:             |  
+-----------------------+----------------------------------------------------
+
+Comment(by v):
+
+ Alright. (I should've known BGA wouldn't want to lose his 'Extreme' :-)
+ )[[BR]]
+ I'll copy-paste my idea for a complete fix from haiku-development.
+
+ my idea would be to add a call to get_cpu_struct()[[BR]]
+ (found in: headers/private/kernel/cpu.h )[[BR]]
+ in get_cpu_model_string()[[BR]]
+ (in: headers/private/shared/cpu_type.h )[[BR]]
+ and searching the arch.model_name field of the result for xeon and extreme
+ and based on the result:[[BR]]
+ - add nothing to 'Core 2' (for the Core 2 Duo's and Quad's)[[BR]]
+ - add ' (Xeon)'[[BR]]
+ - add ' (Extreme)'[[BR]]
+ [[BR]]
+ I could then do the same for the Xeon from ticket 2002 and any other Xeon.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3541#comment:7">http://dev.haiku-os.org/ticket/3541#comment:7</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="021579.html">[Haiku-bugs] [Haiku] #3541: Core 2 Duo shows as Core 2 Extreme
+</A></li>
+	<LI>Next message: <A HREF="021582.html">[Haiku-bugs] [Haiku] #4565: Inconsistent search dirs between gcc2	and gcc4.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21580">[ date ]</a>
+              <a href="thread.html#21580">[ thread ]</a>
+              <a href="subject.html#21580">[ subject ]</a>
+              <a href="author.html#21580">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

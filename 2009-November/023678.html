@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3846: Intel_extreme driver problem on	i855g
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233846%3A%20Intel_extreme%20driver%20problem%20on%0A%09i855g&In-Reply-To=%3C050.8f0470a987076520fdd246254cd53d80%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="023674.html">
+   <LINK REL="Next"  HREF="023679.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3846: Intel_extreme driver problem on	i855g</H1>
+    <B>ajitomatix</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233846%3A%20Intel_extreme%20driver%20problem%20on%0A%09i855g&In-Reply-To=%3C050.8f0470a987076520fdd246254cd53d80%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3846: Intel_extreme driver problem on	i855g">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Nov 11 09:54:24 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="023674.html">[Haiku-bugs] [Haiku] #2603: resolv.conf should be in /boot/common/settings/network/
+</A></li>
+        <LI>Next message: <A HREF="023679.html">[Haiku-bugs] [Haiku] #3846: Intel_extreme driver problem on	i855g
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#23678">[ date ]</a>
+              <a href="thread.html#23678">[ thread ]</a>
+              <a href="subject.html#23678">[ subject ]</a>
+              <a href="author.html#23678">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3846: Intel_extreme driver problem on i855g
+--------------------------------------------+-------------------------------
+ Reporter:  walera                          |       Owner:  axeld         
+     Type:  bug                             |      Status:  new           
+ Priority:  normal                          |   Milestone:  R1            
+Component:  Drivers/Graphics/intel_extreme  |     Version:  R1/Development
+Blockedby:                                  |    Platform:  x86           
+ Blocking:                                  |  
+--------------------------------------------+-------------------------------
+
+Comment(by ajitomatix):
+
+ I have found a workaround thanks to [<A HREF="http://betips.net/1997/09/09/intel-">http://betips.net/1997/09/09/intel-</A>
+ ca810-video-with-other-graphics-adapters/ this BeOS R5 tip].
+
+ Since intel extreme driver is not working, the workaround is to use a VESA
+ driver. To do that I did the following:
+
+ {{{
+ $&gt; cd /boot/system/add-ons/kernel/drivers/dev/graphics/
+ $&gt; sudo mv intel_extreme ~/
+ }}}
+ Then restart Haiku.
+
+ What this does is removes the symbolic link to the buggy intel_extreme
+ driver. Haiku then has to fall back to VESA driver when it reboots.
+
+ This workaround is tested on R33964.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3846#comment:8">http://dev.haiku-os.org/ticket/3846#comment:8</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="023674.html">[Haiku-bugs] [Haiku] #2603: resolv.conf should be in /boot/common/settings/network/
+</A></li>
+	<LI>Next message: <A HREF="023679.html">[Haiku-bugs] [Haiku] #3846: Intel_extreme driver problem on	i855g
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#23678">[ date ]</a>
+              <a href="thread.html#23678">[ thread ]</a>
+              <a href="subject.html#23678">[ subject ]</a>
+              <a href="author.html#23678">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2893: System hanging at desktop with	r28244
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232893%3A%20System%20hanging%20at%20desktop%20with%0A%09r28244&In-Reply-To=%3C053.a8877c74de4b2208c3226676191c60b7%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011244.html">
+   <LINK REL="Next"  HREF="011253.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2893: System hanging at desktop with	r28244</H1>
+    <B>stippi</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232893%3A%20System%20hanging%20at%20desktop%20with%0A%09r28244&In-Reply-To=%3C053.a8877c74de4b2208c3226676191c60b7%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2893: System hanging at desktop with	r28244">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Oct 22 09:30:32 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011244.html">[Haiku-bugs] [Haiku] #2893: System hanging at desktop with	r28244
+</A></li>
+        <LI>Next message: <A HREF="011253.html">[Haiku-bugs] [Haiku] #2893: System hanging at desktop with	r28244
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11248">[ date ]</a>
+              <a href="thread.html#11248">[ thread ]</a>
+              <a href="subject.html#11248">[ subject ]</a>
+              <a href="author.html#11248">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2893: System hanging at desktop with r28244
+----------------------------+-----------------------------------------------
+  Reporter:  anevilyak      |       Owner:  axeld         
+      Type:  bug            |      Status:  new           
+  Priority:  normal         |   Milestone:  R1            
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |   Blockedby:                
+  Platform:  All            |    Blocking:                
+----------------------------+-----------------------------------------------
+
+Comment(by stippi):
+
+ Thanks for all the info. The stack trace for picasso is interesting, since
+ it just seems to be in it's message loop waiting for the next message.
+ That would indicate that the lock was leaked in the processing of an
+ earlier message, no?
+
+ The &quot;floating overlays lock&quot; is used to protect the visible cursor shape
+ and the stored background behind the cursor. When something renders to the
+ screen that would overdraw the cursor, then the lock comes into play. The
+ code is using auto lockers, see DrawingEngine. What programs are you
+ running at startup? (Trying to figure out which messages may have been
+ processed earlier.) If we can't spot this ourselves, maybe we need to
+ enable some tracing mode in app_server to see what was going on before.
+ Perhaps something that uses the kernel tracing would be most convenient.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2893#comment:11">http://dev.haiku-os.org/ticket/2893#comment:11</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011244.html">[Haiku-bugs] [Haiku] #2893: System hanging at desktop with	r28244
+</A></li>
+	<LI>Next message: <A HREF="011253.html">[Haiku-bugs] [Haiku] #2893: System hanging at desktop with	r28244
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11248">[ date ]</a>
+              <a href="thread.html#11248">[ thread ]</a>
+              <a href="subject.html#11248">[ subject ]</a>
+              <a href="author.html#11248">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

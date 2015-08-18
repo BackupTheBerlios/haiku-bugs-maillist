@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2507: [NetPositive] crash after closing it's preferences window
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-July/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232507%3A%20%5BNetPositive%5D%20crash%20after%20closing%20it%27s%0A%20preferences%20window&In-Reply-To=%3C040.50a5debfb7bb3a648e1fffecaaf78605%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008867.html">
+   <LINK REL="Next"  HREF="008853.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2507: [NetPositive] crash after closing it's preferences window</H1>
+    <B>diver</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232507%3A%20%5BNetPositive%5D%20crash%20after%20closing%20it%27s%0A%20preferences%20window&In-Reply-To=%3C040.50a5debfb7bb3a648e1fffecaaf78605%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2507: [NetPositive] crash after closing it's preferences window">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Jul 10 12:33:09 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008867.html">[Haiku-bugs] [Haiku] #2506: [app_server] crash in	WindowList::RemoveWindow ()
+</A></li>
+        <LI>Next message: <A HREF="008853.html">[Haiku-bugs] [Haiku] #2508: [MediaPlayer] add icons to playlis
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8852">[ date ]</a>
+              <a href="thread.html#8852">[ thread ]</a>
+              <a href="subject.html#8852">[ subject ]</a>
+              <a href="author.html#8852">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2507: [NetPositive] crash after closing it's preferences window
+--------------------------------+-------------------------------------------
+ Reporter:  diver               |       Owner:  axeld         
+     Type:  bug                 |      Status:  new           
+ Priority:  normal              |   Milestone:  R1            
+Component:  Servers/app_server  |     Version:  R1 development
+Blockedby:                      |    Platform:  All           
+ Blocking:                      |  
+--------------------------------+-------------------------------------------
+ NetPositive crash after closing it's preferences window.
+ Dunno if it reproducible.
+
+ {{{
+ [tcsetpgrp failed in terminal_inferior: Invalid Argument]
+ Thread 857 caused an exception: Segment violation
+ Reading symbols from /boot/beos/system/lib/libbe.so...(no debugging
+ symbols found)...done.
+ Loaded symbols for /boot/beos/system/lib/libbe.so
+ Reading symbols from /boot/beos/system/lib/libnetwork.so...(no debugging
+ symbols found)...done.
+ Loaded symbols for /boot/beos/system/lib/libnetwork.so
+ Reading symbols from /boot/beos/system/lib/libtracker.so...(no debugging
+ symbols found)...done.
+ Loaded symbols for /boot/beos/system/lib/libtracker.so
+ Reading symbols from /boot/beos/system/lib/libtextencoding.so...(no
+ debugging symbols found)...done.
+ Loaded symbols for /boot/beos/system/lib/libtextencoding.so
+ Reading symbols from /boot/beos/system/lib/libmidi.so...(no debugging
+ symbols found)...done.
+ Loaded symbols for /boot/beos/system/lib/libmidi.so
+ Reading symbols from /boot/beos/system/lib/libmail.so...(no debugging
+ symbols found)...done.
+ Loaded symbols for /boot/beos/system/lib/libmail.so
+ Reading symbols from /boot/beos/system/lib/libtranslation.so...(no
+ debugging symbols found)...done.
+ Loaded symbols for /boot/beos/system/lib/libtranslation.so
+ Reading symbols from /boot/beos/system/lib/libgame.so...(no debugging
+ symbols found)...done.
+ Loaded symbols for /boot/beos/system/lib/libgame.so
+ Reading symbols from /boot/beos/system/lib/libroot.so...done.
+ Loaded symbols for /boot/beos/system/lib/libroot.so
+ Reading symbols from /boot/beos/system/lib/libpng.so...done.
+ Loaded symbols for /boot/beos/system/lib/libpng.so
+ Reading symbols from /boot/beos/system/lib/libz.so...done.
+ Loaded symbols for /boot/beos/system/lib/libz.so
+ Reading symbols from /boot/beos/system/lib/libstdc++.r4.so...done.
+ Loaded symbols for /boot/beos/system/lib/libstdc++.r4.so
+ Reading symbols from /boot/beos/system/lib/libmidi2.so...done.
+ Loaded symbols for /boot/beos/system/lib/libmidi2.so
+ Reading symbols from /boot/beos/system/lib/libmedia.so...done.
+ Loaded symbols for /boot/beos/system/lib/libmedia.so
+ Reading symbols from /boot/beos/system/lib/libfluidsynth.so...done.
+ Loaded symbols for /boot/beos/system/lib/libfluidsynth.so
+ [tcsetpgrp failed in terminal_inferior: Invalid Argument]
+
+ [Switching to team /BeOS/beos/apps/NetPositive (784) thread w&gt;Preferences
+ (857)]
+ 0x004ab213 in BView::~BView () from /boot/beos/system/lib/libbe.so
+ (gdb) bt
+ #0  0x004ab213 in BView::~BView () from /boot/beos/system/lib/libbe.so
+ #1  0x004625dc in BMenuField::~BMenuField ()
+    from /boot/beos/system/lib/libbe.so
+ #2  0x004ab21f in BView::~BView () from /boot/beos/system/lib/libbe.so
+ #3  0x00496c0c in BTab::~BTab () from /boot/beos/system/lib/libbe.so
+ #4  0x004977c3 in BTabView::~BTabView () from
+ /boot/beos/system/lib/libbe.so
+ #5  0x004ab21f in BView::~BView () from /boot/beos/system/lib/libbe.so
+ #6  0x00332561 in PrefsView::~PrefsView ()
+ #7  0x004ab21f in BView::~BView () from /boot/beos/system/lib/libbe.so
+ #8  0x004b5f1b in BWindow::~BWindow () from /boot/beos/system/lib/libbe.so
+ #9  0x00413796 in BLooper::Quit () from /boot/beos/system/lib/libbe.so
+ #10 0x004b662a in BWindow::Quit () from /boot/beos/system/lib/libbe.so
+ #11 0x00414e1f in BLooper::_QuitRequested ()
+    from /boot/beos/system/lib/libbe.so
+ #12 0x0041331a in BLooper::DispatchMessage ()
+    from /boot/beos/system/lib/libbe.so
+ #13 0x004b8ebd in BWindow::DispatchMessage ()
+    from /boot/beos/system/lib/libbe.so
+ #14 0x004bc678 in BWindow::task_looper () from
+ /boot/beos/system/lib/libbe.so
+ #15 0x0041488b in BLooper::_task0_ () from /boot/beos/system/lib/libbe.so
+ #16 0x009859c0 in thread_entry () from /boot/beos/system/lib/libroot.so
+ #17 0x70206fec in ?? ()
+ (gdb)
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2507">http://dev.haiku-os.org/ticket/2507</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008867.html">[Haiku-bugs] [Haiku] #2506: [app_server] crash in	WindowList::RemoveWindow ()
+</A></li>
+	<LI>Next message: <A HREF="008853.html">[Haiku-bugs] [Haiku] #2508: [MediaPlayer] add icons to playlis
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8852">[ date ]</a>
+              <a href="thread.html#8852">[ thread ]</a>
+              <a href="subject.html#8852">[ subject ]</a>
+              <a href="author.html#8852">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

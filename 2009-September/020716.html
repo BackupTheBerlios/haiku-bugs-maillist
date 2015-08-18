@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4412: Several MIME types have only the	generic icon.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234412%3A%20Several%20MIME%20types%20have%20only%20the%0A%09generic%20icon.&In-Reply-To=%3C047.32b5a87d595d7e064e8a149234c16eaa%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="020714.html">
+   <LINK REL="Next"  HREF="020717.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4412: Several MIME types have only the	generic icon.</H1>
+    <B>jonas.kirilla</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234412%3A%20Several%20MIME%20types%20have%20only%20the%0A%09generic%20icon.&In-Reply-To=%3C047.32b5a87d595d7e064e8a149234c16eaa%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4412: Several MIME types have only the	generic icon.">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Sep  5 02:01:07 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="020714.html">[Haiku-bugs] [Haiku] #4412: Several MIME types have only the	generic icon.
+</A></li>
+        <LI>Next message: <A HREF="020717.html">[Haiku-bugs] [Haiku] #4412: Several MIME types have only the	generic icon.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20716">[ date ]</a>
+              <a href="thread.html#20716">[ thread ]</a>
+              <a href="subject.html#20716">[ subject ]</a>
+              <a href="author.html#20716">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4412: Several MIME types have only the generic icon.
+-----------------------+----------------------------------------------------
+ Reporter:  bga        |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1/alpha1     
+Component:  - General  |     Version:  R1 development
+Blockedby:             |    Platform:  All           
+ Blocking:             |  
+-----------------------+----------------------------------------------------
+
+Comment(by jonas.kirilla):
+
+ This is intended. BeOS uses the generic file icon for all mime types that
+ don't provide an icon (themselves or by inheritance). I think it's Tracker
+ that provides it since BeOS' application/* does not have an icon. The end
+ result is that the generic icon gets used for the application subtypes
+ that have no icon.
+
+ Haiku's application.super used to have the &quot;Be Application&quot; icon,
+ overriding Tracker's generic icon. It's great that the application
+ supertype has an icon, but it was the wrong one. There is no good reason
+ to use the icon of the &quot;Be Application&quot; (our executables) by inheritance
+ for all application/ subtypes without icons. Most of them are not
+ executable. There are probably application subtypes around which aren't
+ even binary. It does not make sense to display e.g. Word, Excel or
+ postscript documents, URL types, compression formats, etc, using the Be
+ Application icon, as if they were applications.
+
+ One could likely have the same result (having the generic icon for
+ application subtypes) by removing the icon of Haiku's application.super,
+ but I think it's more correct for the supertype to have an icon than for
+ Tracker to use its fallback icon.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4412#comment:1">http://dev.haiku-os.org/ticket/4412#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="020714.html">[Haiku-bugs] [Haiku] #4412: Several MIME types have only the	generic icon.
+</A></li>
+	<LI>Next message: <A HREF="020717.html">[Haiku-bugs] [Haiku] #4412: Several MIME types have only the	generic icon.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20716">[ date ]</a>
+              <a href="thread.html#20716">[ thread ]</a>
+              <a href="subject.html#20716">[ subject ]</a>
+              <a href="author.html#20716">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

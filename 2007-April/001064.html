@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1167: USB stack built for BONE crashes in UHCI finish thread
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231167%3A%20USB%20stack%20built%20for%20BONE%20crashes%20in%0A%20UHCI%20finish%20thread&In-Reply-To=%3C048.74efea18efe982a00068e2f2402398d7%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001062.html">
+   <LINK REL="Next"  HREF="001065.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1167: USB stack built for BONE crashes in UHCI finish thread</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231167%3A%20USB%20stack%20built%20for%20BONE%20crashes%20in%0A%20UHCI%20finish%20thread&In-Reply-To=%3C048.74efea18efe982a00068e2f2402398d7%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1167: USB stack built for BONE crashes in UHCI finish thread">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Apr 20 14:27:47 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001062.html">[Haiku-bugs] [Haiku] #672: sis7018 Ali Souncard won't appear in Media Prefs, no sound
+</A></li>
+        <LI>Next message: <A HREF="001065.html">[Haiku-bugs] [Haiku] #1167: USB stack built for BONE crashes in UHCI finish thread
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1064">[ date ]</a>
+              <a href="thread.html#1064">[ thread ]</a>
+              <a href="subject.html#1064">[ subject ]</a>
+              <a href="author.html#1064">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1167: USB stack built for BONE crashes in UHCI finish thread
+---------------------------+------------------------------------------------
+ Reporter:  jonas.kirilla  |       Owner:  mmlr          
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1            
+Component:  Drivers/USB    |     Version:  R1 development
+ Platform:  x86            |  
+---------------------------+------------------------------------------------
+ Feedback as per requested in the last paragraph:
+ <A HREF="http://haiku-os.org/blog/mmlr/2007-04-20/using_the_haiku_usb_stack">http://haiku-os.org/blog/mmlr/2007-04-20/using_the_haiku_usb_stack</A>
+
+ &quot;
+ Problems in uhci finish thread :
+ segment violation
+ address: 0x80233070, op: 1 pc: 0x00175563, tmid: 2 thid: 10
+ kernel debugger: Welcome to Kernel Debugging Land...
+  eax 00000000  ebp 0122c944  cs 0008 | area 004b3768  (kernel_intel_text)
+  ebx 00000040  esp 0122c8f8  ss 0010 | addr 00100000  size 00086000
+  ecx 00000040  edi 300f6600  ds 0010 |
+  edx 00000000  esi 80233070  es 0010 | Thread: uhci finish thread
+  eip 00175563 flag 00010246  fs 0000 | Team:  kernel_team
+ trap 0000000e  err 00000000  gs 0000 | Stack Trace follows:
+
+ 00000000  00175563  memcpy_pIII+0047
+ 0122c944  0021a012
+ CreateFilledTransfer__4UHCIP8TransferPP7uhci_tdPP7uhci_qh+00aa
+ 0122c984  002196ef  FinishTransfers__4UHCI+0387
+ 0122c9e4  0021935f  FinishThread__4UHCIPv+001f
+ &quot;
+
+ This is on R5/Bone, at the very start of copying a 233MB file from /boot
+ to a USB flash drive. I can't try the same thing in Haiku as the umass
+ (usb_scsi) driver hasn't been adapted to Haiku, IIRC.
+
+ The CPU is a P4/Celeron, the motherboard is an Asus P4-XP (IIRC) with the
+ intel 845 chipset. The only other USB device connected, that I know of, is
+ a USB mouse by Microsoft.
+
+ I can read from the USB flash media without problems, but writing to it
+ KDLs. I get the feeling that creating folders and small files is less
+ likely to crash than is creating large files.
+
+ The media is in FAT format.
+
+ The full syslog will be uploaded shortly.
+
+ A thought: memcpy_pIII, P4-class CPU?
+ Another one: Is too much memory allocated by the USB driver for the
+ transfer?
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1167">http://dev.haiku-os.org/ticket/1167</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001062.html">[Haiku-bugs] [Haiku] #672: sis7018 Ali Souncard won't appear in Media Prefs, no sound
+</A></li>
+	<LI>Next message: <A HREF="001065.html">[Haiku-bugs] [Haiku] #1167: USB stack built for BONE crashes in UHCI finish thread
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1064">[ date ]</a>
+              <a href="thread.html#1064">[ thread ]</a>
+              <a href="subject.html#1064">[ subject ]</a>
+              <a href="author.html#1064">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

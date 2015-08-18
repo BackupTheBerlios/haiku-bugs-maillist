@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1757: Symbol 'gcvt' not found
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-February/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231757%3A%20Symbol%20%27gcvt%27%20not%20found&In-Reply-To=%3C043.57216cf5f729c94367828d70545fcf72%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="004676.html">
+   <LINK REL="Next"  HREF="004682.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1757: Symbol 'gcvt' not found</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231757%3A%20Symbol%20%27gcvt%27%20not%20found&In-Reply-To=%3C043.57216cf5f729c94367828d70545fcf72%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1757: Symbol 'gcvt' not found">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Feb  6 17:03:26 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="004676.html">[Haiku-bugs] [Haiku] #1547: Panic in	vfs_mount_boot_file_system()
+</A></li>
+        <LI>Next message: <A HREF="004682.html">[Haiku-bugs] [Haiku] #1757: Symbol 'gcvt' not found
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4681">[ date ]</a>
+              <a href="thread.html#4681">[ thread ]</a>
+              <a href="subject.html#4681">[ subject ]</a>
+              <a href="author.html#4681">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1757: Symbol 'gcvt' not found
+-------------------------------+--------------------------------------------
+ Reporter:  andreasf           |       Owner:  axeld         
+     Type:  enhancement        |      Status:  new           
+ Priority:  normal             |   Milestone:  R1            
+Component:  System/libroot.so  |     Version:  R1 development
+ Platform:  x86                |  
+-------------------------------+--------------------------------------------
+ The gcvt function is obsolete but apparently available and in use on R5.
+
+ Copying Perl 5.8.8 compiled on R5 over to Haiku complains about the
+ symbol:
+ {{{
+ elf_resolve_symbol: could not resolve symbol 'gcvt'
+ resolve symbol: &quot;gcvt&quot; returned: -2147478780
+ runtime_loader: troubles relocating: 0x80001304 (image: libperl.so)
+ }}}
+
+ Should we add the gcvt function to libroot without adding it to Haiku's
+ headers? That way it would not be picked up by Haiku apps but would
+ provide compatibility with R5; an implementation like this might work:
+ {{{
+ char* gcvt(double value, int length, char* buf) {
+   sprintf(buf, &quot;%.*g&quot;, length, value);
+   return buf;
+ }
+ }}}
+
+ <A HREF="http://www.thinkage.ca/english/gcos/expl/c/lib/gcvt.html">http://www.thinkage.ca/english/gcos/expl/c/lib/gcvt.html</A>
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1757">http://dev.haiku-os.org/ticket/1757</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="004676.html">[Haiku-bugs] [Haiku] #1547: Panic in	vfs_mount_boot_file_system()
+</A></li>
+	<LI>Next message: <A HREF="004682.html">[Haiku-bugs] [Haiku] #1757: Symbol 'gcvt' not found
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4681">[ date ]</a>
+              <a href="thread.html#4681">[ thread ]</a>
+              <a href="subject.html#4681">[ subject ]</a>
+              <a href="author.html#4681">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

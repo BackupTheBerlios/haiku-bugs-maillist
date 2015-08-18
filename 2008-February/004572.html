@@ -1,0 +1,2914 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1667: Haiku runs dogslow on real hardware (kernel team hang)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-February/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231667%3A%20Haiku%20runs%20dogslow%20on%20real%20hardware%0A%20%28kernel%20team%20hang%29&In-Reply-To=%3C050.13b03032f7a6f834571620dc4e8bafba%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="004570.html">
+   <LINK REL="Next"  HREF="004573.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1667: Haiku runs dogslow on real hardware (kernel team hang)</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231667%3A%20Haiku%20runs%20dogslow%20on%20real%20hardware%0A%20%28kernel%20team%20hang%29&In-Reply-To=%3C050.13b03032f7a6f834571620dc4e8bafba%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1667: Haiku runs dogslow on real hardware (kernel team hang)">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Feb  2 14:30:08 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="004570.html">[Haiku-bugs] [Haiku] #1731: unmounting partitions hangs
+</A></li>
+        <LI>Next message: <A HREF="004573.html">[Haiku-bugs] [Haiku] #1731: unmounting partitions hangs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4572">[ date ]</a>
+              <a href="thread.html#4572">[ thread ]</a>
+              <a href="subject.html#4572">[ subject ]</a>
+              <a href="author.html#4572">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1667: Haiku runs dogslow on real hardware (kernel team hang)
+----------------------------+-----------------------------------------------
+  Reporter:  konrad         |       Owner:  axeld         
+      Type:  bug            |      Status:  new           
+  Priority:  normal         |   Milestone:  R1            
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |    Platform:  x86           
+----------------------------+-----------------------------------------------
+Comment (by konrad):
+
+ Syslog from r23820
+ nForce chipset
+ AMD 2800+
+ 512 MB RAM
+ Nvidia 6600 GT
+
+ I hope this information helps.
+ /Konrad
+
+
+ 2008-02-02 10:31:19 KERN: APM version 1.2 available, flags 7.
+ 2008-02-02 10:31:19 KERN: smp_acpi_probe: entry base 0x9fc00, limit
+ 0xa0000
+ 2008-02-02 10:31:19 KERN: smp_acpi_probe: entry base 0xf0000, limit
+ 0x100000
+ 2008-02-02 10:31:19 KERN: smp_acpi_probe: found ACPI RSDP signature at
+ 0x000f75e0
+ 2008-02-02 10:31:19 KERN: smp: using ACPI to detect MP configuration
+ 2008-02-02 10:31:19 KERN: smp: found rsdp at 0x000f75e0 oem id: Nvidia
+ 2008-02-02 10:31:19 KERN: smp: rsdp points to rsdt at 0x1fff3000
+ 2008-02-02 10:31:19 KERN: smp: searching 2 entries for APIC information
+ 2008-02-02 10:31:19 KERN: smp: skipping uninteresting header 'FACP'
+ 2008-02-02 10:31:19 KERN: smp: local apic address is 0xfee00000
+ 2008-02-02 10:31:19 KERN: smp: found local APIC with id 0
+ 2008-02-02 10:31:19 KERN: smp: found io APIC with id 2 and address
+ 0xfec00000
+ 2008-02-02 10:31:19 KERN: VESA version = 3.0
+ 2008-02-02 10:31:19 KERN: oem string: NVIDIA
+ 2008-02-02 10:31:19 KERN: EDID1: 4f
+ 2008-02-02 10:31:19 KERN: EDID2: ebx 182
+ 2008-02-02 10:31:19 KERN: EDID3: 4f
+ 2008-02-02 10:31:19 KERN: Got EDID!
+ 2008-02-02 10:31:19 KERN: Vendor: MED
+ 2008-02-02 10:31:19 KERN: Product ID: 18749
+ 2008-02-02 10:31:19 KERN: Serial #: 2019
+ 2008-02-02 10:31:19 KERN: Produced in week/year: 11/2004
+ 2008-02-02 10:31:19 KERN: EDID version: 1.3
+ 2008-02-02 10:31:19 KERN: Type: Analog
+ 2008-02-02 10:31:19 KERN: Size: 37 cm x 30 cm
+ 2008-02-02 10:31:19 KERN: Gamma=2.2
+ 2008-02-02 10:31:19 KERN: White (X,Y)=(0.299,0.339)
+ 2008-02-02 10:31:19 KERN: Supported Future Video Modes:
+ 2008-02-02 10:31:19 KERN: <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">1280x1024 at 60Hz</A> (id=32897)
+ 2008-02-02 10:31:19 KERN: <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">1280x1024 at 75Hz</A> (id=36737)
+ 2008-02-02 10:31:19 KERN: <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">1024x768 at 60Hz</A> (id=16481)
+ 2008-02-02 10:31:19 KERN: <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">1024x768 at 70Hz</A> (id=19041)
+ 2008-02-02 10:31:19 KERN: <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">1024x768 at 75Hz</A> (id=20321)
+ 2008-02-02 10:31:19 KERN: <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">800x600 at 60Hz</A> (id=16453)
+ 2008-02-02 10:31:19 KERN: <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">800x600 at 70Hz</A> (id=19013)
+ 2008-02-02 10:31:19 KERN: <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">800x600 at 75Hz</A> (id=20293)
+ 2008-02-02 10:31:19 KERN: Supported VESA Video Modes:
+ 2008-02-02 10:31:19 KERN: <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">720x400 at 70</A>
+ 2008-02-02 10:31:19 KERN: <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">640x480 at 60</A>
+ 2008-02-02 10:31:19 KERN: 640x480x67
+ 2008-02-02 10:31:19 KERN: 640x480x72
+ 2008-02-02 10:31:19 KERN: 640x480x75
+ 2008-02-02 10:31:19 KERN: <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">800x600 at 56</A>
+ 2008-02-02 10:31:19 KERN: <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">800x600 at 60</A>
+ 2008-02-02 10:31:19 KERN: <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">800x600 at 72</A>
+ 2008-02-02 10:31:19 KERN: <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">800x600 at 75</A>
+ 2008-02-02 10:31:19 KERN: <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">832x624 at 75</A>
+ 2008-02-02 10:31:19 KERN: <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">1024x768 at 60</A>
+ 2008-02-02 10:31:19 KERN: <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">1024x768 at 70</A>
+ 2008-02-02 10:31:19 KERN: <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">1024x768 at 75</A>
+ 2008-02-02 10:31:19 KERN: <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">1280x1024 at 75</A>
+ 2008-02-02 10:31:19 KERN: Additional Video Mode:
+ 2008-02-02 10:31:19 KERN: clock=108 MHz
+ 2008-02-02 10:31:19 KERN: h: (1280, 1328, 1440, 1688)
+ 2008-02-02 10:31:19 KERN: v: (1024, 1025, 1028, 1066)
+ 2008-02-02 10:31:19 KERN: size: 35.9 cm x 28.7 cm
+ 2008-02-02 10:31:19 KERN: border: 0 cm x 0 cm
+ 2008-02-02 10:31:19 KERN: Serial Number: 02019
+ 2008-02-02 10:31:19 KERN: Horizontal frequency range = 30..83 kHz
+ 2008-02-02 10:31:19 KERN: Vertical frequency range = 50..76 Hz
+ 2008-02-02 10:31:19 KERN: Maximum pixel clock = 140 MHz
+ 2008-02-02 10:31:19 KERN: Monitor Name: MD7212AZ
+ 2008-02-02 10:31:19 KERN: Welcome to the Haiku boot loader!
+ 2008-02-02 10:31:19 KERN: number of drives: 3
+ 2008-02-02 10:31:19 KERN: add_partitions_for(0x00105208, mountFS = no)
+ 2008-02-02 10:31:19 KERN: add_partitions_for(fd = 0, mountFS = no)
+ 2008-02-02 10:31:19 KERN: 0x001054cc Partition::Partition
+ 2008-02-02 10:31:19 KERN: 0x001054cc Partition::Scan()
+ 2008-02-02 10:31:19 KERN: check for partitioning_system: Amiga Partition
+ Map
+ 2008-02-02 10:31:19 KERN: check for partitioning_system: EFI GUID
+ Partition Map
+ 2008-02-02 10:31:19 KERN: check for partitioning_system: Intel Partition
+ Map
+ 2008-02-02 10:31:19 KERN: intel: pm_identify_partition(1, 1070284: 0,
+ 33820286976, 512)
+ 2008-02-02 10:31:19 KERN: Partition::SetTo(): active: 80
+ 2008-02-02 10:31:19 KERN: Partition::SetTo(): active: 0
+ Last message repeated 2 times
+ 2008-02-02 10:31:19 KERN:   priority: 810
+ 2008-02-02 10:31:19 KERN: check for partitioning_system: Intel Extended
+ Partition
+ 2008-02-02 10:31:19 KERN: check for partitioning_system: Apple Partition
+ Map
+ 2008-02-02 10:31:19 KERN: intel: pm_scan_partition(1, 1070284: 0,
+ 33820286976, 512)
+ 2008-02-02 10:31:19 KERN: 0x00105620 Partition::Partition
+ 2008-02-02 10:31:19 KERN: 0x001054cc Partition::AddChild 0x00105620
+ 2008-02-02 10:31:19 KERN: 0x00105620 Partition::SetParent 0x001054cc
+ 2008-02-02 10:31:19 KERN: new child partition!
+ 2008-02-02 10:31:19 KERN: 0x001054cc Partition::Scan: *** scan child
+ 0x00105620 (start = 32256, size = 33814093824, parent = 0x001054cc)!
+ 2008-02-02 10:31:19 KERN: 0x00105620 Partition::Scan()
+ 2008-02-02 10:31:19 KERN: check for partitioning_system: Amiga Partition
+ Map
+ 2008-02-02 10:31:19 KERN: check for partitioning_system: EFI GUID
+ Partition Map
+ 2008-02-02 10:31:19 KERN: check for partitioning_system: Intel Partition
+ Map
+ 2008-02-02 10:31:19 KERN: intel: pm_identify_partition(2, 1070624: 32256,
+ 33814093824, 512)
+ 2008-02-02 10:31:19 KERN: Partition::SetTo(): active: c3
+ 2008-02-02 10:31:19 KERN: intel: _ParsePrimary(): partition 0: bad
+ location, ignoring
+ 2008-02-02 10:31:19 KERN: Partition::SetTo(): active: ad
+ 2008-02-02 10:31:19 KERN: intel: _ParsePrimary(): partition 1: bad
+ location, ignoring
+ 2008-02-02 10:31:19 KERN: Partition::SetTo(): active: 69
+ 2008-02-02 10:31:19 KERN: intel: _ParsePrimary(): partition 2: bad
+ location, ignoring
+ 2008-02-02 10:31:19 KERN: Partition::SetTo(): active: 79
+ 2008-02-02 10:31:19 KERN: intel: _ParsePrimary(): partition 3: bad
+ location, ignoring
+ 2008-02-02 10:31:19 KERN:   priority: 100
+ 2008-02-02 10:31:19 KERN: check for partitioning_system: Intel Extended
+ Partition
+ 2008-02-02 10:31:19 KERN: intel: ep_identify_partition(2, 32256,
+ 33814093824, 512)
+ 2008-02-02 10:31:19 KERN: check for partitioning_system: Apple Partition
+ Map
+ 2008-02-02 10:31:19 KERN: 0x001054cc Partition::~Partition
+ 2008-02-02 10:31:19 KERN: 0x00105620 Partition::SetParent 0x00000000
+ 2008-02-02 10:31:19 KERN: boot partition offset: 32256
+ 2008-02-02 10:31:19 KERN: 0x00105620 Partition::_Mount check for
+ file_system: BFS Filesystem
+ 2008-02-02 10:31:19 KERN: add_partitions_for(0x001052c0, mountFS = yes)
+ 2008-02-02 10:31:19 KERN: add_partitions_for(fd = 2, mountFS = yes)
+ 2008-02-02 10:31:19 KERN: 0x00106400 Partition::Partition
+ 2008-02-02 10:31:19 KERN: 0x00106400 Partition::Scan()
+ 2008-02-02 10:31:19 KERN: check for partitioning_system: Amiga Partition
+ Map
+ 2008-02-02 10:31:19 KERN: check for partitioning_system: EFI GUID
+ Partition Map
+ 2008-02-02 10:31:19 KERN: check for partitioning_system: Intel Partition
+ Map
+ 2008-02-02 10:31:19 KERN: intel: pm_identify_partition(3, 1074176: 0,
+ 250059350016, 512)
+ 2008-02-02 10:31:19 KERN: Partition::SetTo(): active: 0
+ Last message repeated 1 time
+ 2008-02-02 10:31:19 KERN: Partition::SetTo(): active: 80
+ 2008-02-02 10:31:19 KERN: Partition::SetTo(): active: 0
+ Last message repeated 3 times
+ 2008-02-02 10:31:19 KERN:   priority: 810
+ 2008-02-02 10:31:19 KERN: check for partitioning_system: Intel Extended
+ Partition
+ 2008-02-02 10:31:19 KERN: new child partition!
+ 2008-02-02 10:31:19 KERN: initialize_commpage_syscall(): sysenter/sysexit
+ supported
+ 2008-02-02 10:31:19 KERN: allocate_commpage_entry(3, 5) -&gt; 0xffff0100
+ 2008-02-02 10:31:19 KERN: INIT: init system info
+ 2008-02-02 10:31:19 KERN: INIT: init SMP
+ 2008-02-02 10:31:19 KERN: INIT: init timer
+ 2008-02-02 10:31:19 KERN: INIT: init real time clock
+ 2008-02-02 10:31:19 KERN: allocate_commpage_entry(2, 12) -&gt; 0xffff0108
+ 2008-02-02 10:31:19 KERN: INIT: init semaphores
+ 2008-02-02 10:31:19 KERN: INIT: init VM semaphores
+ 2008-02-02 10:31:19 KERN: INIT: init driver_settings
+ 2008-02-02 10:31:19 KERN: INIT: init generic syscall
+ 2008-02-02 10:31:19 KERN: INIT: init cbuf
+ 2008-02-02 10:31:19 KERN: INIT: init teams
+ 2008-02-02 10:31:19 KERN: INIT: init threads
+ 2008-02-02 10:31:19 KERN: INIT: init ports
+ 2008-02-02 10:31:19 KERN: INIT: init kernel daemons
+ 2008-02-02 10:31:19 KERN: apm_init()
+ 2008-02-02 10:31:19 KERN:   code32: 0xf000, 0x7e3c, length 0x218a
+ 2008-02-02 10:31:19 KERN:   code16: 0xf000, length 0x418b
+ 2008-02-02 10:31:19 KERN:   data: 0xfdf9, length 0x0
+ 2008-02-02 10:31:19 KERN: INIT: init VM threads
+ 2008-02-02 10:31:19 KERN: INIT: init ELF loader
+ 2008-02-02 10:31:19 KERN: INIT: init scheduler
+ 2008-02-02 10:31:19 KERN: INIT: init notification services
+ 2008-02-02 10:31:19 KERN: INIT: init VFS
+ 2008-02-02 10:31:19 KERN: INIT: waking up AP cpus
+ 2008-02-02 10:31:19 KERN: INIT: exiting kernel startup
+ 2008-02-02 10:31:19 KERN: INIT: enabling interrupts and starting scheduler
+ on cpu 0
+ 2008-02-02 10:31:19 KERN: INIT: starting main2 thread
+ 2008-02-02 10:31:19 KERN: INIT: resuming main2 thread...
+ 2008-02-02 10:31:19 KERN: INIT: start of main2: initializing devices
+ 2008-02-02 10:31:19 KERN: INIT: Init modules
+ 2008-02-02 10:31:19 KERN: INIT: Init Userland debugging
+ 2008-02-02 10:31:19 KERN: INIT: Init Messaging Service
+ 2008-02-02 10:31:19 KERN: INIT: Bootstrap file systems
+ 2008-02-02 10:31:19 KERN: INIT: Init Device Manager
+ 2008-02-02 10:31:19 KERN: [35mahci:[0m ahci_get_supported_paths
+ 2008-02-02 10:31:19 KERN:       found root!!
+ 2008-02-02 10:31:19 KERN:       add module bus_managers/isa/root/device_v1
+ to list
+ 2008-02-02 10:31:19 KERN: PCI: pci_module_init
+ 2008-02-02 10:31:19 KERN: PCI: mechanism 1 controller found
+ 2008-02-02 10:31:19 KERN: PCI: [dom 0, bus  0] bus   0, device  0,
+ function  0: vendor 10de, device 01e0, revision c1
+ 2008-02-02 10:31:19 KERN: PCI:   class_base 06, class_function 00,
+ class_api 00
+ 2008-02-02 10:31:19 KERN: PCI:   vendor 10de: nVidia Corporation
+ 2008-02-02 10:31:19 KERN: PCI:   device 01e0: nForce2 AGP (different
+ version?)
+ 2008-02-02 10:31:19 KERN: PCI:   info: Bridge (Host bridge)
+ 2008-02-02 10:31:19 KERN: PCI:   line_size 00, latency 00, header_type 80,
+ BIST 00
+ 2008-02-02 10:31:19 KERN: PCI:   ROM base host 00000000, pci 00000000,
+ size 00000000
+ 2008-02-02 10:31:19 KERN: PCI:   cardbus_CIS 00000000, subsystem_id 80ac,
+ subsystem_vendor_id 1043
+ 2008-02-02 10:31:19 KERN: PCI:   interrupt_line 00, interrupt_pin 00,
+ min_grant 00, max_latency 00
+ 2008-02-02 10:31:19 KERN: PCI:   base reg 0: host c0000000, pci c0000000,
+ size 10000000, flags 08
+ 2008-02-02 10:31:19 KERN: PCI:   base reg 1: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 10:31:19 KERN: PCI:   base reg 2: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 10:31:19 KERN: PCI:   base reg 3: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 10:31:19 KERN: PCI:   base reg 4: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 10:31:19 KERN: PCI:   base reg 5: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 10:31:19 KERN: PCI:   Capabilities: AGP, ldt
+ 2008-02-02 10:31:19 KERN: PCI: [dom 0, bus  0] bus   0, device  0,
+ function  1: vendor 10de, device 01eb, revision c1
+ 2008-02-02 10:31:19 KERN: PCI:   class_base 05, class_function 00,
+ class_api 00
+ 2008-02-02 10:31:19 KERN: PCI:   vendor 10de: nVidia Corporation
+ 2008-02-02 10:31:19 KERN: PCI:   device 01eb: nForce2 Memory Controller 1
+ 2008-02-02 10:31:19 KERN: PCI:   info: Memory controller (RAM memory)
+ 2008-02-02 10:31:19 KERN: PCI:   line_size 00, latency 00, header_type 80,
+ BIST 00
+ 2008-02-02 10:31:19 KERN: PCI:   ROM base host 00000000, pci 00000000,
+ size 00000000
+ 2008-02-02 10:31:19 KERN: PCI:   cardbus_CIS 00000000, subsystem_id 80ac,
+ subsystem_vendor_id 1043
+ 2008-02-02 10:31:19 KERN: PCI:   interrupt_line ff, interrupt_pin 00,
+ min_grant 00, max_latency 00
+ 2008-02-02 10:31:19 KERN: PCI:   base reg 0: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 10:31:19 KERN: PCI:   base reg 1: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 10:31:19 KERN: PCI:   base reg 2: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 10:31:19 KERN: PCI:   base reg 3: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 10:31:19 KERN: PCI:   base reg 4: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 10:31:19 KERN: PCI:   base reg 5: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 10:31:19 KERN: PCI:   Capabilities: (not supported)
+ 2008-02-02 10:31:19 KERN: PCI: [dom 0, bus  0] bus   0, device  0,
+ function  2: vendor 10de, device 01ee, revision c1
+ 2008-02-02 10:31:19 KERN: PCI:   class_base 05, class_function 00,
+ class_api 00
+ 2008-02-02 10:31:19 KERN: PCI:   vendor 10de: nVidia Corporation
+ 2008-02-02 10:31:19 KERN: PCI:   device 01ee: nForce2 Memory Controller 4
+ 2008-02-02 10:31:19 KERN: PCI:   info: Memory controller (RAM memory)
+ 2008-02-02 10:31:19 KERN: PCI:   line_size 00, latency 00, header_type 80,
+ BIST 00
+ 2008-02-02 10:31:19 KERN: PCI:   ROM base host 00000000, pci 00000000,
+ size 00000000
+ 2008-02-02 10:31:19 KERN: PCI:   cardbus_CIS 00000000, subsystem_id 80ac,
+ subsystem_vendor_id 1043
+ 2008-02-02 10:31:19 KERN: PCI:   interrupt_line ff, interrupt_pin 00,
+ min_grant 00, max_latency 00
+ 2008-02-02 10:31:19 KERN: PCI:   base reg 0: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 10:31:19 KERN: PCI:   base reg 1: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 10:31:19 KERN: PCI:   base reg 2: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 10:31:19 KERN: PCI:   base reg 3: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 10:31:19 KERN: PCI:   base reg 4: host 00000000, pci 00000000,
+ size 00000000&lt;DROP&gt;2008-02-02 11:31:19 KERN:  00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 5: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   Capabilities: (not supported)
+ 2008-02-02 11:31:19 KERN: PCI: [dom 0, bus  0] bus   0, device  0,
+ function  3: vendor 10de, device 01ed, revision c1
+ 2008-02-02 11:31:19 KERN: PCI:   class_base 05, class_function 00,
+ class_api 00
+ 2008-02-02 11:31:19 KERN: PCI:   vendor 10de: nVidia Corporation
+ 2008-02-02 11:31:19 KERN: PCI:   device 01ed: nForce2 Memory Controller 3
+ 2008-02-02 11:31:19 KERN: PCI:   info: Memory controller (RAM memory)
+ 2008-02-02 11:31:19 KERN: PCI:   line_size 00, latency 00, header_type 80,
+ BIST 00
+ 2008-02-02 11:31:19 KERN: PCI:   ROM base host 00000000, pci 00000000,
+ size 00000000
+ 2008-02-02 11:31:19 KERN: PCI:   cardbus_CIS 00000000, subsystem_id 80ac,
+ subsystem_vendor_id 1043
+ 2008-02-02 11:31:19 KERN: PCI:   interrupt_line 00, interrupt_pin 00,
+ min_grant 00, max_latency 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 0: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 1: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 2: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 3: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 4: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 5: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   Capabilities: (not supported)
+ 2008-02-02 11:31:19 KERN: PCI: [dom 0, bus  0] bus   0, device  0,
+ function  4: vendor 10de, device 01ec, revision c1
+ 2008-02-02 11:31:19 KERN: PCI:   class_base 05, class_function 00,
+ class_api 00
+ 2008-02-02 11:31:19 KERN: PCI:   vendor 10de: nVidia Corporation
+ 2008-02-02 11:31:19 KERN: PCI:   device 01ec: nForce2 Memory Controller 2
+ 2008-02-02 11:31:19 KERN: PCI:   info: Memory controller (RAM memory)
+ 2008-02-02 11:31:19 KERN: PCI:   line_size 00, latency 00, header_type 80,
+ BIST 00
+ 2008-02-02 11:31:19 KERN: PCI:   ROM base host 00000000, pci 00000000,
+ size 00000000
+ 2008-02-02 11:31:19 KERN: PCI:   cardbus_CIS 00000000, subsystem_id 80ac,
+ subsystem_vendor_id 1043
+ 2008-02-02 11:31:19 KERN: PCI:   interrupt_line ff, interrupt_pin 00,
+ min_grant 00, max_latency 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 0: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 1: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 2: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 3: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 4: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 5: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   Capabilities: (not supported)
+ 2008-02-02 11:31:19 KERN: PCI: [dom 0, bus  0] bus   0, device  0,
+ function  5: vendor 10de, device 01ef, revision c1
+ 2008-02-02 11:31:19 KERN: PCI:   class_base 05, class_function 00,
+ class_api 00
+ 2008-02-02 11:31:19 KERN: PCI:   vendor 10de: nVidia Corporation
+ 2008-02-02 11:31:19 KERN: PCI:   device 01ef: nForce2 Memory Controller 5
+ 2008-02-02 11:31:19 KERN: PCI:   info: Memory controller (RAM memory)
+ 2008-02-02 11:31:19 KERN: PCI:   line_size 00, latency 00, header_type 80,
+ BIST 00
+ 2008-02-02 11:31:19 KERN: PCI:   ROM base host 00000000, pci 00000000,
+ size 00000000
+ 2008-02-02 11:31:19 KERN: PCI:   cardbus_CIS 00000000, subsystem_id 80ac,
+ subsystem_vendor_id 1043
+ 2008-02-02 11:31:19 KERN: PCI:   interrupt_line ff, interrupt_pin 00,
+ min_grant 00, max_latency 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 0: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 1: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 2: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 3: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 4: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 5: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   Capabilities: (not supported)
+ 2008-02-02 11:31:19 KERN: PCI: [dom 0, bus  0] bus   0, device  1,
+ function  0: vendor 10de, device 0060, revision a4
+ 2008-02-02 11:31:19 KERN: PCI:   class_base 06, class_function 01,
+ class_api 00
+ 2008-02-02 11:31:19 KERN: PCI:   vendor 10de: nVidia Corporation
+ 2008-02-02 11:31:19 KERN: PCI:   device 0060: A7N8X Mainboard
+ 2008-02-02 11:31:19 KERN: PCI:   info: Bridge (ISA bridge)
+ 2008-02-02 11:31:19 KERN: PCI:   line_size 00, latency 00, header_type 80,
+ BIST 00
+ 2008-02-02 11:31:19 KERN: PCI:   ROM base host 00000000, pci 00000000,
+ size 00000000
+ 2008-02-02 11:31:19 KERN: PCI:   cardbus_CIS 00000000, subsystem_id 80ad,
+ subsystem_vendor_id 1043
+ 2008-02-02 11:31:19 KERN: PCI:   interrupt_line 00, interrupt_pin 00,
+ min_grant 00, max_latency 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 0: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 1: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 2: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 3: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 4: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 5: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   Capabilities: ldt
+ 2008-02-02 11:31:19 KERN: PCI: [dom 0, bus  0] bus   0, device  1,
+ function  1: vendor 10de, device 0064, revision a2
+ 2008-02-02 11:31:19 KERN: PCI:   class_base 0c, class_function 05,
+ class_api 00
+ 2008-02-02 11:31:19 KERN: PCI:   vendor 10de: nVidia Corporation
+ 2008-02-02 11:31:19 KERN: PCI:   device 0064: nForce2 SMBus (MCP)
+ 2008-02-02 11:31:19 KERN: PCI:   info: Serial bus controller (SMBus)
+ 2008-02-02 11:31:19 KERN: PCI:   line_size 00, latency 00, header_type 80,
+ BIST 00
+ 2008-02-02 11:31:19 KERN: PCI:   ROM base host 00000000, pci 00000000,
+ size 00000000
+ 2008-02-02 11:31:19 KERN: PCI:   cardbus_CIS 00000000, subsystem_id 0c11,
+ subsystem_vendor_id 1043
+ 2008-02-02 11:31:19 KERN: PCI:   interrupt_line 05, interrupt_pin 01,
+ min_grant 03, max_latency 01
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 0: host 0000c000, pci 0000c000,
+ size 00000020, flags 01
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 1: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 2: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 3: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 4: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 5: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   Capabilities: PM
+ 2008-02-02 11:31:19 KERN: PCI: [dom 0, bus  0] bus   0, device  2,
+ function  0: vendor 10de, device 0067, revision a4
+ 2008-02-02 11:31:19 KERN: PCI:   class_base 0c, class_function 03,
+ class_api 10
+ 2008-02-02 11:31:19 KERN: PCI:   vendor 10de: nVidia Corporation
+ 2008-02-02 11:31:19 KERN: PCI:   device 0067: A7N8X Mainboard
+ 2008-02-02 11:31:19 KERN: PCI:   info: Serial bus controller (USB
+ Controller, OHCI)
+ 2008-02-02 11:31:19 KERN: PCI:   line_size 00, latency 00, header_type 80,
+ BIST 00
+ 2008-02-02 11:31:19 KERN: PCI:   ROM base host 00000000, pci 00000000,
+ size 00000000
+ 2008-02-02 11:31:19 KERN: PCI:   cardbus_CIS 00000000, subsystem_id 0c11,
+ subsystem_vendor_id 1043
+ 2008-02-02 11:31:19 KERN: PCI:   interrupt_line 0b, interrupt_pin 01,
+ min_grant 03, max_latency 01
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 0: host e6087000, pci e6087000,
+ size 00001000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 1: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 2: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 3: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 4: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 5: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   Capabilities: PM
+ 2008-02-02 11:31:19 KERN: PCI: [dom 0, bus  0] bus   0, device  2,
+ function  1: vendor 10de, device 0067, revision a4
+ 2008-02-02 11:31:19 KERN: PCI:   class_base 0c, class_function 03,
+ class_api 10
+ 2008-02-02 11:31:19 KERN: PCI:   vendor 10de: nVidia Corporation
+ 2008-02-02 11:31:19 KERN: PCI:   device 0067: A7N8X Mainboard
+ 2008-02-02 11:31:19 KERN: PCI:   info: Serial bus controller (USB
+ Controller, OHCI)
+ 2008-02-02 11:31:19 KERN: PCI:   line_size 00, latency 00, header_type 80,
+ BIST 00
+ 2008-02-02 11:31:19 KERN: PCI:   ROM base host 00000000, pci 00000000,
+ size 00000000
+ 2008-02-02 11:31:19 KERN: PCI:   cardbus_CIS 00000000, subsystem_id 0c11,
+ subsystem_vendor_id 1043
+ 2008-02-02 11:31:19 KERN: PCI:   interrupt_line 0b, interrupt_pin 02,
+ min_grant 03, max_latency 01
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 0: host e6082000, pci e6082000,
+ size 00001000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 1: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 2: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 3: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 4: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 5: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   Capabilities: PM
+ 2008-02-02 11:31:19 KERN: PCI: [dom 0, bus  0] bus   0, device  2,
+ function  2: vendor 10de, device 0068, revision a4
+ 2008-02-02 11:31:19 KERN: PCI:   class_base 0c, class_function 03,
+ class_api 20
+ 2008-02-02 11:31:19 KERN: PCI:   vendor 10de: nVidia Corporation
+ 2008-02-02 11:31:19 KERN: PCI:   device 0068: A7N8X Mainboard
+ 2008-02-02 11:31:19 KERN: PCI:   info: Serial bus controller (USB
+ Controller, EHCI)
+ 2008-02-02 11:31:19 KERN: PCI:   line_size 00, latency 00, header_type 80,
+ BIST 00
+ 2008-02-02 11:31:19 KERN: PCI:   ROM base host 00000000, pci 00000000,
+ size 00000000
+ 2008-02-02 11:31:19 KERN: PCI:   cardbus_CIS 00000000, subsystem_id 0c11,
+ subsystem_vendor_id 1043
+ 2008-02-02 11:31:19 KERN: PCI:   interrupt_line 05, interrupt_pin 03,
+ min_grant 03, max_latency 01
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 0: host e6083000, pci e6083000,
+ size 00000100, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 1: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 2: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 3: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 4: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 5: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   Capabilities: DebugPort, PM
+ 2008-02-02 11:31:19 KERN: PCI: [dom 0, bus  0] bus   0, device  4,
+ funct2008-02-02 11:31:19 KERN: ion  0: vendor 10de, device 0066, revision
+ a1
+ 2008-02-02 11:31:19 KERN: PCI:   class_base 02, class_function 00,
+ class_api 00
+ 2008-02-02 11:31:19 KERN: PCI:   vendor 10de: nVidia Corporation
+ 2008-02-02 11:31:19 KERN: PCI:   device 0066: A7N8X Mainboard onboard
+ nForce2 Ethernet
+ 2008-02-02 11:31:19 KERN: PCI:   info: Network controller (Ethernet
+ controller)
+ 2008-02-02 11:31:19 KERN: PCI:   line_size 00, latency 00, header_type 00,
+ BIST 00
+ 2008-02-02 11:31:19 KERN: PCI:   ROM base host 00000000, pci 00000000,
+ size 00000000
+ 2008-02-02 11:31:19 KERN: PCI:   cardbus_CIS 00000000, subsystem_id 80a7,
+ subsystem_vendor_id 1043
+ 2008-02-02 11:31:19 KERN: PCI:   interrupt_line 05, interrupt_pin 01,
+ min_grant 01, max_latency 14
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 0: host e6086000, pci e6086000,
+ size 00001000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 1: host 0000c400, pci 0000c400,
+ size 00000010, flags 09
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 2: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 3: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 4: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 5: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   Capabilities: PM
+ 2008-02-02 11:31:19 KERN: PCI: [dom 0, bus  0] bus   0, device  5,
+ function  0: vendor 10de, device 006b, revision a2
+ 2008-02-02 11:31:19 KERN: PCI:   class_base 04, class_function 01,
+ class_api 00
+ 2008-02-02 11:31:19 KERN: PCI:   vendor 10de: nVidia Corporation
+ 2008-02-02 11:31:19 KERN: PCI:   device 006b: nForce Audio Processing Unit
+ 2008-02-02 11:31:19 KERN: PCI:   info: Multimedia controller (Multimedia
+ audio controller)
+ 2008-02-02 11:31:19 KERN: PCI:   line_size 00, latency 00, header_type 00,
+ BIST 00
+ 2008-02-02 11:31:19 KERN: PCI:   ROM base host 00000000, pci 00000000,
+ size 00000000
+ 2008-02-02 11:31:19 KERN: PCI:   cardbus_CIS 00000000, subsystem_id 0c11,
+ subsystem_vendor_id 1043
+ 2008-02-02 11:31:19 KERN: PCI:   interrupt_line 05, interrupt_pin 01,
+ min_grant 01, max_latency 0c
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 0: host e6000000, pci e6000000,
+ size 00080000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 1: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 2: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 3: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 4: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 5: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   Capabilities: PM
+ 2008-02-02 11:31:19 KERN: PCI: [dom 0, bus  0] bus   0, device  6,
+ function  0: vendor 10de, device 006a, revision a1
+ 2008-02-02 11:31:19 KERN: PCI:   class_base 04, class_function 01,
+ class_api 00
+ 2008-02-02 11:31:19 KERN: PCI:   vendor 10de: nVidia Corporation
+ 2008-02-02 11:31:19 KERN: PCI:   device 006a: nForce2 AC97 Audio Controler
+ (MCP)
+ 2008-02-02 11:31:19 KERN: PCI:   info: Multimedia controller (Multimedia
+ audio controller)
+ 2008-02-02 11:31:19 KERN: PCI:   line_size 00, latency 00, header_type 00,
+ BIST 00
+ 2008-02-02 11:31:19 KERN: PCI:   ROM base host 00000000, pci 00000000,
+ size 00000000
+ 2008-02-02 11:31:19 KERN: PCI:   cardbus_CIS 00000000, subsystem_id 8095,
+ subsystem_vendor_id 1043
+ 2008-02-02 11:31:19 KERN: PCI:   interrupt_line 0b, interrupt_pin 01,
+ min_grant 02, max_latency 05
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 0: host 0000b000, pci 0000b000,
+ size 00000100, flags 01
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 1: host 0000b400, pci 0000b400,
+ size 00000080, flags 01
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 2: host e6080000, pci e6080000,
+ size 00001000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 3: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 4: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 5: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   Capabilities: PM
+ 2008-02-02 11:31:19 KERN: PCI: [dom 0, bus  0] bus   0, device  8,
+ function  0: vendor 10de, device 006c, revision a3
+ 2008-02-02 11:31:19 KERN: PCI:   class_base 06, class_function 04,
+ class_api 00
+ 2008-02-02 11:31:19 KERN: PCI:   vendor 10de: nVidia Corporation
+ 2008-02-02 11:31:19 KERN: PCI:   device 006c: nForce2 External PCI Bridge
+ 2008-02-02 11:31:19 KERN: PCI:   info: Bridge (PCI bridge, Normal decode)
+ 2008-02-02 11:31:19 KERN: PCI:   line_size 00, latency 00, header_type 01,
+ BIST 00
+ 2008-02-02 11:31:19 KERN: PCI:   subsystem_id 0000, subsystem_vendor_id
+ 0000
+ 2008-02-02 11:31:19 KERN: PCI:   primary_bus 00, secondary_bus 01,
+ subordinate_bus 01, secondary_latency 20
+ 2008-02-02 11:31:19 KERN: PCI:   io_base_upper_16  0000, io_base  90
+ 2008-02-02 11:31:19 KERN: PCI:   io_limit_upper_16 0000, io_limit 90
+ 2008-02-02 11:31:19 KERN: PCI:   memory_base e500, memory_limit e5f0
+ 2008-02-02 11:31:19 KERN: PCI:   prefetchable_memory_base_upper32
+ 00000000, prefetchable_memory_base  fff0
+ 2008-02-02 11:31:19 KERN: PCI:   prefetchable_memory_limit_upper32
+ 00000000, prefetchable_memory_limit 0000
+ 2008-02-02 11:31:19 KERN: PCI:   bridge_control 202, secondary_status 2280
+ 2008-02-02 11:31:19 KERN: PCI:   interrupt_line 00, interrupt_pin 00
+ 2008-02-02 11:31:19 KERN: PCI:   ROM base host 00000000, pci 00000000,
+ size ??
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 0: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 1: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   Capabilities: (not supported)
+ 2008-02-02 11:31:19 KERN: PCI: [dom 0, bus  1] bus   1, device  8,
+ function  0: vendor 10ec, device 8139, revision 10
+ 2008-02-02 11:31:19 KERN: PCI:   class_base 02, class_function 00,
+ class_api 00
+ 2008-02-02 11:31:19 KERN: PCI:   vendor 10ec: Realtek Semiconductor Co.,
+ Ltd.
+ 2008-02-02 11:31:19 KERN: PCI:   device 8139: RT8139
+ 2008-02-02 11:31:19 KERN: PCI:   info: Network controller (Ethernet
+ controller)
+ 2008-02-02 11:31:19 KERN: PCI:   line_size 00, latency 20, header_type 00,
+ BIST 00
+ 2008-02-02 11:31:19 KERN: PCI:   ROM base host 00000000, pci 00000000,
+ size 00000000
+ 2008-02-02 11:31:19 KERN: PCI:   cardbus_CIS 00000000, subsystem_id 8139,
+ subsystem_vendor_id 10ec
+ 2008-02-02 11:31:19 KERN: PCI:   interrupt_line 0b, interrupt_pin 01,
+ min_grant 20, max_latency 40
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 0: host 00009000, pci 00009000,
+ size 00000100, flags 01
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 1: host e5000000, pci e5000000,
+ size 00000100, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 2: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 3: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 4: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 5: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   Capabilities: (not supported)
+ 2008-02-02 11:31:19 KERN: PCI: [dom 0, bus  0] bus   0, device  9,
+ function  0: vendor 10de, device 0065, revision a2
+ 2008-02-02 11:31:19 KERN: PCI:   class_base 01, class_function 01,
+ class_api 8a
+ 2008-02-02 11:31:19 KERN: PCI:   vendor 10de: nVidia Corporation
+ 2008-02-02 11:31:19 KERN: PCI:   device 0065: nForce2 IDE
+ 2008-02-02 11:31:19 KERN: PCI:   info: Mass storage controller (IDE
+ interface)
+ 2008-02-02 11:31:19 KERN: PCI:   line_size 00, latency 00, header_type 00,
+ BIST 00
+ 2008-02-02 11:31:19 KERN: PCI:   ROM base host 00000000, pci 00000000,
+ size 00000000
+ 2008-02-02 11:31:19 KERN: PCI:   cardbus_CIS 00000000, subsystem_id 0c11,
+ subsystem_vendor_id 1043
+ 2008-02-02 11:31:19 KERN: PCI:   interrupt_line 00, interrupt_pin 00,
+ min_grant 03, max_latency 01
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 0: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 1: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 2: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 3: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 4: host 0000f000, pci 0000f000,
+ size 00000010, flags 01
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 5: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   Capabilities: PM
+ 2008-02-02 11:31:19 KERN: PCI: [dom 0, bus  0] bus   0, device 12,
+ function  0: vendor 10de, device 006d, revision a3
+ 2008-02-02 11:31:19 KERN: PCI:   class_base 06, class_function 04,
+ class_api 00
+ 2008-02-02 11:31:19 KERN: PCI:   vendor 10de: nVidia Corporation
+ 2008-02-02 11:31:19 KERN: PCI:   device 006d: nForce2 PCI Bridge
+ 2008-02-02 11:31:19 KERN: PCI:   info: Bridge (PCI bridge, Normal decode)
+ 2008-02-02 11:31:19 KERN: PCI:   line_size 00, latency 00, header_type 01,
+ BIST 00
+ 2008-02-02 11:31:19 KERN: PCI:   subsystem_id 0000, subsystem_vendor_id
+ 0000
+ 2008-02-02 11:31:19 KERN: PCI:   primary_bus 00, secondary_bus 02,
+ subordinate_bus 02, secondary_latency 20
+ 2008-02-02 11:31:19 KERN: PCI:   io_base_upper_16  0000, io_base  a0
+ 2008-02-02 11:31:19 KERN: PCI:   io_limit_upper_16 0000, io_limit a0
+ 2008-02-02 11:31:19 KERN: PCI:   memory_base e000, memory_limit e1f0
+ 2008-02-02 11:31:19 KERN: PCI:   prefetchable_memory_base_upper32
+ 00000000, prefetchable_memory_base  fff0
+ 2008-02-02 11:31:19 KERN: PCI:   prefetchable_memory_limit_upper32
+ 00000000, prefetchable_memory_limit 0000
+ 2008-02-02 11:31:19 KERN: PCI:   bridge_control 02, secondary_status 2280
+ 2008-02-02 11:31:19 KERN: PCI:   interrupt_line 00, interrupt_pin 00
+ 2008-02-02 11:31:19 KERN: PCI:   ROM base host 00000000, pci 00000000,
+ size ??
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 0: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 1: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   Capabilities: (not supported)
+ 2008-02-02 11:31:19 KERN: PCI: [dom 0, bus  2] bus   2, device  1,
+ function  0: vendor 10b7, device 9201, revision 40
+ 2008-02-02 11:31:19 KERN: PCI:   class_base 02, class_function 00,
+ class_api 00
+ 2008-02-02 11:31:19 KERN: PCI:   vendor 10b7: 3Com Corporation
+ 2008-02-02 11:31:19 KERN: PCI:   device 9201: A7N8X Deluxe onboard 3C920B-
+ EMB Integrated Fast Ethernet Controller
+ 2008-02-02 11:31:19 KERN: PCI:   info: Network controller (Ethernet
+ controller)
+ 2008-02-02 11:31:19 KERN: PCI:   line_size 08, latency 20, header_type 00,
+ BIST 00
+ 2008-02-02 11:31:19 KERN: PCI:   ROM base host 00000000, pci 00000000,
+ size 00020000
+ 2008-02-02 11:31:19 KERN: PCI:   cardbus_CIS 00000000, subsystem_id 80ab,
+ subsystem_vendor_id 1043
+ 2008-02-02 11:31:19 KERN: PCI:   interrupt_line 0b, interrupt_pin 01,
+ min_grant 0a, max_latency 0a
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 0: host 0000a000, pci 0000a000,
+ size 00000080, flags 01
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 1: host e1000000, pci e1000000,
+ size 00000080, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 2: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 3: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 4: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 52008-02-02 11:31:19 KERN: :
+ host 00000000, pci 00000000, size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   Capabilities: PM
+ 2008-02-02 11:31:19 KERN: PCI: [dom 0, bus  0] bus   0, device 13,
+ function  0: vendor 10de, device 006e, revision a3
+ 2008-02-02 11:31:19 KERN: PCI:   class_base 0c, class_function 00,
+ class_api 10
+ 2008-02-02 11:31:19 KERN: PCI:   vendor 10de: nVidia Corporation
+ 2008-02-02 11:31:19 KERN: PCI:   device 006e: nForce2 FireWire (IEEE 1394)
+ Controller
+ 2008-02-02 11:31:19 KERN: PCI:   info: Serial bus controller (FireWire
+ (IEEE 1394), OHCI)
+ 2008-02-02 11:31:19 KERN: PCI:   line_size 00, latency 00, header_type 00,
+ BIST 00
+ 2008-02-02 11:31:19 KERN: PCI:   ROM base host 00000000, pci 00000000,
+ size 00000000
+ 2008-02-02 11:31:19 KERN: PCI:   cardbus_CIS 00000000, subsystem_id 809a,
+ subsystem_vendor_id 1043
+ 2008-02-02 11:31:19 KERN: PCI:   interrupt_line 0b, interrupt_pin 01,
+ min_grant 03, max_latency 01
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 0: host e6084000, pci e6084000,
+ size 00000800, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 1: host e6085000, pci e6085000,
+ size 00000040, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 2: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 3: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 4: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 5: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   Capabilities: PM
+ 2008-02-02 11:31:19 KERN: PCI: [dom 0, bus  0] bus   0, device 30,
+ function  0: vendor 10de, device 01e8, revision c1
+ 2008-02-02 11:31:19 KERN: PCI:   class_base 06, class_function 04,
+ class_api 00
+ 2008-02-02 11:31:19 KERN: PCI:   vendor 10de: nVidia Corporation
+ 2008-02-02 11:31:19 KERN: PCI:   device 01e8: nForce2 AGP
+ 2008-02-02 11:31:19 KERN: PCI:   info: Bridge (PCI bridge, Normal decode)
+ 2008-02-02 11:31:19 KERN: PCI:   line_size 00, latency 20, header_type 01,
+ BIST 00
+ 2008-02-02 11:31:19 KERN: PCI:   subsystem_id 0000, subsystem_vendor_id
+ 0000
+ 2008-02-02 11:31:19 KERN: PCI:   primary_bus 00, secondary_bus 03,
+ subordinate_bus 03, secondary_latency 20
+ 2008-02-02 11:31:19 KERN: PCI:   io_base_upper_16  0000, io_base  f0
+ 2008-02-02 11:31:19 KERN: PCI:   io_limit_upper_16 0000, io_limit 00
+ 2008-02-02 11:31:19 KERN: PCI:   memory_base e200, memory_limit e4f0
+ 2008-02-02 11:31:19 KERN: PCI:   prefetchable_memory_base_upper32
+ 00000000, prefetchable_memory_base  d000
+ 2008-02-02 11:31:19 KERN: PCI:   prefetchable_memory_limit_upper32
+ 00000000, prefetchable_memory_limit dff0
+ 2008-02-02 11:31:19 KERN: PCI:   bridge_control 0a, secondary_status 2220
+ 2008-02-02 11:31:19 KERN: PCI:   interrupt_line 00, interrupt_pin 00
+ 2008-02-02 11:31:19 KERN: PCI:   ROM base host 00000000, pci 00000000,
+ size ??
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 0: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 1: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   Capabilities: (not supported)
+ 2008-02-02 11:31:19 KERN: PCI: [dom 0, bus  3] bus   3, device  0,
+ function  0: vendor 10de, device 00f1, revision a2
+ 2008-02-02 11:31:19 KERN: PCI:   class_base 03, class_function 00,
+ class_api 00
+ 2008-02-02 11:31:19 KERN: PCI:   vendor 10de: nVidia Corporation
+ 2008-02-02 11:31:19 KERN: PCI:   device 00f1: NV43 [GeForce 6600 GT]
+ 2008-02-02 11:31:19 KERN: PCI:   info: Display controller (VGA compatible
+ controller, VGA)
+ 2008-02-02 11:31:19 KERN: PCI:   line_size 00, latency 20, header_type 00,
+ BIST 00
+ 2008-02-02 11:31:19 KERN: PCI:   ROM base host 00000000, pci 00000000,
+ size 00020000
+ 2008-02-02 11:31:19 KERN: PCI:   cardbus_CIS 00000000, subsystem_id 0000,
+ subsystem_vendor_id 0000
+ 2008-02-02 11:31:19 KERN: PCI:   interrupt_line 05, interrupt_pin 01,
+ min_grant 05, max_latency 01
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 0: host e2000000, pci e2000000,
+ size 01000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 1: host d0000000, pci d0000000,
+ size 10000000, flags 08
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 2: host e3000000, pci e3000000,
+ size 01000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 3: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 4: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   base reg 5: host 00000000, pci 00000000,
+ size 00000000, flags 00
+ 2008-02-02 11:31:19 KERN: PCI:   Capabilities: PM, AGP
+ 2008-02-02 11:31:19 KERN:       found root!!
+ 2008-02-02 11:31:19 KERN:       add module bus_managers/pci/root/device_v1
+ to list
+ 2008-02-02 11:31:19 KERN: has connection? no
+ 2008-02-02 11:31:19 KERN: module: bus_managers/isa/root/device_v1,
+ support: 1
+ 2008-02-02 11:31:19 KERN: module: bus_managers/pci/root/device_v1,
+ support: 1
+ 2008-02-02 11:31:19 KERN: register rest: bus_managers/isa/root/device_v1
+ 2008-02-02 11:31:19 KERN: free bus_managers/isa/root/device_v1
+ 2008-02-02 11:31:19 KERN: register rest: bus_managers/pci/root/device_v1
+ 2008-02-02 11:31:19 KERN: free bus_managers/pci/root/device_v1
+ 2008-02-02 11:31:19 KERN: INIT: Add preloaded old-style drivers
+ 2008-02-02 11:31:19 KERN: INIT: Mount boot file system
+ 2008-02-02 11:31:19 KERN: get_boot_partitions(): boot volume message:
+ 2008-02-02 11:31:19 KERN: field: &quot;booted from image&quot;, type: LONG
+ (0x4c4f4e47):
+ 2008-02-02 11:31:19 KERN:   [ 0] 0 (0x0)
+ 2008-02-02 11:31:19 KERN: field: &quot;partition offset&quot;, type: LLNG
+ (0x4c4c4e47):
+ 2008-02-02 11:31:19 KERN:   [ 0] 32256 (0x7e00)
+ 2008-02-02 11:31:19 KERN: field: &quot;boot method&quot;, type: LONG (0x4c4f4e47):
+ 2008-02-02 11:31:19 KERN:   [ 0] 0 (0x0)
+ 2008-02-02 11:31:19 KERN: field: &quot;boot drive number&quot;, type: LLNG
+ (0x4c4c4e47):
+ 2008-02-02 11:31:19 KERN:   [ 0] 129 (0x81)
+ 2008-02-02 11:31:19 KERN: field: &quot;disk identifier&quot;, type: RAWT
+ (0x52415754):
+ 2008-02-02 11:31:19 KERN:   [ 0] data: &quot;0x804f75c4&quot;, 80 bytes
+ 2008-02-02 11:31:19 KERN: get_boot_partitions(): boot method type: 0
+ 2008-02-02 11:31:19 KERN: partitioning system:
+ partitioning_systems/intel/extended/v1
+ 2008-02-02 11:31:19 KERN:
+ KDiskDeviceManager::_AddDiskSystem(partitioning_systems/intel/extended/v1)
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Load():
+ partitioning_systems/intel/extended/v1 -&gt; 1
+ 2008-02-02 11:31:19 KERN: intel: ep_std_ops(0x1)
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Unload():
+ partitioning_systems/intel/extended/v1 -&gt; 0
+ 2008-02-02 11:31:19 KERN: intel: ep_std_ops(0x2)
+ 2008-02-02 11:31:19 KERN: KDiskDeviceManager::_AddDiskSystem() done: No
+ error
+ 2008-02-02 11:31:19 KERN: partitioning system:
+ partitioning_systems/intel/map/v1
+ 2008-02-02 11:31:19 KERN:
+ KDiskDeviceManager::_AddDiskSystem(partitioning_systems/intel/map/v1)
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Load():
+ partitioning_systems/intel/map/v1 -&gt; 1
+ 2008-02-02 11:31:19 KERN: intel: pm_std_ops(0x1)
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Unload():
+ partitioning_systems/intel/map/v1 -&gt; 0
+ 2008-02-02 11:31:19 KERN: intel: pm_std_ops(0x2)
+ 2008-02-02 11:31:19 KERN: KDiskDeviceManager::_AddDiskSystem() done: No
+ error
+ 2008-02-02 11:31:19 KERN: file system: file_systems/pipefs/v1
+ 2008-02-02 11:31:19 KERN:
+ KDiskDeviceManager::_AddDiskSystem(file_systems/pipefs/v1)
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Load(): file_systems/pipefs/v1 -&gt; 1
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Unload(): file_systems/pipefs/v1 -&gt;
+ 0
+ 2008-02-02 11:31:19 KERN: KDiskDeviceManager::_AddDiskSystem() done: No
+ error
+ 2008-02-02 11:31:19 KERN: file system: file_systems/bfs/v1
+ 2008-02-02 11:31:19 KERN:
+ KDiskDeviceManager::_AddDiskSystem(file_systems/bfs/v1)
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Load(): file_systems/bfs/v1 -&gt; 1
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Unload(): file_systems/bfs/v1 -&gt; 0
+ 2008-02-02 11:31:19 KERN: KDiskDeviceManager::_AddDiskSystem() done: No
+ error
+ 2008-02-02 11:31:19 KERN: file system: file_systems/devfs/v1
+ 2008-02-02 11:31:19 KERN:
+ KDiskDeviceManager::_AddDiskSystem(file_systems/devfs/v1)
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Load(): file_systems/devfs/v1 -&gt; 1
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Unload(): file_systems/devfs/v1 -&gt;
+ 0
+ 2008-02-02 11:31:19 KERN: KDiskDeviceManager::_AddDiskSystem() done: No
+ error
+ 2008-02-02 11:31:19 KERN: file system: file_systems/rootfs/v1
+ 2008-02-02 11:31:19 KERN:
+ KDiskDeviceManager::_AddDiskSystem(file_systems/rootfs/v1)
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Load(): file_systems/rootfs/v1 -&gt; 1
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Unload(): file_systems/rootfs/v1 -&gt;
+ 0
+ 2008-02-02 11:31:19 KERN: KDiskDeviceManager::_AddDiskSystem() done: No
+ error
+ 2008-02-02 11:31:19 KERN: number of disk systems: 6
+ 2008-02-02 11:31:19 KERN: KDiskDeviceManager::_Scan(/dev/disk)
+ 2008-02-02 11:31:19 KERN: [35mahci:[0m ahci_get_supported_paths
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module busses/scsi/ahci/device_v1 to
+ list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/legacy_sata/device_v1 to list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/silicon_image_3112/device_v1 to list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/ide!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/generic_ide_pci/device_v1 to list
+ 2008-02-02 11:31:19 KERN: has connection? yes
+ 2008-02-02 11:31:19 KERN: [35mahci:[0m ahci_supports_device
+ 2008-02-02 11:31:19 KERN: module: busses/scsi/ahci/device_v1, support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/legacy_sata/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/silicon_image_3112/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/generic_ide_pci/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: free busses/scsi/ahci/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/legacy_sata/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/silicon_image_3112/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/generic_ide_pci/device_v1
+ 2008-02-02 11:31:19 KERN: [35mahci:[0m ahci_get_supported_paths
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module busses/scsi/ahci/device_v1 to
+ list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/legacy_sata/device_v1 to list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/silicon_image_3112/device_v1 to list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/ide!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/generic_ide_pci/device_v1 to list
+ 2008-02-02 11:31:19 KERN: has connection? yes
+ 2008-02-02 11:31:19 KERN: [35mahci:[0m ahci_supports_device
+ 2008-02-02 11:31:19 KERN: module: busses/scsi/ahci/device_v1, support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/legacy_sata/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/silicon_image_3112/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/generic_ide_pci/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: free busses/scsi/ahci/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/legacy_sata/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/silicon_image_3112/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/generic_ide_pci/device_v1
+ 2008-02-02 11:31:19 KERN: [35mahci:[0m ahci_get_supported_paths
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module busses/scsi/ahci/device_v1 to
+ list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/legacy_sata/device_v1 to list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/silicon_image_3112/device_v1 to list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/ide!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/generic_ide_pci/device_v1 to list
+ 2008-02-02 11:31:19 KERN: has connection? yes
+ 2008-02-02 11:31:19 KERN: [35mahci:[0m ahci_supports_device
+ 2008-02-02 11:31:19 KERN: module: busses/scsi/ahci/device_v1, support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/legacy_sata/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/2008-02-02 11:31:19 KERN:
+ silicon_image_3112/device_v1, support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/generic_ide_pci/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: free busses/scsi/ahci/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/legacy_sata/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/silicon_image_3112/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/generic_ide_pci/device_v1
+ 2008-02-02 11:31:19 KERN: [35mahci:[0m ahci_get_supported_paths
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module busses/scsi/ahci/device_v1 to
+ list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/legacy_sata/device_v1 to list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/silicon_image_3112/device_v1 to list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/ide!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/generic_ide_pci/device_v1 to list
+ 2008-02-02 11:31:19 KERN: has connection? yes
+ 2008-02-02 11:31:19 KERN: [35mahci:[0m ahci_supports_device
+ 2008-02-02 11:31:19 KERN: module: busses/scsi/ahci/device_v1, support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/legacy_sata/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/silicon_image_3112/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/generic_ide_pci/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: free busses/scsi/ahci/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/legacy_sata/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/silicon_image_3112/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/generic_ide_pci/device_v1
+ 2008-02-02 11:31:19 KERN: [35mahci:[0m ahci_get_supported_paths
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module busses/scsi/ahci/device_v1 to
+ list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/legacy_sata/device_v1 to list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/silicon_image_3112/device_v1 to list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/ide!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/generic_ide_pci/device_v1 to list
+ 2008-02-02 11:31:19 KERN: has connection? yes
+ 2008-02-02 11:31:19 KERN: [35mahci:[0m ahci_supports_device
+ 2008-02-02 11:31:19 KERN: module: busses/scsi/ahci/device_v1, support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/legacy_sata/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/silicon_image_3112/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/generic_ide_pci/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: free busses/scsi/ahci/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/legacy_sata/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/silicon_image_3112/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/generic_ide_pci/device_v1
+ 2008-02-02 11:31:19 KERN: [35mahci:[0m ahci_get_supported_paths
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module busses/scsi/ahci/device_v1 to
+ list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/legacy_sata/device_v1 to list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/silicon_image_3112/device_v1 to list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/ide!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/generic_ide_pci/device_v1 to list
+ 2008-02-02 11:31:19 KERN: has connection? yes
+ 2008-02-02 11:31:19 KERN: [35mahci:[0m ahci_supports_device
+ 2008-02-02 11:31:19 KERN: module: busses/scsi/ahci/device_v1, support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/legacy_sata/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/silicon_image_3112/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/generic_ide_pci/device_v1,
+ support: 0.3
+ 2008-02-02 11:31:19 KERN: PCI-IDE: Controller in legacy mode: cmd 0x1f0,
+ ctrl 0x3f6, irq 14
+ 2008-02-02 11:31:19 KERN: PCI-IDE: init channel...
+ 2008-02-02 11:31:19 KERN: PCI-IDE: bus   0, device  9, function  0: vendor
+ 10de, device 0065
+ 2008-02-02 11:31:19 KERN: PCI-IDE: channel index 0
+ 2008-02-02 11:31:19 KERN: PCI-IDE: bus master base 0xf000
+ 2008-02-02 11:31:19 KERN: PCI-IDE: init channel done
+ 2008-02-02 11:31:19 KERN: IDE: scan_device_worker: bus 0x90a10700, device-
+ number 0
+ 2008-02-02 11:31:19 KERN: IDE: create_device: bus 0x90a10700, device-
+ number 0
+ 2008-02-02 11:31:19 KERN: IDE: setup_device_links: bus 0x90a10700, device
+ 0x90a03400
+ 2008-02-02 11:31:19 KERN: IDE: scan_device_int: device 0x90a03400, atapi 0
+ 2008-02-02 11:31:19 KERN: IDE: scan_device_int: waiting 100ms...
+ 2008-02-02 11:31:19 KERN: IDE: scan_device_int: got a fast response
+ 2008-02-02 11:31:19 KERN: IDE: scan_device_int: device found
+ 2008-02-02 11:31:19 KERN: IDE: scan_device_worker: bus 0x90a10700, device-
+ number 1
+ 2008-02-02 11:31:19 KERN: IDE: create_device: bus 0x90a10700, device-
+ number 1
+ 2008-02-02 11:31:19 KERN: IDE: setup_device_links: bus 0x90a10700, device
+ 0x90a03800
+ 2008-02-02 11:31:19 KERN: IDE: scan_device_int: device 0x90a03800, atapi 0
+ 2008-02-02 11:31:19 KERN: IDE: scan_device_int: waiting 100ms...
+ 2008-02-02 11:31:19 KERN: IDE: scan_device_int: got a fast response
+ 2008-02-02 11:31:19 KERN: IDE: scan_device_int: device found
+ 2008-02-02 11:31:19 KERN: INIT: main: done... begin idle loop on cpu 0
+ 2008-02-02 11:31:19 KERN: IDE: scan_device_worker: bus 0x90a10700, device-
+ number 0
+ 2008-02-02 11:31:19 KERN: IDE: destroy_device: device 0x90a03400
+ 2008-02-02 11:31:19 KERN: IDE: cleanup_device_links: device 0x90a03400
+ 2008-02-02 11:31:19 KERN: IDE: create_device: bus 0x90a10700, device-
+ number 0
+ 2008-02-02 11:31:19 KERN: IDE: setup_device_links: bus 0x90a10700, device
+ 0x90a03400
+ 2008-02-02 11:31:19 KERN: IDE: scan_device_int: device 0x90a03400, atapi 0
+ 2008-02-02 11:31:19 KERN: IDE: scan_device_int: waiting 100ms...
+ 2008-02-02 11:31:19 KERN: IDE: scan_device_int: got a fast response
+ 2008-02-02 11:31:19 KERN: IDE: scan_device_int: device found
+ 2008-02-02 11:31:19 KERN: IDE: scan_device_worker: bus 0x90a10700, device-
+ number 1
+ 2008-02-02 11:31:19 KERN: IDE: destroy_device: device 0x90a03800
+ 2008-02-02 11:31:19 KERN: IDE: cleanup_device_links: device 0x90a03800
+ 2008-02-02 11:31:19 KERN: IDE: create_device: bus 0x90a10700, device-
+ number 1
+ 2008-02-02 11:31:19 KERN: IDE: setup_device_links: bus 0x90a10700, device
+ 0x90a03800
+ 2008-02-02 11:31:19 KERN: IDE: scan_device_int: device 0x90a03800, atapi 0
+ 2008-02-02 11:31:19 KERN: IDE: scan_device_int: waiting 100ms...
+ 2008-02-02 11:31:19 KERN: IDE: scan_device_int: got a fast response
+ 2008-02-02 11:31:19 KERN: IDE: scan_device_int: device found
+ 2008-02-02 11:31:19 KERN:       found scsi!!
+ 2008-02-02 11:31:19 KERN:       add module
+ drivers/disk/scsi/scsi_dsk/device_v1 to list
+ 2008-02-02 11:31:19 KERN: [35mahci:[0m ahci_get_supported_paths
+ 2008-02-02 11:31:19 KERN:       found scsi!!
+ 2008-02-02 11:31:19 KERN:       add module
+ drivers/disk/scsi/scsi_cd/device_v1 to list
+ 2008-02-02 11:31:19 KERN: has connection? yes
+ 2008-02-02 11:31:19 KERN: module: drivers/disk/scsi/scsi_dsk/device_v1,
+ support: 0.6
+ 2008-02-02 11:31:19 KERN: module: drivers/disk/scsi/scsi_cd/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: tried best module:
+ drivers/disk/scsi/scsi_dsk/device_v1: No error
+ 2008-02-02 11:31:19 KERN: free drivers/disk/scsi/scsi_cd/device_v1
+ 2008-02-02 11:31:19 KERN:       found scsi!!
+ 2008-02-02 11:31:19 KERN:       add module
+ drivers/disk/scsi/scsi_dsk/device_v1 to list
+ 2008-02-02 11:31:19 KERN: [35mahci:[0m ahci_get_supported_paths
+ 2008-02-02 11:31:19 KERN:       found scsi!!
+ 2008-02-02 11:31:19 KERN:       add module
+ drivers/disk/scsi/scsi_cd/device_v1 to list
+ 2008-02-02 11:31:19 KERN: has connection? yes
+ 2008-02-02 11:31:19 KERN: module: drivers/disk/scsi/scsi_dsk/device_v1,
+ support: 0.6
+ 2008-02-02 11:31:19 KERN: module: drivers/disk/scsi/scsi_cd/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: tried best module:
+ drivers/disk/scsi/scsi_dsk/device_v1: No error
+ 2008-02-02 11:31:19 KERN: free drivers/disk/scsi/scsi_cd/device_v1
+ 2008-02-02 11:31:19 KERN: PCI-IDE: Controller in legacy mode: cmd 0x170,
+ ctrl 0x376, irq 15
+ 2008-02-02 11:31:19 KERN: PCI-IDE: init channel...
+ 2008-02-02 11:31:19 KERN: PCI-IDE: bus   0, device  9, function  0: vendor
+ 10de, device 0065
+ 2008-02-02 11:31:19 KERN: PCI-IDE: channel index 1
+ 2008-02-02 11:31:19 KERN: PCI-IDE: bus master base 0xf008
+ 2008-02-02 11:31:19 KERN: PCI-IDE: init channel done
+ 2008-02-02 11:31:19 KERN: IDE: scan_device_worker: bus 0x90a10900, device-
+ number 0
+ 2008-02-02 11:31:19 KERN: IDE: create_device: bus 0x90a10900, device-
+ number 0
+ 2008-02-02 11:31:19 KERN: IDE: setup_device_links: bus 0x90a10900, device
+ 0x90a03c00
+ 2008-02-02 11:31:19 KERN: IDE: scan_device_int: device 0x90a03c00, atapi 0
+ 2008-02-02 11:31:19 KERN: IDE: scan_device_int: waiting 100ms...
+ 2008-02-02 11:31:19 KERN: IDE: scan_device_int: no fast response to
+ inquiry
+ 2008-02-02 11:31:19 KERN: IDE: scan_device_int: status 0x7f
+ 2008-02-02 11:31:19 KERN: IDE: scan_device_int: busy bit not set after
+ 100ms - probably noone there
+ 2008-02-02 11:31:19 KERN: IDE: scan_device_int: aborting because busy bit
+ not set
+ 2008-02-02 11:31:19 KERN: IDE: scan_device_int: device 0x90a03c00, atapi 1
+ 2008-02-02 11:31:19 KERN: ide: reset_device() device 0x90a03c00
+ 2008-02-02 11:31:19 KERN: ide: reset_device() device 0x90a03c00 failed,
+ calling reset_bus
+ 2008-02-02 11:31:19 KERN: ide: reset_bus() device 0x90a03c00, bus
+ 0x90a10900
+ 2008-02-02 11:31:19 KERN: ide: reset_bus() device 0x90a03c00, bus
+ 0x90a10900 success
+ 2008-02-02 11:31:19 KERN: ide: reset_device() device 0x90a03c00
+ 2008-02-02 11:31:19 KERN: ide: reset_device() device 0x90a03c00 failed,
+ calling reset_bus
+ 2008-02-02 11:31:19 KERN: ide: reset_bus() device 0x90a03c00, bus
+ 0x90a10900
+ 2008-02-02 11:31:19 KERN: ide: reset_bus() device 0x90a03c00, bus
+ 0x90a10900 success
+ 2008-02-02 11:31:19 KERN: IDE: scan_device_int: send_command failed
+ 2008-02-02 11:31:19 KERN: IDE: destroy_device: device 0x90a03c00
+ 2008-02-02 11:31:19 KERN: IDE: cleanup_device_links: device 0x90a03c00
+ 2008-02-02 11:31:19 KERN: IDE: scan_device_worker: bus 0x90a10900, device-
+ number 1
+ 2008-02-02 11:31:19 KERN: IDE: create_device: bus 0x90a10900, device-
+ number 1
+ 2008-02-02 11:31:19 KERN: IDE: setup_device_links: bus 0x90a10900, device
+ 0x90a03c00
+ 2008-02-02 11:31:19 KERN: IDE: scan_device_int: device 0x90a03c00, atapi 0
+ 2008-02-02 11:31:19 KERN: IDE: scan_device_int: waiting 100ms...
+ 2008-02-02 11:31:19 KERN: IDE: scan_device_int: got a fast response
+ 2008-02-02 11:31:19 KERN: IDE: scan_device_int: device found
+ 2008-02-02 11:31:19 KERN: IDE: scan_device_worker: bus 0x90a10900, device-
+ number 0
+ 2008-02-02 11:31:19 KERN: IDE: create_device: bus 0x90a10900, device-
+ number 0
+ 2008-02-02 11:31:19 KERN: IDE: setup_device_links: bus 0x90a10900, device
+ 0x90a22000
+ 2008-02-02 11:31:19 KERN: IDE: scan_device_int: device 0x90a22000, atapi 0
+ 2008-02-02 11:31:19 KERN: ide: reset_device() device 0x90a22000
+ 2008-02-02 11:31:19 KERN: ide: reset_device() device 0x90a22000 failed,
+ calling reset_bus
+ 2008-02-02 11:31:19 KERN: ide: reset_bus() device 0x90a22000, bus
+ 0x90a10900
+ 2008-02-02 11:31:19 KERN: ide: reset_bus() device 0x90a22000, bus
+ 0x90a10900 success
+ 2008-02-02 11:31:19 KERN: ide: reset_device() device 0x90a22000
+ 2008-02-02 11:31:19 KERN: ide: reset_device() device 0x90a22000 failed,
+ calling reset_bus
+ 2008-02-02 11:31:19 KERN: ide: reset_bus() device 0x90a22000, bus
+ 0x90a10900
+ 2008-02-02 11:31:19 KERN: ide: reset_bus() device 0x90a22000, bus
+ 0x90a10900 success
+ 2008-02-02 11:31:19 KERN: IDE: scan_device_int: send_command failed
+ 2008-02-02 11:31:19 KERN: IDE: scan_device_int: device 0x90a22000, atapi 1
+ 2008-02-02 11:31:19 KERN: ide: reset_device() device 0x90a22000
+ 2008-02-02 11:31:19 KERN: ide: reset_device() device 0x90a22000 failed,
+ calling reset_bus
+ 2008-02-02 11:31:19 KERN: ide: reset_bus() device 0x90a22000, bus
+ 0x90a10900
+ 2008-02-02 11:31:19 KERN: ide: reset_bus() device 0x90a22000, bus
+ 0x90a10900 success
+ 2008-02-02 11:31:19 KERN: ide: reset_device() device 0x90a22000
+ 2008-02-02 11:31:19 KERN: ide: reset_device() device 0x90a22000 failed,
+ calling reset_bus
+ 2008-02-02 11:31:19 KERN: ide: reset_bus() device 0x90a22000, bus
+ 0x90a10900
+ 2008-02-02 11:31:19 KERN: ide: reset_bus() device 0x90a22000, bus
+ 0x90a10900 success
+ 2008-02-02 11:31:19 KERN: IDE: scan_device_int: sen2008-02-02 11:31:19
+ KERN: d_command failed
+ 2008-02-02 11:31:19 KERN: IDE: destroy_device: device 0x90a22000
+ 2008-02-02 11:31:19 KERN: IDE: cleanup_device_links: device 0x90a22000
+ 2008-02-02 11:31:19 KERN: IDE: scan_device_worker: bus 0x90a10900, device-
+ number 1
+ 2008-02-02 11:31:19 KERN: IDE: destroy_device: device 0x90a03c00
+ 2008-02-02 11:31:19 KERN: IDE: cleanup_device_links: device 0x90a03c00
+ 2008-02-02 11:31:19 KERN: IDE: create_device: bus 0x90a10900, device-
+ number 1
+ 2008-02-02 11:31:19 KERN: IDE: setup_device_links: bus 0x90a10900, device
+ 0x90a03c00
+ 2008-02-02 11:31:19 KERN: IDE: scan_device_int: device 0x90a03c00, atapi 0
+ 2008-02-02 11:31:19 KERN: IDE: scan_device_int: waiting 100ms...
+ 2008-02-02 11:31:19 KERN: IDE: scan_device_int: got a fast response
+ 2008-02-02 11:31:19 KERN: IDE: scan_device_int: device found
+ 2008-02-02 11:31:19 KERN:       found scsi!!
+ 2008-02-02 11:31:19 KERN:       add module
+ drivers/disk/scsi/scsi_dsk/device_v1 to list
+ 2008-02-02 11:31:19 KERN: [35mahci:[0m ahci_get_supported_paths
+ 2008-02-02 11:31:19 KERN:       found scsi!!
+ 2008-02-02 11:31:19 KERN:       add module
+ drivers/disk/scsi/scsi_cd/device_v1 to list
+ 2008-02-02 11:31:19 KERN: has connection? yes
+ 2008-02-02 11:31:19 KERN: module: drivers/disk/scsi/scsi_dsk/device_v1,
+ support: 0.6
+ 2008-02-02 11:31:19 KERN: module: drivers/disk/scsi/scsi_cd/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: tried best module:
+ drivers/disk/scsi/scsi_dsk/device_v1: No error
+ 2008-02-02 11:31:19 KERN: free drivers/disk/scsi/scsi_cd/device_v1
+ 2008-02-02 11:31:19 KERN: tried best module:
+ busses/ide/generic_ide_pci/device_v1: No error
+ 2008-02-02 11:31:19 KERN: free busses/scsi/ahci/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/legacy_sata/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/silicon_image_3112/device_v1
+ 2008-02-02 11:31:19 KERN: [35mahci:[0m ahci_get_supported_paths
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module busses/scsi/ahci/device_v1 to
+ list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/legacy_sata/device_v1 to list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/silicon_image_3112/device_v1 to list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/ide!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/generic_ide_pci/device_v1 to list
+ 2008-02-02 11:31:19 KERN: has connection? yes
+ 2008-02-02 11:31:19 KERN: [35mahci:[0m ahci_supports_device
+ 2008-02-02 11:31:19 KERN: module: busses/scsi/ahci/device_v1, support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/legacy_sata/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/silicon_image_3112/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/generic_ide_pci/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: free busses/scsi/ahci/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/legacy_sata/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/silicon_image_3112/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/generic_ide_pci/device_v1
+ 2008-02-02 11:31:19 KERN: [35mahci:[0m ahci_get_supported_paths
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module busses/scsi/ahci/device_v1 to
+ list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/legacy_sata/device_v1 to list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/silicon_image_3112/device_v1 to list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/ide!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/generic_ide_pci/device_v1 to list
+ 2008-02-02 11:31:19 KERN: has connection? yes
+ 2008-02-02 11:31:19 KERN: [35mahci:[0m ahci_supports_device
+ 2008-02-02 11:31:19 KERN: module: busses/scsi/ahci/device_v1, support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/legacy_sata/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/silicon_image_3112/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/generic_ide_pci/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: free busses/scsi/ahci/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/legacy_sata/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/silicon_image_3112/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/generic_ide_pci/device_v1
+ 2008-02-02 11:31:19 KERN: [35mahci:[0m ahci_get_supported_paths
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module busses/scsi/ahci/device_v1 to
+ list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/legacy_sata/device_v1 to list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/silicon_image_3112/device_v1 to list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/ide!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/generic_ide_pci/device_v1 to list
+ 2008-02-02 11:31:19 KERN: has connection? yes
+ 2008-02-02 11:31:19 KERN: [35mahci:[0m ahci_supports_device
+ 2008-02-02 11:31:19 KERN: module: busses/scsi/ahci/device_v1, support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/legacy_sata/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/silicon_image_3112/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/generic_ide_pci/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: free busses/scsi/ahci/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/legacy_sata/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/silicon_image_3112/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/generic_ide_pci/device_v1
+ 2008-02-02 11:31:19 KERN: [35mahci:[0m ahci_get_supported_paths
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module busses/scsi/ahci/device_v1 to
+ list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/legacy_sata/device_v1 to list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/silicon_image_3112/device_v1 to list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/ide!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/generic_ide_pci/device_v1 to list
+ 2008-02-02 11:31:19 KERN: has connection? yes
+ 2008-02-02 11:31:19 KERN: [35mahci:[0m ahci_supports_device
+ 2008-02-02 11:31:19 KERN: module: busses/scsi/ahci/device_v1, support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/legacy_sata/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/silicon_image_3112/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/generic_ide_pci/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: free busses/scsi/ahci/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/legacy_sata/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/silicon_image_3112/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/generic_ide_pci/device_v1
+ 2008-02-02 11:31:19 KERN: [35mahci:[0m ahci_get_supported_paths
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module busses/scsi/ahci/device_v1 to
+ list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/legacy_sata/device_v1 to list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/silicon_image_3112/device_v1 to list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/ide!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/generic_ide_pci/device_v1 to list
+ 2008-02-02 11:31:19 KERN: has connection? yes
+ 2008-02-02 11:31:19 KERN: [35mahci:[0m ahci_supports_device
+ 2008-02-02 11:31:19 KERN: module: busses/scsi/ahci/device_v1, support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/legacy_sata/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/silicon_image_3112/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/generic_ide_pci/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: free busses/scsi/ahci/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/legacy_sata/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/silicon_image_3112/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/generic_ide_pci/device_v1
+ 2008-02-02 11:31:19 KERN: [35mahci:[0m ahci_get_supported_paths
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module busses/scsi/ahci/device_v1 to
+ list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/legacy_sata/device_v1 to list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/silicon_image_3112/device_v1 to list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/ide!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/generic_ide_pci/device_v1 to list
+ 2008-02-02 11:31:19 KERN: has connection? yes
+ 2008-02-02 11:31:19 KERN: [35mahci:[0m ahci_supports_device
+ 2008-02-02 11:31:19 KERN: module: busses/scsi/ahci/device_v1, support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/legacy_sata/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/silicon_image_3112/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/generic_ide_pci/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: free busses/scsi/ahci/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/legacy_sata/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/silicon_image_3112/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/generic_ide_pci/device_v1
+ 2008-02-02 11:31:19 KERN: [35mahci:[0m ahci_get_supported_paths
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module busses/scsi/ahci/device_v1 to
+ list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/legacy_sata/device_v1 to list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/silicon_image_3112/device_v1 to list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/ide!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/generic_ide_pci/device_v1 to list
+ 2008-02-02 11:31:19 KERN: has connection? yes
+ 2008-02-02 11:31:19 KERN: [35mahci:[0m ahci_supports_device
+ 2008-02-02 11:31:19 KERN: module: busses/scsi/ahci/device_v1, support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/legacy_sata/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/silicon_image_3112/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/generic_ide_pci/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: free busses/scsi/ahci/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/legacy_sata/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/silicon_image_3112/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/generic_ide_pci/device_v1
+ 2008-02-02 11:31:19 KERN: [35mahci:[0m ahci_get_supported_paths
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module busses/scsi/ahci/device_v1 to
+ list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/legacy_sata/device_v1 to list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/silicon_image_3112/device_v1 to list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/ide!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/generic_ide_pci/device_v1 to list
+ 2008-02-02 11:31:19 KERN: has connection? yes
+ 2008-02-02 11:31:19 KERN: [35mahci:[0m ahci_supports_device
+ 2008-02-02 11:31:19 KERN: module: busses/scsi/ahci/device_v1, support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/legacy_sata/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/silicon_image_3112/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/generic_ide_pci/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: free busses/scsi/ahci/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/legacy_sata/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/silicon_image_3112/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/generic_ide_pci/device_v1
+ 2008-02-02 11:31:19 KERN: [35mahci:[0m ahci_get_supported_paths
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module busses/scsi/ahci/device_v1 to
+ 2008-02-02 11:31:19 KERN: list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/legacy_sata/device_v1 to list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/silicon_image_3112/device_v1 to list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/ide!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/generic_ide_pci/device_v1 to list
+ 2008-02-02 11:31:19 KERN: has connection? yes
+ 2008-02-02 11:31:19 KERN: [35mahci:[0m ahci_supports_device
+ 2008-02-02 11:31:19 KERN: module: busses/scsi/ahci/device_v1, support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/legacy_sata/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/silicon_image_3112/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/generic_ide_pci/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: free busses/scsi/ahci/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/legacy_sata/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/silicon_image_3112/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/generic_ide_pci/device_v1
+ 2008-02-02 11:31:19 KERN: [35mahci:[0m ahci_get_supported_paths
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module busses/scsi/ahci/device_v1 to
+ list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/legacy_sata/device_v1 to list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/silicon_image_3112/device_v1 to list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/ide!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/generic_ide_pci/device_v1 to list
+ 2008-02-02 11:31:19 KERN: has connection? yes
+ 2008-02-02 11:31:19 KERN: [35mahci:[0m ahci_supports_device
+ 2008-02-02 11:31:19 KERN: module: busses/scsi/ahci/device_v1, support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/legacy_sata/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/silicon_image_3112/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/generic_ide_pci/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: free busses/scsi/ahci/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/legacy_sata/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/silicon_image_3112/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/generic_ide_pci/device_v1
+ 2008-02-02 11:31:19 KERN: [35mahci:[0m ahci_get_supported_paths
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module busses/scsi/ahci/device_v1 to
+ list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/legacy_sata/device_v1 to list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/silicon_image_3112/device_v1 to list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/ide!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/generic_ide_pci/device_v1 to list
+ 2008-02-02 11:31:19 KERN: has connection? yes
+ 2008-02-02 11:31:19 KERN: [35mahci:[0m ahci_supports_device
+ 2008-02-02 11:31:19 KERN: module: busses/scsi/ahci/device_v1, support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/legacy_sata/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/silicon_image_3112/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/generic_ide_pci/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: free busses/scsi/ahci/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/legacy_sata/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/silicon_image_3112/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/generic_ide_pci/device_v1
+ 2008-02-02 11:31:19 KERN: [35mahci:[0m ahci_get_supported_paths
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module busses/scsi/ahci/device_v1 to
+ list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/legacy_sata/device_v1 to list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/silicon_image_3112/device_v1 to list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/ide!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/generic_ide_pci/device_v1 to list
+ 2008-02-02 11:31:19 KERN: has connection? yes
+ 2008-02-02 11:31:19 KERN: [35mahci:[0m ahci_supports_device
+ 2008-02-02 11:31:19 KERN: module: busses/scsi/ahci/device_v1, support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/legacy_sata/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/silicon_image_3112/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/generic_ide_pci/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: free busses/scsi/ahci/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/legacy_sata/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/silicon_image_3112/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/generic_ide_pci/device_v1
+ 2008-02-02 11:31:19 KERN: [35mahci:[0m ahci_get_supported_paths
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module busses/scsi/ahci/device_v1 to
+ list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/legacy_sata/device_v1 to list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/silicon_image_3112/device_v1 to list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/ide!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/generic_ide_pci/device_v1 to list
+ 2008-02-02 11:31:19 KERN: has connection? yes
+ 2008-02-02 11:31:19 KERN: [35mahci:[0m ahci_supports_device
+ 2008-02-02 11:31:19 KERN: module: busses/scsi/ahci/device_v1, support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/legacy_sata/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/silicon_image_3112/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/generic_ide_pci/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: free busses/scsi/ahci/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/legacy_sata/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/silicon_image_3112/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/generic_ide_pci/device_v1
+ 2008-02-02 11:31:19 KERN: [35mahci:[0m ahci_get_supported_paths
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module busses/scsi/ahci/device_v1 to
+ list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/legacy_sata/device_v1 to list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/silicon_image_3112/device_v1 to list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/ide!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/generic_ide_pci/device_v1 to list
+ 2008-02-02 11:31:19 KERN: has connection? yes
+ 2008-02-02 11:31:19 KERN: [35mahci:[0m ahci_supports_device
+ 2008-02-02 11:31:19 KERN: module: busses/scsi/ahci/device_v1, support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/legacy_sata/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/silicon_image_3112/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/generic_ide_pci/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: free busses/scsi/ahci/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/legacy_sata/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/silicon_image_3112/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/generic_ide_pci/device_v1
+ 2008-02-02 11:31:19 KERN: [35mahci:[0m ahci_get_supported_paths
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module busses/scsi/ahci/device_v1 to
+ list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/legacy_sata/device_v1 to list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/silicon_image_3112/device_v1 to list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/ide!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/generic_ide_pci/device_v1 to list
+ 2008-02-02 11:31:19 KERN: has connection? yes
+ 2008-02-02 11:31:19 KERN: [35mahci:[0m ahci_supports_device
+ 2008-02-02 11:31:19 KERN: module: busses/scsi/ahci/device_v1, support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/legacy_sata/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/silicon_image_3112/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/generic_ide_pci/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: free busses/scsi/ahci/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/legacy_sata/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/silicon_image_3112/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/generic_ide_pci/device_v1
+ 2008-02-02 11:31:19 KERN: [35mahci:[0m ahci_get_supported_paths
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module busses/scsi/ahci/device_v1 to
+ list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/legacy_sata/device_v1 to list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/sata!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/silicon_image_3112/device_v1 to list
+ 2008-02-02 11:31:19 KERN:       found pci!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/ide!!
+ 2008-02-02 11:31:19 KERN:       add module
+ busses/ide/generic_ide_pci/device_v1 to list
+ 2008-02-02 11:31:19 KERN: has connection? yes
+ 2008-02-02 11:31:19 KERN: [35mahci:[0m ahci_supports_device
+ 2008-02-02 11:31:19 KERN: module: busses/scsi/ahci/device_v1, support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/legacy_sata/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/silicon_image_3112/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: module: busses/ide/generic_ide_pci/device_v1,
+ support: 0
+ 2008-02-02 11:31:19 KERN: free busses/scsi/ahci/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/legacy_sata/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/silicon_image_3112/device_v1
+ 2008-02-02 11:31:19 KERN: free busses/ide/generic_ide_pci/device_v1
+ 2008-02-02 11:31:19 KERN: [35mahci:[0m ahci_get_supported_paths
+ 2008-02-02 11:31:19 KERN:       found isa!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/ide!!
+ 2008-02-02 11:31:19 KERN:       add module busses/ide/ide_isa/device_v1 to
+ list
+ 2008-02-02 11:31:19 KERN: has connection? yes
+ 2008-02-02 11:31:19 KERN: module: busses/ide/ide_isa/device_v1, support:
+ 0.6
+ 2008-02-02 11:31:19 KERN: ISA-IDE: can't acquire resources 0x1f0 and 0x3f6
+ 2008-02-02 11:31:19 KERN: ISA-IDE: can't acquire resources 0x170 and 0x376
+ 2008-02-02 11:31:19 KERN: tried best module: busses/ide/ide_isa/device_v1:
+ No error
+ 2008-02-02 11:31:19 KERN: [35mahci:[0m ahci_get_supported_paths
+ 2008-02-02 11:31:19 KERN:       found isa!!
+ 2008-02-02 11:31:19 KERN:       found drivers/dev/disk/ide!!
+ 2008-02-02 11:31:19 KERN:       add module busses/ide/ide_isa/device_v1 to
+ list
+ 2008-02-02 11:31:19 KERN: has connection? yes
+ 2008-02-02 11:31:19 KERN: module: busses/ide/ide_isa/device_v1, support:
+ 0.6
+ 2008-02-02 11:31:19 KERN: ISA-IDE: can't acquire resources 0x1f0 and 0x3f6
+ 2008-02-02 11:31:19 KERN: ISA-IDE: can't acquire resources 0x170 and 0x376
+ 2008-02-02 11:31:19 KERN: tried best module: busses/ide/ide_isa/device_v1:
+ No error
+ 2008-02-02 11:31:19 KERN: KDiskDeviceManager::_Scan(/dev/disk/ata)
+ 2008-02-02 11:31:19 KERN: [35mahci:[0m ahci_get_supported_paths
+ 2008-02-02 11:31:19 KERN:       found isa!!
+ 2008-02-02 11:31:19 KERN: has connection? yes
+ 2008-02-02 11:31:19 KERN: KDiskDeviceManager::_Scan(/dev/disk/ata/0)
+ 2008-02-02 11:31:19 KERN: [35mahci:[0m ahci_get_supported_paths
+ 2008-02-02 11:31:19 KERN:       found isa!!
+ 2008-02-02 11:31:19 KERN: has connection? yes
+ 2008-02-02 11:31:19 KERN:
+ KDiskDeviceManager::_Scan(/dev/disk/ata/0/master)
+ 2008-02-02 11:31:19 KERN: [35mahci:[0m ahci_get_supported_paths
+ 2008-02-02 11:31:19 KERN:       found isa!!
+ 2008-02-02 11:31:19 KERN: has connection? yes
+ 2008-02-02 11:31:19 KERN:
+ KDiskDeviceManager::_Scan(/dev/disk/ata/0/master/raw)
+ 2008-02-02 11:31:19 KERN:   found device: /dev/disk/ata/0/master/raw
+ 2008-02-02 11:31:19 KERN: KDiskDeviceManager::_Scan(/dev/disk/ata/0/slave)
+ 2008-02-02 11:31:19 KERN: [35mahci:[0m ahci_get_supported_paths
+ 2008-02-02 11:31:19 KERN:       found isa!!
+ 2008-02-02 11:31:19 KERN: has connection? yes
+ 2008-02-02 11:31:19 KERN:
+ KDiskDeviceManager::_Scan(/dev/disk/ata/0/slave/raw)
+ 2008-02-02 11:31:19 KERN:   found device: /dev/disk/ata/02008-02-02
+ 11:31:19 KERN: /slave/raw
+ 2008-02-02 11:31:19 KERN: KDiskDeviceManager::_Scan(/dev/disk/ata/1)
+ 2008-02-02 11:31:19 KERN: [35mahci:[0m ahci_get_supported_paths
+ 2008-02-02 11:31:19 KERN:       found isa!!
+ 2008-02-02 11:31:19 KERN: has connection? yes
+ 2008-02-02 11:31:19 KERN: KDiskDeviceManager::_Scan(/dev/disk/ata/1/slave)
+ 2008-02-02 11:31:19 KERN: [35mahci:[0m ahci_get_supported_paths
+ 2008-02-02 11:31:19 KERN:       found isa!!
+ 2008-02-02 11:31:19 KERN: has connection? yes
+ 2008-02-02 11:31:19 KERN:
+ KDiskDeviceManager::_Scan(/dev/disk/ata/1/slave/raw)
+ 2008-02-02 11:31:19 KERN:   found device: /dev/disk/ata/1/slave/raw
+ 2008-02-02 11:31:19 KERN:
+ KDiskDeviceManager::_ScanPartition(/dev/disk/ata/0/master/raw)
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Load():
+ partitioning_systems/intel/extended/v1 -&gt; 1
+ 2008-02-02 11:31:19 KERN: intel: ep_std_ops(0x1)
+ 2008-02-02 11:31:19 KERN:   trying: partitioning_systems/intel/extended/v1
+ 2008-02-02 11:31:19 KERN:   returned: -1000/1000
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Unload():
+ partitioning_systems/intel/extended/v1 -&gt; 0
+ 2008-02-02 11:31:19 KERN: intel: ep_std_ops(0x2)
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Load():
+ partitioning_systems/intel/map/v1 -&gt; 1
+ 2008-02-02 11:31:19 KERN: intel: pm_std_ops(0x1)
+ 2008-02-02 11:31:19 KERN:   trying: partitioning_systems/intel/map/v1
+ 2008-02-02 11:31:19 KERN: intel: pm_identify_partition(0, 0: 0,
+ 250059350016, 512)
+ 2008-02-02 11:31:19 KERN: Partition::SetTo(): active: 0
+ Last message repeated 1 time
+ 2008-02-02 11:31:19 KERN: Partition::SetTo(): active: 80
+ 2008-02-02 11:31:19 KERN: Partition::SetTo(): active: 0
+ 2008-02-02 11:31:19 KERN: Last message repeated 3 times.
+ 2008-02-02 11:31:19 KERN:   returned: 810/1000
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Load(): file_systems/pipefs/v1 -&gt; 1
+ 2008-02-02 11:31:19 KERN:   trying: file_systems/pipefs/v1
+ 2008-02-02 11:31:19 KERN:   returned: -1000/1000
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Unload(): file_systems/pipefs/v1 -&gt;
+ 0
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Load(): file_systems/bfs/v1 -&gt; 1
+ 2008-02-02 11:31:19 KERN:   trying: file_systems/bfs/v1
+ 2008-02-02 11:31:19 KERN:   returned: -2147483648/1000
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Unload(): file_systems/bfs/v1 -&gt; 0
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Load(): file_systems/devfs/v1 -&gt; 1
+ 2008-02-02 11:31:19 KERN:   trying: file_systems/devfs/v1
+ 2008-02-02 11:31:19 KERN:   returned: -1000/1000
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Unload(): file_systems/devfs/v1 -&gt;
+ 0
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Load(): file_systems/rootfs/v1 -&gt; 1
+ 2008-02-02 11:31:19 KERN:   trying: file_systems/rootfs/v1
+ 2008-02-02 11:31:19 KERN:   returned: -1000/1000
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Unload(): file_systems/rootfs/v1 -&gt;
+ 0
+ 2008-02-02 11:31:19 KERN:   scanning with:
+ partitioning_systems/intel/map/v1
+ 2008-02-02 11:31:19 KERN: intel: pm_scan_partition(0, 0: 0, 250059350016,
+ 512)
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Load():
+ partitioning_systems/intel/map/v1 -&gt; 2
+ 2008-02-02 11:31:19 KERN:
+ KDiskDeviceManager::_ScanPartition(/dev/disk/ata/0/master/0)
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Load():
+ partitioning_systems/intel/extended/v1 -&gt; 1
+ 2008-02-02 11:31:19 KERN: intel: ep_std_ops(0x1)
+ 2008-02-02 11:31:19 KERN:   trying: partitioning_systems/intel/extended/v1
+ 2008-02-02 11:31:19 KERN: intel: ep_identify_partition(0, 32256,
+ 52288072704, 512)
+ 2008-02-02 11:31:19 KERN:   returned: -1000/1000
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Unload():
+ partitioning_systems/intel/extended/v1 -&gt; 0
+ 2008-02-02 11:31:19 KERN: intel: ep_std_ops(0x2)
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Load():
+ partitioning_systems/intel/map/v1 -&gt; 3
+ 2008-02-02 11:31:19 KERN:   trying: partitioning_systems/intel/map/v1
+ 2008-02-02 11:31:19 KERN: intel: pm_identify_partition(0, 3: 32256,
+ 52288072704, 512)
+ 2008-02-02 11:31:19 KERN: Partition::SetTo(): active: 72
+ 2008-02-02 11:31:19 KERN: intel: _ParsePrimary(): partition 0: bad
+ location, ignoring
+ 2008-02-02 11:31:19 KERN: Partition::SetTo(): active: 43
+ 2008-02-02 11:31:19 KERN: intel: _ParsePrimary(): partition 1: bad
+ location, ignoring
+ 2008-02-02 11:31:19 KERN: Partition::SetTo(): active: 20
+ 2008-02-02 11:31:19 KERN: Partition::SetTo(): active: 0
+ 2008-02-02 11:31:19 KERN: intel: _ParsePrimary(): partition 3: bad
+ location, ignoring
+ 2008-02-02 11:31:19 KERN:   returned: 100/1000
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Load(): file_systems/pipefs/v1 -&gt; 1
+ 2008-02-02 11:31:19 KERN:   trying: file_systems/pipefs/v1
+ 2008-02-02 11:31:19 KERN:   returned: -1000/1000
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Unload(): file_systems/pipefs/v1 -&gt;
+ 0
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Load(): file_systems/bfs/v1 -&gt; 1
+ 2008-02-02 11:31:19 KERN:   trying: file_systems/bfs/v1
+ 2008-02-02 11:31:19 KERN:   returned: -2147483648/1000
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Unload(): file_systems/bfs/v1 -&gt; 0
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Load(): file_systems/devfs/v1 -&gt; 1
+ 2008-02-02 11:31:19 KERN:   trying: file_systems/devfs/v1
+ 2008-02-02 11:31:19 KERN:   returned: -1000/1000
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Unload(): file_systems/devfs/v1 -&gt;
+ 0
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Load(): file_systems/rootfs/v1 -&gt; 1
+ 2008-02-02 11:31:19 KERN:   trying: file_systems/rootfs/v1
+ 2008-02-02 11:31:19 KERN:   returned: -1000/1000
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Unload(): file_systems/rootfs/v1 -&gt;
+ 0
+ 2008-02-02 11:31:19 KERN:   scanning with:
+ partitioning_systems/intel/map/v1
+ 2008-02-02 11:31:19 KERN: intel: pm_scan_partition(0, 3: 32256,
+ 52288072704, 512)
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Load():
+ partitioning_systems/intel/map/v1 -&gt; 4
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Unload():
+ partitioning_systems/intel/map/v1 -&gt; 3
+ 2008-02-02 11:31:19 KERN:
+ KDiskDeviceManager::_ScanPartition(/dev/disk/ata/0/master/1)
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Load():
+ partitioning_systems/intel/extended/v1 -&gt; 1
+ 2008-02-02 11:31:19 KERN: intel: ep_std_ops(0x1)
+ 2008-02-02 11:31:19 KERN:   trying: partitioning_systems/intel/extended/v1
+ 2008-02-02 11:31:19 KERN: intel: ep_identify_partition(0, 52288104960,
+ 148055040, 512)
+ 2008-02-02 11:31:19 KERN:   returned: -1000/1000
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Unload():
+ partitioning_systems/intel/extended/v1 -&gt; 0
+ 2008-02-02 11:31:19 KERN: intel: ep_std_ops(0x2)
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Load():
+ partitioning_systems/intel/map/v1 -&gt; 4
+ 2008-02-02 11:31:19 KERN:   trying: partitioning_systems/intel/map/v1
+ 2008-02-02 11:31:19 KERN: intel: pm_identify_partition(0, 4: 52288104960,
+ 148055040, 512)
+ 2008-02-02 11:31:19 KERN: intel: _ParsePrimary(): invalid PTS signature
+ 2008-02-02 11:31:19 KERN:   returned: -1000/1000
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Unload():
+ partitioning_systems/intel/map/v1 -&gt; 3
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Load(): file_systems/pipefs/v1 -&gt; 1
+ 2008-02-02 11:31:19 KERN:   trying: file_systems/pipefs/v1
+ 2008-02-02 11:31:19 KERN:   returned: -1000/1000
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Unload(): file_systems/pipefs/v1 -&gt;
+ 0
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Load(): file_systems/bfs/v1 -&gt; 1
+ 2008-02-02 11:31:19 KERN:   trying: file_systems/bfs/v1
+ 2008-02-02 11:31:19 KERN:   returned: -2147483648/1000
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Unload(): file_systems/bfs/v1 -&gt; 0
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Load(): file_systems/devfs/v1 -&gt; 1
+ 2008-02-02 11:31:19 KERN:   trying: file_systems/devfs/v1
+ 2008-02-02 11:31:19 KERN:   returned: -1000/1000
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Unload(): file_systems/devfs/v1 -&gt;
+ 0
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Load(): file_systems/rootfs/v1 -&gt; 1
+ 2008-02-02 11:31:19 KERN:   trying: file_systems/rootfs/v1
+ 2008-02-02 11:31:19 KERN:   returned: -1000/1000
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Unload(): file_systems/rootfs/v1 -&gt;
+ 0
+ 2008-02-02 11:31:19 KERN:
+ KDiskDeviceManager::_ScanPartition(/dev/disk/ata/0/master/2)
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Load():
+ partitioning_systems/intel/extended/v1 -&gt; 1
+ 2008-02-02 11:31:19 KERN: intel: ep_std_ops(0x1)
+ 2008-02-02 11:31:19 KERN:   trying: partitioning_systems/intel/extended/v1
+ 2008-02-02 11:31:19 KERN: intel: ep_identify_partition(0, 52436160000,
+ 52773396480, 512)
+ 2008-02-02 11:31:19 KERN:   returned: -1000/1000
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Unload():
+ partitioning_systems/intel/extended/v1 -&gt; 0
+ 2008-02-02 11:31:19 KERN: intel: ep_std_ops(0x2)
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Load():
+ partitioning_systems/intel/map/v1 -&gt; 4
+ 2008-02-02 11:31:19 KERN:   trying: partitioning_systems/intel/map/v1
+ 2008-02-02 11:31:19 KERN: intel: pm_identify_partition(0, 5: 52436160000,
+ 52773396480, 512)
+ 2008-02-02 11:31:19 KERN: Partition::SetTo(): active: c3
+ 2008-02-02 11:31:19 KERN: intel: _ParsePrimary(): partition 0: bad
+ location, ignoring
+ 2008-02-02 11:31:19 KERN: Partition::SetTo(): active: ad
+ 2008-02-02 11:31:19 KERN: intel: _ParsePrimary(): partition 1: bad
+ location, ignoring
+ 2008-02-02 11:31:19 KERN: Partition::SetTo(): active: 69
+ 2008-02-02 11:31:19 KERN: intel: _ParsePrimary(): partition 2: bad
+ location, ignoring
+ 2008-02-02 11:31:19 KERN: Partition::SetTo(): active: 79
+ 2008-02-02 11:31:19 KERN: intel: _ParsePrimary(): partition 3: bad
+ location, ignoring
+ 2008-02-02 11:31:19 KERN:   returned: 100/1000
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Load(): file_systems/pipefs/v1 -&gt; 1
+ 2008-02-02 11:31:19 KERN:   trying: file_systems/pipefs/v1
+ 2008-02-02 11:31:19 KERN:   returned: -1000/1000
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Unload(): file_systems/pipefs/v1 -&gt;
+ 0
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Load(): file_systems/bfs/v1 -&gt; 1
+ 2008-02-02 11:31:19 KERN:   trying: file_systems/bfs/v1
+ 2008-02-02 11:31:19 KERN:   returned: 800/1000
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Unload():
+ partitioning_systems/intel/map/v1 -&gt; 3
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Load(): file_systems/devfs/v1 -&gt; 1
+ 2008-02-02 11:31:19 KERN:   trying: file_systems/devfs/v1
+ 2008-02-02 11:31:19 KERN:   returned: -1000/1000
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Unload(): file_systems/devfs/v1 -&gt;
+ 0
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Load(): file_systems/rootfs/v1 -&gt; 1
+ 2008-02-02 11:31:19 KERN:   trying: file_systems/rootfs/v1
+ 2008-02-02 11:31:19 KERN:   returned: -1000/1000
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Unload(): file_systems/rootfs/v1 -&gt;
+ 0
+ 2008-02-02 11:31:19 KERN:   scanning with: file_systems/bfs/v1
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Load(): file_systems/bfs/v1 -&gt; 2
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Unload(): file_systems/bfs/v1 -&gt; 1
+ 2008-02-02 11:31:19 KERN:
+ KDiskDeviceManager::_ScanPartition(/dev/disk/ata/0/master/3)
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Load():
+ partitioning_systems/intel/extended/v1 -&gt; 1
+ 2008-02-02 11:31:19 KERN: intel: ep_std_ops(0x1)
+ 2008-02-02 11:31:19 KERN:   trying: partitioning_systems/intel/extended/v1
+ 2008-02-02 11:31:19 KERN: intel: ep_identify_partition(0, 105209556480,
+ 144847180800, 512)
+ 2008-02-02 11:31:19 KERN:   returned: 949/1000
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Load():
+ partitioning_systems/intel/map/v1 -&gt; 4
+ 2008-02-02 11:31:19 KERN:   trying: partitioning_systems/intel/map/v1
+ 2008-02-02 11:31:19 KERN: intel: pm_identify_partition(0, 6: 105209556480,
+ 144847180800, 512)
+ 2008-02-02 11:31:19 KERN:   returned: -1000/1000
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Unload():
+ partitioning_systems/intel/map/v1 -&gt; 3
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Load(): file_systems/pipefs/v1 -&gt; 1
+ 2008-02-02 11:31:19 KERN:   trying: file_systems/pipefs/v1
+ 2008-02-02 11:31:19 KERN:   returned: -1000/1000
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Unload(): file_systems/pipefs/v1 -&gt;
+ 0
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Load(): file_systems/bfs/v1 -&gt; 2
+ 2008-02-02 11:31:19 KERN:   trying: file_systems/bfs/v1
+ 2008-02-02 11:31:19 KERN:   returned: -2147483648/1000
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Unload(): file_systems/bfs/v1 -&gt; 1
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Load(): file_systems/devfs/v1 -&gt; 1
+ 2008-02-02 11:31:19 KERN:   trying: file_systems/devfs/v1
+ 2008-02-02 11:31:19 KERN:   returned: -1000/1000
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Unload(): file_systems/devfs/v1 -&gt;
+ 0
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Load(): file_systems/rootfs/v1 -&gt; 1
+ 2008-02-02 11:31:19 KERN:   trying: file_systems/rootfs/v1
+ 2008-02-02 11:31:19 KERN:   returned: -1000/1000
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Unload(): file_systems/rootfs/v1 -&gt;
+ 0
+ 2008-02-02 11:31:19 KERN:   scanning with:
+ partitioning_systems/intel/extended/v1
+ 2008-02-02 11:31:19 KERN: intel: ep_scan_partition(0, 105209556480,
+ 144847180800, 512)
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Load():
+ partitioning_systems/intel/extended/v1 -&gt; 2
+ 2008-02-02 11:31:19 KERN:
+ KDiskDeviceManager::_ScanPartition(/dev/disk/ata/0/master/3_0)
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Load():
+ partitioning_systems/intel/extended/v1 -&gt; 3
+ 2008-02-02 11:31:19 KERN:   trying: partitioning_systems/intel/extended/v1
+ 2008-02-02 11:31:19 KERN: intel: ep_identify_partition(0, 105209588736,
+ 4844657664, 512)
+ 2008-02-02 11:31:19 KERN:   returned: -1000/1000
+ 2008-02-02 11:31:19 KERN: KDiskSystem::Unload():
+ partitioning_systems/intel/extended/v1 -&gt; 2
+ 2008-02-02 11:31:19 KERN: K2008-02-02 11:31:19 KERN: DiskSystem::Load():
+ partitioning_systems/intel/map/v1 -&gt; 4
+ 2008-02-02 11:31:19 KERN:   trying: partitioning_systems/intel/map/v1
+ 2008-02-02 11:31:19 KERN: intel: pm_identify_partition(0, 7: 105209588736,
+ 4844657664, 512)
+ 2008-02-02 11:31:19 KERN: Partition::SetTo(): active: c3
+ 2008-02-02 11:31:19 KERN: intel: _ParsePrimary(): partition 0: bad
+ location, ignoring
+ 2008-02-02 11:31:19 KERN: Partition::SetTo(): active: ad
+ 2008-02-02 11:31:19 KERN: intel: _ParsePrimary(): partition 1: bad
+ location, ignoring
+ 2008-02-02 11:31:19 KERN: Partition::SetTo(): active: 69
+ 2008-02-02 11:31:19 KERN: inps2_hid: init_hardware
+ 2008-02-02 11:31:19 KERN: ps2_hid: init_driver
+ 2008-02-02 11:31:19 KERN: ps2_hid: publish_devices
+ 2008-02-02 11:31:19 KERN: ps2_hid: publish_devices() returned NULL.
+ 2008-02-02 11:31:19 KERN: ps2_hid: uninit_driver
+ 2008-02-02 11:31:19 KERN: usb_ehci: claiming ownership of the host
+ controller
+ 2008-02-02 11:31:19 KERN: usb_ehci: successfully took ownership of the
+ host controller
+ 2008-02-02 11:31:20 KERN: usb_uhci: no devices found
+ 2008-02-02 11:31:20 KERN: wacom: api_version missing
+ 2008-02-02 11:31:20 KERN: loaded driver /boot/beos/system/add-
+ ons/kernel/drivers/dev/input/wacom
+ 2008-02-02 11:31:20 KERN: bfs: bfs_open_dir:1484: Invalid Argument
+ 2008-02-02 11:31:20 KERN: bfs: GetTree:1221: Invalid Argument
+ 2008-02-02 11:31:20 KERN: bfs: bfs_lookup:496: Invalid Argument
+ 2008-02-02 11:31:20 KERN: cx23882: init_hardware()
+ 2008-02-02 11:31:20 KERN: cx23882: init_hardware() failed: General system
+ error
+ 2008-02-02 11:31:20 KERN: ps2: devfs_publish_device input/mouse/ps2/0,
+ status = 0x00000000
+ 2008-02-02 11:31:21 KERN: ps2: probe_mouse Extended PS/2 mouse found
+ 2008-02-02 11:31:21 KERN: auich: init_hardware()
+ 2008-02-02 11:31:21 KERN: auich: init_driver()
+ 2008-02-02 11:31:21 KERN: auich: auich_setup(0x94c64660)
+ 2008-02-02 11:31:21 KERN: auich: audio/hmulti/auich/1 deviceid = 0x6a
+ chiprev = a1 model = 8095 enhanced at b000
+ 2008-02-02 11:31:21 KERN: auich: PCI command before: 7
+ 2008-02-02 11:31:21 KERN: auich: PCI command after: 7
+ 2008-02-02 11:31:21 KERN: auich: codec reset
+ 2008-02-02 11:31:21 KERN: auich: codec vendor id      = 0x414c4720
+ 2008-02-02 11:31:21 KERN: auich: codec description     = Avance Logic
+ (Realtek) ALC650 or ALC201/ALC201A
+ 2008-02-02 11:31:21 KERN: auich: codec 3d enhancement = Realtek
+ 2008-02-02 11:31:21 KERN: auich: installing interrupt : b
+ 2008-02-02 11:31:21 KERN: auich: writing codec registers
+ 2008-02-02 11:31:21 KERN: auich: codec master output = 0x00
+ 2008-02-02 11:31:21 KERN: auich: codec aux output    = 0x00
+ 2008-02-02 11:31:21 KERN: auich: codec mono output   = 0x8000
+ 2008-02-02 11:31:21 KERN: auich: codec pcm output    = 0x808
+ 2008-02-02 11:31:21 KERN: auich: codec line in      = 0x8808
+ 2008-02-02 11:31:21 KERN: auich: codec record line in= 0x404
+ 2008-02-02 11:31:21 KERN: auich: codec record gain   = 0x8000
+ 2008-02-02 11:31:21 KERN: auich: init_driver done
+ 2008-02-02 11:31:21 KERN: auich: publish_devices()
+ 2008-02-02 11:31:21 KERN: auich: publish audio/hmulti/auich/1
+ 2008-02-02 11:31:21 KERN: auich: find_device(audio/hmulti/auich/1)
+ 2008-02-02 11:31:21 KERN: loaded driver /boot/beos/system/add-
+ ons/kernel/drivers/dev/audio/hmulti/auich
+ 2008-02-02 11:31:21 KERN: auvia: init_hardware()
+ 2008-02-02 11:31:21 KERN: auvia: init_hardware() failed: No such device
+ 2008-02-02 11:31:21 KERN: hda: init_hardware() failed: No such device
+ 2008-02-02 11:31:21 KERN: ps2: devfs_publish_device input/keyboard/at/0,
+ status = 0x00000000
+ 2008-02-02 11:31:21 KERN: bfs: bfs_open_dir:1484: Invalid Argument
+ 2008-02-02 11:31:22 KERN: auich: set_enabled_channels 0 : enabled
+ 2008-02-02 11:31:22 KERN: auich: set_enabled_channels 1 : enabled
+ 2008-02-02 11:31:22 KERN: auich: set_enabled_channels 2 : enabled
+ 2008-02-02 11:31:22 KERN: auich: set_enabled_channels 3 : enabled
+ 2008-02-02 11:31:22 KERN: auich: name : Master
+ 2008-02-02 11:31:22 KERN: auich: name : PCM Out
+ 2008-02-02 11:31:22 KERN: auich: name : CD
+ 2008-02-02 11:31:22 KERN: auich: name : Aux In
+ 2008-02-02 11:31:22 KERN: auich: name : TAD
+ 2008-02-02 11:31:22 KERN: auich: name : Mic
+ 2008-02-02 11:31:22 KERN: auich: name : Line In
+ 2008-02-02 11:31:22 KERN: auich: name : Center/Lfe
+ 2008-02-02 11:31:22 KERN: auich: name : Recording
+ 2008-02-02 11:31:22 KERN: auich: multi-&gt;control_count 46
+ 2008-02-02 11:31:22 KERN: ps2: keyboard found
+ 2008-02-02 11:31:22 KERN: firewire: fw_module_init
+ 2008-02-02 11:31:23 KERN: vendor=10de, device=6e, revision = a3
+ 2008-02-02 11:31:23 KERN: firewire: found 1 cards
+ 2008-02-02 11:31:23 KERN: firewire: latency timer 0 -&gt; 20.
+ 2008-02-02 11:31:23 KERN: firewire: cache size 0 -&gt; 8.
+ 2008-02-02 11:31:23 KERN: firewire: IRQ 11
+ 2008-02-02 11:31:23 KERN: firewire: hardware register address e6084000
+ 2008-02-02 11:31:23 KERN: firewire: mapping physical address 0xe6084000
+ with 2048 bytes for fw ohci register
+ 2008-02-02 11:31:23 KERN: firewire: physical = 0xe6084000, virtual =
+ 0x94cb5000, offset = 0, phyadr = 0xe6084000, mapadr = 0x94cb5000, size =
+ 4096, area = 0x000004c4
+ 2008-02-02 11:31:23 KERN: firewire: mapped registers to 0x94cb5000
+ 2008-02-02 11:31:23 KERN: firewire:OHCI version 1.10 (ROM=0)
+ 2008-02-02 11:31:23 KERN: firewire:No. of Isochronous channels is 4.
+ 2008-02-02 11:31:23 KERN: firewire: allocating 3076 bytes for fwohci
+ config etc. buf
+ 2008-02-02 11:31:23 KERN: firewire: area = 1221, size = 4096, virt =
+ 0x94cb6000, phy = 0x02cc9000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw multi dma
+ buf
+ 2008-02-02 11:31:23 KERN: firewire: area = 1222, size = 4096, virt =
+ 0x94cb7000, phy = 0x02cca000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw multi dma
+ buf
+ 2008-02-02 11:31:23 KERN: firewire: area = 1223, size = 4096, virt =
+ 0x94cb8000, phy = 0x02ccb000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 16384 bytes for fw multi
+ dma buf
+ 2008-02-02 11:31:23 KERN: firewire: area = 1224, size = 16384, virt =
+ 0x94cb9000, phy = 0x02ecf000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw multi dma
+ buf
+ 2008-02-02 11:31:23 KERN: firewire: area = 1225, size = 4096, virt =
+ 0x94cbd000, phy = 0x02ccc000
+ 2008-02-02 11:31:23 KERN: firewire:EUI64 00:e0:18:00:00:2f:a8:00
+ 2008-02-02 11:31:23 KERN: firewire:resetting OHCI...done (loop=0)
+ 2008-02-02 11:31:23 KERN: firewire:fwphy_rddata: 0x2 loop=1, retry=0
+ 2008-02-02 11:31:23 KERN: firewire:fwphy_rddata: 0x3 loop=1, retry=0
+ 2008-02-02 11:31:23 KERN: firewire:Phy 1394a available S400, 2 ports.
+ 2008-02-02 11:31:23 KERN: firewire:fwphy_rddata: 0x5 loop=1, retry=0
+ 2008-02-02 11:31:23 KERN: firewire:Enable 1394a Enhancements
+ 2008-02-02 11:31:23 KERN: firewire:fwphy_rddata: 0x5 loop=1, retry=0
+ 2008-02-02 11:31:23 KERN: firewire:fwphy_rddata: 0x2 loop=1, retry=0
+ 2008-02-02 11:31:23 KERN: firewire:fwphy_rddata: 0x4 loop=1, retry=0
+ 2008-02-02 11:31:23 KERN: Last message repeated 2 times.
+ 2008-02-02 11:31:23 KERN: firewire:Link S400, max_rec 2048 bytes.
+ 2008-02-02 11:31:23 KERN: firewire:BUS_OPT 0xf064a022 -&gt; 0xf864a022
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1229, size = 4096, virt =
+ 0x94cc2000, phy = 0x02ccd000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1230, size = 4096, virt =
+ 0x94cc3000, phy = 0x02cce000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1231, size = 4096, virt =
+ 0x94cc4000, phy = 0x02ce2000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1232, size = 4096, virt =
+ 0x94cc5000, phy = 0x02ce3000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1233, size = 4096, virt =
+ 0x94cc6000, phy = 0x02ce4000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1234, size = 4096, virt =
+ 0x94cc7000, phy = 0x02e6e000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1235, size = 4096, virt =
+ 0x94cc8000, phy = 0x02e6f000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1236, size = 4096, virt =
+ 0x94cc9000, phy = 0x02e70000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1237, size = 4096, virt =
+ 0x94cca000, phy = 0x02e72000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1238, size = 4096, virt =
+ 0x94ccb000, phy = 0x02e74000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1239, size = 4096, virt =
+ 0x94ccc000, phy = 0x02e80000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1240, size = 4096, virt =
+ 0x94ccd000, phy = 0x02ed3000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1241, size = 4096, virt =
+ 0x94cce000, phy = 0x02ed4000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1242, size = 4096, virt =
+ 0x94ccf000, phy = 0x02ed5000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1243, size = 4096, virt =
+ 0x94cd0000, phy = 0x02ed6000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1244, size = 4096, virt =
+ 0x94cd1000, phy = 0x02ed7000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1245, size = 4096, virt =
+ 0x94cd2000, phy = 0x02ed8000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1246, size = 4096, virt =
+ 0x94cd3000, phy = 0x02ed9000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1247, size = 4096, virt =
+ 0x94cd4000, phy = 0x02eda000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1248, size = 4096, virt =
+ 0x94cd5000, phy = 0x02edb000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1249, size = 4096, virt =
+ 0x94cd6000, phy = 0x02edc000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1250, size = 4096, virt =
+ 0x94cd7000, phy = 0x02edd000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1251, size = 4096, virt =
+ 0x94cd8000, phy = 0x02ef0000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1252, size = 4096, virt =
+ 0x94cd9000, phy = 0x02ef1000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1253, size = 4096, virt =
+ 0x94cda000, phy = 0x02ef2000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1254, size = 4096, virt =
+ 0x94cdb000, phy = 0x02ef3000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1255, size = 4096, virt =
+ 0x94cdc000, phy = 0x02ef4000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1256, size = 4096, virt =
+ 0x94cdd000, phy = 0x02ef5000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1257, size = 4096, virt =
+ 0x94cde000, phy = 0x02ef6000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1258, size = 4096, virt =
+ 0x94cdf000, phy = 0x02ef7000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1259, size = 4096, virt =
+ 0x94ce0000, phy = 0x02ef8000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1260, size = 4096, virt =
+ 0x94ce1000, phy = 0x02ef9000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1261, size = 4096, virt =
+ 0x94ce2000, phy = 0x02efa000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1262, size = 4096, virt =
+ 0x94ce3000, phy = 0x02efb000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1263, size = 4096, virt =
+ 0x94ce4000, phy = 0x02efc000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1264, size = 4096, virt =
+ 0x94ce5000, phy = 0x02efd000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1265, size = 4096, virt =
+ 0x94ce6000, phy = 0x02efe000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1266, size = 4096, virt =
+ 0x94ce7000, phy = 0x02eff000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1267, size = 4096, virt =
+ 0x94ce8000, phy = 0x02f00000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1268, size = 4096, virt =
+ 0x94ce9000, phy = 0x02f01000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1269, size = 4096, virt =
+ 0x94cea000, phy = 0x02f02000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1270, size = 4096, virt =
+ 0x94ceb000, phy = 0x02f03000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1271, size = 4096, virt =
+ 0x94cec000, phy = 0x02f04000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1272, size = 4096, virt =
+ 0x94ced000, phy = 0x02f05000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1273, size = 4096, virt =
+ 0x94cee000, phy = 0x02f06000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1274, size = 4096, virt =
+ 0x94cef000, phy = 0x02f07000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1275, size = 4096, virt =
+ 0x94cf0000, phy = 0x02f08000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1276, size = 4096, virt =
+ 0x94cf1000, phy = 0x02f09000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1277, size = 4096, virt =
+ 0x94cf2000, phy = 0x02f0a000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1278, size = 4096, virt =
+ 0x94cf3000, phy = 0x02f0b000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1279, size = 4096, virt =
+ 0x94cf4000, phy = 0x02f0c000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1280, size = 4096, virt =
+ 0x94cf5000, phy = 0x02f0e000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1281, size = 4096, virt =
+ 0x94cf6000, phy = 0x02f0f000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1282, size = 4096, virt =
+ 0x94cf7000, phy = 0x02f11000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1283, size = 4096, virt =
+ 0x94cf8000, phy = 0x02f16000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1284, size = 4096, virt =
+ 0x94cf9000, phy = 0x02f17000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1285, size = 4096, virt =
+ 0x94cfa000, phy = 0x02f18000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1286, size = 4096, virt =
+ 0x94cfb000, phy = 0x02f19000
+ 2008-02-02 11:31:23 KERN: bfs: bfs_create_index:1898: File or Directory
+ already exists
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1288, size = 4096, virt =
+ 0x94cfc000, phy = 0x02f1a000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1289, size = 4096, virt =
+ 0x94cfd000, phy = 0x02f1b000
+ 2008-02-02 11:31:23 KERN: bfs: bfs_create_index:1898: File or Directory
+ already exists
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1291, size = 4096, virt =
+ 0x94cfe000, phy = 0x02f1c000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1292, size = 4096, virt =
+ 0x94cff000, phy = 0x02f1d000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1293, size = 4096, virt =
+ 0x94e00000, phy = 0x02f1e000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1294, size = 4096, virt =
+ 0x94e01000, phy = 0x02f1f000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1295, size = 4096, virt =
+ 0x94e02000, phy = 0x02f20000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1296, size = 4096, virt =
+ 0x94e03000, phy = 0x02f21000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1297, size = 4096, virt =
+ 0x94e04000, phy = 0x02f22000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1298, size = 4096, virt =
+ 0x94e05000, phy = 0x02f23000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1299, size = 4096, virt =
+ 0x94e06000, phy = 0x02f24000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1300, size = 4096, virt =
+ 0x94e07000, phy = 0x02f25000
+ 2008-02-02 11:31:23 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:23 KERN: firewire: area = 1301, size = 4096, virt =
+ 0x94e08000, phy = 0x02f26000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1302, size = 4096, virt =
+ 0x94e09000, phy = 0x02f27000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1303, size = 4096, virt =
+ 0x94e0a000, phy = 0x02f28000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1304, size = 4096, virt =
+ 0x94e0b000, phy = 0x02f29000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1305, size = 4096, virt =
+ 0x94e0c000, phy = 0x02f2a000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1306, size = 4096, virt =
+ 0x94e0d000, phy = 0x02f2b000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1307, size = 4096, virt =
+ 0x94e0e000, phy = 0x02f2c000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1308, size = 4096, virt =
+ 0x94e0f000, phy = 0x02f2d000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1309, size = 4096, virt =
+ 0x94e10000, phy = 0x02f2e000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1310, size = 4096, virt =
+ 0x94e11000, phy = 0x02f2f000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1311, size = 4096, virt =
+ 0x94e12000, phy = 0x02f30000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1312, size = 4096, virt =
+ 0x94e13000, phy = 0x02f31000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1313, size = 4096, virt =
+ 0x94e14000, phy = 0x02f32000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1314, size = 4096, virt =
+ 0x94e15000, phy = 0x02f33000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1315, size = 4096, virt =
+ 0x94e16000, phy = 0x02f34000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1316, size = 4096, virt =
+ 0x94e17000, phy = 0x02f35000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1317, size = 4096, virt =
+ 0x94e18000, phy = 0x02f36000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1318, size = 4096, virt =
+ 0x94e19000, phy = 0x02f37000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1319, size = 4096, virt =
+ 0x94e1a000, phy = 0x02f38000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1320, size = 4096, virt =
+ 0x94e1b000, phy = 0x02f39000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1321, size = 4096, virt =
+ 0x94e1c000, phy = 0x02f3a000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1322, size = 4096, virt =
+ 0x94e1d000, phy = 0x02f3b000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1323, size = 4096, virt =
+ 0x94e1e000, phy = 0x02f3c000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1324, size = 4096, virt =
+ 0x94e1f000, phy = 0x02f3d000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1325, size = 4096, virt =
+ 0x94e20000, phy = 0x02f3e000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1326, size = 4096, virt =
+ 0x94e21000, phy = 0x02f3f000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1327, size = 4096, virt =
+ 0x94e22000, phy = 0x02f40000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1328, size = 4096, virt =
+ 0x94e23000, phy = 0x02f41000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1329, size = 4096, virt =
+ 0x94e24000, phy = 0x02f42000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1332, size = 4096, virt =
+ 0x94e25000, phy = 0x02f49000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1333, size = 4096, virt =
+ 0x94e26000, phy = 0x02f4a000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1334, size = 4096, virt =
+ 0x94e27000, phy = 0x02f4b000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1335, size = 4096, virt =
+ 0x94e28000, phy = 0x02f4c000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1336, size = 4096, virt =
+ 0x94e29000, phy = 0x02f4d000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1337, size = 4096, virt =
+ 0x94e2a000, phy = 0x02f4e000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1338, size = 4096, virt =
+ 0x94e2b000, phy = 0x02f4f000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1339, size = 4096, virt =
+ 0x94e2c000, phy = 0x02f50000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1342, size = 4096, virt =
+ 0x94e31000, phy = 0x02f59000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1343, size = 4096, virt =
+ 0x94e32000, phy = 0x02f5a000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1344, size = 4096, virt =
+ 0x94e33000, phy = 0x02f5b000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1347, size = 4096, virt =
+ 0x94e34000, phy = 0x02f5c000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1349, size = 4096, virt =
+ 0x94e39000, phy = 0x02f5d000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1350, size = 4096, virt =
+ 0x94e3a000, phy = 0x02f5e000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1352, size = 4096, virt =
+ 0x94e3b000, phy = 0x02f5f000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1353, size = 4096, virt =
+ 0x94e3c000, phy = 0x02f60000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1354, size = 4096, virt =
+ 0x94e3d000, phy = 0x02f61000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1355, size = 4096, virt =
+ 0x94e3e000, phy = 0x02f62000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1356, size = 4096, virt =
+ 0x94e3f000, phy = 0x02f63000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1357, size = 4096, virt =
+ 0x94e40000, phy = 0x02f64000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1358, size = 4096, virt =
+ 0x94e41000, phy = 0x02f65000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1359, size = 4096, virt =
+ 0x94e42000, phy = 0x02f66000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1360, size = 4096, virt =
+ 0x94e43000, phy = 0x02f67000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1361, size = 4096, virt =
+ 0x94e44000, phy = 0x02f68000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1362, size = 4096, virt =
+ 0x94e45000, phy = 0x02f69000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1363, size = 4096, virt =
+ 0x94e46000, phy = 0x02f6a000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1364, size = 4096, virt =
+ 0x94e47000, phy = 0x02f6b000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1365, size = 4096, virt =
+ 0x94e48000, phy = 0x02f6c000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1366, size = 4096, virt =
+ 0x94e49000, phy = 0x02f6d000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1367, size = 4096, virt =
+ 0x94e4a000, phy = 0x02f6e000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1368, size = 4096, virt =
+ 0x94e4b000, phy = 0x02f6f000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1371, size = 4096, virt =
+ 0x94e50000, phy = 0x02f70000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1372, size = 4096, virt =
+ 0x94e51000, phy = 0x02f71000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1373, size = 4096, virt =
+ 0x94e52000, phy = 0x02f72000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1374, size = 4096, virt =
+ 0x94e53000, phy = 0x02f73000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1375, size = 4096, virt =
+ 0x94e54000, phy = 0x02f74000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1376, size = 4096, virt =
+ 0x94e55000, phy = 0x02f75000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1377, size = 4096, virt =
+ 0x94e56000, phy = 0x02f76000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1378, size = 4096, virt =
+ 0x94e57000, phy = 0x02f77000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1379, size = 4096, virt =
+ 0x94e58000, phy = 0x02f78000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1380, size = 4096, virt =
+ 0x94e59000, phy = 0x02f79000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1381, size = 4096, virt =
+ 0x94e5a000, phy = 0x02f7a000
+ 2008-02-02 11:31:24 KERN: bfs: bfs_access:1355: Operation not allowed
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1382, size = 4096, virt =
+ 0x94e5b000, phy = 0x02f7b000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1383, size = 4096, virt =
+ 0x94e5c000, phy = 0x02fce000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1384, size = 4096, virt =
+ 0x94e5d000, phy = 0x02fcf000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1385, size = 4096, virt =
+ 0x94e5e000, phy = 0x02fd0000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1386, size = 4096, virt =
+ 0x94e5f000, phy = 0x02fd1000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1387, size = 4096, virt =
+ 0x94e60000, phy = 0x02fd2000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:24 KERN: firewire: area = 1388, size = 4096, virt =
+ 0x94e61000, phy = 0x02fd3000
+ 2008-02-02 11:31:24 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:25 KERN: firewire: area = 1389, size = 4096, virt =
+ 0x94e62000, phy = 0x02fd4000
+ 2008-02-02 11:31:25 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:25 KERN: firewire: area = 1390, size = 4096, virt =
+ 0x94e63000, phy = 0x02fd5000
+ 2008-02-02 11:31:25 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:25 KERN: firewire: area = 1391, size = 4096, virt =
+ 0x94e64000, phy = 0x02fd6000
+ 2008-02-02 11:31:25 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:25 KERN: firewire: area = 1392, size = 4096, virt =
+ 0x94e65000, phy = 0x02fd7000
+ 2008-02-02 11:31:25 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:25 KERN: firewire: area = 1393, size = 4096, virt =
+ 0x94e66000, phy = 0x02fee000
+ 2008-02-02 11:31:25 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:25 KERN: firewire: area = 1394, size = 4096, virt =
+ 0x94e67000, phy = 0x02fef000
+ 2008-02-02 11:31:25 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:25 KERN: firewire: area = 1396, size = 4096, virt =
+ 0x94e6c000, phy = 0x02ff0000
+ 2008-02-02 11:31:25 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:25 KERN: firewire: area = 1398, size = 4096, virt =
+ 0x94e6d000, phy = 0x02ff1000
+ 2008-02-02 11:31:25 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:25 KERN: firewire: area = 1399, size = 4096, virt =
+ 0x94e6e000, phy = 0x02ff2000
+ 2008-02-02 11:31:25 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:25 KERN: firewire: area = 1401, size = 4096, virt =
+ 0x94e73000, phy = 0x02ff3000
+ 2008-02-02 11:31:25 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:25 KERN: firewire: area = 1402, size = 4096, virt =
+ 0x94e74000, phy = 0x02ff4000
+ 2008-02-02 11:31:25 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:25 KERN: bfs: bfs_access:1355: Operation not allowed
+ 2008-02-02 11:31:25 KERN: firewire: area = 1403, size = 4096, virt =
+ 0x94e75000, phy = 0x02ff5000
+ 2008-02-02 11:31:25 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:25 KERN: firewire: area = 1405, size = 4096, virt =
+ 0x94e76000, phy = 0x02ff6000
+ 2008-02-02 11:31:25 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:25 KERN: bfs: bfs_access:1355: Operation not allowed
+ 2008-02-02 11:31:25 KERN: firewire: area = 1406, size = 4096, virt =
+ 0x94e77000, phy = 0x02ff7000
+ 2008-02-02 11:31:25 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:25 KERN: firewire: area = 1407, size = 4096, virt =
+ 0x94e78000, phy = 0x02ff8000
+ 2008-02-02 11:31:25 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:25 KERN: firewire: area = 1408, size = 4096, virt =
+ 0x94e79000, phy = 0x02ff9000
+ 2008-02-02 11:31:25 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:25 KERN: firewire: area = 1409, size = 4096, virt =
+ 0x94e7a000, phy = 0x02ffa000
+ 2008-02-02 11:31:25 KERN: bfs: bfs_access:1355: Operation not allowed
+ 2008-02-02 11:31:25 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:25 KERN: firewire: area = 1410, size = 4096, virt =
+ 0x94e7b000, phy = 0x02ffb000
+ 2008-02-02 11:31:25 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:25 KERN: firewire: area = 1411, size = 4096, virt =
+ 0x94e7c000, phy = 0x02ffc000
+ 2008-02-02 11:31:25 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:25 KERN: firewire: area = 1412, size = 4096, virt =
+ 0x94e7d000, phy = 0x02ffd000
+ 2008-02-02 11:31:25 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:25 KERN: firewire: area = 1413, size = 4096, virt =
+ 0x94e7e000, phy = 0x02ffe000
+ 2008-02-02 11:31:25 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:25 KERN: firewire: area = 1414, size = 4096, virt =
+ 0x94e7f000, phy = 0x02fff000
+ 2008-02-02 11:31:25 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:25 KERN: bfs: bfs_access:1355: Operation not allowed
+ 2008-02-02 11:31:25 KERN: firewire: area = 1415, size = 4096, virt =
+ 0x94e80000, phy = 0x03000000
+ 2008-02-02 11:31:25 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:25 KERN: firewire: area = 1416, size = 4096, virt =
+ 0x94e81000, phy = 0x03001000
+ 2008-02-02 11:31:25 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:25 KERN: firewire: area = 1417, size = 4096, virt =
+ 0x94e82000, phy = 0x03002000
+ 2008-02-02 11:31:25 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:25 KERN: firewire: area = 1418, size = 4096, virt =
+ 0x94e83000, phy = 0x03003000
+ 2008-02-02 11:31:25 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:25 KERN: bfs: bfs_access:1355: Operation not allowed
+ 2008-02-02 11:31:25 KERN: firewire: area = 1419, size = 4096, virt =
+ 0x94e84000, phy = 0x03004000
+ 2008-02-02 11:31:25 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:25 KERN: firewire: area = 1420, size = 4096, virt =
+ 0x94e85000, phy = 0x03005000
+ 2008-02-02 11:31:25 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:25 KERN: firewire: area = 1421, size = 4096, virt =
+ 0x94e86000, phy = 0x03006000
+ 2008-02-02 11:31:25 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:25 KERN: bfs: bfs_access:1355: Operation not allowed
+ 2008-02-02 11:31:25 KERN: firewire: area = 1422, size = 4096, virt =
+ 0x94e87000, phy = 0x03007000
+ 2008-02-02 11:31:25 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:25 KERN: firewire: area = 1423, size = 4096, virt =
+ 0x94e88000, phy = 0x03008000
+ 2008-02-02 11:31:25 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:25 KERN: firewire: area = 1424, size = 4096, virt =
+ 0x94e89000, phy = 0x03009000
+ 2008-02-02 11:31:25 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:25 KERN: firewire: area = 1425, size = 4096, virt =
+ 0x94e8a000, phy = 0x0300a000
+ 2008-02-02 11:31:25 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:25 KERN: firewire: area = 1426, size = 4096, virt =
+ 0x94e8b000, phy = 0x0300b000
+ 2008-02-02 11:31:25 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:25 KERN: firewire: area = 1427, size = 4096, virt =
+ 0x94e8c000, phy = 0x0300c000
+ 2008-02-02 11:31:25 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:25 KERN: firewire: area = 1428, size = 4096, virt =
+ 0x94e8d000, phy = 0x0300d000
+ 2008-02-02 11:31:25 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:25 KERN: firewire: area = 1429, size = 4096, virt =
+ 0x94e8e000, phy = 0x0300e000
+ 2008-02-02 11:31:25 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:25 KERN: firewire: area = 1430, size = 4096, virt =
+ 0x94e8f000, phy = 0x0300f000
+ 2008-02-02 11:31:25 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:25 KERN: firewire: area = 1431, size = 4096, virt =
+ 0x94e90000, phy = 0x03010000
+ 2008-02-02 11:31:25 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:25 KERN: firewire: area = 1432, size = 4096, virt =
+ 0x94e91000, phy = 0x03011000
+ 2008-02-02 11:31:25 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:25 KERN: firewire: area = 1433, size = 4096, virt =
+ 0x94e92000, phy = 0x03012000
+ 2008-02-02 11:31:25 KERN: bfs: bfs_access:1355: Operation not allowed
+ 2008-02-02 11:31:25 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:25 KERN: firewire: area = 1434, size = 4096, virt =
+ 0x94e93000, phy = 0x03013000
+ 2008-02-02 11:31:25 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:25 KERN: bfs: bfs_access:1355: Operation not allowed
+ 2008-02-02 11:31:25 KERN: firewire: area = 1435, size = 4096, virt =
+ 0x94e94000, phy = 0x03014000
+ 2008-02-02 11:31:25 KERN: firewire: allocating 4096 bytes for fw ir Area
+ 2008-02-02 11:31:25 KERN: bfs: bfs_access:1355: Operation not allowed
+ 2008-02-02 11:31:25 KERN: firewire: area = 1436, size = 4096, virt =
+ 0x94e95000, phy = 0x03015000
+ 2008-02-02 11:31:25 KERN: firewire:fwohci_set_intr: 1
+ 2008-02-02 11:31:25 KERN: firewire:Initiate bus reset
+ 2008-02-02 11:31:25 KERN: firewire:fwphy_rddata: 0x1 loop=1, retry=0
+ 2008-02-02 11:31:25 KERN: firewire:BUS reset
+ 2008-02-02 11:31:25 KERN: firewire:node_id=0xc800ffc0, gen=1, CYCLEMASTER
+ mode
+ 2008-02-02 11:31:25 KERN: firewire:BUS reset
+ 2008-02-02 11:31:25 KERN: firewire:1 nodes, maxhop &lt;= 0, cable IRM = 0
+ (me)
+ 2008-02-02 11:31:25 KERN: firewire:fw_set_bus_manager: 0-&gt;0 (loop=0)
+ 2008-02-02 11:31:25 KERN: firewire:bus manager 0 (me)
+ 2008-02-02 11:31:25 KERN: send phy_config root_node=-1 gap_count=5
+ 2008-02-02 11:31:25 KERN: maxdesc: 2
+ 2008-02-02 11:31:25 KERN: firewire:start AT DMA status=0
+ 2008-02-02 11:31:25 KERN: bfs: bfs_access:1355: Operation not allowed
+ 2008-02-02 11:31:25 KERN: firewire:fwphy_rddata: 0x1 loop=1, retry=0
+ 2008-02-02 11:31:25 KERN: loaded driver /boot/beos/system/add-
+ ons/kernel/drivers/dev/bus/fw_raw
+ 2008-02-02 11:31:25 KERN: bfs: bfs_access:1355: Operation not allowed
+ 2008-02-02 11:31:25 KERN: loaded driver /boot/beos/system/add-
+ ons/kernel/drivers/dev/bus/usb_raw
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1667#comment:3">http://dev.haiku-os.org/ticket/1667#comment:3</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="004570.html">[Haiku-bugs] [Haiku] #1731: unmounting partitions hangs
+</A></li>
+	<LI>Next message: <A HREF="004573.html">[Haiku-bugs] [Haiku] #1731: unmounting partitions hangs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4572">[ date ]</a>
+              <a href="thread.html#4572">[ thread ]</a>
+              <a href="subject.html#4572">[ subject ]</a>
+              <a href="author.html#4572">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

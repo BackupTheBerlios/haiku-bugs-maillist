@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1333: _G_config.h issue
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-July/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231333%3A%20_G_config.h%20issue&In-Reply-To=%3C051.b0ec5a7e485d8b4be0b4530cbd4830c6%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001958.html">
+   <LINK REL="Next"  HREF="001951.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1333: _G_config.h issue</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231333%3A%20_G_config.h%20issue&In-Reply-To=%3C051.b0ec5a7e485d8b4be0b4530cbd4830c6%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1333: _G_config.h issue">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Jul 26 19:59:52 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001958.html">[Haiku-bugs] [Haiku] #1333: _G_config.h issue
+</A></li>
+        <LI>Next message: <A HREF="001951.html">[Haiku-bugs] [Haiku] #852: [bin:gdb] won't quit correctly
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1959">[ date ]</a>
+              <a href="thread.html#1959">[ thread ]</a>
+              <a href="subject.html#1959">[ subject ]</a>
+              <a href="author.html#1959">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1333: _G_config.h issue
+---------------------------+------------------------------------------------
+  Reporter:  kaliber       |       Owner:  bonefish      
+      Type:  bug           |      Status:  new           
+  Priority:  low           |   Milestone:  R1            
+ Component:  Build System  |     Version:  R1 development
+Resolution:                |    Platform:  All           
+---------------------------+------------------------------------------------
+Comment (by bonefish):
+
+ Replying to [comment:3 kaliber]:
+ &gt; What does it mean GCC is not ported to Haiku? As I understand we need
+ compiler compatible with BeOS, so there is nothing to do specific for
+ Haiku IMHO.
+
+ You're mistaken here. The plan for Haiku is to be mostly binary and source
+ compatible with BeOS R5. This doesn't imply compatibility in the other
+ direction, nor does it mean that we have to use the same compiler.
+
+ &gt; Are we going to create i586-pc-haiku instead of i586-pc-beos?
+
+ I've already done that for gcc 4. I'm not quite sure yet, if it's worth
+ the work to also to do that for gcc 2.95.3 or if we just stick to the
+ status quo and start migrating to gcc 4 soon. It would be consequent
+ though. Although mostly compatible with BeOS, we've created a new platform
+ and it makes neither sense to live with BeOS work-arounds not necessary
+ for Haiku, nor to hack special cases into *-beos ports for Haiku
+ specifics. It would be the natural strategy to re-port the whole tool
+ chain (perl, autoconf/-make, gcc, binutils,...) to Haiku -- they probably
+ won't build from the sources as they are anyway, since our uname returns
+ &quot;Haiku&quot; instead of &quot;BeOS&quot;.
+
+ &gt; I think it's time to decide about GCC on Haiku. GCC on Haiku is quite
+ stable, so I'm testing it and reporting such bugs.
+
+ Your reports are much appreciated. We have a lot of tasks to do before the
+ gcc question really becomes urgent, though.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1333#comment:4">http://dev.haiku-os.org/ticket/1333#comment:4</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001958.html">[Haiku-bugs] [Haiku] #1333: _G_config.h issue
+</A></li>
+	<LI>Next message: <A HREF="001951.html">[Haiku-bugs] [Haiku] #852: [bin:gdb] won't quit correctly
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1959">[ date ]</a>
+              <a href="thread.html#1959">[ thread ]</a>
+              <a href="subject.html#1959">[ subject ]</a>
+              <a href="author.html#1959">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

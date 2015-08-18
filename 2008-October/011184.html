@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2893: System hanging at desktop with r28244
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232893%3A%20System%20hanging%20at%20desktop%20with%20r28244&In-Reply-To=%3C044.38bf9d30deaa0f028301edf0c05333fa%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011183.html">
+   <LINK REL="Next"  HREF="011198.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2893: System hanging at desktop with r28244</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232893%3A%20System%20hanging%20at%20desktop%20with%20r28244&In-Reply-To=%3C044.38bf9d30deaa0f028301edf0c05333fa%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2893: System hanging at desktop with r28244">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Oct 20 04:03:58 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011183.html">[Haiku-bugs] [Haiku] #2707: cannot mount ext3 file system
+</A></li>
+        <LI>Next message: <A HREF="011198.html">[Haiku-bugs] [Haiku] #2893: System hanging at desktop with	r28244
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11184">[ date ]</a>
+              <a href="thread.html#11184">[ thread ]</a>
+              <a href="subject.html#11184">[ subject ]</a>
+              <a href="author.html#11184">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2893: System hanging at desktop with r28244
+---------------------------+------------------------------------------------
+ Reporter:  anevilyak      |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1 development
+Blockedby:                 |    Platform:  All           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+ My Athlon64 hangs after the terminal launches with r28244. Syslog
+ attached. Interestingly, the keyboard still responds normally, but hitting
+ ctrl+alt+delete drops me into a gdb session for input_server (via
+ fake_app_server). KDL indicates the following teams active:
+
+ {{{
+ team           id  parent      name
+ 0x8117d198      1  0x00000000  kernel_team
+ 0x812aa000    157  0x812307f8  sh
+ 0x812304c8     95  0x8117d198  Deskbar
+ 0x81230660     96  0x8117d198  sh
+ 0x812307f8     97  0x8117d198  Terminal
+ 0x81230b28     99  0x8117d198  media_server
+ 0x81230cc0    100  0x8117d198  midi_server
+ 0x81230e58    101  0x8117d198  print_server
+ 0x81230990    165  0x81230660  ProcessController
+ 0x8117db28     79  0x8117d198  syslog_daemon
+ 0x81230330     83  0x8117d990  input_server
+ 0x8117d4c8     52  0x8117d198  registrar
+ 0x8117d330    115  0x81230b28  media_addon_server
+ 0x8117d660     59  0x8117d198  debug_server
+ 0x8117d7f8     60  0x8117d198  net_server
+ 0x81230198     92  0x8117d198  Tracker
+ 0x8117d990     61  0x8117d198  app_server
+ }}}
+
+ Also indicated is that the sh for Bootscript is waiting on a child.
+ Interestingly, when returning from KDL, the desktop isn't repainted like
+ it usually is. The backtrace from ctrl+alt+del crashing input_server is as
+ follows:
+
+ {{{
+ debug_server: Thread 164 entered the debugger: Debugger call:
+ `getNumAvailable() == 0'
+ stack trace, current PC 0xffff0104  :
+   (0x701c5c9c)  0x4ea6d9  __assert_fail + 0x51
+   (0x701c5ccc)  0x4f47fc  malloc__Q28BPrivate10threadHeapUl + 0x4a0
+   (0x701c5d1c)  0x4f5150  malloc + 0x154
+   (0x701c5d4c)  0x4df6fd  __builtin_new + 0x29
+   (0x701c5d7c)  0x3911be
+ _InitData__7BWindowG5BRectPCc11window_look11window_feelUlUll + 0x4f2
+   (0x701c5ddc)  0x38aadc
+ __7BWindowG5BRectPCc11window_look11window_feelUlUl + 0xcc
+   (0x701c5e2c)  0x5b3cc0  __8TMWindow + 0x5c
+   (0x701c5eec)  0x5b1cbb  _DeviceWatcher__19KeyboardInputDevicePv + 0x227
+   (0x701c5fac)  0x4e58fc  thread_entry + 0x20
+ }}}
+
+ Not really sure what's going on here, but 28243 at least worked fine apart
+ from the issue mentioned in ticket #2866. Disabling SMP makes no
+ difference for this bug (though I'd assume it shouldn't anyways given lack
+ of hyperthreading and/or &gt; 1 CPU / core). Let me know what else would be
+ of interest please.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2893">http://dev.haiku-os.org/ticket/2893</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011183.html">[Haiku-bugs] [Haiku] #2707: cannot mount ext3 file system
+</A></li>
+	<LI>Next message: <A HREF="011198.html">[Haiku-bugs] [Haiku] #2893: System hanging at desktop with	r28244
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11184">[ date ]</a>
+              <a href="thread.html#11184">[ thread ]</a>
+              <a href="subject.html#11184">[ subject ]</a>
+              <a href="author.html#11184">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

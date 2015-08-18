@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4360: KDL during bootscript on waitfor on SMP x86 machine
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234360%3A%20KDL%20during%20bootscript%20on%20waitfor%20on%0A%20SMP%20x86%20machine&In-Reply-To=%3C052.778cd18e08349baec96e3b5af432ed81%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="020374.html">
+   <LINK REL="Next"  HREF="020395.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4360: KDL during bootscript on waitfor on SMP x86 machine</H1>
+    <B>bonefish</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234360%3A%20KDL%20during%20bootscript%20on%20waitfor%20on%0A%20SMP%20x86%20machine&In-Reply-To=%3C052.778cd18e08349baec96e3b5af432ed81%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4360: KDL during bootscript on waitfor on SMP x86 machine">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Aug 29 18:52:59 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="020374.html">[Haiku-bugs] [Haiku] #4360: KDL during bootscript on waitfor on SMP x86 machine
+</A></li>
+        <LI>Next message: <A HREF="020395.html">[Haiku-bugs] [Haiku] #4360: KDL during bootscript on waitfor on SMP x86 machine
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20387">[ date ]</a>
+              <a href="thread.html#20387">[ thread ]</a>
+              <a href="subject.html#20387">[ subject ]</a>
+              <a href="author.html#20387">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4360: KDL during bootscript on waitfor on SMP x86 machine
+---------------------------+------------------------------------------------
+ Reporter:  phoudoin       |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  blocker        |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1 development
+Blockedby:                 |    Platform:  x86           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+
+Comment(by bonefish):
+
+ Replying to [comment:8 mmlr]:
+ &gt; I've seen the exact same panic happen here when using a kernel revision
+ that was incompatible with libroot concerning the size of the DIR cookie,
+ due to the recent addition of seekdir/telldir support fields. Is it
+ possible that your kernel is out of sync somehow? Did you update the
+ kernel separately (like I do often)?
+
+ DIR cookies never cross the libroot-kernel boundary, so regarding this
+ change it really shouldn't matter if kernel and userland are not in sync.
+
+ The stack trace suggests that a thread structure respectively the thread
+ table is corrupt. So a scheduler-related problem seems more likely,
+ particularly since with SMP disabled things work fine. r32503 also having
+ the problem speaks against the theory. Are you sure you have correctly
+ updated to that revision (to be sure the complete system so that you don't
+ miss any of kernel, boot loader, runtime loader or any lib that does
+ syscalls)?
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4360#comment:11">http://dev.haiku-os.org/ticket/4360#comment:11</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="020374.html">[Haiku-bugs] [Haiku] #4360: KDL during bootscript on waitfor on SMP x86 machine
+</A></li>
+	<LI>Next message: <A HREF="020395.html">[Haiku-bugs] [Haiku] #4360: KDL during bootscript on waitfor on SMP x86 machine
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20387">[ date ]</a>
+              <a href="thread.html#20387">[ thread ]</a>
+              <a href="subject.html#20387">[ subject ]</a>
+              <a href="author.html#20387">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

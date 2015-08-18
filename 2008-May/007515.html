@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2246: [patch] tcpdump/libpcap	pcap_platform_finddevs broken
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232246%3A%20%5Bpatch%5D%20tcpdump/libpcap%0A%09pcap_platform_finddevs%20broken&In-Reply-To=%3C038.b771d7bdc418eed8cc9ed0d496c89c89%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007511.html">
+   <LINK REL="Next"  HREF="007528.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2246: [patch] tcpdump/libpcap	pcap_platform_finddevs broken</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232246%3A%20%5Bpatch%5D%20tcpdump/libpcap%0A%09pcap_platform_finddevs%20broken&In-Reply-To=%3C038.b771d7bdc418eed8cc9ed0d496c89c89%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2246: [patch] tcpdump/libpcap	pcap_platform_finddevs broken">trac at haiku-os.org
+       </A><BR>
+    <I>Wed May 21 20:43:59 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007511.html">[Haiku-bugs] [Haiku] #757: [app_server] deadlock on workspace	switching
+</A></li>
+        <LI>Next message: <A HREF="007528.html">[Haiku-bugs] [Haiku] #2246: [patch] tcpdump/libpcap pcap_platform_finddevs broken
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7515">[ date ]</a>
+              <a href="thread.html#7515">[ thread ]</a>
+              <a href="subject.html#7515">[ subject ]</a>
+              <a href="author.html#7515">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2246: [patch] tcpdump/libpcap pcap_platform_finddevs broken
+--------------------------------------+-------------------------------------
+ Reporter:  mjw                       |       Owner:  axeld         
+     Type:  bug                       |      Status:  new           
+ Priority:  normal                    |   Milestone:  R1            
+Component:  Network &amp; Internet/Stack  |     Version:  R1 development
+ Platform:  All                       |  
+--------------------------------------+-------------------------------------
+ pcap_platform_finddevs implementation modifies internal libpcap structures
+ when adding devices to the device list.  However, libpcap expects the
+ device list to be ordered in a subtle way:  the first device in the list
+ should not be a loopback device.
+
+ When tcpdump was run on my machine without any arguments, the loopback
+ device ended up as the first device in the list, which caused tcpdump to
+ exit immediately complaining that there were no suitable devices found.
+
+ This patch adds devices to the device list using pcap_add_if() to ensure
+ the device list is suitably ordered.  tcpdump can now be executed without
+ any arguments to make it listen on a default device.
+
+ I have also added suitable defines to that &quot;tcpdump -D&quot; will now show the
+ list of available devices.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2246">http://dev.haiku-os.org/ticket/2246</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007511.html">[Haiku-bugs] [Haiku] #757: [app_server] deadlock on workspace	switching
+</A></li>
+	<LI>Next message: <A HREF="007528.html">[Haiku-bugs] [Haiku] #2246: [patch] tcpdump/libpcap pcap_platform_finddevs broken
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7515">[ date ]</a>
+              <a href="thread.html#7515">[ thread ]</a>
+              <a href="subject.html#7515">[ subject ]</a>
+              <a href="author.html#7515">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

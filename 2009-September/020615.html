@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4321: Black screen with GeForce 7900 GT
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234321%3A%20Black%20screen%20with%20GeForce%207900%20GT&In-Reply-To=%3C049.9f56681a839155c0e24c60dc19440b07%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="020613.html">
+   <LINK REL="Next"  HREF="020616.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4321: Black screen with GeForce 7900 GT</H1>
+    <B>rudolfc</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234321%3A%20Black%20screen%20with%20GeForce%207900%20GT&In-Reply-To=%3C049.9f56681a839155c0e24c60dc19440b07%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4321: Black screen with GeForce 7900 GT">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Sep  2 20:55:49 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="020613.html">[Haiku-bugs] [Haiku] #4321: Black screen with GeForce 7900 GT
+</A></li>
+        <LI>Next message: <A HREF="020616.html">[Haiku-bugs] [Haiku] #4321: Black screen with GeForce 7900 GT
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20615">[ date ]</a>
+              <a href="thread.html#20615">[ thread ]</a>
+              <a href="subject.html#20615">[ subject ]</a>
+              <a href="author.html#20615">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4321: Black screen with GeForce 7900 GT
+-------------------------------------+--------------------------------------
+ Reporter:  luroh                    |       Owner:  rudolfc       
+     Type:  bug                      |      Status:  new           
+ Priority:  normal                   |   Milestone:  R1            
+Component:  Drivers/Graphics/nVidia  |     Version:  R1 development
+Blockedby:                           |    Platform:  All           
+ Blocking:                           |  
+-------------------------------------+--------------------------------------
+
+Comment(by rudolfc):
+
+ Hmm, thanks!
+
+ From what you tell me now, I am getting an idea what's really wrong here.
+ The CRTC and/or PLL programming fails on that card. In other words: a
+ modeline issue, but inside the driver itself because programming fails.
+ With the VESA settings file the modeline already in the card more
+ resembles the modeline the driver tries to program, than is the case
+ without the vesa settings file.
+ That's why with VESA file the screen becomes more readable.
+
+ I am going to dig a bit into the xfree86 driver asap to see what I can
+ find that I don't have in the driver yet.
+
+ Another possibility is that the CRTC and PLL are switched with the other
+ head by the BIOS (via a new switch register I don't know about yet): so
+ programming succeeds but affects the disabled head. Can you try to bootup
+ with the setting: switchhead true (or something: see the nvidia.settings
+ file) to see what happens then?
+
+ ---------
+
+ If you are wanting to test some more (just a sort of test I'd try to get a
+ bit more info): you could try to remove the vesa settings file again: you
+ can see you have the picture four times on your screen on a screenshot you
+ uploaded. Try this:
+ bootup and select your native mode with Screen, but in 8 bit color (takes
+ 4 times less memory than 32bit color). Hit apply and exit screenprefs.
+ wait a few seconds so we are sure the vesa file gets written to disk. Now
+ delete the vesa file, but keep the app_server_settings in place.
+
+ Reboot. How does the resulting picture look? Can you upload a photo from
+ this test?
+
+
+
+
+ Bye!
+
+ Rudolf.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4321#comment:27">http://dev.haiku-os.org/ticket/4321#comment:27</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="020613.html">[Haiku-bugs] [Haiku] #4321: Black screen with GeForce 7900 GT
+</A></li>
+	<LI>Next message: <A HREF="020616.html">[Haiku-bugs] [Haiku] #4321: Black screen with GeForce 7900 GT
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20615">[ date ]</a>
+              <a href="thread.html#20615">[ thread ]</a>
+              <a href="subject.html#20615">[ subject ]</a>
+              <a href="author.html#20615">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

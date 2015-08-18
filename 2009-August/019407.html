@@ -1,0 +1,123 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4225: OpenDML type AVIs does not work with avi_reader (and h264 codec table fix patch)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234225%3A%20OpenDML%20type%20AVIs%20does%20not%20work%20with%0A%20avi_reader%20%28and%20h264%20codec%20table%20fix%20patch%29&In-Reply-To=%3C043.4fec916443aafe82e5c1f83df8294fd4%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="019458.html">
+   <LINK REL="Next"  HREF="019701.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4225: OpenDML type AVIs does not work with avi_reader (and h264 codec table fix patch)</H1>
+    <B>herdemir</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234225%3A%20OpenDML%20type%20AVIs%20does%20not%20work%20with%0A%20avi_reader%20%28and%20h264%20codec%20table%20fix%20patch%29&In-Reply-To=%3C043.4fec916443aafe82e5c1f83df8294fd4%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4225: OpenDML type AVIs does not work with avi_reader (and h264 codec table fix patch)">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Aug 12 22:42:40 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="019458.html">[Haiku-bugs] [Haiku] #4224: patch: private areas, mlock()/munlock() and MAP_LOCKED for mmap()
+</A></li>
+        <LI>Next message: <A HREF="019701.html">[Haiku-bugs] [Haiku] #4225: OpenDML type AVIs does not work with avi_reader (and h264 codec table fix patch)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19407">[ date ]</a>
+              <a href="thread.html#19407">[ thread ]</a>
+              <a href="subject.html#19407">[ subject ]</a>
+              <a href="author.html#19407">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4225: OpenDML type AVIs does not work with avi_reader (and h264 codec table fix
+patch)
+----------------------------------+-----------------------------------------
+ Reporter:  herdemir              |       Owner:  marcusoverhagen
+     Type:  bug                   |      Status:  new            
+ Priority:  normal                |   Milestone:  R1             
+Component:  Audio &amp; Video/Codecs  |     Version:  R1 development 
+Blockedby:                        |    Platform:  All            
+ Blocking:                        |  
+----------------------------------+-----------------------------------------
+ Actually not just problems about the subject, but also some other problems
+ during investigation:
+
+  * While avi_reader can handle standart AVI files, it cannot handle
+ OpenDML type AVI files. Tested with some avi files with both types and
+ seen that avi_reader can only hanlde 'AVI ' chunk(1-2MB), which shows ~
+ 5secs video/audio, then gets end of file error. In OpenDML after the 'AVI
+ ' comes 'AVIX' chunk which rest of the stream (179 MB) is, cannot be
+ played. As a temporary solution I switched to ffmpegs AVI reader and it
+ was fine. So, it would be better for the time being to switch to ffmpegs
+ avi reader, until avi_reader can handle it.
+
+  * While testing avi files, some of them was using H264 video codec, which
+ should play normally, but wasn't working. After some investigation the
+ H264 section of B_AVI_FORMAT_FAMILY in CodecTable was entered wrongly.
+ After fixing it, I could watch them correctly. A fix is attached.
+
+  * Another problem was, while playing Standart AVI files(XVID &amp; MP3), the
+ sounds get muted after some time or after seeking. Tried with several
+ combinations:
+ {{{
+ - avi_reader &amp; ffmpeg mp3 decoder
+ - ffmpeg avi reader &amp; (native)mp3Decoder
+ - ffmpeg avi reader &amp; ffmpeg mp3 decoder
+ }}}
+   still it didn't solve the mute problem. I suspect it's related to
+ MediaPlayer, not codec related.
+
+  * Last problem I could remember is related to ffmpeg. While using
+ avi_reader with an h264 avi file, the video was playing in B_YCbCr422
+ colorspace. But when using with ffmpeg avi reader, the color space it was
+ using was B_RGB32 and  (in some avis, not all) half of the video was
+ showing in green. Even tough some videos did show normal, the conversion
+ to B_RGB32 then to Overlay was consuming much more CPU then B_YCbCr422 to
+ Overlay. It is related either to the ffmpeg reader or MediaPlayer.
+
+ Sorry for writing it long. And just one question left. I'm trying to learn
+ BeOS/Haiku API and its kit, to contribute in the future. I don't have much
+ pratical experience(except Java &amp; .Net), even though I'm computer
+ engineering student :P. I'm trying to update mp3decoder with the mpg123
+ 1.8.1 library. While trying to update i encountered with stack alignment
+ problem. Is the stack alignment problem fixed in Haiku? If it is how can I
+ clear this stack alignment problem? Some tips could be also enough.
+ Again sorry for writing it sooo long.
+
+ Tested with r32270 GCC4. The stack alignment problem is tested with GCC2
+ one, didn't test with GCC4 one.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4225">http://dev.haiku-os.org/ticket/4225</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="019458.html">[Haiku-bugs] [Haiku] #4224: patch: private areas, mlock()/munlock() and MAP_LOCKED for mmap()
+</A></li>
+	<LI>Next message: <A HREF="019701.html">[Haiku-bugs] [Haiku] #4225: OpenDML type AVIs does not work with avi_reader (and h264 codec table fix patch)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19407">[ date ]</a>
+              <a href="thread.html#19407">[ thread ]</a>
+              <a href="subject.html#19407">[ subject ]</a>
+              <a href="author.html#19407">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

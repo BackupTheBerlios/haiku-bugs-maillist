@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #619: [BListView] selection should be	centered
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-July/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23619%3A%20%5BBListView%5D%20selection%20should%20be%0A%09centered&In-Reply-To=%3C049.3c777e684d9b19a1c9ea5ef727705f5a%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001989.html">
+   <LINK REL="Next"  HREF="001993.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #619: [BListView] selection should be	centered</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23619%3A%20%5BBListView%5D%20selection%20should%20be%0A%09centered&In-Reply-To=%3C049.3c777e684d9b19a1c9ea5ef727705f5a%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #619: [BListView] selection should be	centered">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Jul 30 13:43:31 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001989.html">[Haiku-bugs] [Haiku] #1068: Print server dies with PDF printer	driver
+</A></li>
+        <LI>Next message: <A HREF="001993.html">[Haiku-bugs] [Haiku] #919: Drop down box's do not work with	keyboard
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1992">[ date ]</a>
+              <a href="thread.html#1992">[ thread ]</a>
+              <a href="subject.html#1992">[ subject ]</a>
+              <a href="author.html#1992">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#619: [BListView] selection should be centered
+------------------------+---------------------------------------------------
+  Reporter:  diver      |       Owner:  axeld
+      Type:  bug        |      Status:  new  
+  Priority:  normal     |   Milestone:  R1   
+ Component:  - General  |     Version:       
+Resolution:             |    Platform:  All  
+------------------------+---------------------------------------------------
+Changes (by axeld):
+
+  * platform:  =&gt; All
+
+Comment:
+
+ The patch definitely improves the situation, however it is not entirely
+ correct, either.
+ Since the ascent and descent are the maximal height of the font, you would
+ need to ceilf() either of them individually. As you can see, the
+ SetHeight() call after your changes does it incorrectly as well.
+ You should also ceil() or floor() the leading/2 and double that exact
+ value for SetHeight().
+ Do you want to do these changes and apply another patch, or should I
+ rework your patch and commit it?
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/619#comment:3">http://dev.haiku-os.org/ticket/619#comment:3</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001989.html">[Haiku-bugs] [Haiku] #1068: Print server dies with PDF printer	driver
+</A></li>
+	<LI>Next message: <A HREF="001993.html">[Haiku-bugs] [Haiku] #919: Drop down box's do not work with	keyboard
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1992">[ date ]</a>
+              <a href="thread.html#1992">[ thread ]</a>
+              <a href="subject.html#1992">[ subject ]</a>
+              <a href="author.html#1992">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

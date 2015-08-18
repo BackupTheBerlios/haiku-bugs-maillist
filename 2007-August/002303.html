@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1398: PANIC: vnode is not becoming unbusy!
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231398%3A%20PANIC%3A%20vnode%20is%20not%20becoming%20unbusy%21&In-Reply-To=%3C040.6bb834389aca6cdc9f2278a538cdc0b5%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002302.html">
+   <LINK REL="Next"  HREF="002304.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1398: PANIC: vnode is not becoming unbusy!</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231398%3A%20PANIC%3A%20vnode%20is%20not%20becoming%20unbusy%21&In-Reply-To=%3C040.6bb834389aca6cdc9f2278a538cdc0b5%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1398: PANIC: vnode is not becoming unbusy!">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Aug 15 17:21:28 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002302.html">[Haiku-bugs] [Haiku] #1095: NVIDIA nForce SATA driver
+</A></li>
+        <LI>Next message: <A HREF="002304.html">[Haiku-bugs] [Haiku] #1398: PANIC: vnode is not becoming unbusy!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2303">[ date ]</a>
+              <a href="thread.html#2303">[ thread ]</a>
+              <a href="subject.html#2303">[ subject ]</a>
+              <a href="author.html#2303">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1398: PANIC: vnode is not becoming unbusy!
+------------------------------+---------------------------------------------
+ Reporter:  korli             |       Owner:  bga           
+     Type:  bug               |      Status:  new           
+ Priority:  normal            |   Milestone:  R1            
+Component:  File Systems/BFS  |     Version:  R1 development
+ Platform:  All               |  
+------------------------------+---------------------------------------------
+ It happened while net booting with r21964.
+
+ bfs: bfs_access:1314: Operation not allowed
+ Last message repeated 2 times.
+ bfs: bfs_access:1314: Operation not allowed
+ Last message repeated 3 times.
+ Last message repeated 5 times.
+ PANIC: vnode 4:198406 is not becoming unbusy!
+
+ Welcome to Kernel Debugging Land...
+ Running on CPU 0
+ kdebug&gt; sc
+ stack trace for thread 0x56 &quot;TrackerTaskLoop&quot;
+     kernel stack: 0x81023000 to 0x81027000
+       user stack: 0x70000000 to 0x70040000
+ frame            caller     &lt;image&gt;:function + offset
+ 81026990 (+  36) 80082de2   &lt;kernel&gt;:invoke_command + 0x006c
+ 810269b4 (+  48) 80082ef8   &lt;kernel&gt;:kernel_debugger_loop + 0x00d3
+ 810269e4 (+  32) 80083952   &lt;kernel&gt;:kernel_debugger + 0x00af
+ 81026a04 (+ 176) 8008389b   &lt;kernel&gt;:panic + 0x002d
+ 81026ab4 (+  64) 80046f12   &lt;kernel&gt;:_Z9get_vnodelxPP5vnodei + 0x01a4
+ 81026af4 (+  48) 80047bec   &lt;kernel&gt;:get_vnode + 0x001a
+ 81026b24 (+ 112) 81607992   &lt;bfs&gt;:_ZN5Inode12GetAttributeEPKcPPS_ + 0x019c
+ 81026b94 (+  48) 816051fa   &lt;bfs&gt;:_ZN9Attribute3GetEPKc + 0x017a
+ 81026bc4 (+  48) 81605246   &lt;bfs&gt;:_ZN9Attribute4OpenEPKciPP11attr_cookie +
+ 0x003c
+ 81026bf4 (+  96) 816148d6   &lt;bfs&gt;:_Z13bfs_open_attrPvS_PKciPS_ + 0x0030
+ 81026c54 (+  80) 8004aca7   &lt;kernel&gt;:_Z9attr_openiPKcib + 0x006f
+ 81026ca4 (+ 288) 8004ad7b   &lt;kernel&gt;:_user_open_attr + 0x0049
+ 81026dc4 (+ 352) 8003820a   &lt;kernel&gt;:syscall_dispatcher + 0x0c9f
+ 81026f24 (+ 128) 8008b8bf   &lt;kernel&gt;:i386_handle_trap + 0x0308
+ iframe at 0x81026fac (end = 0x81027000)
+  eax 0x58           ebx 0x695458        ecx 0x80000005   edx 0x424087
+  esi 0x1801b0a0     edi 0x7003f988      ebp 0x7003f92c   esp 0x81026fdc
+  eip 0xffff0102  eflags 0x202
+  vector: 0x63, error code: 0x0
+ 81026fa4 (+   0) ffff0102
+ 7003f92c (+  48) 003c7585
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libbe.so at 0x00245000</A>&gt;:unknown + 0x182585
+ 7003f95c (+  64) 003c8c19
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libbe.so at 0x00245000</A>&gt;:unknown + 0x183c19
+ 7003f99c (+ 800) 00551811
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libtracker.so at 0x0047c000</A>&gt;:unknown + 0xd5811
+ 7003fcbc (+  96) 00551ebb
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libtracker.so at 0x0047c000</A>&gt;:unknown + 0xd5ebb
+ 7003fd1c (+  48) 00552063
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libtracker.so at 0x0047c000</A>&gt;:unknown + 0xd6063
+ 7003fd4c (+  48) 005524c0
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libtracker.so at 0x0047c000</A>&gt;:unknown + 0xd64c0
+ 7003fd7c (+  96) 0055257c
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libtracker.so at 0x0047c000</A>&gt;:unknown + 0xd657c
+ 7003fddc (+ 272) 00559566
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libtracker.so at 0x0047c000</A>&gt;:unknown + 0xdd566
+ 7003feec (+ 112) 00559993
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libtracker.so at 0x0047c000</A>&gt;:unknown + 0xdd993
+ 7003ff5c (+  32) 0055a15f
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libtracker.so at 0x0047c000</A>&gt;:unknown + 0xde15f
+ 7003ff7c (+  32) 0059f5aa
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libtracker.so at 0x0047c000</A>&gt;:unknown + 0x1235aa
+ 7003ff9c (+  32) 0059f361
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libtracker.so at 0x0047c000</A>&gt;:unknown + 0x123361
+ 7003ffbc (+  32) 0061e94e
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libroot.so at 0x005fd000</A>&gt;:unknown + 0x2194e
+ 7003ffdc (+   0) 7003ffec   856:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">TrackerTaskLoop_56_stack at 0x70000000</A> +
+ 0x3ffec
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1398">http://dev.haiku-os.org/ticket/1398</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002302.html">[Haiku-bugs] [Haiku] #1095: NVIDIA nForce SATA driver
+</A></li>
+	<LI>Next message: <A HREF="002304.html">[Haiku-bugs] [Haiku] #1398: PANIC: vnode is not becoming unbusy!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2303">[ date ]</a>
+              <a href="thread.html#2303">[ thread ]</a>
+              <a href="subject.html#2303">[ subject ]</a>
+              <a href="author.html#2303">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

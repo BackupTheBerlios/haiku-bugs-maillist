@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4144: BScreen::SetMode() not working OK
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-July/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234144%3A%20BScreen%3A%3ASetMode%28%29%20not%20working%20OK&In-Reply-To=%3C051.871bf0e324c90d680c516bb08842adb5%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="018755.html">
+   <LINK REL="Next"  HREF="018801.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4144: BScreen::SetMode() not working OK</H1>
+    <B>rudolfc</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234144%3A%20BScreen%3A%3ASetMode%28%29%20not%20working%20OK&In-Reply-To=%3C051.871bf0e324c90d680c516bb08842adb5%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4144: BScreen::SetMode() not working OK">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Jul 29 19:52:54 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="018755.html">[Haiku-bugs] [Haiku] #4144: BScreen::SetMode() not working OK
+</A></li>
+        <LI>Next message: <A HREF="018801.html">[Haiku-bugs] [Haiku] #4144: BScreen::SetMode() not working OK
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18798">[ date ]</a>
+              <a href="thread.html#18798">[ thread ]</a>
+              <a href="subject.html#18798">[ subject ]</a>
+              <a href="author.html#18798">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4144: BScreen::SetMode() not working OK
+-----------------------+----------------------------------------------------
+ Reporter:  rudolfc    |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+Blockedby:             |    Platform:  All           
+ Blocking:             |  
+-----------------------+----------------------------------------------------
+
+Comment(by rudolfc):
+
+ Hi Stephan,
+
+ The good news is Setmode is now executed. However: the flags are not all
+ 'transparantly' used as BeOS does. The officially unused flags are
+ filtered on Haiku, while BeOS handles all bits.
+
+ The behaviour on Haiku is that it seems Setmode only accesses the
+ accelerant if the mode differs from the already set one. If only
+ (unknown)flags are different it won't call the accelerant, nor will it
+ save them for the next boot.
+ The app_server dedraws the screen however as a 'proof' Setmode is actually
+ called from the app.
+ Can it be proposemode also is not transparant for all flags?
+
+ The setmode command with the workspace argument seems to react the same as
+ the 'normal' setmode command: so in that sense setmode is now fixed.
+
+ Anyhow: I am talking about the flags since the Matrox and nVidia drivers
+ use these flags for dualhead and TVout support. It would be handy if that
+ would be possible on Haiku, saves me some time rewriting the driver for
+ the Haiku screen preflet at this time..
+
+ Please let me know if the flags will be modified to behave like BeOS or
+ not. :-)
+
+ Bye and thanks for the quick response!!
+
+ Rudolf.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4144#comment:2">http://dev.haiku-os.org/ticket/4144#comment:2</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="018755.html">[Haiku-bugs] [Haiku] #4144: BScreen::SetMode() not working OK
+</A></li>
+	<LI>Next message: <A HREF="018801.html">[Haiku-bugs] [Haiku] #4144: BScreen::SetMode() not working OK
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18798">[ date ]</a>
+              <a href="thread.html#18798">[ thread ]</a>
+              <a href="subject.html#18798">[ subject ]</a>
+              <a href="author.html#18798">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

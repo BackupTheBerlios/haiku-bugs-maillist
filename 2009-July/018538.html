@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4104: Occasional debugger call from Observable class destructor when Icon-O-Matic is quit
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-July/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234104%3A%20Occasional%20debugger%20call%20from%0A%20Observable%20class%20destructor%20when%20Icon-O-Matic%20is%20quit&In-Reply-To=%3C045.62afb4c4a34a455d442483906f35f6e7%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="018576.html">
+   <LINK REL="Next"  HREF="018548.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4104: Occasional debugger call from Observable class destructor when Icon-O-Matic is quit</H1>
+    <B>leavengood</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234104%3A%20Occasional%20debugger%20call%20from%0A%20Observable%20class%20destructor%20when%20Icon-O-Matic%20is%20quit&In-Reply-To=%3C045.62afb4c4a34a455d442483906f35f6e7%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4104: Occasional debugger call from Observable class destructor when Icon-O-Matic is quit">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Jul 18 21:12:29 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="018576.html">[Haiku-bugs] [Haiku] #4103: cddb not working
+</A></li>
+        <LI>Next message: <A HREF="018548.html">[Haiku-bugs] [Haiku] #2930: The Mail Daemon can't use SSL in default in pre-alpha1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18538">[ date ]</a>
+              <a href="thread.html#18538">[ thread ]</a>
+              <a href="subject.html#18538">[ subject ]</a>
+              <a href="author.html#18538">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4104: Occasional debugger call from Observable class destructor when Icon-O-Matic
+is quit
+---------------------------------------+------------------------------------
+ Reporter:  leavengood                 |       Owner:  stippi        
+     Type:  bug                        |      Status:  new           
+ Priority:  normal                     |   Milestone:  R1            
+Component:  Applications/Icon-O-Matic  |     Version:  R1 development
+Blockedby:                             |    Platform:  All           
+ Blocking:                             |  
+---------------------------------------+------------------------------------
+ I have been using Icon-O-Matic a lot lately and I have been seeing
+ periodically. Sometimes when IOM is quit, the crash dialog comes up. The
+ stacktrace indicates the problem is from a debugger call:
+
+ {{{
+ 228: DEBUGGER: Observable::~Observable() - 1 observers still watching,
+ first: 12PathListItem
+
+ debug_server: Thread 228 entered the debugger: Debugger call:
+ `Observable::~Observable() - 1 observers still watching, first:
+ 12PathListItem
+ '
+ stack trace, current PC 0xffff0114  :
+   (0x7ffee6fc)  0x28e127  _._10Observable + 0x83
+   (0x7ffee83c)  0x27481d  _._10IconObject + 0x6d
+   (0x7ffee87c)  0x25bd2e  _._Q38BPrivate4Icon10VectorPath + 0xca
+   (0x7ffeeabc)  0x29aa26  Release__13Referenceable + 0x42
+   (0x7ffeeaec)  0x2caa43  _._19UnassignPathCommand + 0x3b
+   (0x7ffeeb1c)  0x2767ae  Clear__12CommandStack + 0x8a
+   (0x7ffeeb5c)  0x27422e  MakeEmpty__8Documentb + 0x26
+   (0x7ffeeb8c)  0x2d7896  _MakeIconEmpty__13IconEditorApp + 0xaa
+   (0x7ffeebcc)  0x2d6a54  MessageReceived__13IconEditorAppP8BMessage +
+ 0x98
+   (0x7ffeecac)  0x3ee8eb  DispatchMessage__7BLooperP8BMessageP8BHandler +
+ 0x5b
+   (0x7ffeecdc)  0x3e5025
+ DispatchMessage__12BApplicationP8BMessageP8BHandler + 0x405
+   (0x7ffeeecc)  0x3f0259  task_looper__7BLooper + 0x211
+   (0x7ffeef0c)  0x3e3791  Run__12BApplication + 0x75
+   (0x7ffeef4c)  0x2da09a  main + 0x6e
+   (0x7ffeef7c)  0x25478b  _start + 0x5b
+   (0x7ffeefac)  0x105b1a  runtime_loader + 0x14a
+ }}}
+
+ So for whatever reason a PathListItem is not being removed from the
+ Observer list before the Observable is destroyed.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4104">http://dev.haiku-os.org/ticket/4104</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="018576.html">[Haiku-bugs] [Haiku] #4103: cddb not working
+</A></li>
+	<LI>Next message: <A HREF="018548.html">[Haiku-bugs] [Haiku] #2930: The Mail Daemon can't use SSL in default in pre-alpha1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18538">[ date ]</a>
+              <a href="thread.html#18538">[ thread ]</a>
+              <a href="subject.html#18538">[ subject ]</a>
+              <a href="author.html#18538">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

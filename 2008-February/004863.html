@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1791: sqlite locking problem
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-February/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231791%3A%20sqlite%20locking%20problem&In-Reply-To=%3C042.0996c1357de727a1b9c811cb56947d21%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="004859.html">
+   <LINK REL="Next"  HREF="004938.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1791: sqlite locking problem</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231791%3A%20sqlite%20locking%20problem&In-Reply-To=%3C042.0996c1357de727a1b9c811cb56947d21%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1791: sqlite locking problem">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Feb 14 21:39:27 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="004859.html">[Haiku-bugs] [Haiku] #1595: Refcounted BString implementation
+</A></li>
+        <LI>Next message: <A HREF="004938.html">[Haiku-bugs] [Haiku] #1791: sqlite locking problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4863">[ date ]</a>
+              <a href="thread.html#4863">[ thread ]</a>
+              <a href="subject.html#4863">[ subject ]</a>
+              <a href="author.html#4863">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1791: sqlite locking problem
+-----------------------+----------------------------------------------------
+ Reporter:  kaliber    |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+ Platform:  All        |  
+-----------------------+----------------------------------------------------
+ First of all I know that sqlite is not a part of Haiku, but maybe someone
+ could help to run sqlite on Haiku.
+
+ Here is a strace output:
+
+ {{{
+ SQLite version 3.4.2
+ Enter &quot;.help&quot; for instructions
+ [  7715] _kern_write(0x1, 0xffffffffffffffff, 0x1802c420, 0x34) =
+ 0x00000034 (42 us)
+ [  7715] _kern_acquire_sem(0x59769) = 0x00000000 No error (5 us)
+ [  7715] _kern_release_sem(0x59769) = 0x00000000 No error (5 us)
+ sqlite&gt; [  7715] _kern_write(0x1, 0xffffffffffffffff, 0x1802c420, 0x8) =
+ 0x00000008 (46 us)
+ [  7715] _kern_read_stat(0x0, (nil), false, 0x7ffe664c, 0x3c) = 0x00000000
+ No error (40 us)
+ [  7715] _kern_ioctl(0x0, TCGETA, 0x7ffe65fc, 0x20) = 0x00000000 No error
+ (20 us)
+
+ [  7715] _kern_read(0x0, 0xffffffffffffffff, 0x1802e800, 0x1) = 0x00000001
+ (5762338 us)
+ sqlite&gt; [  7715] _kern_write(0x1, 0xffffffffffffffff, 0x1802c420, 0x8) =
+ 0x00000008 (38 us)
+ CREATE table x(y text);
+ [  7715] _kern_read(0x0, 0xffffffffffffffff, 0x1802e800, 0x18) =
+ 0x00000018 (10193876 us)
+ [  7715] _kern_resize_area(0x247de, 0x33000) = 0x00000000 No error (38 us)
+ [  7715] _kern_getcwd(0x18030be0, 0x1388) = 0x00000000 No error (488 us)
+ [  7715] _kern_open(0xffffffff, &quot;/boot/home/sqlite-3.4.2/db&quot;, 0x8202,
+ 0x1a4) = 0x00000003 (5589 us)
+ [  7715] _kern_fcntl(0x3, 0x2, 0x0) = 0x00000000 No error (171 us)
+ [  7715] _kern_fcntl(0x3, 0x4, 0x1) = 0x00000000 No error (9 us)
+ [  7715] _kern_read_stat(0x3, (nil), false, 0x7ffe6514, 0x3c) = 0x00000000
+ No error (28 us)
+ [  7715] _kern_seek(0x3, 0x0, 0x0) = 0x400000024 (26 us)
+ [  7715] _kern_read(0x3, 0xffffffffffffffff, 0x7ffe6748, 0x0) = 0x00000000
+ (16 us)
+ [  7715] _kern_resize_area(0x247de, 0x53000) = 0x00000000 No error (39 us)
+ [  7715] _kern_fcntl(0x3, 0x80, 0x7ffe6264) = 0x00000000 No error (699 us)
+ [  7715] _kern_fcntl(0x3, 0x80, 0x7ffe6264) = 0x00000000 No error (256 us)
+ [  7715] _kern_fcntl(0x3, 0x80, 0x7ffe6264) = 0x00000000 No error (328 us)
+ [  7715] _kern_access(&quot;/boot/home/sqlite-3.4.2/db-journal&quot;, 0x0) =
+ 0x80006003 No such file or directory (136 us)
+ [  7715] _kern_read_stat(0x3, (nil), false, 0x7ffe627c, 0x3c) = 0x00000000
+ No error (42 us)
+ [  7715] _kern_fcntl(0x3, 0x80, 0x7ffe62f4) = 0x80000005 Invalid Argument
+ (99 us)
+ [  7715] _kern_access(&quot;/boot/home/sqlite-3.4.2/db-journal&quot;, 0x0) =
+ 0x80006003 No such file or directory (219 us)
+ [  7715] _kern_read_stat(0x3, (nil), false, 0x7ffe61cc, 0x3c) = 0x00000000
+ No error (55 us)
+ [  7715] _kern_fcntl(0x3, 0x80, 0x7ffe62f4) = 0x80000002 Permission denied
+ (90 us)
+ [  7715] _kern_fcntl(0x3, 0x80, 0x7ffe6234) = 0x80000005 Invalid Argument
+ (49 us)
+ SQL error: database is locked
+ [  7715] _kern_write(0x1, 0xffffffffffffffff, 0x1802c420, 0x1e) =
+ 0x0000001e (39 us)
+ sqlite&gt; [  7715] _kern_write(0x1, 0xffffffffffffffff, 0x1802c420, 0x8) =
+ 0x00000008 (31 us)
+ }}}
+
+ Bug in fcntl?
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1791">http://dev.haiku-os.org/ticket/1791</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="004859.html">[Haiku-bugs] [Haiku] #1595: Refcounted BString implementation
+</A></li>
+	<LI>Next message: <A HREF="004938.html">[Haiku-bugs] [Haiku] #1791: sqlite locking problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4863">[ date ]</a>
+              <a href="thread.html#4863">[ thread ]</a>
+              <a href="subject.html#4863">[ subject ]</a>
+              <a href="author.html#4863">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

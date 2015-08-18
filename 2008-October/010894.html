@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2598: sshd occasionally segfaults on connect (possibly when forking)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232598%3A%20sshd%20occasionally%20segfaults%20on%0A%20connect%20%28possibly%20when%20forking%29&In-Reply-To=%3C053.f3206e5eefe6ca446d4a09810ef67116%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010892.html">
+   <LINK REL="Next"  HREF="010899.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2598: sshd occasionally segfaults on connect (possibly when forking)</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232598%3A%20sshd%20occasionally%20segfaults%20on%0A%20connect%20%28possibly%20when%20forking%29&In-Reply-To=%3C053.f3206e5eefe6ca446d4a09810ef67116%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2598: sshd occasionally segfaults on connect (possibly when forking)">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Oct  9 16:54:03 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010892.html">[Haiku-bugs] [Haiku] #2397: Build system writes over actual filesystem contents while trying to add boot sector to partition
+</A></li>
+        <LI>Next message: <A HREF="010899.html">[Haiku-bugs] [Haiku] #2368: App-server crash when moving Deskbar modal window to another workspace
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10894">[ date ]</a>
+              <a href="thread.html#10894">[ thread ]</a>
+              <a href="subject.html#10894">[ subject ]</a>
+              <a href="author.html#10894">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2598: sshd occasionally segfaults on connect (possibly when forking)
+----------------------------+-----------------------------------------------
+  Reporter:  anevilyak      |       Owner:  bonefish      
+      Type:  bug            |      Status:  assigned      
+  Priority:  normal         |   Milestone:  R1            
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |   Blockedby:                
+  Platform:  All            |    Blocking:                
+----------------------------+-----------------------------------------------
+
+Comment(by anevilyak):
+
+ Replying to [comment:30 bonefish]:
+ &gt; It would also be interesting why the behavior has changed now. Did you
+ do the previous test before r27925? That's at least something that changed
+ in the allocator. If not, setting kHeapIncrement to B_PAGE_SIZE (in
+ .../malloc/arch_specific.cpp) might bring back the old behavior. Depending
+ on whether a gdb session turns something up with the current behavior, it
+ might be easier to analyze the old one, since it crashes meaner and
+ probably earlier.
+
+ That's actually possible, I seem to remember I still got the old behavior
+ only a few days ago. Crashing in flight like it is now is new for me
+ though, it used to only crash on new connection, never in mid data
+ transfer. Though I think mmlr said he saw problems like that on his C2Q
+ sometimes. Will try changing the heap increment tonight and see what
+ happens.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2598#comment:31">http://dev.haiku-os.org/ticket/2598#comment:31</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010892.html">[Haiku-bugs] [Haiku] #2397: Build system writes over actual filesystem contents while trying to add boot sector to partition
+</A></li>
+	<LI>Next message: <A HREF="010899.html">[Haiku-bugs] [Haiku] #2368: App-server crash when moving Deskbar modal window to another workspace
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10894">[ date ]</a>
+              <a href="thread.html#10894">[ thread ]</a>
+              <a href="subject.html#10894">[ subject ]</a>
+              <a href="author.html#10894">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3966: Free Pascal Compiler throwing	exception at r30830
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233966%3A%20Free%20Pascal%20Compiler%20throwing%0A%09exception%20at%20r30830&In-Reply-To=%3C049.4d3e8a73ed27a27307dd8115d5bdf857%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="017730.html">
+   <LINK REL="Next"  HREF="017732.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3966: Free Pascal Compiler throwing	exception at r30830</H1>
+    <B>haiqu</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233966%3A%20Free%20Pascal%20Compiler%20throwing%0A%09exception%20at%20r30830&In-Reply-To=%3C049.4d3e8a73ed27a27307dd8115d5bdf857%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3966: Free Pascal Compiler throwing	exception at r30830">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Jun  1 02:29:15 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="017730.html">[Haiku-bugs] [Haiku] #3986: problem with ls command (symlink	traversal bug?)
+</A></li>
+        <LI>Next message: <A HREF="017732.html">[Haiku-bugs] [Haiku] #3959: Wrong HDD size shown
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17731">[ date ]</a>
+              <a href="thread.html#17731">[ thread ]</a>
+              <a href="subject.html#17731">[ subject ]</a>
+              <a href="author.html#17731">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3966: Free Pascal Compiler throwing exception at r30830
+-----------------------+----------------------------------------------------
+ Reporter:  haiqu      |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+Blockedby:             |    Platform:  x86           
+ Blocking:             |  
+-----------------------+----------------------------------------------------
+
+Comment(by haiqu):
+
+ Fixed. Changed the following in fpc/rtl/haiku/ostypes:
+
+ {{{
+ (* This is the BeOS stat struct and Haiku version differs as at r30830
+    stat = packed record
+       dev:longint;     {&quot;device&quot; that this file resides on}
+       ino:int64;       {this file's inode #, unique per device}
+       st_mode:dword;      {mode bits (rwx for user, group, etc)}
+       nlink:longint;   {number of hard links to this file}
+       uid:dword;       {user id of the owner of this file}
+       gid:dword;       {group id of the owner of this file}
+       st_size:int64;      {size of this file (in bytes)}
+       rdev:longint;    {device type (not used)}
+       blksize:longint; {preferref block size for i/o}
+       atime:longint;   {last access time}
+       st_mtime:longint;   {last modification time}
+       ctime:longint;   {last change time, not creation time}
+       crtime:longint;  {creation time}
+    end;
+ *)
+
+    stat = packed record
+        st_dev:longint;       {&quot;device&quot; that this file resides on}
+        st_ino:int64;         {this file's inode #, unique per device}
+        st_mode:dword;        {mode bits (rwx for user, group, etc)}
+        st_nlink:longint;     {number of hard links to this file}
+        st_uid:dword;         {user id of the owner of this file}
+        st_gid:dword;         {group id of the owner of this file}
+        st_size:int64;        {size of this file (in bytes)}
+        st_rdev:longint;      {device type (not used)}
+        st_blksize:longint;   {preferref block size for i/o}
+        st_atime:timespec;    {last access time}
+        st_mtime:timespec;    {last modification time}
+        st_ctime:timespec;    {last change time, not creation time}
+        st_crtime:timespec;   {creation time}
+        st_type:dword;        {attribute/index type}
+        st_blocks:int64;      {number of blocks allocated for object}
+    end;
+    TStat = stat;
+    pStat = ^stat;
+
+ }}}
+
+ Also needed to do a few patches in rtl/unix/sysutils.pp and
+ rtl/unix/dos.pp like so:
+
+ {{{
+ {$ifdef haiku}
+       Result:=UnixToWinAge(info.st_mtime.tv_sec);
+ {$else}
+       Result:=UnixToWinAge(info.st_mtime);
+ {$endif}
+ }}}
+
+ It's all good now.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3966#comment:4">http://dev.haiku-os.org/ticket/3966#comment:4</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="017730.html">[Haiku-bugs] [Haiku] #3986: problem with ls command (symlink	traversal bug?)
+</A></li>
+	<LI>Next message: <A HREF="017732.html">[Haiku-bugs] [Haiku] #3959: Wrong HDD size shown
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17731">[ date ]</a>
+              <a href="thread.html#17731">[ thread ]</a>
+              <a href="subject.html#17731">[ subject ]</a>
+              <a href="author.html#17731">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

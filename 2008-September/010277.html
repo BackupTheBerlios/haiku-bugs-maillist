@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2730: Changing filetype won't add extra attributes of new type
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232730%3A%20Changing%20filetype%20won%27t%20add%20extra%0A%20attributes%20of%20new%20type&In-Reply-To=%3C053.84354a6975a4ac42bf50d3c48079d5a0%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010275.html">
+   <LINK REL="Next"  HREF="010288.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2730: Changing filetype won't add extra attributes of new type</H1>
+    <B>stippi</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232730%3A%20Changing%20filetype%20won%27t%20add%20extra%0A%20attributes%20of%20new%20type&In-Reply-To=%3C053.84354a6975a4ac42bf50d3c48079d5a0%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2730: Changing filetype won't add extra attributes of new type">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Sep 14 11:49:11 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010275.html">[Haiku-bugs] [Haiku] #2730: Changing filetype won't add extra attributes of new type
+</A></li>
+        <LI>Next message: <A HREF="010288.html">[Haiku-bugs] [Haiku] #2730: Changing filetype won't add extra attributes of new type
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10277">[ date ]</a>
+              <a href="thread.html#10277">[ thread ]</a>
+              <a href="subject.html#10277">[ subject ]</a>
+              <a href="author.html#10277">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2730: Changing filetype won't add extra attributes of new type
+-----------------------------------+----------------------------------------
+  Reporter:  humdinger             |       Owner:  axeld         
+      Type:  bug                   |      Status:  closed        
+  Priority:  normal                |   Milestone:  R1            
+ Component:  Applications/Tracker  |     Version:  R1 development
+Resolution:  invalid               |   Blockedby:                
+  Platform:  All                   |    Blocking:                
+-----------------------------------+----------------------------------------
+Changes (by stippi):
+
+  * status:  new =&gt; closed
+  * resolution:  =&gt; invalid
+
+
+Comment:
+
+ I can understand that you find this irritating, but this is how it's
+ supposed to work.
+
+ * Any file can have any attributes. (!)
+ * Certain attributes are &quot;associated&quot; with certain file types via the
+ FileTypes preflet. This is only for Tracker so that it offers these
+ attributes to be edited or displayed when it encounters files of a certain
+ types. The information is also available to other applications via the
+ BMimeType API.
+ * An individual file may or may not truly have certain attributes that are
+ associated to it's type. The binding is lose. If for example you associate
+ an attribute to a file, nothing will happen, only the mimtype database
+ entry will save the setting. Not a single file of the affected type in the
+ system will automatically get any attribute written because of the change.
+ All that happens is that Tracker will now offer this attribute column. In
+ the same sense, if you remove associated attributes from a type, nothing
+ will happen to files that already have this attribute.
+ * If you change the type of a file, nothing will happen to attributes that
+ are already attached to the file on disk. Only the Tracker Attributes menu
+ may change.
+ * Tracker stores the folder/window settings with regard to the displayed
+ attribute columns. The columns are not automatically removed, in the same
+ way as they are not automatically added. So just because files in a folder
+ change their type, or are removed, or are added to the folder, does not
+ automatically affect the attribute columns. Since attribute data is part
+ of a file, the data will be displayed truthfully when a column happens to
+ be there. Regardless of whether the attribute is still associated with the
+ file.
+
+ All this is a lose binding where several applications work together.
+ FileTypes influences the Tracker attribute column offering and the mime
+ database which is also available via the OS API for other applications
+ (the Registrar makes it available). The attributes that are on disk for a
+ given file doesn't really have anything to do with this.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2730#comment:1">http://dev.haiku-os.org/ticket/2730#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010275.html">[Haiku-bugs] [Haiku] #2730: Changing filetype won't add extra attributes of new type
+</A></li>
+	<LI>Next message: <A HREF="010288.html">[Haiku-bugs] [Haiku] #2730: Changing filetype won't add extra attributes of new type
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10277">[ date ]</a>
+              <a href="thread.html#10277">[ thread ]</a>
+              <a href="subject.html#10277">[ subject ]</a>
+              <a href="author.html#10277">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

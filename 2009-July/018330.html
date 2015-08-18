@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4075: Panic in r31444 when mounting a NTFS	volume
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-July/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234075%3A%20Panic%20in%20r31444%20when%20mounting%20a%20NTFS%0A%09volume&In-Reply-To=%3C044.63f77896bae802d7ed1274d53006aef6%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="018687.html">
+   <LINK REL="Next"  HREF="018342.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4075: Panic in r31444 when mounting a NTFS	volume</H1>
+    <B>meianoite</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234075%3A%20Panic%20in%20r31444%20when%20mounting%20a%20NTFS%0A%09volume&In-Reply-To=%3C044.63f77896bae802d7ed1274d53006aef6%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4075: Panic in r31444 when mounting a NTFS	volume">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Jul  7 20:50:15 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="018687.html">[Haiku-bugs] [Haiku] #4074: eMachines 19&quot; WS LCD monitor native resolution not avail. using AGP Geforce 2/3
+</A></li>
+        <LI>Next message: <A HREF="018342.html">[Haiku-bugs] [Haiku] #4075: Panic in r31444 when mounting a	NTFS volume
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18330">[ date ]</a>
+              <a href="thread.html#18330">[ thread ]</a>
+              <a href="subject.html#18330">[ subject ]</a>
+              <a href="author.html#18330">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4075: Panic in r31444 when mounting a NTFS volume
+-------------------------------+--------------------------------------------
+ Reporter:  meianoite          |       Owner:  3dEyes        
+     Type:  bug                |      Status:  new           
+ Priority:  critical           |   Milestone:  R1/alpha1     
+Component:  File Systems/NTFS  |     Version:  R1 development
+Blockedby:                     |    Platform:  x86           
+ Blocking:                     |  
+-------------------------------+--------------------------------------------
+ System is gcc2 r31444 with rebuilt toolchain at the same revision.
+ Probably related to the recent wchar_t changes, since NTFS uses Unicode
+ for names. Reproducible every time.
+
+ I'm considering this critical despite the NTFS add-on being optional
+ because I can't see any Windows multi-booting user not enabling it.
+
+ Steps to reproduce: enable gpl addons (and maybe 3rd party, I don't know
+ where the ntfs-3g add-on is located). Boot Haiku, attempt to mount a NTFS
+ volume, as read-only even.
+ First symptom appears before the mounting per se: the volume names aren't
+ shown anymore, with Tracker showing a placeholder &quot;NTFS Volume&quot; label
+ instead.
+ Second symptom is that, well, it KDLs, with the following message:
+
+ {{{
+ PANIC: vm_page_fault: unhandled page fault in kernel space at 0x0, ip
+ 0x800ea66b
+
+ Welcome to Kernel Debugging Land...
+ Thread 160 &quot;TrashWatcher&quot; running on CPU 3
+ }}}
+
+ Screenshots of stack trace are attached, sorry for the CRT noise.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4075">http://dev.haiku-os.org/ticket/4075</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="018687.html">[Haiku-bugs] [Haiku] #4074: eMachines 19&quot; WS LCD monitor native resolution not avail. using AGP Geforce 2/3
+</A></li>
+	<LI>Next message: <A HREF="018342.html">[Haiku-bugs] [Haiku] #4075: Panic in r31444 when mounting a	NTFS volume
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18330">[ date ]</a>
+              <a href="thread.html#18330">[ thread ]</a>
+              <a href="subject.html#18330">[ subject ]</a>
+              <a href="author.html#18330">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

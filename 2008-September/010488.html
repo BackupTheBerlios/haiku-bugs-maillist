@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2760: Crash when sorting populated folder
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232760%3A%20Crash%20when%20sorting%20populated%20folder&In-Reply-To=%3C044.57783320966c89af108394cb99691802%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010481.html">
+   <LINK REL="Next"  HREF="010490.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2760: Crash when sorting populated folder</H1>
+    <B>humdinger</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232760%3A%20Crash%20when%20sorting%20populated%20folder&In-Reply-To=%3C044.57783320966c89af108394cb99691802%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2760: Crash when sorting populated folder">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Sep 22 18:06:58 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010481.html">[Haiku-bugs] [Haiku] #1874: VIA Rhine-II not working
+</A></li>
+        <LI>Next message: <A HREF="010490.html">[Haiku-bugs] [Haiku] #1609: NetworkStatus -&gt; No Link
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10488">[ date ]</a>
+              <a href="thread.html#10488">[ thread ]</a>
+              <a href="subject.html#10488">[ subject ]</a>
+              <a href="author.html#10488">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2760: Crash when sorting populated folder
+----------------------------------+-----------------------------------------
+ Reporter:  humdinger             |       Owner:  axeld         
+     Type:  bug                   |      Status:  new           
+ Priority:  normal                |   Milestone:  R1            
+Component:  Applications/Tracker  |     Version:  R1 development
+Blockedby:                        |    Platform:  All           
+ Blocking:                        |  
+----------------------------------+-----------------------------------------
+ This is on vmware, r27404.
+
+ When I change the sort order to &quot;Subject&quot; in mail folder with 4500+ mails,
+ Tracker's crashing. This is the serial log:
+ {{{
+ vm_soft_fault: va 0x0 not covered by area in address space
+ vm_page_fault: vm_soft_fault returned error 'Bad address' on fault at 0x1,
+ ip 0x3b3446, write 0, user 1, thread 0xb0
+ vm_page_fault: thread &quot;w&gt;/exImage/mail/in&quot; (176) in team &quot;Tracker&quot; (84)
+ tried to read address 0x1, ip 0x3b3446 (&quot;libbe.so_seg0ro&quot; +0x1b1446)
+ stack trace:
+   0x0056b369 (libtracker.so_seg0ro + 0x122369)
+   0x0058a643 (libtracker.so_seg0ro + 0x141643)
+   0x0058f89f (libtracker.so_seg0ro + 0x14689f)
+   0x003ba127 (libbe.so_seg0ro + 0x1b8127)
+   0x003b9ab6 (libbe.so_seg0ro + 0x1b7ab6)
+   0x003b9c92 (libbe.so_seg0ro + 0x1b7c92)
+   0x003b3ce1 (libbe.so_seg0ro + 0x1b1ce1)
+   0x003b3b86 (libbe.so_seg0ro + 0x1b1b86)
+   0x003b3eed (libbe.so_seg0ro + 0x1b1eed)
+   0x0058e67b (libtracker.so_seg0ro + 0x14567b)
+   0x0058a9f5 (libtracker.so_seg0ro + 0x1419f5)
+   0x005ad7fb (libtracker.so_seg0ro + 0x1647fb)
+   0x005acd77 (libtracker.so_seg0ro + 0x163d77)
+   0x005ac449 (libtracker.so_seg0ro + 0x163449)
+   0x00357949 (libbe.so_seg0ro + 0x155949)
+   0x0035bacc (libbe.so_seg0ro + 0x159acc)
+   0x002b1d93 (libbe.so_seg0ro + 0xafd93)
+   0x006575a8 (libroot.so_seg0ro + 0x255a8)
+   0x701c5fec (w&gt;TrackerWindow_176_stack + 0x3ffec)
+ vm_soft_fault: va 0x0 not covered by area in address space
+ vm_page_fault: vm_soft_fault returned error 'Bad address' on fault at 0x0,
+ ip 0x800c2bdc, write 0, user 0, thread 0xb0
+ debug_server: Thread 176 entered the debugger: Segment violation
+ stack trace, current PC 0x3b3446  ItemAt__C5BListl + 0x16:
+   (0x701c59cc)  0x56b369  WidgetFor__CQ28BPrivate5BPoseUlPl + 0x45
+   (0x701c59fc)  0x58a643
+ CheckPoseSortOrder__Q28BPrivate9BPoseViewPQ28BPrivate5BPosel + 0x1e3
+ (closest symbol)
+   (0x701c5a3c)  0x58f89f
+ PoseCompareAddWidgetBinder__FPCQ28BPrivate5BPoseT0Pv + 0x27
+   (0x701c5a6c)  0x3ba127  Compare__26PointerListHelperWithStatePCvT1 +
+ 0x2b
+   (0x701c5a9c)  0x3b9ab6
+ __unguarded_partition__H3ZPPvZPvZ10comparator_X01X01X11X21_X01 + 0x82
+   (0x701c5adc)  0x3b9c92
+ __introsort_loop__H4ZPPvZPvZlZ10comparator_X01X01PX11X21X31_v + 0x1ae
+   (0x701c5b3c)  0x3b3ce1  QuickSort__25AbstractPointerListHelperPPvll +
+ 0x61
+   (0x701c5b8c)  0x3b3b86  SortItems__25AbstractPointerListHelperP5BList +
+ 0x3a
+   (0x701c5bdc)  0x3b3eed  SortItems__13_PointerList_PFPCvPCvPv_iPv + 0x41
+   (0x701c5c0c)  0x58e67b
+ SortItems__t11BObjectList1ZQ28BPrivate5BPosePFPCQ28BPrivate5BPosePCQ28BPrivate5BPosePv_iPv
+ + 0x27
+   (0x701c5c3c)  0x58a9f5  SortPoses__Q28BPrivate9BPoseView + 0x3d
+   (0x701c5c7c)  0x5ad7fb  Clicked__Q28BPrivate15ColumnDragStateG6BPoint +
+ 0x117
+   (0x701c5ccc)  0x5acd77  MouseUp__Q28BPrivate16ColumnTrackStateG6BPoint +
+ 0x53
+   (0x701c5d0c)  0x5ac449  MouseUp__Q28BPrivate10BTitleViewG6BPoint + 0x41
+   (0x701c5d3c)  0x357949  DispatchMessage__7BWindowP8BMessageP8BHandler +
+ 0xd95
+   (0x701c5f1c)  0x35bacc  task_looper__7BWindow + 0x270
+   (0x701c5f7c)  0x2b1d93  _task0___7BLooperPv + 0x3f
+   (0x701c5fac)  0x6575a8  _get_next_team_info + 0x5c (closest symbol)
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2760">http://dev.haiku-os.org/ticket/2760</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010481.html">[Haiku-bugs] [Haiku] #1874: VIA Rhine-II not working
+</A></li>
+	<LI>Next message: <A HREF="010490.html">[Haiku-bugs] [Haiku] #1609: NetworkStatus -&gt; No Link
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10488">[ date ]</a>
+              <a href="thread.html#10488">[ thread ]</a>
+              <a href="subject.html#10488">[ subject ]</a>
+              <a href="author.html#10488">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

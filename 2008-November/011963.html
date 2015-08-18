@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3048: IO Scheduler: &quot;no more requests&quot; panic
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233048%3A%20IO%20Scheduler%3A%20%22no%20more%20requests%22%20panic&In-Reply-To=%3C039.1d4f738770887a716fbc718c9f065752%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011962.html">
+   <LINK REL="Next"  HREF="011973.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3048: IO Scheduler: &quot;no more requests&quot; panic</H1>
+    <B>heto</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233048%3A%20IO%20Scheduler%3A%20%22no%20more%20requests%22%20panic&In-Reply-To=%3C039.1d4f738770887a716fbc718c9f065752%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3048: IO Scheduler: &quot;no more requests&quot; panic">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Nov  2 23:34:29 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011962.html">[Haiku-bugs] [Haiku] #2575: The KDL during mount of partition	FAT
+</A></li>
+        <LI>Next message: <A HREF="011973.html">[Haiku-bugs] [Haiku] #3048: IO Scheduler: &quot;no more requests&quot;	panic
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11963">[ date ]</a>
+              <a href="thread.html#11963">[ thread ]</a>
+              <a href="subject.html#11963">[ subject ]</a>
+              <a href="author.html#11963">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3048: IO Scheduler: &quot;no more requests&quot; panic
+---------------------------+------------------------------------------------
+ Reporter:  heto           |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1 development
+Blockedby:                 |    Platform:  x86           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+ Running Haiku r28387, I frequently (often several times a day) get PANIC:
+ no more requests in the IO scheduler thread. There does not seem to be a
+ reliable way to reproduce the bug; I have had it occur even immediately
+ after the system has booted and Tracker has loaded, although usually the
+ bug occurs after a couple hours of usage.
+
+ I'll attach a log with a backtrace. The backtrace always stops at a READ
+ FAULT right after IOScheduler::_Scheduler, so it might not be very useful.
+ I have a couple of blurry photos from earlier occurrences of the panic,
+ and looking at them it seems that the arguments to IOScheduler::_Scheduler
+ are always the same for the most part.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3048">http://dev.haiku-os.org/ticket/3048</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011962.html">[Haiku-bugs] [Haiku] #2575: The KDL during mount of partition	FAT
+</A></li>
+	<LI>Next message: <A HREF="011973.html">[Haiku-bugs] [Haiku] #3048: IO Scheduler: &quot;no more requests&quot;	panic
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11963">[ date ]</a>
+              <a href="thread.html#11963">[ thread ]</a>
+              <a href="subject.html#11963">[ subject ]</a>
+              <a href="author.html#11963">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

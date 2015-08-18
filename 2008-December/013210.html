@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3231: File type problems with Paladin in	Haiku, not BeOS
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-December/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233231%3A%20File%20type%20problems%20with%20Paladin%20in%0A%09Haiku%2C%20not%20BeOS&In-Reply-To=%3C047.7f10d7c830d5ae1c35ab5ff08228e2cf%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="013209.html">
+   <LINK REL="Next"  HREF="013211.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3231: File type problems with Paladin in	Haiku, not BeOS</H1>
+    <B>PieterPanman</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233231%3A%20File%20type%20problems%20with%20Paladin%20in%0A%09Haiku%2C%20not%20BeOS&In-Reply-To=%3C047.7f10d7c830d5ae1c35ab5ff08228e2cf%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3231: File type problems with Paladin in	Haiku, not BeOS">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Dec 16 23:09:29 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="013209.html">[Haiku-bugs] [Haiku] #3230: sed needs to be freshened (easy)
+</A></li>
+        <LI>Next message: <A HREF="013211.html">[Haiku-bugs] [Haiku] #2998: bcm440x doesn't initialize the NIC
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13210">[ date ]</a>
+              <a href="thread.html#13210">[ thread ]</a>
+              <a href="subject.html#13210">[ subject ]</a>
+              <a href="author.html#13210">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3231: File type problems with Paladin in Haiku, not BeOS
+----------------------------------+-----------------------------------------
+ Reporter:  PieterPanman          |       Owner:  axeld         
+     Type:  bug                   |      Status:  new           
+ Priority:  normal                |   Milestone:  R1            
+Component:  Applications/Tracker  |     Version:  R1 development
+Blockedby:                        |    Platform:  All           
+ Blocking:                        |  
+----------------------------------+-----------------------------------------
+ I installed DarkWyrm's Paladin, a BeIDE replacement. I'm running into some
+ filetype issues that don't exist in BeOS.
+ When I create a project file, its file type is messed up.
+
+ To reproduce:
+ - Install Paladin 1.0 RC from Bebits
+ - Run it and create a new project
+ - Save it and exit
+ In Tracker, the file home/MyProject/MyProject.pld is identified as a
+ generic file. See BeforeOpening.png. However, when I catattr the file, it
+ returns a Paladin file type:
+ {{{
+ ~/projects/MyProject&gt; catattr BEOS:TYPE MyProject.pld
+ MyProject.pld : string : text/x-vnd.dw-Paladin.Project
+ }}}
+ Paladin installed the FileType association correctly as far as I can see.
+ (see PaladinFileType.png)
+ Double clicking the file opens it in StyleEdit. It also doesn't have the
+ correct icon.
+
+ When I Identify the file, it is identified as a Text File (text/plain).
+
+ With the File Type addon I changed its type to text/x-vnd.dw-
+ Paladin.Project. Now this type is also seen by catattr, and also by
+ Tracker (&quot;Paladin Project&quot; as the kind).
+
+ However, when I open the project and close it, it is saved and the same
+ issue as above occurs again.
+
+ I don't know where tracker gets its information, but if catattr BEOS:TYPE
+ returns text/x-vnd.dw-Paladin.Project, it should find the type to be a
+ Paladin Project.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3231">http://dev.haiku-os.org/ticket/3231</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="013209.html">[Haiku-bugs] [Haiku] #3230: sed needs to be freshened (easy)
+</A></li>
+	<LI>Next message: <A HREF="013211.html">[Haiku-bugs] [Haiku] #2998: bcm440x doesn't initialize the NIC
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13210">[ date ]</a>
+              <a href="thread.html#13210">[ thread ]</a>
+              <a href="subject.html#13210">[ subject ]</a>
+              <a href="author.html#13210">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

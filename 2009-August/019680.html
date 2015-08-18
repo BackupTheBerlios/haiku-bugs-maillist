@@ -1,0 +1,233 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4274: [Tracker] crash in BWindow::IsHidden
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234274%3A%20%5BTracker%5D%20crash%20in%20BWindow%3A%3AIsHidden&In-Reply-To=%3C040.aa4cc3d90f288aaf79fef844e686ece9%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="019679.html">
+   <LINK REL="Next"  HREF="019699.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4274: [Tracker] crash in BWindow::IsHidden</H1>
+    <B>diver</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234274%3A%20%5BTracker%5D%20crash%20in%20BWindow%3A%3AIsHidden&In-Reply-To=%3C040.aa4cc3d90f288aaf79fef844e686ece9%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4274: [Tracker] crash in BWindow::IsHidden">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Aug 18 02:15:17 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="019679.html">[Haiku-bugs] [Haiku] #3084: [Tracker] crash in	BMessage::_FindField
+</A></li>
+        <LI>Next message: <A HREF="019699.html">[Haiku-bugs] [Haiku] #4274: [Tracker] crash in BWindow::IsHidden
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19680">[ date ]</a>
+              <a href="thread.html#19680">[ thread ]</a>
+              <a href="subject.html#19680">[ subject ]</a>
+              <a href="author.html#19680">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4274: [Tracker] crash in BWindow::IsHidden
+----------------------------------+-----------------------------------------
+ Reporter:  diver                 |       Owner:  axeld         
+     Type:  bug                   |      Status:  new           
+ Priority:  normal                |   Milestone:  R1            
+Component:  Applications/Tracker  |     Version:  R1 development
+Blockedby:                        |    Platform:  All           
+ Blocking:                        |  
+----------------------------------+-----------------------------------------
+ Happend while playing with SoundPlay replicant.[[BR]]
+ {{{
+ Thread 621 caused an exception: Segment violation
+ Reading symbols from /boot/system/runtime_loader...done.
+ Loaded symbols for /boot/system/runtime_loader
+ Reading symbols from /boot/system/lib/libbe.so...done.
+ Loaded symbols for /boot/system/lib/libbe.so
+ Reading symbols from /boot/system/lib/libtracker.so...done.
+ Loaded symbols for /boot/system/lib/libtracker.so
+ Reading symbols from /boot/system/lib/libroot.so...done.
+ Loaded symbols for /boot/system/lib/libroot.so
+ Reading symbols from /boot/system/lib/libstdc++.r4.so...done.
+ Loaded symbols for /boot/system/lib/libstdc++.r4.so
+ Reading symbols from /boot/system/lib/libtranslation.so...done.
+ Loaded symbols for /boot/system/lib/libtranslation.so
+ Reading symbols from /boot/system/lib/libtextencoding.so...done.
+ Loaded symbols for /boot/system/lib/libtextencoding.so
+ Reading symbols from /boot/system/apps/Workspaces...done.
+ Loaded symbols for /boot/system/apps/Workspaces
+ Reading symbols from /boot/system/add-
+ ons/Translators/BMPTranslator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/BMPTranslator
+ Reading symbols from /boot/system/add-
+ ons/Translators/EXRTranslator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/EXRTranslator
+ Reading symbols from /boot/system/lib/libilmimf.so...done.
+ Loaded symbols for /boot/system/lib/libilmimf.so
+ Reading symbols from /boot/system/lib/libz.so...done.
+ Loaded symbols for /boot/system/lib/libz.so
+ Reading symbols from /boot/system/add-
+ ons/Translators/GIFTranslator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/GIFTranslator
+ Reading symbols from /boot/system/add-
+ ons/Translators/JPEG2000Translator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/JPEG2000Translator
+ Reading symbols from /boot/system/add-
+ ons/Translators/JPEGTranslator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/JPEGTranslator
+ Reading symbols from /boot/system/add-
+ ons/Translators/PCXTranslator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/PCXTranslator
+ Reading symbols from /boot/system/add-
+ ons/Translators/PNGTranslator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/PNGTranslator
+ Reading symbols from /boot/system/add-
+ ons/Translators/PPMTranslator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/PPMTranslator
+ Reading symbols from /boot/system/add-
+ ons/Translators/RAWTranslator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/RAWTranslator
+ Reading symbols from /boot/system/add-ons/Translators/RTF-
+ Translator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/RTF-Translator
+ Reading symbols from /boot/system/add-
+ ons/Translators/SGITranslator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/SGITranslator
+ Reading symbols from /boot/system/add-
+ ons/Translators/STXTTranslator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/STXTTranslator
+ Reading symbols from /boot/system/add-
+ ons/Translators/TGATranslator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/TGATranslator
+ Reading symbols from /boot/system/add-
+ ons/Translators/TIFFTranslator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/TIFFTranslator
+ Reading symbols from /boot/system/add-
+ ons/Translators/WonderBrushTranslator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/WonderBrushTranslator
+ Reading symbols from /boot/home/Desktop/SoundPlay/SoundPlay...done.
+ Loaded symbols for /boot/home/Desktop/SoundPlay/SoundPlay
+ Reading symbols from /boot/home/config/lib/liblayout.so...done.
+ Loaded symbols for /boot/home/config/lib/liblayout.so
+ Reading symbols from /boot/system/lib/libmedia.so...done.
+ Loaded symbols for /boot/system/lib/libmedia.so
+ Reading symbols from /boot/system/lib/libgame.so...done.
+ Loaded symbols for /boot/system/lib/libgame.so
+ Reading symbols from /boot/system/lib/libbnetapi.so...done.
+ Loaded symbols for /boot/system/lib/libbnetapi.so
+ Reading symbols from /boot/system/lib/libnetwork.so...done.
+ Loaded symbols for /boot/system/lib/libnetwork.so
+ Reading symbols from /boot/home/Desktop/SoundPlay/Plugins/AudioIn...done.
+ Loaded symbols for /boot/home/Desktop/SoundPlay/Plugins/AudioIn
+ Reading symbols from
+ /boot/home/Desktop/SoundPlay/Plugins/CPlusAdapter...done.
+ Loaded symbols for /boot/home/Desktop/SoundPlay/Plugins/CPlusAdapter
+ Reading symbols from /boot/home/Desktop/SoundPlay/Plugins/Deskbar...done.
+ Loaded symbols for /boot/home/Desktop/SoundPlay/Plugins/Deskbar
+ Reading symbols from
+ /boot/home/Desktop/SoundPlay/Plugins/DeskbarFFT...done.
+ Loaded symbols for /boot/home/Desktop/SoundPlay/Plugins/DeskbarFFT
+ Reading symbols from
+ /boot/home/Desktop/SoundPlay/Plugins/DeskbarVU...done.
+ Loaded symbols for /boot/home/Desktop/SoundPlay/Plugins/DeskbarVU
+ Reading symbols from /boot/home/Desktop/SoundPlay/Plugins/FreeVerb...done.
+ Loaded symbols for /boot/home/Desktop/SoundPlay/Plugins/FreeVerb
+ Reading symbols from
+ /boot/home/Desktop/SoundPlay/Plugins/LiveEncoder...done.
+ Loaded symbols for /boot/home/Desktop/SoundPlay/Plugins/LiveEncoder
+ Reading symbols from
+ /boot/home/Desktop/SoundPlay/Plugins/LoudnessPlugin...done.
+ Loaded symbols for /boot/home/Desktop/SoundPlay/Plugins/LoudnessPlugin
+ Reading symbols from /boot/home/Desktop/SoundPlay/Plugins/MP3Clean...done.
+ Loaded symbols for /boot/home/Desktop/SoundPlay/Plugins/MP3Clean
+ Reading symbols from
+ /boot/home/Desktop/SoundPlay/Plugins/MidiRenderer...done.
+ Loaded symbols for /boot/home/Desktop/SoundPlay/Plugins/MidiRenderer
+ Reading symbols from
+ /boot/home/Desktop/SoundPlay/Plugins/ModPlugin...done.
+ Loaded symbols for /boot/home/Desktop/SoundPlay/Plugins/ModPlugin
+ Reading symbols from
+ /boot/home/Desktop/SoundPlay/Plugins/NoVoicePlugin...done.
+ Loaded symbols for /boot/home/Desktop/SoundPlay/Plugins/NoVoicePlugin
+ Reading symbols from /boot/home/Desktop/SoundPlay/Plugins/Noise...done.
+ Loaded symbols for /boot/home/Desktop/SoundPlay/Plugins/Noise
+ Reading symbols from
+ /boot/home/Desktop/SoundPlay/Plugins/OggVorbis...done.
+ Loaded symbols for /boot/home/Desktop/SoundPlay/Plugins/OggVorbis
+ Reading symbols from /boot/home/config/lib/libogg.so...done.
+ Loaded symbols for /boot/home/config/lib/libogg.so
+ Reading symbols from /boot/home/config/lib/libvorbisfile.so...done.
+ Loaded symbols for /boot/home/config/lib/libvorbisfile.so
+ Reading symbols from /boot/home/config/lib/libvorbis.so...done.
+ Loaded symbols for /boot/home/config/lib/libvorbis.so
+ Reading symbols from
+ /boot/home/Desktop/SoundPlay/Plugins/PitchChange...done.
+ Loaded symbols for /boot/home/Desktop/SoundPlay/Plugins/PitchChange
+ Reading symbols from
+ /boot/home/Desktop/SoundPlay/Plugins/SimpleScopePlugin...done.
+ Loaded symbols for /boot/home/Desktop/SoundPlay/Plugins/SimpleScopePlugin
+ Reading symbols from
+ /boot/home/Desktop/SoundPlay/Plugins/SpectrumAnalyzer...done.
+ Loaded symbols for /boot/home/Desktop/SoundPlay/Plugins/SpectrumAnalyzer
+ Loaded symbols for /boot/home/Desktop/SoundPlay/SoundPlay
+ [tcsetpgrp failed in terminal_inferior: Invalid Argument]
+ [Switching to team /boot/system/Tracker (81) thread w&gt;SoundPlay playlist
+ editor (621)]
+ 0x0038099e in BWindow::IsHidden () from /boot/system/lib/libbe.so
+ (gdb) bt
+ #0  0x0038099e in BWindow::IsHidden () from /boot/system/lib/libbe.so
+ #1  0x0037f788 in BWindow::IsMinimized () from /boot/system/lib/libbe.so
+ #2  0x08c388aa in SoundPlayController::IsMainInterfaceHidden ()
+    from /boot/home/Desktop/SoundPlay/SoundPlay
+ #3  0x08c3fd58 in aa_zzzzzzzzzzzzzzzzzzzz ()
+    from /boot/home/Desktop/SoundPlay/SoundPlay
+ #4  0x002bfe9e in BLooper::Quit () from /boot/system/lib/libbe.so
+ #5  0x0037b766 in BWindow::Quit () from /boot/system/lib/libbe.so
+ #6  0x002c1527 in BLooper::_QuitRequested () from
+ /boot/system/lib/libbe.so
+ #7  0x002bfa22 in BLooper::DispatchMessage () from
+ /boot/system/lib/libbe.so
+ #8  0x0037e1e9 in BWindow::DispatchMessage () from
+ /boot/system/lib/libbe.so
+ #9  0x00381d84 in BWindow::task_looper () from /boot/system/lib/libbe.so
+ #10 0x002c0f93 in BLooper::_task0_ () from /boot/system/lib/libbe.so
+ #11 0x00696124 in thread_entry () from /boot/system/lib/libroot.so
+ #12 0x7834bfec in ?? ()
+ (gdb)
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4274">http://dev.haiku-os.org/ticket/4274</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="019679.html">[Haiku-bugs] [Haiku] #3084: [Tracker] crash in	BMessage::_FindField
+</A></li>
+	<LI>Next message: <A HREF="019699.html">[Haiku-bugs] [Haiku] #4274: [Tracker] crash in BWindow::IsHidden
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19680">[ date ]</a>
+              <a href="thread.html#19680">[ thread ]</a>
+              <a href="subject.html#19680">[ subject ]</a>
+              <a href="author.html#19680">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

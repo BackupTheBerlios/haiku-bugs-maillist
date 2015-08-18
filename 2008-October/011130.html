@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2874: Haiku build fails on Ubuntu 8.10
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232874%3A%20Haiku%20build%20fails%20on%20Ubuntu%208.10&In-Reply-To=%3C045.a2dbf0960e56021d6d781262b15c3f88%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011132.html">
+   <LINK REL="Next"  HREF="011791.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2874: Haiku build fails on Ubuntu 8.10</H1>
+    <B>netster403</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232874%3A%20Haiku%20build%20fails%20on%20Ubuntu%208.10&In-Reply-To=%3C045.a2dbf0960e56021d6d781262b15c3f88%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2874: Haiku build fails on Ubuntu 8.10">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Oct 19 02:45:37 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011132.html">[Haiku-bugs] [Haiku] #2873: poweroff when selecting Shutdown
+</A></li>
+        <LI>Next message: <A HREF="011791.html">[Haiku-bugs] [Haiku] #2874: Haiku build fails on Ubuntu 8.10
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11130">[ date ]</a>
+              <a href="thread.html#11130">[ thread ]</a>
+              <a href="subject.html#11130">[ subject ]</a>
+              <a href="author.html#11130">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2874: Haiku build fails on Ubuntu 8.10
+--------------------------+-------------------------------------------------
+ Reporter:  netster403    |       Owner:  bonefish      
+     Type:  bug           |      Status:  new           
+ Priority:  normal        |   Milestone:  R1            
+Component:  Build System  |     Version:  R1 development
+Blockedby:                |    Platform:  x86           
+ Blocking:                |  
+--------------------------+-------------------------------------------------
+ Ubuntu 8.10 had some changes and some additions that prevent the
+ buildtools in svn to compile...
+
+ Steps taken:
+ svn checkouts of haiku and buildtools
+ svn updates performed in each directory
+ &quot; ./configure --build-cross-tools ../buildtools/ &quot; performed in haiku dir.
+
+ Results:
+ Failure to compile gcc:
+
+ gcc -DCROSS_COMPILE -DIN_GCC     -O2  -DHAVE_CONFIG_H    -I.
+ -I/home/alex/haiku/buildtools/legacy/gcc/gcc
+ -I/home/alex/haiku/buildtools/legacy/gcc/gcc/config
+ -I/home/alex/haiku/buildtools/legacy/gcc/gcc/../include  \
+         -DTARGET_MACHINE=\&quot;i586-pc-haiku\&quot;  \
+         -c `echo /home/alex/haiku/buildtools/legacy/gcc/gcc/collect2.c |
+ sed 's,^\./,,'`
+ In function &#8216;open&#8217;,
+     inlined from &#8216;collect_execute&#8217; at
+ /home/alex/haiku/buildtools/legacy/gcc/gcc/collect2.c:1779:
+ /usr/include/bits/fcntl2.h:51: error: call to &#8216;__open_missing_mode&#8217;
+ declared with attribute error: open with O_CREAT in second argument needs
+ 3 arguments
+ make[1]: *** [collect2.o] Error 1
+ make[1]: Leaving directory `/home/alex/haiku/haiku/generated/cross-tools-
+ build/gcc/gcc'
+ make: *** [cross] Error 2
+ ERROR: Building gcc failed.
+
+
+
+ This error is documented on ubuntu's wiki.  There is a work-around listed
+ ( -U_FORTIFY_SOURCE ) but I can't figure out how to implement it in
+ CPPFLAGS :'(
+
+ <A HREF="https://wiki.ubuntu.com/CompilerFlags#-D_FORTIFY_SOURCE=2">https://wiki.ubuntu.com/CompilerFlags#-D_FORTIFY_SOURCE=2</A>
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2874">http://dev.haiku-os.org/ticket/2874</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011132.html">[Haiku-bugs] [Haiku] #2873: poweroff when selecting Shutdown
+</A></li>
+	<LI>Next message: <A HREF="011791.html">[Haiku-bugs] [Haiku] #2874: Haiku build fails on Ubuntu 8.10
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11130">[ date ]</a>
+              <a href="thread.html#11130">[ thread ]</a>
+              <a href="subject.html#11130">[ subject ]</a>
+              <a href="author.html#11130">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

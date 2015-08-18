@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2439: boot process stalls (around mime_update.sh/emuxki: init_hardware()?)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232439%3A%20boot%20process%20stalls%20%28around%0A%20mime_update.sh/emuxki%3A%20init_hardware%28%29%3F%29&In-Reply-To=%3C038.f78b13c2744771eb62cdc040745d297c%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008447.html">
+   <LINK REL="Next"  HREF="008454.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2439: boot process stalls (around mime_update.sh/emuxki: init_hardware()?)</H1>
+    <B>kev</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232439%3A%20boot%20process%20stalls%20%28around%0A%20mime_update.sh/emuxki%3A%20init_hardware%28%29%3F%29&In-Reply-To=%3C038.f78b13c2744771eb62cdc040745d297c%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2439: boot process stalls (around mime_update.sh/emuxki: init_hardware()?)">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Jun 23 13:38:31 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008447.html">[Haiku-bugs] [Haiku] #1756: svn checkout results in panic() which in turn results in corrupted BFS
+</A></li>
+        <LI>Next message: <A HREF="008454.html">[Haiku-bugs] [Haiku] #2439: boot process stalls (around mime_update.sh/emuxki: init_hardware()?)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8451">[ date ]</a>
+              <a href="thread.html#8451">[ thread ]</a>
+              <a href="subject.html#8451">[ subject ]</a>
+              <a href="author.html#8451">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2439: boot process stalls (around mime_update.sh/emuxki: init_hardware()?)
+--------------------+-------------------------------------------------------
+ Reporter:  kev     |       Owner:  axeld         
+     Type:  bug     |      Status:  new           
+ Priority:  normal  |   Milestone:  R1            
+Component:  System  |     Version:  R1 development
+Blockedby:          |    Platform:  x86           
+ Blocking:          |  
+--------------------+-------------------------------------------------------
+ Haiku was booting off my HD using an Apr 26 build, but I got a USB mass
+ storage device I wanted to try, so I thought I'd move to the latest build,
+ whatever was current an hour ago.
+
+ Now the desktop never comes up.  (I can't tell you much more than that
+ when actually booting to it, not using QEMU--as soon as I hit the Haiku
+ option in bootman, my screen blanks because my hardware doesn't support
+ 1024x768x24, so a blank screen is the last thing/all I see, and after a
+ few minutes of waiting, my num lock key does not toggle, and nothing
+ appears to be happening.)
+
+ In QEMU, I get the nice boot screen, and each of the icons lights up in
+ turn.  Then that screen goes mangled, I assume as it switches video modes,
+ but I never get a desktop.  At that point it seems stuck on
+ mime_update.sh, but if I wait it out for ten minutes or more, it moves on
+ to emuxki: init_hardware(), but then after another ten minutes with the
+ processor pegged at full, doesn't seem to be going anywhere.
+
+ The last few lines I get in QEMU are:
+
+ loaded driver /boot/beos/system/add-ons/kernel/drivers/dev/input/ps2_hid
+ usb_uhci: no devices found
+ usb_ohci: no devices found
+ usb_ehci: no devices found
+ USB Stack: no bus managers available
+ usb_uhci: no devices found
+ usb_ohci: no devices found
+ usb_ehci: no devices found
+ USB Stack: no bus managers available
+ wacom: cannot get module &quot;bus_managers/usb/v3&quot;
+ ps2: devfs_publish_device input/mouse/ps2/0, status = 0x00000000
+ ps2: devfs_publish_device input/keyboard/at/0, status = 0x00000000
+ ps2: probe_mouse Extended PS/2 mouse found
+ ps2: keyboard found
+ bfs: bfs_open_dir:1461: Invalid Argument
+ Running post install script /boot/common/boot/post_install/mime_update.sh
+ ...
+ emuxki: init_hardware()
+
+ Any suggestions?
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2439">http://dev.haiku-os.org/ticket/2439</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008447.html">[Haiku-bugs] [Haiku] #1756: svn checkout results in panic() which in turn results in corrupted BFS
+</A></li>
+	<LI>Next message: <A HREF="008454.html">[Haiku-bugs] [Haiku] #2439: boot process stalls (around mime_update.sh/emuxki: init_hardware()?)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8451">[ date ]</a>
+              <a href="thread.html#8451">[ thread ]</a>
+              <a href="subject.html#8451">[ subject ]</a>
+              <a href="author.html#8451">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

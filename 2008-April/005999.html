@@ -1,0 +1,160 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2001: GCC include directive bug.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232001%3A%20GCC%20include%20directive%20bug.&In-Reply-To=%3C038.6ca3d2bab4b2d1ce99291df9e3b96494%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005998.html">
+   <LINK REL="Next"  HREF="006000.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2001: GCC include directive bug.</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232001%3A%20GCC%20include%20directive%20bug.&In-Reply-To=%3C038.6ca3d2bab4b2d1ce99291df9e3b96494%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2001: GCC include directive bug.">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Apr  1 15:51:41 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005998.html">[Haiku-bugs] [Haiku] #1962: Some resolutions in VESA no longer	work
+</A></li>
+        <LI>Next message: <A HREF="006000.html">[Haiku-bugs] [Haiku] #2001: GCC include directive bug.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5999">[ date ]</a>
+              <a href="thread.html#5999">[ thread ]</a>
+              <a href="subject.html#5999">[ subject ]</a>
+              <a href="author.html#5999">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2001: GCC include directive bug.
+-----------------------+----------------------------------------------------
+ Reporter:  bga        |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  high       |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+ Platform:  All        |  
+-----------------------+----------------------------------------------------
+ This is an interesting bug. it manifested itself when trying to compile
+ Haiku under itself and it is 100% reproducible not only by me, but by
+ others too. First, here is the line that triggers the bug:
+
+ gcc -c &quot;src/libs/stdc++/sinst.cc&quot; -O2 -Wall -Wno-trigraphs -Wno-ctor-dtor-
+ privacy -Woverloaded-virtual -Wpointer-arith -Wcast-align -Wsign-compare
+ -pipe -nostdinc -Wno-multichar -D_ZETA_USING_DEPRECATED_API_=1
+ -D_ZETA_TS_FIND_DIR_=1 -nostdinc++ -fno-implicit-templates -Wno-sign-
+ compare -fpic -D__HAIKU__ -DHAIKU_DISTRO_COMPATIBILITY_DEFAULT -D__INTEL__
+ -DARCH_x86 -D_BEOS_R5_COMPATIBLE_ -DHAIKU_TARGET_PLATFORM_HAIKU -DC
+ -DEXTRACT -DINSERT -DGETLINE -Ibuild/user_config_headers
+ -Ibuild/config_headers -Isrc/libs/stdc++
+ -Igenerated/objects/common/libs/stdc++
+ -Igenerated/objects/haiku_host/x86/common/libs/stdc++
+ -Igenerated/objects/haiku/x86/common/libs/stdc++ -I- -Isrc/libs/stdc++
+ -Isrc/system/libroot/posix/glibc/libio
+ -Isrc/system/libroot/posix/glibc/stdlib -Isrc/system/libroot/posix/glibc
+ /stdio-common -Isrc/system/libroot/posix/glibc/include
+ -Isrc/system/libroot/posix/glibc/include/arch/x86 -Iheaders/cpp
+ -Isrc/system/libroot/posix/glibc -Iheaders/posix -Iheaders/os
+ -Iheaders/os/kernel -Iheaders/os/storage -Iheaders/os/support
+ -Iheaders/build/gcc-2.95.3 -Iheaders/build/gcc-2.95.3 -Iheaders
+ -Iheaders/posix -Iheaders/gnu -Iheaders/glibc -Iheaders/os -Iheaders/os
+ /add-ons -Iheaders/os/add-ons/file_system -Iheaders/os/add-ons/graphics
+ -Iheaders/os/add-ons/input_server -Iheaders/os/add-ons/registrar
+ -Iheaders/os/add-ons/screen_saver -Iheaders/os/add-ons/tracker
+ -Iheaders/os/app -Iheaders/os/device -Iheaders/os/drivers
+ -Iheaders/os/game -Iheaders/os/interface -Iheaders/os/kernel
+ -Iheaders/os/media -Iheaders/os/mail -Iheaders/os/midi -Iheaders/os/midi2
+ -Iheaders/os/net -Iheaders/os/opengl -Iheaders/os/storage
+ -Iheaders/os/support -Iheaders/os/translation -Iheaders/private/.
+ -Iheaders/cpp -o
+ &quot;generated/objects/haiku/x86/release/libs/stdc++/cstrio.o&quot;
+
+ And here is the result:
+
+ In file included from
+ /boot/home/extra_stuff/src/system/libroot/posix/glibc/include/bits/waitstatus.h:63,
+                  from
+ /boot/home/extra_stuff/src/system/libroot/posix/glibc/stdlib/stdlib.h:44,
+                  from /boot/home/extra_stuff/headers/cpp/stl_alloc.h:59,
+                  from /boot/home/extra_stuff/headers/cpp/alloc.h:21,
+                  from
+ /boot/home/extra_stuff/headers/cpp/std/bastring.h:39,
+                  from /boot/home/extra_stuff/headers/cpp/string:6,
+                  from /boot/home/extra_stuff/src/libs/stdc++/sinst.cc:36:
+ /boot/home/extra_stuff/src/system/libroot/posix/glibc/include/endian.h:1:
+ string/endian.h: Operation not allowed
+
+ When adding some debug to vnode_path_to_vnode() in vfs.cpp, we see this:
+
+ KERN: vnode_path_to_vnode: top of loop. p = 0x90c34000, p =
+ 'headers/cpp/string/endian.h'
+ KERN: vnode_path_to_vnode: top of loop. p = 0x90c34008, p =
+ 'cpp/string/endian.h'
+ KERN: vnode_path_to_vnode: top of loop. p = 0x90c3400c, p =
+ 'string/endian.h'
+ KERN: vnode_path_to_vnode: top of loop. p = 0x90c34013, p = 'endian.h'
+ KERN: bfs: bfs_access:1360: Operation not allowed
+
+ The reason is &quot;headers/cpp/string&quot; is a file so when processing the
+ &quot;string&quot; component of this directory, it fails with the &quot;Operation not
+ allowed&quot; error because it tries to open the file &quot;string&quot; with access mode
+ &quot;X_OK&quot; (vnode_path_to_vnode() treats all path components as directories).
+
+ The problem is not in vnode_path_to_vnode() as this behaviour is expected
+ (although it seems POSIX defines that this error should be &quot;Not a
+ directory&quot; and not &quot;Operation not allowed&quot; so what is happening is that,
+ somehow, GCC is checking for include paths in a weird order or our include
+ paths have a specific pattern that makes if fails. For example, it could
+ be something like this:
+
+ 1 - We have a path &quot;a/b&quot; and another &quot;a/c&quot; in our include path.
+ 2 - Some file does #include &quot;string/endian.h&quot;.
+ 3 - There is a &quot;a/c/string/endian.h&quot; file but there is also a
+ &quot;/a/b/string&quot; file.
+ 4 - Due to the way the paths are being searched, if tries &quot;/a/b&quot; first and
+ errors out as described before it can check &quot;/a/c&quot;.
+
+ So, in summary:
+
+ 1 - The erro returned should be &quot;Not a directory&quot;.
+ 2 - Our include paths may or may not be broken in the Haiku build system.
+ 3 - We may or may not have a bug in GCC.
+
+ So, including axeld and ingo in this ticket.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2001">http://dev.haiku-os.org/ticket/2001</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005998.html">[Haiku-bugs] [Haiku] #1962: Some resolutions in VESA no longer	work
+</A></li>
+	<LI>Next message: <A HREF="006000.html">[Haiku-bugs] [Haiku] #2001: GCC include directive bug.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5999">[ date ]</a>
+              <a href="thread.html#5999">[ thread ]</a>
+              <a href="subject.html#5999">[ subject ]</a>
+              <a href="author.html#5999">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

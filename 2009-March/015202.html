@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2629: Automatic disk mounting not working.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232629%3A%20Automatic%20disk%20mounting%20not%20working.&In-Reply-To=%3C047.b2cfb6e5383457466e78516f506c71bb%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="015200.html">
+   <LINK REL="Next"  HREF="015203.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2629: Automatic disk mounting not working.</H1>
+    <B>bga</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232629%3A%20Automatic%20disk%20mounting%20not%20working.&In-Reply-To=%3C047.b2cfb6e5383457466e78516f506c71bb%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2629: Automatic disk mounting not working.">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Mar 19 01:08:30 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="015200.html">[Haiku-bugs] [Haiku] #2030: Dead Beef in Address Space Area List
+</A></li>
+        <LI>Next message: <A HREF="015203.html">[Haiku-bugs] [Haiku] #2629: Automatic disk mounting not working.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15202">[ date ]</a>
+              <a href="thread.html#15202">[ thread ]</a>
+              <a href="subject.html#15202">[ subject ]</a>
+              <a href="author.html#15202">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2629: Automatic disk mounting not working.
+-----------------------------------+----------------------------------------
+  Reporter:  bga                   |       Owner:  axeld         
+      Type:  bug                   |      Status:  reopened      
+  Priority:  normal                |   Milestone:  R1            
+ Component:  Applications/Tracker  |     Version:  R1 development
+Resolution:                        |   Blockedby:  1052          
+  Platform:  All                   |    Blocking:                
+-----------------------------------+----------------------------------------
+Changes (by bga):
+
+  * status:  closed =&gt; reopened
+  * resolution:  fixed =&gt;
+
+
+Comment:
+
+ I am reopening this as this still does not work for me. It works for
+ removable media but not for built in devices. If you prefer you can close
+ this again and I will create a different bug for the specific case of HDs.
+ Here is some more data:
+
+ {{{
+ [/boot/home]&gt; mountvolume -lh
+ Volume         File System              Size Mounted At (Device)
+ ---------------------------------------------------------------------
+                Intel Partition Map    465.8G   (ata/1/slave/raw)
+                &lt;unknown&gt;              465.8G   (ata/1/slave/0)
+                &lt;unknown&gt;                   0   (atapi/1/master/raw)
+                Intel Partition Map    232.9G   (scsi/0/1/0/raw)
+                &lt;unknown&gt;              140.0G   (scsi/0/1/0/0)
+ &lt;unnamed&gt;      Ext2 File System        14.0G   (scsi/0/1/0/1)
+                &lt;unknown&gt;                1.9G   (scsi/0/1/0/2)
+                Intel Extended          77.0G   (scsi/0/1/0/3)
+ Haiku          Be File System          38.5G /boot  (scsi/0/1/0/3_0)
+ Haiku          Be File System          38.5G   (scsi/0/1/0/3_1)
+                Intel Partition Map    111.8G   (scsi/0/2/0/raw)
+ Zeta 1.2       Be File System           9.8G   (scsi/0/2/0/0)
+ Zeta 1.5       Be File System           4.9G   (scsi/0/2/0/1)
+ Data           Be File System          77.0G   (scsi/0/2/0/2)
+ no name        FAT32 File System       20.1G   (scsi/0/2/0/3)
+ }}}
+
+ If I mount the &quot;&lt;unnamed&gt;&quot; ext2 partition or the &quot;no name&quot; FAT32 partition
+ and reboot, they will not be mounted even with Tracker set to mount
+ previously mounted disks.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2629#comment:6">http://dev.haiku-os.org/ticket/2629#comment:6</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="015200.html">[Haiku-bugs] [Haiku] #2030: Dead Beef in Address Space Area List
+</A></li>
+	<LI>Next message: <A HREF="015203.html">[Haiku-bugs] [Haiku] #2629: Automatic disk mounting not working.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15202">[ date ]</a>
+              <a href="thread.html#15202">[ thread ]</a>
+              <a href="subject.html#15202">[ subject ]</a>
+              <a href="author.html#15202">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

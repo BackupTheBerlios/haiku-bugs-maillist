@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3209: [Terminal] Enhancements (mostly easy)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-December/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233209%3A%20%5BTerminal%5D%20Enhancements%20%28mostly%20easy%29&In-Reply-To=%3C044.e2e4602da82c8cf223d4299070489edb%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="013064.html">
+   <LINK REL="Next"  HREF="013123.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3209: [Terminal] Enhancements (mostly easy)</H1>
+    <B>humdinger</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233209%3A%20%5BTerminal%5D%20Enhancements%20%28mostly%20easy%29&In-Reply-To=%3C044.e2e4602da82c8cf223d4299070489edb%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3209: [Terminal] Enhancements (mostly easy)">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Dec  7 15:14:46 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="013064.html">[Haiku-bugs] [Haiku] #2998: bcm440x doesn't initialize the NIC
+</A></li>
+        <LI>Next message: <A HREF="013123.html">[Haiku-bugs] [Haiku] #3209: [Terminal] Enhancements (mostly	easy)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13065">[ date ]</a>
+              <a href="thread.html#13065">[ thread ]</a>
+              <a href="subject.html#13065">[ subject ]</a>
+              <a href="author.html#13065">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3209: [Terminal] Enhancements (mostly easy)
+-----------------------------------+----------------------------------------
+ Reporter:  humdinger              |       Owner:  jackburton    
+     Type:  enhancement            |      Status:  new           
+ Priority:  normal                 |   Milestone:  R1            
+Component:  Applications/Terminal  |     Version:  R1 development
+Blockedby:                         |    Platform:  All           
+ Blocking:                         |  
+-----------------------------------+----------------------------------------
+ This is r28717.
+
+ I have a few suggestions to make Terminal more enduser friendly.
+
+ 1. See tip: <A HREF="http://betips.net/1997/09/09/customize-bash-keybindings">http://betips.net/1997/09/09/customize-bash-keybindings</A>
+ I propose to add these lines to inputrc:
+
+ {{{ Control-f: kill-word
+ &quot;\e[1~&quot;: beginning-of-line
+ &quot;\e[4~&quot;: end-of-line }}}
+
+ Which will activate HOME and END keys and deletes the word to the right of
+ the cursor with CRTL+F.
+ The other lines in that tip refer to international characters which is
+ blocked by another old ticket already, #215.
+
+ 2. The title tab of Terminal's settings panel should be named like the
+ menu item envoking it: &quot;Terminal Preferences&quot;.
+
+ 3. The colors in the dropdown menu in that panel should be renamed to be
+ more enduser friendly:
+ * Text
+ * Background
+ * Cursor
+ * Text under Cursor
+ * Selected Text
+ * Selected Background
+
+ 4. If there is more than one Tab in a Terminal window, ALT+W should only
+ close the current Tab, not the whole window with all the tabbed sessions.
+ That's what ALT+Q is for.
+
+ 5. Only the current Tab should be light grey. The others should be darker
+ to have the active one stand out.
+
+ 6. Instead of &quot;Shell 1,2,3&quot; name each Tab &quot;Alt+1, 2, 3&quot; to remind people
+ of the switching shortcuts. This should take in account the Menu
+ preference setting if anybody uses &quot;CONTROL&quot; instead of &quot;ALT&quot;.
+
+ 7. A bit more complicated: Have a double-click on the &quot;Alt+1,2,3&quot; Tab-
+ label enter editing mode to rename a Tab.
+
+ 8. Tabbed-Terminals that are busy could show a little icon in the tab that
+ gets removed when the prompt's back.
+
+ 9. I'd appreciate to have a checkbox in the &quot;Terminal Preferences&quot; panel
+ called &quot;Automatic coloring of new tabs&quot;. This will open every new tab with
+ a different nicely(!) colored profile.
+ The Tab color should reflect each background color.
+
+
+ I think I better stop now... :)
+ I have to admit that I'm not the world's heaviest shell user, but these
+ are the things I'd find being useful without imposing too much on our
+ weathered shell denizens.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3209">http://dev.haiku-os.org/ticket/3209</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="013064.html">[Haiku-bugs] [Haiku] #2998: bcm440x doesn't initialize the NIC
+</A></li>
+	<LI>Next message: <A HREF="013123.html">[Haiku-bugs] [Haiku] #3209: [Terminal] Enhancements (mostly	easy)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13065">[ date ]</a>
+              <a href="thread.html#13065">[ thread ]</a>
+              <a href="subject.html#13065">[ subject ]</a>
+              <a href="author.html#13065">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

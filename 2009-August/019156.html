@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4191: &quot;Ungrouping&quot; several opened files
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234191%3A%20%22Ungrouping%22%20several%20opened%20files&In-Reply-To=%3C053.54ccdde42f903601d8e09ecc0c4cfad8%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="019129.html">
+   <LINK REL="Next"  HREF="019130.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4191: &quot;Ungrouping&quot; several opened files</H1>
+    <B>jonas.kirilla</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234191%3A%20%22Ungrouping%22%20several%20opened%20files&In-Reply-To=%3C053.54ccdde42f903601d8e09ecc0c4cfad8%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4191: &quot;Ungrouping&quot; several opened files">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Aug  7 08:36:39 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="019129.html">[Haiku-bugs] [Haiku] #4191: &quot;Ungrouping&quot; several opened files
+</A></li>
+        <LI>Next message: <A HREF="019130.html">[Haiku-bugs] [Haiku] #4059: PackageInstaller needs a &quot;Yes to all&quot; button in dialog box
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19156">[ date ]</a>
+              <a href="thread.html#19156">[ thread ]</a>
+              <a href="subject.html#19156">[ subject ]</a>
+              <a href="author.html#19156">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4191: &quot;Ungrouping&quot; several opened files
+----------------------------+-----------------------------------------------
+ Reporter:  humdinger       |       Owner:  stippi        
+     Type:  enhancement     |      Status:  new           
+ Priority:  normal          |   Milestone:  R1            
+Component:  User Interface  |     Version:  R1 development
+Blockedby:                  |    Platform:  All           
+ Blocking:                  |  
+----------------------------+-----------------------------------------------
+
+Comment(by jonas.kirilla):
+
+ I agree with the proposal in general, but I will focus on the
+ MediaPlayer/ShowImage case in this comment since I found Tracker a bit
+ curious here. Take a look at how Tracker opens a selection of multiple
+ files:
+
+ 1. Select 10 audio files that would normally open in MediaPlayer and open
+ them by doing Command-A, Command-O. This will open 10 MediaPlayer windows.
+
+ 2. Select the same 10 audio files and open them using &quot;Open With &gt;
+ MediaPlayer&quot;. This will open a single MediaPlayer with a playlist of the
+ 10 files.
+
+ (I don't know if this applies to all view modes - I don't remember if it
+ was the list view or the icon view I tried.)
+
+ I'm guessing that Tracker send 10 messages with a single entry in case 1,
+ but one message with 10 entries in the second case.
+
+ Tracker's &quot;Command-O&quot; should take a hint from &quot;Open with&quot;. That should
+ make it easier for ShowImage or MediaPlayer to decide (for themselves)
+ when to open a slideshow or playlist and when to open multiple window. If
+ Tracker does not pass along the user's intent to open a set of files as an
+ actual set, the receiving application can only guess the user's intent.
+
+ I'm not saying always/blindly stuff all selection in a single BMessage -
+ there can be different filetypes or files having a preferred application
+ attribute set.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4191#comment:1">http://dev.haiku-os.org/ticket/4191#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="019129.html">[Haiku-bugs] [Haiku] #4191: &quot;Ungrouping&quot; several opened files
+</A></li>
+	<LI>Next message: <A HREF="019130.html">[Haiku-bugs] [Haiku] #4059: PackageInstaller needs a &quot;Yes to all&quot; button in dialog box
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19156">[ date ]</a>
+              <a href="thread.html#19156">[ thread ]</a>
+              <a href="subject.html#19156">[ subject ]</a>
+              <a href="author.html#19156">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

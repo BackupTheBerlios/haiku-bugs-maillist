@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4115: Failed to relocate error when attempting to boot PPC kernel.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-July/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234115%3A%20Failed%20to%20relocate%20error%20when%0A%20attempting%20to%20boot%20PPC%20kernel.&In-Reply-To=%3C053.56ae780d4c98d9529f7ce3aa2574a3b1%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="018663.html">
+   <LINK REL="Next"  HREF="018816.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4115: Failed to relocate error when attempting to boot PPC kernel.</H1>
+    <B>kallisti5</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234115%3A%20Failed%20to%20relocate%20error%20when%0A%20attempting%20to%20boot%20PPC%20kernel.&In-Reply-To=%3C053.56ae780d4c98d9529f7ce3aa2574a3b1%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4115: Failed to relocate error when attempting to boot PPC kernel.">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Jul 30 00:21:28 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="018663.html">[Haiku-bugs] [Haiku] #4115: Failed to relocate error when attempting to boot PPC kernel.
+</A></li>
+        <LI>Next message: <A HREF="018816.html">[Haiku-bugs] [Haiku] #4115: Failed to relocate error when attempting to boot PPC kernel.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18815">[ date ]</a>
+              <a href="thread.html#18815">[ thread ]</a>
+              <a href="subject.html#18815">[ subject ]</a>
+              <a href="author.html#18815">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4115: Failed to relocate error when attempting to boot PPC kernel.
+---------------------------+------------------------------------------------
+ Reporter:  kallisti5      |       Owner:  mmu_man 
+     Type:  bug            |      Status:  assigned
+ Priority:  normal         |   Milestone:  R1      
+Component:  System/Kernel  |     Version:          
+Blockedby:                 |    Platform:  PowerPC 
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+
+Comment(by kallisti5):
+
+ ok, used readelf was able to extract a listing of the missing relocations
+ as per the offsets in the errors.  Magic fingers!
+
+ {{{
+
+ 8017b3b0  000e3201 R_PPC_ADDR32      00000000   _Z18_user_atomic_set64 + 0
+ 8018d208  000e3215 R_PPC_JMP_SLOT    00000000   _Z18_user_atomic_set64 + 0
+ 8017b3b8  0009ef01 R_PPC_ADDR32      00000000   _Z27_user_atomic_test_ + 0
+ 8018c340  0009ef15 R_PPC_JMP_SLOT    00000000   _Z27_user_atomic_test_ + 0
+ 8017b3c0  000ae201 R_PPC_ADDR32      00000000   _Z18_user_atomic_add64 + 0
+ 8018c6f0  000ae215 R_PPC_JMP_SLOT    00000000   _Z18_user_atomic_add64 + 0
+ 8017b3c8  0000d301 R_PPC_ADDR32      00000000   _Z18_user_atomic_and64 + 0
+ 8018a428  0000d315 R_PPC_JMP_SLOT    00000000   _Z18_user_atomic_and64 + 0
+ 8017b3d0  0008cc01 R_PPC_ADDR32      00000000   _Z17_user_atomic_or64P + 0
+ 8018bf08  0008cc15 R_PPC_JMP_SLOT    00000000   _Z17_user_atomic_or64P + 0
+ 8017b3d8  00063501 R_PPC_ADDR32      00000000   _Z18_user_atomic_get64 + 0
+ 8018b640  00063515 R_PPC_JMP_SLOT    00000000   _Z18_user_atomic_get64 + 0
+ 8018d1c0  000e0d15 R_PPC_JMP_SLOT    00000000   arch_cpu_init_percpu + 0
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4115#comment:11">http://dev.haiku-os.org/ticket/4115#comment:11</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="018663.html">[Haiku-bugs] [Haiku] #4115: Failed to relocate error when attempting to boot PPC kernel.
+</A></li>
+	<LI>Next message: <A HREF="018816.html">[Haiku-bugs] [Haiku] #4115: Failed to relocate error when attempting to boot PPC kernel.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18815">[ date ]</a>
+              <a href="thread.html#18815">[ thread ]</a>
+              <a href="subject.html#18815">[ subject ]</a>
+              <a href="author.html#18815">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

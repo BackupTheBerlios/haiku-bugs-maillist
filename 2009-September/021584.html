@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2780: Video out of range on GeForce 6100	(KM51G-754)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232780%3A%20Video%20out%20of%20range%20on%20GeForce%206100%0A%09%28KM51G-754%29&In-Reply-To=%3C055.736fc319859f4fab32b192ed8f94f5ba%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="021594.html">
+   <LINK REL="Next"  HREF="021586.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2780: Video out of range on GeForce 6100	(KM51G-754)</H1>
+    <B>tbe</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232780%3A%20Video%20out%20of%20range%20on%20GeForce%206100%0A%09%28KM51G-754%29&In-Reply-To=%3C055.736fc319859f4fab32b192ed8f94f5ba%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2780: Video out of range on GeForce 6100	(KM51G-754)">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Sep 17 21:53:56 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="021594.html">[Haiku-bugs] [Haiku] #4232: problem starting vmware player with the gcc4 compiled disk image
+</A></li>
+        <LI>Next message: <A HREF="021586.html">[Haiku-bugs] [Haiku] #3541: Core 2 Duo shows as Core 2 Extreme
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21584">[ date ]</a>
+              <a href="thread.html#21584">[ thread ]</a>
+              <a href="subject.html#21584">[ subject ]</a>
+              <a href="author.html#21584">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2780: Video out of range on GeForce 6100 (KM51G-754)
+-------------------------------------+--------------------------------------
+ Reporter:  richienyhus              |       Owner:  rudolfc  
+     Type:  bug                      |      Status:  new      
+ Priority:  normal                   |   Milestone:  R1       
+Component:  Drivers/Graphics/nVidia  |     Version:  R1/alpha1
+Blockedby:                           |    Platform:  All      
+ Blocking:                           |  
+-------------------------------------+--------------------------------------
+Changes (by tbe):
+
+ * cc: truls.becken@&#8230; (added)
+  * version:  R1/pre-alpha1 =&gt; R1/alpha1
+
+
+Comment:
+
+ Hi Rudolf,
+
+ I have the same chipset on an ASRock K8NF4G-SATA2 motherboard, and
+ experience similar problems in that I2C/EDID does not work and the screen
+ goes black when the nvidia driver kicks in. This is with the R1/alpha1
+ release (r33109).
+
+ My screen is a Samsung SyncMaster 710N (MJ17ASKS/EDC) with 1280x1024
+ native resolution. The motherboard only has VGA out and the screen only
+ VGA in, so DVI is not an option.
+
+ Originally, the OSD would show &quot;44.5kHz 55Hz NN&quot;, with no resolution
+ mentioned, but I know from the driver log that this was 1024x768. I don't
+ have that log at the moment because after selecting 1280x1024 from the
+ boot menu, it keeps using that resolution, for which OSD says &quot;59.3kHz
+ 56Hz NN&quot;. I'll attach the syslog and driver log below. This is with
+ &quot;force_ws false&quot; by the way, but that doesn't seem to make any difference.
+
+ In VESA mode, things have always been fine, and OSD says &quot;63.8kHz 60Hz PP
+ 1280x1024&quot;, which is exactly the same as on the boot screen. I'll attach
+ the syslog for this as well. If I lower the resolution using the Screen
+ preflet, OSD tells me &quot;48.3kHz 60Hz NN 1024x768&quot;.
+
+ Thanks,
+ Truls
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2780#comment:38">http://dev.haiku-os.org/ticket/2780#comment:38</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="021594.html">[Haiku-bugs] [Haiku] #4232: problem starting vmware player with the gcc4 compiled disk image
+</A></li>
+	<LI>Next message: <A HREF="021586.html">[Haiku-bugs] [Haiku] #3541: Core 2 Duo shows as Core 2 Extreme
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21584">[ date ]</a>
+              <a href="thread.html#21584">[ thread ]</a>
+              <a href="subject.html#21584">[ subject ]</a>
+              <a href="author.html#21584">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

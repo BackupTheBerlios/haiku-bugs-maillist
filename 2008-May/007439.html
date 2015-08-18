@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2242: pthread_attr_getscope, pthread_attr_setscope implementation
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232242%3A%20pthread_attr_getscope%2C%0A%20pthread_attr_setscope%20implementation&In-Reply-To=%3C052.3201e4c540e8d8b7fbf14d776af3ec4b%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007437.html">
+   <LINK REL="Next"  HREF="007440.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2242: pthread_attr_getscope, pthread_attr_setscope implementation</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232242%3A%20pthread_attr_getscope%2C%0A%20pthread_attr_setscope%20implementation&In-Reply-To=%3C052.3201e4c540e8d8b7fbf14d776af3ec4b%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2242: pthread_attr_getscope, pthread_attr_setscope implementation">trac at haiku-os.org
+       </A><BR>
+    <I>Mon May 19 22:57:58 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007437.html">[Haiku-bugs] [Haiku] #2242: pthread_attr_getscope, pthread_attr_setscope implementation
+</A></li>
+        <LI>Next message: <A HREF="007440.html">[Haiku-bugs] [Haiku] #2242: pthread_attr_getscope, pthread_attr_setscope implementation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7439">[ date ]</a>
+              <a href="thread.html#7439">[ thread ]</a>
+              <a href="subject.html#7439">[ subject ]</a>
+              <a href="author.html#7439">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2242: pthread_attr_getscope, pthread_attr_setscope implementation
+--------------------------+-------------------------------------------------
+  Reporter:  kaoutsis     |       Owner:  axeld         
+      Type:  enhancement  |      Status:  new           
+  Priority:  low          |   Milestone:  Unscheduled   
+ Component:  - General    |     Version:  R1 development
+Resolution:               |    Platform:  All           
+--------------------------+-------------------------------------------------
+Comment (by kaoutsis):
+
+ {{{
+ make[1]: Leaving directory `/boot/home/Desktop/wine-1.0-rc1/include'
+ make[1]: Entering directory `/boot/home/Desktop/wine-1.0-rc1/loader'
+ gcc -c -I. -I. -I../include -I../include    -Wall -pipe -fno-strict-
+ aliasing -Wwrite-strings -Wpointer-arith  -g -O2  -o pthread.o pthread.c
+ /boot/home/Desktop/wine-1.0-rc1/loader/pthread.c: In function
+ `create_thread':
+ /boot/home/Desktop/wine-1.0-rc1/loader/pthread.c:117: warning: implicit
+ declaration of function `pthread_attr_setscope'
+ /boot/home/Desktop/wine-1.0-rc1/loader/pthread.c: In function
+ `exit_thread':
+ /boot/home/Desktop/wine-1.0-rc1/loader/pthread.c:192: warning: `noreturn'
+ function does return
+ /boot/home/Desktop/wine-1.0-rc1/loader/pthread.c: In function
+ `abort_thread':
+ /boot/home/Desktop/wine-1.0-rc1/loader/pthread.c:202: warning: `noreturn'
+ function does return
+ gcc -c -I. -I. -I../include -I../include    -Wall -pipe -fno-strict-
+ aliasing -Wwrite-strings -Wpointer-arith  -g -O2  -o main.o main.c
+ gcc -o wine-pthread -Wl,--export-dynamic pthread.o main.o -L../libs/wine
+ -lwine ../libs/port/libwine_port.a    -Wl,--rpath,\$ORIGIN/../libs/wine
+ pthread.o: In function `create_thread':
+ /boot/home/Desktop/wine-1.0-rc1/loader/pthread.c:117: undefined reference
+ to `pthread_attr_setscope'
+ collect2: ld returned 1 exit status
+ make[1]: *** [wine-pthread] Error 1
+ make[1]: Leaving directory `/boot/home/Desktop/wine-1.0-rc1/loader'
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2242#comment:2">http://dev.haiku-os.org/ticket/2242#comment:2</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007437.html">[Haiku-bugs] [Haiku] #2242: pthread_attr_getscope, pthread_attr_setscope implementation
+</A></li>
+	<LI>Next message: <A HREF="007440.html">[Haiku-bugs] [Haiku] #2242: pthread_attr_getscope, pthread_attr_setscope implementation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7439">[ date ]</a>
+              <a href="thread.html#7439">[ thread ]</a>
+              <a href="subject.html#7439">[ subject ]</a>
+              <a href="author.html#7439">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

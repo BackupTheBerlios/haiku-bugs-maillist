@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3751: Redrawing problems.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233751%3A%20Redrawing%20problems.&In-Reply-To=%3C038.0e233409b5195ef2817f5e39fca6e403%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="016016.html">
+   <LINK REL="Next"  HREF="016029.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3751: Redrawing problems.</H1>
+    <B>bga</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233751%3A%20Redrawing%20problems.&In-Reply-To=%3C038.0e233409b5195ef2817f5e39fca6e403%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3751: Redrawing problems.">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Apr 12 16:24:08 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="016016.html">[Haiku-bugs] [Haiku] #3750: Missing posix math rounding	functions
+</A></li>
+        <LI>Next message: <A HREF="016029.html">[Haiku-bugs] [Haiku] #3751: Redrawing problems.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16017">[ date ]</a>
+              <a href="thread.html#16017">[ thread ]</a>
+              <a href="subject.html#16017">[ subject ]</a>
+              <a href="author.html#16017">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3751: Redrawing problems.
+----------------------------+-----------------------------------------------
+ Reporter:  bga             |       Owner:  stippi        
+     Type:  bug             |      Status:  new           
+ Priority:  normal          |   Milestone:  R1            
+Component:  User Interface  |     Version:  R1 development
+Blockedby:                  |    Platform:  All           
+ Blocking:                  |  
+----------------------------+-----------------------------------------------
+ Running Haiku GCC2 r30138 now but this has been present since at least a
+ few revisions ago. I am also using the VESA driver as my video card is not
+ supported.
+
+ It seems redrawing is broken under some circumstances. I could notice it
+ more evidently in SoundPlay and the Backgrouns Tracker add-on.
+
+ Here is an overview of the attached screenshots:
+
+ 1 - SoundPlayStartup.jpg : SoundPlay just after startup. Notice the
+ buttons that control playback are missing. Also the volume knob. Although
+ it is showing in the screenshot, immediately after startup the progress
+ bar and time information were not showing either. They showed up after
+ their first self-update.
+
+ 2 - SoundPlayAfterBeingPartiallyObscured.jpg : This shows that the part
+ that was obscured by Tracker's context menu was draw (only the invalidated
+ area).
+
+ 3 - SoundPlayAfterBeingTotallyObscured.jpg : This is SoundPlay after being
+ fully obscured by a window and then having the Window minimized. Behaviour
+ is exactly the same as in the first screenshot but, in this case, I took
+ the screenshot before the progress bar updated itself.
+
+ 4 - Backgrounds.jpg : This shows that the position knob is not being
+ correctly invalidated. I just clicked randomly in the color sliders and
+ got this result. I gues sthis is related to the SoundPlay problem.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3751">http://dev.haiku-os.org/ticket/3751</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="016016.html">[Haiku-bugs] [Haiku] #3750: Missing posix math rounding	functions
+</A></li>
+	<LI>Next message: <A HREF="016029.html">[Haiku-bugs] [Haiku] #3751: Redrawing problems.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16017">[ date ]</a>
+              <a href="thread.html#16017">[ thread ]</a>
+              <a href="subject.html#16017">[ subject ]</a>
+              <a href="author.html#16017">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

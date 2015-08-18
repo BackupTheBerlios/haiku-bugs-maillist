@@ -1,0 +1,156 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4103: cddb not working
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-July/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234103%3A%20cddb%20not%20working&In-Reply-To=%3C042.b23f929ea5df9388d3c24be2e0c5cab2%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="018531.html">
+   <LINK REL="Next"  HREF="018535.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4103: cddb not working</H1>
+    <B>scottmc</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234103%3A%20cddb%20not%20working&In-Reply-To=%3C042.b23f929ea5df9388d3c24be2e0c5cab2%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4103: cddb not working">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Jul 18 18:59:05 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="018531.html">[Haiku-bugs] [Haiku] #3651: Possible CharacterMap enhancements	(easy)
+</A></li>
+        <LI>Next message: <A HREF="018535.html">[Haiku-bugs] [Haiku] #4103: cddb not working
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18534">[ date ]</a>
+              <a href="thread.html#18534">[ thread ]</a>
+              <a href="subject.html#18534">[ subject ]</a>
+              <a href="author.html#18534">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4103: cddb not working
+-----------------------+----------------------------------------------------
+ Reporter:  scottmc    |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+Blockedby:             |    Platform:  All           
+ Blocking:             |  
+-----------------------+----------------------------------------------------
+ This was on r31621, here's a syslog snip from a removed/insertion of an
+ audio cd:
+ {{{
+ KERN: Media removed from /dev/disk/atapi/1/master/raw
+ KERN: Media changed from /dev/disk/atapi/1/master/raw
+ KERN: KDiskDeviceManager::_ScanPartition(/dev/disk/atapi/1/master/raw)
+ KERN: intel: ep_std_ops(0x1)
+ KERN:   trying: partitioning_systems/intel/extended/v1
+ KERN:   returned: -1
+ KERN: intel: ep_std_ops(0x2)
+ KERN:   trying: partitioning_systems/intel/map/v1
+ KERN: intel: pm_identify_partition(8, 1: 0, 549216256, 2048)
+ KERN: check_sense: Illegal request
+ KERN: cd_read(): request.Wait() returned: General system error
+ KERN:   returned: -1
+ KERN:   trying: file_systems/bfs/v1
+ KERN: check_sense: Illegal request
+ KERN: cd_read(): request.Wait() returned: General system error
+ KERN:   returned: -1
+ KERN:   trying: file_systems/devfs/v1
+ KERN:   returned: -1
+ KERN:   trying: file_systems/rootfs/v1
+ KERN:   returned: -1
+ KERN:   trying: partitioning_systems/session/v1
+ KERN: raw_command:
+ KERN:   returned: 0.699
+ KERN:   trying: file_systems/attribute_overlay/v1
+ KERN:   returned: -1
+ KERN:   trying: file_systems/cdda/v1
+ KERN: raw_command:
+ KERN: 01. 00:02.00 (length 04:28.30)
+ KERN: 02. 04:30.30 (length 03:05.47)
+ KERN: 03. 07:36.02 (length 03:29.15)
+ KERN: 04. 11:05.17 (length 03:44.08)
+ KERN: 05. 14:49.25 (length 04:35.12)
+ KERN: 06. 19:24.37 (length 03:34.48)
+ KERN: 07. 22:59.10 (length 06:38.35)
+ KERN: 08. 29:37.45 (length 03:22.05)
+ KERN: 09. 32:59.50 (length 04:33.05)
+ KERN: 10. 37:32.55 (length 04:23.42)
+ KERN: 11. 41:56.22 (length 04:14.68)
+ KERN: 12. 46:11.15 (length 04:09.15)
+ KERN: 13. 50:20.30 (length 03:46.17)
+ KERN: 14. 54:06.47 (length 05:31.00)
+ KERN:   returned: 0.8
+ KERN:   trying: file_systems/ext2/v1
+ KERN: check_sense: Illegal request
+ KERN: cd_read(): request.Wait() returned: General system error
+ KERN:   returned: -2147483648
+ KERN:   trying: file_systems/fat/v1
+ KERN: check_sense: Illegal request
+ KERN: cd_read(): request.Wait() returned: General system error
+ KERN:   returned: -1
+ KERN:   trying: file_systems/iso9660/v1
+ KERN: identify(8, 0x81079360)
+ KERN: check_sense: Illegal request
+ KERN: cd_read(): request.Wait() returned: General system error
+ KERN:   returned: -1
+ KERN:   trying: file_systems/nfs/v1
+ KERN:   returned: -1
+ KERN:   trying: file_systems/userlandfs/v1
+ KERN:   returned: -1
+ KERN:   trying: file_systems/write_overlay/v1
+ KERN:   returned: -1
+ KERN:   scanning with: file_systems/cdda/v1
+ KERN: raw_command:
+ KERN: 01. 00:02.00 (length 04:28.30)
+ KERN: 02. 04:30.30 (length 03:05.47)
+ KERN: 03. 07:36.02 (length 03:29.15)
+ KERN: 04. 11:05.17 (length 03:44.08)
+ KERN: 05. 14:49.25 (length 04:35.12)
+ KERN: 06. 19:24.37 (length 03:34.48)
+ KERN: 07. 22:59.10 (length 06:38.35)
+ KERN: 08. 29:37.45 (length 03:22.05)
+ KERN: 09. 32:59.50 (length 04:33.05)
+ KERN: 10. 37:32.55 (length 04:23.42)
+ KERN: 11. 41:56.22 (length 04:14.68)
+ KERN: 12. 46:11.15 (length 04:09.15)
+ KERN: 13. 50:20.30 (length 03:46.17)
+ KERN: 14. 54:06.47 (length 05:31.00)
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4103">http://dev.haiku-os.org/ticket/4103</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="018531.html">[Haiku-bugs] [Haiku] #3651: Possible CharacterMap enhancements	(easy)
+</A></li>
+	<LI>Next message: <A HREF="018535.html">[Haiku-bugs] [Haiku] #4103: cddb not working
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18534">[ date ]</a>
+              <a href="thread.html#18534">[ thread ]</a>
+              <a href="subject.html#18534">[ subject ]</a>
+              <a href="author.html#18534">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

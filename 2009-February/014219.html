@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3264: KDL when checkfs hits 31800 nodes	processed
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-February/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233264%3A%20KDL%20when%20checkfs%20hits%2031800%20nodes%0A%09processed&In-Reply-To=%3C050.16bdeb1c39142b05bceb701b1235b548%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="014214.html">
+   <LINK REL="Next"  HREF="014220.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3264: KDL when checkfs hits 31800 nodes	processed</H1>
+    <B>mmadia</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233264%3A%20KDL%20when%20checkfs%20hits%2031800%20nodes%0A%09processed&In-Reply-To=%3C050.16bdeb1c39142b05bceb701b1235b548%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3264: KDL when checkfs hits 31800 nodes	processed">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Feb  3 14:41:39 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="014214.html">[Haiku-bugs] [Haiku] #2713: SATA disk problem: &quot;PANIC: could not write back block ### (Device seek error)&quot;
+</A></li>
+        <LI>Next message: <A HREF="014220.html">[Haiku-bugs] [Haiku] #3111: [auich] PANIC: page fault but interrupts were disabled.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14219">[ date ]</a>
+              <a href="thread.html#14219">[ thread ]</a>
+              <a href="subject.html#14219">[ subject ]</a>
+              <a href="author.html#14219">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3264: KDL when checkfs hits 31800 nodes processed
+---------------------------+------------------------------------------------
+ Reporter:  mmadia         |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1 development
+Blockedby:                 |    Platform:  All           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+
+Comment(by mmadia):
+
+ I've re-created this error.
+
+ For a while I had concerns that these errors were due to physical defects
+ in my drives.
+ Running SeaTools v1.09, reports no error in either 'short' or 'long'
+ tests.
+ So for now, I'm convinced the error is software based.
+
+ Using a freshly initialized ~430gb bfs partition as the destination.
+ Using numerous 100~160gb drives, each with 3~4 bfs partitions from my R5
+ system as the source.
+
+ Prior to copyattr -d -r -v /source/* dest/,
+ I ran checkfs on each source numerous times, manually deleting files that
+ were reported, then re-running checkfs to ensure the a clean FS.
+
+ During the transfer of the 3rd volume,  copyattr KDL'd
+ After rebooting, I removed the entire directory that was being copied at
+ the time of the crash.
+ I then ran checkfs /dest and at which point this tickets KDL said hello.
+
+ What information can I gather about this partition for you?
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3264#comment:3">http://dev.haiku-os.org/ticket/3264#comment:3</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="014214.html">[Haiku-bugs] [Haiku] #2713: SATA disk problem: &quot;PANIC: could not write back block ### (Device seek error)&quot;
+</A></li>
+	<LI>Next message: <A HREF="014220.html">[Haiku-bugs] [Haiku] #3111: [auich] PANIC: page fault but interrupts were disabled.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14219">[ date ]</a>
+              <a href="thread.html#14219">[ thread ]</a>
+              <a href="subject.html#14219">[ subject ]</a>
+              <a href="author.html#14219">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

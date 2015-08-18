@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2641: [nvidia] Video problems
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232641%3A%20%5Bnvidia%5D%20Video%20problems&In-Reply-To=%3C050.59fb974c90b7dada062c05221c99e5a1%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="015081.html">
+   <LINK REL="Next"  HREF="015082.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2641: [nvidia] Video problems</H1>
+    <B>VinDuv</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232641%3A%20%5Bnvidia%5D%20Video%20problems&In-Reply-To=%3C050.59fb974c90b7dada062c05221c99e5a1%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2641: [nvidia] Video problems">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Mar 13 21:56:46 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="015081.html">[Haiku-bugs] [Haiku] #3553: [diffutils] STRERROR_R_CHAR_P is	defined to 1
+</A></li>
+        <LI>Next message: <A HREF="015082.html">[Haiku-bugs] [Haiku] #3472: gcc4 and shared libraries
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15079">[ date ]</a>
+              <a href="thread.html#15079">[ thread ]</a>
+              <a href="subject.html#15079">[ subject ]</a>
+              <a href="author.html#15079">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2641: [nvidia] Video problems
+-------------------------------------+--------------------------------------
+ Reporter:  VinDuv                   |       Owner:  rudolfc       
+     Type:  bug                      |      Status:  new           
+ Priority:  normal                   |   Milestone:  R1            
+Component:  Drivers/Graphics/nVidia  |     Version:  R1 development
+Blockedby:                           |    Platform:  All           
+ Blocking:                           |  
+-------------------------------------+--------------------------------------
+
+Comment(by VinDuv):
+
+ Hi Rudolf,
+
+ The internal display was used when I activated logging. I made some other
+ tests with and without the CRT connected (see the attached log).[[BR]]
+ The driver does not work in BeOS R5 either (same behavior)[[BR]]
+ But the good news is that the driver is at least partially working !
+
+ What I have done :[[BR]]
+ 1. Set switchhead to true, reboot with the external CRT =&gt; image OK (on
+ external)[[BR]]
+ 2. Reboot =&gt; still OK[[BR]]
+ 3. Change resolution to the highest provided, 1400x1050 (it is not a
+ standard resolution for the external screen, but it is the native
+ resolution of the internal one - I guess this is a side effect of
+ switchhead) =&gt; OK[[BR]]
+ 4. Reboot =&gt; Not OK, freeze after the rocket icon, with the internal, the
+ external or both screens enabled (even KDL wasn't showing)[[BR]]
+ 5. Reboot with switchhead disabled =&gt; OK on internal ![[BR]]
+ 6. Changing resolution =&gt; Not OK (same behavior as before)
+
+ So it seems that only the native resolution works properly on the internal
+ screen.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2641#comment:6">http://dev.haiku-os.org/ticket/2641#comment:6</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="015081.html">[Haiku-bugs] [Haiku] #3553: [diffutils] STRERROR_R_CHAR_P is	defined to 1
+</A></li>
+	<LI>Next message: <A HREF="015082.html">[Haiku-bugs] [Haiku] #3472: gcc4 and shared libraries
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15079">[ date ]</a>
+              <a href="thread.html#15079">[ thread ]</a>
+              <a href="subject.html#15079">[ subject ]</a>
+              <a href="author.html#15079">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

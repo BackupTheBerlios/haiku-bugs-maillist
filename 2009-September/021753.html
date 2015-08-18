@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4604: USB errors after unplugging Wacom	tablet
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234604%3A%20USB%20errors%20after%20unplugging%20Wacom%0A%09tablet&In-Reply-To=%3C050.2f4cbb6ed03f9f32fd6731f900085a2e%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="021748.html">
+   <LINK REL="Next"  HREF="021725.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4604: USB errors after unplugging Wacom	tablet</H1>
+    <B>stippi</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234604%3A%20USB%20errors%20after%20unplugging%20Wacom%0A%09tablet&In-Reply-To=%3C050.2f4cbb6ed03f9f32fd6731f900085a2e%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4604: USB errors after unplugging Wacom	tablet">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Sep 21 12:42:41 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="021748.html">[Haiku-bugs] [Haiku] #4604: USB errors after unplugging Wacom	tablet
+</A></li>
+        <LI>Next message: <A HREF="021725.html">[Haiku-bugs] [Haiku] #4605: scp doesn't fully transfer files
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21753">[ date ]</a>
+              <a href="thread.html#21753">[ thread ]</a>
+              <a href="subject.html#21753">[ subject ]</a>
+              <a href="author.html#21753">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4604: USB errors after unplugging Wacom tablet
+-------------------------------+--------------------------------------------
+ Reporter:  idefix             |       Owner:  mmlr     
+     Type:  bug                |      Status:  new      
+ Priority:  normal             |   Milestone:  R1       
+Component:  Drivers/Mouse/USB  |     Version:  R1/alpha1
+Blockedby:                     |    Platform:  All      
+ Blocking:                     |  
+-------------------------------+--------------------------------------------
+
+Comment(by stippi):
+
+ Very interesting. When the pen is not in proximation, the wacom tablet
+ will never send an interrupt transfer that the driver scheduled. Instead,
+ the driver will hit a timeout and reschedule the next transfer (with the
+ same timeout). This was designed such that the transfer thread would exit
+ cleanly and not block forever when the tablet is unplugged (this was
+ necessary on BeOS R5 when the driver was written). Maybe there is
+ something wrong with how the driver cleans up (respectively doesn't clean
+ up) the timed out transfers.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4604#comment:3">http://dev.haiku-os.org/ticket/4604#comment:3</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="021748.html">[Haiku-bugs] [Haiku] #4604: USB errors after unplugging Wacom	tablet
+</A></li>
+	<LI>Next message: <A HREF="021725.html">[Haiku-bugs] [Haiku] #4605: scp doesn't fully transfer files
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21753">[ date ]</a>
+              <a href="thread.html#21753">[ thread ]</a>
+              <a href="subject.html#21753">[ subject ]</a>
+              <a href="author.html#21753">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

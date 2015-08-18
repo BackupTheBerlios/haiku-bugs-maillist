@@ -1,0 +1,214 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #425: [3dmov] Segment violation
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-December/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23425%3A%20%5B3dmov%5D%20Segment%20violation&In-Reply-To=%3C049.7f7826e7fcb7e0651438ae19e352f7d1%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003977.html">
+   <LINK REL="Next"  HREF="003979.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #425: [3dmov] Segment violation</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23425%3A%20%5B3dmov%5D%20Segment%20violation&In-Reply-To=%3C049.7f7826e7fcb7e0651438ae19e352f7d1%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #425: [3dmov] Segment violation">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Dec 21 10:28:36 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003977.html">[Haiku-bugs] [Haiku] #155: keyboard doesn't always work
+</A></li>
+        <LI>Next message: <A HREF="003979.html">[Haiku-bugs] [Haiku] #581: Crash while mounting a BFS partition
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3978">[ date ]</a>
+              <a href="thread.html#3978">[ thread ]</a>
+              <a href="subject.html#3978">[ subject ]</a>
+              <a href="author.html#3978">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#425: [3dmov] Segment violation
+------------------------+---------------------------------------------------
+  Reporter:  diver      |       Owner:  axeld 
+      Type:  bug        |      Status:  closed
+  Priority:  normal     |   Milestone:  R1    
+ Component:  - General  |     Version:        
+Resolution:  duplicate  |    Platform:  All   
+------------------------+---------------------------------------------------
+Changes (by jackburton):
+
+  * status:  new =&gt; closed
+  * platform:  =&gt; All
+  * resolution:  =&gt; duplicate
+
+Old description:
+
+&gt;<i> 3dmov crash if you play a bit whith it. Good news is it's more stable
+</I>&gt;<i> than on my
+</I>&gt;<i> R5 :-)
+</I>&gt;<i>
+</I>&gt;<i> GNU gdb 6.3
+</I>&gt;<i> Copyright 2004 Free Software Foundation, Inc.
+</I>&gt;<i> GDB is free software, covered by the GNU General Public License, and you
+</I>&gt;<i> are
+</I>&gt;<i> welcome to change it and/or distribute copies of it under certain
+</I>&gt;<i> conditions.
+</I>&gt;<i> Type &quot;show copying&quot; to see the conditions.
+</I>&gt;<i> There is absolutely no warranty for GDB.  Type &quot;show warranty&quot; for
+</I>&gt;<i> details.
+</I>&gt;<i> This GDB was configured as &quot;i586-pc-haiku&quot;...(no debugging symbols found)
+</I>&gt;<i>
+</I>&gt;<i> Thread 202 caused an exception: Segment violation
+</I>&gt;<i> Reading symbols from /boot/beos/system/lib/libbe.so...(no debugging
+</I>&gt;<i> symbols
+</I>&gt;<i> found)...done.
+</I>&gt;<i> Loaded symbols for /boot/beos/system/lib/libbe.so
+</I>&gt;<i> Reading symbols from /boot/beos/system/lib/libtranslation.so...(no
+</I>&gt;<i> debugging
+</I>&gt;<i> symbols found)...done.
+</I>&gt;<i> Loaded symbols for /boot/beos/system/lib/libtranslation.so
+</I>&gt;<i> Reading symbols from /boot/beos/system/lib/libnet.so...
+</I>&gt;<i> (no debugging symbols found)...done.
+</I>&gt;<i> Loaded symbols for /boot/beos/system/lib/libnet.so
+</I>&gt;<i> Reading symbols from /boot/beos/system/lib/libroot.so...done.
+</I>&gt;<i> Loaded symbols for /boot/beos/system/lib/libroot.so
+</I>&gt;<i> Reading symbols from /boot/beos/system/lib/libstdc++.r4.so...done.
+</I>&gt;<i> Loaded symbols for /boot/beos/system/lib/libstdc++.r4.so
+</I>&gt;<i> Reading symbols from /boot/beos/system/lib/libsocket.so...done.
+</I>&gt;<i> Loaded symbols for /boot/beos/system/lib/libsocket.so
+</I>&gt;<i>
+</I>&gt;<i> [Switching to team /BeBox/home/temp/BeOS_Old_Demos (177) thread Sphere
+</I>&gt;<i> (202)]
+</I>&gt;<i> 0x0045deb7 in BPrivate::processHeap::free ()
+</I>&gt;<i>    from /boot/beos/system/lib/libroot.so
+</I>&gt;<i> (gdb) bt
+</I>&gt;<i> #0  0x0045deb7 in BPrivate::processHeap::free ()
+</I>&gt;<i>    from /boot/beos/system/lib/libroot.so
+</I>&gt;<i> #1  0x0045f6a1 in free () from /boot/beos/system/lib/libroot.so
+</I>&gt;<i> #2  0x002183d7 in B3dEthricWorld::~B3dEthericWorld ()
+</I>&gt;<i> #3  0x00223aca in B3dView::~B3dView ()
+</I>&gt;<i> #4  0x0022e63b in Z3dView::~Z3dView ()
+</I>&gt;<i> #5  0x0033ff3f in BView::~BView () from /boot/beos/system/lib/libbe.so
+</I>&gt;<i> #6  0x00348f10 in BWindow::~BWindow () from
+</I>&gt;<i> /boot/beos/system/lib/libbe.so
+</I>&gt;<i> #7  0x00232499 in Z3dWindow::~Z3dWindow ()
+</I>&gt;<i> #8  0x002d16c9 in BLooper::Quit () from /boot/beos/system/lib/libbe.so
+</I>&gt;<i> #9  0x00349516 in BWindow::Quit () from /boot/beos/system/lib/libbe.so
+</I>&gt;<i> #10 0x002d2d71 in BLooper::_QuitRequested ()
+</I>&gt;<i>    from /boot/beos/system/lib/libbe.so
+</I>&gt;<i> #11 0x002d124e in BLooper::DispatchMessage ()
+</I>&gt;<i>    from /boot/beos/system/lib/libbe.so
+</I>&gt;<i> #12 0x0034b651 in BWindow::DispatchMessage ()
+</I>&gt;<i>    from /boot/beos/system/lib/libbe.so
+</I>&gt;<i> #13 0x0034e68c in BWindow::task_looper () from
+</I>&gt;<i> /boot/beos/system/lib/libbe.so
+</I>&gt;<i> #14 0x002d27eb in BLooper::_task0_ () from /boot/beos/system/lib/libbe.so
+</I>&gt;<i> #15 0x00455850 in thread_entry () from /boot/beos/system/lib/libroot.so
+</I>&gt;<i> #16 0x701c5fec in ?? ()
+</I>&gt;<i> (gdb)
+</I>
+New description:
+
+ 3dmov crash if you play a bit whith it. Good news is it's more stable than
+ on my
+ R5 :-)
+
+ GNU gdb 6.3
+ Copyright 2004 Free Software Foundation, Inc.
+ GDB is free software, covered by the GNU General Public License, and you
+ are
+ welcome to change it and/or distribute copies of it under certain
+ conditions.
+ Type &quot;show copying&quot; to see the conditions.
+ There is absolutely no warranty for GDB.  Type &quot;show warranty&quot; for
+ details.
+ This GDB was configured as &quot;i586-pc-haiku&quot;...(no debugging symbols found)
+
+ Thread 202 caused an exception: Segment violation
+ Reading symbols from /boot/beos/system/lib/libbe.so...(no debugging
+ symbols
+ found)...done.
+ Loaded symbols for /boot/beos/system/lib/libbe.so
+ Reading symbols from /boot/beos/system/lib/libtranslation.so...(no
+ debugging
+ symbols found)...done.
+ Loaded symbols for /boot/beos/system/lib/libtranslation.so
+ Reading symbols from /boot/beos/system/lib/libnet.so...
+ (no debugging symbols found)...done.
+ Loaded symbols for /boot/beos/system/lib/libnet.so
+ Reading symbols from /boot/beos/system/lib/libroot.so...done.
+ Loaded symbols for /boot/beos/system/lib/libroot.so
+ Reading symbols from /boot/beos/system/lib/libstdc++.r4.so...done.
+ Loaded symbols for /boot/beos/system/lib/libstdc++.r4.so
+ Reading symbols from /boot/beos/system/lib/libsocket.so...done.
+ Loaded symbols for /boot/beos/system/lib/libsocket.so
+
+ [Switching to team /BeBox/home/temp/BeOS_Old_Demos (177) thread Sphere
+ (202)]
+ 0x0045deb7 in BPrivate::processHeap::free ()
+    from /boot/beos/system/lib/libroot.so
+ (gdb) bt
+ #0  0x0045deb7 in BPrivate::processHeap::free ()
+    from /boot/beos/system/lib/libroot.so
+ #1  0x0045f6a1 in free () from /boot/beos/system/lib/libroot.so
+ #2  0x002183d7 in B3dEthricWorld::~B3dEthericWorld ()
+ #3  0x00223aca in B3dView::~B3dView ()
+ #4  0x0022e63b in Z3dView::~Z3dView ()
+ #5  0x0033ff3f in BView::~BView () from /boot/beos/system/lib/libbe.so
+ #6  0x00348f10 in BWindow::~BWindow () from /boot/beos/system/lib/libbe.so
+ #7  0x00232499 in Z3dWindow::~Z3dWindow ()
+ #8  0x002d16c9 in BLooper::Quit () from /boot/beos/system/lib/libbe.so
+ #9  0x00349516 in BWindow::Quit () from /boot/beos/system/lib/libbe.so
+ #10 0x002d2d71 in BLooper::_QuitRequested ()
+    from /boot/beos/system/lib/libbe.so
+ #11 0x002d124e in BLooper::DispatchMessage ()
+    from /boot/beos/system/lib/libbe.so
+ #12 0x0034b651 in BWindow::DispatchMessage ()
+    from /boot/beos/system/lib/libbe.so
+ #13 0x0034e68c in BWindow::task_looper () from
+ /boot/beos/system/lib/libbe.so
+ #14 0x002d27eb in BLooper::_task0_ () from /boot/beos/system/lib/libbe.so
+ #15 0x00455850 in thread_entry () from /boot/beos/system/lib/libroot.so
+ #16 0x701c5fec in ?? ()
+ (gdb)
+
+Comment:
+
+ This looks like a dup of #1591
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/425#comment:1">http://dev.haiku-os.org/ticket/425#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003977.html">[Haiku-bugs] [Haiku] #155: keyboard doesn't always work
+</A></li>
+	<LI>Next message: <A HREF="003979.html">[Haiku-bugs] [Haiku] #581: Crash while mounting a BFS partition
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3978">[ date ]</a>
+              <a href="thread.html#3978">[ thread ]</a>
+              <a href="subject.html#3978">[ subject ]</a>
+              <a href="author.html#3978">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

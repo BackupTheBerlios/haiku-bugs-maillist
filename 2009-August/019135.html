@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4194: fuse (userlandfs) causes a page fault - user access in kernel area
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234194%3A%20fuse%20%28userlandfs%29%20causes%20a%20page%20fault%20-%0A%20user%20access%20in%20kernel%20area&In-Reply-To=%3C039.5411c54ce7a3f6ce5acf9f7d711a5a47%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="019134.html">
+   <LINK REL="Next"  HREF="019137.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4194: fuse (userlandfs) causes a page fault - user access in kernel area</H1>
+    <B>Blub</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234194%3A%20fuse%20%28userlandfs%29%20causes%20a%20page%20fault%20-%0A%20user%20access%20in%20kernel%20area&In-Reply-To=%3C039.5411c54ce7a3f6ce5acf9f7d711a5a47%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4194: fuse (userlandfs) causes a page fault - user access in kernel area">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Aug  6 21:55:16 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="019134.html">[Haiku-bugs] [Haiku] #4084: Lack 1440x900 resolutoion
+</A></li>
+        <LI>Next message: <A HREF="019137.html">[Haiku-bugs] [Haiku] #4194: fuse (userlandfs) causes a page fault - user access in kernel area
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19135">[ date ]</a>
+              <a href="thread.html#19135">[ thread ]</a>
+              <a href="subject.html#19135">[ subject ]</a>
+              <a href="author.html#19135">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4194: fuse (userlandfs) causes a page fault - user access in kernel area
+--------------------------+-------------------------------------------------
+ Reporter:  Blub          |       Owner:  axeld         
+     Type:  bug           |      Status:  new           
+ Priority:  normal        |   Milestone:  R1            
+Component:  File Systems  |     Version:  R1 development
+Blockedby:                |    Platform:  All           
+ Blocking:                |  
+--------------------------+-------------------------------------------------
+ I'm currently trying to run sshfs on haiku, svn rev 32167
+ I was able to successfully run the &quot;hello-world&quot; fuse-filesystem using
+ fuse, but when I try to mount using sshfs, just after I logged in and
+ typed in my password, a page-fault happens when creating the file-cookie-
+ locker
+ I have prepared GDB and syslog output after building
+ userlandfs+subdirectories with debug information and am trying to debug
+ this, but I hardly know the code so it's hard for me to find the problem.
+
+ It's a bit hard to reproduce since sshfs depends on glib2 (with thread
+ support) and you need a fuse pkgconfig (.pc) file, but once you have that
+ you can simply - without any changes to the source - do:[[BR]]
+ ./configure[[BR]]
+ make[[BR]]
+ mkdir ~/config/add-ons/userlandfs     #if not already done[[BR]]
+ cp sshfs ~/config/add-ons/userlandfs/sshfs[[BR]]
+
+ then:[[BR]]
+ mount -t userlandfs -o 'sshfs <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">user at host</A>:' mountpoint/
+
+ You can download all the needed dependencies from:[[BR]]
+ <A HREF="http://rear.endoftheinternet.org/~blub/haiku-files/">http://rear.endoftheinternet.org/~blub/haiku-files/</A> [[BR]]
+ (scroll down to the package list)[[BR]]
+ they can simply unzipped into /boot: unzip -d package....pkg.zip
+
+ glib2 there is compield with the system-PCRE so you need to
+ download:[[BR]]
+ pcre[[BR]]
+ glib2[[BR]]
+ fuse-proto    (if you don't already have a fuse.pc file)[[BR]]
+ pkgconfig     (so ./configure finds what it needs)[[BR]]
+ and the current sshfs-fuse source from
+ <A HREF="http://fuse.sourceforge.net/sshfs.html">http://fuse.sourceforge.net/sshfs.html</A>
+
+ syslog and gdb output files follow...
+
+ == The Problem ==
+ The problem happens within FUSE, so I doubt it is a problem with
+ sshfs[[BR]]
+ And even if it was a bug in sshfs, it shouldn't be allowed to crash
+ userlandfs/fuse in such a way.[[BR]]
+ After such an unsuccessful mount, any further attempt to mount something
+ else results in a message[[BR]]
+ mount: General system error
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4194">http://dev.haiku-os.org/ticket/4194</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="019134.html">[Haiku-bugs] [Haiku] #4084: Lack 1440x900 resolutoion
+</A></li>
+	<LI>Next message: <A HREF="019137.html">[Haiku-bugs] [Haiku] #4194: fuse (userlandfs) causes a page fault - user access in kernel area
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19135">[ date ]</a>
+              <a href="thread.html#19135">[ thread ]</a>
+              <a href="subject.html#19135">[ subject ]</a>
+              <a href="author.html#19135">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

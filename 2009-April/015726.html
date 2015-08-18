@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3682: Smart BAlert knows when to Escape
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233682%3A%20Smart%20BAlert%20knows%20when%20to%20Escape&In-Reply-To=%3C048.2b4c0061d5e31d2f88d08f6a36e01913%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="015725.html">
+   <LINK REL="Next"  HREF="015727.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3682: Smart BAlert knows when to Escape</H1>
+    <B>jonas.kirilla</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233682%3A%20Smart%20BAlert%20knows%20when%20to%20Escape&In-Reply-To=%3C048.2b4c0061d5e31d2f88d08f6a36e01913%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3682: Smart BAlert knows when to Escape">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Apr  6 07:39:04 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="015725.html">[Haiku-bugs] [Haiku] #2655: [NTFS] Port NTFS file system to	Haiku FS API
+</A></li>
+        <LI>Next message: <A HREF="015727.html">[Haiku-bugs] [Haiku] #3682: Smart BAlert knows when to Escape
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15726">[ date ]</a>
+              <a href="thread.html#15726">[ thread ]</a>
+              <a href="subject.html#15726">[ subject ]</a>
+              <a href="author.html#15726">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3682: Smart BAlert knows when to Escape
+--------------------------------+-------------------------------------------
+ Reporter:  jonas.kirilla       |       Owner:  axeld         
+     Type:  enhancement         |      Status:  new           
+ Priority:  normal              |   Milestone:  R1            
+Component:  Kits/Interface Kit  |     Version:  R1 development
+Blockedby:                      |    Platform:  All           
+ Blocking:                      |  
+--------------------------------+-------------------------------------------
+ I think it would be safe to give BAlert enough intelligence for itself to
+ set escape as the shortcut key for a Cancel button, under these certain
+ conditions:
+
+ 1. It should be done as late as possible. (Not in the constructor.)
+ Preferrably in BAlert's Go() method, so as to give the user plenty of time
+ to set up shortcut keys before the system starts guessing.
+
+ 2. It should be conditionalized on an English locale, as soon as that is
+ supported. (&quot;Cancel&quot; might mean something else in some other language.
+ Other languages would need a different string. The feature would be turned
+ off for unknown languages/locales.)
+
+ 3. Additionally, these conditions should be met:
+
+ {{{
+ - there exists a button named Cancel
+ - the Cancel button has no shortcut key set
+ - no other button has B_ESCAPE set as its shortcut key
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3682">http://dev.haiku-os.org/ticket/3682</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="015725.html">[Haiku-bugs] [Haiku] #2655: [NTFS] Port NTFS file system to	Haiku FS API
+</A></li>
+	<LI>Next message: <A HREF="015727.html">[Haiku-bugs] [Haiku] #3682: Smart BAlert knows when to Escape
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15726">[ date ]</a>
+              <a href="thread.html#15726">[ thread ]</a>
+              <a href="subject.html#15726">[ subject ]</a>
+              <a href="author.html#15726">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

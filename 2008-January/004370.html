@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1714: Mouse events mostly do not reach BWindow in Mozilla, aswell as drawing messages
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-January/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231714%3A%20Mouse%20events%20mostly%20do%20not%20reach%0A%20BWindow%20in%20Mozilla%2C%20aswell%20as%20drawing%20messages&In-Reply-To=%3C050.861a271cd6182cfeffa1a8948c6544f5%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="004368.html">
+   <LINK REL="Next"  HREF="004372.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1714: Mouse events mostly do not reach BWindow in Mozilla, aswell as drawing messages</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231714%3A%20Mouse%20events%20mostly%20do%20not%20reach%0A%20BWindow%20in%20Mozilla%2C%20aswell%20as%20drawing%20messages&In-Reply-To=%3C050.861a271cd6182cfeffa1a8948c6544f5%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1714: Mouse events mostly do not reach BWindow in Mozilla, aswell as drawing messages">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Jan 20 15:51:32 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="004368.html">[Haiku-bugs] [Haiku] #1714: Mouse events mostly do not reach BWindow in Mozilla, aswell as drawing messages
+</A></li>
+        <LI>Next message: <A HREF="004372.html">[Haiku-bugs] [Haiku] #1714: Mouse events mostly do not reach BWindow in Mozilla, aswell as drawing messages
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4370">[ date ]</a>
+              <a href="thread.html#4370">[ thread ]</a>
+              <a href="subject.html#4370">[ subject ]</a>
+              <a href="author.html#4370">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1714: Mouse events mostly do not reach BWindow in Mozilla, aswell as drawing
+messages
+---------------------------------+------------------------------------------
+  Reporter:  fyysik              |       Owner:  stippi        
+      Type:  bug                 |      Status:  new           
+  Priority:  high                |   Milestone:  R1            
+ Component:  Servers/app_server  |     Version:  R1 development
+Resolution:                      |    Platform:  x86           
+---------------------------------+------------------------------------------
+Comment (by fyysik):
+
+ axeld, we were right in our suspects about clipping.
+ If I change code in gfx backend to set clipping region always to 0 in
+ ConstrainClippingRegion instead using region provided by Mozilla - mouse
+ starts work. But yeah, as expected, mozilla look is broken in such case. I
+ can try to fix it in Mozilla code, there are some ideas here, but for
+ sure, it is bug of explicit incompatibility with R5 and Dano
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1714#comment:5">http://dev.haiku-os.org/ticket/1714#comment:5</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="004368.html">[Haiku-bugs] [Haiku] #1714: Mouse events mostly do not reach BWindow in Mozilla, aswell as drawing messages
+</A></li>
+	<LI>Next message: <A HREF="004372.html">[Haiku-bugs] [Haiku] #1714: Mouse events mostly do not reach BWindow in Mozilla, aswell as drawing messages
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4370">[ date ]</a>
+              <a href="thread.html#4370">[ thread ]</a>
+              <a href="subject.html#4370">[ subject ]</a>
+              <a href="author.html#4370">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

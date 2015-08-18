@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3356: intermittant and out of order audio
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-January/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233356%3A%20intermittant%20and%20out%20of%20order%20audio&In-Reply-To=%3C051.40d03e58fc9715a1be2171fac0e052ae%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="013953.html">
+   <LINK REL="Next"  HREF="013997.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3356: intermittant and out of order audio</H1>
+    <B>stippi</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233356%3A%20intermittant%20and%20out%20of%20order%20audio&In-Reply-To=%3C051.40d03e58fc9715a1be2171fac0e052ae%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3356: intermittant and out of order audio">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Jan 24 17:37:45 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="013953.html">[Haiku-bugs] [Haiku] #3356: intermittant and out of order audio
+</A></li>
+        <LI>Next message: <A HREF="013997.html">[Haiku-bugs] [Haiku] #3356: intermittant and out of order audio
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13961">[ date ]</a>
+              <a href="thread.html#13961">[ thread ]</a>
+              <a href="subject.html#13961">[ subject ]</a>
+              <a href="author.html#13961">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3356: intermittant and out of order audio
+-----------------------+----------------------------------------------------
+ Reporter:  rudolfc    |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+Blockedby:             |    Platform:  All           
+ Blocking:             |  
+-----------------------+----------------------------------------------------
+
+Comment(by stippi):
+
+ Replying to [comment:9 rudolfc]:
+ &gt; If I think about what Stephan said I'd say this drift-averaging makes
+ audio more robust indeed. Don't know what effect it has if you use a
+ mediaplayer with variable playback speed though: will it respond less
+ promptly on settings changes for instance?
+ &gt; I'd say some sort of optimum/compromise would have to be found, but
+ improvement over the current default multi-media-addon is certainly
+ possible.
+
+ No, the drift averaging will have no effect whatsoever on the latency.
+ It's really just a way to get a smoother change in drift. Drift in audio
+ happens when the true clock frequency of the audio hardware is slightly
+ different from what it's supposed to be. Like 48005 Hz instead of 48000
+ Hz. It is not uncommon. The Media Kit can compensate this by sending
+ buffers at a slightly faster or slower rate, it could even to have audio
+ playback at the correct speed anyways, but I am not a fan of that, since
+ it degrades quality, no matter how good the resampler. I'd rather have a
+ song be 0.5 seconds shorter or faster. You calculate the drift in the
+ Media Kit node by comparing the expected buffer duration (performance
+ time) with the measured buffer duration (OS real time clock). Usually, the
+ node will wait on an interrupt of the hardware (ie a semaphore released by
+ the driver), and since it runs at realtime priority, it should wake up as
+ soon as possible when the driver releases the semaphore. This *seems* to
+ be where Haiku currently still has some problems. But obviously one effect
+ of that is less accurate drift calculation, since the measurement of the
+ realtime between two buffers, respectively two semaphore wake ups, is less
+ accurate. The averaging should be useful even if the wakeup latency would
+ be much better on Haiku, since it will never be perfect. And as I already
+ explained, it was necessary on ZETA as well (tested with C-Media
+ hardware). In any case, the latency for userland applications is totally
+ uneffected by all this.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3356#comment:12">http://dev.haiku-os.org/ticket/3356#comment:12</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="013953.html">[Haiku-bugs] [Haiku] #3356: intermittant and out of order audio
+</A></li>
+	<LI>Next message: <A HREF="013997.html">[Haiku-bugs] [Haiku] #3356: intermittant and out of order audio
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13961">[ date ]</a>
+              <a href="thread.html#13961">[ thread ]</a>
+              <a href="subject.html#13961">[ subject ]</a>
+              <a href="author.html#13961">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

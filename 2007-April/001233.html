@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1193: Build for R5 haiku-openglkit-cvs - No OpenGL Renderer
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231193%3A%20Build%20for%20R5%20haiku-openglkit-cvs%20-%0A%20No%20OpenGL%20Renderer&In-Reply-To=%3C050.a4e7e3beb0eef7cc4bcca53ac8e161fd%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001232.html">
+   <LINK REL="Next"  HREF="001234.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1193: Build for R5 haiku-openglkit-cvs - No OpenGL Renderer</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231193%3A%20Build%20for%20R5%20haiku-openglkit-cvs%20-%0A%20No%20OpenGL%20Renderer&In-Reply-To=%3C050.a4e7e3beb0eef7cc4bcca53ac8e161fd%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1193: Build for R5 haiku-openglkit-cvs - No OpenGL Renderer">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Apr 30 20:58:58 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001232.html">[Haiku-bugs] [Haiku] #1193: Build for R5 haiku-openglkit-cvs - No OpenGL Renderer
+</A></li>
+        <LI>Next message: <A HREF="001234.html">[Haiku-bugs] [Haiku] #1193: Build for R5 haiku-openglkit-cvs - No OpenGL Renderer
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1233">[ date ]</a>
+              <a href="thread.html#1233">[ thread ]</a>
+              <a href="subject.html#1233">[ subject ]</a>
+              <a href="author.html#1233">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1193: Build for R5 haiku-openglkit-cvs - No OpenGL Renderer
+------------------------------+---------------------------------------------
+  Reporter:  andybe           |       Owner:  korli         
+      Type:  enhancement      |      Status:  new           
+  Priority:  low              |   Milestone:  R1            
+ Component:  Kits/OpenGL Kit  |     Version:  R1 development
+Resolution:                   |    Platform:  All           
+------------------------------+---------------------------------------------
+Comment (by andybe):
+
+ ok, I found it
+
+ add-on/opengl/Mesa Software Render
+ is missing by building this package.
+
+ The headers from Kits/opengl/GL got are from Mesa 6.3 and as I can see we
+ are include the &quot;glut&quot; library in libGL.so. That isn't to hard, but normal
+ it is seperated in libglut.so. That's why our libGL.so is 1MB big.
+
+ Don't know about me. Should'nt it be better to splitte glut out of
+ libGL.so as
+ other does it also (BeOS, MacOSX, Linux).
+
+ Thanks for listening.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1193#comment:6">http://dev.haiku-os.org/ticket/1193#comment:6</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001232.html">[Haiku-bugs] [Haiku] #1193: Build for R5 haiku-openglkit-cvs - No OpenGL Renderer
+</A></li>
+	<LI>Next message: <A HREF="001234.html">[Haiku-bugs] [Haiku] #1193: Build for R5 haiku-openglkit-cvs - No OpenGL Renderer
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1233">[ date ]</a>
+              <a href="thread.html#1233">[ thread ]</a>
+              <a href="subject.html#1233">[ subject ]</a>
+              <a href="author.html#1233">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2350: Segment violation in FillRectNoClipping when booting on eeePC
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-July/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232350%3A%20Segment%20violation%20in%0A%20FillRectNoClipping%20when%20booting%20on%20eeePC&In-Reply-To=%3C052.15953ab449d41ac385bf1bd9e5d2a29f%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009172.html">
+   <LINK REL="Next"  HREF="009174.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2350: Segment violation in FillRectNoClipping when booting on eeePC</H1>
+    <B>stippi</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232350%3A%20Segment%20violation%20in%0A%20FillRectNoClipping%20when%20booting%20on%20eeePC&In-Reply-To=%3C052.15953ab449d41ac385bf1bd9e5d2a29f%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2350: Segment violation in FillRectNoClipping when booting on eeePC">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Jul 27 12:44:13 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009172.html">[Haiku-bugs] [Haiku] #2350: Segment violation in FillRectNoClipping when booting on eeePC
+</A></li>
+        <LI>Next message: <A HREF="009174.html">[Haiku-bugs] [Haiku] #2350: Segment violation in FillRectNoClipping when booting on eeePC
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9173">[ date ]</a>
+              <a href="thread.html#9173">[ thread ]</a>
+              <a href="subject.html#9173">[ subject ]</a>
+              <a href="author.html#9173">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2350: Segment violation in FillRectNoClipping when booting on eeePC
+---------------------------------+------------------------------------------
+  Reporter:  exparrot            |       Owner:  axeld         
+      Type:  bug                 |      Status:  new           
+  Priority:  normal              |   Milestone:  R1            
+ Component:  Servers/app_server  |     Version:  R1 development
+Resolution:                      |   Blockedby:                
+  Platform:  x86                 |    Blocking:                
+---------------------------------+------------------------------------------
+
+Comment(by stippi):
+
+ The problem seems to be that app_server and the graphics driver are out of
+ sync with regards to the current resolution. In another words, the
+ app_server thinks that the driver is in another resolution than it
+ actually is. Then it writes to the frame buffer out of bounds which leads
+ to the crash. From what I hear from mmlr, the problem can be worked around
+ by copying a resolution settings file which forces an initial mode switch
+ and syncs app_server to the driver or vice versa. (mmlr, does a vesa
+ settings file suffice?) I have not yet had a chance to look into the root
+ cause of the problem.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2350#comment:7">http://dev.haiku-os.org/ticket/2350#comment:7</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009172.html">[Haiku-bugs] [Haiku] #2350: Segment violation in FillRectNoClipping when booting on eeePC
+</A></li>
+	<LI>Next message: <A HREF="009174.html">[Haiku-bugs] [Haiku] #2350: Segment violation in FillRectNoClipping when booting on eeePC
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9173">[ date ]</a>
+              <a href="thread.html#9173">[ thread ]</a>
+              <a href="subject.html#9173">[ subject ]</a>
+              <a href="author.html#9173">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

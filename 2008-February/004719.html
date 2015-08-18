@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1366: /dev/urandom doesn't working?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-February/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231366%3A%20/dev/urandom%20doesn%27t%20working%3F&In-Reply-To=%3C051.db4e7b4001096097923419466d4889e0%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="004718.html">
+   <LINK REL="Next"  HREF="004720.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1366: /dev/urandom doesn't working?</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231366%3A%20/dev/urandom%20doesn%27t%20working%3F&In-Reply-To=%3C051.db4e7b4001096097923419466d4889e0%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1366: /dev/urandom doesn't working?">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Feb  7 11:18:32 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="004718.html">[Haiku-bugs] [Haiku] #1366: /dev/urandom doesn't working?
+</A></li>
+        <LI>Next message: <A HREF="004720.html">[Haiku-bugs] [Haiku] #1538: Page fault during installing perl	from sources
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4719">[ date ]</a>
+              <a href="thread.html#4719">[ thread ]</a>
+              <a href="subject.html#4719">[ subject ]</a>
+              <a href="author.html#4719">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1366: /dev/urandom doesn't working?
+------------------------+---------------------------------------------------
+  Reporter:  kaliber    |       Owner:  axeld         
+      Type:  bug        |      Status:  new           
+  Priority:  normal     |   Milestone:  R1            
+ Component:  - General  |     Version:  R1 development
+Resolution:             |    Platform:  All           
+------------------------+---------------------------------------------------
+Comment (by bonefish):
+
+ Replying to [comment:8 axeld]:
+ &gt; That was similar to our original version of thread_yield() (I think it
+ put it in the run queue as if would have priority 1). However, our
+ allocator uses thread_yield() when it cannot get an internal lock (it
+ would be not that easy to change it to use semaphores).
+ &gt;
+ &gt; While that works fine usually, when there is a high priority thread
+ waiting, no one else would ever have the chance to get that lock, because
+ the high priority thread is constantly trying.
+
+ You disabled thread_yield() in r21572 due to &quot;ongoing problems&quot;. In r22515
+ you fixed a problem in the scheduler with skipping high priority threads.
+ So the main reason might be fixed already, right?
+
+ At any rate, thread_yield() should be used sparingly in high priority
+ threads anyway.
+
+ &gt; Maybe we should revert to that priority 1 version again - at least it
+ should work better now, since the scheduler does not ignore lower priority
+ threads that often anymore.
+
+ Since I'll need /dev/urandom to work fast now, so that building Perl
+ doesn't take ages, I'll introduce a &quot;force&quot; boolean parameter to
+ thread_yield() that when true, will use the current implementation and
+ otherwise just call scheduler_reschedule() without priority adjustment or
+ setting was_yielded, so that the thread will continue to run, if no other
+ thread is ready. This should be perfect for the random driver's purpose.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1366#comment:9">http://dev.haiku-os.org/ticket/1366#comment:9</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="004718.html">[Haiku-bugs] [Haiku] #1366: /dev/urandom doesn't working?
+</A></li>
+	<LI>Next message: <A HREF="004720.html">[Haiku-bugs] [Haiku] #1538: Page fault during installing perl	from sources
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4719">[ date ]</a>
+              <a href="thread.html#4719">[ thread ]</a>
+              <a href="subject.html#4719">[ subject ]</a>
+              <a href="author.html#4719">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

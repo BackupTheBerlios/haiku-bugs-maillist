@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3003: Workspaces releated crash
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233003%3A%20Workspaces%20releated%20crash&In-Reply-To=%3C053.2461b708e95db0e22b5d64a6672fe76d%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011911.html">
+   <LINK REL="Next"  HREF="011913.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3003: Workspaces releated crash</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233003%3A%20Workspaces%20releated%20crash&In-Reply-To=%3C053.2461b708e95db0e22b5d64a6672fe76d%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3003: Workspaces releated crash">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Nov  1 22:27:36 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011911.html">[Haiku-bugs] [Haiku] #3011: Filling Tracker windows with many files takes too long
+</A></li>
+        <LI>Next message: <A HREF="011913.html">[Haiku-bugs] [Haiku] #3023: BTextView::LineAt() and BTextView::CountLines() behavior is incorrect
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11912">[ date ]</a>
+              <a href="thread.html#11912">[ thread ]</a>
+              <a href="subject.html#11912">[ subject ]</a>
+              <a href="author.html#11912">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3003: Workspaces releated crash
+---------------------------------+------------------------------------------
+  Reporter:  kallisti5           |       Owner:  axeld         
+      Type:  bug                 |      Status:  new           
+  Priority:  normal              |   Milestone:  R1            
+ Component:  Servers/app_server  |     Version:  R1 development
+Resolution:                      |   Blockedby:                
+  Platform:  All                 |    Blocking:                
+---------------------------------+------------------------------------------
+
+Comment(by anevilyak):
+
+ Seems to be:
+
+ {{{
+ Thread 14 (team /boot/beos/system/servers/app_server (63) thread a95:x-vnd
+ .Be-TSKB (136)):
+ #0 0x0028f5f3 in WindowList::RemoveWindow ()
+ #1 0x0024eb48 in Desktop::ActivateWindow ()
+ #2 0x0025117c in Desktop::WindowAction ()
+ #3 0x0026c25b in ServerApp::DispatchMessage()
+ #4 0x00267198 in ServerApp::MessageLooper ()
+ #5 0x0026b7c5 in MessageLooper::_message_thread ()
+ #6 0x006f5610 in thread_entry () from /boot/beos/system/lib/libroot.so
+ }}}
+
+ Would be helpful if someone would fix the problem that gdb attaches to the
+ main thread of the team always, took me a while to track that down because
+ fake_app_server is quite slow, making thread apply all bt not fun at all.
+ This is 100% reproducible by the way.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3003#comment:3">http://dev.haiku-os.org/ticket/3003#comment:3</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011911.html">[Haiku-bugs] [Haiku] #3011: Filling Tracker windows with many files takes too long
+</A></li>
+	<LI>Next message: <A HREF="011913.html">[Haiku-bugs] [Haiku] #3023: BTextView::LineAt() and BTextView::CountLines() behavior is incorrect
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11912">[ date ]</a>
+              <a href="thread.html#11912">[ thread ]</a>
+              <a href="subject.html#11912">[ subject ]</a>
+              <a href="author.html#11912">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

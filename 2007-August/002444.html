@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1426: redraw is incorrect
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231426%3A%20redraw%20is%20incorrect&In-Reply-To=%3C049.bc05d387c78db34dbc74a6c33b0b4514%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002443.html">
+   <LINK REL="Next"  HREF="002445.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1426: redraw is incorrect</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231426%3A%20redraw%20is%20incorrect&In-Reply-To=%3C049.bc05d387c78db34dbc74a6c33b0b4514%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1426: redraw is incorrect">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Aug 26 15:28:27 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002443.html">[Haiku-bugs] [Haiku] #1426: redraw is incorrect
+</A></li>
+        <LI>Next message: <A HREF="002445.html">[Haiku-bugs] [Haiku] #1426: redraw is incorrect
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2444">[ date ]</a>
+              <a href="thread.html#2444">[ thread ]</a>
+              <a href="subject.html#2444">[ subject ]</a>
+              <a href="author.html#2444">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1426: redraw is incorrect
+---------------------------------+------------------------------------------
+  Reporter:  axeld               |       Owner:  stippi        
+      Type:  bug                 |      Status:  assigned      
+  Priority:  high                |   Milestone:  R1            
+ Component:  Servers/app_server  |     Version:  R1 development
+Resolution:                      |    Platform:  All           
+---------------------------------+------------------------------------------
+Comment (by stippi):
+
+ Small correction: The problem would have shown itself visually in terms of
+ flickering lines. But the clipping problem is that instead, the lines and
+ rects are not drawn at all in some conditions.
+ I am thinking that maybe the rounding of coordinates (in case a BView is
+ not B_SUB_PIXEL_PRECISE) should not happen in Painter, but in
+ ViewLayer::ConvertToScreenForDrawing(). That would avoid this problem and
+ simplify some code maybe.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1426#comment:3">http://dev.haiku-os.org/ticket/1426#comment:3</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002443.html">[Haiku-bugs] [Haiku] #1426: redraw is incorrect
+</A></li>
+	<LI>Next message: <A HREF="002445.html">[Haiku-bugs] [Haiku] #1426: redraw is incorrect
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2444">[ date ]</a>
+              <a href="thread.html#2444">[ thread ]</a>
+              <a href="subject.html#2444">[ subject ]</a>
+              <a href="author.html#2444">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

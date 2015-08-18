@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1168: driver free hook not called
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231168%3A%20driver%20free%20hook%20not%20called&In-Reply-To=%3C050.72116faf31595662ea1b335aa3e37ee4%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001199.html">
+   <LINK REL="Next"  HREF="001075.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1168: driver free hook not called</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231168%3A%20driver%20free%20hook%20not%20called&In-Reply-To=%3C050.72116faf31595662ea1b335aa3e37ee4%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1168: driver free hook not called">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Apr 22 00:14:37 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001199.html">[Haiku-bugs] [Haiku] #1167: USB stack built for BONE crashes in UHCI finish thread
+</A></li>
+        <LI>Next message: <A HREF="001075.html">[Haiku-bugs] [Haiku] #1168: driver free hook not called
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1074">[ date ]</a>
+              <a href="thread.html#1074">[ thread ]</a>
+              <a href="subject.html#1074">[ subject ]</a>
+              <a href="author.html#1074">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1168: driver free hook not called
+-----------------------------+----------------------------------------------
+ Reporter:  marcusoverhagen  |       Owner:  axeld         
+     Type:  bug              |      Status:  new           
+ Priority:  normal           |   Milestone:  R1            
+Component:  System/Kernel    |     Version:  R1 development
+ Platform:  All              |  
+-----------------------------+----------------------------------------------
+ When an application has opened a driver and doesn't close it,
+ the driver's free hook will not be called when the application
+ crashes or is killed. However, the close hook does get called.
+
+ It looks like vfs_free_io_context() calls close_fd() and put_fd(),
+ close_fd will call close hook if previous reference count was 1
+ put_fd will call free hook if previous reference count was 1.
+ Something is wrong with that logic
+
+ example:
+
+ ls /dev/dvb/cs23882/1
+ cx23882: driver open
+ cx23882: driver read
+ cx23882: driver close
+ cx23882: driver free
+ .
+ tail -f /dev/dvb/cs23882/1 (or opening media server and killing
+ media_server)
+ cx23882: driver open
+ cx23882: driver read
+ cx23882: driver close
+ .
+ ls /dev/dvb/cs23882/1
+ cx23882: driver open (=&gt; B_BUSY, because free hook wasn't called)
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1168">http://dev.haiku-os.org/ticket/1168</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001199.html">[Haiku-bugs] [Haiku] #1167: USB stack built for BONE crashes in UHCI finish thread
+</A></li>
+	<LI>Next message: <A HREF="001075.html">[Haiku-bugs] [Haiku] #1168: driver free hook not called
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1074">[ date ]</a>
+              <a href="thread.html#1074">[ thread ]</a>
+              <a href="subject.html#1074">[ subject ]</a>
+              <a href="author.html#1074">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

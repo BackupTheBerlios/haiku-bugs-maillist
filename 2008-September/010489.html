@@ -1,0 +1,282 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2757: regression: r27665 broke booting, panics at the red rocket
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232757%3A%20regression%3A%20r27665%20broke%20booting%2C%0A%20panics%20at%20the%20red%20rocket&In-Reply-To=%3C049.7b5fc2ec116362153cfa0f6e0901db3d%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010482.html">
+   <LINK REL="Next"  HREF="010484.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2757: regression: r27665 broke booting, panics at the red rocket</H1>
+    <B>bonefish</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232757%3A%20regression%3A%20r27665%20broke%20booting%2C%0A%20panics%20at%20the%20red%20rocket&In-Reply-To=%3C049.7b5fc2ec116362153cfa0f6e0901db3d%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2757: regression: r27665 broke booting, panics at the red rocket">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Sep 22 13:52:38 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010482.html">[Haiku-bugs] [Haiku] #2757: regression: r27665 broke booting, panics at the red rocket
+</A></li>
+        <LI>Next message: <A HREF="010484.html">[Haiku-bugs] [Haiku] #2757: regression: r27665 broke booting, panics at the red rocket
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10489">[ date ]</a>
+              <a href="thread.html#10489">[ thread ]</a>
+              <a href="subject.html#10489">[ subject ]</a>
+              <a href="author.html#10489">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2757: regression: r27665 broke booting, panics at the red rocket
+----------------------------+-----------------------------------------------
+  Reporter:  luroh          |       Owner:  axeld         
+      Type:  bug            |      Status:  reopened      
+  Priority:  normal         |   Milestone:  R1            
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |   Blockedby:                
+  Platform:  All            |    Blocking:                
+----------------------------+-----------------------------------------------
+Changes (by bonefish):
+
+  * status:  closed =&gt; reopened
+  * resolution:  fixed =&gt;
+
+
+Comment:
+
+ The problem persists in r27688. Now I can actually reproduce it:
+ {{{
+ PANIC: vm_page_fault: unhandled page fault in kernel space at 0x4c, ip
+ 0x90b589b6
+
+ Welcome to Kernel Debugging Land...
+ Thread 122 &quot;media_addon_server&quot; running on CPU 0
+ kdebug&gt; sc
+ stack trace for thread 122 &quot;media_addon_server&quot;
+     kernel stack: 0x9201e000 to 0x92022000
+       user stack: 0x7efef000 to 0x7ffef000
+ frame            caller     &lt;image&gt;:function + offset
+  0 92021820 (+  48) 80057a35
+ &lt;/boot/beos/system/kernel_x86&gt;:invoke_debugger_command + 0x00f5
+  1 92021850 (+  64) 80057825
+ &lt;/boot/beos/system/kernel_x86&gt;:invoke_pipe_segment__FP21debugger_command_pipelPc
+ + 0x0079
+  2 92021890 (+  64) 80057bad
+ &lt;/boot/beos/system/kernel_x86&gt;:invoke_debugger_command_pipe + 0x009d
+  3 920218d0 (+  48) 800590e8
+ &lt;/boot/beos/system/kernel_x86&gt;:_ParseCommandPipe__16ExpressionParserRi +
+ 0x0234
+  4 92021900 (+  64) 80058522
+ &lt;/boot/beos/system/kernel_x86&gt;:EvaluateCommand__16ExpressionParserPCcRi +
+ 0x02ba
+  5 92021940 (+ 224) 8005a510
+ &lt;/boot/beos/system/kernel_x86&gt;:evaluate_debug_command + 0x0088
+  6 92021a20 (+  64) 80055e36
+ &lt;/boot/beos/system/kernel_x86&gt;:kernel_debugger_loop__Fv + 0x01ae
+  7 92021a60 (+  48) 80056a09
+ &lt;/boot/beos/system/kernel_x86&gt;:kernel_debugger + 0x0121
+  8 92021a90 (+ 192) 800568dd   &lt;/boot/beos/system/kernel_x86&gt;:panic +
+ 0x0029
+  9 92021b50 (+  80) 800b4b2d
+ &lt;/boot/beos/system/kernel_x86&gt;:vm_page_fault + 0x0139
+ 10 92021ba0 (+  64) 800c4045
+ &lt;/boot/beos/system/kernel_x86&gt;:page_fault_exception + 0x00e1
+ 11 92021be0 (+  12) 800c7606   &lt;/boot/beos/system/kernel_x86&gt;:int_bottom +
+ 0x0036 (nearest)
+ kernel iframe at 0x92021bec (end = 0x92021c3c)
+  eax 0x90b58b25     ebx 0x90b59c84      ecx 0x8010869c   edx 0x0
+  esi 0x90b59dc0     edi 0x90b91190      ebp 0x92021c74   esp 0x92021c20
+  eip 0x90b589b6  eflags 0x10296
+  vector: 0xe, error code: 0x0
+ 12 92021bec (+ 136) 90b589b6   &lt;/boot/beos/system/add-
+ ons/kernel/busses/ide/generic_ide_pci&gt;:supports_device + 0x002e
+ 13 92021c74 (+  64) 80062d78
+ &lt;/boot/beos/system/kernel_x86&gt;:_RegisterPath__11device_nodePCc + 0x0030
+ 14 92021cb4 (+  96) 80062f87
+ &lt;/boot/beos/system/kernel_x86&gt;:_RegisterDynamic__11device_nodeP11device_node
+ + 0x0147
+ 15 92021d14 (+  48) 800630f1
+ &lt;/boot/beos/system/kernel_x86&gt;:_Probe__11device_node + 0x0055
+ 16 92021d44 (+  80) 80063287
+ &lt;/boot/beos/system/kernel_x86&gt;:Probe__11device_nodePCcUl + 0x018b
+ 17 92021d94 (+  80) 800632d2
+ &lt;/boot/beos/system/kernel_x86&gt;:Probe__11device_nodePCcUl + 0x01d6
+ 18 92021de4 (+  64) 80063ad3
+ &lt;/boot/beos/system/kernel_x86&gt;:device_manager_probe + 0x004f
+ 19 92021e24 (+  64) 80063cf3
+ &lt;/boot/beos/system/kernel_x86&gt;:scan_for_drivers__FP11devfs_vnode + 0x0073
+ 20 92021e64 (+  64) 8006583d
+ &lt;/boot/beos/system/kernel_x86&gt;:devfs_open_dir__FP9fs_volumeP8fs_vnodePPv +
+ 0x0081
+ 21 92021ea4 (+  48) 80091f44
+ &lt;/boot/beos/system/kernel_x86&gt;:open_dir_vnode__FP5vnodeb + 0x0028
+ 22 92021ed4 (+  48) 800929bd
+ &lt;/boot/beos/system/kernel_x86&gt;:dir_open__FiPcb + 0x0051
+ 23 92021f04 (+  64) 80097f2b
+ &lt;/boot/beos/system/kernel_x86&gt;:_user_open_dir + 0x0093
+ 24 92021f44 (+ 100) 800c7832
+ &lt;/boot/beos/system/kernel_x86&gt;:pre_syscall_debug_done + 0x0002 (nearest)
+ user iframe at 0x92021fa8 (end = 0x92022000)
+  eax 0x62           ebx 0x440fec        ecx 0x7ffedde0   edx 0xffff0104
+  esi 0x7ffee269     edi 0x3eae2d        ebp 0x7ffee76c   esp 0x92021fdc
+  eip 0xffff0104  eflags 0x203      user esp 0x7ffedde0
+  vector: 0x63, error code: 0x0
+ 25 92021fa8 (+   0) ffff0104
+ 26 7ffee76c (+  48) 0037df1c   &lt;libbe.so&gt;:SetTo__6BEntryPCcb + 0x003c
+ 27 7ffee79c (+  48) 0037dc5f   &lt;libbe.so&gt;:__6BEntryPCcb + 0x0053
+ 28 7ffee7cc (+ 128) 00743a8d
+ &lt;libdevice.so&gt;:__12RosterLooperP10BUSBRoster + 0x0069
+ 29 7ffee84c (+  64) 0074401e   &lt;libdevice.so&gt;:Start__10BUSBRoster + 0x005a
+ 30 7ffee88c (+  48) 0072adbc
+ &lt;usb_webcam.media_addon&gt;:__16WebCamMediaAddOnl + 0x0108
+ 31 7ffee8bc (+  64) 0072b2a9   &lt;usb_webcam.media_addon&gt;:make_media_addon +
+ 0x0031
+ 32 7ffee8fc (+  48) 004b4b85
+ &lt;libmedia.so&gt;:LoadAddon__Q38BPrivate5media18DormantNodeManagerPP11BMediaAddOnPlPCcl
+ + 0x00a5
+ 33 7ffee92c (+ 128) 004b4230
+ &lt;libmedia.so&gt;:GetAddon__Q38BPrivate5media18DormantNodeManagerl + 0x00ac
+ 34 7ffee9ac (+ 144) 00206b8d   &lt;_APP_&gt;:AddOnAdded__16MediaAddonServerPCcx
+ + 0x0069
+ 35 7ffeea3c (+ 192) 00208245
+ &lt;_APP_&gt;:MessageReceived__16MediaAddonServerP8BMessage + 0x0211
+ 36 7ffeeafc (+ 304) 00207ea0
+ &lt;_APP_&gt;:WatchDir__16MediaAddonServerP6BEntry + 0x0140
+ 37 7ffeec2c (+ 176) 002064dd   &lt;_APP_&gt;:ReadyToRun__16MediaAddonServer +
+ 0x0209
+ 38 7ffeecdc (+ 496) 002b31a1
+ &lt;libbe.so&gt;:DispatchMessage__12BApplicationP8BMessageP8BHandler + 0x02f9
+ 39 7ffeeecc (+  64) 002bda5d   &lt;libbe.so&gt;:task_looper__7BLooper + 0x0211
+ 40 7ffeef0c (+  64) 002b1a19   &lt;libbe.so&gt;:Run__12BApplication + 0x0075
+ 41 7ffeef4c (+  48) 002087e6   &lt;_APP_&gt;:main + 0x007e
+ 42 7ffeef7c (+  48) 00205c03   &lt;_APP_&gt;:_start + 0x005b
+ 43 7ffeefac (+  48) 001008ea   3183:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">runtime_loader_seg0ro at 0x00100000</A> +
+ 0x8ea
+ 44 7ffeefdc (+   0) 7ffeefec
+ 3182:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">media_addon_server_main_stack at 0x7efef000</A> + 0xffffec
+ kdebug&gt; team_images 1
+ Registered images of team 1
+     ID text       size    data       size    name
+      1 0x80000000 1081344 0x80108000 139264  /boot/beos/system/kernel_x86
+      3 0x806fe000 49152   0x8070a000 4096    /boot/beos/system/add-
+ ons/kernel/boot/usb
+      4 0x806e9000 61440   0x806f8000 8192    /boot/beos/system/add-
+ ons/kernel/boot/uhci
+      6 0x806dc000 16384   0x806e0000 4096    /boot/beos/system/add-
+ ons/kernel/boot/scsi_periph
+      7 0x806d9000 8192    0x806db000 4096    /boot/beos/system/add-
+ ons/kernel/boot/scsi_disk
+      9 0x806c6000 36864   0x806cf000 8192    /boot/beos/system/add-
+ ons/kernel/boot/scsi
+     10 0x8060b000 528384  0x8068c000 237568  /boot/beos/system/add-
+ ons/kernel/boot/pci
+     12 0x805f4000 8192    0x805f6000 4096    /boot/beos/system/add-
+ ons/kernel/boot/locked_pool
+     15 0x805e9000 4096    0x805ea000 4096    /boot/beos/system/add-
+ ons/kernel/boot/isa
+     18 0x805d6000 12288   0x805d9000 4096    /boot/beos/system/add-
+ ons/kernel/boot/ide_adapter
+     19 0x805c8000 36864   0x805d1000 4096    /boot/beos/system/add-
+ ons/kernel/boot/ide
+     20 0x805c6000 4096    0x805c7000 4096    /boot/beos/system/add-
+ ons/kernel/boot/generic_ide_pci
+     22 0x805b0000 4096    0x805b1000 4096    /boot/beos/system/add-
+ ons/kernel/boot/config_manager
+     23 0x8057e000 167936  0x805a7000 4096    /boot/beos/system/add-
+ ons/kernel/boot/bfs
+    215 0x80518000 8192    0x8051a000 4096    /boot/beos/system/add-
+ ons/kernel/drivers/dev/console
+    216 0x80530000 4096    0x80531000 4096    /boot/beos/system/add-
+ ons/kernel/drivers/dev/dprintf
+    217 0x80532000 8192    0x80534000 4096    /boot/beos/system/add-
+ ons/kernel/drivers/dev/keyboard
+    218 0x80535000 4096    0x80536000 4096    /boot/beos/system/add-
+ ons/kernel/drivers/dev/null
+    219 0x80537000 12288   0x8053a000 4096    /boot/beos/system/add-
+ ons/kernel/drivers/dev/random
+    220 0x8075c000 36864   0x80765000 16384   /boot/beos/system/add-
+ ons/kernel/drivers/dev/tty
+    221 0x8053b000 4096    0x8053c000 4096    /boot/beos/system/add-
+ ons/kernel/drivers/dev/zero
+    255 0x8053f000 4096    0x80540000 8192    /boot/beos/system/add-
+ ons/kernel/cpu/generic_x86
+    256 0x80769000 28672   0x80770000 94208   /boot/beos/system/add-
+ ons/kernel/debugger/disasm
+    257 0x80574000 8192    0x80576000 4096    /boot/beos/system/add-
+ ons/kernel/debugger/hangman
+    258 0x80577000 4096    0x80578000 4096    /boot/beos/system/add-
+ ons/kernel/debugger/invalidate_on_exit
+    893 0x80546000 86016   0x8055b000 8192    /boot/beos/system/add-
+ ons/kernel/network/stack
+    903 0x8055d000 24576   0x80563000 4096    /boot/beos/system/add-
+ ons/kernel/network/protocols/udp
+    904 0x80564000 36864   0x8056d000 4096    /boot/beos/system/add-
+ ons/kernel/network/protocols/ipv4
+    906 0x80244000 4096    0x80245000 4096    /boot/beos/system/add-
+ ons/kernel/network/devices/loopback
+    907 0x8056e000 4096    0x8056f000 4096    /boot/beos/system/add-
+ ons/kernel/network/datalink_protocols/loopback_frame
+    913 0x80787000 196608  0x807b7000 8192    /boot/beos/system/add-
+ ons/kernel/drivers/dev/net/ipro1000
+    923 0x805ac000 8192    0x805ae000 8192    /boot/beos/system/add-
+ ons/kernel/network/devices/ethernet
+    924 0x805b6000 4096    0x805b7000 4096    /boot/beos/system/add-
+ ons/kernel/network/datalink_protocols/ipv4_datagram
+    925 0x805b8000 12288   0x805bb000 4096    /boot/beos/system/add-
+ ons/kernel/network/datalink_protocols/arp
+    926 0x805bc000 4096    0x805bd000 4096    /boot/beos/system/add-
+ ons/kernel/network/datalink_protocols/ethernet_frame
+    933 0x805e4000 8192    0x805e6000 8192    /boot/beos/system/add-
+ ons/kernel/drivers/dev/graphics/vesa
+    935 0x9277c000 49152   0x92788000 4096    /boot/beos/system/add-
+ ons/kernel/network/protocols/tcp
+   1054 0x92000000 20480   0x92005000 4096    /boot/beos/system/add-
+ ons/kernel/bus_managers/ps2
+   1056 0x807fd000 8192    0x807ff000 4096    /boot/beos/system/add-
+ ons/kernel/drivers/dev/input/wacom
+   1114 0x90b58000 4096    0x90b59000 4096    /boot/beos/system/add-
+ ons/kernel/busses/ide/generic_ide_pci
+ }}}
+
+ The names of modules loaded by the boot loader and by the kernel still
+ differ. The former point to the boot symlinks. Here the generic_ide_pci is
+ loaded twice.
+
+ Unless there are objections I'll revert the whole mess.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2757#comment:25">http://dev.haiku-os.org/ticket/2757#comment:25</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010482.html">[Haiku-bugs] [Haiku] #2757: regression: r27665 broke booting, panics at the red rocket
+</A></li>
+	<LI>Next message: <A HREF="010484.html">[Haiku-bugs] [Haiku] #2757: regression: r27665 broke booting, panics at the red rocket
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10489">[ date ]</a>
+              <a href="thread.html#10489">[ thread ]</a>
+              <a href="subject.html#10489">[ subject ]</a>
+              <a href="author.html#10489">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

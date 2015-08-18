@@ -1,0 +1,159 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1236: Intel 82801FB USB Controllers: BIOS Legacy USB Support: ON disables publishing USB2 devices.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231236%3A%20Intel%2082801FB%20USB%20Controllers%3A%20BIOS%0A%20Legacy%20USB%20Support%3A%20ON%20disables%20publishing%20USB2%20devices.&In-Reply-To=%3C043.d792bfdd6b39e037e543dae618f71417%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001423.html">
+   <LINK REL="Next"  HREF="001520.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1236: Intel 82801FB USB Controllers: BIOS Legacy USB Support: ON disables publishing USB2 devices.</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231236%3A%20Intel%2082801FB%20USB%20Controllers%3A%20BIOS%0A%20Legacy%20USB%20Support%3A%20ON%20disables%20publishing%20USB2%20devices.&In-Reply-To=%3C043.d792bfdd6b39e037e543dae618f71417%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1236: Intel 82801FB USB Controllers: BIOS Legacy USB Support: ON disables publishing USB2 devices.">trac at haiku-os.org
+       </A><BR>
+    <I>Sun May 20 23:05:56 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001423.html">[Haiku-bugs] [Haiku] #1066: Print_server is not started at boot
+</A></li>
+        <LI>Next message: <A HREF="001520.html">[Haiku-bugs] [Haiku] #1236: Intel 82801FB USB Controllers: BIOS Legacy USB Support: ON disables publishing USB2 devices.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1426">[ date ]</a>
+              <a href="thread.html#1426">[ thread ]</a>
+              <a href="subject.html#1426">[ subject ]</a>
+              <a href="author.html#1426">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1236: Intel 82801FB USB Controllers: BIOS Legacy USB Support: ON disables
+publishing USB2 devices.
+-------------------------+--------------------------------------------------
+ Reporter:  siarzhuk     |       Owner:  mmlr          
+     Type:  bug          |      Status:  new           
+ Priority:  normal       |   Milestone:  R1            
+Component:  Drivers/USB  |     Version:  R1 development
+ Platform:  All          |  
+-------------------------+--------------------------------------------------
+ 1) The laptop PC with following USB Controller was tested:
+
+ V       8086    Intel Corporation
+ D       2658    82801FB (ICH6) USB UHCI Controller 1
+ D       2659    82801FB (ICH6) USB UHCI Controller 2
+ D       265A    82801FB (ICH6) USB UHCI Controller 3
+ D       265B    82801FB (ICH6) USB UHCI Controller 4
+ D       265C    82801FB (ICH6) USB 2.0 EHCI Controller
+
+ 2) Tested system has &quot;Legacy USB Support&quot; settings in BIOS. There are two
+ possible states for this option: Enabled and Disabled.
+
+
+ 3) Terminal command
+
+ ls /dev/bus/usb/ -alR
+
+ was used to check the fact of publishing device under corresponding
+ directory in /dev hierarchy.
+
+ 4) Terminal command
+
+ usb_dev_info /dev/bus/usb/N/M
+
+ was used to obtain USB device information. The &quot;N&quot; and &quot;M&quot; are
+ corresponding subdirectory and file names of the device entry.
+
+ 5) Two syslog files attached to this bug report. First one was acquired
+ with disabled BIOS Legacy USB Support option, second one was acquired with
+ enabled option.
+
+ 6) Haiku revision used during this tests: 21181
+
+ '''The Test I:'''
+
+ Haiku was booted with _disabled_ BIOS &quot;Legacy USB support&quot;. Two USB2 mass
+ storage devices were plugged in before the system boot.
+
+ a)I use &quot;ls&quot; to check the device publishing and usb_dev_info to be sure
+ that both mass storage device are published. All was OK.
+
+ b) I have plugged one of devices out. Checked device entry with &quot;ls&quot; - it
+ was still displayed, tried to obtain device information with
+ &quot;usb_dev_info&quot; - it failed with &quot;cannot open&quot; message.
+
+ c) I plugged this device in the _same_ port. Checked with &quot;ls&quot; - it is
+ here. Checked with &quot;usb_dev_info&quot; - correct information displayed.
+
+ d) Plugged this device out and plug it into _another_ port. Checked with
+ &quot;ls&quot; - device entry not changed. Checked it with &quot;usb_dev_info&quot; - failed
+ with &quot;cannot open&quot;. Tried to get &quot;usb_dev_info&quot; for other possible dev
+ entries on this controller (from 0 to 7) - nothing found.
+
+
+ '''The Test II'''
+
+ Haiku was booted with _enabled_ BIOS &quot;Legacy USB support&quot;. One USB2 mass
+ storage device with another USB1 mass storage device were plugged in
+ before booting Haiku.
+
+ a)I use &quot;ls&quot; to check the device publishing and usb_dev_info to be sure
+ that both mass storage device are published. Only USB1 device was found.
+ USB2 device was not published.
+
+ b)I tried to plug USB2 device out and plug it into the same port. Nothing
+ published under /dev. Tried to replug it into another port - nothing. Note
+ that syslog contains corresponding &quot;pipe changed&quot; notifications for USB2
+ device!
+
+ c) The &quot;non-working plug in notifications&quot; issue from Test I is also
+ observed with USB1 device in this test.
+
+
+ '''The PROBLEM''':
+ Looks like BIOS &quot;Legacy USB Support&quot; option has negative effect on Haiku&#180;s
+ USB stack on tested system. In case this option is enabled - USB2 devices
+ are not published in /dev hierarchy. Only USB1 are published.
+ Unfortunately I have no possibility to check  this from real driver at
+ this time - only &quot;ls&quot;-check was performed.
+
+ '''NOTES''':
+ Mentioned &quot;non-working plug in notify&quot; problem looks like not related to
+ this BIOS &quot;legacy USB&quot; option. May be I should post it as another bug
+ report?
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1236">http://dev.haiku-os.org/ticket/1236</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001423.html">[Haiku-bugs] [Haiku] #1066: Print_server is not started at boot
+</A></li>
+	<LI>Next message: <A HREF="001520.html">[Haiku-bugs] [Haiku] #1236: Intel 82801FB USB Controllers: BIOS Legacy USB Support: ON disables publishing USB2 devices.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1426">[ date ]</a>
+              <a href="thread.html#1426">[ thread ]</a>
+              <a href="subject.html#1426">[ subject ]</a>
+              <a href="author.html#1426">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

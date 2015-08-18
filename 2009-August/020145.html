@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4308: ATA finds no boot partition
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234308%3A%20ATA%20finds%20no%20boot%20partition&In-Reply-To=%3C057.0fdc95bf222204b123fb9c272bbd2cc9%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="020133.html">
+   <LINK REL="Next"  HREF="020185.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4308: ATA finds no boot partition</H1>
+    <B>mmlr</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234308%3A%20ATA%20finds%20no%20boot%20partition&In-Reply-To=%3C057.0fdc95bf222204b123fb9c272bbd2cc9%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4308: ATA finds no boot partition">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Aug 25 18:58:28 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="020133.html">[Haiku-bugs] [Haiku] #4308: ATA finds no boot partition
+</A></li>
+        <LI>Next message: <A HREF="020185.html">[Haiku-bugs] [Haiku] #4308: ATA finds no boot partition
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20145">[ date ]</a>
+              <a href="thread.html#20145">[ thread ]</a>
+              <a href="subject.html#20145">[ subject ]</a>
+              <a href="author.html#20145">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4308: ATA finds no boot partition
+---------------------------+------------------------------------------------
+ Reporter:  jonas.kirilla  |       Owner:  mmlr          
+     Type:  bug            |      Status:  assigned      
+ Priority:  high           |   Milestone:  R1/alpha1     
+Component:  System/Kernel  |     Version:  R1 development
+Blockedby:                 |    Platform:  All           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+
+Comment(by mmlr):
+
+ Yes, the problem seems to be that device selection doesn't work. The thing
+ is that I am unsure of the reason. Two things I could imagine: The
+ device/controller is busy, and we must not check for the selected device
+ until it becomes unbusy (I don't have the specs at hand, so can't verify
+ if this is how it works, I just faintly remember something along those
+ lines) or device selection doesn't work by only writing that single byte
+ on the affected controller, i.e. a complete command is necessary (though
+ I'd see this as unlikely). I have cross-verified with the IDE bus_manager,
+ which is not exactly easy, as it works pretty differently, and have seen
+ that it also uses LBA mode for the device selection. So I conclude that's
+ not the problem at hand.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4308#comment:10">http://dev.haiku-os.org/ticket/4308#comment:10</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="020133.html">[Haiku-bugs] [Haiku] #4308: ATA finds no boot partition
+</A></li>
+	<LI>Next message: <A HREF="020185.html">[Haiku-bugs] [Haiku] #4308: ATA finds no boot partition
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20145">[ date ]</a>
+              <a href="thread.html#20145">[ thread ]</a>
+              <a href="subject.html#20145">[ subject ]</a>
+              <a href="author.html#20145">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

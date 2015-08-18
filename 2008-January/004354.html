@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1716: Copying and removing some files (about 2 Mo) in the same destination directory two times corrupt the file system
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-January/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231716%3A%20Copying%20and%20removing%20some%20files%20%28about%0A%202%20Mo%29%20in%20the%20same%20destination%20directory%20two%20times%20corrupt%20the%20file%20system&In-Reply-To=%3C038.9861e3365dcbcbeca29e6d7589b4adfe%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="004353.html">
+   <LINK REL="Next"  HREF="004355.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1716: Copying and removing some files (about 2 Mo) in the same destination directory two times corrupt the file system</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231716%3A%20Copying%20and%20removing%20some%20files%20%28about%0A%202%20Mo%29%20in%20the%20same%20destination%20directory%20two%20times%20corrupt%20the%20file%20system&In-Reply-To=%3C038.9861e3365dcbcbeca29e6d7589b4adfe%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1716: Copying and removing some files (about 2 Mo) in the same destination directory two times corrupt the file system">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Jan 19 19:39:04 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="004353.html">[Haiku-bugs] [Haiku] #1715: Tracker Deadlock on AppLooper Port
+</A></li>
+        <LI>Next message: <A HREF="004355.html">[Haiku-bugs] [Haiku] #1716: Copying and removing some files (about 2 Mo) in the same destination directory two times corrupt the file system
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4354">[ date ]</a>
+              <a href="thread.html#4354">[ thread ]</a>
+              <a href="subject.html#4354">[ subject ]</a>
+              <a href="author.html#4354">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1716: Copying and removing some files (about 2 Mo) in the same destination
+directory two times corrupt the file system
+------------------------------+---------------------------------------------
+ Reporter:  oco               |       Owner:  axeld         
+     Type:  bug               |      Status:  new           
+ Priority:  normal            |   Milestone:  R1            
+Component:  File Systems/BFS  |     Version:  R1 development
+ Platform:  All               |  
+------------------------------+---------------------------------------------
+ This is a simplified scenario to reproduce the problem that prevent me
+ from building the full freepascal source tree under Haiku.
+
+ I am able to reproduce the problem with a simple shell script and some
+ files (see attached files).
+
+ Steps to reproduce :
+
+  - unzip the attached files in a directory
+  - go into this directory under Haiku
+  - launch ./test.sh in a terminal
+
+ Under Haiku, the second call to rm can't remove the last file in the dest
+ directory and print a &quot;general system error&quot; message.
+
+ Here is a copy of the script :
+
+ mkdir dest
+ cp source/*.* dest
+ rm dest/*.*
+ cp source/*.* dest
+ rm dest/*.*
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1716">http://dev.haiku-os.org/ticket/1716</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="004353.html">[Haiku-bugs] [Haiku] #1715: Tracker Deadlock on AppLooper Port
+</A></li>
+	<LI>Next message: <A HREF="004355.html">[Haiku-bugs] [Haiku] #1716: Copying and removing some files (about 2 Mo) in the same destination directory two times corrupt the file system
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4354">[ date ]</a>
+              <a href="thread.html#4354">[ thread ]</a>
+              <a href="subject.html#4354">[ subject ]</a>
+              <a href="author.html#4354">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

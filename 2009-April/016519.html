@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3772: Freeze on Haiku tree compilation	(reproduceable)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233772%3A%20Freeze%20on%20Haiku%20tree%20compilation%0A%09%28reproduceable%29&In-Reply-To=%3C060.1089daae354d1f9a979ffe382dc494f7%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="016431.html">
+   <LINK REL="Next"  HREF="016523.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3772: Freeze on Haiku tree compilation	(reproduceable)</H1>
+    <B>michael.weirauch</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233772%3A%20Freeze%20on%20Haiku%20tree%20compilation%0A%09%28reproduceable%29&In-Reply-To=%3C060.1089daae354d1f9a979ffe382dc494f7%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3772: Freeze on Haiku tree compilation	(reproduceable)">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Apr 24 09:28:12 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="016431.html">[Haiku-bugs] [Haiku] #3772: Freeze on Haiku tree compilation	(reproduceable)
+</A></li>
+        <LI>Next message: <A HREF="016523.html">[Haiku-bugs] [Haiku] #3772: Freeze on Haiku tree compilation	(reproduceable)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16519">[ date ]</a>
+              <a href="thread.html#16519">[ thread ]</a>
+              <a href="subject.html#16519">[ subject ]</a>
+              <a href="author.html#16519">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3772: Freeze on Haiku tree compilation (reproduceable)
+------------------------------+---------------------------------------------
+ Reporter:  michael.weirauch  |       Owner:  axeld         
+     Type:  bug               |      Status:  new           
+ Priority:  normal            |   Milestone:  R1            
+Component:  System            |     Version:  R1 development
+Blockedby:                    |    Platform:  x86           
+ Blocking:                    |  
+------------------------------+---------------------------------------------
+
+Comment(by michael.weirauch):
+
+ r30347; new-ata-bm; acpi
+
+ I stripped down the system one by one removing bt, hda, firewire,
+ ipro1000, usb and the eist driver. The freeze is still reproduceable, but
+ comes at a later stage. (see further below) I also tested a installation
+ from a USB hard disk and a compilation there.
+
+ The main observation is that the system freezes either during high I/O or
+ shorty afterwards:
+
+  * ./configure for SDL-1.2.3 freeze short after config.status is written
+ and header dep generation takes place; or shortly after the whole
+ configure is run
+  * jam -qaj2 on the Haiku tree; ctrl+c'ing the process right in the middle
+ waiting a bit and the system freezes some time afterwards on inactivity
+ (not reproduceable every time)
+  * freeze during random_file_actions -r100000 -f150000 -d100 -m128000 -v
+ during execution
+
+ There are occassions where the whole system just works quite long.
+ Remember two days ago with a full tree compile, browsing the net,
+ downloading and checking out blender trees via svn at the same time...
+
+ I am going for testing out the random_file_actions with tracing options
+ enabled as mentioned in [<A HREF="http://dev.haiku-os.org/ticket/3808#comment:9">http://dev.haiku-os.org/ticket/3808#comment:9</A>
+ 3808]. Jaming the tree with these options froze unfortunately last night
+ and I fell asleep waiting for it :)
+
+ Can it be that the system might get into a freeze/deadlock due to file
+ system corruption? The storage partition I am jam'ing on is existant for
+ quite a time and has gone through several dozens of outages/freezes since
+ 2008-11.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3772#comment:5">http://dev.haiku-os.org/ticket/3772#comment:5</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="016431.html">[Haiku-bugs] [Haiku] #3772: Freeze on Haiku tree compilation	(reproduceable)
+</A></li>
+	<LI>Next message: <A HREF="016523.html">[Haiku-bugs] [Haiku] #3772: Freeze on Haiku tree compilation	(reproduceable)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16519">[ date ]</a>
+              <a href="thread.html#16519">[ thread ]</a>
+              <a href="subject.html#16519">[ subject ]</a>
+              <a href="author.html#16519">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

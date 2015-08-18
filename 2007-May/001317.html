@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1218: Support for GeForce 7100 GS
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231218%3A%20Support%20for%20GeForce%207100%20GS&In-Reply-To=%3C040.2d614584dc1dfef24ab91a182761c220%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001321.html">
+   <LINK REL="Next"  HREF="001318.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1218: Support for GeForce 7100 GS</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231218%3A%20Support%20for%20GeForce%207100%20GS&In-Reply-To=%3C040.2d614584dc1dfef24ab91a182761c220%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1218: Support for GeForce 7100 GS">trac at haiku-os.org
+       </A><BR>
+    <I>Wed May  9 13:14:18 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001321.html">[Haiku-bugs] [Haiku] #1217: AUICH looping media_server
+</A></li>
+        <LI>Next message: <A HREF="001318.html">[Haiku-bugs] [Haiku] #1218: Support for GeForce 7100 GS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1317">[ date ]</a>
+              <a href="thread.html#1317">[ thread ]</a>
+              <a href="subject.html#1317">[ subject ]</a>
+              <a href="author.html#1317">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1218: Support for GeForce 7100 GS
+-------------------------------------+--------------------------------------
+ Reporter:  cyrus                    |       Owner:  axeld         
+     Type:  enhancement              |      Status:  new           
+ Priority:  normal                   |   Milestone:  R1            
+Component:  Drivers/Graphics/nVidia  |     Version:  R1 development
+ Platform:  x86                      |  
+-------------------------------------+--------------------------------------
+ I have a GeForce 7100 GS Card (016a), based on NV44 that works great with
+ this modifications:
+
+ Index: kernel/drivers/graphics/nvidia/driver.c
+ ===================================================================
+ --- kernel/drivers/graphics/nvidia/driver.c     (revision 21076)
+ +++ kernel/drivers/graphics/nvidia/driver.c     (working copy)
+ @@ -181,6 +181,7 @@
+         0x0168, /* Nvidia GeForce 6400 Go */
+         0x0169, /* Nvidia GeForce 6250 Go */
+         0x016b, /* Nvidia unknown FX Go */
+ +       0x016a, /* Nvidia Geforce 7100 GS */
+         0x016c, /* Nvidia unknown FX Go */
+         0x016d, /* Nvidia unknown FX Go */
+         0x016e, /* Nvidia unknown FX */
+ Index: accelerants/nvidia/engine/nv_general.c
+ ===================================================================
+ --- accelerants/nvidia/engine/nv_general.c      (revision 21076)
+ +++ accelerants/nvidia/engine/nv_general.c      (working copy)
+ @@ -553,6 +553,13 @@
+                 sprintf(si-&gt;adi.chipset, &quot;NV44&quot;);
+                 status = nvxx_general_powerup();
+                 break;
+ +       case 0x016a10de: /* Nvidia 7100 GS */
+ +               si-&gt;ps.card_type = NV44;
+ +               si-&gt;ps.card_arch = NV40A;
+ +               sprintf(si-&gt;adi.name, &quot;Nvidia GeForce 7100 GS&quot;);
+ +               sprintf(si-&gt;adi.chipset, &quot;NV44&quot;);
+ +               status = nvxx_general_powerup();
+ +               break;
+         case 0x016b10de: /* Nvidia unknown FX Go */
+         case 0x016c10de: /* Nvidia unknown FX Go */
+         case 0x016d10de: /* Nvidia unknown FX Go */
+
+ It would be nice if that could go into upstream.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1218">http://dev.haiku-os.org/ticket/1218</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001321.html">[Haiku-bugs] [Haiku] #1217: AUICH looping media_server
+</A></li>
+	<LI>Next message: <A HREF="001318.html">[Haiku-bugs] [Haiku] #1218: Support for GeForce 7100 GS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1317">[ date ]</a>
+              <a href="thread.html#1317">[ thread ]</a>
+              <a href="subject.html#1317">[ subject ]</a>
+              <a href="author.html#1317">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

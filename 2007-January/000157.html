@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #553: /boot/beos/system/add-ons/kernel/cpu/generic_x86 makes Haiku goes -ons/kernel/cpu/generic_x86 makes Haiku goeKDL in a pentium 233 mmx
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-January/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23553%3A%0A%20/boot/beos/system/add-ons/kernel/cpu/generic_x86%20makes%20Haiku%20goes%0A%20-ons/kernel/cpu/generic_x86%20makes%20Haiku%20goeKDL%20in%20a%20pentium%20233%20mmx&In-Reply-To=%3C069.e278a005732f6ef8a41c70d1c596c29a%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000156.html">
+   <LINK REL="Next"  HREF="000158.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #553: /boot/beos/system/add-ons/kernel/cpu/generic_x86 makes Haiku goes -ons/kernel/cpu/generic_x86 makes Haiku goeKDL in a pentium 233 mmx</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23553%3A%0A%20/boot/beos/system/add-ons/kernel/cpu/generic_x86%20makes%20Haiku%20goes%0A%20-ons/kernel/cpu/generic_x86%20makes%20Haiku%20goeKDL%20in%20a%20pentium%20233%20mmx&In-Reply-To=%3C069.e278a005732f6ef8a41c70d1c596c29a%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #553: /boot/beos/system/add-ons/kernel/cpu/generic_x86 makes Haiku goes -ons/kernel/cpu/generic_x86 makes Haiku goeKDL in a pentium 233 mmx">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Jan 19 14:38:53 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000156.html">[Haiku-bugs] [Haiku] #553: /boot/beos/system/add-ons/kernel/cpu/generic_x86 makes Haiku goes -ons/kernel/cpu/generic_x86 makes Haiku goeKDL in a pentium 233 mmx
+</A></li>
+        <LI>Next message: <A HREF="000158.html">[Haiku-bugs] [Haiku] #553: /boot/beos/system/add-ons/kernel/cpu/generic_x86 makes Haiku goes -ons/kernel/cpu/generic_x86 makes Haiku goeKDL in a pentium 233 mmx
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#157">[ date ]</a>
+              <a href="thread.html#157">[ thread ]</a>
+              <a href="subject.html#157">[ subject ]</a>
+              <a href="author.html#157">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#553: /boot/beos/system/add-ons/kernel/cpu/generic_x86 makes Haiku goes
+-ons/kernel/cpu/generic_x86 makes Haiku goeKDL in a pentium 233 mmx
+------------------------------+---------------------------------------------
+  Reporter:  <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">kaoutsis at sch.gr</A>  |       Owner:  axeld
+      Type:  bug              |      Status:  new  
+  Priority:  normal           |   Milestone:  R1   
+ Component:  Applications     |     Version:       
+Resolution:                   |    Platform:  All  
+------------------------------+---------------------------------------------
+Comment (by korli):
+
+ Replying to [comment:9 kaoutsis]:
+ &gt; $ ls -lh
+ &gt; total 19k
+ &gt; -rw-r--r--   1 baron    users        1.5k Jan 13 10:49 amd.o
+ &gt; -rwx--x--x   1 baron    users         11k Jan 18 01:39 generic_x86
+ &gt; -rw-r--r--   1 baron    users        2.4k Jan 13 10:49 generic_x86.o
+ &gt; -rw-r--r--   1 baron    users        1.5k Jan 13 10:49 intel.o
+ &gt; -rw-r--r--   1 baron    users        1.6k Jan 13 10:50 via.o
+ &gt;
+ &gt; For the time i can not think anything else.
+
+ Maybe try this :
+ strings generic_x86 | grep intel_count_mtrrs
+
+ With a current build it shouldn't return a match (the function doesn't
+ exist anymore)
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku.webfactional.com/ticket/553#comment:10">http://dev.haiku.webfactional.com/ticket/553#comment:10</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku.webfactional.com">http://dev.haiku.webfactional.com</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000156.html">[Haiku-bugs] [Haiku] #553: /boot/beos/system/add-ons/kernel/cpu/generic_x86 makes Haiku goes -ons/kernel/cpu/generic_x86 makes Haiku goeKDL in a pentium 233 mmx
+</A></li>
+	<LI>Next message: <A HREF="000158.html">[Haiku-bugs] [Haiku] #553: /boot/beos/system/add-ons/kernel/cpu/generic_x86 makes Haiku goes -ons/kernel/cpu/generic_x86 makes Haiku goeKDL in a pentium 233 mmx
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#157">[ date ]</a>
+              <a href="thread.html#157">[ thread ]</a>
+              <a href="subject.html#157">[ subject ]</a>
+              <a href="author.html#157">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

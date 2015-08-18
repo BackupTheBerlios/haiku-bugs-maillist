@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2886: cd file: no such file or directory
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232886%3A%20cd%20file%3A%20no%20such%20file%20or%20directory&In-Reply-To=%3C051.cacca04d16f9c477a673cf61f1fe7967%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="016228.html">
+   <LINK REL="Next"  HREF="016233.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2886: cd file: no such file or directory</H1>
+    <B>raghuram87</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232886%3A%20cd%20file%3A%20no%20such%20file%20or%20directory&In-Reply-To=%3C051.cacca04d16f9c477a673cf61f1fe7967%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2886: cd file: no such file or directory">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Apr 16 18:34:11 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="016228.html">[Haiku-bugs] [Haiku] #1234: adapt our build system to distro	guidelines
+</A></li>
+        <LI>Next message: <A HREF="016233.html">[Haiku-bugs] [Haiku] #2886: cd file: no such file or directory
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16230">[ date ]</a>
+              <a href="thread.html#16230">[ thread ]</a>
+              <a href="subject.html#16230">[ subject ]</a>
+              <a href="author.html#16230">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2886: cd file: no such file or directory
+---------------------------------------------+------------------------------
+ Reporter:  Adek336                          |       Owner:  axeld         
+     Type:  bug                              |      Status:  new           
+ Priority:  normal                           |   Milestone:  R1            
+Component:  Applications/Command Line Tools  |     Version:  R1 development
+Blockedby:                                   |    Platform:  All           
+ Blocking:                                   |  
+---------------------------------------------+------------------------------
+
+Comment(by raghuram87):
+
+ No, its not an error with Haiku. Let me explain:
+
+ We do sh_canonpath() or sh_physpath(). In both these functions its checked
+ if every part of the path breaking it at each /, is a valid dir or not. So
+ for that a stat of the partial path is done and the returned struct is
+ checked if the stat'ed node represents a direcotry, something like:
+ s=stat(path) &amp;&amp; isdir(s). Now, stat() could return a ENOENT because the
+ user tried cd'ing into a non-existent file/dir. But the user could have
+ tried cd'ing into a file, which is also the case the above condition
+ fails. If the above condition failed we bail out of sh_canonpath() and
+ sh_physpath() and set errno = ENOENT. This is where we make the mistake,
+ because the above condition may have failed because path was a file and
+ not a dir. Also stat() can never return ENOTDIR in this case. stat()
+ returns ENOTDIR when a component of the path is not a dir and is a file
+ (It returns ENOENT if its not a dir and not a file). However here we check
+ for each component of the path from the start, so the condition that
+ catches this error is isdir() and not stat(). So the patch now does the
+ following: If we tried stat()'ing a non-existent file, errno would have
+ already been set to ENOENT by stat(). Only when stat() succeeded and
+ isdir() failed (which is a case when canon_failed is true) we have errno
+ != ENOENT and that is when we can infer the error is ENOTDIR. There are no
+ other posix calls in sh_canonpath() and sh_physpath(), hence the
+ assumption that only two errors ENOENT or ENOTDIR are possible is sound.
+
+ Raghu.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2886#comment:3">http://dev.haiku-os.org/ticket/2886#comment:3</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="016228.html">[Haiku-bugs] [Haiku] #1234: adapt our build system to distro	guidelines
+</A></li>
+	<LI>Next message: <A HREF="016233.html">[Haiku-bugs] [Haiku] #2886: cd file: no such file or directory
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16230">[ date ]</a>
+              <a href="thread.html#16230">[ thread ]</a>
+              <a href="subject.html#16230">[ subject ]</a>
+              <a href="author.html#16230">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

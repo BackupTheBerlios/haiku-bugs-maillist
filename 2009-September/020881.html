@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4050: ATA driver cannot recognize 2nd HDD
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234050%3A%20ATA%20driver%20cannot%20recognize%202nd%20HDD&In-Reply-To=%3C046.b8b125cabdb6609d9893cd8b11100364%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="020880.html">
+   <LINK REL="Next"  HREF="020882.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4050: ATA driver cannot recognize 2nd HDD</H1>
+    <B>marcusoverhagen</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234050%3A%20ATA%20driver%20cannot%20recognize%202nd%20HDD&In-Reply-To=%3C046.b8b125cabdb6609d9893cd8b11100364%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4050: ATA driver cannot recognize 2nd HDD">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Sep  7 15:59:14 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="020880.html">[Haiku-bugs] [Haiku] #4050: ATA driver cannot recognize 2nd HDD
+</A></li>
+        <LI>Next message: <A HREF="020882.html">[Haiku-bugs] [Haiku] #4058: Boot fails, new ATA stack
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20881">[ date ]</a>
+              <a href="thread.html#20881">[ thread ]</a>
+              <a href="subject.html#20881">[ subject ]</a>
+              <a href="author.html#20881">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4050: ATA driver cannot recognize 2nd HDD
+--------------------------+-------------------------------------------------
+ Reporter:  mt            |       Owner:  marcusoverhagen
+     Type:  bug           |      Status:  new            
+ Priority:  high          |   Milestone:  R1/alpha1      
+Component:  Drivers/Disk  |     Version:  R1 development 
+Blockedby:  4058          |    Platform:  x86            
+ Blocking:                |  
+--------------------------+-------------------------------------------------
+
+Comment(by marcusoverhagen):
+
+ This is a strange problem. There are no further ata related errors in the
+ syslog, except those two in the beginning. I think that error recovery is
+ working for those two. I analyzed them yesterday, it's a failing &quot;check
+ media status&quot;. This should not affect further operation.
+ {{{
+ 575 KERN: ata 4 error: command failed, error bit is set. status 0x51,
+ error 0x04
+ 576 KERN: publish device: node 0x80fcf000, path disk/ata/4/master/raw,
+ module drivers/disk/scsi/scsi_disk/device_v1
+ 577 KERN: ata 4 error: command failed, error bit is set. status 0x51,
+ error 0x04
+ 578 KERN: publish device: node 0x80fcf230, path disk/ata/4/slave/raw,
+ module drivers/disk/scsi/scsi_disk/device_v1
+ }}}
+
+ Haiku can mount disk/ata/4/master/raw and read it successfully, while
+ disk/ata/4/slave/raw generates those errors, without generating any ata
+ debug output.
+
+ The error message seems to be returned by the io_scheduler in
+ scsi_disk.cpp, but there is no accompanying ata error message.
+
+ {{{
+ KERN: das_read(): request.Wait() returned: Device timeout
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4050#comment:9">http://dev.haiku-os.org/ticket/4050#comment:9</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="020880.html">[Haiku-bugs] [Haiku] #4050: ATA driver cannot recognize 2nd HDD
+</A></li>
+	<LI>Next message: <A HREF="020882.html">[Haiku-bugs] [Haiku] #4058: Boot fails, new ATA stack
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20881">[ date ]</a>
+              <a href="thread.html#20881">[ thread ]</a>
+              <a href="subject.html#20881">[ subject ]</a>
+              <a href="author.html#20881">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

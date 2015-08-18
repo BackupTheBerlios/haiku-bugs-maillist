@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1781: AHCI module failed to use Intel 82801FBM ICH6-M (8086 : 2653) controller.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-February/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231781%3A%20AHCI%20module%20failed%20to%20use%20Intel%0A%2082801FBM%20ICH6-M%20%288086%20%3A%202653%29%20controller.&In-Reply-To=%3C043.9c0c4679eba1e11253cf8ec2b4760b97%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="004798.html">
+   <LINK REL="Next"  HREF="004800.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1781: AHCI module failed to use Intel 82801FBM ICH6-M (8086 : 2653) controller.</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231781%3A%20AHCI%20module%20failed%20to%20use%20Intel%0A%2082801FBM%20ICH6-M%20%288086%20%3A%202653%29%20controller.&In-Reply-To=%3C043.9c0c4679eba1e11253cf8ec2b4760b97%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1781: AHCI module failed to use Intel 82801FBM ICH6-M (8086 : 2653) controller.">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Feb 10 00:54:56 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="004798.html">[Haiku-bugs] [Haiku] #1132: Combobox with 'max-size' in Auto-slideshow filled with wrong resolutions
+</A></li>
+        <LI>Next message: <A HREF="004800.html">[Haiku-bugs] [Haiku] #1781: AHCI module failed to use Intel 82801FBM ICH6-M (8086 : 2653) controller.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4799">[ date ]</a>
+              <a href="thread.html#4799">[ thread ]</a>
+              <a href="subject.html#4799">[ subject ]</a>
+              <a href="author.html#4799">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1781: AHCI module failed to use Intel 82801FBM ICH6-M (8086 : 2653) controller.
+--------------------------+-------------------------------------------------
+ Reporter:  siarzhuk      |       Owner:  marcusoverhagen
+     Type:  bug           |      Status:  new            
+ Priority:  normal        |   Milestone:  R1             
+Component:  Drivers/Disk  |     Version:  R1 development 
+ Platform:  x86           |  
+--------------------------+-------------------------------------------------
+ Boot problem is observed on laptop with following mass storage controller:
+
+ ===
+ PCI bus, device #18: Mass Storage Controller (IDE) [1|1|80]
+         Current configuration: irqs [14][15]
+           io range:  min 1f0 max 1f0 align 0 len 8
+           io range:  min 3f4 max 3f4 align 0 len 4
+           io range:  min 170 max 170 align 0 len 8
+           io range:  min 374 max 374 align 0 len 4
+           io range:  min 0 max 0 align 0 len 8
+           io range:  min 0 max 0 align 0 len 4
+           io range:  min 0 max 0 align 0 len 8
+           io range:  min 0 max 0 align 0 len 4
+           io range:  min 18a0 max 18a0 align 0 len 10
+         1 configurations
+
+         Possible configuration #0: irqs [14][15]
+           io range:  min 1f0 max 1f0 align 0 len 8
+           io range:  min 3f4 max 3f4 align 0 len 4
+           io range:  min 170 max 170 align 0 len 8
+           io range:  min 374 max 374 align 0 len 4
+           io range:  min 0 max 0 align 0 len 8
+           io range:  min 0 max 0 align 0 len 4
+           io range:  min 0 max 0 align 0 len 8
+           io range:  min 0 max 0 align 0 len 4
+           io range:  min 18a0 max 18a0 align 0 len 10
+
+         Bus-dependent information:
+         vendor id: 8086, device id: 2653
+ ===
+
+ - This laptop has SAMSUNG HM110JC ATA HDD attached to this controller.
+ - No SATA/IDE switch options are found in BIOS Setup. Looks like it is
+ either hard-coded to IDE mode or depends on type of attached HDD. Anyway I
+ didn't know that my laptop has &quot;SATA controller&quot; until this problem arise.
+ :-)
+ - An attempt to load haiku on this hardware fails with &quot;PANIC:
+ get_boot_partition failed!&quot; message.
+ - In case I remove ahci bus module from Haiku partition - no boot problems
+ observed and Haiku loads normally.
+
+ Unfortunately this laptop has no RS232 port to acquire debug log in
+ compact text form. Attached screenshot contains one page of debug log
+ during controller initialization phase. If you need complete log - I'll
+ put other 20 pages onto Trac. :-)
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1781">http://dev.haiku-os.org/ticket/1781</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="004798.html">[Haiku-bugs] [Haiku] #1132: Combobox with 'max-size' in Auto-slideshow filled with wrong resolutions
+</A></li>
+	<LI>Next message: <A HREF="004800.html">[Haiku-bugs] [Haiku] #1781: AHCI module failed to use Intel 82801FBM ICH6-M (8086 : 2653) controller.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4799">[ date ]</a>
+              <a href="thread.html#4799">[ thread ]</a>
+              <a href="subject.html#4799">[ subject ]</a>
+              <a href="author.html#4799">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

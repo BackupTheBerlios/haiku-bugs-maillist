@@ -1,0 +1,199 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2098: Polytonic keymap implementation
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232098%3A%20Polytonic%20keymap%20implementation&In-Reply-To=%3C052.1dddb2034d458843b9a4c366f252af56%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006570.html">
+   <LINK REL="Next"  HREF="006723.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2098: Polytonic keymap implementation</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232098%3A%20Polytonic%20keymap%20implementation&In-Reply-To=%3C052.1dddb2034d458843b9a4c366f252af56%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2098: Polytonic keymap implementation">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Apr 23 11:15:15 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006570.html">[Haiku-bugs] [Haiku] #2098: Polytonic keymap implementation
+</A></li>
+        <LI>Next message: <A HREF="006723.html">[Haiku-bugs] [Haiku] #2098: Polytonic keymap implementation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6721">[ date ]</a>
+              <a href="thread.html#6721">[ thread ]</a>
+              <a href="subject.html#6721">[ subject ]</a>
+              <a href="author.html#6721">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2098: Polytonic keymap implementation
+--------------------------+-------------------------------------------------
+  Reporter:  kaoutsis     |       Owner:  axeld         
+      Type:  enhancement  |      Status:  new           
+  Priority:  normal       |   Milestone:  R1            
+ Component:  - General    |     Version:  R1 development
+Resolution:               |    Platform:  All           
+--------------------------+-------------------------------------------------
+Comment (by kaoutsis):
+
+ Some notes regarding the polytonic keymap implementation:
+
+ There are 7 vowels 1) alpha &#945;  2) epsilon &#949;  3) omicron &#959;  4) omega &#969;
+ 5) iota &#953;  6) eta &#951;  7) upsilon &#965; (all small and capital letters).
+
+ there are 9! tokens, that can be stand alone or combined with others:
+ accents:
+ oxia &#8189; (=&gt; acute)
+ varia &#8175; (=&gt; grave)
+ perispomeni &#8128; (=&gt; circumflex)
+
+ pneumata (think of these as some kind of accents):
+ psili &#8125; dasia &#8190;
+
+ dialytika (=&gt; dieresis): &#168;
+
+ phonetics quantity:
+ vracy
+ macron
+
+ ypogegrammeni:  &#8126;
+ ypogegrammeni is for small letters, prosgegrammeni for capitals;
+ actually, these stand for 'iota' but since combined with the
+ other vowels, think of this as a token.
+
+ And finally, there are 25! discernible common combinations,
+ (for small letters and the corresponding 25 combinations for capitals),
+ not all vowels have them all, but the most of them do have and are
+ widely used:
+ 1) vowels plus oxia:  &#8049;, &#8051;, &#8055;, &#8057;, &#8059;, &#8061;, &#8053;
+ 2) vowels plus varia: &#8048;, &#8050;, &#8052;, &#8054;, &#8056;, &#8058;, &#8060;
+ 3) vowels plus perispomeni: &#8118;, &#8134;, &#8166;, &#8182;
+ 4) vowels plus psili: &#7936;, &#7952;, &#7968;, &#8000;, &#8016;, &#7984;, &#8032;
+ 5) vowels plus dasia: &#7937;, &#7953;, &#7969;, etc
+ 6) vowels plus oxia plus psili: &#7940;, etc
+ 7) vowels plus oxia plus psili plus ypogegrammeni: &#8068;, etc
+ 8) vowels plus oxia plus dasia: &#7941;, etc
+ 9) vowels plus oxia plus dasia plus ypogegrammeni: &#8069;, etc
+ 10) vowels plus varia plus psili: &#7938;, etc
+ 11) vowels plus varia plus psili plus ypogegrammeni: &#8066;, etc
+ 12) vowels plus varia plus dasia: &#7939;, etc
+ 13) vowels plus varia plus dasia plus ypogegrammeni: &#8067;, etc
+ 14) vowels plus perispomeni plus psili: &#7942;, etc
+ 15) vowels plus perispomeni plus psili plus ypogegrammeni: &#8070;, etc
+ 16) vowels plus perispomeni plus dasia: &#7943;, etc
+ 17) vowels plus perispomeni plus dasia plus ypogegrammeni: &#8071;, etc
+ 18) vowels plus perispomeni plus ypogegrammeni: &#8119;, etc
+ 19) vowels plus dialytika: &#971;, &#970;
+ 20) vowels plus dialytika plus oxia: &#8147;, &#8163;
+ 21) vowels plus dialytika plus varia: &#8146;. &#8162;
+ 22) vowels plus dialytika plus perispomeni: &#8151;, &#8167;
+ 23) vowels plus ypogegrammeni: &#8115;
+ 24) vowels plus vracy: &#8160;, &#8144;, &#8112;
+ 25) vowels plus macron: &#8161;, &#8145;, &#8113;
+
+ As i said earlier all above combinations applied  also for capitals.
+ We have 5 modifiers: acute, grave, dieresis, circumflex,  tilde,
+ adding the Option key gives sum: 6
+
+ An example, the following options are assigned  randomly:
+ 1) Circumflex to handle psili and varia together
+ 2) tilde to handle dasia and varia
+ 3) dieresis to handle psili and oxia
+ 4) grave to handle dasia and oxia
+ 5) acute to handle perispomeni and dasia
+ 6) option key to handle perispomeni and psili
+
+ there aren't any other modifiers for the rest
+ combinations. I can't think any other solution,
+ except from extending the keymap program.
+
+ After some digging i cite the way, which
+ windows vista is handling polytonic:
+ (personally i don't like, the key mapping that vista has)
+ &#8049; &lt;= ; &#945;                &#8147; &lt;= shift w &#953;          &#7937; &lt;= shift ' &#945;
+ &#8048; &lt;= ] &#945;                &#970; &lt;= shift ; &#953;          &#7938; &lt;= \ &#945;
+ &#8118; &lt;= [ &#945;                &#8146; &lt;= shift ~ &#953;          &#7939; &lt;= shift \ &#945;
+ &#7936; &lt;= ' &#945;                &#8115; &lt;= shift [ &#945;          &#8113; &lt;= - &#945;
+ &#7942; &lt;= = &#945;                &#8112; &lt;= shift - &#945;          &#7943; &lt;= shift = &#945;
+ &#7940; &lt;= / &#945;                &#7941; &lt;= shift / &#945;
+
+ From what i can understand, vista doesn't combine
+ modifiers together, but has more than 6 modifiers (16 maybe?)
+
+ An other problem is of course if we should follow
+ the vista way for compatibility reasons, or we should
+ make our own more logical mapping way.
+
+ Conclusion:
+ According to my opinion there are three ways:
+ a) Making Greek-polytonic depend on Greek keymap:
+ Greek-polytonic will have only the new characters
+ 5-6 modifiers are enough: with only one modifier
+ we could map ~25-30 letters, but if we need
+ a letter without accents we must switch to Greek keymap
+ This method is the ugliest!
+
+ to the two solutions bellow be have to extend somehow
+ the keymap program:
+
+ b) Using vista method (less ugly from the previous)
+ We have to add more modifiers.
+
+ c) Combine modifiers together (an probably adding
+ some new) that is my idea:
+ an example from ypothetical Greek-polytonic.keymap,
+ [...]
+ Grave ' '       = 0xe1bfaf   # varia
+ Grave 0xceb1    = 0xe1bdb0   # small letter alpha plus varia
+ [...]
+ Tilde ' '       = 0xe1bebd   # psili
+ Tilde 0xceb1    = 0xe1bc80   # small letter alpha plus psili
+ [...]
+ Grave Tilde 0xceb1 = 0xe1bc82  # small letter alpha plus varia plus psili
+
+ This is not currently possible, needs to extend the program to do that.
+
+ One that wanted a small letter alpha plus varia plus psili, he could
+ press the key for varia, then the key for psili and finally small
+ alpha;
+ (if he presses only varia, and then if he presses no other key for
+ modifiers,
+ he will get a vowel with varia).
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2098#comment:2">http://dev.haiku-os.org/ticket/2098#comment:2</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006570.html">[Haiku-bugs] [Haiku] #2098: Polytonic keymap implementation
+</A></li>
+	<LI>Next message: <A HREF="006723.html">[Haiku-bugs] [Haiku] #2098: Polytonic keymap implementation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6721">[ date ]</a>
+              <a href="thread.html#6721">[ thread ]</a>
+              <a href="subject.html#6721">[ subject ]</a>
+              <a href="author.html#6721">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

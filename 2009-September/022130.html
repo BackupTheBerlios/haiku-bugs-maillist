@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4668: ShowImage Slide Show behaviour
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234668%3A%20ShowImage%20Slide%20Show%20behaviour&In-Reply-To=%3C051.869e7b32a8c134bd96c81787a8ce5703%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="022127.html">
+   <LINK REL="Next"  HREF="022131.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4668: ShowImage Slide Show behaviour</H1>
+    <B>aldeck</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234668%3A%20ShowImage%20Slide%20Show%20behaviour&In-Reply-To=%3C051.869e7b32a8c134bd96c81787a8ce5703%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4668: ShowImage Slide Show behaviour">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Sep 28 12:33:06 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="022127.html">[Haiku-bugs] [Haiku] #4668: ShowImage Slide Show behaviour
+</A></li>
+        <LI>Next message: <A HREF="022131.html">[Haiku-bugs] [Haiku] #4668: ShowImage Slide Show behaviour
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22130">[ date ]</a>
+              <a href="thread.html#22130">[ thread ]</a>
+              <a href="subject.html#22130">[ subject ]</a>
+              <a href="author.html#22130">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4668: ShowImage Slide Show behaviour
+------------------------------------+---------------------------------------
+ Reporter:  Malthus                 |       Owner:  leavengood
+     Type:  bug                     |      Status:  new       
+ Priority:  normal                  |   Milestone:  R1        
+Component:  Applications/ShowImage  |     Version:  R1/alpha1 
+Blockedby:                          |    Platform:  All       
+ Blocking:                          |  
+------------------------------------+---------------------------------------
+
+Old description:
+
+&gt;<i> Try this: use Find to construct a query which returns several jpeg
+</I>&gt;<i> pictures, preferably from more than one folder. Double-click one of the
+</I>&gt;<i> entries in the query results window to open it in ShowImage. Now run
+</I>&gt;<i> ShowImage's Slide Show feature and see what range of pictures you get.
+</I>&gt;<i> (Alternatively use Previous and Next to scroll through them.)
+</I>&gt;<i>
+</I>&gt;<i> It *almost* works. That is, the slide show scrolls through the files in
+</I>&gt;<i> the query results window as though it were a regular Tracker folder and
+</I>&gt;<i> regardless of the files' real locations - until it has displayed the last
+</I>&gt;<i> file, when it jumps into that file's real location, and displays any
+</I>&gt;<i> pictures in that folder which follow it alphabetically. If I haven't
+</I>&gt;<i> explained that very well, the attached screenshot should make it clear:
+</I>&gt;<i> I've got two folders containing jpegs; also a query results window
+</I>&gt;<i> picking three particular files from those two folders. Now if I double-
+</I>&gt;<i> click on one of the entries in the query results window then start a
+</I>&gt;<i> slideshow, it should rotate through Lily00029.jpg, MrPink and
+</I>&gt;<i> R0012584.JPG. In fact it gives me those three plus Shrub00019.jpg and
+</I>&gt;<i> SPACE_SHUTTLE_O_20090901.jpg - ie the pictures following R0012584.JPG in
+</I>&gt;<i> the /boot/home/Pictures folder.
+</I>&gt;<i>
+</I>&gt;<i> I don't know if the developers were even thinking of queries as a means
+</I>&gt;<i> of choosing pictures for a slide show, so I don't know whether this
+</I>&gt;<i> behaviour, imperfect as it is, is by accident or design but, working
+</I>&gt;<i> well, this would be a useful feature. I'm particularly interested because
+</I>&gt;<i> I've catalogued my jpegs with indexed custom attributes - captions etc.
+</I>&gt;<i> It would be great to be able to bore dinner guests with themed slide
+</I>&gt;<i> shows, without the show suddenly going off-topic :-)
+</I>&gt;<i>
+</I>&gt;<i> This is long-standing behaviour, of course; I've been using ShowImage in
+</I>&gt;<i> BeOS for some time, and I've always realised query-based slideshows don't
+</I>&gt;<i> quite work as I think they should. But I've only recently figured out
+</I>&gt;<i> exactly where the extra pictures come from.
+</I>
+New description:
+
+ Try this: use Find to construct a query which returns several jpeg
+ pictures, preferably from more than one folder. Double-click one of the
+ entries in the query results window to open it in ShowImage. Now run
+ ShowImage's Slide Show feature and see what range of pictures you get.
+ (Alternatively use Previous and Next to scroll through them.)
+
+ It *almost* works. That is, the slide show scrolls through the files in
+ the query results window as though it were a regular Tracker folder and
+ regardless of the files' real locations - until it has displayed the last
+ file, when it jumps into that file's real location, and displays any
+ pictures in that folder which follow it alphabetically. If I haven't
+ explained that very well, the attached screenshot should make it clear:
+ I've got two folders containing jpegs; also a query results window picking
+ three particular files from those two folders. Now if I double-click on
+ one of the entries in the query results window then start a slideshow, it
+ should rotate through Lily00029.jpg, MrPink and R0012584.JPG. In fact it
+ gives me those three plus Shrub00019.jpg and SPACE_SHUTTLE_O_20090901.jpg
+ - ie the pictures following R0012584.JPG in the /boot/home/Pictures
+ folder.
+
+ I don't know if the developers were even thinking of queries as a means of
+ choosing pictures for a slide show, so I don't know whether this
+ behaviour, imperfect as it is, is by accident or design but, working well,
+ this would be a useful feature. I'm particularly interested because I've
+ catalogued my jpegs with indexed custom attributes - captions etc. It
+ would be great to be able to bore dinner guests with themed slide shows,
+ without the show suddenly going off-topic :-)
+
+ This is long-standing behaviour, of course; I've been using ShowImage in
+ BeOS for some time, and I've always realised query-based slideshows don't
+ quite work as I think they should. But I've only recently figured out
+ exactly where the extra pictures come from.
+
+--
+
+Comment(by aldeck):
+
+ having a look
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4668#comment:1">http://dev.haiku-os.org/ticket/4668#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="022127.html">[Haiku-bugs] [Haiku] #4668: ShowImage Slide Show behaviour
+</A></li>
+	<LI>Next message: <A HREF="022131.html">[Haiku-bugs] [Haiku] #4668: ShowImage Slide Show behaviour
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22130">[ date ]</a>
+              <a href="thread.html#22130">[ thread ]</a>
+              <a href="subject.html#22130">[ subject ]</a>
+              <a href="author.html#22130">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

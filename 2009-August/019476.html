@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4229: nv7600go notebook chipset results in a black screen
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234229%3A%20nv7600go%20notebook%20chipset%20results%0A%20in%20a%20black%20screen&In-Reply-To=%3C053.a9229eb695861b7241f6b4e5ae4172ea%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="019475.html">
+   <LINK REL="Next"  HREF="019477.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4229: nv7600go notebook chipset results in a black screen</H1>
+    <B>rudolfc</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234229%3A%20nv7600go%20notebook%20chipset%20results%0A%20in%20a%20black%20screen&In-Reply-To=%3C053.a9229eb695861b7241f6b4e5ae4172ea%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4229: nv7600go notebook chipset results in a black screen">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Aug 14 22:20:26 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="019475.html">[Haiku-bugs] [Haiku] #4229: nv7600go notebook chipset results in a black screen
+</A></li>
+        <LI>Next message: <A HREF="019477.html">[Haiku-bugs] [Haiku] #4229: nv7600go notebook chipset results in a black screen
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19476">[ date ]</a>
+              <a href="thread.html#19476">[ thread ]</a>
+              <a href="subject.html#19476">[ subject ]</a>
+              <a href="author.html#19476">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4229: nv7600go notebook chipset results in a black screen
+-------------------------------------+--------------------------------------
+ Reporter:  humdinger                |       Owner:  rudolfc       
+     Type:  bug                      |      Status:  new           
+ Priority:  normal                   |   Milestone:  R1            
+Component:  Drivers/Graphics/nVidia  |     Version:  R1 development
+Blockedby:                           |    Platform:  All           
+ Blocking:                           |  
+-------------------------------------+--------------------------------------
+
+Comment(by rudolfc):
+
+ hmm, I am running in that mode on my laptop right now, but on windows. I
+ just booted a few times and over here the driver always works. Independant
+ of one or both missing files, and independant of the mode I choose. I'll
+ try to grab the file for you (can't get on the net on haiku because wifi
+ isn't enabled by default)
+
+ It's unfortunate that haiku's app_server settings file doesn't use ascii
+ like the beos app_server did :-/
+ would it understand such an old settings file though?
+
+ The vesa bios doesn't support ws modes I take it since they don't show in
+ the boot options menu in the bootloader. In fact, I never saw a bios yet
+ that showed such modes there.
+
+ Anyhow: if the native mode would work then the problem would be 'solvable'
+ by the driver telling app_server what the native mode of your system is. I
+ got from Axel that there are some new hooks I can implement for just that
+ (if I understand correctly).
+
+ Of course, since you can run 1024x768 in vesa mode (correct?) the driver
+ should be able to use that mode as well..
+
+ Bye!
+
+ Rudolf.
+
+ Update: since you are also writing comments ATM :-)
+ The modeline isn't actually used by the driver: it itself determines the
+ right settings from the modeline it fetched from the card GPU programming
+ at bootup. You can safely try my settings (15,4 inch BTW too ;-)
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4229#comment:7">http://dev.haiku-os.org/ticket/4229#comment:7</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="019475.html">[Haiku-bugs] [Haiku] #4229: nv7600go notebook chipset results in a black screen
+</A></li>
+	<LI>Next message: <A HREF="019477.html">[Haiku-bugs] [Haiku] #4229: nv7600go notebook chipset results in a black screen
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19476">[ date ]</a>
+              <a href="thread.html#19476">[ thread ]</a>
+              <a href="subject.html#19476">[ subject ]</a>
+              <a href="author.html#19476">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

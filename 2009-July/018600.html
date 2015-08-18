@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4113: mbtowc() is unusable
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-July/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234113%3A%20mbtowc%28%29%20is%20unusable&In-Reply-To=%3C050.7be4b7775cb7b29803671d540899c0d1%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="018596.html">
+   <LINK REL="Next"  HREF="018603.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4113: mbtowc() is unusable</H1>
+    <B>schily</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234113%3A%20mbtowc%28%29%20is%20unusable&In-Reply-To=%3C050.7be4b7775cb7b29803671d540899c0d1%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4113: mbtowc() is unusable">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Jul 23 21:56:34 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="018596.html">[Haiku-bugs] [Haiku] #4113: mbtowc() is unusable
+</A></li>
+        <LI>Next message: <A HREF="018603.html">[Haiku-bugs] [Haiku] #4113: mbtowc() is unusable
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18600">[ date ]</a>
+              <a href="thread.html#18600">[ thread ]</a>
+              <a href="subject.html#18600">[ subject ]</a>
+              <a href="author.html#18600">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4113: mbtowc() is unusable
+-----------------------+----------------------------------------------------
+ Reporter:  schily     |       Owner:  zooey         
+     Type:  bug        |      Status:  assigned      
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+Blockedby:             |    Platform:  All           
+ Blocking:             |  
+-----------------------+----------------------------------------------------
+
+Comment(by schily):
+
+ Do you like to tell me that you deliver a non-working GCC together with
+ Haiku?
+
+ Anyway, the autoconf results tell me that sizeof(L'a') is 4
+ as well as sizeof(wchar_t). In addition, the specific problem
+ cannot be a rsult of such size problems as the function mbtowc()
+ cannot know about this and the incorrect return value is a result
+ from interpreting the input string that is an array of 8 bit chars.
+
+ As mentioned before, I asume that the internal tables used by glibc
+ are set up incorrectly.
+
+ Another problem is that Haiku does not set any if the LC_* or LANG
+ environment variables and an application thus would in a POSIX
+ compliant anvironment asume the &quot;C&quot; locale which could be either
+ &quot;ISO-646&quot; or &quot;ISO-8859-1&quot; coding.
+
+ As the problem is easy to reproduce even with your small test program,
+ it should be easy to fix....
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4113#comment:9">http://dev.haiku-os.org/ticket/4113#comment:9</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="018596.html">[Haiku-bugs] [Haiku] #4113: mbtowc() is unusable
+</A></li>
+	<LI>Next message: <A HREF="018603.html">[Haiku-bugs] [Haiku] #4113: mbtowc() is unusable
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18600">[ date ]</a>
+              <a href="thread.html#18600">[ thread ]</a>
+              <a href="subject.html#18600">[ subject ]</a>
+              <a href="author.html#18600">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

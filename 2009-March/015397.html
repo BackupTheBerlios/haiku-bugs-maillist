@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3595: Problems with FireWare controller on HP Compaq NX7400
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233595%3A%20Problems%20with%20FireWare%20controller%0A%20on%20HP%20Compaq%20NX7400&In-Reply-To=%3C052.7bff2e732144062461d313319085d7ea%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="015396.html">
+   <LINK REL="Next"  HREF="015416.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3595: Problems with FireWare controller on HP Compaq NX7400</H1>
+    <B>siarzhuk</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233595%3A%20Problems%20with%20FireWare%20controller%0A%20on%20HP%20Compaq%20NX7400&In-Reply-To=%3C052.7bff2e732144062461d313319085d7ea%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3595: Problems with FireWare controller on HP Compaq NX7400">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Mar 28 18:40:59 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="015396.html">[Haiku-bugs] [Haiku] #3595: Problems with FireWare controller on HP Compaq NX7400
+</A></li>
+        <LI>Next message: <A HREF="015416.html">[Haiku-bugs] [Haiku] #3595: Problems with FireWare controller on HP Compaq NX7400
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15397">[ date ]</a>
+              <a href="thread.html#15397">[ thread ]</a>
+              <a href="subject.html#15397">[ subject ]</a>
+              <a href="author.html#15397">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3595: Problems with FireWare controller on HP Compaq NX7400
+------------------------------+---------------------------------------------
+ Reporter:  siarzhuk          |       Owner:  absabs     
+     Type:  bug               |      Status:  new        
+ Priority:  normal            |   Milestone:  Unscheduled
+Component:  Drivers/FireWire  |     Version:             
+Blockedby:                    |    Platform:  All        
+ Blocking:                    |  
+------------------------------+---------------------------------------------
+
+Comment(by siarzhuk):
+
+ Replying to [comment:7 absabs]:
+ &gt; siarzhuk, I have update the firewire stack, after svn up, please
+ &gt; add
+ &gt; OWRITE(sc, FWOHCI_INTSTATCLR, ~0);
+ &gt; after
+ &gt; sc-&gt;intmask |=  OHCI_INT_CYC_LOST | OHCI_INT_PHY_INT;
+ &gt; in line 582 in src/add-ons/kernel/bus_managers/firewire/fwohci.c
+ &gt;
+ &gt; would you please help recompile and test it.
+
+ Looks like this help a bit. ;-) No more boot hangups observed.
+ Corresponding successful log is attached. Note that count of handled
+ interrupts is also looks more reasonable now.
+
+ PS: This Notebook has no &quot;PnP OS&quot; BIOS configuration. :-|
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3595#comment:9">http://dev.haiku-os.org/ticket/3595#comment:9</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="015396.html">[Haiku-bugs] [Haiku] #3595: Problems with FireWare controller on HP Compaq NX7400
+</A></li>
+	<LI>Next message: <A HREF="015416.html">[Haiku-bugs] [Haiku] #3595: Problems with FireWare controller on HP Compaq NX7400
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15397">[ date ]</a>
+              <a href="thread.html#15397">[ thread ]</a>
+              <a href="subject.html#15397">[ subject ]</a>
+              <a href="author.html#15397">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

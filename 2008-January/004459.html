@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1726: PS/2 mouse doesn't work
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-January/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231726%3A%20PS/2%20mouse%20doesn%27t%20work&In-Reply-To=%3C050.4cab65b9a55933fe49b4da6f47369d34%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="004458.html">
+   <LINK REL="Next"  HREF="004464.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1726: PS/2 mouse doesn't work</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231726%3A%20PS/2%20mouse%20doesn%27t%20work&In-Reply-To=%3C050.4cab65b9a55933fe49b4da6f47369d34%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1726: PS/2 mouse doesn't work">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Jan 24 18:40:22 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="004458.html">[Haiku-bugs] [Haiku] #1726: PS/2 mouse doesn't work
+</A></li>
+        <LI>Next message: <A HREF="004464.html">[Haiku-bugs] [Haiku] #1726: PS/2 mouse doesn't work
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4459">[ date ]</a>
+              <a href="thread.html#4459">[ thread ]</a>
+              <a href="subject.html#4459">[ subject ]</a>
+              <a href="author.html#4459">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1726: PS/2 mouse doesn't work
+--------------------------------+-------------------------------------------
+  Reporter:  ekdahl             |       Owner:  marcusoverhagen
+      Type:  bug                |      Status:  assigned       
+  Priority:  normal             |   Milestone:  R1             
+ Component:  Drivers/Mouse/PS2  |     Version:  R1 development 
+Resolution:                     |    Platform:  All            
+--------------------------------+-------------------------------------------
+Changes (by marcusoverhagen):
+
+ * cc: mmlr (added)
+  * status:  new =&gt; assigned
+
+Comment:
+
+ What is your configuration?
+
+ USB mouse connected to PS2 port with green converter,
+ and
+ USB keyboard connected to USB port?
+
+ Technically, there exist some USB mouse and keyboards
+ that also work as PS/2 and those provice the green mouse
+ or pink keyboard converter (from USB to PS2 connector).
+ I have those, too. Be aware that you can't use these
+ converters with all devices, just with those that support
+ both PS2 and USB mode (they are sold with converter then).
+
+
+ This might be a conflict of USB legacy emulation and PS/2.
+
+ Or in other words: The ohci driver might now disable legacy
+ emulation, and the bios shuts off PS2-mouse and keyboard input
+ as a result. But the ohci driver isn't finished, and doesn't fully
+ work.
+
+ Please do a first test and remove the ohci driver from Haiku and reboot.
+ Does the mouse and keyboard work after that?
+
+ If it doesn't, do a second test:
+ Remove the ohci, ehci and uhci driver from Haiku reboot.
+
+ Does the mouse and keyboard work after that?
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1726#comment:1">http://dev.haiku-os.org/ticket/1726#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="004458.html">[Haiku-bugs] [Haiku] #1726: PS/2 mouse doesn't work
+</A></li>
+	<LI>Next message: <A HREF="004464.html">[Haiku-bugs] [Haiku] #1726: PS/2 mouse doesn't work
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4459">[ date ]</a>
+              <a href="thread.html#4459">[ thread ]</a>
+              <a href="subject.html#4459">[ subject ]</a>
+              <a href="author.html#4459">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

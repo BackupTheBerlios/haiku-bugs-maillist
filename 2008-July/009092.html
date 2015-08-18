@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1906: BeIDE crash
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-July/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231906%3A%20BeIDE%20crash&In-Reply-To=%3C049.1feb194916f41cccee8a3d2e57864e65%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009086.html">
+   <LINK REL="Next"  HREF="009094.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1906: BeIDE crash</H1>
+    <B>kallisti5</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231906%3A%20BeIDE%20crash&In-Reply-To=%3C049.1feb194916f41cccee8a3d2e57864e65%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1906: BeIDE crash">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Jul 23 16:14:44 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009086.html">[Haiku-bugs] [Haiku] #1739: Include a build system script to generate a proper 'develop' directory on Haiku
+</A></li>
+        <LI>Next message: <A HREF="009094.html">[Haiku-bugs] [Haiku] #2538: PANIC: ASSERT FAILED (src/system/kernel/fs/vfs.cpp:799): oldRefCount &gt; 0 while attempting to unmount partition
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9092">[ date ]</a>
+              <a href="thread.html#9092">[ thread ]</a>
+              <a href="subject.html#9092">[ subject ]</a>
+              <a href="author.html#9092">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1906: BeIDE crash
+---------------------------+------------------------------------------------
+  Reporter:  thorn         |       Owner:  axeld         
+      Type:  bug           |      Status:  new           
+  Priority:  normal        |   Milestone:  R1            
+ Component:  Applications  |     Version:  R1 development
+Resolution:                |   Blockedby:                
+  Platform:  All           |    Blocking:                
+---------------------------+------------------------------------------------
+
+Comment(by kallisti5):
+
+ verified still present on r26257
+
+ vm_soft_fault: va 0x6669649b not covered by area in address space
+ vm_page_fault: vm_soft_fault returned error 'Bad address' on fault at
+ 0x6669649b, ip 0x3136c7, write 0, user 1, thread 0x20b
+ vm_page_fault: sending team &quot;BeIDE&quot; 0x1fa SIGSEGV, ip 0x3136c7
+ (&quot;BeIDE_seg0ro&quot; +0x1136c7)
+ stack trace:
+   0x0027ba0a (BeIDE_seg0ro + 0x7ba0a)
+   0x006aab22 (libbe.so_seg0ro + 0xadb22)
+   0x0074e78a (libbe.so_seg0ro + 0x15178a)
+   0x006ac1ab (libbe.so_seg0ro + 0xaf1ab)
+   0x006aa6a6 (libbe.so_seg0ro + 0xad6a6)
+   0x0075101d (libbe.so_seg0ro + 0x15401d)
+   0x007547d8 (libbe.so_seg0ro + 0x1577d8)
+   0x006abc17 (libbe.so_seg0ro + 0xaec17)
+   0x008649f0 (libroot.so_seg0ro + 0x249f0)
+   0x70102fec (w&gt;About BeIDE_523_stack + 0x3ffec)
+ vm_soft_fault: va 0x0 not covered by area in address space
+ vm_page_fault: vm_soft_fault returned error 'Bad address' on fault at 0x0,
+ ip 0x800acc60, write 0, user 0, thread 0x20b
+ debug_server: Thread 523 entered the debugger: Segment violation
+ stack trace, current PC 0x3136c7  _._t10VideoCoder1Z7MemArea + 0x17:
+   (0x70102c10)  0x27ba0a  _._8AboutBox + 0x46
+   (0x70102c2c)  0x6aab22  Quit__7BLooper + 0xde
+   (0x70102c5c)  0x74e78a  Quit__7BWindow + 0xc6
+   (0x70102c8c)  0x6ac1ab  _QuitRequested__7BLooperP8BMessage + 0x107
+   (0x70102d0c)  0x6aa6a6  DispatchMessage__7BLooperP8BMessageP8BHandler +
+ 0x46
+   (0x70102d3c)  0x75101d  DispatchMessage__7BWindowP8BMessageP8BHandler +
+ 0x174d
+   (0x70102f1c)  0x7547d8  task_looper__7BWindow + 0x270
+   (0x70102f7c)  0x6abc17  _task0___7BLooperPv + 0x3f
+   (0x70102fac)  0x8649f0  _get_next_team_info + 0x5c (closest symbol)
+ wait interval 911822, scan pages 1225, free 1857, target 190
+ wait interval 982828, scan pages 651, free 2010, target 37
+ wait interval 997215, scan pages 535, free 2041, target 6
+ debug_server: Killing team 506 (/boot/develop/BeIDE/BeIDE)
+ debug_server: TeamDebugHandler::Init(): Failed to get info for team 506:
+ Operation on invalid team
+ debug_server: KillTeam(): Error getting info for team 506: Operation on
+ invalid team
+ debug_server: Killing team 506 ()
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1906#comment:1">http://dev.haiku-os.org/ticket/1906#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009086.html">[Haiku-bugs] [Haiku] #1739: Include a build system script to generate a proper 'develop' directory on Haiku
+</A></li>
+	<LI>Next message: <A HREF="009094.html">[Haiku-bugs] [Haiku] #2538: PANIC: ASSERT FAILED (src/system/kernel/fs/vfs.cpp:799): oldRefCount &gt; 0 while attempting to unmount partition
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9092">[ date ]</a>
+              <a href="thread.html#9092">[ thread ]</a>
+              <a href="subject.html#9092">[ subject ]</a>
+              <a href="author.html#9092">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4500: Haiku can't boot on XenServer 5.5
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234500%3A%20Haiku%20can%27t%20boot%20on%20XenServer%205.5&In-Reply-To=%3C054.5aec929c2f96265601cfb7957567770b%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="021297.html">
+   <LINK REL="Next"  HREF="021520.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4500: Haiku can't boot on XenServer 5.5</H1>
+    <B>jackburton</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234500%3A%20Haiku%20can%27t%20boot%20on%20XenServer%205.5&In-Reply-To=%3C054.5aec929c2f96265601cfb7957567770b%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4500: Haiku can't boot on XenServer 5.5">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Sep 16 23:53:53 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="021297.html">[Haiku-bugs] [Haiku] #4500: Haiku can't boot on XenServer 5.5
+</A></li>
+        <LI>Next message: <A HREF="021520.html">[Haiku-bugs] [Haiku] #4500: Haiku can't boot on XenServer 5.5
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21497">[ date ]</a>
+              <a href="thread.html#21497">[ thread ]</a>
+              <a href="subject.html#21497">[ subject ]</a>
+              <a href="author.html#21497">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4500: Haiku can't boot on XenServer 5.5
+------------------------+---------------------------------------------------
+ Reporter:  jackburton  |       Owner:  axeld         
+     Type:  bug         |      Status:  new           
+ Priority:  normal      |   Milestone:  R1            
+Component:  System      |     Version:  R1/Development
+Blockedby:              |    Platform:  All           
+ Blocking:              |  
+------------------------+---------------------------------------------------
+
+Comment(by jackburton):
+
+ Replying to [comment:8 mmlr]:
+ &gt; It's pretty obvious: you don't get any interrupts, or you don't get
+ interrupts from certain device. That causes APIC timers to fail and, if
+ timer interrupts are generally missing, the scheduler not to work. It also
+ explains that USB hangs. Please check the ints command and try to look
+ into the PIC setup during boot for the problem.
+
+ I had a look into the PIC setup but nothing seems suspicious there. I also
+ double checked with other OSes code.
+ Moreover, as shown by the ints.png screenshot, looks like interrupts are
+ not (completely) missing. But the fact that the disk controller has &quot;0&quot;
+ handled interrupts seems definitely related to the problem.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4500#comment:9">http://dev.haiku-os.org/ticket/4500#comment:9</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="021297.html">[Haiku-bugs] [Haiku] #4500: Haiku can't boot on XenServer 5.5
+</A></li>
+	<LI>Next message: <A HREF="021520.html">[Haiku-bugs] [Haiku] #4500: Haiku can't boot on XenServer 5.5
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21497">[ date ]</a>
+              <a href="thread.html#21497">[ thread ]</a>
+              <a href="subject.html#21497">[ subject ]</a>
+              <a href="author.html#21497">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

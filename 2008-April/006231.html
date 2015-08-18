@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2037: Please add &lt;sys/poll.h&gt;
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232037%3A%20Please%20add%20%3Csys/poll.h%3E&In-Reply-To=%3C038.0cf5c0a67152138d33a3daf2d9bfec0a%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006229.html">
+   <LINK REL="Next"  HREF="006275.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2037: Please add &lt;sys/poll.h&gt;</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232037%3A%20Please%20add%20%3Csys/poll.h%3E&In-Reply-To=%3C038.0cf5c0a67152138d33a3daf2d9bfec0a%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2037: Please add &lt;sys/poll.h&gt;">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Apr  6 22:43:05 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006229.html">[Haiku-bugs] [Haiku] #1969: No video driver for Intel 82845G/GL
+</A></li>
+        <LI>Next message: <A HREF="006275.html">[Haiku-bugs] [Haiku] #2037: Please add &lt;sys/poll.h&gt;
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6231">[ date ]</a>
+              <a href="thread.html#6231">[ thread ]</a>
+              <a href="subject.html#6231">[ subject ]</a>
+              <a href="author.html#6231">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2037: Please add &lt;sys/poll.h&gt;
+-------------------------------+--------------------------------------------
+ Reporter:  mjw                |       Owner:  axeld         
+     Type:  enhancement        |      Status:  new           
+ Priority:  normal             |   Milestone:  R1            
+Component:  System/libroot.so  |     Version:  R1 development
+ Platform:  All                |  
+-------------------------------+--------------------------------------------
+ This may be a bit controversial, but I'll give it a go anyway...
+
+ Most documentation for poll() states that programs using poll() should
+ #include &lt;poll.h&gt;.  However, this rule seems to be more honoured in the
+ breech than the observance, with a lot of 3rd party code #including
+ &lt;sys/poll.h&gt;.  Haiku does not have &lt;sys/poll.h&gt;, so 3rd party code that
+ #includes &lt;sys/poll.h&gt; needs to be modified to compile.
+
+ Posix OSs that I have seen (Linux, Solaris and NetBSD) have the main
+ poll() header in &lt;sys/poll.h&gt;.  &lt;poll.h&gt; either #includes, or is a
+ symbolic link to, &lt;sys/poll.h&gt;.
+
+ I have attached a patch that makes Haiku emulate Linux/Solaris semantics:
+ &lt;poll.h&gt; #includes &lt;sys/poll.h&gt;.  This patch should not break existing
+ Haiku/BeOS software, and will allow 3rd party apps to be ported with less
+ modifications.
+
+ Any chance of it being applied?
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2037">http://dev.haiku-os.org/ticket/2037</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006229.html">[Haiku-bugs] [Haiku] #1969: No video driver for Intel 82845G/GL
+</A></li>
+	<LI>Next message: <A HREF="006275.html">[Haiku-bugs] [Haiku] #2037: Please add &lt;sys/poll.h&gt;
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6231">[ date ]</a>
+              <a href="thread.html#6231">[ thread ]</a>
+              <a href="subject.html#6231">[ subject ]</a>
+              <a href="author.html#6231">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

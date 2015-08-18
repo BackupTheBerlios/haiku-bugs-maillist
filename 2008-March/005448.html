@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1898: getpeername returns size bigger	than passed in?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231898%3A%20getpeername%20returns%20size%20bigger%0A%09than%20passed%20in%3F&In-Reply-To=%3C047.ffeb19a61759b169e709e58bd4bb3ce2%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005443.html">
+   <LINK REL="Next"  HREF="005451.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1898: getpeername returns size bigger	than passed in?</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231898%3A%20getpeername%20returns%20size%20bigger%0A%09than%20passed%20in%3F&In-Reply-To=%3C047.ffeb19a61759b169e709e58bd4bb3ce2%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1898: getpeername returns size bigger	than passed in?">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Mar  9 01:03:41 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005443.html">[Haiku-bugs] [Haiku] #1898: getpeername returns size bigger	than passed in?
+</A></li>
+        <LI>Next message: <A HREF="005451.html">[Haiku-bugs] [Haiku] #1898: getpeername returns size bigger	than passed in?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5448">[ date ]</a>
+              <a href="thread.html#5448">[ thread ]</a>
+              <a href="subject.html#5448">[ subject ]</a>
+              <a href="author.html#5448">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1898: getpeername returns size bigger than passed in?
+---------------------------------------+------------------------------------
+  Reporter:  tqh                       |       Owner:  axeld         
+      Type:  bug                       |      Status:  reopened      
+  Priority:  normal                    |   Milestone:  R1            
+ Component:  Network &amp; Internet/Stack  |     Version:  R1 development
+Resolution:                            |    Platform:  All           
+---------------------------------------+------------------------------------
+Changes (by tqh):
+
+  * status:  closed =&gt; reopened
+  * resolution:  fixed =&gt;
+
+Comment:
+
+ I think there are still issues, these are just printfs with what I get
+ from Haiku's getpeername:
+ First call:
+ _MD_getpeername:addrlen = 28
+  [called]
+ _MD_getpeername:addrlen after = 28
+ _MD_getpeername:sockaddr.sa_len after = 82
+
+
+ Second call:
+ _MD_getpeername:addrlen = 28
+  [called]
+ _MD_getpeername:addrlen after = 32
+ _MD_getpeername:sockaddr.sa_len after = 32
+
+ First call has very strange things going on with the sa_len field. Mozilla
+ treats sa_len and sa_family and that is  set to 8786 in decimal. That's
+ 0x2252 which I can't make any sense of at all. Second at least seems to be
+ ok in general as family is AF_INET at least but there the it returns a
+ bigger size.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1898#comment:4">http://dev.haiku-os.org/ticket/1898#comment:4</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005443.html">[Haiku-bugs] [Haiku] #1898: getpeername returns size bigger	than passed in?
+</A></li>
+	<LI>Next message: <A HREF="005451.html">[Haiku-bugs] [Haiku] #1898: getpeername returns size bigger	than passed in?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5448">[ date ]</a>
+              <a href="thread.html#5448">[ thread ]</a>
+              <a href="subject.html#5448">[ subject ]</a>
+              <a href="author.html#5448">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

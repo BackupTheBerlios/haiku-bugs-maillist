@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3109: [kernel] vm_area_release_ref: area not found in aspace's area list
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233109%3A%20%5Bkernel%5D%20vm_area_release_ref%3A%20area%0A%20not%20found%20in%20aspace%27s%20area%20list&In-Reply-To=%3C049.17812828033c8c47f5c920f6f2ff2dce%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012296.html">
+   <LINK REL="Next"  HREF="012299.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3109: [kernel] vm_area_release_ref: area not found in aspace's area list</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233109%3A%20%5Bkernel%5D%20vm_area_release_ref%3A%20area%0A%20not%20found%20in%20aspace%27s%20area%20list&In-Reply-To=%3C049.17812828033c8c47f5c920f6f2ff2dce%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3109: [kernel] vm_area_release_ref: area not found in aspace's area list">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Nov 10 01:46:30 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012296.html">[Haiku-bugs] [Haiku] #3109: [kernel] vm_area_release_ref: area not found in aspace's area list
+</A></li>
+        <LI>Next message: <A HREF="012299.html">[Haiku-bugs] [Haiku] #3109: [kernel] vm_area_release_ref: area not found in aspace's area list
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12298">[ date ]</a>
+              <a href="thread.html#12298">[ thread ]</a>
+              <a href="subject.html#12298">[ subject ]</a>
+              <a href="author.html#12298">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3109: [kernel] vm_area_release_ref: area not found in aspace's area list
+----------------------------+-----------------------------------------------
+  Reporter:  diver          |       Owner:  axeld         
+      Type:  bug            |      Status:  new           
+  Priority:  normal         |   Milestone:  R1            
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |   Blockedby:                
+  Platform:  All            |    Blocking:                
+----------------------------+-----------------------------------------------
+
+Comment(by anevilyak):
+
+ Confirmed here with ~7000 files. Interestingly, the problem appears to be
+ that app_server dies. At least after the deadlock hitting f12 to go to KDL
+ doesn't show app_server in the team list:
+
+ {{{
+
+ kdebug&gt; teams
+ team           id  parent      name
+ 0x8126b4c8    124  0x81248b28  media_addon_server
+ 0x8117e7f8     62  0x8117e198  net_server
+ 0x81248198     94  0x8117e198  Tracker
+ 0x8117e198      1  0x00000000  kernel_team
+ 0x812484c8     95  0x8117e198  Deskbar
+ 0x81248990     98  0x8117e198  Terminal
+ 0x8126b000    161  0x81248990  sh
+ 0x81248b28     99  0x8117e198  media_server
+ 0x81248cc0    100  0x8117e198  midi_server
+ 0x81248e58    101  0x8117e198  print_server
+ 0x8117eb28     81  0x8117e198  syslog_daemon
+ 0x81248330     85  0x8117e198  input_server
+ 0x8117e4c8     54  0x8117e198  registrar
+ 0x8117e660     61  0x8117e198  debug_server
+
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3109#comment:5">http://dev.haiku-os.org/ticket/3109#comment:5</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012296.html">[Haiku-bugs] [Haiku] #3109: [kernel] vm_area_release_ref: area not found in aspace's area list
+</A></li>
+	<LI>Next message: <A HREF="012299.html">[Haiku-bugs] [Haiku] #3109: [kernel] vm_area_release_ref: area not found in aspace's area list
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12298">[ date ]</a>
+              <a href="thread.html#12298">[ thread ]</a>
+              <a href="subject.html#12298">[ subject ]</a>
+              <a href="author.html#12298">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

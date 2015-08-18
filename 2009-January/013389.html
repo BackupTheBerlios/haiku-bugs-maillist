@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3257: PANIC: release_spinlock: lock 0x80112694 was already released
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-January/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233257%3A%20PANIC%3A%20release_spinlock%3A%20lock%0A%200x80112694%20was%20already%20released&In-Reply-To=%3C055.fa337e90b6b749389273092425fb4949%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="013385.html">
+   <LINK REL="Next"  HREF="013387.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3257: PANIC: release_spinlock: lock 0x80112694 was already released</H1>
+    <B>syst3mcr4sh</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233257%3A%20PANIC%3A%20release_spinlock%3A%20lock%0A%200x80112694%20was%20already%20released&In-Reply-To=%3C055.fa337e90b6b749389273092425fb4949%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3257: PANIC: release_spinlock: lock 0x80112694 was already released">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Jan  3 20:16:45 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="013385.html">[Haiku-bugs] [Haiku] #3257: PANIC: release_spinlock: lock 0x80112694 was already released
+</A></li>
+        <LI>Next message: <A HREF="013387.html">[Haiku-bugs] [Haiku] #2342: No system timer interrupt on some	ATI chipsets
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13389">[ date ]</a>
+              <a href="thread.html#13389">[ thread ]</a>
+              <a href="subject.html#13389">[ subject ]</a>
+              <a href="author.html#13389">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3257: PANIC: release_spinlock: lock 0x80112694 was already released
+-------------------------+--------------------------------------------------
+ Reporter:  syst3mcr4sh  |       Owner:  axeld         
+     Type:  bug          |      Status:  new           
+ Priority:  normal       |   Milestone:  R1            
+Component:  - General    |     Version:  R1 development
+Blockedby:               |    Platform:  x86           
+ Blocking:               |  
+-------------------------+--------------------------------------------------
+
+Comment(by syst3mcr4sh):
+
+ stack crawl with CR set to CRLF sorry for this
+
+ PANIC: release_spinlock: lock 0x80112694 was already released[[BR]]
+ [[BR]]
+ [[BR]]
+ Welcome to Kernel Debugging Land...[[BR]]
+ Thread 32 &quot;scsi notifier&quot; running on CPU 0[[BR]]
+ kdebug&gt; sc[[BR]]
+ stack trace for thread 32 &quot;scsi notifier&quot;[[BR]]
+     kernel stack: 0x80434000 to 0x80438000[[BR]]
+ frame               caller     &lt;image&gt;:function + offset[[BR]]
+  0 80437bc8 (+  48) 8005bd3d   &lt;kernel_x86&gt;:invoke_debugger_command +
+ 0x00f5[[BR]]
+  1 80437bf8 (+  64) 8005bb2d   &lt;kernel_x86&gt;
+ invoke_pipe_segment(debugger_command_pipe*: 0x80122a60, int32: 0, 0x0
+ &quot;&lt;NULL&gt;&quot;) + 0x0079[[BR]]
+  2 80437c38 (+  64) 8005beb4   &lt;kernel_x86&gt;:invoke_debugger_command_pipe +
+ 0x009c[[BR]]
+  3 80437c78 (+  48) 8005d43c   &lt;kernel_x86&gt;
+ ExpressionParser&lt;0x80437d2c&gt;::ParseCommandPipe(0x80437d28) + 0x0234[[BR]]
+  4 80437ca8 (+  64) 8005c876   &lt;kernel_x86&gt;
+ ExpressionParser&lt;0x80437d2c&gt;::EvaluateCommand(0x801128a0 &quot;sc&quot;, 0x80437d28)
+ + 0x02ba[[BR]]
+  5 80437ce8 (+ 224) 8005e864   &lt;kernel_x86):evaluate_debug_command +
+ 0x0088[[BR]]
+  6 80437dc8 (+  64) 80059c52   &lt;kernel_x86&gt; kernel_debugger_loop() +
+ 0x01ae[[BR]]
+  7 80437e08 (+  32) 8005aabd   &lt;kernel_x86&gt;:kernel_debugger + 0x004d[[BR]]
+  8 80437e28 (+ 192) 8005aa65   &lt;kernel_x86):panic + 0x0029[[BR]]
+  9 80437ee8 (+  48) 80049af6   &lt;kernel_x86&gt;:release_spinlock +
+ 0x004e[[BR]]
+ 10 80437f18 (+  80) 8003467b   &lt;kernel_x86&gt;
+ ConditionVariableEntry&lt;0x80437f9c&gt;::Wait(uint32: 0x0 (0), int64: 0) +
+ 0x01db[[BR]]
+ 11 80437f68 (+  80) 8006e55c   &lt;kernel_x86&gt;
+ IOScheduler&lt;0x80f24a5c&gt;::_RequestNotifier(0x83049800, 0x80051441,
+ 0x80112694) + 0x011c[[BR]]
+ 12 80437fb8 (+  32) 8006e5f2   &lt;kernel_x86&gt;
+ IOScheduler&lt;0x80f24a5c&gt;::_RequestNotifierThread(NULL) + 0x0012[[BR]]
+ 13 80437fd8 (+  32) 800514bb   &lt;kernel_x86&gt; _create_kernel_thread_kentry()
+ + 0x001b[[BR]]
+ 14 80437ff8 (+2143059976) 80051458   &lt;kernel_x86&gt; thread_kthread_exit() +
+ 0x0000[[BR]]
+ kdebug&gt;[[BR]]
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3257#comment:1">http://dev.haiku-os.org/ticket/3257#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="013385.html">[Haiku-bugs] [Haiku] #3257: PANIC: release_spinlock: lock 0x80112694 was already released
+</A></li>
+	<LI>Next message: <A HREF="013387.html">[Haiku-bugs] [Haiku] #2342: No system timer interrupt on some	ATI chipsets
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13389">[ date ]</a>
+              <a href="thread.html#13389">[ thread ]</a>
+              <a href="subject.html#13389">[ subject ]</a>
+              <a href="author.html#13389">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

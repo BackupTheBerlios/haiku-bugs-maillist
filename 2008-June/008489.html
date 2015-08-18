@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2405: MediaPlayer doesn't use overlay altough it is available
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232405%3A%20MediaPlayer%20doesn%27t%20use%20overlay%0A%20altough%20it%20is%20available&In-Reply-To=%3C050.e6eda9670760c2f2207bbc523b9b5508%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008321.html">
+   <LINK REL="Next"  HREF="008303.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2405: MediaPlayer doesn't use overlay altough it is available</H1>
+    <B>axeld</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232405%3A%20MediaPlayer%20doesn%27t%20use%20overlay%0A%20altough%20it%20is%20available&In-Reply-To=%3C050.e6eda9670760c2f2207bbc523b9b5508%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2405: MediaPlayer doesn't use overlay altough it is available">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Jun 24 11:00:18 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008321.html">[Haiku-bugs] [Haiku] #2405: MediaPlayer doesn't use overlay altough it is available
+</A></li>
+        <LI>Next message: <A HREF="008303.html">[Haiku-bugs] [Haiku] #1609: NetworkStatus -&gt; No Link
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8489">[ date ]</a>
+              <a href="thread.html#8489">[ thread ]</a>
+              <a href="subject.html#8489">[ subject ]</a>
+              <a href="author.html#8489">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2405: MediaPlayer doesn't use overlay altough it is available
+---------------------------------------+------------------------------------
+  Reporter:  nutela                    |       Owner:  marcusoverhagen
+      Type:  bug                       |      Status:  new            
+  Priority:  normal                    |   Milestone:  R1             
+ Component:  Applications/MediaPlayer  |     Version:  R1 development 
+Resolution:                            |   Blockedby:                 
+  Platform:  x86                       |    Blocking:                 
+---------------------------------------+------------------------------------
+
+Comment(by axeld):
+
+ The overlay buffers usually reside in the frame buffer area that is
+ created by the kernel driver. I don't really understand why
+ get_area_info() would fail, though - this can only happen in case
+ vm.cpp::get_address_space_by_area_id() does not find the area in question.
+
+ The B_USER_CLONEABLE_AREA flag should not have an influence on
+ get_area_info(), though.
+ It looks like this needs a bit more investigation.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2405#comment:6">http://dev.haiku-os.org/ticket/2405#comment:6</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008321.html">[Haiku-bugs] [Haiku] #2405: MediaPlayer doesn't use overlay altough it is available
+</A></li>
+	<LI>Next message: <A HREF="008303.html">[Haiku-bugs] [Haiku] #1609: NetworkStatus -&gt; No Link
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8489">[ date ]</a>
+              <a href="thread.html#8489">[ thread ]</a>
+              <a href="subject.html#8489">[ subject ]</a>
+              <a href="author.html#8489">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

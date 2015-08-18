@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2911: vm_page_fault: unhandled page fault in kernel space at 9xcccccccc, ip 0x80049b42
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232911%3A%20vm_page_fault%3A%20unhandled%20page%20fault%20in%0A%20kernel%20space%20at%209xcccccccc%2C%20ip%200x80049b42&In-Reply-To=%3C041.024ddc83ff54e1a8624827f5c46cf039%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011324.html">
+   <LINK REL="Next"  HREF="011385.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2911: vm_page_fault: unhandled page fault in kernel space at 9xcccccccc, ip 0x80049b42</H1>
+    <B>stippi</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232911%3A%20vm_page_fault%3A%20unhandled%20page%20fault%20in%0A%20kernel%20space%20at%209xcccccccc%2C%20ip%200x80049b42&In-Reply-To=%3C041.024ddc83ff54e1a8624827f5c46cf039%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2911: vm_page_fault: unhandled page fault in kernel space at 9xcccccccc, ip 0x80049b42">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Oct 23 14:04:45 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011324.html">[Haiku-bugs] [Haiku] #2910: [Terminal] Creating new tab and moving mouse selects whole view
+</A></li>
+        <LI>Next message: <A HREF="011385.html">[Haiku-bugs] [Haiku] #2911: vm_page_fault: unhandled page fault in kernel space at 0xcccccccc, ip 0x80049b42
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11377">[ date ]</a>
+              <a href="thread.html#11377">[ thread ]</a>
+              <a href="subject.html#11377">[ subject ]</a>
+              <a href="author.html#11377">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2911: vm_page_fault: unhandled page fault in kernel space at 9xcccccccc, ip
+0x80049b42
+-----------------------+----------------------------------------------------
+ Reporter:  stippi     |       Owner:  bonefish      
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+Blockedby:             |    Platform:  All           
+ Blocking:             |  
+-----------------------+----------------------------------------------------
+ It all started because Tracker crashed. I wanted to open the Home folder
+ by double-clicking onto the link on the Desktop. Somehow I dragged and
+ opened the context menu for the link instead (almost at the same time),
+ because I needed to use the graphics tablet. My other USB devices stopped
+ working again, but the tablet usually still works in this situation.
+ Anyways, it's hard to perform any clicks at all with a tablet while not
+ moving the pen at the same time. (On a related note, it's almost
+ impossible to open links in NetSurf because of the movement while
+ clicking). So Tracker crashed in the BPopUpMenu tracking thread when it
+ opens the window and tries to attach the BMenuBar (enters debugger because
+ it's already attached). After I had seen enough in GDB, I typed &quot;detach&quot;
+ and that dropped me right into KDL, with this stack trace:
+
+ {{{
+ [...]
+ &lt;kernel_x86&gt;:vm_page_fault + 0x0199
+ &lt;kernel_x86&gt;:page_fault_exception + 0x00d4
+ &lt;kernel_x86&gt;:int_bottom + 0x0036
+ kernel iframe at 0x88d5fed0 (end = 0x88d5ff20)
+  eax 0xcccccccc  ebx 0x78206fe0    ecx 0x0          edx 0x8516c800
+  esi 0x800       edi 0x0           ebp 0x88d5ff68   esp 0x88d5ff04
+  eip 0x80049b42 eflags 0x10206
+  vector: 0xe, error code: 0x0
+ &lt;kernel_x86&gt;:handle_signals + 0x0066
+ &lt;kernel_x86&gt;:thread_at_kernel_exit + 0x0085
+ &lt;kernel_x86&gt;:arch_thread_enter_userspace + 0x0066
+ &lt;kernel_x86&gt;:_create_user_thread_kentry() + 0x0024
+ &lt;kernel_x86&gt;:thread_kthread_exit() + 0x0000
+ }}}
+
+ If I should type more of the numbers for it to be more helpful next time,
+ please tell...
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2911">http://dev.haiku-os.org/ticket/2911</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011324.html">[Haiku-bugs] [Haiku] #2910: [Terminal] Creating new tab and moving mouse selects whole view
+</A></li>
+	<LI>Next message: <A HREF="011385.html">[Haiku-bugs] [Haiku] #2911: vm_page_fault: unhandled page fault in kernel space at 0xcccccccc, ip 0x80049b42
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11377">[ date ]</a>
+              <a href="thread.html#11377">[ thread ]</a>
+              <a href="subject.html#11377">[ subject ]</a>
+              <a href="author.html#11377">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

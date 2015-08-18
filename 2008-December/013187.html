@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3222: Wrong gradients
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-December/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233222%3A%20Wrong%20gradients&In-Reply-To=%3C053.ae6b3fc05809ed3a2f0f6b452d09bb67%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="013185.html">
+   <LINK REL="Next"  HREF="013186.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3222: Wrong gradients</H1>
+    <B>stippi</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233222%3A%20Wrong%20gradients&In-Reply-To=%3C053.ae6b3fc05809ed3a2f0f6b452d09bb67%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3222: Wrong gradients">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Dec 15 15:41:52 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="013185.html">[Haiku-bugs] [Haiku] #3222: Wrong gradients
+</A></li>
+        <LI>Next message: <A HREF="013186.html">[Haiku-bugs] [Haiku] #3223: DiskUsage: nicer colors
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13187">[ date ]</a>
+              <a href="thread.html#13187">[ thread ]</a>
+              <a href="subject.html#13187">[ subject ]</a>
+              <a href="author.html#13187">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3222: Wrong gradients
+----------------------------------------+-----------------------------------
+  Reporter:  humdinger                  |       Owner:  stippi        
+      Type:  bug                        |      Status:  new           
+  Priority:  normal                     |   Milestone:  R1            
+ Component:  Applications/Icon-O-Matic  |     Version:  R1 development
+Resolution:                             |   Blockedby:                
+  Platform:  All                        |    Blocking:                
+----------------------------------------+-----------------------------------
+
+Comment(by stippi):
+
+ Yes, it's a known problem in Icon-O-Matic. The transformation box wraps
+ wrongly around linear gradients. It has nothing to do with Artur's
+ gradient work. I need to fix it in a way, though, that does not break all
+ existing icons, but that should be doable by fixing both the initial
+ transformation and how the transform box wraps around linear gradients. By
+ the way, the wrong wrapping happens in this way: The gradient start is
+ where the right edge of the box is mirrored at the left edge:
+ {{{
+
+           .---------.
+           |         |
+ |---------+----o----|
+           |         |
+           .---------.
+
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3222#comment:1">http://dev.haiku-os.org/ticket/3222#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="013185.html">[Haiku-bugs] [Haiku] #3222: Wrong gradients
+</A></li>
+	<LI>Next message: <A HREF="013186.html">[Haiku-bugs] [Haiku] #3223: DiskUsage: nicer colors
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13187">[ date ]</a>
+              <a href="thread.html#13187">[ thread ]</a>
+              <a href="subject.html#13187">[ subject ]</a>
+              <a href="author.html#13187">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

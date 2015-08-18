@@ -1,0 +1,150 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4028: Hybrid GPT/MBR Initial Program	Loader
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234028%3A%20Hybrid%20GPT/MBR%20Initial%20Program%0A%09Loader&In-Reply-To=%3C053.f57b170a553328ee1e7eb5613ce4e865%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="018012.html">
+   <LINK REL="Next"  HREF="018013.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4028: Hybrid GPT/MBR Initial Program	Loader</H1>
+    <B>meianoite</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234028%3A%20Hybrid%20GPT/MBR%20Initial%20Program%0A%09Loader&In-Reply-To=%3C053.f57b170a553328ee1e7eb5613ce4e865%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4028: Hybrid GPT/MBR Initial Program	Loader">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Jun 15 00:02:23 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="018012.html">[Haiku-bugs] [Haiku] #4028: Hybrid GPT/MBR Initial Program	Loader
+</A></li>
+        <LI>Next message: <A HREF="018013.html">[Haiku-bugs] [Haiku] #1429: Icons for some of the servers use	old style.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18014">[ date ]</a>
+              <a href="thread.html#18014">[ thread ]</a>
+              <a href="subject.html#18014">[ subject ]</a>
+              <a href="author.html#18014">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4028: Hybrid GPT/MBR Initial Program Loader
+--------------------------+-------------------------------------------------
+ Reporter:  meianoite     |       Owner:  axeld         
+     Type:  enhancement   |      Status:  new           
+ Priority:  normal        |   Milestone:  R1            
+Component:  File Systems  |     Version:  R1 development
+Blockedby:                |    Platform:  All           
+ Blocking:                |  
+--------------------------+-------------------------------------------------
+Description changed by meianoite:
+
+Old description:
+
+&gt;<i> Attached is a 512 byte PMBR boot loader that looks for the UUID of a
+</I>&gt;<i> Haiku GPT partition and boots it, falling back to MBR partitions if said
+</I>&gt;<i> UUID isn't found or if the (primary) GPT is corrupted or non-existent.
+</I>&gt;<i>
+</I>&gt;<i> Its usefulness is in being a generalised IPL that supports both
+</I>&gt;<i> partitioning styles, allowing it to be used transparently and even
+</I>&gt;<i> allowing disks to be converted from one partitioning style to the other
+</I>&gt;<i> with ease, should the need for more partitions or volumes over 2TiB arise
+</I>&gt;<i> (for instance when cloning an older disk to a newer, more capacious one).
+</I>&gt;<i>
+</I>&gt;<i> It also paves the way for Haiku to create and support booting from
+</I>&gt;<i> multiple volumes larger than 2TiB, which we're in the very privileged
+</I>&gt;<i> position of enjoying efficiently in the near future due to BFS. Another
+</I>&gt;<i> use case is taking a disk from a Intel EFI machine, plugging it on a BIOS
+</I>&gt;<i> machine and boot just fine; and vice-versa.
+</I>&gt;<i>
+</I>&gt;<i> As mentioned, if there are valid partitions defined in the MBR, and the
+</I>&gt;<i> primary GPT becomes corrupt, it can fall back to loading the MBR
+</I>&gt;<i> partition with the active flag set, if one is defined.
+</I>&gt;<i>
+</I>&gt;<i> Currently there's no provision for falling back to the GPT copy that
+</I>&gt;<i> lives in the end of the disk, due to the 512 bytes constraint; supporting
+</I>&gt;<i> this would require either some major refactoring of the code or disabling
+</I>&gt;<i> the support for booting from MBR using calls to int13h other than
+</I>&gt;<i> function 4200h, &quot;LBA Read from Disk&quot;.
+</I>&gt;<i>
+</I>&gt;<i> It was tested on emulators and on my actual, proper computer. It can load
+</I>&gt;<i> Windows, Haiku and FreeBSD;  the number of sectors to load from the
+</I>&gt;<i> partition is adjustable, but beware that int13h 4200h only supports up to
+</I>&gt;<i> 127 (0x7f) sectors, or a loader of almost 64KiB; so don't specify a
+</I>&gt;<i> larger number. This is not checked on the code, again because of space
+</I>&gt;<i> constraints.
+</I>
+New description:
+
+ Attached is a 512 byte PMBR boot loader that looks for the UUID of a Haiku
+ GPT partition and boots it, falling back to MBR partitions if said UUID
+ isn't found or if the (primary) GPT is corrupted or non-existent.
+
+ Its usefulness is in being a generalised IPL that supports both
+ partitioning styles, allowing it to be used transparently and even
+ allowing disks to be converted from one partitioning style to the other
+ with ease, should the need for more partitions or volumes over 2TiB arise
+ (for instance when cloning an older disk to a newer, more capacious one).
+
+ It also paves the way for Haiku to create and support booting from
+ multiple volumes larger than 2TiB, which we're in the very privileged
+ position of enjoying efficiently in the near future due to BFS. Another
+ use case is taking a disk from a Intel EFI machine, plugging it on a BIOS
+ machine and boot just fine; and vice-versa.
+
+ As mentioned, if there are valid partitions defined in the MBR, and the
+ primary GPT becomes corrupt, it can fall back to loading the MBR partition
+ with the active flag set, if one is defined.
+
+ Currently there's no provision for falling back to the GPT copy that lives
+ in the end of the disk, due to the 512 bytes constraint; supporting this
+ would require either some major refactoring of the code or disabling the
+ support for booting from MBR using calls to int13h other than function
+ 4200h, &quot;LBA Read from Disk&quot;.
+
+ It was tested on emulators and on my actual, proper computer. Loading
+ Windows, Haiku and FreeBSD was tested (UUID must be changed accordingly,
+ of course); for the GPT boot, the number of sectors to load from the
+ partition is adjustable (needed by FreeBSD's &quot;gptloader&quot; on a freebsd-boot
+ UUID partition), probably needed by Haiku as well since stage1 is 2
+ sectors big), but beware that int13h 4200h only supports up to 127 (0x7f)
+ sectors, or a loader of almost 64KiB; so don't specify a larger number.
+ This is not checked on the code, again because of space constraints.
+
+--
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4028#comment:3">http://dev.haiku-os.org/ticket/4028#comment:3</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="018012.html">[Haiku-bugs] [Haiku] #4028: Hybrid GPT/MBR Initial Program	Loader
+</A></li>
+	<LI>Next message: <A HREF="018013.html">[Haiku-bugs] [Haiku] #1429: Icons for some of the servers use	old style.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18014">[ date ]</a>
+              <a href="thread.html#18014">[ thread ]</a>
+              <a href="subject.html#18014">[ subject ]</a>
+              <a href="author.html#18014">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

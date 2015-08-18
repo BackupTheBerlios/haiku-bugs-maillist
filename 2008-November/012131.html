@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2789: writing to usb disks fail after 10-100Mb of writing files
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232789%3A%20writing%20to%20usb%20disks%20fail%20after%0A%2010-100Mb%20of%20writing%20files&In-Reply-To=%3C051.cfb98bef860ebca1c8dce828e2389597%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012533.html">
+   <LINK REL="Next"  HREF="012133.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2789: writing to usb disks fail after 10-100Mb of writing files</H1>
+    <B>rudolfc</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232789%3A%20writing%20to%20usb%20disks%20fail%20after%0A%2010-100Mb%20of%20writing%20files&In-Reply-To=%3C051.cfb98bef860ebca1c8dce828e2389597%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2789: writing to usb disks fail after 10-100Mb of writing files">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Nov  6 08:35:46 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012533.html">[Haiku-bugs] [Haiku] #3085: [Sounds] crashes after playing the event sounds consecutively.
+</A></li>
+        <LI>Next message: <A HREF="012133.html">[Haiku-bugs] [Haiku] #2956: GDB very often attaches to wrong thread (main thread)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12131">[ date ]</a>
+              <a href="thread.html#12131">[ thread ]</a>
+              <a href="subject.html#12131">[ subject ]</a>
+              <a href="author.html#12131">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2789: writing to usb disks fail after 10-100Mb of writing files
+----------------------+-----------------------------------------------------
+  Reporter:  rudolfc  |       Owner:  mmlr          
+      Type:  bug      |      Status:  new           
+  Priority:  normal   |   Milestone:  R1            
+ Component:  Drivers  |     Version:  R1 development
+Resolution:           |   Blockedby:                
+  Platform:  x86      |    Blocking:                
+----------------------+-----------------------------------------------------
+
+Comment(by rudolfc):
+
+ Hi again,
+
+ I have new info that might be related:
+ On another system I booted from USB, and then mounted a second stick. I
+ formatted that stick using DriveSetup, and copied all files from the
+ current booted stick to that new stick.
+ This way I create a haiku usb stick without the space restriction
+ 'imposed' by using a prepared image from haiku nightly builds.
+
+ Trying to get this done fails since writing fail after some time (see
+ above), but also sometimes reading fails (could not read block).
+
+ Here's the 'funny' and interesting part:
+
+ The haiku builds open up a terminal window at boottime. If I quit this
+ terminal window, I can successfully copy the stick and boot from the new
+ one. If I keep the window open, things go wrong.
+ If I open up a terminal window during copying, I promptly get a read or
+ write error AFAICT. After such an error Haiku is instable and unable to
+ shut down.
+
+ So I get the feeling that everything works OK (slow, but OK) as long as
+ only one thread or program is trying to access USB volumes. As soon as a
+ second program/thread tries to access, the problem appears.
+
+ When I say 'slow' above, I mean: writing seems normal in speed (tracker
+ progressbar progresses as expected). But after tracker says it's done,
+ activity remains going on on the stick to be written to. This can continue
+ for a minute or so.
+
+ Before issuing a second folder copy action, I'd better wait until the
+ stick becomes idle, or I risk the error again.
+
+ I tested several recent Haiku images. The problem is persistant.
+
+ Hope this info helps..
+
+ Rudolf.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2789#comment:1">http://dev.haiku-os.org/ticket/2789#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012533.html">[Haiku-bugs] [Haiku] #3085: [Sounds] crashes after playing the event sounds consecutively.
+</A></li>
+	<LI>Next message: <A HREF="012133.html">[Haiku-bugs] [Haiku] #2956: GDB very often attaches to wrong thread (main thread)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12131">[ date ]</a>
+              <a href="thread.html#12131">[ thread ]</a>
+              <a href="subject.html#12131">[ subject ]</a>
+              <a href="author.html#12131">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

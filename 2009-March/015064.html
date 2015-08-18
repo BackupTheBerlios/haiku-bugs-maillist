@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3550: [mmap] Freezes when maping lots of	memory
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233550%3A%20%5Bmmap%5D%20Freezes%20when%20maping%20lots%20of%0A%09memory&In-Reply-To=%3C042.88d89a4b9c13d5f9eae9616a7f2290bc%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="015061.html">
+   <LINK REL="Next"  HREF="015065.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3550: [mmap] Freezes when maping lots of	memory</H1>
+    <B>Adek336</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233550%3A%20%5Bmmap%5D%20Freezes%20when%20maping%20lots%20of%0A%09memory&In-Reply-To=%3C042.88d89a4b9c13d5f9eae9616a7f2290bc%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3550: [mmap] Freezes when maping lots of	memory">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Mar 12 13:58:03 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="015061.html">[Haiku-bugs] [Haiku] #2389: [Terminal] Add a menu option to allow the user to give the terminal a custom name
+</A></li>
+        <LI>Next message: <A HREF="015065.html">[Haiku-bugs] [Haiku] #3551: yasm fails an extra 7 tests on newer	Haiku
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15064">[ date ]</a>
+              <a href="thread.html#15064">[ thread ]</a>
+              <a href="subject.html#15064">[ subject ]</a>
+              <a href="author.html#15064">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3550: [mmap] Freezes when maping lots of memory
+---------------------------+------------------------------------------------
+ Reporter:  Adek336        |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1 development
+Blockedby:                 |    Platform:  All           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+ Test program:
+ {{{
+ #include &lt;stdio.h&gt;
+ #include &lt;stdlib.h&gt;
+ #include &lt;string.h&gt;
+ #include &lt;sys/mman.h&gt;
+
+ int main()
+ {
+         char name[1024];
+         strcpy(name, &quot;/tmp/adipeXXXXXX&quot;);
+         int fd = mkstemp(name);
+         if (fd == -1)
+         {
+                 perror(&quot;mkstemp&quot;);
+                 exit(1);
+         }
+
+         void *v;
+
+         int i;
+         for (i = 0; i &lt; 4000000; i++)
+         {
+                 v = mmap(NULL, 1000* getpagesize(), PROT_READ|PROT_WRITE,
+ MAP_SHARED, fd, 0);
+                 fprintf(stderr, &quot;i = %d\n&quot;, i);
+                 if (v == (caddr_t) -1)
+                 {
+                         perror(&quot;mmap&quot;);
+                         exit(1);
+                 }
+         }
+
+
+         close(fd);
+         return 0;
+ }
+
+ }}}
+
+ On Haiku: the program freezes after i = 224, can't ctrl-c it, can't open
+ the context menu when clicking on the cpu meter in Deskbar, the app
+ doesn't close when Terminal is closed, the Shutdown dialog freezes, cpu
+ meter in Deskbar shows 100%.
+
+ For comparison, on Linux: after some iterations, &quot;mmap: Cannot allocate
+ memory&quot;
+
+ Tested under vmware, r29445, hybrid build, 524 MiB memory in the guest
+ machine.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3550">http://dev.haiku-os.org/ticket/3550</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="015061.html">[Haiku-bugs] [Haiku] #2389: [Terminal] Add a menu option to allow the user to give the terminal a custom name
+</A></li>
+	<LI>Next message: <A HREF="015065.html">[Haiku-bugs] [Haiku] #3551: yasm fails an extra 7 tests on newer	Haiku
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15064">[ date ]</a>
+              <a href="thread.html#15064">[ thread ]</a>
+              <a href="subject.html#15064">[ subject ]</a>
+              <a href="author.html#15064">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

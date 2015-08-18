@@ -1,0 +1,123 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2527: PANIC: vm_page_fault: unhandled page fault in kernel space at 0x1001004, ip 0x8004fafb
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-July/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232527%3A%20PANIC%3A%20vm_page_fault%3A%20unhandled%20page%0A%20fault%20in%20kernel%20space%20at%200x1001004%2C%20ip%200x8004fafb&In-Reply-To=%3C044.09dcb199e85b7f2328bd68e6916dc739%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009009.html">
+   <LINK REL="Next"  HREF="009011.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2527: PANIC: vm_page_fault: unhandled page fault in kernel space at 0x1001004, ip 0x8004fafb</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232527%3A%20PANIC%3A%20vm_page_fault%3A%20unhandled%20page%0A%20fault%20in%20kernel%20space%20at%200x1001004%2C%20ip%200x8004fafb&In-Reply-To=%3C044.09dcb199e85b7f2328bd68e6916dc739%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2527: PANIC: vm_page_fault: unhandled page fault in kernel space at 0x1001004, ip 0x8004fafb">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Jul 18 01:17:20 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009009.html">[Haiku-bugs] [Haiku] #2526: Mouse preference window vertically	compressed
+</A></li>
+        <LI>Next message: <A HREF="009011.html">[Haiku-bugs] [Haiku] #1727: Haiku panics with vm_page fault/double fault after 20-30s usage
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9008">[ date ]</a>
+              <a href="thread.html#9008">[ thread ]</a>
+              <a href="subject.html#9008">[ subject ]</a>
+              <a href="author.html#9008">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2527: PANIC: vm_page_fault: unhandled page fault in kernel space at 0x1001004, ip
+0x8004fafb
+-------------------------+--------------------------------------------------
+ Reporter:  anevilyak    |       Owner:  bonefish      
+     Type:  bug          |      Status:  new           
+ Priority:  high         |   Milestone:  R1            
+Component:  Drivers/TTY  |     Version:  R1 development
+Blockedby:               |    Platform:  All           
+ Blocking:               |  
+-------------------------+--------------------------------------------------
+ I went to open a file in vim, and then hit page down, and was greeted by
+ the KDL in the subject line. Backtrace is as follows
+
+ {{{
+ &lt;snip&gt;kernel_debugger_stuff
+ &lt;kernel&gt;:panic + 0x0029
+ &lt;kernel&gt;:vm_page_fault + 0x00b1
+ &lt;kernel&gt;:page_fault_exception + 0x00b1
+ &lt;kernel&gt;:int_bottom + 0x0036 (nearest)
+ iframe at 0xa11efb9c (end = 0xa11efbf4)
+ eax 0x1001000 ebx 09x13d1040 ecx 0x0 edx 0x913d1040
+ esi 0x1 edi 0x80992060 ebp 0xa11efc04 esp 0xa11efbd0
+ eip 0x8004fafb eflags 0x10206
+ vector: 0xe, error code: 0x0
+ &lt;kernel&gt;:notify_select_events + 0x001b
+ &lt;kernel&gt;:notify_select_event + 0x0027
+ &lt;kernel&gt;:notify_select_event_pool + 0x005c
+ &lt;/boot/beos/system/add-
+ ons/kernel/drivers/tty&gt;:tty_notify_select_event__FP3ttyUc + 0x0031
+ &lt;/boot/beos/system/add-
+ ons/kernel/drivers/tty&gt;:tty_notify_if_available__FP3ttyT0b + 0x0085
+ &lt;/boot/beos/system/add-ons/kernel/drivers/tty&gt;:_._12ReaderLocker + 0x0069
+ &lt;/boot/beos/system/add-
+ ons/kernel/drivers/tty&gt;:tty_input_read__FP10tty_cookiePvPUl + 0x04cc
+ &lt;/boot/beos/system/add-ons/kernel/drivers/tty&gt;:slave_read__FPvxT0Pul +
+ 0x0027
+ &lt;kernel&gt;:devfs_read__FP9fs_volumeP8fs_vnodePvxT2PUl + 0x017b
+ &lt;kernel&gt;:file_read__FP15file_descriptorxPVPul + 0x0044
+ &lt;kernel&gt;:common_user_io__FixPvUlb + 0x017d
+ &lt;kernel&gt;:_user_read + 0x0028
+ &lt;kernel&gt;:pre_syscall_debug_done + 0x0002 (nearest)
+ iframe at 0xa11effa8 (end = 0xa11f0000)
+ eax 0x7c ebx 0x633e48 ecx 0x70080f40 edx 0xffff0104
+ esi 0x343cb8 edi 0x0 ebp 0x70080f7c esp 0xa11effdc
+ eip 0xffff0104 eflags 0x203
+ vector: 0x63, error code: 0x0
+ 25 a11effa8 (+ 0) ffff0104
+ 26 70080f7c (+48) 00318fa0 &lt;_APP_&gt;:OpenPTY + 0x01a0 (nearest)
+ 27 70080fac (+48) 005abac0 &lt;libroot.so:&gt;:_get_next_team_info + 0x005c
+ (nearest)
+ 28 70080fdc (+ 0) 70080fec 122723:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">vim_async_read_4651_stack at 0x70041000</A> +
+ 0x33fec
+ }}}
+
+ I'm not sure how easy this will be to replicate as I've used vim quite a
+ bit and never seen this one before, but will let you know if I find a
+ consistent way to duplicate it.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2527">http://dev.haiku-os.org/ticket/2527</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009009.html">[Haiku-bugs] [Haiku] #2526: Mouse preference window vertically	compressed
+</A></li>
+	<LI>Next message: <A HREF="009011.html">[Haiku-bugs] [Haiku] #1727: Haiku panics with vm_page fault/double fault after 20-30s usage
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9008">[ date ]</a>
+              <a href="thread.html#9008">[ thread ]</a>
+              <a href="subject.html#9008">[ subject ]</a>
+              <a href="author.html#9008">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

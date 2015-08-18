@@ -1,0 +1,149 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2825: PANIC: page fault, but interrupts were disabled. Touching address 0x00000001 from eip 0x80b32094
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232825%3A%20PANIC%3A%20page%20fault%2C%0A%20but%20interrupts%20were%20disabled.%20Touching%20address%200x00000001%20from%20eip%0A%200x80b32094&In-Reply-To=%3C047.004f0fcb2c63c15fdf1c883a220a44b1%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010965.html">
+   <LINK REL="Next"  HREF="011472.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2825: PANIC: page fault, but interrupts were disabled. Touching address 0x00000001 from eip 0x80b32094</H1>
+    <B>axeld</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232825%3A%20PANIC%3A%20page%20fault%2C%0A%20but%20interrupts%20were%20disabled.%20Touching%20address%200x00000001%20from%20eip%0A%200x80b32094&In-Reply-To=%3C047.004f0fcb2c63c15fdf1c883a220a44b1%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2825: PANIC: page fault, but interrupts were disabled. Touching address 0x00000001 from eip 0x80b32094">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Oct 14 00:12:39 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010965.html">[Haiku-bugs] [Haiku] #2825: PANIC: page fault, but interrupts were disabled. Touching address 0x00000001 from eip 0x80b32094
+</A></li>
+        <LI>Next message: <A HREF="011472.html">[Haiku-bugs] [Haiku] #2825: PANIC: page fault, but interrupts were disabled. Touching address 0x00000001 from eip 0x80b32094
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10966">[ date ]</a>
+              <a href="thread.html#10966">[ thread ]</a>
+              <a href="subject.html#10966">[ subject ]</a>
+              <a href="author.html#10966">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2825: PANIC: page fault, but interrupts were disabled. Touching address
+0x00000001 from eip 0x80b32094
+----------------------+-----------------------------------------------------
+  Reporter:  oco      |       Owner:  axeld         
+      Type:  bug      |      Status:  new           
+  Priority:  normal   |   Milestone:  R1            
+ Component:  Add-Ons  |     Version:  R1 development
+Resolution:           |   Blockedby:                
+  Platform:  All      |    Blocking:                
+----------------------+-----------------------------------------------------
+
+Old description:
+
+&gt;<i> When booting Haiku (r28043) through pxe on my old machine (Celeron 300 /
+</I>&gt;<i> 192 Mo of RAM), a page fault occur. If i remove the gcc2 demangler from
+</I>&gt;<i> the image, it boots fine.
+</I>&gt;<i>
+</I>&gt;<i> Here is the end of the debug output :
+</I>&gt;<i> ...
+</I>&gt;<i> KDiskDeviceManager::_Scan(/dev/disk/virtual)
+</I>&gt;<i> nbd:&gt;init_hardware()
+</I>&gt;<i> nbd:&gt;init_driver()
+</I>&gt;<i> KDiskDeviceManager::_Scan(/dev/disk/virtual/remote_disk)
+</I>&gt;<i> KDiskDeviceManager::_Scan(/dev/disk/virtual/remote_disk/0)
+</I>&gt;<i> KDiskDeviceManager::_Scan(/dev/disk/virtual/remote_disk/0/raw)
+</I>&gt;<i> Failed to resize /var/swap to 402653184 bytes: No space left on device
+</I>&gt;<i> Failed to add swap file /var/swap: Invalid Argument
+</I>&gt;<i> allocate_commpage_entry(4, 34) -&gt; 0xffff0118
+</I>&gt;<i> set_memory_write_back base 0 length c000000
+</I>&gt;<i> find_nearest c000000 0
+</I>&gt;<i> find_nearest 4000000 1
+</I>&gt;<i> find_nearest 4000000 1
+</I>&gt;<i> solutions: 0x8000000 0x4000000
+</I>&gt;<i> allocate MTRR slot 0, base = 0, length = 8000000, type=0x6
+</I>&gt;<i> allocate MTRR slot 1, base = 8000000, length = 4000000, type=0x6
+</I>&gt;<i> kernel debugger extension &quot;debugger/disasm/v1&quot;: loaded
+</I>&gt;<i> kernel debugger extension &quot;debugger/hangman/v1&quot;: loaded
+</I>&gt;<i> kernel debugger extension &quot;debugger/invalidate_on_exit/v1&quot;: loaded
+</I>&gt;<i> kernel debugger extension &quot;debugger/demangle/gcc2/v1&quot;: loaded
+</I>&gt;<i> PANIC: page fault, but interrupts were disabled. Touching address
+</I>&gt;<i> 0x00000001 fro
+</I>&gt;<i> m eip 0x80b32094
+</I>
+New description:
+
+ When booting Haiku (r28043) through pxe on my old machine (Celeron 300 /
+ 192 Mo of RAM), a page fault occur. If i remove the gcc2 demangler from
+ the image, it boots fine.
+
+ Here is the end of the debug output :
+ {{{
+ ...
+ KDiskDeviceManager::_Scan(/dev/disk/virtual)
+ nbd:&gt;init_hardware()
+ nbd:&gt;init_driver()
+ KDiskDeviceManager::_Scan(/dev/disk/virtual/remote_disk)
+ KDiskDeviceManager::_Scan(/dev/disk/virtual/remote_disk/0)
+ KDiskDeviceManager::_Scan(/dev/disk/virtual/remote_disk/0/raw)
+ Failed to resize /var/swap to 402653184 bytes: No space left on device
+ Failed to add swap file /var/swap: Invalid Argument
+ allocate_commpage_entry(4, 34) -&gt; 0xffff0118
+ set_memory_write_back base 0 length c000000
+ find_nearest c000000 0
+ find_nearest 4000000 1
+ find_nearest 4000000 1
+ solutions: 0x8000000 0x4000000
+ allocate MTRR slot 0, base = 0, length = 8000000, type=0x6
+ allocate MTRR slot 1, base = 8000000, length = 4000000, type=0x6
+ kernel debugger extension &quot;debugger/disasm/v1&quot;: loaded
+ kernel debugger extension &quot;debugger/hangman/v1&quot;: loaded
+ kernel debugger extension &quot;debugger/invalidate_on_exit/v1&quot;: loaded
+ kernel debugger extension &quot;debugger/demangle/gcc2/v1&quot;: loaded
+ PANIC: page fault, but interrupts were disabled. Touching address
+ 0x00000001 fro
+ m eip 0x80b32094
+ }}}
+
+--
+
+Comment(by axeld):
+
+ Can you also post a stack trace if that is possible? You can use &quot;sc -d&quot;
+ to disable the demangler in case this is needed.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2825#comment:1">http://dev.haiku-os.org/ticket/2825#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010965.html">[Haiku-bugs] [Haiku] #2825: PANIC: page fault, but interrupts were disabled. Touching address 0x00000001 from eip 0x80b32094
+</A></li>
+	<LI>Next message: <A HREF="011472.html">[Haiku-bugs] [Haiku] #2825: PANIC: page fault, but interrupts were disabled. Touching address 0x00000001 from eip 0x80b32094
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10966">[ date ]</a>
+              <a href="thread.html#10966">[ thread ]</a>
+              <a href="subject.html#10966">[ subject ]</a>
+              <a href="author.html#10966">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1756: svn checkout results in panic() which in turn results in corrupted BFS
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-February/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231756%3A%20svn%20checkout%20results%20in%20panic%28%29%20which%0A%20in%20turn%20results%20in%20corrupted%20BFS&In-Reply-To=%3C044.b42502b6ff1c9036a98834e2b8a474f4%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="004921.html">
+   <LINK REL="Next"  HREF="004675.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1756: svn checkout results in panic() which in turn results in corrupted BFS</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231756%3A%20svn%20checkout%20results%20in%20panic%28%29%20which%0A%20in%20turn%20results%20in%20corrupted%20BFS&In-Reply-To=%3C044.b42502b6ff1c9036a98834e2b8a474f4%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1756: svn checkout results in panic() which in turn results in corrupted BFS">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Feb  6 15:10:48 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="004921.html">[Haiku-bugs] [Haiku] #1755: APR 0.9.x configure hangs
+</A></li>
+        <LI>Next message: <A HREF="004675.html">[Haiku-bugs] [Haiku] #1715: Tracker Deadlock on AppLooper Port
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4672">[ date ]</a>
+              <a href="thread.html#4672">[ thread ]</a>
+              <a href="subject.html#4672">[ subject ]</a>
+              <a href="author.html#4672">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1756: svn checkout results in panic() which in turn results in corrupted BFS
+------------------------------+---------------------------------------------
+ Reporter:  anevilyak         |       Owner:  axeld         
+     Type:  bug               |      Status:  new           
+ Priority:  normal            |   Milestone:  R1            
+Component:  File Systems/BFS  |     Version:  R1 development
+ Platform:  All               |  
+------------------------------+---------------------------------------------
+ If you attempt an svn checkout of the Haiku source tree from within Haiku,
+ it relatively consistently panics into the kernel after roughly the same
+ amount of progress in the checkout every time (in my case, in the middle
+ of the glibc portion of libroot). The panic itself is unimportant (heap
+ overgrew itself), as it's a known allocator issue. However, on reboot the
+ partition is rendered unbootable, as the kernel claims to be unable to
+ find the boot volume. Attempting to mount the partition with the bfs_shell
+ in order to play back the BFS log produces the following output:
+
+ bfs: Replay log, disk was not correctly unmounted...
+ run count: 1002310361, array max: 23, max runs: 126
+ bfs: Log entry has broken header!
+ bfs: replaying log entry from 1976 failed: Unknown error 2147483664
+ bfs: could not initialize journal/block bitmap allocator!
+ bfs: bfs_mount:127: Cannot allocate memory
+ Error: Mounting FS failed: Cannot allocate memory
+
+ Leaving the partition still unusable. This corruption happened
+ consistently across several runs of (reimage partition, boot, checkout,
+ reboot).
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1756">http://dev.haiku-os.org/ticket/1756</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="004921.html">[Haiku-bugs] [Haiku] #1755: APR 0.9.x configure hangs
+</A></li>
+	<LI>Next message: <A HREF="004675.html">[Haiku-bugs] [Haiku] #1715: Tracker Deadlock on AppLooper Port
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4672">[ date ]</a>
+              <a href="thread.html#4672">[ thread ]</a>
+              <a href="subject.html#4672">[ subject ]</a>
+              <a href="author.html#4672">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

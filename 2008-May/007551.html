@@ -1,0 +1,175 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2252: KDL during untaring
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232252%3A%20KDL%20during%20untaring&In-Reply-To=%3C042.c93bd56de32ec27dc08511cbdf693481%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007550.html">
+   <LINK REL="Next"  HREF="007552.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2252: KDL during untaring</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232252%3A%20KDL%20during%20untaring&In-Reply-To=%3C042.c93bd56de32ec27dc08511cbdf693481%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2252: KDL during untaring">trac at haiku-os.org
+       </A><BR>
+    <I>Thu May 22 18:45:33 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007550.html">[Haiku-bugs] [Haiku] #1044: USB OHCI support
+</A></li>
+        <LI>Next message: <A HREF="007552.html">[Haiku-bugs] [Haiku] #1044: USB OHCI support
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7551">[ date ]</a>
+              <a href="thread.html#7551">[ thread ]</a>
+              <a href="subject.html#7551">[ subject ]</a>
+              <a href="author.html#7551">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2252: KDL during untaring
+-----------------------+----------------------------------------------------
+ Reporter:  kaliber    |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+ Platform:  All        |  
+-----------------------+----------------------------------------------------
+ I'm using rev25610. I cannot reproduce it.
+
+
+ {{{
+ wait interval 483251, scan pages 4690, free 1868, target 2228
+ check through
+ wait interval 479541, scan pages 4720, free 1852, target 2244
+ wait interval 481628, scan pages 4703, free 1861, target 2235
+ wait interval 523376, scan pages 4366, free 2041, target 2055
+ wait interval 389782, scan pages 5446, free 1465, target 2631
+ wait interval 347802, scan pages 5785, free 1284, target 2812
+ wait interval 372619, scan pages 5584, free 1391, target 2705
+ vm_soft_fault: va 0x0 not covered by area in address space
+ vm_page_fault: vm_soft_fault returned error 'Bad address' on fault at 0x0,
+ ip 0x805b9393, write 0, user 0, thread 0x800a
+ PANIC: vm_page_fault: unhandled page fault in kernel space at 0x0, ip
+ 0x805b9393
+
+ Welcome to Kernel Debugging Land...
+ Running on CPU 0
+ kdebug&gt;
+ kdebug&gt;
+ kdebug&gt; bt
+ stack trace for thread 32778 &quot;tar&quot;
+     kernel stack: 0x9397e000 to 0x93982000
+       user stack: 0x7efe7000 to 0x7ffe7000
+ frame            caller     &lt;image&gt;:function + offset
+ 93981390 (+  48) 800498a3   &lt;kernel&gt;:invoke_debugger_command + 0x00cf
+ 939813c0 (+  64) 8004a64c   &lt;kernel&gt;:_ParseCommand__16ExpressionParserRi +
+ 0x01f8
+ 93981400 (+  48) 8004a03e
+ &lt;kernel&gt;:EvaluateCommand__16ExpressionParserPCcRi + 0x01de
+ 93981430 (+ 224) 8004b760   &lt;kernel&gt;:evaluate_debug_command + 0x0088
+ 93981510 (+  64) 800483de   &lt;kernel&gt;:kernel_debugger_loop__Fv + 0x017a
+ 93981550 (+  48) 80049091   &lt;kernel&gt;:kernel_debugger + 0x010d
+ 93981580 (+ 192) 80048f79   &lt;kernel&gt;:panic + 0x0029
+ 93981640 (+  64) 800942c5   &lt;kernel&gt;:vm_page_fault + 0x00b1
+ 93981680 (+  64) 8009e41d   &lt;kernel&gt;:page_fault_exception + 0x00b1
+ 939816c0 (+  12) 800a1b0a   &lt;kernel&gt;:int_bottom + 0x002a (nearest)
+ iframe at 0x939816cc (end = 0x93981724)
+  eax 0x0            ebx 0x805bee24      ecx 0x90ba2000   edx 0x246
+  esi 0x1            edi 0x90ba4000      ebp 0x93981734   esp 0x93981700
+  eip 0x805b9393  eflags 0x10282
+  vector: 0xe, error code: 0x0
+ 939816cc (+ 104) 805b9393   &lt;ide&gt;:sim_scsi_io + 0x0123
+ 93981734 (+  64) 806a5b01   &lt;scsi&gt;:scsi_async_io + 0x0245
+ 93981774 (+  96) 806b7e4f   &lt;scsi_periph&gt;:periph_read_write + 0x01fb
+ 939817d4 (+  80) 806b7bfb   &lt;scsi_periph&gt;:periph_read + 0x003f
+ 93981824 (+  64) 806b3d3e   &lt;scsi_dsk&gt;:das_read + 0x0042
+ 93981864 (+ 160) 805a5bb4   &lt;block_io&gt;:block_io_readv_int + 0x042c
+ 93981904 (+  80) 805a6390   &lt;block_io&gt;:block_io_read + 0x0040
+ 93981954 (+  64) 8006d166   &lt;kernel&gt;:Process__11IOSchedulerR9IORequest +
+ 0x0052
+ 93981994 (+ 112) 800684b5
+ &lt;kernel&gt;:devfs_read__FP9fs_volumeP8fs_vnodePvxT2PUl + 0x0141
+ 93981a04 (+  64) 8007a156   &lt;kernel&gt;:file_read__FP15file_descriptorxPvPUl
+ + 0x0036
+ 93981a44 (+  96) 8006b4fd   &lt;kernel&gt;:_kern_read + 0x0145
+ 93981aa4 (+  64) 800a9f52   &lt;kernel&gt;:read_pos + 0x0036
+ 93981ae4 (+  80) 80024957   &lt;kernel&gt;:get_cached_block__FP11block_cachexPbb
+ + 0x010b
+ 93981b34 (+  80) 8002760a   &lt;kernel&gt;:block_cache_get_etc + 0x004e
+ 93981b84 (+  64) 8057c84e
+ &lt;bfs&gt;:SetTo__15AllocationBlockR15AllocationGroupUs + 0x00ae
+ 93981bc4 (+ 128) 8057d8dd
+ &lt;bfs&gt;:AllocateBlocks__14BlockAllocatorR11TransactionlUsUsUsR9block_run +
+ 0x018d
+ 93981c44 (+  80) 8057dcf7
+ &lt;bfs&gt;:Allocate__14BlockAllocatorR11TransactionP5InodexR9block_runUs +
+ 0x018b
+ 93981c94 (+ 288) 8058c154   &lt;bfs&gt;:_GrowStream__5InodeR11Transactionx +
+ 0x02f8
+ 93981db4 (+  48) 8058d709   &lt;bfs&gt;:SetFileSize__5InodeR11Transactionx +
+ 0x0069
+ 93981de4 (+  64) 8058bb16   &lt;bfs&gt;:WriteAt__5InodeR11TransactionxPCUcPUl +
+ 0x023a
+ 93981e24 (+  96) 80598fd0
+ &lt;bfs&gt;:bfs_write__FP9fs_volumeP8fs_vnodePvxPCvPUl + 0x00d0
+ 93981e84 (+  64) 8007a196
+ &lt;kernel&gt;:file_write__FP15file_descriptorxPCvPUl + 0x0036
+ 93981ec4 (+  80) 8006ac25   &lt;kernel&gt;:common_user_io__FixPvUlb + 0x017d
+ 93981f14 (+  48) 8006b118   &lt;kernel&gt;:_user_write + 0x0028
+ 93981f44 (+ 100) 800a1ce2   &lt;kernel&gt;:pre_syscall_debug_done + 0x0002
+ (nearest)
+ iframe at 0x93981fa8 (end = 0x93982000)
+  eax 0x7b           ebx 0x2ef760        ecx 0x7ffe6da0   edx 0xffff0104
+  esi 0x61           edi 0x61            ebp 0x7ffe6ddc   esp 0x93981fdc
+  eip 0xffff0104  eflags 0x207
+  vector: 0x63, error code: 0x0
+ 93981fa8 (+   0) ffff0104
+ 7ffe6ddc (+  48) 0023436d   &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">_APP_ at 0x00200000</A>&gt;:unknown + 0x3436d
+ 7ffe6e0c (+  48) 0022c58e   &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">_APP_ at 0x00200000</A>&gt;:unknown + 0x2c58e
+ 7ffe6e3c (+  80) 00211e59   &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">_APP_ at 0x00200000</A>&gt;:unknown + 0x11e59
+ 7ffe6e8c (+  48) 00212c16   &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">_APP_ at 0x00200000</A>&gt;:unknown + 0x12c16
+ 7ffe6ebc (+ 144) 0021851d   &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">_APP_ at 0x00200000</A>&gt;:unknown + 0x1851d
+ 7ffe6f4c (+  48) 002238c8   &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">_APP_ at 0x00200000</A>&gt;:unknown + 0x238c8
+ 7ffe6f7c (+  48) 00208df7   &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">_APP_ at 0x00200000</A>&gt;:unknown + 0x8df7
+ 7ffe6fac (+  48) 0010084a   704808:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">runtime_loader_seg0ro at 0x00100000</A> +
+ 0x84a
+ 7ffe6fdc (+   0) 7ffe6fec   704807:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">tar_main_stack at 0x7efe7000</A> + 0xffffec
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2252">http://dev.haiku-os.org/ticket/2252</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007550.html">[Haiku-bugs] [Haiku] #1044: USB OHCI support
+</A></li>
+	<LI>Next message: <A HREF="007552.html">[Haiku-bugs] [Haiku] #1044: USB OHCI support
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7551">[ date ]</a>
+              <a href="thread.html#7551">[ thread ]</a>
+              <a href="subject.html#7551">[ subject ]</a>
+              <a href="author.html#7551">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

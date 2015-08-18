@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4433: PPC haiku-boot-cd-ppc broken on x86_64 Linux compiles.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234433%3A%20PPC%20haiku-boot-cd-ppc%20broken%20on%0A%20x86_64%20Linux%20compiles.&In-Reply-To=%3C053.fb47ea55efc7cd98dfa3b944f5186849%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="020810.html">
+   <LINK REL="Next"  HREF="020791.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4433: PPC haiku-boot-cd-ppc broken on x86_64 Linux compiles.</H1>
+    <B>kallisti5</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234433%3A%20PPC%20haiku-boot-cd-ppc%20broken%20on%0A%20x86_64%20Linux%20compiles.&In-Reply-To=%3C053.fb47ea55efc7cd98dfa3b944f5186849%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4433: PPC haiku-boot-cd-ppc broken on x86_64 Linux compiles.">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Sep  6 19:47:47 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="020810.html">[Haiku-bugs] [Haiku] #4433: PPC haiku-boot-cd-ppc broken on x86_64 Linux compiles.
+</A></li>
+        <LI>Next message: <A HREF="020791.html">[Haiku-bugs] [Haiku] #4434: Rename &quot;OpenTerminal&quot; to &quot;Open	Terminal&quot; (patch)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20816">[ date ]</a>
+              <a href="thread.html#20816">[ thread ]</a>
+              <a href="subject.html#20816">[ subject ]</a>
+              <a href="author.html#20816">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4433: PPC haiku-boot-cd-ppc broken on x86_64 Linux compiles.
+--------------------------------+-------------------------------------------
+ Reporter:  kallisti5           |       Owner:  axeld         
+     Type:  bug                 |      Status:  new           
+ Priority:  normal              |   Milestone:  R1            
+Component:  System/Boot Loader  |     Version:  R1 development
+Blockedby:                      |    Platform:  PowerPC       
+ Blocking:                      |  
+--------------------------------+-------------------------------------------
+
+Comment(by kallisti5):
+
+ Skipped the SetVersion, boot-loader compiled ok... (removing -q would of
+ done the same.. oh well)
+ {{{
+ * Jam SetVersion1 defined in build/jam/BeOSRules
+ * Jam SetVersion1 called by rule SetVersion in build/jam/BeOSRules
+ * Jam SetVersion called by rule KernelLd in build/jam/KernelRules
+         * This is where the failing call is happening.
+         * Commenting out SerVersion lets the bootloader compile
+ successfully.
+           (looking back maybe not using -q would of stopped jam from
+ removing
+           the failed bootloader.. oh well.
+
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">alex at eris</A>:~/develop/haiku$ export
+ LD_LIBRARY_PATH=$LD_LIBRARY_PATH:generated/objects/linux/lib
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">alex at eris</A>:~/develop/haiku$
+ generated/objects/linux/x86/release/tools/setversion
+ &quot;generated/objects/haiku/ppc/release/system/boot/boot_loader_openfirmware
+ -system 1 0 0 a 1 -short &quot;Developer Build&quot; ;
+ setversion: Input/output error:
+ generated/objects/haiku/ppc/release/system/boot/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">boot_loader_openfirmwarealex at eris</A>:~/develop/haiku$
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">alex at eris</A>:~/develop/haiku$ echo $?
+ 1
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">alex at eris</A>:~/develop/haiku$ file
+ generated/objects/haiku/ppc/release/system/boot/boot_loader_openfirmware
+ generated/objects/haiku/ppc/release/system/boot/boot_loader_openfirmware:
+ ELF 32-bit MSB executable, PowerPC or cisco 4500, version 1 (SYSV),
+ statically linked, with unknown capability 0x41000000 = 0x11676e75, with
+ unknown capability 0x10000 = 0x90401, not stripped
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">alex at eris</A>:~/develop/haiku$
+ }}}
+
+
+ attaching strace of setversion failing. Not sure if this is a general
+ x86_64 bug or if it is PPC related.  Does x86 haiku compile on x86_64?
+ {{{
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">alex at eris</A>:~/develop/haiku$ strace -vvFfo strace
+ generated/objects/linux/x86/release/tools/setversion
+ &quot;generated/objects/haiku/ppc/release/system/boot/boot_loader_openfirmware&quot;
+ -system 1 0 0 a 1 -short &quot;Developer Build&quot; ;
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4433#comment:4">http://dev.haiku-os.org/ticket/4433#comment:4</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="020810.html">[Haiku-bugs] [Haiku] #4433: PPC haiku-boot-cd-ppc broken on x86_64 Linux compiles.
+</A></li>
+	<LI>Next message: <A HREF="020791.html">[Haiku-bugs] [Haiku] #4434: Rename &quot;OpenTerminal&quot; to &quot;Open	Terminal&quot; (patch)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20816">[ date ]</a>
+              <a href="thread.html#20816">[ thread ]</a>
+              <a href="subject.html#20816">[ subject ]</a>
+              <a href="author.html#20816">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

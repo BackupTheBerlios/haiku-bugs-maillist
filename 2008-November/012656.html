@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3124: ls /dev causes a page fault
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233124%3A%20ls%20/dev%20causes%20a%20page%20fault&In-Reply-To=%3C054.ca59f0be85526d877cb2e6f442d8b88b%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012654.html">
+   <LINK REL="Next"  HREF="012662.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3124: ls /dev causes a page fault</H1>
+    <B>Adek336</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233124%3A%20ls%20/dev%20causes%20a%20page%20fault&In-Reply-To=%3C054.ca59f0be85526d877cb2e6f442d8b88b%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3124: ls /dev causes a page fault">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Nov 19 17:48:27 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012654.html">[Haiku-bugs] [Haiku] #3124: ls /dev causes a page fault
+</A></li>
+        <LI>Next message: <A HREF="012662.html">[Haiku-bugs] [Haiku] #3124: ls /dev causes a page fault
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12656">[ date ]</a>
+              <a href="thread.html#12656">[ thread ]</a>
+              <a href="subject.html#12656">[ subject ]</a>
+              <a href="author.html#12656">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3124: ls /dev causes a page fault
+----------------------------+-----------------------------------------------
+  Reporter:  apprentice     |       Owner:  axeld         
+      Type:  bug            |      Status:  new           
+  Priority:  normal         |   Milestone:  R1            
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |   Blockedby:                
+  Platform:  x86            |    Blocking:                
+----------------------------+-----------------------------------------------
+
+Comment(by Adek336):
+
+ The trac output gives a pretty clear view of what instructions cause the
+ crash and suggest that &quot;parent&quot; is not a valid pointer at that point; also
+ we see, that the value of parent which is fed into fix_dirent() seems
+ reasonable (in the trac, vnode=0x...). That is a lot of valuable
+ information! For once, it allows me to suspect what the direct cause of
+ the crash is, a buffer overflow during user_memcpy() of d_name; if that is
+ the case, with the new diff you will see a panic &quot;d_reclen&gt;sizeof(buffer)&quot;
+ which you can easily continue through; that would be quite a progress :-)
+
+ The new diff also traces the names of files, so we will know the name of
+ the /dev/* file which goes right before the offending file.
+
+ The diff is against the trunk version of vfs.cpp, so to revert to that
+ version before applying the patch you may do
+ {{{
+ svn revert src/system/kernel/fs/vfs.cpp
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3124#comment:24">http://dev.haiku-os.org/ticket/3124#comment:24</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012654.html">[Haiku-bugs] [Haiku] #3124: ls /dev causes a page fault
+</A></li>
+	<LI>Next message: <A HREF="012662.html">[Haiku-bugs] [Haiku] #3124: ls /dev causes a page fault
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12656">[ date ]</a>
+              <a href="thread.html#12656">[ thread ]</a>
+              <a href="subject.html#12656">[ subject ]</a>
+              <a href="author.html#12656">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

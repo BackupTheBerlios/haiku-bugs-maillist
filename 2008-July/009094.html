@@ -1,0 +1,167 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2538: PANIC: ASSERT FAILED (src/system/kernel/fs/vfs.cpp:799): oldRefCount &gt; 0 while attempting to unmount partition
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-July/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232538%3A%20PANIC%3A%20ASSERT%20FAILED%0A%20%28src/system/kernel/fs/vfs.cpp%3A799%29%3A%20oldRefCount%20%3E%200%20while%20attempting%20to%0A%20unmount%20partition&In-Reply-To=%3C044.34411df52ad4097b7b4450f5552c750c%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009092.html">
+   <LINK REL="Next"  HREF="009095.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2538: PANIC: ASSERT FAILED (src/system/kernel/fs/vfs.cpp:799): oldRefCount &gt; 0 while attempting to unmount partition</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232538%3A%20PANIC%3A%20ASSERT%20FAILED%0A%20%28src/system/kernel/fs/vfs.cpp%3A799%29%3A%20oldRefCount%20%3E%200%20while%20attempting%20to%0A%20unmount%20partition&In-Reply-To=%3C044.34411df52ad4097b7b4450f5552c750c%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2538: PANIC: ASSERT FAILED (src/system/kernel/fs/vfs.cpp:799): oldRefCount &gt; 0 while attempting to unmount partition">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Jul 23 18:49:02 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009092.html">[Haiku-bugs] [Haiku] #1906: BeIDE crash
+</A></li>
+        <LI>Next message: <A HREF="009095.html">[Haiku-bugs] [Haiku] #2538: PANIC: ASSERT FAILED (src/system/kernel/fs/vfs.cpp:799): oldRefCount &gt; 0 while attempting to unmount partition
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9094">[ date ]</a>
+              <a href="thread.html#9094">[ thread ]</a>
+              <a href="subject.html#9094">[ subject ]</a>
+              <a href="author.html#9094">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2538: PANIC: ASSERT FAILED (src/system/kernel/fs/vfs.cpp:799): oldRefCount &gt; 0
+while attempting to unmount partition
+---------------------------+------------------------------------------------
+ Reporter:  anevilyak      |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  high           |   Milestone:  R1/alpha1     
+Component:  System/Kernel  |     Version:  R1 development
+Blockedby:                 |    Platform:  All           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+ Steps to reproduce:
+
+ - mount second BFS partition.
+ - cd to partition in a Terminal
+ - open DriveSetup
+ - attempt to unmount via DriveSetup (error -&gt; busy)
+ - close Terminal
+ - attempt to unmount via DriveSetup (error -&gt; busy)
+ - open Terminal and use Terminal unmount command -&gt; KDL
+
+ {{{
+ vnode 0x90bb27f8
+ PANIC: ASSERT FAILED (src/system/kernel/fs/vfs.cpp:799): oldRefCount &gt; 0
+
+ Welcome to Kernel Debugging Land...
+ Running on CPU 0
+ kdebug&gt; bt
+ stack trace for thread 218 &quot;unmount&quot;
+     kernel stack: 0x806c4000 to 0x806c8000
+       user stack: 0x7efef000 to 0x7ffef000
+ frame            caller     &lt;image&gt;:function + offset
+  0 806c7c14 (+  32) 80052268   &lt;kernel&gt;:invoke_debugger_command + 0x00da
+  1 806c7c34 (+  48) 8005236b
+ &lt;kernel&gt;:invoke_pipe_segment(debugger_command_pipe*, long, char*) + 0x006f
+  2 806c7c64 (+  32) 80052438   &lt;kernel&gt;:invoke_debugger_command_pipe +
+ 0x008e
+  3 806c7c84 (+  32) 80052f32
+ &lt;kernel&gt;:ExpressionParser::_ParseCommandPipe(int&amp;) + 0x0084
+  4 806c7ca4 (+  48) 80053516
+ &lt;kernel&gt;:ExpressionParser::EvaluateCommand(char const*, int&amp;) + 0x010c
+  5 806c7cd4 (+ 192) 800535cf   &lt;kernel&gt;:evaluate_debug_command + 0x0089
+  6 806c7d94 (+  64) 800516ae   &lt;kernel&gt;:kernel_debugger + 0x024c
+  7 806c7dd4 (+ 176) 80051795   &lt;kernel&gt;:panic + 0x002d
+  8 806c7e84 (+  64) 80079ff7   &lt;kernel&gt;:dec_vnode_ref_count(vnode*, bool,
+ bool) + 0x0057
+  9 806c7ec4 (+  80) 8007dd72   &lt;kernel&gt;:fs_unmount(char*, long, unsigned
+ long, bool) + 0x017c
+ 10 806c7f14 (+  48) 8007e11b   &lt;kernel&gt;:_user_unmount + 0x006f
+ 11 806c7f44 (+ 100) 800a0622   &lt;kernel&gt;:pre_syscall_debug_done + 0x0002
+ (nearest)
+ iframe at 0x806c7fa8 (end = 0x806c8000)
+  eax 0x50           ebx 0x2b1e00        ecx 0x7ffeeecc   edx 0xffff0104
+  esi 0x7ffef5bc     edi 0x7ffef544      ebp 0x7ffeeee8   esp 0x806c7fdc
+  eip 0xffff0104  eflags 0x206
+  vector: 0x63, error code: 0x0
+ 12 806c7fa8 (+   0) ffff0104
+ 13 7ffeeee8 (+ 128) 00200a10   &lt;_APP_&gt;:main + 0x00c8
+ 14 7ffeef68 (+  52) 002007fd   &lt;_APP_&gt;:_start + 0x0051
+ 15 7ffeef9c (+  64) 0010019a   3526:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">runtime_loader_seg0ro at 0x00100000</A> +
+ 0x19a
+ 16 7ffeefdc (+   0) 7ffeefec   3525:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">unmount_main_stack at 0x7efef000</A> +
+ 0xffffec
+ kdebug&gt; vnode 0x90bb27f8
+ VNODE: 0x90bb27f8
+  device:        4
+  id:            2053
+  ref_count:     -1
+  private_node:  0x90bb63fc
+  mount:         0x90b08eb0
+  covered_by:    0x00000000
+  cache:         0x00000000
+  flags:         ---
+  advisory_lock: 0x00000000
+ kdebug&gt; vnodes 4
+ address    dev     inode  ref cache      fs-node    locking    flags
+ 0x90bb27f8   4      2053   -1 0x00000000 0x90bb63fc 0x00000000 ---
+ 0x90bb2a18   4      2055    0 0x00000000 0x90bb694c 0x00000000 ---
+ 0x90bb26e8   4      2119    0 0x00000000 0x90bb6aa0 0x00000000 ---
+ 0x90bb2908   4      2251    0 0x00000000 0x90bb66a4 0x00000000 ---
+ 0x90bb2fac   4      2276    0 0x00000000 0x90bbd2a8 0x00000000 ---
+ 0x90bb2e58   4      2277    0 0x00000000 0x90bbd7f8 0x00000000 ---
+ 0x90bb2d48   4      2278    0 0x00000000 0x90bbd550 0x00000000 ---
+ 0x90bbb330   4      2273    0 0x00000000 0x90bbc154 0x00000000 ---
+ 0x90bbb3fc   4      2274    0 0x00000000 0x90bbc3fc 0x00000000 ---
+ 0x90bb2cc0   4      2275    0 0x00000000 0x90bbd3fc 0x00000000 ---
+ 0x90bb2990   4      2284    0 0x00000000 0x90bb67f8 0x00000000 ---
+ 0x90bbb264   4      2282    0 0x00000000 0x90bbde9c 0x00000000 ---
+ 0x90bb2dd0   4      2283    0 0x00000000 0x90bbd6a4 0x00000000 ---
+ 0x90bbb044   4      2332    0 0x00000000 0x90bb6e9c 0x00000000 ---
+ 0x90bbb0cc   4      2370    0 0x00000000 0x90bbd000 0x00000000 ---
+ 0x90bbb154   4      2449    0 0x00000000 0x90bbd154 0x00000000 ---
+ 0x90bbb2ec   4      2476    0 0x90b371e0 0x90bbc000 0x00000000 ---
+ 0x90bbb3b8   4      2477    0 0x90b3be10 0x90bbc2a8 0x00000000 ---
+ 0x90bb2f24   4      2478    0 0x90b44870 0x90bbdaa0 0x00000000 ---
+ 0x90bbb000   4      2484    0 0x90b40e10 0x90bbdbf4 0x00000000 ---
+ 0x90bbb484   4      2488    0 0x90b60960 0x90bbc550 0x00000000 ---
+ 0x90bb2c38   4      2581    0 0x00000000 0x90bb6d48 0x00000000 ---
+ 0x90bb2ee0   4      2614    0 0x00000000 0x90bbd94c 0x00000000 ---
+ 0x90bbb1dc   4      2647    0 0x00000000 0x90bbdd48 0x00000000 ---
+ kdebug&gt;
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2538">http://dev.haiku-os.org/ticket/2538</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009092.html">[Haiku-bugs] [Haiku] #1906: BeIDE crash
+</A></li>
+	<LI>Next message: <A HREF="009095.html">[Haiku-bugs] [Haiku] #2538: PANIC: ASSERT FAILED (src/system/kernel/fs/vfs.cpp:799): oldRefCount &gt; 0 while attempting to unmount partition
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9094">[ date ]</a>
+              <a href="thread.html#9094">[ thread ]</a>
+              <a href="subject.html#9094">[ subject ]</a>
+              <a href="author.html#9094">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

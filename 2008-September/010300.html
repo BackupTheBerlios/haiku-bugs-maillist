@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2732: syslog loses messages
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232732%3A%20syslog%20loses%20messages&In-Reply-To=%3C042.c4ad7828ae13004d96e9b27064f1bd33%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010299.html">
+   <LINK REL="Next"  HREF="010676.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2732: syslog loses messages</H1>
+    <B>Adek336</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232732%3A%20syslog%20loses%20messages&In-Reply-To=%3C042.c4ad7828ae13004d96e9b27064f1bd33%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2732: syslog loses messages">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Sep 15 04:43:00 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010299.html">[Haiku-bugs] [Haiku] #2599: Virtual Box networking detected,	not working
+</A></li>
+        <LI>Next message: <A HREF="010676.html">[Haiku-bugs] [Haiku] #2732: syslog loses messages
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10300">[ date ]</a>
+              <a href="thread.html#10300">[ thread ]</a>
+              <a href="subject.html#10300">[ subject ]</a>
+              <a href="author.html#10300">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2732: syslog loses messages
+-----------------------------------+----------------------------------------
+ Reporter:  Adek336                |       Owner:  axeld         
+     Type:  bug                    |      Status:  new           
+ Priority:  normal                 |   Milestone:  R1            
+Component:  Servers/syslog_daemon  |     Version:  R1 development
+Blockedby:                         |    Platform:  All           
+ Blocking:                         |  
+-----------------------------------+----------------------------------------
+ r27420
+ Reproduceable on computers equipped with a VIA Rhine-II ethernet card:
+ 1) the driver's attach method clearly logs the word &quot;Quirks&quot; but that is
+ not to be found in /var/log/syslog
+ 2) no &quot;&lt;TRUNC&gt;&quot; found in syslog
+ 3) &quot;&lt;DROP&gt;&quot; can be found but I think it's before the vr driver is being
+ attached:
+ {{{
+ ...
+ KERN: PCI: [dom 0, bus  0] bus   0, device  0, function  0: vendor 1106,
+ device 0258, revision 00
+ KERN: PCI:   class_base 06, class_function 00, class_api 00
+ KERN: PCI:   vendor 1106: VIA Technologi&lt;DROP&gt;KERN: .
+ KERN: PCI:   device 0258: PT880 Host Bridge
+ KERN: PCI:   info: Bridge (Host bridge)
+ ...
+ KERN: PCI: [dom 0, bus  0] bus   0, device 18, function  0: vendor 1106,
+ device 3065, revision 78
+ KERN: PCI:   class_base 02, class_function 00, class_api 00
+ KERN: PCI:   vendor 1106: VIA Technologies, Inc.
+ KERN: PCI:   device 3065: VT6102 [Rhine-II] (K7VT6 motherboard)
+ KERN: PCI:   info: Network controller (Ethernet controller)
+ ...
+ KERN: [via_rhine] (vr) tx shutdown timeout
+ KERN: [via_rhine] (vr) restarting
+ ...
+ }}}
+ And as we see from the last part, the driver is up and running and must
+ have gone through attach.
+
+ I'm pretty sure that on computers without via rhine-II the driver's probe
+ method is called as well so one could add a dprintf(&quot;vr_probe\n&quot;) there
+ and check if it's missing. Or try reproduce with another driver.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2732">http://dev.haiku-os.org/ticket/2732</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010299.html">[Haiku-bugs] [Haiku] #2599: Virtual Box networking detected,	not working
+</A></li>
+	<LI>Next message: <A HREF="010676.html">[Haiku-bugs] [Haiku] #2732: syslog loses messages
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10300">[ date ]</a>
+              <a href="thread.html#10300">[ thread ]</a>
+              <a href="subject.html#10300">[ subject ]</a>
+              <a href="author.html#10300">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

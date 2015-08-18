@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2877: [BeHappy] crashes on startup
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232877%3A%20%5BBeHappy%5D%20crashes%20on%20startup&In-Reply-To=%3C051.7f4ea771a31fccfa5cde7f83adae6e13%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="022262.html">
+   <LINK REL="Next"  HREF="022264.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2877: [BeHappy] crashes on startup</H1>
+    <B>augiedoggie</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232877%3A%20%5BBeHappy%5D%20crashes%20on%20startup&In-Reply-To=%3C051.7f4ea771a31fccfa5cde7f83adae6e13%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2877: [BeHappy] crashes on startup">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Oct  1 19:56:32 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="022262.html">[Haiku-bugs] [Haiku] #4686: [German] Appearance preflet
+</A></li>
+        <LI>Next message: <A HREF="022264.html">[Haiku-bugs] [Haiku] #4686: [German] Appearance preflet
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22263">[ date ]</a>
+              <a href="thread.html#22263">[ thread ]</a>
+              <a href="subject.html#22263">[ subject ]</a>
+              <a href="author.html#22263">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2877: [BeHappy] crashes on startup
+-----------------------+----------------------------------------------------
+ Reporter:  scottmc    |       Owner:  mmu_man      
+     Type:  bug        |      Status:  assigned     
+ Priority:  normal     |   Milestone:  R1           
+Component:  - General  |     Version:  R1/pre-alpha1
+Blockedby:             |    Platform:  All          
+ Blocking:             |  
+-----------------------+----------------------------------------------------
+
+Comment(by augiedoggie):
+
+ I hope this can be fixed.  BeHappy was working for me for a very long time
+ and now this popped up just a few days ago.  I get two different
+ backtraces depending on if it's the first run(without a Preferences file)
+ or the second run.  On the first run I get a backtrace similar to the
+ original one for this ticket.
+
+ Second run:
+ {{{
+ GNU gdb 6.3
+ Copyright 2004 Free Software Foundation, Inc.
+ GDB is free software, covered by the GNU General Public License, and you
+ are
+ welcome to change it and/or distribute copies of it under certain
+ conditions.
+ Type &quot;show copying&quot; to see the conditions.
+ There is absolutely no warranty for GDB.  Type &quot;show warranty&quot; for
+ details.
+ This GDB was configured as &quot;i586-pc-haiku&quot;...(no debugging symbols found)
+
+ [tcsetpgrp failed in terminal_inferior: Invalid Argument]
+ Thread 940 caused an exception: Segment violation
+ Reading symbols from /boot/system/runtime_loader...done.
+ Loaded symbols for /boot/system/runtime_loader
+ Reading symbols from /boot/system/lib/libbe.so...done.
+ Loaded symbols for /boot/system/lib/libbe.so
+ Reading symbols from /boot/system/lib/libtracker.so...done.
+ Loaded symbols for /boot/system/lib/libtracker.so
+ Reading symbols from /boot/system/lib/libroot.so...done.
+ Loaded symbols for /boot/system/lib/libroot.so
+ Reading symbols from /boot/system/lib/libstdc++.r4.so...done.
+ Loaded symbols for /boot/system/lib/libstdc++.r4.so
+ Reading symbols from /boot/system/lib/libtranslation.so...done.
+ Loaded symbols for /boot/system/lib/libtranslation.so
+ Reading symbols from /boot/system/lib/libtextencoding.so...done.
+ Loaded symbols for /boot/system/lib/libtextencoding.so
+ [tcsetpgrp failed in terminal_inferior: Invalid Argument]
+ [Switching to team /boot/apps/BeHappy/BeHappy (932) thread w&gt;BeHappy!
+ (940)]
+ 0x00408044 in BList::IndexOf () from /boot/system/lib/libbe.so
+ (gdb) bt
+ #0  0x00408044 in BList::IndexOf () from /boot/system/lib/libbe.so
+ #1  0x002214d4 in Preferences::CloseWindow ()
+ #2  0x0021c08f in MainWindow::~MainWindow ()
+ #3  0x002ee5ce in BLooper::_task0_ () from /boot/system/lib/libbe.so
+ #4  0x006c40c8 in thread_entry () from /boot/system/lib/libroot.so
+ #5  0x70102fec in ?? ()
+
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2877#comment:4">http://dev.haiku-os.org/ticket/2877#comment:4</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="022262.html">[Haiku-bugs] [Haiku] #4686: [German] Appearance preflet
+</A></li>
+	<LI>Next message: <A HREF="022264.html">[Haiku-bugs] [Haiku] #4686: [German] Appearance preflet
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22263">[ date ]</a>
+              <a href="thread.html#22263">[ thread ]</a>
+              <a href="subject.html#22263">[ subject ]</a>
+              <a href="author.html#22263">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

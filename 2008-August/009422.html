@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2586: PANIC: ASSERT FAILED (/usr/home/rene/devel/src/add-ons/kernel/bus_managers/ata/ata_request.c:83): status != 0x01
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232586%3A%20PANIC%3A%20ASSERT%20FAILED%0A%20%28/usr/home/rene/devel/src/add-ons/kernel/bus_managers/ata/ata_request.c%3A83%29%3A%0A%20status%20%21%3D%200x01&In-Reply-To=%3C044.51c8246685016e22ecbb1c767b88c509%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009421.html">
+   <LINK REL="Next"  HREF="009430.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2586: PANIC: ASSERT FAILED (/usr/home/rene/devel/src/add-ons/kernel/bus_managers/ata/ata_request.c:83): status != 0x01</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232586%3A%20PANIC%3A%20ASSERT%20FAILED%0A%20%28/usr/home/rene/devel/src/add-ons/kernel/bus_managers/ata/ata_request.c%3A83%29%3A%0A%20status%20%21%3D%200x01&In-Reply-To=%3C044.51c8246685016e22ecbb1c767b88c509%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2586: PANIC: ASSERT FAILED (/usr/home/rene/devel/src/add-ons/kernel/bus_managers/ata/ata_request.c:83): status != 0x01">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Aug  8 04:55:25 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009421.html">[Haiku-bugs] [Haiku] #2078: [PATCH] Add stdio_ext.h header (was: Add stdio_ext.h header)
+</A></li>
+        <LI>Next message: <A HREF="009430.html">[Haiku-bugs] [Haiku] #2586: PANIC: ASSERT FAILED (/usr/home/rene/devel/src/add-ons/kernel/bus_managers/ata/ata_request.c:83): status != 0x01
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9422">[ date ]</a>
+              <a href="thread.html#9422">[ thread ]</a>
+              <a href="subject.html#9422">[ subject ]</a>
+              <a href="author.html#9422">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2586: PANIC: ASSERT FAILED (/usr/home/rene/devel/src/add-
+ons/kernel/bus_managers/ata/ata_request.c:83): status != 0x01
+--------------------------+-------------------------------------------------
+ Reporter:  anevilyak     |       Owner:  marcusoverhagen
+     Type:  bug           |      Status:  new            
+ Priority:  high          |   Milestone:  R1/alpha1      
+Component:  Drivers/Disk  |     Version:  R1 development 
+Blockedby:                |    Platform:  All            
+ Blocking:                |  
+--------------------------+-------------------------------------------------
+ While jamming Haiku within Haiku (after having done an svn up on the copy
+ of the tree stored on the disk), I hit this kdl. Backtrace as follows:
+
+ {{{
+ stack trace for thread 37 &quot;scsi scheduler&quot;
+     kernel stack: 0xa017b000 to 0xa017f000
+ frame            caller     &lt;image&gt;:function + offset
+  0 a017eb08 (+  48) 800577d5   &lt;kernel&gt;:invoke_debugger_command + 0x00ed
+  1 a017eb38 (+  64) 800575cd
+ &lt;kernel&gt;:invoke_pipe_segment__FP21debugger_command_pipelPc + 0x0079
+  2 a017eb78 (+  64) 80057915   &lt;kernel&gt;:invoke_debugger_command_pipe +
+ 0x009d
+  3 a017ebb8 (+  48) 800587f0
+ &lt;kernel&gt;:_ParseCommandPipe__16ExpressionParserRi + 0x0234
+  4 a017ebe8 (+  48) 800581a6
+ &lt;kernel&gt;:EvaluateCommand__16ExpressionParserPCcRi + 0x01de
+  5 a017ec18 (+ 224) 80059bbc   &lt;kernel&gt;:evaluate_debug_command + 0x0088
+  6 a017ecf8 (+  64) 80055c4a   &lt;kernel&gt;:kernel_debugger_loop__Fv + 0x01ae
+  7 a017ed38 (+  48) 800567e3   &lt;kernel&gt;:kernel_debugger + 0x0117
+  8 a017ed68 (+ 192) 800566c1   &lt;kernel&gt;:panic + 0x0029
+  9 a017ee28 (+  48) 807cdde5   &lt;ide&gt;:ata_request_set_status + 0x003d
+ 10 a017ee58 (+  48) 807d083e   &lt;ide&gt;:ata_exec_io + 0x0402
+ 11 a017ee88 (+  48) 807cec42   &lt;ide&gt;:sim_scsi_io + 0x006a
+ 12 a017eeb8 (+  64) 808cd99b   &lt;scsi&gt;:scsi_async_io + 0x02f3
+ 13 a017eef8 (+  96) 808e0678
+ &lt;scsi_periph&gt;:periph_io__FP23scsi_periph_device_infoP11IOOperationPUl +
+ 0x025c
+ 14 a017ef58 (+  48) 808dbcfe   &lt;scsi_disk&gt;:do_io__FPvP11IOOperation +
+ 0x0032
+ 15 a017ef88 (+  48) 80068829   &lt;kernel&gt;:_Scheduler__11IOScheduler + 0x0055
+ 16 a017efb8 (+  32) 80068896   &lt;kernel&gt;:_SchedulerThread__11IOSchedulerPv
+ + 0x0012
+ 17 a017efd8 (+  32) 8004d8c3   &lt;kernel&gt;:_create_kernel_thread_kentry__Fv +
+ 0x001b
+ 18 a017eff8 (+1609043976) 8004d860   &lt;kernel&gt;:thread_kthread_exit__Fv +
+ 0x0000
+ }}}
+
+ I don't know what else would be useful to look up at this point though, so
+ I'm going to leave the box in KDL so you can let me know if there's
+ anything else you want me to pull out of the kernel debugger.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2586">http://dev.haiku-os.org/ticket/2586</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009421.html">[Haiku-bugs] [Haiku] #2078: [PATCH] Add stdio_ext.h header (was: Add stdio_ext.h header)
+</A></li>
+	<LI>Next message: <A HREF="009430.html">[Haiku-bugs] [Haiku] #2586: PANIC: ASSERT FAILED (/usr/home/rene/devel/src/add-ons/kernel/bus_managers/ata/ata_request.c:83): status != 0x01
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9422">[ date ]</a>
+              <a href="thread.html#9422">[ thread ]</a>
+              <a href="subject.html#9422">[ subject ]</a>
+              <a href="author.html#9422">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

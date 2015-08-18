@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1032: BGLView::DirectConnected() badly	implemented
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231032%3A%20BGLView%3A%3ADirectConnected%28%29%20badly%0A%09implemented&In-Reply-To=%3C049.19ce13f3a15308303267c363678aeb06%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000843.html">
+   <LINK REL="Next"  HREF="000845.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1032: BGLView::DirectConnected() badly	implemented</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231032%3A%20BGLView%3A%3ADirectConnected%28%29%20badly%0A%09implemented&In-Reply-To=%3C049.19ce13f3a15308303267c363678aeb06%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1032: BGLView::DirectConnected() badly	implemented">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Mar 22 11:40:04 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000843.html">[Haiku-bugs] [Haiku] #1032: BGLView::DirectConnected() badly	implemented
+</A></li>
+        <LI>Next message: <A HREF="000845.html">[Haiku-bugs] [Haiku] #683: [ProcessController] redraw problems
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#844">[ date ]</a>
+              <a href="thread.html#844">[ thread ]</a>
+              <a href="subject.html#844">[ subject ]</a>
+              <a href="author.html#844">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1032: BGLView::DirectConnected() badly implemented
+------------------------------+---------------------------------------------
+  Reporter:  korli            |       Owner:  jackburton    
+      Type:  bug              |      Status:  new           
+  Priority:  high             |   Milestone:  R1            
+ Component:  Kits/OpenGL Kit  |     Version:  R1 development
+Resolution:                   |    Platform:  All           
+------------------------------+---------------------------------------------
+Changes (by phoudoin):
+
+  * owner:  korli =&gt; jackburton
+  * priority:  normal =&gt; high
+
+Old description:
+
+&gt;<i> BGLView::DirectConnected() seems badly implemented.
+</I>&gt;<i> Several screen savers crash in it.
+</I>&gt;<i>
+</I>&gt;<i> MesaSoftwareRenderer::DirectConnected() is not implemented yet. It could
+</I>&gt;<i> be needed to implement it to fix this bug.
+</I>
+New description:
+
+ BGLView::DirectConnected() is badly implemented.
+ Several screen savers crash in it.
+
+ MesaSoftwareRenderer::DirectConnected() is not implemented yet. It could
+ be needed to implement it to fix this bug.
+
+Comment:
+
+ I guess one could quickly transform Mesa's beos &quot;sample&quot; program to use
+ BDirectWindow instead of plain BWindow and make the GLView not a little
+ bit inner the window area for clipping testbed. Would make a basic test
+ app. I'll try to commit such app as soon as possible, if RealLife (tm)
+ give me a break.
+
+ Regarding direct window support, the renderer's EnableDirectMode() method
+ will be first called by BGLView when direct mode is turn on or off. When
+ on, renderer's DirectConnected() method will be called each time the
+ direct access configuration changes, aka in the same cases than
+ BDirectWindow::DirectConnect() method.
+ The single difference is about view vs window. We need to clip the direct
+ mode info to the GLView area before forward the info to the renderer. We
+ should not touch directly ouside view visible region. This clipping task
+ should be done whatever the renderer is, in BGLView::DirectConnected()
+ method, *before* passing (clipped) info to the renderer. The commented out
+ code there today doesn't do such clipping but just copying the info.
+ Rudolf's nvidia 3D driver hack to avoid drawing over menu bar is a
+ workaround which happens to be enough for GLTeapot because beside the menu
+ bar the OpenGL view take full window surface. It's not enough.
+
+ The next task, indeed, is to add to our current MesaSoftwareRenderer
+ support for direct rendering, most probably dvia a dedicated direct
+ drawing thread. But it could/should be the subject of a seperate
+ &quot;MesaSoftwareRenderer don't support direct mode&quot; ticket IMHO.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1032#comment:8">http://dev.haiku-os.org/ticket/1032#comment:8</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000843.html">[Haiku-bugs] [Haiku] #1032: BGLView::DirectConnected() badly	implemented
+</A></li>
+	<LI>Next message: <A HREF="000845.html">[Haiku-bugs] [Haiku] #683: [ProcessController] redraw problems
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#844">[ date ]</a>
+              <a href="thread.html#844">[ thread ]</a>
+              <a href="subject.html#844">[ subject ]</a>
+              <a href="author.html#844">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,228 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1514: PANIC: no range for address 0xffd283ff
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231514%3A%20PANIC%3A%20no%20range%20for%20address%200xffd283ff&In-Reply-To=%3C050.a35e9f7b51b0b82a7728f60871f0e762%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002862.html">
+   <LINK REL="Next"  HREF="002865.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1514: PANIC: no range for address 0xffd283ff</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231514%3A%20PANIC%3A%20no%20range%20for%20address%200xffd283ff&In-Reply-To=%3C050.a35e9f7b51b0b82a7728f60871f0e762%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1514: PANIC: no range for address 0xffd283ff">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Oct  1 15:02:10 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002862.html">[Haiku-bugs] [Haiku] #1513: write access attempted on read-only area 0x441 at 0x946667d9
+</A></li>
+        <LI>Next message: <A HREF="002865.html">[Haiku-bugs] [Haiku] #1514: PANIC: no range for address	0xffd283ff
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2864">[ date ]</a>
+              <a href="thread.html#2864">[ thread ]</a>
+              <a href="subject.html#2864">[ subject ]</a>
+              <a href="author.html#2864">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1514: PANIC: no range for address 0xffd283ff
+-----------------------------+----------------------------------------------
+ Reporter:  marcusoverhagen  |       Owner:  axeld         
+     Type:  bug              |      Status:  new           
+ Priority:  normal           |   Milestone:  R1            
+Component:  System/Kernel    |     Version:  R1 development
+ Platform:  All              |  
+-----------------------------+----------------------------------------------
+ also there was no disk read error before, this happened:
+
+ {{{
+ bfs: invalid node (0xa0254400) read from offset 1024, inode at 90781
+ bfs: b+tree node at 1024 could not be loaded
+ bfs: Find:1860: General system error
+ bfs: invalid node (0xa0254400) read from offset 1024, inode at 90781
+ bfs: b+tree node at 1024 could not be loaded
+ bfs: Find:1860: General system error
+ bfs: invalid node (0xa0254400) read from offset 1024, inode at 90781
+ bfs: b+tree node at 1024 could not be loaded
+ bfs: Find:1860: General system error
+ bfs: invalid node (0xa0254400) read from offset 1024, inode at 90781
+ bfs: b+tree node at 1024 could not be loaded
+ bfs: Find:1860: General system error
+ bfs: invalid node (0xa0254400) read from offset 1024, inode at 90781
+ bfs: b+tree node at 1024 could not be loaded
+ bfs: Find:1860: General system error
+ bfs: invalid node (0xa0254400) read from offset 1024, inode at 90781
+ bfs: BPlusTree::SeekDown() could not open node 1024
+ bfs: Insert:1266: General system error
+ bfs: Create:2363: General system error
+ bfs: WriteAttribute:898: General system error
+ bfs: invalid node (0xa0254400) read from offset 1024, inode at 90781
+ bfs: b+tree node at 1024 could not be loaded
+ bfs: Find:1860: General system error
+ bfs: invalid node (0xa0254400) read from offset 1024, inode at 90781
+ bfs: b+tree node at 1024 could not be loaded
+ bfs: Find:1860: General system error
+ bfs: invalid node (0xa0254400) read from offset 1024, inode at 90781
+ bfs: b+tree node at 1024 could not be loaded
+ bfs: Find:1860: General system error
+ bfs: invalid node (0xa0254400) read from offset 1024, inode at 90781
+ bfs: b+tree node at 1024 could not be loaded
+ bfs: Find:1860: General system error
+ bfs: invalid node (0xa0254400) read from offset 1024, inode at 90781
+ bfs: b+tree node at 1024 could not be loaded
+ bfs: Find:1860: General system error
+ bfs: invalid node (0xa0254400) read from offset 1024, inode at 90781
+ bfs: BPlusTree::SeekDown() could not open node 1024
+ bfs: Insert:1266: General system error
+ bfs: Create:2363: General system error
+ bfs: WriteAttribute:898: General system error
+ bfs: invalid node (0xa0254400) read from offset 1024, inode at 90781
+ bfs: b+tree node at 1024 could not be loaded
+ bfs: Find:1860: General system error
+ bfs: invalid node (0xa0254400) read from offset 1024, inode at 90781
+ bfs: b+tree node at 1024 could not be loaded
+ bfs: Find:1860: General system error
+ bfs: invalid node (0xa0254400) read from offset 1024, inode at 90781
+ bfs: b+tree node at 1024 could not be loaded
+ bfs: Find:1860: General system error
+ bfs: invalid node (0xa0254400) read from offset 1024, inode at 90781
+ bfs: b+tree node at 1024 could not be loaded
+ bfs: Find:1860: General system error
+ bfs: invalid node (0xa0254400) read from offset 1024, inode at 90781
+ bfs: b+tree node at 1024 could not be loaded
+ bfs: Find:1860: General system error
+ bfs: invalid node (0xa0254400) read from offset 1024, inode at 90781
+ bfs: BPlusTree::SeekDown() could not open node 1024
+ bfs: Insert:1266: General system error
+ bfs: Create:2363: General system error
+ bfs: WriteAttribute:898: General system error
+ bfs: invalid node (0xa0254400) read from offset 1024, inode at 90781
+ bfs: b+tree node at 1024 could not be loaded
+ bfs: Find:1860: General system error
+ bfs: invalid node (0xa0254400) read from offset 1024, inode at 90781
+ bfs: b+tree node at 1024 could not be loaded
+ bfs: Find:1860: General system error
+ bfs: invalid node (0xa0254400) read from offset 1024, inode at 90781
+ bfs: b+tree node at 1024 could not be loaded
+ bfs: Find:1860: General system error
+ bfs: invalid node (0xa0254400) read from offset 1024, inode at 90781
+ bfs: b+tree node at 1024 could not be loaded
+ bfs: Find:1860: General system error
+ bfs: invalid node (0xa0254400) read from offset 1024, inode at 90781
+ bfs: b+tree node at 1024 could not be loaded
+ bfs: Find:1860: General system error
+ bfs: invalid node (0xa0254400) read from offset 1024, inode at 90781
+ bfs: BPlusTree::SeekDown() could not open node 1024
+ bfs: Insert:1266: General system error
+ bfs: Create:2363: General system error
+ bfs: WriteAttribute:898: General system error
+ bfs: invalid node (0xa0254400) read from offset 1024, inode at 90781
+ bfs: b+tree node at 1024 could not be loaded
+ bfs: Find:1860: General system error
+ bfs: invalid node (0xa0254400) read from offset 1024, inode at 90781
+ bfs: b+tree node at 1024 could not be loaded
+ bfs: Find:1860: General system error
+ bfs: invalid node (0xa0254400) read from offset 1024, inode at 90781
+ bfs: b+tree node at 1024 could not be loaded
+ bfs: Find:1860: General system error
+ CPU 1 halted!
+ PANIC: no range for address 0xffd283ff
+ }}}
+
+ Welcome to Kernel Debugging Land...
+ Running on CPU 0
+ kdebug&gt; bt
+ stack trace for thread 0x117 &quot;AboutSystem&quot;
+     kernel stack: 0x947a1000 to 0x947a5000
+       user stack: 0x7efe7000 to 0x7ffe7000
+ frame            caller     &lt;image&gt;:function + offset
+ 947a4a40 (+  52) 80083321   &lt;kernel&gt;:invoke_command + 0x0075
+ 947a4a74 (+  48) 80083572   &lt;kernel&gt;:kernel_debugger + 0x020e
+ 947a4aa4 (+ 176) 80083609   &lt;kernel&gt;:panic + 0x002d
+ 947a4b54 (+  48) 80060e96   &lt;kernel&gt;:_ZN11block_cache4FreeEPv + 0x0034
+ 947a4b84 (+  48) 80062c7b   &lt;kernel&gt;:cache_start_sub_transaction + 0x00a5
+ 947a4bb4 (+  48) 8025286d   &lt;bfs&gt;:_ZN7Journal4LockEP11Transaction + 0x0087
+ 947a4be4 (+  32) 8025292c   &lt;bfs&gt;:_ZN11Transaction5StartEP6Volumex +
+ 0x0032
+ 947a4c04 (+  64) 80259fc4   &lt;bfs&gt;:_Z14bfs_create_dirPvS_PKciPx + 0x010a
+ 947a4c44 (+ 336) 8004f904   &lt;kernel&gt;:_Z10dir_createiPcib + 0x005e
+ 947a4d94 (+  48) 8004f991   &lt;kernel&gt;:_user_create_dir + 0x0071
+ 947a4dc4 (+ 352) 8003895d   &lt;kernel&gt;:syscall_dispatcher + 0x0b23
+ 947a4f24 (+ 128) 8008b92c   &lt;kernel&gt;:i386_handle_trap + 0x0315
+ iframe at 0x947a4fac (end = 0x947a5000)
+  eax 0x4d           ebx 0x55c100        ecx 0x3          edx 0x180103f0
+  esi 0x4ba31c       edi 0x0             ebp 0x7ffe63e8   esp 0x947a4fdc
+  eip 0xffff0102  eflags 0x212
+  vector: 0x63, error code: 0x0
+ 947a4fa4 (+   0) ffff0102
+ 7ffe63e8 (+  80) 004b267c
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libtranslation.so at 0x004a3000</A>&gt;:unknown + 0xf67c
+ 7ffe6438 (+  32) 004b2712
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libtranslation.so at 0x004a3000</A>&gt;:unknown + 0xf712
+ 7ffe6458 (+  48) 004b27e9
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libtranslation.so at 0x004a3000</A>&gt;:unknown + 0xf7e9
+ 7ffe6488 (+ 128) 004ae3a5
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libtranslation.so at 0x004a3000</A>&gt;:unknown + 0xb3a5
+ 7ffe6508 (+  96) 004ae72c
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libtranslation.so at 0x004a3000</A>&gt;:unknown + 0xb72c
+ 7ffe6568 (+2032) 00205637
+ &lt;/boot/beos/apps/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">AboutSystem at 0x00200000</A>&gt;:unknown + 0x5637
+ 7ffe6d58 (+ 176) 002072ef
+ &lt;/boot/beos/apps/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">AboutSystem at 0x00200000</A>&gt;:unknown + 0x72ef
+ 7ffe6e08 (+  48) 00207464
+ &lt;/boot/beos/apps/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">AboutSystem at 0x00200000</A>&gt;:unknown + 0x7464
+ 7ffe6e38 (+ 320) 002093f0
+ &lt;/boot/beos/apps/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">AboutSystem at 0x00200000</A>&gt;:unknown + 0x93f0
+ 7ffe6568 (+2032) 00205637
+ &lt;/boot/beos/apps/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">AboutSystem at 0x00200000</A>&gt;:unknown + 0x5637
+ 7ffe6d58 (+ 176) 002072ef
+ &lt;/boot/beos/apps/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">AboutSystem at 0x00200000</A>&gt;:unknown + 0x72ef
+ 7ffe6e08 (+  48) 00207464
+ &lt;/boot/beos/apps/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">AboutSystem at 0x00200000</A>&gt;:unknown + 0x7464
+ 7ffe6e38 (+ 320) 002093f0
+ &lt;/boot/beos/apps/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">AboutSystem at 0x00200000</A>&gt;:unknown + 0x93f0
+ 7ffe6f78 (+  52) 0020468d
+ &lt;/boot/beos/apps/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">AboutSystem at 0x00200000</A>&gt;:unknown + 0x468d
+ 7ffe6fac (+  48) 00100104   1692:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">runtime_loader_seg0ro at 0x00100000</A> + 0x104
+ 7ffe6fdc (+   0) 7ffe6fec
+ 1691:/boot/beos/apps/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">AboutSystem_mai at 0x7efe7000</A> + 0xffffec
+ kdebug&gt;
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1514">http://dev.haiku-os.org/ticket/1514</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002862.html">[Haiku-bugs] [Haiku] #1513: write access attempted on read-only area 0x441 at 0x946667d9
+</A></li>
+	<LI>Next message: <A HREF="002865.html">[Haiku-bugs] [Haiku] #1514: PANIC: no range for address	0xffd283ff
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2864">[ date ]</a>
+              <a href="thread.html#2864">[ thread ]</a>
+              <a href="subject.html#2864">[ subject ]</a>
+              <a href="author.html#2864">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3436: NetSurf crashing
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-February/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233436%3A%20NetSurf%20crashing&In-Reply-To=%3C050.3a16efac2bf81ae01bd8a7c49b3f3c6a%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="014541.html">
+   <LINK REL="Next"  HREF="014693.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3436: NetSurf crashing</H1>
+    <B>iFrodo</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233436%3A%20NetSurf%20crashing&In-Reply-To=%3C050.3a16efac2bf81ae01bd8a7c49b3f3c6a%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3436: NetSurf crashing">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Feb 21 12:03:59 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="014541.html">[Haiku-bugs] [Haiku] #3436: NetSurf crashing
+</A></li>
+        <LI>Next message: <A HREF="014693.html">[Haiku-bugs] [Haiku] #3436: NetSurf crashing
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14542">[ date ]</a>
+              <a href="thread.html#14542">[ thread ]</a>
+              <a href="subject.html#14542">[ subject ]</a>
+              <a href="author.html#14542">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3436: NetSurf crashing
+---------------------------+------------------------------------------------
+  Reporter:  Hubert        |       Owner:  axeld         
+      Type:  bug           |      Status:  reopened      
+  Priority:  normal        |   Milestone:  R1            
+ Component:  Applications  |     Version:  R1 development
+Resolution:                |   Blockedby:                
+  Platform:  All           |    Blocking:                
+---------------------------+------------------------------------------------
+
+Comment(by iFrodo):
+
+ Ok I verified my suggestion and it should work.
+
+ How did I verified:
+
+ - I installed the GCC2 compiled translators in /boot/home/config/add-
+ ons/Translators
+ - I tried NetSurf
+
+ And it worked! :)
+
+ Proof: <A HREF="http://bpresles.free.fr/NetSurf-BePDF-BeHappy-GCC4Hybrid.png">http://bpresles.free.fr/NetSurf-BePDF-BeHappy-GCC4Hybrid.png</A>
+
+ So it seems that even if the subdirectory suggestion wouldn't be faisable,
+ installing GCC2 version of Translator with for example a &quot;-gcc2&quot; part in
+ their names on the /boot/beos/system/add-ons/Translators/ will work.
+
+ I've also veryfied the last solution. I copied the GCC2 version of
+ Translators with -gcc2 name (e.g: BPM-gcc2Translator) in /boot/beos/system
+ /add-ons/Translators/ and it works also.
+
+ So a very quick fix to this issue (as it's not a bug), would seemly to
+ include the installation of GCC2 Translators with &quot;-gcc2&quot; included in
+ their names on /boot/beos/system/add-ons/Translators/  in the GCC2
+ additional library build process in a GCC4/GCC2 haiku build process.
+
+ I hope you will consider this suggestion, as it works, and allows to offer
+ a better R5 compatibility (as good as with a GCC2 build? Maybe!!) in
+ GCC4/GCC2 hybrid Haiku builds.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3436#comment:3">http://dev.haiku-os.org/ticket/3436#comment:3</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="014541.html">[Haiku-bugs] [Haiku] #3436: NetSurf crashing
+</A></li>
+	<LI>Next message: <A HREF="014693.html">[Haiku-bugs] [Haiku] #3436: NetSurf crashing
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14542">[ date ]</a>
+              <a href="thread.html#14542">[ thread ]</a>
+              <a href="subject.html#14542">[ subject ]</a>
+              <a href="author.html#14542">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

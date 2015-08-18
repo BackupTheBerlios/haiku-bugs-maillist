@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2893: System hanging at desktop with	r28244
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232893%3A%20System%20hanging%20at%20desktop%20with%0A%09r28244&In-Reply-To=%3C053.b4b32b5b434159301c545250554e109e%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011305.html">
+   <LINK REL="Next"  HREF="011320.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2893: System hanging at desktop with	r28244</H1>
+    <B>bonefish</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232893%3A%20System%20hanging%20at%20desktop%20with%0A%09r28244&In-Reply-To=%3C053.b4b32b5b434159301c545250554e109e%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2893: System hanging at desktop with	r28244">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Oct 23 11:04:59 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011305.html">[Haiku-bugs] [Haiku] #2893: System hanging at desktop with	r28244
+</A></li>
+        <LI>Next message: <A HREF="011320.html">[Haiku-bugs] [Haiku] #2893: System hanging at desktop with	r28244
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11318">[ date ]</a>
+              <a href="thread.html#11318">[ thread ]</a>
+              <a href="subject.html#11318">[ subject ]</a>
+              <a href="author.html#11318">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2893: System hanging at desktop with r28244
+--------------------------------------+-------------------------------------
+  Reporter:  anevilyak                |       Owner:  euan          
+      Type:  bug                      |      Status:  new           
+  Priority:  normal                   |   Milestone:  R1            
+ Component:  Drivers/Graphics/radeon  |     Version:  R1 development
+Resolution:                           |   Blockedby:                
+  Platform:  All                      |    Blocking:                
+--------------------------------------+-------------------------------------
+Changes (by bonefish):
+
+  * owner:  axeld =&gt; euan
+  * component:  System/Kernel =&gt; Drivers/Graphics/radeon
+
+
+Comment:
+
+ 0 is definitely allowed, though I was convinced that the first semaphore
+ ID we give out is 1. Obviously I was wrong; the first semaphore created
+ (for the heap grower) has ID 0. The check in the debugger command function
+ was incorrect.
+
+ That explains pretty much everything. The heap grower semaphore is only
+ released when the heap is in need for growing, which may just not happen
+ at that point. Before r28244 the driver might have gotten lucky in that
+ heap growing was necessary and the semaphore was released. r28244 has
+ probably changed the heap usage just enough that this doesn't happen
+ anymore.
+
+ At any rate, this is obviously a bug in the driver. Changing component and
+ hoping someone familiar with the driver will fix it.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2893#comment:23">http://dev.haiku-os.org/ticket/2893#comment:23</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011305.html">[Haiku-bugs] [Haiku] #2893: System hanging at desktop with	r28244
+</A></li>
+	<LI>Next message: <A HREF="011320.html">[Haiku-bugs] [Haiku] #2893: System hanging at desktop with	r28244
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11318">[ date ]</a>
+              <a href="thread.html#11318">[ thread ]</a>
+              <a href="subject.html#11318">[ subject ]</a>
+              <a href="author.html#11318">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4034: BFS partition became read-only
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234034%3A%20BFS%20partition%20became%20read-only&In-Reply-To=%3C041.fd6d44ddc05477bb95a6a87853e353df%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="018069.html">
+   <LINK REL="Next"  HREF="018071.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4034: BFS partition became read-only</H1>
+    <B>mmadia</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234034%3A%20BFS%20partition%20became%20read-only&In-Reply-To=%3C041.fd6d44ddc05477bb95a6a87853e353df%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4034: BFS partition became read-only">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Jun 21 02:27:27 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="018069.html">[Haiku-bugs] [Haiku] #3231: File type problems with Paladin in Haiku, not BeOS
+</A></li>
+        <LI>Next message: <A HREF="018071.html">[Haiku-bugs] [Haiku] #4035: Missing symbol in GCC4/2 Hybrid
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18070">[ date ]</a>
+              <a href="thread.html#18070">[ thread ]</a>
+              <a href="subject.html#18070">[ subject ]</a>
+              <a href="author.html#18070">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4034: BFS partition became read-only
+------------------------------+---------------------------------------------
+ Reporter:  mmadia            |       Owner:  axeld         
+     Type:  bug               |      Status:  new           
+ Priority:  normal            |   Milestone:  R1            
+Component:  File Systems/BFS  |     Version:  R1 development
+Blockedby:                    |    Platform:  All           
+ Blocking:                    |  
+------------------------------+---------------------------------------------
+ While using a python build automation script to build Haiku, the partition
+ spontaneously became read-only. The partition is 10GB with about 2GB free.
+ On it is : haiku &amp; buildtools source trees and the generated folder.
+ System is r30928-gcc2 and has been up for 1.5days. Attached is syslog. Are
+ there any tests or additional information that would be useful before re-
+ initializing?
+
+ {{{
+ /builder&gt; checkfs -c /builder/
+ haiku-alpha.iso (inode = 2118556), has blocks already set
+ checked 235784 nodes, 0 blocks not allocated, 3072 blocks already set,
+ 3484 blocks could be freed
+         files           186948
+         directories     48015
+         attributes      517
+         attr. dirs      282
+         indices         22
+ }}}
+
+ some snippets from syslog:
+ {{{
+ KERN: bfs: Remove:1696: No such file or directory
+ KERN: bfs: Could not find value in index &quot;last_modified&quot;!
+ KERN: bfs: Oh no, value 2621458 not found in fragments of node 184320...
+ }}}
+ {{{
+ KERN: bfs: KERN: double indirect-&gt;runs-&gt;run: block_run(66, 49596, 4):
+ blocks 4374972 - 4374975 are already set!
+ KERN: bfs: double indirect-&gt;runs-&gt;run: block_run(66, 49600, 4): blocks
+ 4374976 - 4374979 are already set!
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4034">http://dev.haiku-os.org/ticket/4034</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="018069.html">[Haiku-bugs] [Haiku] #3231: File type problems with Paladin in Haiku, not BeOS
+</A></li>
+	<LI>Next message: <A HREF="018071.html">[Haiku-bugs] [Haiku] #4035: Missing symbol in GCC4/2 Hybrid
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18070">[ date ]</a>
+              <a href="thread.html#18070">[ thread ]</a>
+              <a href="subject.html#18070">[ subject ]</a>
+              <a href="author.html#18070">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

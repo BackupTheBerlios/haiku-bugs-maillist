@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4360: KDL during bootscript on waitfor on SMP	x86 machine
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234360%3A%20KDL%20during%20bootscript%20on%20waitfor%20on%20SMP%0A%09x86%20machine&In-Reply-To=%3C043.5910723f0d799dbee1bbf5b39fd6179b%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="020286.html">
+   <LINK REL="Next"  HREF="020289.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4360: KDL during bootscript on waitfor on SMP	x86 machine</H1>
+    <B>phoudoin</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234360%3A%20KDL%20during%20bootscript%20on%20waitfor%20on%20SMP%0A%09x86%20machine&In-Reply-To=%3C043.5910723f0d799dbee1bbf5b39fd6179b%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4360: KDL during bootscript on waitfor on SMP	x86 machine">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Aug 28 12:41:53 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="020286.html">[Haiku-bugs] [Haiku] #4359: CopyRegion() with direct windows broken
+</A></li>
+        <LI>Next message: <A HREF="020289.html">[Haiku-bugs] [Haiku] #4360: KDL during bootscript on waitfor on SMP x86 machine
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20288">[ date ]</a>
+              <a href="thread.html#20288">[ thread ]</a>
+              <a href="subject.html#20288">[ subject ]</a>
+              <a href="author.html#20288">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4360: KDL during bootscript on waitfor on SMP x86 machine
+---------------------------+------------------------------------------------
+ Reporter:  phoudoin       |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  blocker        |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1 development
+Blockedby:                 |    Platform:  x86           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+ Since a few days, any Haiku x86gcc4hybrid (ATA stack) built from trunk
+ goes to KDL during bootscript time: the default desktop screen show up
+ (app_server started) and immediately after this KDL message:
+
+ {{{
+ PANIC: page fault, but interrupts were disabled.
+ Touching address 0x00020036 from eip 0x800d6d79
+
+ Welcome to Kernel Debugging Land...
+ Thread 65 &quot;waitfor&quot;, on CPU 0.
+ kdebug&gt;
+ }}}
+
+ Seen again this morning with a r32762, but it was the case since few days
+ already. Trying every safe options but &quot;disable SMP&quot; changes nothing. With
+ only &quot;disable SMP&quot; option, everything works fine. Except SMP ;-).
+
+ Haiku is installed natively, the machine is a Quad Core 2 Q6600 @ 2.4Ghz,
+ Radeon HD4870 (-&gt; vesa driver), 2 SATA disks (controller in SATA mode),
+ USB Keyboard and mouse, an USB Volito tablet and an USB finger print
+ reader.
+
+ Unfortunatly, my Logitech Illuminated USB keyboard connected to onboard
+ EHCI/UHCI controller doesn't work while in KDL, so I can investigate more
+ from the KDL :-\
+
+ I'll check with a r1a1 raw image tonight.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4360">http://dev.haiku-os.org/ticket/4360</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="020286.html">[Haiku-bugs] [Haiku] #4359: CopyRegion() with direct windows broken
+</A></li>
+	<LI>Next message: <A HREF="020289.html">[Haiku-bugs] [Haiku] #4360: KDL during bootscript on waitfor on SMP x86 machine
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20288">[ date ]</a>
+              <a href="thread.html#20288">[ thread ]</a>
+              <a href="subject.html#20288">[ subject ]</a>
+              <a href="author.html#20288">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

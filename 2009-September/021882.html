@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4606: ld doesn't support -lm
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234606%3A%20ld%20doesn%27t%20support%20-lm&In-Reply-To=%3C053.dd4053a9475caeef7f47fc04d882e751%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="021872.html">
+   <LINK REL="Next"  HREF="021906.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4606: ld doesn't support -lm</H1>
+    <B>austin987</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234606%3A%20ld%20doesn%27t%20support%20-lm&In-Reply-To=%3C053.dd4053a9475caeef7f47fc04d882e751%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4606: ld doesn't support -lm">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Sep 23 02:44:13 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="021872.html">[Haiku-bugs] [Haiku] #4606: ld doesn't support -lm
+</A></li>
+        <LI>Next message: <A HREF="021906.html">[Haiku-bugs] [Haiku] #4606: ld doesn't support -lm
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21882">[ date ]</a>
+              <a href="thread.html#21882">[ thread ]</a>
+              <a href="subject.html#21882">[ subject ]</a>
+              <a href="author.html#21882">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4606: ld doesn't support -lm
+--------------------------+-------------------------------------------------
+  Reporter:  austin987    |       Owner:  axeld    
+      Type:  enhancement  |      Status:  closed   
+  Priority:  normal       |   Milestone:  R1       
+ Component:  - General    |     Version:  R1/alpha1
+Resolution:  invalid      |   Blockedby:           
+  Platform:  All          |    Blocking:           
+--------------------------+-------------------------------------------------
+
+Comment(by austin987):
+
+ Replying to [comment:11 scottmc]:
+ &gt; In cases like this please don't go posting bugs on projects demanding
+ that they fix something so that it works in Haiku.  Please work with
+ HaikuPorts (ports.haiku-files.org) to create a patch and have it reviewed
+ prior to sending it upstream.  We are minority OS and don't need to go
+ around giving other projects a bad impression here.
+
+ There was no demand. Note, I work on wine and this was filed as an
+ enhancement.
+
+ &gt; &lt;rant&gt;We have politely fixed -lm issues with other projects who falsely
+ assumed it to be some sort of standard to use -lm.  Well it's NOT a
+ standard, so they really shouldn't be treating it as such.&lt;/rant&gt;
+ &gt;
+ &gt; Looking through WINE's git, it appears they do in fact use autotools, so
+ a simple AC_CHECK_LIB(cos,libm) (<A HREF="http://tinyurl.com/neyxeb">http://tinyurl.com/neyxeb</A>), and changing
+ all cases of -lm to $LIBM should fix this right up.
+
+ The problem is only partially in configure/configure.ac. The main problem
+ is in tools/winegcc.c, which is a wrapper around gcc for compiling wine
+ code, to avoid name conflicts and other problems compiling windows code
+ brings about. Winegcc can't use autoconf macros, hence, the problem.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4606#comment:13">http://dev.haiku-os.org/ticket/4606#comment:13</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="021872.html">[Haiku-bugs] [Haiku] #4606: ld doesn't support -lm
+</A></li>
+	<LI>Next message: <A HREF="021906.html">[Haiku-bugs] [Haiku] #4606: ld doesn't support -lm
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21882">[ date ]</a>
+              <a href="thread.html#21882">[ thread ]</a>
+              <a href="subject.html#21882">[ subject ]</a>
+              <a href="author.html#21882">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

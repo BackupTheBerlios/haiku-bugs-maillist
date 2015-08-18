@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1764: USB Mouse Freezes after a While
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-February/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231764%3A%20USB%20Mouse%20Freezes%20after%20a%20While&In-Reply-To=%3C052.4487a1f995af8590050a46face0c0466%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="004716.html">
+   <LINK REL="Next"  HREF="004725.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1764: USB Mouse Freezes after a While</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231764%3A%20USB%20Mouse%20Freezes%20after%20a%20While&In-Reply-To=%3C052.4487a1f995af8590050a46face0c0466%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1764: USB Mouse Freezes after a While">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Feb  7 12:21:22 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="004716.html">[Haiku-bugs] [Haiku] #1764: USB Mouse Freezes after a While
+</A></li>
+        <LI>Next message: <A HREF="004725.html">[Haiku-bugs] [Haiku] #1764: USB Mouse Freezes after a While
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4724">[ date ]</a>
+              <a href="thread.html#4724">[ thread ]</a>
+              <a href="subject.html#4724">[ subject ]</a>
+              <a href="author.html#4724">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1764: USB Mouse Freezes after a While
+--------------------------+-------------------------------------------------
+  Reporter:  bonefish     |       Owner:  mmlr          
+      Type:  bug          |      Status:  new           
+  Priority:  normal       |   Milestone:  R1            
+ Component:  Drivers/USB  |     Version:  R1 development
+Resolution:               |    Platform:  All           
+--------------------------+-------------------------------------------------
+Comment (by bonefish):
+
+ int output:
+
+ {{{
+ kdebug&gt; int
+ int   0, enabled 1, handled        0, unhandled        0
+         0x80090040
+ int   1, enabled 1, handled        9, unhandled        0, ACTIVE
+         0x9080ed4c
+ int  10, enabled 2, handled     4727, unhandled        0
+         0xa3288178      0x802a8fe0
+ int  11, enabled 6, handled       13, unhandled      273
+         0xa3288178      0xa3288178      0xa3288178      0xa3288178
+ 0xa3248b24      0x80456820
+ int  12, enabled 1, handled       17, unhandled        0
+         0x9080ed4c
+ int  14, enabled 1, handled      319, unhandled        0
+         0x802fdac8
+ int  15, enabled 1, handled        0, unhandled        0
+         0x802fdac8
+ int 219, enabled 1, handled   106428, unhandled        0
+         0x8008f138
+ int 221, enabled 1, handled    30338, unhandled        0
+         0x8008f14c
+ int 222, enabled 1, handled        0, unhandled        0
+         0x8008f174
+ int 223, enabled 1, handled        0, unhandled        0
+         0x8008f160
+ kdebug&gt; ls 0xa3288178
+ 0xa3288178 = InterruptHandler__4UHCIPv + 0x0 (/boot/beos/system/add-
+ ons/kernel/busses/usb/uhci)
+ kdebug&gt; ls 0xa3248b24
+ 0xa3248b24 = InterruptHandler__4EHCIPv + 0x0 (/boot/beos/system/add-
+ ons/kernel/busses/usb/ehci)
+ kdebug&gt; ls 0x80456820
+ 0x80456820 = em_intr_fast + 0x0 (/boot/beos/system/add-
+ ons/kernel/drivers/dev/net/ipro1000)
+ }}}
+
+ I'll start with removing the ipro1000. The problem isn't that quickly
+ reproducible, though. With &quot;after a while&quot; I mean like half an hour or
+ more.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1764#comment:3">http://dev.haiku-os.org/ticket/1764#comment:3</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="004716.html">[Haiku-bugs] [Haiku] #1764: USB Mouse Freezes after a While
+</A></li>
+	<LI>Next message: <A HREF="004725.html">[Haiku-bugs] [Haiku] #1764: USB Mouse Freezes after a While
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4724">[ date ]</a>
+              <a href="thread.html#4724">[ thread ]</a>
+              <a href="subject.html#4724">[ subject ]</a>
+              <a href="author.html#4724">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

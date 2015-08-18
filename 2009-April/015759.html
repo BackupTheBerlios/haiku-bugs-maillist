@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3110: [kernel] PANIC: page still has	mappings
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233110%3A%20%5Bkernel%5D%20PANIC%3A%20page%20still%20has%0A%09mappings&In-Reply-To=%3C049.8adafef60c5b7348fcfa264133296ed1%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="015758.html">
+   <LINK REL="Next"  HREF="015760.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3110: [kernel] PANIC: page still has	mappings</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233110%3A%20%5Bkernel%5D%20PANIC%3A%20page%20still%20has%0A%09mappings&In-Reply-To=%3C049.8adafef60c5b7348fcfa264133296ed1%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3110: [kernel] PANIC: page still has	mappings">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Apr  7 01:29:16 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="015758.html">[Haiku-bugs] [Haiku] #3110: [kernel] PANIC: page still has	mappings
+</A></li>
+        <LI>Next message: <A HREF="015760.html">[Haiku-bugs] [Haiku] #3554: Time out error if i copy Haiku from	usb to HDD
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15759">[ date ]</a>
+              <a href="thread.html#15759">[ thread ]</a>
+              <a href="subject.html#15759">[ subject ]</a>
+              <a href="author.html#15759">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3110: [kernel] PANIC: page still has mappings
+---------------------------+------------------------------------------------
+ Reporter:  diver          |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1 development
+Blockedby:                 |    Platform:  All           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+
+Comment(by anevilyak):
+
+ Further info from debug session with Ingo for reference:
+
+ {{{
+ kdebug&gt; page 0x8236b0c8
+ PAGE: 0x8236b0c8
+ queue_next,prev: 0x8285e468, 0x823856d0
+ physical_number: c205
+ cache:           0x812f1a2c
+ cache_offset:    3921
+ cache_next:      0x00000000
+ type:            0
+ state:           active
+ wired_count:     0
+ usage_count:     2
+ busy_writing:    0
+ area mappings:
+   0x812afe60 (0x1697)
+ kdebug&gt; area 0x1697
+ AREA: 0x812afe60
+ name:           'libtracker.so_seg0ro'
+ owner:          0xb2
+ id:             0x1697
+ base:           0x595000
+ size:           0x195000
+ protection:     0x15
+ wiring:         0x0
+ memory_type:    0x0
+ cache:          0x81272d14
+ cache_type:     vnode
+ cache_offset:   0x0
+ cache_next:     0x00000000
+ cache_prev:     0x00000000
+ page mappings:  285
+ kdebug&gt; cache_tree 0x81272d14
+ 0x8127f348
+   0x81281364
+   0x8128b554
+   0x812a65d0
+   0x812db554
+   0x81272d14 &lt;--
+   0x81272b24
+ kdebug&gt; area address 0x812ff0a0
+ AREA: 0x812ff0a0
+ name:           'heap'
+ owner:          0x299c
+ id:             0x4b015
+ base:           0x18000000
+ size:           0x1720000
+ protection:     0x33
+ wiring:         0x0
+ memory_type:    0x0
+ cache:          0x812f1a2c
+ cache_type:     RAM
+ cache_offset:   0x0
+ cache_next:     0x00000000
+ cache_prev:     0x00000000
+ page mappings:  0
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3110#comment:10">http://dev.haiku-os.org/ticket/3110#comment:10</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="015758.html">[Haiku-bugs] [Haiku] #3110: [kernel] PANIC: page still has	mappings
+</A></li>
+	<LI>Next message: <A HREF="015760.html">[Haiku-bugs] [Haiku] #3554: Time out error if i copy Haiku from	usb to HDD
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15759">[ date ]</a>
+              <a href="thread.html#15759">[ thread ]</a>
+              <a href="subject.html#15759">[ subject ]</a>
+              <a href="author.html#15759">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

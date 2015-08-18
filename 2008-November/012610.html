@@ -1,0 +1,453 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3156: build fails r28677
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233156%3A%20build%20fails%20r28677&In-Reply-To=%3C042.091997b1a83da24bed2e2ac02b97d10a%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012623.html">
+   <LINK REL="Next"  HREF="012612.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3156: build fails r28677</H1>
+    <B>bbjimmy</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233156%3A%20build%20fails%20r28677&In-Reply-To=%3C042.091997b1a83da24bed2e2ac02b97d10a%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3156: build fails r28677">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Nov 17 06:45:43 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012623.html">[Haiku-bugs] [Haiku] #3155: Place initial mouse pointer at deskbar instead of middle of screen
+</A></li>
+        <LI>Next message: <A HREF="012612.html">[Haiku-bugs] [Haiku] #3156: build fails r28677
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12610">[ date ]</a>
+              <a href="thread.html#12610">[ thread ]</a>
+              <a href="subject.html#12610">[ subject ]</a>
+              <a href="author.html#12610">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3156: build fails r28677
+--------------------------+-------------------------------------------------
+ Reporter:  bbjimmy       |       Owner:  bonefish      
+     Type:  bug           |      Status:  new           
+ Priority:  normal        |   Milestone:  R1            
+Component:  Build System  |     Version:  R1 development
+Blockedby:                |    Platform:  All           
+ Blocking:                |  
+--------------------------+-------------------------------------------------
+ jam -q using haiku  r28677 installed on a real partition:
+
+ Cc generated/objects/haiku/x86/release/bin/network/ftpd/ftpcmd.o
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:138: `USER' undeclared here
+ (not in a function)
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:138: initializer element is not
+ constant
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:138: (near initialization for
+ `cmdtab[0].token')
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:139: `PASS' undeclared here
+ (not in a function)
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:139: initializer element is not
+ constant
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:139: (near initialization for
+ `cmdtab[1].token')
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:140: `ACCT' undeclared here
+ (not in a function)
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:140: initializer element is not
+ constant
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:140: (near initialization for
+ `cmdtab[2].token')
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:141: `SMNT' undeclared here
+ (not in a function)
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:141: initializer element is not
+ constant
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:141: (near initialization for
+ `cmdtab[3].token')
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:142: `REIN' undeclared here
+ (not in a function)
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:142: initializer element is not
+ constant
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:142: (near initialization for
+ `cmdtab[4].token')
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:143: `QUIT' undeclared here
+ (not in a function)
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:143: initializer element is not
+ constant
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:143: (near initialization for
+ `cmdtab[5].token')
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:144: `PORT' undeclared here
+ (not in a function)
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:144: initializer element is not
+ constant
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:144: (near initialization for
+ `cmdtab[6].token')
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:145: `LPRT' undeclared here
+ (not in a function)
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:145: initializer element is not
+ constant
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:145: (near initialization for
+ `cmdtab[7].token')
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:146: `EPRT' undeclared here
+ (not in a function)
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:146: initializer element is not
+ constant
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:146: (near initialization for
+ `cmdtab[8].token')
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:147: `PASV' undeclared here
+ (not in a function)
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:147: initializer element is not
+ constant
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:147: (near initialization for
+ `cmdtab[9].token')
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:148: `LPSV' undeclared here
+ (not in a function)
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:148: initializer element is not
+ constant
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:148: (near initialization for
+ `cmdtab[10].token')
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:149: `EPSV' undeclared here
+ (not in a function)
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:149: initializer element is not
+ constant
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:149: (near initialization for
+ `cmdtab[11].token')
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:150: `TYPE' undeclared here
+ (not in a function)
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:150: initializer element is not
+ constant
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:150: (near initialization for
+ `cmdtab[12].token')
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:151: `STRU' undeclared here
+ (not in a function)
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:151: initializer element is not
+ constant
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:151: (near initialization for
+ `cmdtab[13].token')
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:152: `MODE' undeclared here
+ (not in a function)
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:152: initializer element is not
+ constant
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:152: (near initialization for
+ `cmdtab[14].token')
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:153: `RETR' undeclared here
+ (not in a function)
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:153: initializer element is not
+ constant
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:153: (near initialization for
+ `cmdtab[15].token')
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:154: `STOR' undeclared here
+ (not in a function)
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:154: initializer element is not
+ constant
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:154: (near initialization for
+ `cmdtab[16].token')
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:155: `APPE' undeclared here
+ (not in a function)
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:155: initializer element is not
+ constant
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:155: (near initialization for
+ `cmdtab[17].token')
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:156: `MLFL' undeclared here
+ (not in a function)
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:156: initializer element is not
+ constant
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:156: (near initialization for
+ `cmdtab[18].token')
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:157: `MAIL' undeclared here
+ (not in a function)
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:157: initializer element is not
+ constant
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:157: (near initialization for
+ `cmdtab[19].token')
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:158: `MSND' undeclared here
+ (not in a function)
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:158: initializer element is not
+ constant
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:158: (near initialization for
+ `cmdtab[20].token')
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:159: `MSOM' undeclared here
+ (not in a function)
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:159: initializer element is not
+ constant
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:159: (near initialization for
+ `cmdtab[21].token')
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:160: `MSAM' undeclared here
+ (not in a function)
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:160: initializer element is not
+ constant
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:160: (near initialization for
+ `cmdtab[22].token')
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:161: `MRSQ' undeclared here
+ (not in a function)
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:161: initializer element is not
+ constant
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:161: (near initialization for
+ `cmdtab[23].token')
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:162: `MRCP' undeclared here
+ (not in a function)
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:162: initializer element is not
+ constant
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:162: (near initialization for
+ `cmdtab[24].token')
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:163: `ALLO' undeclared here
+ (not in a function)
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:163: initializer element is not
+ constant
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:163: (near initialization for
+ `cmdtab[25].token')
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:164: `REST' undeclared here
+ (not in a function)
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:164: initializer element is not
+ constant
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:164: (near initialization for
+ `cmdtab[26].token')
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:165: `RNFR' undeclared here
+ (not in a function)
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:165: initializer element is not
+ constant
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:165: (near initialization for
+ `cmdtab[27].token')
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:166: `RNTO' undeclared here
+ (not in a function)
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:166: initializer element is not
+ constant
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:166: (near initialization for
+ `cmdtab[28].token')
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:167: `ABOR' undeclared here
+ (not in a function)
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:167: initializer element is not
+ constant
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:167: (near initialization for
+ `cmdtab[29].token')
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:168: `DELE' undeclared here
+ (not in a function)
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:168: initializer element is not
+ constant
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:168: (near initialization for
+ `cmdtab[30].token')
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:169: `CWD' undeclared here (not
+ in a function)
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:169: initializer element is not
+ constant
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:169: (near initialization for
+ `cmdtab[31].token')
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:170: `CWD' undeclared here (not
+ in a function)
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:170: initializer element is not
+ constant
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:170: (near initialization for
+ `cmdtab[32].token')
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:171: `LIST' undeclared here
+ (not in a function)
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:171: initializer element is not
+ constant
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:171: (near initialization for
+ `cmdtab[33].token')
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:172: `NLST' undeclared here
+ (not in a function)
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:172: initializer element is not
+ constant
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:172: (near initialization for
+ `cmdtab[34].token')
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:173: `SITE' undeclared here
+ (not in a function)
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:173: initializer element is not
+ constant
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:173: (near initialization for
+ `cmdtab[35].token')
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:174: `SYST' undeclared here
+ (not in a function)
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:174: initializer element is not
+ constant
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:174: (near initialization for
+ `cmdtab[36].token')
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:175: `FEAT' undeclared here
+ (not in a function)
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:175: initializer element is not
+ constant
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:175: (near initialization for
+ `cmdtab[37].token')
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:176: `STAT' undeclared here
+ (not in a function)
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:176: initializer element is not
+ constant
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:176: (near initialization for
+ `cmdtab[38].token')
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:177: `HELP' undeclared here
+ (not in a function)
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:177: initializer element is not
+ constant
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:177: (near initialization for
+ `cmdtab[39].token')
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:178: `NOOP' undeclared here
+ (not in a function)
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:178: initializer element is not
+ constant
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:178: (near initialization for
+ `cmdtab[40].token')
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:179: `MKD' undeclared here (not
+ in a function)
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:179: initializer element is not
+ constant
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:179: (near initialization for
+ `cmdtab[41].token')
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:180: `MKD' undeclared here (not
+ in a function)
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:180: initializer element is not
+ constant
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:180: (near initialization for
+ `cmdtab[42].token')
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:181: `RMD' undeclared here (not
+ in a function)
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:181: initializer element is not
+ constant
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:181: (near initialization for
+ `cmdtab[43].token')
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:182: `RMD' undeclared here (not
+ in a function)
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:182: initializer element is not
+ constant
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:182: (near initialization for
+ `cmdtab[44].token')
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:183: `PWD' undeclared here (not
+ in a function)
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:183: initializer element is not
+ constant
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:183: (near initialization for
+ `cmdtab[45].token')
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:184: `PWD' undeclared here (not
+ in a function)
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:184: initializer element is not
+ constant
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:184: (near initialization for
+ `cmdtab[46].token')
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:185: `CDUP' undeclared here
+ (not in a function)
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:185: initializer element is not
+ constant
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:185: (near initialization for
+ `cmdtab[47].token')
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:186: `CDUP' undeclared here
+ (not in a function)
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:186: initializer element is not
+ constant
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:186: (near initialization for
+ `cmdtab[48].token')
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:187: `STOU' undeclared here
+ (not in a function)
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:187: initializer element is not
+ constant
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:187: (near initialization for
+ `cmdtab[49].token')
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:188: `SIZE' undeclared here
+ (not in a function)
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:188: initializer element is not
+ constant
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:188: (near initialization for
+ `cmdtab[50].token')
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:189: `MDTM' undeclared here
+ (not in a function)
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:189: initializer element is not
+ constant
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:189: (near initialization for
+ `cmdtab[51].token')
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:194: `MDFIVE' undeclared here
+ (not in a function)
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:194: initializer element is not
+ constant
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:194: (near initialization for
+ `sitetab[0].token')
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:195: `UMASK' undeclared here
+ (not in a function)
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:195: initializer element is not
+ constant
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:195: (near initialization for
+ `sitetab[1].token')
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:196: `IDLE' undeclared here
+ (not in a function)
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:196: initializer element is not
+ constant
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:196: (near initialization for
+ `sitetab[2].token')
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:197: `CHMOD' undeclared here
+ (not in a function)
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:197: initializer element is not
+ constant
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:197: (near initialization for
+ `sitetab[3].token')
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:198: `HELP' undeclared here
+ (not in a function)
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:198: initializer element is not
+ constant
+ /BeO51/haiku/src/bin/network/ftpd/ftpcmd.y:198: (near initialization for
+ `sitetab[4].token')
+
+ gcc -O2 -Wall -Wno-trigraphs -Wmissing-prototypes -Wpointer-arith -Wcast-
+ align -Wsign-compare -Wno-multichar -nostdinc -c
+ &quot;generated/objects/haiku/x86/common/bin/network/ftpd/ftpcmd.c&quot; -D__HAIKU__
+ -DHAIKU_DISTRO_COMPATIBILITY_DEFAULT -D__INTEL__ -DARCH_x86
+ -DBOOT_ARCHIVE_IMAGE_OFFSET=270 -D_BEOS_R5_COMPATIBLE_
+ -DHAIKU_TARGET_PLATFORM_HAIKU -Ibuild/user_config_headers
+ -Ibuild/config_headers -Isrc/bin/network/ftpd
+ -Igenerated/objects/common/bin/network/ftpd
+ -Igenerated/objects/haiku_host/x86/common/bin/network/ftpd
+ -Igenerated/objects/haiku/x86/common/bin/network/ftpd -I-
+ -Iheaders/compatibility/bsd -Isrc/bin/network/ftpd
+ -Iheaders/build/gcc-2.95.3 -Iheaders -Iheaders/posix -Iheaders/gnu
+ -Iheaders/glibc -Iheaders/os -Iheaders/os/add-ons -Iheaders/os/add-
+ ons/file_system -Iheaders/os/add-ons/graphics -Iheaders/os/add-
+ ons/input_server -Iheaders/os/add-ons/registrar -Iheaders/os/add-
+ ons/screen_saver -Iheaders/os/add-ons/tracker -Iheaders/os/app
+ -Iheaders/os/device -Iheaders/os/drivers -Iheaders/os/game
+ -Iheaders/os/interface -Iheaders/os/kernel -Iheaders/os/media
+ -Iheaders/os/mail -Iheaders/os/midi -Iheaders/os/midi2 -Iheaders/os/net
+ -Iheaders/os/opengl -Iheaders/os/storage -Iheaders/os/support
+ -Iheaders/os/translation -Iheaders/private/. -Iheaders/cpp -o
+ &quot;generated/objects/haiku/x86/release/bin/network/ftpd/ftpcmd.o&quot; ;
+
+ ...failed Cc generated/objects/haiku/x86/release/bin/network/ftpd/ftpcmd.o
+ ...
+ ...skipped ftpd for lack of &lt;src!bin!network!ftpd&gt;ftpcmd.o...
+ ...skipped &lt;HaikuImage&gt;haiku.image-copy-files-dummy-beos/bin for lack of
+ ftpd...
+ ...skipped haiku.image for lack of &lt;HaikuImage&gt;haiku.image-copy-files...
+ ...failed updating 1 target(s)...
+ ...skipped 3 target(s)...
+ ...updated 582 target(s)...
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3156">http://dev.haiku-os.org/ticket/3156</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012623.html">[Haiku-bugs] [Haiku] #3155: Place initial mouse pointer at deskbar instead of middle of screen
+</A></li>
+	<LI>Next message: <A HREF="012612.html">[Haiku-bugs] [Haiku] #3156: build fails r28677
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12610">[ date ]</a>
+              <a href="thread.html#12610">[ thread ]</a>
+              <a href="subject.html#12610">[ subject ]</a>
+              <a href="author.html#12610">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3077: Missed keystrokes and repeating keys on USB Keyboard
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-February/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233077%3A%20Missed%20keystrokes%20and%20repeating%0A%20keys%20on%20USB%20Keyboard&In-Reply-To=%3C052.cd3d34a8665c41ee8b2027a53ad57753%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="014300.html">
+   <LINK REL="Next"  HREF="014302.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3077: Missed keystrokes and repeating keys on USB Keyboard</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233077%3A%20Missed%20keystrokes%20and%20repeating%0A%20keys%20on%20USB%20Keyboard&In-Reply-To=%3C052.cd3d34a8665c41ee8b2027a53ad57753%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3077: Missed keystrokes and repeating keys on USB Keyboard">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Feb  6 23:11:06 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="014300.html">[Haiku-bugs] [Haiku] #3077: Missed keystrokes and repeating keys on USB Keyboard
+</A></li>
+        <LI>Next message: <A HREF="014302.html">[Haiku-bugs] [Haiku] #3077: Missed keystrokes and repeating keys on USB Keyboard
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14301">[ date ]</a>
+              <a href="thread.html#14301">[ thread ]</a>
+              <a href="subject.html#14301">[ subject ]</a>
+              <a href="author.html#14301">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3077: Missed keystrokes and repeating keys on USB Keyboard
+-------------------------+--------------------------------------------------
+ Reporter:  tigerdog     |       Owner:  mmlr          
+     Type:  bug          |      Status:  assigned      
+ Priority:  normal       |   Milestone:  R1            
+Component:  Drivers/USB  |     Version:  R1 development
+Blockedby:               |    Platform:  All           
+ Blocking:               |  
+-------------------------+--------------------------------------------------
+
+Comment(by anevilyak):
+
+ BeOS r5 doesn't actually try to take control of it, it just uses it
+ directly in via the BIOS. The other OSes in your list are using the full
+ USB HID spec, which your keyboard seems to support properly. To make a
+ long story short, in USB there are two different protocol specs for input
+ devices. One is very primitive (what mmlr referred to as the &quot;boot&quot;
+ protocol), and only supports simple keyboards and two button mice. This is
+ what Haiku currently supports for keyboards. The other is the full HID
+ spec, which is more like 150 pages, works quite differently, but if
+ properly implemented supports any and every USB input device known to man
+ (joysticks, 10 button programmable mice, you name it). Most other OSes
+ will be speaking the latter, and as such might not see a problem if your
+ keyboard doesn't correctly speak boot.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3077#comment:10">http://dev.haiku-os.org/ticket/3077#comment:10</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="014300.html">[Haiku-bugs] [Haiku] #3077: Missed keystrokes and repeating keys on USB Keyboard
+</A></li>
+	<LI>Next message: <A HREF="014302.html">[Haiku-bugs] [Haiku] #3077: Missed keystrokes and repeating keys on USB Keyboard
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14301">[ date ]</a>
+              <a href="thread.html#14301">[ thread ]</a>
+              <a href="subject.html#14301">[ subject ]</a>
+              <a href="author.html#14301">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

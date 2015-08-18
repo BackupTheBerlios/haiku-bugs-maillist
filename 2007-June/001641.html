@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #845: Haiku fails to build on x86_64 Linux
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23845%3A%20Haiku%20fails%20to%20build%20on%20x86_64%20Linux&In-Reply-To=%3C058.185d833c5f31d25f1105905833dfab01%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001640.html">
+   <LINK REL="Next"  HREF="001642.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #845: Haiku fails to build on x86_64 Linux</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23845%3A%20Haiku%20fails%20to%20build%20on%20x86_64%20Linux&In-Reply-To=%3C058.185d833c5f31d25f1105905833dfab01%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #845: Haiku fails to build on x86_64 Linux">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Jun 10 23:44:31 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001640.html">[Haiku-bugs] [Haiku] #845: Haiku fails to build on x86_64 Linux
+</A></li>
+        <LI>Next message: <A HREF="001642.html">[Haiku-bugs] [Haiku] #1186: crash in _DemuxBroadcast
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1641">[ date ]</a>
+              <a href="thread.html#1641">[ thread ]</a>
+              <a href="subject.html#1641">[ subject ]</a>
+              <a href="author.html#1641">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#845: Haiku fails to build on x86_64 Linux
+-----------------------------+----------------------------------------------
+  Reporter:  johndrinkwater  |       Owner:  bonefish      
+      Type:  bug             |      Status:  new           
+  Priority:  normal          |   Milestone:  R1            
+ Component:  Build System    |     Version:  R1 development
+Resolution:                  |    Platform:  x64           
+-----------------------------+----------------------------------------------
+Comment (by bonefish):
+
+ Replying to [comment:10 korli]:
+ &gt; I tried to build and indeed I had to export &quot;-D__INTEL__ -fPIC&quot; as
+ CCFLAGS.
+
+ Why is -fPIC needed?
+
+ &gt; There are a lot of issues identified in the following patch.
+
+ Please don't apply the patch as is. The *int32* -&gt; *int64* changes -- or
+ more generally, all casts from pointers to integers -- should rather use
+ addr_t or, in the FS Shell code, fssh_addr_t. The definition of
+ fssh_addr_t obviously needs to be conditional. I guess it would make sense
+ to introduce a macro somewhere, which tells whether this is a 64 bit
+ architecture.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/845#comment:11">http://dev.haiku-os.org/ticket/845#comment:11</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001640.html">[Haiku-bugs] [Haiku] #845: Haiku fails to build on x86_64 Linux
+</A></li>
+	<LI>Next message: <A HREF="001642.html">[Haiku-bugs] [Haiku] #1186: crash in _DemuxBroadcast
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1641">[ date ]</a>
+              <a href="thread.html#1641">[ thread ]</a>
+              <a href="subject.html#1641">[ subject ]</a>
+              <a href="author.html#1641">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

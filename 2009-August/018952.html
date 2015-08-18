@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4171: SoundPlay is crashing when unflattening	a BMessage.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234171%3A%20SoundPlay%20is%20crashing%20when%20unflattening%0A%09a%20BMessage.&In-Reply-To=%3C038.484764ed1f1d45f0e71b13cb90123409%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="018951.html">
+   <LINK REL="Next"  HREF="019120.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4171: SoundPlay is crashing when unflattening	a BMessage.</H1>
+    <B>bga</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234171%3A%20SoundPlay%20is%20crashing%20when%20unflattening%0A%09a%20BMessage.&In-Reply-To=%3C038.484764ed1f1d45f0e71b13cb90123409%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4171: SoundPlay is crashing when unflattening	a BMessage.">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Aug  1 18:50:30 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="018951.html">[Haiku-bugs] [Haiku] #2934: Menu preferences have too big window
+</A></li>
+        <LI>Next message: <A HREF="019120.html">[Haiku-bugs] [Haiku] #4171: SoundPlay is crashing when unflattening a BMessage.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18952">[ date ]</a>
+              <a href="thread.html#18952">[ thread ]</a>
+              <a href="subject.html#18952">[ subject ]</a>
+              <a href="author.html#18952">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4171: SoundPlay is crashing when unflattening a BMessage.
+----------------------------------+-----------------------------------------
+ Reporter:  bga                   |       Owner:  axeld         
+     Type:  bug                   |      Status:  new           
+ Priority:  normal                |   Milestone:  R1            
+Component:  Kits/Application Kit  |     Version:  R1 development
+Blockedby:                        |    Platform:  All           
+ Blocking:                        |  
+----------------------------------+-----------------------------------------
+ Maybe this could be related to the recent change introduced by r32039?
+
+ {{{
+ [Switching to team /boot/apps/SoundPlay/SoundPlay (458) thread SoundPlay
+ (458)]
+ 0xffff012c in ?? ()
+ (gdb) bt
+ #0  0xffff012c in ?? ()
+ #1  0x00000000 in ?? ()
+ #2  0x00000004 in ?? ()
+ #3  0x004a45e3 in BMemoryIO::ReadAt () from /boot/system/lib/libbe.so
+ #4  0x004a429a in BPositionIO::Read () from /boot/system/lib/libbe.so
+ #5  0x003954f0 in BPrivate::MessageAdapter::_UnflattenR5Message ()
+    from /boot/system/lib/libbe.so
+ #6  0x00394944 in BPrivate::MessageAdapter::Unflatten ()
+    from /boot/system/lib/libbe.so
+ #7  0x0038fbea in BMessage::Unflatten () from /boot/system/lib/libbe.so
+ #8  0x00393d38 in BMessage::FindMessage () from /boot/system/lib/libbe.so
+ #9  0x00393cbe in BMessage::FindMessage () from /boot/system/lib/libbe.so
+ #10 0x0024f133 in SoundPlayController::RetrievePreference ()
+ #11 0x00b54bdf in DeskbarView::Archive ()
+    from /boot/apps/SoundPlay/Plugins/DeskbarFFT
+ #12 0x003c8ee4 in BDeskbar::AddItem () from /boot/system/lib/libbe.so
+ #13 0x00b54163 in getplugin () from
+ /boot/apps/SoundPlay/Plugins/DeskbarFFT
+ #14 0x00258613 in aa3zzzzzzzzzzzzzzzzzzzzzzzzzzzzzz ()
+ #15 0x00238a20 in aaez ()
+ #16 0x00236dd4 in aahzzz ()
+ #17 0x00105b1a in runtime_loader () from /boot/system/runtime_loader
+ #18 0x7ffeefec in ?? ()
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4171">http://dev.haiku-os.org/ticket/4171</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="018951.html">[Haiku-bugs] [Haiku] #2934: Menu preferences have too big window
+</A></li>
+	<LI>Next message: <A HREF="019120.html">[Haiku-bugs] [Haiku] #4171: SoundPlay is crashing when unflattening a BMessage.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18952">[ date ]</a>
+              <a href="thread.html#18952">[ thread ]</a>
+              <a href="subject.html#18952">[ subject ]</a>
+              <a href="author.html#18952">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

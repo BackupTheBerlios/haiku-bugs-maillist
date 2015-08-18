@@ -1,0 +1,153 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3595: Problems with FireWare controller on HP	Compaq NX7400
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233595%3A%20Problems%20with%20FireWare%20controller%20on%20HP%0A%09Compaq%20NX7400&In-Reply-To=%3C043.b161c03ca60834d0c1910e1882a33f4d%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="015298.html">
+   <LINK REL="Next"  HREF="015305.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3595: Problems with FireWare controller on HP	Compaq NX7400</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233595%3A%20Problems%20with%20FireWare%20controller%20on%20HP%0A%09Compaq%20NX7400&In-Reply-To=%3C043.b161c03ca60834d0c1910e1882a33f4d%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3595: Problems with FireWare controller on HP	Compaq NX7400">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Mar 22 21:46:37 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="015298.html">[Haiku-bugs] [Haiku] #3308: Possible floating point failures in IEEE 754 tests
+</A></li>
+        <LI>Next message: <A HREF="015305.html">[Haiku-bugs] [Haiku] #3595: Problems with FireWare controller on HP Compaq NX7400
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15299">[ date ]</a>
+              <a href="thread.html#15299">[ thread ]</a>
+              <a href="subject.html#15299">[ subject ]</a>
+              <a href="author.html#15299">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3595: Problems with FireWare controller on HP Compaq NX7400
+------------------------------+---------------------------------------------
+ Reporter:  siarzhuk          |       Owner:  absabs     
+     Type:  bug               |      Status:  new        
+ Priority:  normal            |   Milestone:  Unscheduled
+Component:  Drivers/FireWire  |     Version:             
+ Keywords:                    |   Blockedby:             
+ Platform:  All               |    Blocking:             
+------------------------------+---------------------------------------------
+ '''Tested configuration:'''
+
+ 1) HP Compaq NX7400 Notebook.
+
+ 2) Haiku r29625.
+
+ '''The Problem description:'''
+
+ Haiku freeze on boot. Captured system log shows that it was stopped during
+ some FireWare stuff tracing. The &quot;int&quot; command in KDL shows extra large
+ amount of handled interrupts at the interrupt line attached to FireWare
+ controller. Removing fireware bus manager &quot;solves&quot; the boot problem and
+ allows Haiku to work normally.
+
+ Result of int KDL command in case of failed boot process:
+
+ {{{
+ kdebug&gt; int
+ int   1, enabled 1, handled       27, unhandled        0, ACTIVE
+         ps2:ps2_interrupt (0x838e75c0), data 0x00000000
+ int  10, enabled 7, handled 10160925, unhandled        0
+         firewire:fwohci_intr (0x83ad0fcc), data 0x81d29000
+         intel_extreme:intel_interrupt_handler__FPv (0x80775d70), data
+ 0x8106a4d0
+         ahci:Interrupt__14AHCIControllerPv (0x805b4c70), data 0x80fb90cc
+         ehci:InterruptHandler__4EHCIPv (0x805f7b0c), data 0x80fb7440
+         uhci:InterruptHandler__4UHCIPv (0x8074d600), data 0x80f936d8
+         uhci:InterruptHandler__4UHCIPv (0x8074d600), data 0x80f9336c
+         broadcom440x:intr_wrapper (0x807d5a6c), data 0x81048f28
+ int  11, enabled 2, handled        9, unhandled        0
+         uhci:InterruptHandler__4UHCIPv (0x8074d600), data 0x80f935b4
+         uhci:InterruptHandler__4UHCIPv (0x8074d600), data 0x80f93490
+ int  12, enabled 1, handled        9, unhandled        0
+         ps2:ps2_interrupt (0x838e75c0), data 0x00000000
+ int  14, enabled 1, handled       52, unhandled        0
+         ide_adapter:ide_adapter_inthand (0x80618a84), data 0x80fb8070
+ int  15, enabled 1, handled        0, unhandled        0
+         ide_adapter:ide_adapter_inthand (0x80618a84), data 0x80fb80a8
+ int 219, enabled 1, handled    25227, unhandled        0
+         kernel_x86:apic_timer_interrupt (0x800d33e8), data 0x00000000
+ kdebug&gt;
+ }}}
+
+ Results of int KDL command in case fireware bus manager module is removed:
+
+
+ {{{
+ kdebug&gt; int
+ int   1, enabled 1, handled        9, unhandled        0, ACTIVE
+         ps2:ps2_interrupt (0x838e75c0), data 0x00000000
+ int  10, enabled 6, handled    19199, unhandled        0
+         intel_extreme:intel_interrupt_handler__FPv (0x80775d70), data
+ 0x8106a4d0
+         ahci:Interrupt__14AHCIControllerPv (0x805b4c70), data 0x80fb90cc
+         ehci:InterruptHandler__4EHCIPv (0x805f7b0c), data 0x80fb7440
+         uhci:InterruptHandler__4UHCIPv (0x8074d600), data 0x80f936d8
+         uhci:InterruptHandler__4UHCIPv (0x8074d600), data 0x80f9336c
+         broadcom440x:intr_wrapper (0x807d5a6c), data 0x81048f00
+ int  11, enabled 2, handled     1115, unhandled        0
+         uhci:InterruptHandler__4UHCIPv (0x8074d600), data 0x80f935b4
+         uhci:InterruptHandler__4UHCIPv (0x8074d600), data 0x80f93490
+ int  12, enabled 1, handled       66, unhandled        0
+         ps2:ps2_interrupt (0x838e75c0), data 0x00000000
+ int  14, enabled 1, handled      181, unhandled        0
+         ide_adapter:ide_adapter_inthand (0x80618a84), data 0x80fb8070
+ int  15, enabled 1, handled        0, unhandled        0
+         ide_adapter:ide_adapter_inthand (0x80618a84), data 0x80fb80a8
+ int 219, enabled 1, handled    17348, unhandled        0
+         kernel_x86:apic_timer_interrupt (0x800d33e8), data 0x00000000
+ kdebug&gt; continue
+
+ }}}
+
+ Note the count of handled interrupts for line 10 in both cases.
+
+ '''Note:'''
+
+ This notebook will be available for full testing until 10 April 2009.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3595">http://dev.haiku-os.org/ticket/3595</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="015298.html">[Haiku-bugs] [Haiku] #3308: Possible floating point failures in IEEE 754 tests
+</A></li>
+	<LI>Next message: <A HREF="015305.html">[Haiku-bugs] [Haiku] #3595: Problems with FireWare controller on HP Compaq NX7400
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15299">[ date ]</a>
+              <a href="thread.html#15299">[ thread ]</a>
+              <a href="subject.html#15299">[ subject ]</a>
+              <a href="author.html#15299">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

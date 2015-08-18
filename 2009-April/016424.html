@@ -1,0 +1,141 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3794: HDA driver detects onboard chip but produces no sound
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233794%3A%20HDA%20driver%20detects%20onboard%20chip%20but%0A%20produces%20no%20sound&In-Reply-To=%3C049.cb0871233ea29a1396eb3a592eaa215b%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="016348.html">
+   <LINK REL="Next"  HREF="016425.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3794: HDA driver detects onboard chip but produces no sound</H1>
+    <B>korli</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233794%3A%20HDA%20driver%20detects%20onboard%20chip%20but%0A%20produces%20no%20sound&In-Reply-To=%3C049.cb0871233ea29a1396eb3a592eaa215b%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3794: HDA driver detects onboard chip but produces no sound">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Apr 20 22:16:42 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="016348.html">[Haiku-bugs] [Haiku] #3794: HDA driver detects onboard chip but	produces no sound
+</A></li>
+        <LI>Next message: <A HREF="016425.html">[Haiku-bugs] [Haiku] #3794: HDA driver detects onboard chip but produces no sound
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16424">[ date ]</a>
+              <a href="thread.html#16424">[ thread ]</a>
+              <a href="subject.html#16424">[ subject ]</a>
+              <a href="author.html#16424">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3794: HDA driver detects onboard chip but produces no sound
+-------------------------------+--------------------------------------------
+ Reporter:  adamk              |       Owner:  axeld         
+     Type:  bug                |      Status:  new           
+ Priority:  normal             |   Milestone:  R1            
+Component:  Drivers/Audio/HDA  |     Version:  R1 development
+Blockedby:                     |    Platform:  All           
+ Blocking:                     |  
+-------------------------------+--------------------------------------------
+Changes (by korli):
+
+  * component:  - General =&gt; Drivers/Audio/HDA
+
+
+Old description:
+
+&gt;<i> The HDA driver seems to have recently been extended to support my intel
+</I>&gt;<i> sound chip, but I'm not getting any audio output from any of the four
+</I>&gt;<i> ports (2 in the rear, two in the front).
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">hdac0 at pci0</A>:0:27:0:      class=0x040300 card=0x01c11028 chip=0x269a8086
+</I>&gt;<i> rev=0x09 hdr=0x00
+</I>&gt;<i>     vendor     = 'Intel Corporation'
+</I>&gt;<i>     device     = 'Enterprise Southbridge High Definition Audio'
+</I>&gt;<i>     class      = multimedia
+</I>&gt;<i>     subclass   = HDA
+</I>&gt;<i>
+</I>&gt;<i> What's more, I do not get any sound from the SB Live! in my box if I
+</I>&gt;<i> leave the HDA enabled in the BIOS.  And, yes, I've tried switching to the
+</I>&gt;<i> emuxki driver via the Media preferences (it selected the HDA by default).
+</I>&gt;<i>
+</I>&gt;<i> I will attach three serial debug logs.  One will be haiku-emuxki.txt.
+</I>&gt;<i> This is the log file from when the hda is disabled and the SB Live! works
+</I>&gt;<i> just fine.  Next will be haiku-hda.txt.  This is with the Live! removed,
+</I>&gt;<i> the HDA enabled in the bios, but no audio from any application.  Then
+</I>&gt;<i> haiku-hda-emuxki.txt.  This is with the hda enabled, the Live! in the
+</I>&gt;<i> machine, and no idea.  It starts with the hda detected by default, and I
+</I>&gt;<i> tested all four jacks to see if I get any audio from the hda device.
+</I>&gt;<i> Nothing worked.  I then went into the Media preferences, selected the
+</I>&gt;<i> emuxki device, and restarted the Media server.  Tested, but no audio from
+</I>&gt;<i> the Live! either.
+</I>&gt;<i>
+</I>&gt;<i> Adam
+</I>
+New description:
+
+ The HDA driver seems to have recently been extended to support my intel
+ sound chip, but I'm not getting any audio output from any of the four
+ ports (2 in the rear, two in the front).
+
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">hdac0 at pci0</A>:0:27:0:      class=0x040300 card=0x01c11028 chip=0x269a8086
+ rev=0x09 hdr=0x00
+     vendor     = 'Intel Corporation'
+     device     = 'Enterprise Southbridge High Definition Audio'
+     class      = multimedia
+     subclass   = HDA
+
+ What's more, I do not get any sound from the SB Live! in my box if I leave
+ the HDA enabled in the BIOS.  And, yes, I've tried switching to the emuxki
+ driver via the Media preferences (it selected the HDA by default).
+
+ I will attach three serial debug logs.  One will be haiku-emuxki.txt.
+ This is the log file from when the hda is disabled and the SB Live! works
+ just fine.  Next will be haiku-hda.txt.  This is with the Live! removed,
+ the HDA enabled in the bios, but no audio from any application.  Then
+ haiku-hda-emuxki.txt.  This is with the hda enabled, the Live! in the
+ machine, and no idea.  It starts with the hda detected by default, and I
+ tested all four jacks to see if I get any audio from the hda device.
+ Nothing worked.  I then went into the Media preferences, selected the
+ emuxki device, and restarted the Media server.  Tested, but no audio from
+ the Live! either.
+
+ Adam
+
+--
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3794#comment:1">http://dev.haiku-os.org/ticket/3794#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="016348.html">[Haiku-bugs] [Haiku] #3794: HDA driver detects onboard chip but	produces no sound
+</A></li>
+	<LI>Next message: <A HREF="016425.html">[Haiku-bugs] [Haiku] #3794: HDA driver detects onboard chip but produces no sound
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16424">[ date ]</a>
+              <a href="thread.html#16424">[ thread ]</a>
+              <a href="subject.html#16424">[ subject ]</a>
+              <a href="author.html#16424">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

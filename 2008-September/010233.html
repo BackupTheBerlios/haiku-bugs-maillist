@@ -1,0 +1,166 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2719: [bfs]: deadlock - mutex bfs inode+24.1243 not released on exit
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232719%3A%20%5Bbfs%5D%3A%20deadlock%20-%20mutex%20bfs%0A%20inode%2B24.1243%20not%20released%20on%20exit&In-Reply-To=%3C042.c6025ee34d274254a1a3ec7d7f314c13%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010232.html">
+   <LINK REL="Next"  HREF="010244.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2719: [bfs]: deadlock - mutex bfs inode+24.1243 not released on exit</H1>
+    <B>emitrax</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232719%3A%20%5Bbfs%5D%3A%20deadlock%20-%20mutex%20bfs%0A%20inode%2B24.1243%20not%20released%20on%20exit&In-Reply-To=%3C042.c6025ee34d274254a1a3ec7d7f314c13%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2719: [bfs]: deadlock - mutex bfs inode+24.1243 not released on exit">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Sep 11 17:31:51 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010232.html">[Haiku-bugs] [Haiku] #2670: Directories created using Tracker have wrong permissions.
+</A></li>
+        <LI>Next message: <A HREF="010244.html">[Haiku-bugs] [Haiku] #2719: [bfs]: deadlock - mutex bfs inode+24.1243 not released on exit
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10233">[ date ]</a>
+              <a href="thread.html#10233">[ thread ]</a>
+              <a href="subject.html#10233">[ subject ]</a>
+              <a href="author.html#10233">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2719: [bfs]: deadlock - mutex bfs inode+24.1243 not released on exit
+------------------------------+---------------------------------------------
+ Reporter:  emitrax           |       Owner:  axeld         
+     Type:  bug               |      Status:  new           
+ Priority:  normal            |   Milestone:  R1/alpha1     
+Component:  File Systems/BFS  |     Version:  R1 development
+Blockedby:                    |    Platform:  All           
+ Blocking:                    |  
+------------------------------+---------------------------------------------
+ It seems weird since AutoLocker seem to be used everywhere, but this
+ happens while writing with bonnie++ to the same directory I was creating
+ some directories, and mkdir failed with name too long. Could it be
+ possible it didn't release the lock?
+
+ {{{
+ kdebug&gt; thread bonnie++
+ THREAD: 0x93197000
+ id:                 4335 (0x10ef)
+ name:               &quot;bonnie++&quot;
+ all_next:           0x9316f800
+ team_next:          0x00000000
+ q_next:             0x913c5000
+ priority:           10 (next 10)
+ state:              waiting
+ next_state:         waiting
+ cpu:                0x00000000
+ sig_pending:        0x0 (blocked: 0x0)
+ in_kernel:          1
+ waiting for:        rwlock 0x90dfb400
+ fault_handler:      0x00000000
+ args:               0x90d945a0 0x00000000
+ entry:              0x8004b4d0
+ team:               0x90c3e45c, &quot;bonnie++&quot;
+   exit.sem:         43239
+   exit.status:      0x0 (No error)
+   exit.reason:      0x0
+   exit.signal:      0x0
+   exit.waiters:
+ kernel_stack_area:  92166
+ kernel_stack_base:  0x920a6000
+ user_stack_area:    92168
+ user_stack_base:    0x7efef000
+ user_local_storage: 0x7ffef000
+ kernel_errno:       0x0 (No error)
+ kernel_time:        16259689
+ user_time:          31183218
+ flags:              0x200
+ architecture dependant section:
+         esp: 0x920a9cb8
+         ss: 0x00000010
+         fpu_state at 0x93197380
+
+
+ kdebug&gt; mutex 0x90dfb400
+ mutex 0x90dfb400:
+   name:            bfs inode+24.1243
+   flags:           0xd8
+   holder:          -1
+   waiting threads: 4335
+
+
+ kdebug&gt; bt 4335
+ stack trace for thread 4335 &quot;bonnie++&quot;
+     kernel stack: 0x920a6000 to 0x920aa000
+       user stack: 0x7efef000 to 0x7ffef000
+ frame            caller     &lt;image&gt;:function + offset
+  0 920a9d14 (+  32) 800439ce   &lt;kernel&gt;:context_switch__FP6threadT0 +
+ 0x0026
+  1 920a9d34 (+  64) 80043c38   &lt;kernel&gt;:scheduler_reschedule + 0x0248
+  2 920a9d74 (+  48) 8003a104   &lt;kernel&gt;:rw_lock_wait__FP7rw_lockb + 0x00c4
+  3 920a9da4 (+  64) 8003a666   &lt;kernel&gt;:rw_lock_write_lock + 0x00b6
+  4 920a9de4 (+  64) 80594a7e   &lt;bfs&gt;:WriteAt__5InodeR11TransactionxPCUcPUl
+ + 0x010a
+  5 920a9e24 (+  96) 805a1857
+ &lt;bfs&gt;:bfs_write__FP9fs_volumeP8fs_vnodePvxPCvPUl + 0x00d3
+  6 920a9e84 (+  64) 8009370f
+ &lt;kernel&gt;:file_write__FP15file_descriptorxPCvPUl + 0x0067
+  7 920a9ec4 (+  80) 800833ad   &lt;kernel&gt;:common_user_io__FixPvUlb + 0x017d
+  8 920a9f14 (+  48) 800838a0   &lt;kernel&gt;:_user_write + 0x0028
+  9 920a9f44 (+ 100) 800c8852   &lt;kernel&gt;:pre_syscall_debug_done + 0x0002
+ (nearest)
+ user iframe at 0x920a9fa8 (end = 0x920aa000)
+  eax 0x82           ebx 0x2bbcdc        ecx 0x7ffeeb90   edx 0xffff0104
+  esi 0x7ffeec3c     edi 0x14ed          ebp 0x7ffeebcc   esp 0x920a9fdc
+  eip 0xffff0104  eflags 0x203      user esp 0x7ffeeb90
+  vector: 0x63, error code: 0x0
+ 10 920a9fa8 (+   0) ffff0104
+ 11 7ffeebcc (+  48) 00203196
+ &lt;/boot/beos/bin/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">bonnie++ at 0x00200000</A>&gt;:unknown + 0x3196
+ 12 7ffeebfc (+ 128) 00206f89
+ &lt;/boot/beos/bin/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">bonnie++ at 0x00200000</A>&gt;:unknown + 0x6f89
+ 13 7ffeec7c (+ 768) 00206ac9
+ &lt;/boot/beos/bin/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">bonnie++ at 0x00200000</A>&gt;:unknown + 0x6ac9
+ 14 7ffeef7c (+  48) 002028ff
+ &lt;/boot/beos/bin/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">bonnie++ at 0x00200000</A>&gt;:unknown + 0x28ff
+ 15 7ffeefac (+  48) 001008ea   92169:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">runtime_loader_seg0ro at 0x00100000</A> +
+ 0x8ea
+ 16 7ffeefdc (+   0) 7ffeefec   92168:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">bonnie++_main_stack at 0x7efef000</A> +
+ 0xffffec
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2719">http://dev.haiku-os.org/ticket/2719</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010232.html">[Haiku-bugs] [Haiku] #2670: Directories created using Tracker have wrong permissions.
+</A></li>
+	<LI>Next message: <A HREF="010244.html">[Haiku-bugs] [Haiku] #2719: [bfs]: deadlock - mutex bfs inode+24.1243 not released on exit
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10233">[ date ]</a>
+              <a href="thread.html#10233">[ thread ]</a>
+              <a href="subject.html#10233">[ subject ]</a>
+              <a href="author.html#10233">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

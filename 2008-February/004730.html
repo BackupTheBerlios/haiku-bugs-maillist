@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1764: USB Mouse Freezes after a While
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-February/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231764%3A%20USB%20Mouse%20Freezes%20after%20a%20While&In-Reply-To=%3C052.fddc9a474951da76e9d35e1ce9e17ca8%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="004728.html">
+   <LINK REL="Next"  HREF="004873.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1764: USB Mouse Freezes after a While</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231764%3A%20USB%20Mouse%20Freezes%20after%20a%20While&In-Reply-To=%3C052.fddc9a474951da76e9d35e1ce9e17ca8%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1764: USB Mouse Freezes after a While">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Feb  7 14:42:07 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="004728.html">[Haiku-bugs] [Haiku] #1764: USB Mouse Freezes after a While
+</A></li>
+        <LI>Next message: <A HREF="004873.html">[Haiku-bugs] [Haiku] #1764: USB Mouse Freezes after a While
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4730">[ date ]</a>
+              <a href="thread.html#4730">[ thread ]</a>
+              <a href="subject.html#4730">[ subject ]</a>
+              <a href="author.html#4730">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1764: USB Mouse Freezes after a While
+--------------------------+-------------------------------------------------
+  Reporter:  bonefish     |       Owner:  mmlr          
+      Type:  bug          |      Status:  assigned      
+  Priority:  normal       |   Milestone:  R1            
+ Component:  Drivers/USB  |     Version:  R1 development
+Resolution:               |    Platform:  All           
+--------------------------+-------------------------------------------------
+Comment (by marcusoverhagen):
+
+ Trying again to comment on this:
+
+ The ps2 debug output indicates that the BIOS is trapping access to the
+ PS/2 io-ports, but is not providing legacy emulation. I don't know how
+ this can happen, but you are not the only one with this problem. There is
+ at least one similar bug.
+
+ The interrupt debug code will disable an interrupt when less than 1% of
+ 100000 interrupts was handled. The code seems to be broken for ISA
+ interrupts, but thats not an issue here. Linux uses 0.1%
+
+ Why the HDA driver has such an influence I don't know. I also don't
+ understand why it's not using any interrupt.
+
+ The BIOS might provide legacy keyboard/mouse support regardless of the
+ &quot;USB BIOS Support&quot; setting, you can test this by removing uhci, ohci and
+ ehci drivers, and testing both settings.
+
+ Complete syslogs would be nice, especially with/without the HDA driver.
+ You should also cold-reboot between tests.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1764#comment:7">http://dev.haiku-os.org/ticket/1764#comment:7</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="004728.html">[Haiku-bugs] [Haiku] #1764: USB Mouse Freezes after a While
+</A></li>
+	<LI>Next message: <A HREF="004873.html">[Haiku-bugs] [Haiku] #1764: USB Mouse Freezes after a While
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4730">[ date ]</a>
+              <a href="thread.html#4730">[ thread ]</a>
+              <a href="subject.html#4730">[ subject ]</a>
+              <a href="author.html#4730">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

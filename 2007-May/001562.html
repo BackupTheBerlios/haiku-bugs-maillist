@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #889: [PackageBuilder] crash on File-&gt;Open
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23889%3A%20%5BPackageBuilder%5D%20crash%20on%20File-%3EOpen&In-Reply-To=%3C049.351370d39d4d5a351482ee4f22aa1c1f%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001561.html">
+   <LINK REL="Next"  HREF="001564.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #889: [PackageBuilder] crash on File-&gt;Open</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23889%3A%20%5BPackageBuilder%5D%20crash%20on%20File-%3EOpen&In-Reply-To=%3C049.351370d39d4d5a351482ee4f22aa1c1f%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #889: [PackageBuilder] crash on File-&gt;Open">trac at haiku-os.org
+       </A><BR>
+    <I>Tue May 29 20:28:05 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001561.html">[Haiku-bugs] [Haiku] #889: [PackageBuilder] crash on File-&gt;Open
+</A></li>
+        <LI>Next message: <A HREF="001564.html">[Haiku-bugs] [Haiku] #1025: KDL deleting and retriving sizes of directories in FAT disk
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1562">[ date ]</a>
+              <a href="thread.html#1562">[ thread ]</a>
+              <a href="subject.html#1562">[ subject ]</a>
+              <a href="author.html#1562">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#889: [PackageBuilder] crash on File-&gt;Open
+---------------------------------+------------------------------------------
+  Reporter:  diver               |       Owner:  bonefish      
+      Type:  bug                 |      Status:  assigned      
+  Priority:  normal              |   Milestone:  R1            
+ Component:  Kits/Interface Kit  |     Version:  R1 development
+Resolution:                      |    Platform:  All           
+---------------------------------+------------------------------------------
+Comment (by bonefish):
+
+ Doesn't seem to be a simple binary compatibility problem (different
+ object/vtable size). The !__si_type_info::dcast() works recursively. It is
+ invoked for the parent class' type info until the type info of the right
+ class is found (or the bottom is hit). In this case the
+ BPrivate::BHScrollBar type info tries to calls dcast() of the super class,
+ namely BScrollBar, type info. Apparently our loader chose the BScrollBar
+ type info living in the PackageBuilder executable. In memory this one has
+ a NULL vtable pointer, which causes the segfault, when the dcast() method
+ is tried to be resolved.
+
+ I don't know yet, why that pointer is NULL. I haven't understood yet, how
+ it usually should be initialized. There don't seem to be relocation
+ entries. So there's probably special initialization code responsible for
+ those initializations. Maybe our loader doesn't call it for the executable
+ in this case for any reason.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/889#comment:12">http://dev.haiku-os.org/ticket/889#comment:12</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001561.html">[Haiku-bugs] [Haiku] #889: [PackageBuilder] crash on File-&gt;Open
+</A></li>
+	<LI>Next message: <A HREF="001564.html">[Haiku-bugs] [Haiku] #1025: KDL deleting and retriving sizes of directories in FAT disk
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1562">[ date ]</a>
+              <a href="thread.html#1562">[ thread ]</a>
+              <a href="subject.html#1562">[ subject ]</a>
+              <a href="author.html#1562">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

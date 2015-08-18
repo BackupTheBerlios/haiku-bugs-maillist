@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1854: bcm570x driver (GPL) hangs after short period, panics on 'ifconfig --delete'
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-February/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231854%3A%20bcm570x%20driver%20%28GPL%29%20hangs%20after%20short%0A%20period%2C%20panics%20on%20%27ifconfig%20--delete%27&In-Reply-To=%3C047.72dd8070740df6d55edb31b47fe56576%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005159.html">
+   <LINK REL="Next"  HREF="005245.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1854: bcm570x driver (GPL) hangs after short period, panics on 'ifconfig --delete'</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231854%3A%20bcm570x%20driver%20%28GPL%29%20hangs%20after%20short%0A%20period%2C%20panics%20on%20%27ifconfig%20--delete%27&In-Reply-To=%3C047.72dd8070740df6d55edb31b47fe56576%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1854: bcm570x driver (GPL) hangs after short period, panics on 'ifconfig --delete'">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Feb 25 19:00:47 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005159.html">[Haiku-bugs] [Haiku] #215: Problem with special characters
+</A></li>
+        <LI>Next message: <A HREF="005245.html">[Haiku-bugs] [Haiku] #1854: bcm570x driver (GPL) hangs after short period, panics on 'ifconfig --delete'
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5160">[ date ]</a>
+              <a href="thread.html#5160">[ thread ]</a>
+              <a href="subject.html#5160">[ subject ]</a>
+              <a href="author.html#5160">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1854: bcm570x driver (GPL) hangs after short period, panics on 'ifconfig
+--delete'
+--------------------------------+-------------------------------------------
+ Reporter:  vortechs2000        |       Owner:  axeld         
+     Type:  bug                 |      Status:  new           
+ Priority:  normal              |   Milestone:  R1            
+Component:  Network &amp; Internet  |     Version:  R1 development
+ Platform:  x86                 |  
+--------------------------------+-------------------------------------------
+ This bug is against the haiku trunk as of Thursday, Feb 21, 2008.  I am
+ running on a Dell D600 Latitude laptop with a broadcom 570x chipset.
+
+ lspci -nn output looks like this for the broadcom:
+
+ 02:00.0 Ethernet controller ![0200]: Broadcom Corporation NetXtreme
+ BCM5705M Gigabit Ethernet [14e4:165d] (rev 01)
+
+
+ The driver works for a few minutes after bootup.  I am able to get a dhcp
+ lease, download firefox from bebits, etc.  But after a short (&lt;10min)
+ period of time, the driver hangs (generally hanging terminal too if I'm
+ trying to run wget).
+
+ Also of note is that the usb driver appears to be acting up - the usb
+ mouse works at first, and then fails.  If this appears to be related, or
+ the root cause of the network driver hang, feel free to switch the
+ component/summary, etc.  There are quite a few messages related to that
+ before the panic.
+
+ I have attached the serial console log up to the panic and including a
+ stack crawl.  Please let me know if more information is needed.  This is
+ quite reproducable, so I can have it back up and into the problem within
+ minutes.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1854">http://dev.haiku-os.org/ticket/1854</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005159.html">[Haiku-bugs] [Haiku] #215: Problem with special characters
+</A></li>
+	<LI>Next message: <A HREF="005245.html">[Haiku-bugs] [Haiku] #1854: bcm570x driver (GPL) hangs after short period, panics on 'ifconfig --delete'
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5160">[ date ]</a>
+              <a href="thread.html#5160">[ thread ]</a>
+              <a href="subject.html#5160">[ subject ]</a>
+              <a href="author.html#5160">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

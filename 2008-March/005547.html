@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1920: Userland Heap Garbage in Kernel	Heap Page
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231920%3A%20Userland%20Heap%20Garbage%20in%20Kernel%0A%09Heap%20Page&In-Reply-To=%3C052.7c1b7f8b6e9af84db321acc8470bd60e%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005546.html">
+   <LINK REL="Next"  HREF="005548.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1920: Userland Heap Garbage in Kernel	Heap Page</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231920%3A%20Userland%20Heap%20Garbage%20in%20Kernel%0A%09Heap%20Page&In-Reply-To=%3C052.7c1b7f8b6e9af84db321acc8470bd60e%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1920: Userland Heap Garbage in Kernel	Heap Page">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Mar 15 18:14:47 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005546.html">[Haiku-bugs] [Haiku] #1920: Userland Heap Garbage in Kernel	Heap Page
+</A></li>
+        <LI>Next message: <A HREF="005548.html">[Haiku-bugs] [Haiku] #1920: Userland Heap Garbage in Kernel	Heap Page
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5547">[ date ]</a>
+              <a href="thread.html#5547">[ thread ]</a>
+              <a href="subject.html#5547">[ subject ]</a>
+              <a href="author.html#5547">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1920: Userland Heap Garbage in Kernel Heap Page
+----------------------------+-----------------------------------------------
+  Reporter:  bonefish       |       Owner:  bonefish      
+      Type:  bug            |      Status:  assigned      
+  Priority:  blocker        |   Milestone:  R1/alpha1     
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |    Platform:  All           
+----------------------------+-----------------------------------------------
+Comment (by mmlr):
+
+ Indeed there is an even simpler way to solve this problem. When using the
+ empty_index field as the allocation_id you get full 16 bits. Then one can
+ simply use the index of the first page of the allocation as the
+ allocation_id. This is guaranteed to be unique and there is no need for
+ any separate id allocation. Also it needs no change to the rest of the
+ code. I will apply a diff for that right after this comment.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1920#comment:6">http://dev.haiku-os.org/ticket/1920#comment:6</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005546.html">[Haiku-bugs] [Haiku] #1920: Userland Heap Garbage in Kernel	Heap Page
+</A></li>
+	<LI>Next message: <A HREF="005548.html">[Haiku-bugs] [Haiku] #1920: Userland Heap Garbage in Kernel	Heap Page
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5547">[ date ]</a>
+              <a href="thread.html#5547">[ thread ]</a>
+              <a href="subject.html#5547">[ subject ]</a>
+              <a href="author.html#5547">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

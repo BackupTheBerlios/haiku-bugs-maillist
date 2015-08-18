@@ -1,0 +1,145 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2172: neon's single_read test hangs at	100% CPU
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232172%3A%20neon%27s%20single_read%20test%20hangs%20at%0A%09100%25%20CPU&In-Reply-To=%3C052.d6a556ecc254f08e92649d6c5c214ffa%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007027.html">
+   <LINK REL="Next"  HREF="007035.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2172: neon's single_read test hangs at	100% CPU</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232172%3A%20neon%27s%20single_read%20test%20hangs%20at%0A%09100%25%20CPU&In-Reply-To=%3C052.d6a556ecc254f08e92649d6c5c214ffa%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2172: neon's single_read test hangs at	100% CPU">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Apr 30 20:39:00 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007027.html">[Haiku-bugs] [Haiku] #2172: neon's single_read test hangs at	100% CPU
+</A></li>
+        <LI>Next message: <A HREF="007035.html">[Haiku-bugs] [Haiku] #2172: neon's single_read test hangs at	100% CPU
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7034">[ date ]</a>
+              <a href="thread.html#7034">[ thread ]</a>
+              <a href="subject.html#7034">[ subject ]</a>
+              <a href="author.html#7034">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2172: neon's single_read test hangs at 100% CPU
+---------------------------------+------------------------------------------
+  Reporter:  andreasf            |       Owner:  axeld         
+      Type:  bug                 |      Status:  new           
+  Priority:  normal              |   Milestone:  R1            
+ Component:  Network &amp; Internet  |     Version:  R1 development
+Resolution:                      |    Platform:  x86           
+---------------------------------+------------------------------------------
+Comment (by andreasf):
+
+ Better luck at r25274 with SMP disabled, back to {{{peek_close}}}:
+ {{{
+ kdebug&gt; threads 177
+ thread         id  state        sem/cv cpu pri  stack      team  name
+ 0x90dbd800    177  running        -      0  10  0x94314000  177  socket
+ kdebug&gt; sc 177
+ stack trace for thread 177 &quot;socket&quot;
+     kernel stack: 0x94314000 to 0x94318000
+       user stack: 0x7efe7000 to 0x7ffe7000
+ frame            caller     &lt;image&gt;:function + offset
+ 94317928 (+  52) 8008ace7   &lt;kernel&gt;:invoke_debugger_command + 0x00cf
+ 9431795c (+  64) 8008ba90   &lt;kernel&gt;:_ParseCommand__16ExpressionParserRi +
+ 0x01f8
+ 9431799c (+  48) 8008b482
+ &lt;kernel&gt;:EvaluateCommand__16ExpressionParserPCcRi + 0x01de
+ 943179cc (+ 228) 8008cba4   &lt;kernel&gt;:evaluate_debug_command + 0x0088
+ 94317ab0 (+  64) 80089822   &lt;kernel&gt;:kernel_debugger_loop__Fv + 0x017a
+ 94317af0 (+  48) 8008a4d5   &lt;kernel&gt;:kernel_debugger + 0x010d
+ 94317b20 (+ 192) 8008a3bd   &lt;kernel&gt;:panic + 0x0029
+ 94317be0 (+  48) 807b7df1   &lt;/boot/beos/system/add-
+ ons/kernel/bus_managers/ps2&gt;:ps2_interrupt + 0x00cd
+ 94317c10 (+  64) 80028918   &lt;kernel&gt;:int_io_interrupt_handler + 0x00e0
+ 94317c50 (+  48) 80097522   &lt;kernel&gt;:hardware_interrupt + 0x007a
+ 94317c80 (+  12) 8009ab6d   &lt;kernel&gt;:int_bottom + 0x001d (nearest)
+ iframe at 0x94317c8c (end = 0x94317ce4)
+  eax 0x90dbd800     ebx 0x90f01a9c      ecx 0x2129d      edx 0x0
+  esi 0x94317dcc     edi 0x94317dcc      ebp 0x94317cf4   esp 0x94317cc0
+  eip 0x80029171  eflags 0x282
+  vector: 0x21, error code: 0x0
+ 94317c8c (+ 104) 80029171   &lt;kernel&gt;:mutex_unlock + 0x000d
+ 94317cf4 (+  48) 802f135a   &lt;/boot/beos/system/add-
+ ons/kernel/network/protocols/tcp&gt;:Wait__8WaitListRQ28BPrivatet10AutoLocker2Z5mutexZQ28BPrivate12MutexLockingxb
+ + 0x002e
+ 94317d24 (+  64) 802f2d13   &lt;/boot/beos/system/add-
+ ons/kernel/network/protocols/tcp&gt;:_WaitForEstablished__11TCPEndpointRQ28BPrivatet10AutoLocker2Z5mutexZQ28BPrivate12Mutex7
+ 94317d64 (+ 112) 802f1c20   &lt;/boot/beos/system/add-
+ ons/kernel/network/protocols/tcp&gt;:Connect__11TCPEndpointPC8sockaddr +
+ 0x0234
+ 94317dd4 (+  48) 802f097b   &lt;/boot/beos/system/add-
+ ons/kernel/network/protocols/tcp&gt;:tcp_connect__FP12net_protocolPC8sockaddr
+ + 0x0023
+ 94317e04 (+  48) 802d189d   &lt;/boot/beos/system/add-
+ ons/kernel/network/stack&gt;:socket_connect__FP10net_socketPC8sockaddrUi +
+ 0x0055
+ 94317e34 (+  48) 802d76f6   &lt;/boot/beos/system/add-
+ ons/kernel/network/stack&gt;:stack_interface_connect__FP10net_socketPC8sockaddrUi
+ + 0x002e
+ 94317e64 (+  48) 8004ad85   &lt;kernel&gt;:common_connect__FiPC8sockaddrUib +
+ 0x0049
+ 94317e94 (+ 176) 8004c178   &lt;kernel&gt;:_user_connect + 0x0080
+ 94317f44 (+ 100) 8009ace2   &lt;kernel&gt;:pre_syscall_debug_done + 0x0002
+ (nearest)
+ iframe at 0x94317fa8 (end = 0x94318000)
+  eax 0x82           ebx 0x3c89f8        ecx 0x7ffe6dd0   edx 0xffff0104
+  esi 0x7ffe6e4c     edi 0x20            ebp 0x7ffe6e1c   esp 0x94317fdc
+  eip 0xffff0104  eflags 0x200213
+  vector: 0x63, error code: 0x0
+ 94317fa8 (+   0) ffff0104
+ 7ffe6e1c (+  80) 002185c1   &lt;libneon.so.25&gt;:ne_addr_destroy + 0x0085
+ (nearest)
+ 7ffe6e6c (+  64) 00218688   &lt;libneon.so.25&gt;:ne_sock_connect + 0x006c
+ 7ffe6eac (+  48) 00202742   &lt;socket&gt;:_term_after + 0x0122 (nearest)
+ 7ffe6edc (+  48) 00202870   &lt;socket&gt;:_term_after + 0x0250 (nearest)
+ 7ffe6f0c (+  48) 00202e84   &lt;socket&gt;:_term_after + 0x0864 (nearest)
+ 7ffe6f3c (+  64) 00204e1c   &lt;socket&gt;:main + 0x03c8
+ 7ffe6f7c (+  48) 0020253f   &lt;socket&gt;:_start + 0x005b
+ 7ffe6fac (+  48) 0010078e   2245:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">runtime_loader_seg0ro at 0x00100000</A> + 0x78e
+ 7ffe6fdc (+   0) 7ffe6fec   2244:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">socket_main_stack at 0x7efe7000</A> + 0xffffec
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2172#comment:4">http://dev.haiku-os.org/ticket/2172#comment:4</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007027.html">[Haiku-bugs] [Haiku] #2172: neon's single_read test hangs at	100% CPU
+</A></li>
+	<LI>Next message: <A HREF="007035.html">[Haiku-bugs] [Haiku] #2172: neon's single_read test hangs at	100% CPU
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7034">[ date ]</a>
+              <a href="thread.html#7034">[ thread ]</a>
+              <a href="subject.html#7034">[ subject ]</a>
+              <a href="author.html#7034">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

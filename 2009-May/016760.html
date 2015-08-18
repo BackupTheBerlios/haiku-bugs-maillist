@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3850: don't set non-existing VESA modes?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233850%3A%20don%27t%20set%20non-existing%20VESA%20modes%3F&In-Reply-To=%3C042.bdab496ae021bc7cbc7868e9b8635c86%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="017716.html">
+   <LINK REL="Next"  HREF="016761.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3850: don't set non-existing VESA modes?</H1>
+    <B>rudolfc</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233850%3A%20don%27t%20set%20non-existing%20VESA%20modes%3F&In-Reply-To=%3C042.bdab496ae021bc7cbc7868e9b8635c86%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3850: don't set non-existing VESA modes?">trac at haiku-os.org
+       </A><BR>
+    <I>Fri May  1 17:42:14 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="017716.html">[Haiku-bugs] [Haiku] #3849: Audio files with distorted sound.
+</A></li>
+        <LI>Next message: <A HREF="016761.html">[Haiku-bugs] [Haiku] #3850: don't set non-existing VESA modes?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16760">[ date ]</a>
+              <a href="thread.html#16760">[ thread ]</a>
+              <a href="subject.html#16760">[ subject ]</a>
+              <a href="author.html#16760">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3850: don't set non-existing VESA modes?
+-----------------------+----------------------------------------------------
+ Reporter:  rudolfc    |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+Blockedby:             |    Platform:  All           
+ Blocking:             |  
+-----------------------+----------------------------------------------------
+ It is possible that systems are outthere that have an older gfx card, but
+ a fairly recent monitor. In such a case the native resolution of this
+ monitor can be higher than the highest available VESA mode in the card's
+ BIOS.
+ On top of that, it's very possible that the native resolution can be set
+ by the haiku gfx driver. Since such a resolution will automatically also
+ be preset in the 'vesa' config file, on next boot that non-existing mode
+ will be set.
+ The result is no signal (or hanging cards) during the boot and the boot-
+ icons won't be visible.
+
+ The kernel should check a vesa settings file against reported available
+ VESA modes from the card at boot-time, and fall back to a lower mode if
+ the requested mode is not there.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3850">http://dev.haiku-os.org/ticket/3850</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="017716.html">[Haiku-bugs] [Haiku] #3849: Audio files with distorted sound.
+</A></li>
+	<LI>Next message: <A HREF="016761.html">[Haiku-bugs] [Haiku] #3850: don't set non-existing VESA modes?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16760">[ date ]</a>
+              <a href="thread.html#16760">[ thread ]</a>
+              <a href="subject.html#16760">[ subject ]</a>
+              <a href="author.html#16760">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

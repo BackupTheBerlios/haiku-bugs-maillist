@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3946: automount weirdness: creates symlink at	mount point
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233946%3A%20automount%20weirdness%3A%20creates%20symlink%20at%0A%09mount%20point&In-Reply-To=%3C048.b2e4220462b5a9106a2b425193cfca4b%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="017472.html">
+   <LINK REL="Next"  HREF="017475.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3946: automount weirdness: creates symlink at	mount point</H1>
+    <B>jonas.kirilla</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233946%3A%20automount%20weirdness%3A%20creates%20symlink%20at%0A%09mount%20point&In-Reply-To=%3C048.b2e4220462b5a9106a2b425193cfca4b%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3946: automount weirdness: creates symlink at	mount point">trac at haiku-os.org
+       </A><BR>
+    <I>Fri May 22 01:13:05 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="017472.html">[Haiku-bugs] [Haiku] #3945: getaddrinfo() issue
+</A></li>
+        <LI>Next message: <A HREF="017475.html">[Haiku-bugs] [Haiku] #3947: Optional Package: p7zip - archive seems to contain wrong permissions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17473">[ date ]</a>
+              <a href="thread.html#17473">[ thread ]</a>
+              <a href="subject.html#17473">[ subject ]</a>
+              <a href="author.html#17473">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3946: automount weirdness: creates symlink at mount point
+---------------------------+------------------------------------------------
+ Reporter:  jonas.kirilla  |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1            
+Component:  - General      |     Version:  R1 development
+Blockedby:                 |    Platform:  All           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+ Running Haiku off harddisk (r30806 and r30823 on two different machines) I
+ tried plugging a USB stick to which I had dd:ed a BFS image. (IIRC a
+ haiku.image, from some April 12 revision, if the below output is to be
+ trusted.)
+
+ No volume appeared, but Tracker's mount menu showed the volume as mounted.
+ I tried to unmount but the volume remained checkmarked in the mount menu.
+ Wondering what was up I turned to Terminal and had a look at the
+ filesystem mount points.
+
+ After USB stick insertion and Tracker r/w dialog answered, the following
+ symlink appears at /:
+
+ {{{
+ /&gt; ls -al
+  ...
+ lrwxrwxrwx 1 baron root   30 Apr 12 21:17 Haiku1 -&gt;
+ /boot/system/preferences/Media
+  ...
+ }}}
+
+ A symlink is unexpected. The link target is just puzzling.
+ Its permissions deviates from the other symlinks at the fs root.
+
+
+ After removal of USB stick:
+ {{{
+ /&gt; ls -al
+  ...
+ drwxr-xr-x 1 baron root    0 May 21 22:06 Haiku1
+  ...
+ /&gt;
+ }}}
+
+ Now we're back to a folder for the mount point. (Created before the
+ symlink and covered by it, now revealed again?)
+
+ See attached file for full output.
+
+ I don't think I can reproduce this anymore. Having dd:ed a later Haiku
+ revision to the stick, Haiku crashes in the &quot;bfs block allocator&quot;. (Worn
+ out flash maybe?)
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3946">http://dev.haiku-os.org/ticket/3946</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="017472.html">[Haiku-bugs] [Haiku] #3945: getaddrinfo() issue
+</A></li>
+	<LI>Next message: <A HREF="017475.html">[Haiku-bugs] [Haiku] #3947: Optional Package: p7zip - archive seems to contain wrong permissions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17473">[ date ]</a>
+              <a href="thread.html#17473">[ thread ]</a>
+              <a href="subject.html#17473">[ subject ]</a>
+              <a href="author.html#17473">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

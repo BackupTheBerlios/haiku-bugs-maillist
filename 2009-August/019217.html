@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4194: fuse (userlandfs) causes a page fault - user access in kernel area
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234194%3A%20fuse%20%28userlandfs%29%20causes%20a%20page%0A%20fault%20-%20user%20access%20in%20kernel%20area&In-Reply-To=%3C048.5d8f3c89021418eae500a5d0f55bc89e%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="019213.html">
+   <LINK REL="Next"  HREF="019218.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4194: fuse (userlandfs) causes a page fault - user access in kernel area</H1>
+    <B>bonefish</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234194%3A%20fuse%20%28userlandfs%29%20causes%20a%20page%0A%20fault%20-%20user%20access%20in%20kernel%20area&In-Reply-To=%3C048.5d8f3c89021418eae500a5d0f55bc89e%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4194: fuse (userlandfs) causes a page fault - user access in kernel area">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Aug  8 20:54:29 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="019213.html">[Haiku-bugs] [Haiku] #4194: fuse (userlandfs) causes a page fault - user access in kernel area
+</A></li>
+        <LI>Next message: <A HREF="019218.html">[Haiku-bugs] [Haiku] #4194: fuse (userlandfs) causes a page fault - user access in kernel area
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19217">[ date ]</a>
+              <a href="thread.html#19217">[ thread ]</a>
+              <a href="subject.html#19217">[ subject ]</a>
+              <a href="author.html#19217">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4194: fuse (userlandfs) causes a page fault - user access in kernel area
+---------------------------+------------------------------------------------
+  Reporter:  Blub          |       Owner:  bonefish      
+      Type:  bug           |      Status:  closed        
+  Priority:  normal        |   Milestone:  R1            
+ Component:  File Systems  |     Version:  R1 development
+Resolution:  invalid       |   Blockedby:                
+  Platform:  All           |    Blocking:                
+---------------------------+------------------------------------------------
+
+Comment(by bonefish):
+
+ Replying to [comment:14 Blub]:
+ &gt; Yes, with B_USE_POSITIVE_POSIX_ERRORS most things work, however:[[BR]]
+ &gt; With this the userlandfs_server still isn't automatically started.[[BR]]
+
+ Actually it is automatically started. The problem is that sshfs starts ssh
+ which in turn tries to open the controlling terminal. Since the
+ userlandfs_server when started by the kernel doesn't have a controlling
+ terminal, ssh fails immediately and sshfs fails to mount. That's not a
+ problem of the userlandfs, though, but of the sshfs &quot;port&quot;. A real port
+ should handle the interactive authentication differently. For lazy ports
+ the FUSE bridge could offer a feature to open a terminal, but such an
+ option doesn't exist yet.
+
+ &gt; Fuse still only allows one volume to be mounted so you cannot have
+ multiple ssh filesystems mounted at the same time.[[BR]]
+
+ Yep, that's a known missing feature. For a file system add-on with Haiku
+ or BeOS kernel style interface only one userlandfs_server needs to be
+ started, since one instance can mount an arbitrary number of volumes. FUSE
+ requires a process per volume, though, which doesn't quite fit the
+ userlandfs design yet.
+
+ &gt; And personally I don't think it is acceptable that without these flags
+ you can end up in the KDL, although this would only happen to developers.
+
+ Userland file systems shouldn't be able to cause KDLs. If that still
+ happens after r32184, it's worth to file a ticket.
+
+ &gt; Should I file tickets for the first 2 problems? (what about the 3rd?)
+
+ The first isn't a bug/missing feature in Haiku or userlandfs, so there's
+ no point in filing a ticket. Feel free to file a ticket for the second one
+ -- I'm sure there's a TODO in the code, so you don't really have to.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4194#comment:15">http://dev.haiku-os.org/ticket/4194#comment:15</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="019213.html">[Haiku-bugs] [Haiku] #4194: fuse (userlandfs) causes a page fault - user access in kernel area
+</A></li>
+	<LI>Next message: <A HREF="019218.html">[Haiku-bugs] [Haiku] #4194: fuse (userlandfs) causes a page fault - user access in kernel area
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19217">[ date ]</a>
+              <a href="thread.html#19217">[ thread ]</a>
+              <a href="subject.html#19217">[ subject ]</a>
+              <a href="author.html#19217">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

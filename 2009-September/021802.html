@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4523: black screen on ATI Mobility Radeon	X700
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234523%3A%20black%20screen%20on%20ATI%20Mobility%20Radeon%0A%09X700&In-Reply-To=%3C051.1004868ba031dda85b4ae5ceda199d06%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="021752.html">
+   <LINK REL="Next"  HREF="021339.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4523: black screen on ATI Mobility Radeon	X700</H1>
+    <B>euan</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234523%3A%20black%20screen%20on%20ATI%20Mobility%20Radeon%0A%09X700&In-Reply-To=%3C051.1004868ba031dda85b4ae5ceda199d06%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4523: black screen on ATI Mobility Radeon	X700">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Sep 22 02:39:25 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="021752.html">[Haiku-bugs] [Haiku] #4523: black screen on ATI Mobility Radeon	X700
+</A></li>
+        <LI>Next message: <A HREF="021339.html">[Haiku-bugs] [Haiku] #4524: KDL with Terratec Aureon 7.1 Space and M-Audio Revolution 5.1 + OSS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21802">[ date ]</a>
+              <a href="thread.html#21802">[ thread ]</a>
+              <a href="subject.html#21802">[ subject ]</a>
+              <a href="author.html#21802">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4523: black screen on ATI Mobility Radeon X700
+-------------------------------------+--------------------------------------
+ Reporter:  makitka                  |       Owner:  euan     
+     Type:  bug                      |      Status:  new      
+ Priority:  normal                   |   Milestone:  R1       
+Component:  Drivers/Graphics/radeon  |     Version:  R1/alpha1
+Blockedby:                           |    Platform:  All      
+ Blocking:                           |  
+-------------------------------------+--------------------------------------
+
+Comment(by euan):
+
+ yes I would think that it is the same issue.  There was changes done in
+ the xorg drivers regarding the &quot;bios_scratch&quot; registers after the
+ documentation was released.  Apparently some of the register manipulations
+ were incorrect.
+
+ its a doubly hard problem for me to help with as 1 i can't boot haiku on
+ real hardware, and 2 I don't have an X800 / X600 laptop. :(
+
+ Previous attempts at solving the problem seemed to lead to ACPI / bios
+ problem.  I was never sure if that was an accurate diagnosis though.
+
+ If anyone wants to try, put some tracing in where the bios scratch regs
+ are read (before they are touched), then compare to the now fully
+ understood lists of regs:
+
+ <A HREF="http://cgit.freedesktop.org/xorg/driver/xf86-video-">http://cgit.freedesktop.org/xorg/driver/xf86-video-</A>
+ ati/tree/src/radeon_reg.h
+
+ Look for RADEON_BIOS_0_SCRATCH
+
+ If I get some time this week I'll also have a look.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4523#comment:4">http://dev.haiku-os.org/ticket/4523#comment:4</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="021752.html">[Haiku-bugs] [Haiku] #4523: black screen on ATI Mobility Radeon	X700
+</A></li>
+	<LI>Next message: <A HREF="021339.html">[Haiku-bugs] [Haiku] #4524: KDL with Terratec Aureon 7.1 Space and M-Audio Revolution 5.1 + OSS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21802">[ date ]</a>
+              <a href="thread.html#21802">[ thread ]</a>
+              <a href="subject.html#21802">[ subject ]</a>
+              <a href="author.html#21802">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,158 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4853: non-alphanumeric characters are shown as HTML escape sequences
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234853%3A%20non-alphanumeric%20characters%20are%20shown%0A%20as%20HTML%20escape%20sequences&In-Reply-To=%3C036.1f71214093c375c256efdb291a0a3f92%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="023132.html">
+   <LINK REL="Next"  HREF="023135.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4853: non-alphanumeric characters are shown as HTML escape sequences</H1>
+    <B>v</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234853%3A%20non-alphanumeric%20characters%20are%20shown%0A%20as%20HTML%20escape%20sequences&In-Reply-To=%3C036.1f71214093c375c256efdb291a0a3f92%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4853: non-alphanumeric characters are shown as HTML escape sequences">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Oct 26 01:19:36 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="023132.html">[Haiku-bugs] [Haiku] #4503: Bootman won't install on a mixed IDE and AHCI system
+</A></li>
+        <LI>Next message: <A HREF="023135.html">[Haiku-bugs] [Haiku] #4853: non-alphanumeric characters are shown as HTML escape sequences
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#23134">[ date ]</a>
+              <a href="thread.html#23134">[ thread ]</a>
+              <a href="subject.html#23134">[ subject ]</a>
+              <a href="author.html#23134">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4853: non-alphanumeric characters are shown as HTML escape sequences
+---------------------+------------------------------------------------------
+ Reporter:  v        |       Owner:  haiku-web     
+     Type:  bug      |      Status:  new           
+ Priority:  normal   |   Milestone:  R1            
+Component:  Website  |     Version:  R1/Development
+Blockedby:           |    Platform:  All           
+ Blocking:           |  
+---------------------+------------------------------------------------------
+ <A HREF="http://www.haiku-">http://www.haiku-</A>
+ os.org/documents/dev/driver_development_presentation_waltercon_2006
+ [[BR]]
+ Instead of the non-alphanumeric characters the HTML escape sequences for
+ them are _shown_.[[BR]]
+ [[BR]]
+ I'd guess this isn't the only page on which this occurs, so maybe this can
+ be solved without awaiting a report for each page.[[BR]]
+ [[BR]]
+ I'll go into specifics now:[[BR]]
+ [[BR]]
+ under heading &quot;1. Device File System&quot;[[BR]]
+ under heading &quot;For development:&quot;[[BR]]
+ [[BR]]
+ in the sentence[[BR]]
+ ''use rescan &lt;driver name&gt; to make sure the system reloads your
+ driver after a recompilation''[[BR]]
+ [[BR]]
+ should be '''&lt;driver name&gt;''' instead of '''&lt;driver name&gt;''' [[BR]]
+ [[BR]]
+ under heading &quot;2. Modules&quot;[[BR]]
+ [[BR]]
+ in the first code block
+ {{{
+         module_info *modules[] = {
+                 (module_info *)&amp;scsi_for_sim_module,
+                 (module_info *)&amp;scsi_bus_module,
+                 (module_info *)&amp;scsi_device_module,
+                 (module_info *)&amp;scsi_bus_raw_module,
+                 NULL
+         };
+ }}}
+ should be
+ {{{
+         module_info *modules[] = {
+                 (module_info *)&amp;scsi_for_sim_module,
+                 (module_info *)&amp;scsi_bus_module,
+                 (module_info *)&amp;scsi_device_module,
+                 (module_info *)&amp;scsi_bus_raw_module,
+                 NULL
+         };
+ }}}
+ in the second code block[[BR]]
+ [[BR]]
+ the lines
+ {{{
+                 (module_info **)&amp;gManager);
+         if (status &lt; B_OK) {
+ }}}
+ should be
+ {{{
+                 (module_info **)&amp;gManager);
+         if (status &lt; B_OK) {
+ }}}
+
+ in the third code block[[BR]]
+ the lines
+ {{{
+                 {B_DEVICE_MANAGER_MODULE_NAME, (module_info
+ **)&amp;gManager},
+                 {LOCKED_POOL_MODULE_NAME, (module_info
+ **)&amp;gLockedPool},
+ }}}
+
+ should be
+ {{{
+                 {B_DEVICE_MANAGER_MODULE_NAME, (module_info **)&amp;gManager},
+                 {LOCKED_POOL_MODULE_NAME, (module_info **)&amp;gLockedPool},
+ }}}
+
+ under heading &quot;4. Interrupts&quot;[[BR]]
+ [[BR]]
+ the first code block
+ {{{
+ status = install_io_interrupt_handler(info.pci-&gt;u.h0.interrupt_line,
+                 &amp;my_interrupt_handler, (void *)&amp;info, 0);
+ }}}
+
+ should probably be
+
+ {{{
+ status = install_io_interrupt_handler(info.pci-&gt;u.h0.interrupt_line,
+                 &amp;my_interrupt_handler, (void *)&amp;info, 0);}}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4853">http://dev.haiku-os.org/ticket/4853</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="023132.html">[Haiku-bugs] [Haiku] #4503: Bootman won't install on a mixed IDE and AHCI system
+</A></li>
+	<LI>Next message: <A HREF="023135.html">[Haiku-bugs] [Haiku] #4853: non-alphanumeric characters are shown as HTML escape sequences
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#23134">[ date ]</a>
+              <a href="thread.html#23134">[ thread ]</a>
+              <a href="subject.html#23134">[ subject ]</a>
+              <a href="author.html#23134">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

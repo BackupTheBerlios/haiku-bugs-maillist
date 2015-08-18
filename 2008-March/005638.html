@@ -1,0 +1,168 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1938: libroot: free bug - Segment violation
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231938%3A%20libroot%3A%20free%20bug%20-%20Segment%20violation&In-Reply-To=%3C040.119952edd4c2fc54e34694964337fe1e%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005637.html">
+   <LINK REL="Next"  HREF="005640.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1938: libroot: free bug - Segment violation</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231938%3A%20libroot%3A%20free%20bug%20-%20Segment%20violation&In-Reply-To=%3C040.119952edd4c2fc54e34694964337fe1e%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1938: libroot: free bug - Segment violation">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Mar 19 02:21:34 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005637.html">[Haiku-bugs] [Haiku] #1937: libroot: malloc bug - Thread 7445 called debugger(): _numBlocks &gt; 0
+</A></li>
+        <LI>Next message: <A HREF="005640.html">[Haiku-bugs] [Haiku] #1938: libroot: free bug - Segment	violation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5638">[ date ]</a>
+              <a href="thread.html#5638">[ thread ]</a>
+              <a href="subject.html#5638">[ subject ]</a>
+              <a href="author.html#5638">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1938: libroot: free bug - Segment violation
+-------------------------------+--------------------------------------------
+ Reporter:  thorn              |       Owner:  axeld         
+     Type:  bug                |      Status:  new           
+ Priority:  normal             |   Milestone:  R1            
+Component:  System/libroot.so  |     Version:  R1 development
+ Platform:  x86                |  
+-------------------------------+--------------------------------------------
+ env:
+ haiku r24413
+ texinfo-4.11 / makeinfo
+
+ backtrace:
+
+ {{{
+ This GDB was configured as &quot;i586-pc-haiku&quot;...
+ [tcsetpgrp failed in terminal_inferior: Invalid Argument]
+ Thread 7323 caused an exception: Segment violation
+ Reading symbols from /boot/beos/system/lib/libroot.so...done.
+ Loaded symbols for /boot/beos/system/lib/libroot.so
+ [tcsetpgrp failed in terminal_inferior: Invalid Argument]
+ [Switching to team ../makeinfo --html -I./../../doc -I../../doc --no-split
+ ./../.. (7323) thread makeinfo (7323)]
+ 0x0027289c in atomic_test_and_set () from /boot/beos/system/lib/libroot.so
+ (gdb) bt full
+ #0  0x0027289c in atomic_test_and_set () from
+ /boot/beos/system/lib/libroot.so
+ No symbol table info available.
+ #1  0x00276d85 in BPrivate::hoardLock () from
+ /boot/beos/system/lib/libroot.so
+ No symbol table info available.
+ #2  0x0027a406 in BPrivate::processHeap::free ()
+    from /boot/beos/system/lib/libroot.so
+ No symbol table info available.
+ #3  0x0027bb08 in free () from /boot/beos/system/lib/libroot.so
+ No symbol table info available.
+ #4  0x00229846 in getdocumenttext (msgid=0x23e447 &quot;Up:&quot;) at
+ makeinfo.c:4348
+         tmp = 0x0
+         old_LC_ALL = 0x0
+         old_LANGUAGE = 0x0
+         result = 0x23e447 &quot;Up:&quot;
+         old_locale = 0x1802bf00 &quot;C&quot;
+ #5  0x0022d0b8 in cm_node () at node.c:1021
+         epilogue_len = 0
+         node = 0x1800f548 &quot;Help-FOO&quot;
+         prev = 0x0
+         next = 0x0
+         up = 0x1802bef0 &quot;Help-M&quot;
+         new_node_pos = 35337
+         defaulting = 0
+         this_section = 4
+ }}}
+
+ source:
+
+ {{{
+   char* old_locale;
+ ..
+   setlocale (LC_ALL, old_locale);
+   free (old_locale);
+ }}}
+
+ serial log:
+
+ {{{
+ vm_soft_fault: va 0x398 not covered by area in address space
+ vm_page_fault: vm_soft_fault returned error 'Bad address' on fault at
+ 0x398, ip 0x27289c, write 1, user 1, thread 0x1c9b
+ vm_page_fault: sending team &quot;makeinfo&quot; 0x1c9b SIGSEGV, ip 0x27289c
+ (&quot;libroot.so_seg0ro&quot; +0x2289c)
+ stack trace:
+   0x0027a406 (libroot.so_seg0ro + 0x2a406)
+   0x0027bb08 (libroot.so_seg0ro + 0x2bb08)
+   0x00229846 (makeinfo_seg0ro + 0x29846)
+   0x0022d0b8 (makeinfo_seg0ro + 0x2d0b8)
+   0x00225718 (makeinfo_seg0ro + 0x25718)
+   0x00225d35 (makeinfo_seg0ro + 0x25d35)
+   0x0022482a (makeinfo_seg0ro + 0x2482a)
+   0x00223cef (makeinfo_seg0ro + 0x23cef)
+   0x00222ce2 (makeinfo_seg0ro + 0x22ce2)
+   0x0020c5e5 (makeinfo_seg0ro + 0xc5e5)
+   0x001007ca (runtime_loader_seg0ro + 0x7ca)
+   0x7ffe6fec (makeinfo_main_stack + 0xffffec)
+ vm_soft_fault: va 0x0 not covered by area in address space
+ vm_page_fault: vm_soft_fault returned error 'Bad address' on fault at 0x0,
+ ip 0x80092ae8, write 0, user 0, thread 0x1c9b
+ debug_server: Thread 7323 entered the debugger: Segment violation
+ stack trace, current PC 0x27289c  atomic_test_and_set + 0xc (closest
+ symbol):
+   (0x7ffe6924)  0x27a406  free__Q28BPrivate11processHeapPv + 0x17a
+   (0x7ffe6964)  0x27bb08  free + 0xa0
+   (0x7ffe6994)  0x229846  getdocumenttext + 0x1ae
+   (0x7ffe69d4)  0x22d0b8  cm_node + 0x1294
+   (0x7ffe6e70)  0x225718  init_paragraph + 0x844 (closest symbol)
+   (0x7ffe6eb0)  0x225d35  reader_loop + 0x609
+   (0x7ffe6ee0)  0x22482a  reverse_list + 0xe5a (closest symbol)
+   (0x7ffe6f10)  0x223cef  reverse_list + 0x31f (closest symbol)
+   (0x7ffe6f40)  0x222ce2  main + 0xf5e
+   (0x7ffe6f80)  0x20c5e5  _start + 0x61
+   (0x7ffe6fac)  0x1007ca  (runtime_loader_seg0ro + 0x7ca)
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1938">http://dev.haiku-os.org/ticket/1938</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005637.html">[Haiku-bugs] [Haiku] #1937: libroot: malloc bug - Thread 7445 called debugger(): _numBlocks &gt; 0
+</A></li>
+	<LI>Next message: <A HREF="005640.html">[Haiku-bugs] [Haiku] #1938: libroot: free bug - Segment	violation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5638">[ date ]</a>
+              <a href="thread.html#5638">[ thread ]</a>
+              <a href="subject.html#5638">[ subject ]</a>
+              <a href="author.html#5638">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

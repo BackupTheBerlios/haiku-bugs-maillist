@@ -1,0 +1,444 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1167: USB stack built for BONE crashes in UHCI finish thread
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231167%3A%20USB%20stack%20built%20for%20BONE%20crashes%20in%0A%20UHCI%20finish%20thread&In-Reply-To=%3C057.7798d3ec4b93cf69591aa3f7f97d305f%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001101.html">
+   <LINK REL="Next"  HREF="001111.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1167: USB stack built for BONE crashes in UHCI finish thread</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231167%3A%20USB%20stack%20built%20for%20BONE%20crashes%20in%0A%20UHCI%20finish%20thread&In-Reply-To=%3C057.7798d3ec4b93cf69591aa3f7f97d305f%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1167: USB stack built for BONE crashes in UHCI finish thread">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Apr 24 15:14:06 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001101.html">[Haiku-bugs] [Haiku] #1167: USB stack built for BONE crashes in UHCI finish thread
+</A></li>
+        <LI>Next message: <A HREF="001111.html">[Haiku-bugs] [Haiku] #1167: USB stack built for BONE crashes in UHCI finish thread
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1102">[ date ]</a>
+              <a href="thread.html#1102">[ thread ]</a>
+              <a href="subject.html#1102">[ subject ]</a>
+              <a href="author.html#1102">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1167: USB stack built for BONE crashes in UHCI finish thread
+----------------------------+-----------------------------------------------
+  Reporter:  jonas.kirilla  |       Owner:  mmlr          
+      Type:  bug            |      Status:  assigned      
+  Priority:  normal         |   Milestone:  R1            
+ Component:  Drivers/USB    |     Version:  R1 development
+Resolution:                 |    Platform:  x86           
+----------------------------+-----------------------------------------------
+Comment (by jonas.kirilla):
+
+ R5/Bone listdev:
+
+ {{{
+ ISA bus, device #0: Communication Device (Serial) [7|0|2]
+ Current configuration: irq [4]
+   io range:  min 3f8 max 3f8 align 0 len 8
+ 4 configurations
+
+ Possible configuration #0: irq [4]
+   io range:  min 3f8 max 3f8 align 0 len 8
+
+ Possible configuration #1: irq [3]
+   io range:  min 2f8 max 2f8 align 0 len 8
+
+ Possible configuration #2: irq [4]
+   io range:  min 3e8 max 3e8 align 0 len 8
+
+ Possible configuration #3: irq [10]
+   io range:  min 2e8 max 2e8 align 0 len 8
+
+ Bus-dependent information:
+ CSN 0 LDN 0
+
+ ISA bus, device #1: Mass Storage Controller (Floppy) [1|2|0]
+ Current configuration: irq [6] dma [2]
+   io range:  min 3f2 max 3f2 align 0 len 4
+ 1 configurations
+
+ Possible configuration #0: irq [6] dma [2]
+   io range:  min 3f2 max 3f2 align 0 len 4
+
+ Bus-dependent information:
+ CSN 5 LDN 0
+
+ ISA bus, device #2: Memory Controller (RAM) [5|0|0]
+ Current configuration:
+   mem range: min 0 max 0 align 0 len a0000
+   mem range: min 100000 max 100000 align 0 len 1ff00000
+   mem range: min e8000 max e8000 align 0 len 8000
+   mem range: min f0000 max f0000 align 0 len 4000
+   mem range: min f4000 max f4000 align 0 len 4000
+   mem range: min f8000 max f8000 align 0 len 8000
+   mem range: min cf400 max cf400 align 0 len c00
+   mem range: min fff80000 max fff80000 align 0 len 80000
+ 1 configurations
+
+ Possible configuration #0:
+   mem range: min 0 max 0 align 0 len a0000
+   mem range: min 100000 max 100000 align 0 len 1ff00000
+   mem range: min e8000 max e8000 align 0 len 8000
+   mem range: min f0000 max f0000 align 0 len 4000
+   mem range: min f4000 max f4000 align 0 len 4000
+   mem range: min f8000 max f8000 align 0 len 8000
+   mem range: min cf400 max cf400 align 0 len c00
+   mem range: min fff80000 max fff80000 align 0 len 80000
+
+ Bus-dependent information:
+ CSN 9 LDN 0
+
+ ISA bus, device #3: Generic System Peripheral (PIC) [8|0|1]
+ Current configuration: irq [2]
+   io range:  min 20 max 20 align 0 len 2
+   io range:  min a0 max a0 align 0 len 2
+   io range:  min 4d0 max 4d0 align 0 len 2
+ 1 configurations
+
+ Possible configuration #0: irq [2]
+   io range:  min 20 max 20 align 0 len 2
+   io range:  min a0 max a0 align 0 len 2
+   io range:  min 4d0 max 4d0 align 0 len 2
+
+ Bus-dependent information:
+ CSN a LDN 0
+
+ ISA bus, device #4: Generic System Peripheral (Timer) [8|2|1]
+ Current configuration: irq [0]
+   io range:  min 40 max 40 align 0 len 4
+ 1 configurations
+
+ Possible configuration #0: irq [0]
+   io range:  min 40 max 40 align 0 len 4
+
+ Bus-dependent information:
+ CSN b LDN 0
+
+ ISA bus, device #5: Generic System Peripheral (RTC) [8|3|1]
+ Current configuration: irq [8]
+   io range:  min 70 max 70 align 0 len 2
+ 1 configurations
+
+ Possible configuration #0: irq [8]
+   io range:  min 70 max 70 align 0 len 2
+
+ Bus-dependent information:
+ CSN c LDN 0
+
+ ISA bus, device #6: Input Device (Keyboard) [9|0|0]
+ Current configuration: irq [1]
+   io range:  min 60 max 60 align 0 len 1
+   io range:  min 64 max 64 align 0 len 1
+ 1 configurations
+
+ Possible configuration #0: irq [1]
+   io range:  min 60 max 60 align 0 len 1
+   io range:  min 64 max 64 align 0 len 1
+
+ Bus-dependent information:
+ CSN d LDN 0
+
+ ISA bus, device #7: CPU (486) [b|1|0]
+ Current configuration: irq [13]
+   io range:  min f0 max f0 align 0 len 1
+ 1 configurations
+
+ Possible configuration #0: irq [13]
+   io range:  min f0 max f0 align 0 len 1
+
+ Bus-dependent information:
+ CSN e LDN 0
+
+ ISA bus, device #8: Generic System Peripheral (DMA) [8|1|1]
+ Current configuration: dma [4]
+   io range:  min 0 max 0 align 0 len 10
+   io range:  min 80 max 80 align 0 len 11
+   io range:  min 94 max 94 align 0 len c
+   io range:  min c0 max c0 align 0 len 1f
+ 1 configurations
+
+ Possible configuration #0: dma [4]
+   io range:  min 0 max 0 align 0 len 10
+   io range:  min 80 max 80 align 0 len 11
+   io range:  min 94 max 94 align 0 len c
+   io range:  min c0 max c0 align 0 len 1f
+
+ Bus-dependent information:
+ CSN f LDN 0
+
+ ISA bus, device #9: Generic System Peripheral (Other) [8|80|0]
+ Current configuration:
+   io range:  min 61 max 61 align 1 len 1
+ 1 configurations
+
+ Possible configuration #0:
+   io range:  min 61 max 61 align 1 len 1
+
+ Bus-dependent information:
+ CSN 10 LDN 0
+
+ ISA bus, device #10: Bridge Device (PCI-PCI) [6|4|0]
+ Current configuration:
+   io range:  min cf8 max cf8 align 0 len 8
+ 1 configurations
+
+ Possible configuration #0:
+   io range:  min cf8 max cf8 align 0 len 8
+
+ Bus-dependent information:
+ CSN 11 LDN 0
+
+ ISA bus, device #11: Generic System Peripheral (Other) [8|80|ff]
+ Current configuration:
+   io range:  min 290 max 290 align 0 len 8
+   io range:  min 3f0 max 3f0 align 0 len 2
+   io range:  min e400 max e400 align 0 len 80
+   io range:  min ec00 max ec00 align 0 len 40
+ 1 configurations
+
+ Possible configuration #0:
+   io range:  min 290 max 290 align 0 len 8
+   io range:  min 3f0 max 3f0 align 0 len 2
+   io range:  min e400 max e400 align 0 len 80
+   io range:  min ec00 max ec00 align 0 len 40
+
+ Bus-dependent information:
+ CSN 12 LDN 0
+
+ PCI bus, device #0: Bridge Device (Host) [6|0|0]
+ Current configuration:
+   mem range: min f8000000 max f8000000 align 0 len 4000000
+ 1 configurations
+
+ Possible configuration #0:
+   mem range: min f8000000 max f8000000 align 0 len 4000000
+
+ Bus-dependent information:
+ vendor id: 8086, device id: 1a30
+
+ PCI bus, device #1: Bridge Device (PCI-PCI) [6|4|0]
+ Current configuration:
+ 1 configurations
+
+ Possible configuration #0:
+
+ Bus-dependent information:
+ vendor id: 8086, device id: 1a31
+
+ PCI bus, device #2: Display Controller (VGA/8514) [3|0|0]
+ Current configuration: irq [11]
+   mem range: min ee000000 max ee000000 align 0 len 1000000
+   mem range: min f0000000 max f0000000 align 0 len 8000000
+ 1 configurations
+
+ Possible configuration #0: irq [11]
+   mem range: min ee000000 max ee000000 align 0 len 1000000
+   mem range: min f0000000 max f0000000 align 0 len 8000000
+
+ Bus-dependent information:
+ vendor id: 10de, device id: 326
+
+ PCI bus, device #3: Bridge Device (PCI-PCI) [6|4|0]
+ Current configuration:
+ 1 configurations
+
+ Possible configuration #0:
+
+ Bus-dependent information:
+ vendor id: 8086, device id: 244e
+
+ PCI bus, device #4: Serial Bus Controller (USB) [c|3|0]
+ Current configuration: irq [10]
+   io range:  min d800 max d800 align 0 len 20
+ 1 configurations
+
+ Possible configuration #0: irq [10]
+   io range:  min d800 max d800 align 0 len 20
+
+ Bus-dependent information:
+ vendor id: 1106, device id: 3038
+
+ PCI bus, device #5: Serial Bus Controller (USB) [c|3|0]
+ Current configuration: irq [12]
+   io range:  min d400 max d400 align 0 len 20
+ 1 configurations
+
+ Possible configuration #0: irq [12]
+   io range:  min d400 max d400 align 0 len 20
+
+ Bus-dependent information:
+ vendor id: 1106, device id: 3038
+
+ PCI bus, device #6: Serial Bus Controller (USB) [c|3|20]
+ Current configuration: irq [3]
+   mem range: min ed800000 max ed800000 align 0 len 100
+ 1 configurations
+
+ Possible configuration #0: irq [3]
+   mem range: min ed800000 max ed800000 align 0 len 100
+
+ Bus-dependent information:
+ vendor id: 1106, device id: 3104
+
+ PCI bus, device #7: Multimedia Device (Audio) [4|1|0]
+ Current configuration: irq [9]
+   io range:  min d000 max d000 align 0 len 20
+ 1 configurations
+
+ Possible configuration #0: irq [9]
+   io range:  min d000 max d000 align 0 len 20
+
+ Bus-dependent information:
+ vendor id: 1102, device id: 2
+
+ PCI bus, device #8: Input Device (Other) [9|80|0]
+ Current configuration:
+   io range:  min b800 max b800 align 0 len 8
+ 1 configurations
+
+ Possible configuration #0:
+   io range:  min b800 max b800 align 0 len 8
+
+ Bus-dependent information:
+ vendor id: 1102, device id: 7002
+
+ PCI bus, device #9: NIC (Ethernet) [2|0|0]
+ Current configuration: irq [7]
+   io range:  min b400 max b400 align 0 len 100
+   mem range: min ed000000 max ed000000 align 0 len 100
+ 1 configurations
+
+ Possible configuration #0: irq [7]
+   io range:  min b400 max b400 align 0 len 100
+   mem range: min ed000000 max ed000000 align 0 len 100
+
+ Bus-dependent information:
+ vendor id: 10ec, device id: 8139
+
+ PCI bus, device #10: Communication Device (Serial) [7|0|2]
+ Current configuration: irq [5]
+   io range:  min b000 max b000 align 0 len 8
+   io range:  min a800 max a800 align 0 len 8
+   io range:  min a400 max a400 align 0 len 8
+   io range:  min a000 max a000 align 0 len 8
+   mem range: min ec800000 max ec800000 align 0 len 40
+ 1 configurations
+
+ Possible configuration #0: irq [5]
+   io range:  min b000 max b000 align 0 len 8
+   io range:  min a800 max a800 align 0 len 8
+   io range:  min a400 max a400 align 0 len 8
+   io range:  min a000 max a000 align 0 len 8
+   mem range: min ec800000 max ec800000 align 0 len 40
+
+ Bus-dependent information:
+ vendor id: 14d2, device id: 8020
+
+ PCI bus, device #11: Bridge Device (ISA) [6|1|0]
+ Current configuration:
+ 1 configurations
+
+ Possible configuration #0:
+
+ Bus-dependent information:
+ vendor id: 8086, device id: 2440
+
+ PCI bus, device #12: Mass Storage Controller (IDE) [1|1|80]
+ Current configuration: irqs [14][15]
+   io range:  min 1f0 max 1f0 align 0 len 8
+   io range:  min 3f4 max 3f4 align 0 len 4
+   io range:  min 170 max 170 align 0 len 8
+   io range:  min 374 max 374 align 0 len 4
+   io range:  min 9800 max 9800 align 0 len 10
+ 1 configurations
+
+ Possible configuration #0: irqs [14][15]
+   io range:  min 1f0 max 1f0 align 0 len 8
+   io range:  min 3f4 max 3f4 align 0 len 4
+   io range:  min 170 max 170 align 0 len 8
+   io range:  min 374 max 374 align 0 len 4
+   io range:  min 9800 max 9800 align 0 len 10
+
+ Bus-dependent information:
+ vendor id: 8086, device id: 244b
+
+ PCI bus, device #13: Serial Bus Controller (USB) [c|3|0]
+ Current configuration: irq [3]
+   io range:  min 9400 max 9400 align 0 len 20
+ 1 configurations
+
+ Possible configuration #0: irq [3]
+   io range:  min 9400 max 9400 align 0 len 20
+
+ Bus-dependent information:
+ vendor id: 8086, device id: 2442
+
+ PCI bus, device #14: Serial Bus Controller (USB) [c|3|0]
+ Current configuration: irq [9]
+   io range:  min 9000 max 9000 align 0 len 20
+ 1 configurations
+
+ Possible configuration #0: irq [9]
+   io range:  min 9000 max 9000 align 0 len 20
+
+ Bus-dependent information:
+ vendor id: 8086, device id: 2444
+
+ PCI bus, device #15: Multimedia Device (Audio) [4|1|0]
+ Current configuration: irq [10]
+   io range:  min 8800 max 8800 align 0 len 100
+   io range:  min 8400 max 8400 align 0 len 40
+ 1 configurations
+
+ Possible configuration #0: irq [10]
+   io range:  min 8800 max 8800 align 0 len 100
+   io range:  min 8400 max 8400 align 0 len 40
+
+ Bus-dependent information:
+ vendor id: 8086, device id: 2445
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1167#comment:5">http://dev.haiku-os.org/ticket/1167#comment:5</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001101.html">[Haiku-bugs] [Haiku] #1167: USB stack built for BONE crashes in UHCI finish thread
+</A></li>
+	<LI>Next message: <A HREF="001111.html">[Haiku-bugs] [Haiku] #1167: USB stack built for BONE crashes in UHCI finish thread
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1102">[ date ]</a>
+              <a href="thread.html#1102">[ thread ]</a>
+              <a href="subject.html#1102">[ subject ]</a>
+              <a href="author.html#1102">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

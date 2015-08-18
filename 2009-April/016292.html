@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2197: KDL when starting Firefox
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232197%3A%20KDL%20when%20starting%20Firefox&In-Reply-To=%3C049.8bbb5b5ebd74b097d1950c624dcb4d1f%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="016291.html">
+   <LINK REL="Next"  HREF="016298.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2197: KDL when starting Firefox</H1>
+    <B>philcostin</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232197%3A%20KDL%20when%20starting%20Firefox&In-Reply-To=%3C049.8bbb5b5ebd74b097d1950c624dcb4d1f%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2197: KDL when starting Firefox">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Apr 18 01:23:31 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="016291.html">[Haiku-bugs] [Haiku] #2886: cd file: no such file or directory
+</A></li>
+        <LI>Next message: <A HREF="016298.html">[Haiku-bugs] [Haiku] #3780: Missing support for building to partition from MacOSX/Darwin
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16292">[ date ]</a>
+              <a href="thread.html#16292">[ thread ]</a>
+              <a href="subject.html#16292">[ subject ]</a>
+              <a href="author.html#16292">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2197: KDL when starting Firefox
+-------------------------------------+--------------------------------------
+  Reporter:  cebif                   |       Owner:  axeld         
+      Type:  bug                     |      Status:  reopened      
+  Priority:  blocker                 |   Milestone:  R1            
+ Component:  Network &amp; Internet/TCP  |     Version:  R1 development
+Resolution:                          |   Blockedby:                
+  Platform:  All                     |    Blocking:                
+-------------------------------------+--------------------------------------
+
+Comment(by philcostin):
+
+ Someone who has debugged semaphore issues before might find this useful...
+
+ This is the far more useful info I found after playing with the debugger
+ and switching it to CPU 1.
+
+ {{{
+ kdebug&gt; cpu 1
+ Welcome to Kernel Debugging Land...
+ Thread 538 &quot;firefox-bin&quot; running on CPU 1
+ kdebug&gt; teams
+ team            id      parent          name
+ 0x80fa5000      1       0x00000000      kernel_team
+ 0x8105c330      532     0x8105c198      sh
+ 0x80fa5cc0      98      0x80fa5000      Tracker
+ 0x80fa54c8      67      0x80fa5000      debug_server
+ 0x8105c000      99      0x80fa5000      Deskbar
+ 0x80fa5660      68      0x80fa5000      net_server
+ 0x80fa57f8      69      0x80fa5000      app_server
+ 0x8105c660      103     0x80fa5000      media_server
+ 0x8105cb28      538     0x8105c330      firefox-bin
+ 0x8105c7f8      104     0x80fa5000      midi_server
+ 0x8105c990      105     0x80fa5000      print_server
+ 0x80fa5b28      419     0x80fa5cc0      Terminal
+ 0x8105c4c8      423     0x80fa5b28      sh
+ 0x80fa5990      83      0x80fa5000      syslog_daemon
+ 0x80fa5e58      87      0x80fa57f8      input_server
+ 0x80fa5198      119     0x8105c660      media_addon_server
+ 0x8105c198      525     0x8105c4c8      sh
+ 0x80fa5330      60      0x80fa5000      registrar
+ kdebug&gt; threads 538
+ thread          id      state   wait for        object  cpu pri  stack
+ team    name
+ 0x855b9800      538     running         -               1   10
+ 0x85935000     538     firefox-bin
+ 0x855ab000      539     waiting sem             6468    -   10
+ 0x85939000     538     Mozilla XUL BApplication
+ kdebug&gt; sem 6468
+ SEM: 0x842b91d0
+ id:     6468 (0x1944)
+ name:   &#180;AppLooperPort&#180;
+ owner:  -1
+ count:  -1
+ queue:  539
+ last acquired by: 539, count: 1
+ last released by: 539, count: 1
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2197#comment:37">http://dev.haiku-os.org/ticket/2197#comment:37</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="016291.html">[Haiku-bugs] [Haiku] #2886: cd file: no such file or directory
+</A></li>
+	<LI>Next message: <A HREF="016298.html">[Haiku-bugs] [Haiku] #3780: Missing support for building to partition from MacOSX/Darwin
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16292">[ date ]</a>
+              <a href="thread.html#16292">[ thread ]</a>
+              <a href="subject.html#16292">[ subject ]</a>
+              <a href="author.html#16292">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

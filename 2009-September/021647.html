@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4455: Deksbar crashes on mounting	non-boot partition
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234455%3A%20Deksbar%20crashes%20on%20mounting%0A%09non-boot%20partition&In-Reply-To=%3C060.4adebba1389a0c6adb776462238e959a%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="021217.html">
+   <LINK REL="Next"  HREF="020961.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4455: Deksbar crashes on mounting	non-boot partition</H1>
+    <B>michael.weirauch</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234455%3A%20Deksbar%20crashes%20on%20mounting%0A%09non-boot%20partition&In-Reply-To=%3C060.4adebba1389a0c6adb776462238e959a%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4455: Deksbar crashes on mounting	non-boot partition">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Sep 19 13:12:31 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="021217.html">[Haiku-bugs] [Haiku] #4455: Deksbar crashes on mounting	non-boot partition
+</A></li>
+        <LI>Next message: <A HREF="020961.html">[Haiku-bugs] [Haiku] #2948: No nVidia accelerated video on 7600GS analog output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21647">[ date ]</a>
+              <a href="thread.html#21647">[ thread ]</a>
+              <a href="subject.html#21647">[ subject ]</a>
+              <a href="author.html#21647">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4455: Deksbar crashes on mounting non-boot partition
+------------------------------+---------------------------------------------
+ Reporter:  michael.weirauch  |       Owner:  axeld        
+     Type:  bug               |      Status:  new          
+ Priority:  normal            |   Milestone:  R1           
+Component:  File Systems/BFS  |     Version:  R1/pre-alpha1
+Blockedby:                    |    Platform:  x86          
+ Blocking:                    |  
+------------------------------+---------------------------------------------
+
+Comment(by michael.weirauch):
+
+ bfs/Query.cpp:1117 allerts to syslog that Inode::GetName() fails.
+ For circumventing the Deskbar crash I am returning a dummy &quot;xyz&quot; name.
+
+ I don't have the expertise investigating this, so leaving
+ filesystem &quot;intact&quot; until Axel returns.
+
+ I also failed constructing a BDirectory with the parent's dev_t
+ and ino_t information (extended the dump message to get this info)
+ for iterating the parents directory entries in order to find the
+ entry choking. InitCheck() failed.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4455#comment:7">http://dev.haiku-os.org/ticket/4455#comment:7</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="021217.html">[Haiku-bugs] [Haiku] #4455: Deksbar crashes on mounting	non-boot partition
+</A></li>
+	<LI>Next message: <A HREF="020961.html">[Haiku-bugs] [Haiku] #2948: No nVidia accelerated video on 7600GS analog output
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21647">[ date ]</a>
+              <a href="thread.html#21647">[ thread ]</a>
+              <a href="subject.html#21647">[ subject ]</a>
+              <a href="author.html#21647">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #278: [FileTypes] disappearing menu items
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23278%3A%20%5BFileTypes%5D%20disappearing%20menu%20items&In-Reply-To=%3C049.758371d1f19da0beb51c67331623b708%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="017310.html">
+   <LINK REL="Next"  HREF="017204.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #278: [FileTypes] disappearing menu items</H1>
+    <B>stpere</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23278%3A%20%5BFileTypes%5D%20disappearing%20menu%20items&In-Reply-To=%3C049.758371d1f19da0beb51c67331623b708%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #278: [FileTypes] disappearing menu items">trac at haiku-os.org
+       </A><BR>
+    <I>Sat May  9 22:51:22 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="017310.html">[Haiku-bugs] [Haiku] #3908: Too easy to accidentally select first item off a popup menu
+</A></li>
+        <LI>Next message: <A HREF="017204.html">[Haiku-bugs] [Haiku] #3909: Set urlwrapper to initially handle all URL types - this enables a better system-user dialog
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17203">[ date ]</a>
+              <a href="thread.html#17203">[ thread ]</a>
+              <a href="subject.html#17203">[ subject ]</a>
+              <a href="author.html#17203">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#278: [FileTypes] disappearing menu items
+------------------------------------+---------------------------------------
+  Reporter:  diver                  |       Owner:  axeld         
+      Type:  bug                    |      Status:  reopened      
+  Priority:  normal                 |   Milestone:  R1            
+ Component:  Preferences/FileTypes  |     Version:  R1 development
+Resolution:                         |   Blockedby:                
+  Platform:  All                    |    Blocking:                
+------------------------------------+---------------------------------------
+Changes (by stpere):
+
+  * version:  =&gt; R1 development
+
+
+Old description:
+
+&gt;<i> This could be due linux build image, but anyway:
+</I>&gt;<i> Start FyleTypes and expand application
+</I>&gt;<i> select Be Application and go to Preferred application box
+</I>&gt;<i> click on popup menu and select None
+</I>&gt;<i> now click there again and you'll see that Tracker disappeared from menu
+</I>&gt;<i> list.
+</I>&gt;<i> Tested with rev16685 under vmware.
+</I>
+New description:
+
+ This could be due linux build image, but anyway:
+ Start FyleTypes and expand application
+ select Be Application and go to Preferred application box
+ click on popup menu and select None
+ now click there again and you'll see that Tracker disappeared from menu
+ list.
+ Tested with rev16685 under vmware.
+
+--
+
+Comment:
+
+ Here are some observations I made while investigating this ticket :
+
+ First, sorry for the novel &gt;.&lt;
+
+ I open FileTypes, I select the Be Application Mimetype, set the preferred
+ app. to None and Tracker's item disappear from the menu, as mentioned.
+
+ I went to FileTypes's source code (PreferredAppMenu.cpp) and requested the
+ message listing the supporting applications message to print on stream.  I
+ was puzzled to discover it wasn't returning Tracker.  So I found out
+ Tracker was first shown simply because it was the current Preferred App.
+ So changing the preferred app had for effect to remove Tracker from this
+ menu on next update (since it wasn't even listed as a supporting app)
+
+ Next, FileTypes &gt; Application Types. I select Tracker, remove its support
+ for Be Application Mimetype, and re-add it.  Close (and save) the window.
+ Back in FileTypes main window, I can now see Tracker in the menu for the
+ preferred App of Be Applications.  Selecting None doesn't make tracker
+ disappear now.  And the supporting Apps message returns Tracker now.
+
+ Next, I close and reopen FileTypes.  The &quot;fix&quot; is still effective, the
+ support of Be Applications files from Tracker is still recognized.
+
+ Next, I reboot.  It returns to the old behaviour where selecting None
+ makes Tracker disappears from the preferred app. menu.
+
+ So, there must be something wrong with the way the mime database is loaded
+ on boot.  I'm trying to figure it out, but can't promise anything, since
+ I'm learning how it works while trying to fix it :)
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/278#comment:18">http://dev.haiku-os.org/ticket/278#comment:18</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="017310.html">[Haiku-bugs] [Haiku] #3908: Too easy to accidentally select first item off a popup menu
+</A></li>
+	<LI>Next message: <A HREF="017204.html">[Haiku-bugs] [Haiku] #3909: Set urlwrapper to initially handle all URL types - this enables a better system-user dialog
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17203">[ date ]</a>
+              <a href="thread.html#17203">[ thread ]</a>
+              <a href="subject.html#17203">[ subject ]</a>
+              <a href="author.html#17203">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

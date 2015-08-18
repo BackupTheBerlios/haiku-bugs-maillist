@@ -1,0 +1,642 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #739: Haiku bootloader does not detect	boot volume
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23739%3A%20Haiku%20bootloader%20does%20not%20detect%0A%09boot%20volume&In-Reply-To=%3C061.381ab43edbf8983ae878b8ccd3334356%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002286.html">
+   <LINK REL="Next"  HREF="002289.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #739: Haiku bootloader does not detect	boot volume</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23739%3A%20Haiku%20bootloader%20does%20not%20detect%0A%09boot%20volume&In-Reply-To=%3C061.381ab43edbf8983ae878b8ccd3334356%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #739: Haiku bootloader does not detect	boot volume">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Aug 14 14:38:32 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002286.html">[Haiku-bugs] [Haiku] #977: [kernel] sometimes boot fail, just stops at boot logo
+</A></li>
+        <LI>Next message: <A HREF="002289.html">[Haiku-bugs] [Haiku] #739: Haiku bootloader does not detect	boot volume
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2288">[ date ]</a>
+              <a href="thread.html#2288">[ thread ]</a>
+              <a href="subject.html#2288">[ subject ]</a>
+              <a href="author.html#2288">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#739: Haiku bootloader does not detect boot volume
+--------------------------------+-------------------------------------------
+  Reporter:  <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">kev at brantaero.com</A>  |       Owner:  axeld
+      Type:  bug                |      Status:  new  
+  Priority:  blocker            |   Milestone:  R1   
+ Component:  System/Kernel      |     Version:       
+Resolution:                     |    Platform:  All  
+--------------------------------+-------------------------------------------
+Comment (by kev):
+
+ Tried the latest build this morning.  Same old story trying to boot from
+ actual HD.  In QEMU I got various results depending on what else I was
+ doing at the time, but from a fresh Terminal window, if I just left it, I
+ got the following.  (The mouse warnings didn't happen until after a while
+ of inactivity I tried moving the mouse around to see what would happen.)
+
+ {{{
+
+ Welcome to the BeOS shell.
+
+ $ cd /boot/apps/QEMU/
+ $ qemu -serial stdio -hda ~/Downloads/haiku.image -snapshot
+ APM version 1.2 available, flags 3.
+ smp_probe: entry base 0x9fc00, limit 0xa0000
+ smp_probe: entry base 0xf0000, limit 0x100000
+ VESA version = 200
+ oem string: VGABIOS Cirrus extension
+ EDID1: 14f
+ Welcome to the Haiku boot loader!
+ legacy base address 1f0
+ ATA device, master
+ number of drives: 1
+ add_partitions_for(0x001051cc, mountFS = no)
+ add_partitions_for(fd = 0, mountFS = no)
+ Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ intel: pm_identify_partition(1, 1069856: 0, 104857600, 512)
+ Partition::SetTo(): active: 6f
+ intel: _ParsePrimary(): partition 0: bad location, ignoring
+ Partition::SetTo(): active: 74
+ Partition::SetTo(): active: 0
+ Partition::SetTo(): active: 0
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ boot partition offset: 0
+ check for file_system: BFS Filesystem
+ load kernel...
+ unhandled pheader type 0x6
+ unhandled pheader type 0x3
+ kernel entry at 8002d43c
+ Welcome to kernel debugger output!
+ Haiku revision: 21935
+ INIT: init CPU
+ CPU 0: type 0 family 6 model 3 stepping 3, string 'GenuineIntel'
+ CPU 0: features: fpu de pse tsc msr pae mce cx8 sep pge cmov pat mmx fxsr
+ sse sse2
+ INIT: init interrupts
+ INIT: init VM
+ slab: init base 0x91794000 + 0x2000
+ vm_mark_page_range_inuse: page 0x9f in non-free state 7!
+ INIT: init driver_settings
+ heap: allocated big chunk (65548 bytes), it will never be freed!
+ INIT: init system info
+ INIT: init SMP
+ INIT: init timer
+ INIT: init real time clock
+ INIT: init semaphores
+ INIT: init VM semaphores
+ INIT: init driver_settings
+ INIT: init generic syscall
+ INIT: init cbuf
+ INIT: init teams
+ INIT: init threads
+ INIT: init ports
+ INIT: init kernel daemons
+ apm_init()
+   code32: 0xf000, 0x9b07, length 0xfff0
+   code16: 0xf000, length 0xfff0
+   data: 0xf000, length 0xfff0
+ INIT: init VM threads
+ INIT: init ELF loader
+ INIT: init scheduler
+ INIT: init notification services
+ INIT: init VFS
+ INIT: waking up AP cpus
+ INIT: exiting kernel startup
+ INIT: enabling interrupts and starting scheduler on cpu 0
+ INIT: starting main2 thread
+ INIT: resuming main2 thread...
+ INIT: start of main2: initializing devices
+ INIT: Init modules
+ INIT: Init Userland debugging
+ INIT: Init Messaging Service
+ INIT: Bootstrap file systems
+ INIT: Init Device Manager
+         found root!!
+         add module bus_managers/isa/root/device_v1 to list
+ PCI: pci_module_init
+ PCI: mechanism 1 controller found
+ PCI: EnumerateBus: domain 0, bus 0
+ PCI: EnumerateBus done: domain 0, bus 0, last used bus number 0
+ PCI: DiscoverBus, domain 0, bus 0
+ PCI: DiscoverDevice, domain 0, bus 0, dev 0, func 0
+ PCI: CreateDevice, domain 0, bus 0, dev 0, func 0:
+ PCI: vendor 0x8086, device 0x1237, class_base 0x06, class_sub 0x00
+ PCI: DiscoverDevice, domain 0, bus 0, dev 1, func 0
+ PCI: CreateDevice, domain 0, bus 0, dev 1, func 0:
+ PCI: vendor 0x8086, device 0x7000, class_base 0x06, class_sub 0x01
+ PCI: DiscoverDevice, domain 0, bus 0, dev 1, func 1
+ PCI: CreateDevice, domain 0, bus 0, dev 1, func 1:
+ PCI: vendor 0x8086, device 0x7010, class_base 0x01, class_sub 0x01
+ PCI: DiscoverDevice, domain 0, bus 0, dev 1, func 2
+ PCI: DiscoverDevice, domain 0, bus 0, dev 1, func 3
+ PCI: DiscoverDevice, domain 0, bus 0, dev 1, func 4
+ PCI: DiscoverDevice, domain 0, bus 0, dev 1, func 5
+ PCI: DiscoverDevice, domain 0, bus 0, dev 1, func 6
+ PCI: DiscoverDevice, domain 0, bus 0, dev 1, func 7
+ PCI: DiscoverDevice, domain 0, bus 0, dev 2, func 0
+ PCI: CreateDevice, domain 0, bus 0, dev 2, func 0:
+ PCI: vendor 0x1013, device 0x00b8, class_base 0x03, class_sub 0x00
+ PCI: DiscoverDevice, domain 0, bus 0, dev 3, func 0
+ PCI: CreateDevice, domain 0, bus 0, dev 3, func 0:
+ PCI: vendor 0x10ec, device 0x8029, class_base 0x02, class_sub 0x00
+ PCI: [dom 0, bus  0] bus   0, device  0, function  0: vendor 8086, device
+ 1237, revision 02
+ PCI:   class_base 06, class_function 00, class_api 00
+ PCI:   vendor 8086: Intel Corporation
+ PCI:   device 1237: 440FX - 82441FX PMC [Natoma]
+ PCI:   info: Bridge (Host bridge)
+ PCI:   line_size 00, latency 00, header_type 00, BIST 00
+ PCI:   ROM base host 00000000, pci 00000000, size 00000000
+ PCI:   cardbus_CIS 00000000, subsystem_id 0000, subsystem_vendor_id 0000
+ PCI:   interrupt_line 00, interrupt_pin 00, min_grant 00, max_latency 00
+ PCI:   base reg 0: host 00000000, pci 00000000, size 00000000, flags 00
+ PCI:   base reg 1: host 00000000, pci 00000000, size 00000000, flags 00
+ PCI:   base reg 2: host 00000000, pci 00000000, size 00000000, flags 00
+ PCI:   base reg 3: host 00000000, pci 00000000, size 00000000, flags 00
+ PCI:   base reg 4: host 00000000, pci 00000000, size 00000000, flags 00
+ PCI:   base reg 5: host 00000000, pci 00000000, size 00000000, flags 00
+ PCI:   Capabilities: (not supported)
+ PCI: [dom 0, bus  0] bus   0, device  1, function  0: vendor 8086, device
+ 7000, revision 00
+ PCI:   class_base 06, class_function 01, class_api 00
+ PCI:   vendor 8086: Intel Corporation
+ PCI:   device 7000: 82371SB PIIX3 ISA [Natoma/Triton II]
+ PCI:   info: Bridge (ISA bridge)
+ PCI:   line_size 00, latency 00, header_type 80, BIST 00
+ PCI:   ROM base host 00000000, pci 00000000, size 00000000
+ PCI:   cardbus_CIS 00000000, subsystem_id 0000, subsystem_vendor_id 0000
+ PCI:   interrupt_line 00, interrupt_pin 00, min_grant 00, max_latency 00
+ PCI:   base reg 0: host 00000000, pci 00000000, size 00000000, flags 00
+ PCI:   base reg 1: host 00000000, pci 00000000, size 00000000, flags 00
+ PCI:   base reg 2: host 00000000, pci 00000000, size 00000000, flags 00
+ PCI:   base reg 3: host 00000000, pci 00000000, size 00000000, flags 00
+ PCI:   base reg 4: host 00000000, pci 00000000, size 00000000, flags 00
+ PCI:   base reg 5: host 00000000, pci 00000000, size 00000000, flags 00
+ PCI:   Capabilities: (not supported)
+ PCI: [dom 0, bus  0] bus   0, device  1, function  1: vendor 8086, device
+ 7010, revision 00
+ PCI:   class_base 01, class_function 01, class_api 80
+ PCI:   vendor 8086: Intel Corporation
+ PCI:   device 7010: 82371SB PIIX3 IDE [Natoma/Triton II]
+ PCI:   info: Mass storage controller (IDE interface)
+ PCI:   line_size 00, latency 00, header_type 00, BIST 00
+ PCI:   ROM base host 00000000, pci 00000000, size 00000000
+ PCI:   cardbus_CIS 00000000, subsystem_id 0000, subsystem_vendor_id 0000
+ PCI:   interrupt_line 00, interrupt_pin 00, min_grant 00, max_latency 00
+ PCI:   base reg 0: host 00000000, pci 00000000, size 00000000, flags 00
+ PCI:   base reg 1: host 00000000, pci 00000000, size 00000000, flags 00
+ PCI:   base reg 2: host 00000000, pci 00000000, size 00000000, flags 00
+ PCI:   base reg 3: host 00000000, pci 00000000, size 00000000, flags 00
+ PCI:   base reg 4: host 0000c000, pci 0000c000, size 00000010, flags 01
+ PCI:   base reg 5: host 00000000, pci 00000000, size 00000000, flags 00
+ PCI:   Capabilities: (not supported)
+ PCI: [dom 0, bus  0] bus   0, device  2, function  0: vendor 1013, device
+ 00b8, revision 00
+ PCI:   class_base 03, class_function 00, class_api 00
+ PCI:   vendor 1013: Cirrus Logic
+ PCI:   device 00b8: GD 5446
+ PCI:   info: Display controller (VGA compatible controller, VGA)
+ PCI:   line_size 00, latency 00, header_type 00, BIST 00
+ PCI:   ROM base host 00000000, pci 00000000, size 00000000
+ PCI:   cardbus_CIS 00000000, subsystem_id 0000, subsystem_vendor_id 0000
+ PCI:   interrupt_line 00, interrupt_pin 00, min_grant 00, max_latency 00
+ PCI:   base reg 0: host f0000000, pci f0000000, size 02000000, flags 08
+ PCI:   base reg 1: host f2000000, pci f2000000, size 00001000, flags 00
+ PCI:   base reg 2: host 00000000, pci 00000000, size 00000000, flags 00
+ PCI:   base reg 3: host 00000000, pci 00000000, size 00000000, flags 00
+ PCI:   base reg 4: host 00000000, pci 00000000, size 00000000, flags 00
+ PCI:   base reg 5: host 00000000, pci 00000000, size 00000000, flags 00
+ PCI:   Capabilities: (not supported)
+ PCI: [dom 0, bus  0] bus   0, device  3, function  0: vendor 10ec, device
+ 8029, revision 00
+ PCI:   class_base 02, class_function 00, class_api 00
+ PCI:   vendor 10ec: Realtek Semiconductor Co., Ltd.
+ PCI:   device 8029: RTL-8029(AS)
+ PCI:   info: Network controller (Ethernet controller)
+ PCI:   line_size 00, latency 00, header_type 00, BIST 00
+ PCI:   ROM base host 00000000, pci 00000000, size 00000000
+ PCI:   cardbus_CIS 00000000, subsystem_id 0000, subsystem_vendor_id 0000
+ PCI:   interrupt_line 0b, interrupt_pin 01, min_grant 00, max_latency 00
+ PCI:   base reg 0: host 0000c100, pci 0000c100, size 00000100, flags 01
+ PCI:   base reg 1: host 00000000, pci 00000000, size 00000000, flags 00
+ PCI:   base reg 2: host 00000000, pci 00000000, size 00000000, flags 00
+ PCI:   base reg 3: host 00000000, pci 00000000, size 00000000, flags 00
+ PCI:   base reg 4: host 00000000, pci 00000000, size 00000000, flags 00
+ PCI:   base reg 5: host 00000000, pci 00000000, size 00000000, flags 00
+ PCI:   Capabilities: (not supported)
+         found root!!
+         add module bus_managers/pci/root/device_v1 to list
+ has connection? no
+ module: bus_managers/isa/root/device_v1, support: 1
+ module: bus_managers/pci/root/device_v1, support: 1
+ register rest: bus_managers/isa/root/device_v1
+ free bus_managers/isa/root/device_v1
+ register rest: bus_managers/pci/root/device_v1
+ free bus_managers/pci/root/device_v1
+ INIT: Add preloaded old-style drivers
+ INIT: Mount boot file system
+ get_boot_partitions(): boot volume message:
+ field: &quot;booted from image&quot;, type: LONG (0x4c4f4e47):
+   [ 0] 0 (0x0)
+ field: &quot;partition offset&quot;, type: LLNG (0x4c4c4e47):
+   [ 0] 0 (0x0)
+ field: &quot;boot method&quot;, type: LONG (0x4c4f4e47):
+   [ 0] 0 (0x0)
+ field: &quot;boot drive number&quot;, type: LLNG (0x4c4c4e47):
+   [ 0] 128 (0x80)
+ field: &quot;disk identifier&quot;, type: RAWT (0x52415754):
+   [ 0] data: &quot;0x8033ffa8&quot;, 80 bytes
+ get_boot_partitions(): boot method type: 0
+ partitioning system: partitioning_systems/intel/extended/v1
+ KDiskDeviceManager::_AddDiskSystem(partitioning_systems/intel/extended/v1)
+ intel: ep_std_ops(0x1)
+ intel: ep_std_ops(0x2)
+ KDiskDeviceManager::_AddDiskSystem() done: No error
+ partitioning system: partitioning_systems/intel/map/v1
+ KDiskDeviceManager::_AddDiskSystem(partitioning_systems/intel/map/v1)
+ intel: pm_std_ops(0x1)
+ intel: pm_std_ops(0x2)
+ KDiskDeviceManager::_AddDiskSystem() done: No error
+ file system: file_systems/bfs/v1
+ KDiskDeviceManager::_AddDiskSystem(file_systems/bfs/v1)
+ KDiskDeviceManager::_AddDiskSystem() done: No error
+ file system: file_systems/pipefs/v1
+ KDiskDeviceManager::_AddDiskSystem(file_systems/pipefs/v1)
+ KDiskDeviceManager::_AddDiskSystem() done: No error
+ file system: file_systems/devfs/v1
+ KDiskDeviceManager::_AddDiskSystem(file_systems/devfs/v1)
+ KDiskDeviceManager::_AddDiskSystem() done: No error
+ file system: file_systems/rootfs/v1
+ KDiskDeviceManager::_AddDiskSystem(file_systems/rootfs/v1)
+ KDiskDeviceManager::_AddDiskSystem() done: No error
+ number of disk systems: 6
+ KDiskDeviceManager::_Scan(/dev/disk)
+         found pci!!
+         found drivers/dev/disk/sata!!
+         add module busses/ide/ahci/device_v1 to list
+         found pci!!
+         found drivers/dev/disk/ide!!
+         add module busses/ide/generic_ide_pci/device_v1 to list
+         found pci!!
+         found drivers/dev/disk/sata!!
+         add module busses/ide/silicon_image_3112/device_v1 to list
+ has connection? yes
+ module: busses/ide/ahci/device_v1, support: 0
+ module: busses/ide/generic_ide_pci/device_v1, support: 0
+ module: busses/ide/silicon_image_3112/device_v1, support: 0
+ free busses/ide/ahci/device_v1
+ free busses/ide/generic_ide_pci/device_v1
+ free busses/ide/silicon_image_3112/device_v1
+         found pci!!
+         found drivers/dev/disk/sata!!
+         add module busses/ide/ahci/device_v1 to list
+         found pci!!
+         found drivers/dev/disk/ide!!
+         add module busses/ide/generic_ide_pci/device_v1 to list
+         found pci!!
+         found drivers/dev/disk/sata!!
+         add module busses/ide/silicon_image_3112/device_v1 to list
+ has connection? yes
+ module: busses/ide/ahci/device_v1, support: 0
+ module: busses/ide/generic_ide_pci/device_v1, support: 0
+ module: busses/ide/silicon_image_3112/device_v1, support: 0
+ free busses/ide/ahci/device_v1
+ free busses/ide/generic_ide_pci/device_v1
+ free busses/ide/silicon_image_3112/device_v1
+         found pci!!
+         found drivers/dev/disk/sata!!
+         add module busses/ide/ahci/device_v1 to list
+         found pci!!
+         found drivers/dev/disk/ide!!
+         add module busses/ide/generic_ide_pci/device_v1 to list
+         found pci!!
+         found drivers/dev/disk/sata!!
+         add module busses/ide/silicon_image_3112/device_v1 to list
+ has connection? yes
+ module: busses/ide/ahci/device_v1, support: 0
+ module: busses/ide/generic_ide_pci/device_v1, support: 0.3
+ module: busses/ide/silicon_image_3112/device_v1, support: 0
+ INIT: main: done... begin idle loop on cpu 0
+         found scsi!!
+         add module drivers/disk/scsi/scsi_cd/device_v1 to list
+         found scsi!!
+         add module drivers/disk/scsi/scsi_dsk/device_v1 to list
+ has connection? yes
+ module: drivers/disk/scsi/scsi_cd/device_v1, support: 0
+ module: drivers/disk/scsi/scsi_dsk/device_v1, support: 1.6
+ tried best module: drivers/disk/scsi/scsi_dsk/device_v1: No error
+ free drivers/disk/scsi/scsi_cd/device_v1
+ IDE PCI -- ide_adapter_detect_channel: Simplex controller - disabling DMA
+ of secondary channel
+         found scsi!!
+         add module drivers/disk/scsi/scsi_cd/device_v1 to list
+         found scsi!!
+         add module drivers/disk/scsi/scsi_dsk/device_v1 to list
+ has connection? yes
+ module: drivers/disk/scsi/scsi_cd/device_v1, support: 1.6
+ module: drivers/disk/scsi/scsi_dsk/device_v1, support: 0
+ tried best module: drivers/disk/scsi/scsi_cd/device_v1: No error
+ free drivers/disk/scsi/scsi_dsk/device_v1
+ tried best module: busses/ide/generic_ide_pci/device_v1: No error
+ free busses/ide/ahci/device_v1
+ free busses/ide/silicon_image_3112/device_v1
+         found pci!!
+         found drivers/dev/disk/sata!!
+         add module busses/ide/ahci/device_v1 to list
+         found pci!!
+         found drivers/dev/disk/ide!!
+         add module busses/ide/generic_ide_pci/device_v1 to list
+         found pci!!
+         found drivers/dev/disk/sata!!
+         add module busses/ide/silicon_image_3112/device_v1 to list
+ has connection? yes
+ module: busses/ide/ahci/device_v1, support: 0
+ module: busses/ide/generic_ide_pci/device_v1, support: 0
+ module: busses/ide/silicon_image_3112/device_v1, support: 0
+ free busses/ide/ahci/device_v1
+ free busses/ide/generic_ide_pci/device_v1
+ free busses/ide/silicon_image_3112/device_v1
+         found pci!!
+         found drivers/dev/disk/sata!!
+         add module busses/ide/ahci/device_v1 to list
+         found pci!!
+         found drivers/dev/disk/ide!!
+         add module busses/ide/generic_ide_pci/device_v1 to list
+         found pci!!
+         found drivers/dev/disk/sata!!
+         add module busses/ide/silicon_image_3112/device_v1 to list
+ has connection? yes
+ module: busses/ide/ahci/device_v1, support: 0
+ module: busses/ide/generic_ide_pci/device_v1, support: 0
+ module: busses/ide/silicon_image_3112/device_v1, support: 0
+ free busses/ide/ahci/device_v1
+ free busses/ide/generic_ide_pci/device_v1
+ free busses/ide/silicon_image_3112/device_v1
+         found isa!!
+         found drivers/dev/disk/ide!!
+         add module busses/ide/ide_isa/device_v1 to list
+ has connection? yes
+ module: busses/ide/ide_isa/device_v1, support: 1.6
+ tried best module: busses/ide/ide_isa/device_v1: No error
+         found pci!!
+         found drivers/dev/disk/sata!!
+         add module busses/ide/ahci/device_v1 to list
+         found pci!!
+         found drivers/dev/disk/ide!!
+         add module busses/ide/generic_ide_pci/device_v1 to list
+         found pci!!
+         found drivers/dev/disk/sata!!
+         add module busses/ide/silicon_image_3112/device_v1 to list
+ has connection? yes
+ module: busses/ide/ahci/device_v1, support: 0
+ module: busses/ide/generic_ide_pci/device_v1, support: 0.3
+ module: busses/ide/silicon_image_3112/device_v1, support: 0
+ IDE PCI -- ide_adapter_detect_controller: Couldn't acquire controller
+ resource 49152
+
+ tried best module: busses/ide/generic_ide_pci/device_v1: General system
+ error
+ free busses/ide/ahci/device_v1
+ free busses/ide/silicon_image_3112/device_v1
+         found isa!!
+         found drivers/dev/disk/ide!!
+         add module busses/ide/ide_isa/device_v1 to list
+ has connection? yes
+ module: busses/ide/ide_isa/device_v1, support: 1.6
+ tried best module: busses/ide/ide_isa/device_v1: No error
+ KDiskDeviceManager::_Scan(/dev/disk/ata)
+         found isa!!
+ has connection? yes
+ KDiskDeviceManager::_Scan(/dev/disk/ata/0)
+         found isa!!
+ has connection? yes
+ KDiskDeviceManager::_Scan(/dev/disk/ata/0/master)
+         found isa!!
+ has connection? yes
+ KDiskDeviceManager::_Scan(/dev/disk/ata/0/master/raw)
+   found device: /dev/disk/ata/0/master/raw
+ KDiskDeviceManager::_Scan(/dev/disk/atapi)
+         found isa!!
+ has connection? yes
+ KDiskDeviceManager::_Scan(/dev/disk/atapi/1)
+         found isa!!
+ has connection? yes
+ KDiskDeviceManager::_Scan(/dev/disk/atapi/1/master)
+         found isa!!
+ has connection? yes
+ KDiskDeviceManager::_Scan(/dev/disk/atapi/1/master/raw)
+   found device: /dev/disk/atapi/1/master/raw
+ intel: ep_std_ops(0x1)
+ intel: ep_std_ops(0x2)
+ intel: pm_std_ops(0x1)
+ intel: pm_identify_partition(0, 0: 0, 104857600, 512)
+ Partition::SetTo(): active: 6f
+ intel: _ParsePrimary(): partition 0: bad location, ignoring
+ Partition::SetTo(): active: 74
+ Partition::SetTo(): active: 0
+ Partition::SetTo(): active: 0
+ intel: pm_std_ops(0x2)
+ bfs: mounted &quot;Haiku&quot; (root node at 65536, device =
+ /dev/disk/ata/0/master/raw)
+ module: Search for file_cache/launch_speedup/v1 failed.
+ ** could not open launch speedup!
+ partitioning system: partitioning_systems/session/v1
+ KDiskDeviceManager::_AddDiskSystem(partitioning_systems/session/v1)
+ KDiskDeviceManager::_AddDiskSystem() done: No error
+ file system: file_systems/cdda/v1
+ KDiskDeviceManager::_AddDiskSystem(file_systems/cdda/v1)
+ KDiskDeviceManager::_AddDiskSystem() done: No error
+ file system: file_systems/dos/v1
+ KDiskDeviceManager::_AddDiskSystem(file_systems/dos/v1)
+ KDiskDeviceManager::_AddDiskSystem() done: No error
+ file system: file_systems/googlefs/v1
+ KDiskDeviceManager::_AddDiskSystem(file_systems/googlefs/v1)
+ KDiskDeviceManager::_AddDiskSystem() done: No error
+ file system: file_systems/iso9660/v1
+ KDiskDeviceManager::_AddDiskSystem(file_systems/iso9660/v1)
+ KDiskDeviceManager::_AddDiskSystem() done: No error
+ file system: file_systems/nfs/v1
+ KDiskDeviceManager::_AddDiskSystem(file_systems/nfs/v1)
+ nfs:std_ops(INIT)
+ nfs:std_ops(UNINIT)
+ KDiskDeviceManager::_AddDiskSystem() done: No error
+ KDiskDeviceManager::_Scan(/dev/disk)
+ con_init: trying module console/frame_buffer/v1
+ loaded driver /boot/beos/system/add-ons/kernel/drivers/dev/console
+ loaded driver /boot/beos/system/add-ons/kernel/drivers/dev/dprintf
+ loaded driver /boot/beos/system/add-ons/kernel/drivers/dev/keyboard
+ loaded driver /boot/beos/system/add-ons/kernel/drivers/dev/null
+ loaded driver /boot/beos/system/add-ons/kernel/drivers/dev/random
+ loaded driver /boot/beos/system/add-ons/kernel/drivers/dev/tty
+ loaded driver /boot/beos/system/add-ons/kernel/drivers/dev/zero
+ KDiskDeviceManager::_Scan(/dev/disk/ata)
+ KDiskDeviceManager::_Scan(/dev/disk/ata/0)
+ KDiskDeviceManager::_Scan(/dev/disk/ata/0/master)
+ KDiskDeviceManager::_Scan(/dev/disk/ata/0/master/raw)
+ KDiskDeviceManager::_Scan(/dev/disk/atapi)
+ KDiskDeviceManager::_Scan(/dev/disk/atapi/1)
+ KDiskDeviceManager::_Scan(/dev/disk/atapi/1/master)
+ KDiskDeviceManager::_Scan(/dev/disk/atapi/1/master/raw)
+ KDiskDeviceManager::_Scan(/dev/disk/scsi)
+ loaded module /boot/beos/system/add-
+ ons/kernel/drivers/dev/disk/scsi/scsi_cd
+ loaded module /boot/beos/system/add-
+ ons/kernel/drivers/dev/disk/scsi/scsi_dsk
+ KDiskDeviceManager::_Scan(/dev/disk/virtual)
+ nbd:&gt;init_hardware()
+ nbd:&gt;init_driver()
+ nbd: init_driver() failed: No such file or directory
+ kernel debugger extention &quot;debugger/hangman/v1&quot;: loaded
+ INIT: Bootscript started
+ bfs: bfs_open_dir:1443: Invalid Argument
+ intel_extreme: init_hardware()
+ intel_extreme: init_hardware() failed: No such file or directory
+ matrox: init_hardware() failed: General system error
+ neomagic: init_hardware() failed: General system error
+ nvidia: init_hardware() failed: General system error
+ Radeon - init_hardware: Version: 5.1.6.0
+ Radeon - Radeon_CardDetect: no supported devices found
+ radeon: init_hardware() failed: General system error
+ savage: init_hardware - no supported devices
+ s3savage: init_hardware() failed: General system error
+ vesa: init_hardware()
+ vesa: init_driver()
+ vesa: publish_devices()
+ vesa: find_device()
+ loaded driver /boot/beos/system/add-ons/kernel/drivers/dev/graphics/vesa
+ etherpci: init_driver etherpci found at IRQ b etherpci: publish_devices()
+ loaded driver /boot/beos/system/add-ons/kernel/drivers/dev/net/etherpci
+ ipro1000: init_hardware() failed: General system error
+ loaded driver /boot/beos/system/add-ons/kernel/drivers/dev/net/net_stack
+ rtl8139 init_driver(): no device found
+ rtl8139: init_driver() failed: No such device
+ rtl8169: init_hardware() failed: General system error
+ sis900: init_driver() failed: No such device
+ via-rhine: init_driver() failed: General system error
+ vlance: init hardware
+ vlance: init_driver
+ vlance: init_driver() failed: General system error
+ wb840: init_driver() failed: No such device
+ vesa: vesa_init() completed successfully!
+ vesa: acc: vesa.accelerant
+ register_domain(1, internet)
+ unregister_domain(0x908b82c0, 1, internet)
+ register_domain(1, internet)
+ get_device_interface: ask &quot;network/devices/ethernet/v1&quot; for loop
+ get_device_interface: ask &quot;network/devices/loopback/v1&quot; for loop
+ bfs: bfs_open_dir:1443: Invalid Argument
+ get_device_interface: ask &quot;network/devices/ethernet/v1&quot; for
+ /dev/net/etherpci/0
+ ipv4_datalink_init(/dev/net/etherpci/0)
+ etherpci: open net/etherpci/0 dev=908d7200
+ etherpci: reg_base=c100
+ ne2000 pci ethernet card found - 52:54:00:12:34:56
+ Interrupts installed at b
+ etherpci: control: ETHER_INIT
+ etherpci: control: GET_ADDR
+ register_domain(4, link)
+ ps2_hid: init_hardware
+ ps2_hid: init_driver
+ ps2_hid: publish_devices
+ ps2_hid: publish_devices() returned NULL.
+ ps2_hid: uninit_driver
+ heap: allocated big chunk (131072 bytes), it will never be freed!
+ usb_ehci: no devices found
+ usb_uhci: no devices found
+ USB Stack: no bus managers available
+ usb_hid: init_driver() failed: General system error
+ ps2: devfs_publish_device input/mouse/ps2/0, status = 0x00000000
+ ps2: devfs_publish_device input/keyboard/at/0, status = 0x00000000
+ ps2: keyboard found
+ ps2: probe_mouse Extended PS/2 mouse found
+ cx23882: init_hardware()
+ cx23882: init_hardware() failed: General system error
+ bfs: bfs_access:1314: Operation not allowed
+ Last message repeated 11 times.
+ auich: init_hardware()
+ auich: init_hardware() failed: No such device
+ auvia: init_hardware()
+ auvia: init_hardware() failed: No such device
+ emuxki: init_hardware()
+ emuxki: init_hardware() failed: No such device
+ hda: init_hardware() failed: No such device
+ heap: allocated big chunk (131072 bytes), it will never be freed!
+ usb_ehci: no devices found
+ usb_uhci: no devices found
+ USB Stack: no bus managers available
+ usb_raw: init_driver() failed: No such device
+ ps2: strange mouse data, x-delta 127, trying resync
+ ps2: bad mouse data, trying resync
+ ps2: bad mouse data, trying resync
+ ps2: strange mouse data, x-delta 127, trying resync
+ ps2: strange mouse data, x/y overflow, trying resync
+ ps2: bad mouse data, trying resync
+ ps2: strange mouse data, x-delta 127, trying resync
+ ps2: bad mouse data, trying resync
+ ps2: bad mouse data, trying resync
+ ps2: strange mouse data, x-delta 127, trying resync
+ ps2: bad mouse data, trying resync
+ ps2: bad mouse data, trying resync
+ ps2: strange mouse data, x-delta 127, trying resync
+ ps2: bad mouse data, trying resync
+ ps2: bad mouse data, trying resync
+ ps2: strange mouse data, x-delta 127, trying resync
+ ps2: bad mouse data, trying resync
+ ps2: bad mouse data, trying resync
+ ps2: strange mouse data, x-delta 124, trying resync
+ ps2: strange mouse data, x/y overflow, trying resync
+ ps2: bad mouse data, trying resync
+
+ $
+
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/739#comment:15">http://dev.haiku-os.org/ticket/739#comment:15</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002286.html">[Haiku-bugs] [Haiku] #977: [kernel] sometimes boot fail, just stops at boot logo
+</A></li>
+	<LI>Next message: <A HREF="002289.html">[Haiku-bugs] [Haiku] #739: Haiku bootloader does not detect	boot volume
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2288">[ date ]</a>
+              <a href="thread.html#2288">[ thread ]</a>
+              <a href="subject.html#2288">[ subject ]</a>
+              <a href="author.html#2288">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

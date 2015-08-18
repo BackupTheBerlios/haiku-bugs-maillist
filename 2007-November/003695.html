@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1639: Sometimes the posix test fork_3-1 fails.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231639%3A%20Sometimes%20the%20posix%20test%20fork_3-1%20fails.&In-Reply-To=%3C043.dea63991d83d7b00bb54874add499658%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003694.html">
+   <LINK REL="Next"  HREF="003696.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1639: Sometimes the posix test fork_3-1 fails.</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231639%3A%20Sometimes%20the%20posix%20test%20fork_3-1%20fails.&In-Reply-To=%3C043.dea63991d83d7b00bb54874add499658%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1639: Sometimes the posix test fork_3-1 fails.">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Nov 24 16:12:46 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003694.html">[Haiku-bugs] [Haiku] #1419: rtl8139exp KDL
+</A></li>
+        <LI>Next message: <A HREF="003696.html">[Haiku-bugs] [Haiku] #1640: Drag&amp;drop between icon-wells
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3695">[ date ]</a>
+              <a href="thread.html#3695">[ thread ]</a>
+              <a href="subject.html#3695">[ subject ]</a>
+              <a href="author.html#3695">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1639: Sometimes the posix test fork_3-1 fails.
+-----------------------+----------------------------------------------------
+ Reporter:  kaoutsis   |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+ Platform:  All        |  
+-----------------------+----------------------------------------------------
+ &quot;Sometimes&quot; means here that if you run the test 5 times, one or two times
+ will failed.
+ In these cases the output is like this:
+ {{{
+ [14:03:55]Kill returned 0 (0: No error)
+ [14:03:55] .../fork/3-1.c FAILED: Another process with the same PID as the
+ child exists
+ }}}
+
+ the particular file is:
+ src/tests/system/libroot/posix/posixtestsuite/conformance/interfaces/fork/3-1.c
+
+ the chunk of code that is related:
+ {{{
+ [...]
+         /* Parent joins the child */
+         ctl = waitpid(child, &amp;status, 0);
+         if (ctl != child)  {  UNRESOLVED(errno, &quot;Waitpid returned the
+ wrong PID&quot;);  }
+         if ((!WIFEXITED(status)) || (WEXITSTATUS(status) != PTS_PASS))
+         {
+                 UNRESOLVED(status, &quot;Child exited abnormally&quot;);
+         }
+
+         ret = kill(child, 0);
+         if ((ret == 0) || (errno != ESRCH))
+         {
+                 output(&quot;Kill returned %d (%d: %s)\n&quot;, ret, errno,
+ strerror(errno));
+                 FAILED(&quot;Another process with the same PID as the child
+ exists&quot;);
+         }
+ [...]
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1639">http://dev.haiku-os.org/ticket/1639</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003694.html">[Haiku-bugs] [Haiku] #1419: rtl8139exp KDL
+</A></li>
+	<LI>Next message: <A HREF="003696.html">[Haiku-bugs] [Haiku] #1640: Drag&amp;drop between icon-wells
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3695">[ date ]</a>
+              <a href="thread.html#3695">[ thread ]</a>
+              <a href="subject.html#3695">[ subject ]</a>
+              <a href="author.html#3695">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

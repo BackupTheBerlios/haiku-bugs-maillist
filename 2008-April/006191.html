@@ -1,0 +1,156 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2030: Dead Beef in Address Space Area List
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232030%3A%20Dead%20Beef%20in%20Address%20Space%20Area%20List&In-Reply-To=%3C043.f25f2e33dd38d3acf89fb3bfb1a90dbd%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006190.html">
+   <LINK REL="Next"  HREF="006907.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2030: Dead Beef in Address Space Area List</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232030%3A%20Dead%20Beef%20in%20Address%20Space%20Area%20List&In-Reply-To=%3C043.f25f2e33dd38d3acf89fb3bfb1a90dbd%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2030: Dead Beef in Address Space Area List">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Apr  5 23:55:15 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006190.html">[Haiku-bugs] [Haiku] #1969: No video driver for Intel 82845G/GL
+</A></li>
+        <LI>Next message: <A HREF="006907.html">[Haiku-bugs] [Haiku] #2030: Dead Beef in Address Space Area List
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6191">[ date ]</a>
+              <a href="thread.html#6191">[ thread ]</a>
+              <a href="subject.html#6191">[ subject ]</a>
+              <a href="author.html#6191">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2030: Dead Beef in Address Space Area List
+---------------------------+------------------------------------------------
+ Reporter:  bonefish       |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1/alpha1     
+Component:  System/Kernel  |     Version:  R1 development
+ Platform:  All            |  
+---------------------------+------------------------------------------------
+ r24809, VMware, during boot phase
+
+ {{{
+ vm_soft_fault: va 0xdeadbef3 not covered by area in address space
+ vm_page_fault: vm_soft_fault returned error 'Bad address' on fault at
+ 0xdeadbef3, ip 0x80062857, write 0, user 0, thread 0x65
+ PANIC: vm_page_fault: unhandled page fault in kernel space at 0xdeadbef3,
+ ip 0x80062857
+
+ Welcome to Kernel Debugging Land...
+ Running on CPU 0
+ kdebug&gt; sc
+ stack trace for thread 101 &quot;TrackerTaskLoop&quot;
+     kernel stack: 0x9f34d000 to 0x9f351000
+       user stack: 0x70000000 to 0x70040000
+ frame            caller     &lt;image&gt;:function + offset
+ 9f350a74 (+  52) 8008ab7f   &lt;kernel&gt;:invoke_debugger_command + 0x00cf
+ 9f350aa8 (+  64) 8008b920   &lt;kernel&gt;:_ParseCommand__16ExpressionParserRi +
+ 0x01f8
+ 9f350ae8 (+  48) 8008b312
+ &lt;kernel&gt;:EvaluateCommand__16ExpressionParserPCcRi + 0x01de
+ 9f350b18 (+ 228) 8008ca34   &lt;kernel&gt;:evaluate_debug_command + 0x0088
+ 9f350bfc (+  64) 800896c2   &lt;kernel&gt;:kernel_debugger_loop__Fv + 0x017a
+ 9f350c3c (+  48) 8008a36d   &lt;kernel&gt;:kernel_debugger + 0x010d
+ 9f350c6c (+ 192) 8008a255   &lt;kernel&gt;:panic + 0x0029
+ 9f350d2c (+  64) 800617b7   &lt;kernel&gt;:vm_page_fault + 0x00ab
+ 9f350d6c (+  64) 80098ee5   &lt;kernel&gt;:page_fault_exception + 0x00b1
+ 9f350dac (+  12) 8009c69d   &lt;kernel&gt;:int_bottom + 0x001d (nearest)
+ iframe at 0x9f350db8 (end = 0x9f350e10)
+  eax 0xc18fff       ebx 0x90c48840      ecx 0x7003e000   edx 0xdeadbeef
+  esi 0x9f350f14     edi 0x7003ef5c      ebp 0x9f350e0c   esp 0x9f350dec
+  eip 0x80062857  eflags 0x10282
+  vector: 0xe, error code: 0x0
+ 9f350db8 (+  84) 80062857   &lt;kernel&gt;:vm_area_lookup + 0x002f
+ 9f350e0c (+ 272) 800619f2   &lt;kernel&gt;:vm_soft_fault__FUlbT1 + 0x0092
+ 9f350f1c (+  64) 8006173d   &lt;kernel&gt;:vm_page_fault + 0x0031
+ 9f350f5c (+  64) 80098ee5   &lt;kernel&gt;:page_fault_exception + 0x00b1
+ 9f350f9c (+  12) 8009c706   &lt;kernel&gt;:int_bottom_user + 0x005a (nearest)
+ iframe at 0x9f350fa8 (end = 0x9f351000)
+  eax 0x4556e0       ebx 0x76f9f4        ecx 0xffffffff   edx 0x7003f568
+  esi 0x7003f568     edi 0x7003f67c      ebp 0x7003f52c   esp 0x9f350fdc
+  eip 0x725ac9    eflags 0x10206    user esp 0x7003ef60
+  vector: 0xe, error code: 0x6
+ 9f350fa8 (+   0) 00725ac9   &lt;libroot.so&gt;:_IO_vfprintf + 0x0009
+ 7003f52c (+ 288) 0071804c   &lt;libroot.so&gt;:_IO_vsnprintf + 0x007c
+ 7003f64c (+1072) 006e8f04   &lt;libroot.so&gt;:ktrace_vprintf + 0x0030
+ 7003fa7c (+  48) 006e8ecb   &lt;libroot.so&gt;:ktrace_printf + 0x0023
+ 7003faac (+ 160) 002ee259
+ &lt;libbe.so&gt;:_SendMessage__C8BMessagelllxbR10BMessenger + 0x03b1
+ 7003fb4c (+ 144) 002ee59c
+ &lt;libbe.so&gt;:_SendMessage__C8BMessagelllP8BMessagexx + 0x01ac
+ 7003fbdc (+  80) 0030b96f
+ &lt;libbe.so&gt;:SendMessage__CQ28BMessage7PrivatelllP8BMessagexx + 0x0043
+ 7003fc2c (+  80) 002f575c
+ &lt;libbe.so&gt;:SendMessage__C10BMessengerP8BMessageT1xx + 0x0070
+ 7003fc7c (+ 208) 002f91b0   &lt;libbe.so&gt;:GetAppInfo__C7BRosterPCcP8app_info
+ + 0x00bc
+ 7003fd4c (+ 320) 002f58b3   &lt;libbe.so&gt;:_InitData__10BMessengerPCclPl +
+ 0x005b
+ 7003fe8c (+  48) 002f4fa1   &lt;libbe.so&gt;:__10BMessengerPCclPl + 0x003d
+ 7003febc (+  96) 005f712b
+ &lt;libtracker.so&gt;:Preload__Q28BPrivate13NodePreloader + 0x007b
+ 7003ff1c (+  48) 005f7436
+ &lt;libtracker.so&gt;:__cl__Q28BPrivatet25PlainMemberFunctionObject1ZQ28BPrivate13NodePreloader
+ + 0x006a
+ 7003ff4c (+  48) 006421f3   &lt;libtracker.so&gt;:Run__Q28BPrivate6Thread +
+ 0x002b
+ 7003ff7c (+  48) 00642038
+ &lt;libtracker.so&gt;:RunBinder__Q28BPrivate12SimpleThreadPv + 0x0028
+ 7003ffac (+  48) 006ecc40   &lt;libroot.so&gt;:_get_next_team_info + 0x005c
+ (nearest)
+ 7003ffdc (+   0) 7003ffec
+ [*** READ/WRITE FAULT ***]
+ }}}
+
+ The faulting instruction is the &quot;if (area-&gt;id == RESERVED_AREA_ID)&quot;. The
+ address space lock looked good (sem count 1023). No other Tracker threads
+ were in a related part of the kernel at the time (only in syscalls like
+ port_buffer_size(), and snooze()).
+
+ Smells like a rare race condition. A review of the address space locking
+ might turn something up.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2030">http://dev.haiku-os.org/ticket/2030</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006190.html">[Haiku-bugs] [Haiku] #1969: No video driver for Intel 82845G/GL
+</A></li>
+	<LI>Next message: <A HREF="006907.html">[Haiku-bugs] [Haiku] #2030: Dead Beef in Address Space Area List
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6191">[ date ]</a>
+              <a href="thread.html#6191">[ thread ]</a>
+              <a href="subject.html#6191">[ subject ]</a>
+              <a href="author.html#6191">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

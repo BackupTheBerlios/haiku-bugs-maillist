@@ -1,0 +1,197 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2893: System hanging at desktop with	r28244
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232893%3A%20System%20hanging%20at%20desktop%20with%0A%09r28244&In-Reply-To=%3C053.34022b95819fc5af4ba0e7dcedf03fde%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011227.html">
+   <LINK REL="Next"  HREF="011243.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2893: System hanging at desktop with	r28244</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232893%3A%20System%20hanging%20at%20desktop%20with%0A%09r28244&In-Reply-To=%3C053.34022b95819fc5af4ba0e7dcedf03fde%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2893: System hanging at desktop with	r28244">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Oct 22 00:48:41 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011227.html">[Haiku-bugs] [Haiku] #2893: System hanging at desktop with	r28244
+</A></li>
+        <LI>Next message: <A HREF="011243.html">[Haiku-bugs] [Haiku] #2893: System hanging at desktop with	r28244
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11240">[ date ]</a>
+              <a href="thread.html#11240">[ thread ]</a>
+              <a href="subject.html#11240">[ subject ]</a>
+              <a href="author.html#11240">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2893: System hanging at desktop with r28244
+----------------------------+-----------------------------------------------
+  Reporter:  anevilyak      |       Owner:  axeld         
+      Type:  bug            |      Status:  new           
+  Priority:  normal         |   Milestone:  R1            
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |   Blockedby:                
+  Platform:  All            |    Blocking:                
+----------------------------+-----------------------------------------------
+
+Comment(by anevilyak):
+
+ OK, had a look at the thread states.
+
+ {{{
+ kdebug&gt; threads 61
+ thread         id  state     wait for   object  cpu pri  stack      team
+ name
+ 0x838cf800    156  waiting   sem           749    -  15  0x84e38000   61
+ w:93:Deskbar
+ 0x83910000    191  waiting   sem          2361    -  15  0x84e73000   61
+ a:189:x-vnd.Geb-ProcessControll
+ 0x838db000    129  waiting   sem          1541    -  15  0x84d60000   61
+ a:92:x-vnd.Be-TRAK
+ 0x838cc000    130  waiting   sem          1559    -  15  0x84dc3000   61
+ a:93:x-vnd.Be-TSKB
+ 0x838c8000    103  waiting   sem          1077    -  90  0x84d4c000   61
+ event loop
+ 0x838c4000    135  waiting   sem          1628    -  15  0x84d48000   61
+ a:96:x-vnd.Haiku-Terminal
+ 0x838d1800    104  waiting   sem          1076    -  95  0x84d54000   61
+ cursor loop
+ 0x838f4000    137  waiting   sem          1616    -  15  0x84dff000   61
+ w:93:Twitcher
+ 0x838ce800    106  waiting   sem          1148    -  15  0x84d58000   61
+ a:98:x-vnd.Haiku-midi_server
+ 0x838f5800    139  waiting   sem          1605    -  15  0x84def000   61
+ w:92:Tracker Status
+ 0x8388f800     77  waiting   sem           707    -  10  0x84192000   61
+ Font Manager
+ 0x838f3800    140  waiting   sem           749    -  15  0x84df3000   61
+ w:96:Terminal 1
+ 0x838cb000    109  waiting   sem          1172    -  15  0x84d5c000   61
+ a:99:x-vnd.Be-PSRV
+ 0x8389c000     78  waiting   sem           744    -  10  0x84d04000   61
+ screen manager
+ 0x838f8000    142  waiting   sem          1694    -  15  0x84dfb000   61
+ w:93:offscreen
+ 0x838dd000    111  waiting   sem          1228    -  15  0x84d8f000   61
+ a:97:x-vnd.Be.media-server
+ 0x838fc800    147  waiting   sem             0    -  15  0x84e18000   61
+ w:92:Desktop
+ 0x838a2800     85  waiting   sem           832    -  15  0x84d10000   61
+ d:0:baron
+ 0x838a3000     86  waiting   sem           895    -  15  0x84d14000   61
+ a:79:x-vnd.Haiku-SystemLogger
+ 0x838a3800     87  waiting   sem           906    -  15  0x84d18000   61
+ a:83:x-vnd.Be-input_server
+ 0x838ec800    119  waiting   sem          1329    -  15  0x84da7000   61
+ a:116:x-vnd.Be.addon-host
+ 0x83866000     61  waiting   sem           702    -  10  0x80233000   61
+ picasso
+ }}}
+
+ Several threads are waiting on the sem &quot;floating overlays lock&quot;, including
+ the windows that appear frozen (i.e. Deskbar and Terminal):
+ {{{
+ SEM: 0x8312a508
+ id:      749 (0x2ed)
+ name:    'floating overlays lock'
+ owner:   61
+ count:   -2
+ queue:   140 156
+ }}}
+
+ This sem is held by the Picasso thread, which in turn appears to have
+ recursively locked the &quot;haiku app_server&quot; sem&quot; and is stuck waiting there.
+
+ {{{
+ kdebug&gt; sem 702
+ SEM: 0x83129db0
+ id:      702 (0x2be)
+ name:    'haiku app_server'
+ owner:   -1
+ count:   -1
+ queue:   61
+ last acquired by: 61
+ }}}
+
+ If of interest:
+ {{{
+ THREAD: 0x83866000
+ id:                 61 (0x3d)
+ name:               &quot;picasso&quot;
+ all_next:           0x00000000
+ team_next:          0x00000000
+ q_next:             0x838a6800
+ priority:           10 (next 10, I/O: -1)
+ state:              waiting
+ next_state:         waiting
+ cpu:                0x00000000
+ sig_pending:        0x0 (blocked: 0x0)
+ in_kernel:          1
+ waiting for:        semaphore 702
+ fault_handler:      0x00000000
+ args:               0x811ea708 0x00000000
+ entry:              0x8004b700
+ team:               0x8117b990, &quot;app_server&quot;
+   exit.sem:         545
+   exit.status:      0x0 (No error)
+   exit.reason:      0x0
+   exit.signal:      0x0
+   exit.waiters:
+ kernel_stack_area:  3605
+ kernel_stack_base:  0x80233000
+ user_stack_area:    3641
+ user_stack_base:    0x7efef000
+ user_local_storage: 0x7ffef000
+ kernel_errno:       0x80006003 (No such file or directory)
+ kernel_time:        1060540
+ user_time:          143514
+ flags:              0x0
+ architecture dependant section:
+         esp: 0x80236d28
+         ss: 0x00000010
+         fpu_state at 0x838663d0
+ }}}
+
+ What also seems suspicious to me though is that the desktop window is
+ indicated as waiting on semaphore 0, which doesn't exist, unless this is a
+ special indicator of some kind that I'm not aware of.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2893#comment:8">http://dev.haiku-os.org/ticket/2893#comment:8</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011227.html">[Haiku-bugs] [Haiku] #2893: System hanging at desktop with	r28244
+</A></li>
+	<LI>Next message: <A HREF="011243.html">[Haiku-bugs] [Haiku] #2893: System hanging at desktop with	r28244
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11240">[ date ]</a>
+              <a href="thread.html#11240">[ thread ]</a>
+              <a href="subject.html#11240">[ subject ]</a>
+              <a href="author.html#11240">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

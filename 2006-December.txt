@@ -1,0 +1,2137 @@
+From trac at haiku-os.org  Fri Dec  1 12:02:09 2006
+From: trac at haiku-os.org (Haiku)
+Date: Fri, 01 Dec 2006 11:02:09 -0000
+Subject: [Haiku-bugs] [Haiku] #928: 'which' aborts or kills terminal
+In-Reply-To: <042.cb3c8cee9b1fe4bc5451ef7c7e62e622@haiku-os.org>
+References: <042.cb3c8cee9b1fe4bc5451ef7c7e62e622@haiku-os.org>
+Message-ID: <051.8fffbebb367612cdd02df5dc8651a6f3@haiku-os.org>
+
+#928: 'which' aborts or kills terminal
+------------------------------------+---------------------------------------
+  Reporter:  engima                 |       Owner:  axeld         
+      Type:  bug                    |      Status:  new           
+  Priority:  normal                 |   Milestone:  Haiku R1      
+ Component:  Applications/Terminal  |     Version:  R1 development
+Resolution:                         |    Platform:  All           
+------------------------------------+---------------------------------------
+Comment (by jackburton):
+
+ Typing just echo $($cmd) results in the same problem.
+
+-- 
+Ticket URL: <http://haiku-os.org/trac/ticket/928#comment:4>
+Haiku <http://haiku-os.org/trac>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Fri Dec  1 13:28:22 2006
+From: trac at haiku-os.org (Haiku)
+Date: Fri, 01 Dec 2006 12:28:22 -0000
+Subject: [Haiku-bugs] [Haiku] #928: 'which' aborts or kills terminal
+In-Reply-To: <042.cb3c8cee9b1fe4bc5451ef7c7e62e622@haiku-os.org>
+References: <042.cb3c8cee9b1fe4bc5451ef7c7e62e622@haiku-os.org>
+Message-ID: <051.a947e9a6ef29af7ef5b2c58f02fa8a64@haiku-os.org>
+
+#928: 'which' aborts or kills terminal
+------------------------------------+---------------------------------------
+  Reporter:  engima                 |       Owner:  axeld         
+      Type:  bug                    |      Status:  new           
+  Priority:  normal                 |   Milestone:  Haiku R1      
+ Component:  Applications/Terminal  |     Version:  R1 development
+Resolution:                         |    Platform:  All           
+------------------------------------+---------------------------------------
+Comment (by jackburton):
+
+ MiniTerminal is also affected, although:
+
+ 'which' results in:
+ whence: argument expected
+
+ while
+
+ 'which ls' results in:
+ sh: src/system/libroot/posix/malloc/processheap.cpp:166:void
+ BPrivate::processHeap::free(void *): sb
+
+ and a crash.
+
+-- 
+Ticket URL: <http://haiku-os.org/trac/ticket/928#comment:5>
+Haiku <http://haiku-os.org/trac>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Fri Dec  1 13:29:32 2006
+From: trac at haiku-os.org (Haiku)
+Date: Fri, 01 Dec 2006 12:29:32 -0000
+Subject: [Haiku-bugs] [Haiku] #113: Ctrl+C kills applications that
+	shouldn't be killed
+In-Reply-To: <054.0eebcb8d67af47d067596d4495892bbd@haiku-os.org>
+References: <054.0eebcb8d67af47d067596d4495892bbd@haiku-os.org>
+Message-ID: <063.a0aed86f0dbac72dba7ed224cfbe87e1@haiku-os.org>
+
+#113: Ctrl+C kills applications that shouldn't be killed
+---------------------------------+------------------------------------------
+  Reporter:  genki at bredband.net  |       Owner:  korli   
+      Type:  bug                 |      Status:  new     
+  Priority:  critical            |   Milestone:  Haiku R1
+ Component:  Applications        |     Version:          
+Resolution:                      |    Platform:  x86     
+---------------------------------+------------------------------------------
+Comment (by jackburton):
+
+ MiniTerminal is not affected by this problem. This could be an hint that
+ something's wrong within Terminal itself ?
+
+-- 
+Ticket URL: <http://haiku-os.org/trac/ticket/113#comment:20>
+Haiku <http://haiku-os.org/trac>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Mon Dec  4 11:16:12 2006
+From: trac at haiku-os.org (Haiku)
+Date: Mon, 04 Dec 2006 10:16:12 -0000
+Subject: [Haiku-bugs] [Haiku] #890: [Deskbar] icons are broken for
+	supertypes
+In-Reply-To: <041.e122ab3f7a89db4a493c5f9d1a0f7083@haiku-os.org>
+References: <041.e122ab3f7a89db4a493c5f9d1a0f7083@haiku-os.org>
+Message-ID: <050.3fb4acc59bec519b2c9d0c3cd2fa15a8@haiku-os.org>
+
+#890: [Deskbar] icons are broken for supertypes
+---------------------------------------------+------------------------------
+  Reporter:  diver                           |       Owner:  stippi        
+      Type:  bug                             |      Status:  new           
+  Priority:  normal                          |   Milestone:  Haiku R1      
+ Component:  User Interface/Application Kit  |     Version:  R1 development
+Resolution:                                  |    Platform:  All           
+---------------------------------------------+------------------------------
+Changes (by jackburton):
+
+ * cc: axeld (added)
+
+Comment:
+
+ I think I found the problem.
+ TBarApp::AddTeam() uses BBitmap::SetBits() and passes B_RGB32 as
+ colorspace parameter, but SetBits() interprets that as B_RGB24_BIG (to
+ mimic R5's behaviour, AFAIK). Passing B_RGBA32 instead should be fine.
+
+-- 
+Ticket URL: <http://haiku-os.org/trac/ticket/890#comment:3>
+Haiku <http://haiku-os.org/trac>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Mon Dec  4 16:39:17 2006
+From: trac at haiku-os.org (Haiku)
+Date: Mon, 04 Dec 2006 15:39:17 -0000
+Subject: [Haiku-bugs] [Haiku] #890: [Deskbar] icons are broken for
+	supertypes
+In-Reply-To: <041.e122ab3f7a89db4a493c5f9d1a0f7083@haiku-os.org>
+References: <041.e122ab3f7a89db4a493c5f9d1a0f7083@haiku-os.org>
+Message-ID: <050.ec1d8ffc772f5e88a1f221253d586fb0@haiku-os.org>
+
+#890: [Deskbar] icons are broken for supertypes
+---------------------------------------------+------------------------------
+  Reporter:  diver                           |       Owner:  stippi        
+      Type:  bug                             |      Status:  new           
+  Priority:  normal                          |   Milestone:  Haiku R1      
+ Component:  User Interface/Application Kit  |     Version:  R1 development
+Resolution:                                  |    Platform:  All           
+---------------------------------------------+------------------------------
+Comment (by jackburton):
+
+ Replying to [comment:3 jackburton]:
+ > I think I found the problem.
+ > TBarApp::AddTeam() uses BBitmap::SetBits() and passes B_RGB32 as
+ colorspace parameter, but SetBits() interprets that as B_RGB24_BIG (to
+ mimic R5's behaviour, AFAIK). Passing B_RGBA32 instead should be fine.
+
+ Actually it already passes RGBA32. looks like the problem was elsewhere.
+ Should be fixed in rev 19420, please review.
+
+-- 
+Ticket URL: <http://haiku-os.org/trac/ticket/890#comment:4>
+Haiku <http://haiku-os.org/trac>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Mon Dec  4 17:55:50 2006
+From: trac at haiku-os.org (Haiku)
+Date: Mon, 04 Dec 2006 16:55:50 -0000
+Subject: [Haiku-bugs] [Haiku] #890: [Deskbar] icons are broken for
+	supertypes
+In-Reply-To: <041.e122ab3f7a89db4a493c5f9d1a0f7083@haiku-os.org>
+References: <041.e122ab3f7a89db4a493c5f9d1a0f7083@haiku-os.org>
+Message-ID: <050.474e84cac576e8b3da1da3c2952d5260@haiku-os.org>
+
+#890: [Deskbar] icons are broken for supertypes
+---------------------------------------------+------------------------------
+  Reporter:  diver                           |       Owner:  stippi        
+      Type:  bug                             |      Status:  new           
+  Priority:  normal                          |   Milestone:  Haiku R1      
+ Component:  User Interface/Application Kit  |     Version:  R1 development
+Resolution:                                  |    Platform:  All           
+---------------------------------------------+------------------------------
+Comment (by axeld):
+
+ Stefano, in case you missed it: please always write r19420, so Trac can
+ pick it up and create a link to the revision.
+
+-- 
+Ticket URL: <http://haiku-os.org/trac/ticket/890#comment:5>
+Haiku <http://haiku-os.org/trac>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Tue Dec  5 09:04:20 2006
+From: trac at haiku-os.org (Haiku)
+Date: Tue, 05 Dec 2006 08:04:20 -0000
+Subject: [Haiku-bugs] [Haiku] #890: [Deskbar] icons are broken for
+	supertypes
+In-Reply-To: <041.e122ab3f7a89db4a493c5f9d1a0f7083@haiku-os.org>
+References: <041.e122ab3f7a89db4a493c5f9d1a0f7083@haiku-os.org>
+Message-ID: <050.3c29c2a8bf49d26f526df82f5c056151@haiku-os.org>
+
+#890: [Deskbar] icons are broken for supertypes
+---------------------------------------------+------------------------------
+  Reporter:  diver                           |       Owner:  stippi        
+      Type:  bug                             |      Status:  new           
+  Priority:  normal                          |   Milestone:  Haiku R1      
+ Component:  User Interface/Application Kit  |     Version:  R1 development
+Resolution:                                  |    Platform:  All           
+---------------------------------------------+------------------------------
+Comment (by jackburton):
+
+ Replying to [comment:5 axeld]:
+ > Stefano, in case you missed it: please always write r19420, so Trac can
+ pick it up and create a link to the revision.
+
+ Yes, sorry, I forgot about that.
+ What about the change ? Does it look correct ? At least I can't reproduce
+ this bug anymore.
+
+-- 
+Ticket URL: <http://haiku-os.org/trac/ticket/890#comment:6>
+Haiku <http://haiku-os.org/trac>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Tue Dec  5 11:58:17 2006
+From: trac at haiku-os.org (Haiku)
+Date: Tue, 05 Dec 2006 10:58:17 -0000
+Subject: [Haiku-bugs] [Haiku] #422: [Bezeer] Segment violation
+In-Reply-To: <041.e014ac187720ecfdfe086c34c7fe518a@haiku-os.org>
+References: <041.e014ac187720ecfdfe086c34c7fe518a@haiku-os.org>
+Message-ID: <050.3df26c634927a410a03b4c97acca6c8d@haiku-os.org>
+
+#422: [Bezeer] Segment violation
+-------------------------------------------+--------------------------------
+  Reporter:  diver                         |       Owner:  jackburton    
+      Type:  bug                           |      Status:  closed        
+  Priority:  normal                        |   Milestone:  Haiku R1      
+ Component:  User Interface/Interface Kit  |     Version:  R1 development
+Resolution:  fixed                         |    Platform:  All           
+-------------------------------------------+--------------------------------
+Changes (by jackburton):
+
+  * status:  assigned => closed
+  * resolution:  => fixed
+
+Comment:
+
+ Replying to [comment:5 jackburton]:
+ > Replying to [comment:4 jackburton]:
+ >
+ > Since rev 19332 the original bug has been fixed.
+ > There's still a problem, but it doesn't seem related to menus.
+
+ I spoke with the Beezer developer, and it looks like Beezer deletes the
+ BPopUpMenu. Since the BPopUpMenu auto destroys itself, this leads to a
+ segment violation (freeing already freed memory). I don't know why this
+ doesn't happen under beos, but it's a Beezer bug. Closing.
+
+-- 
+Ticket URL: <http://haiku-os.org/trac/ticket/422#comment:6>
+Haiku <http://haiku-os.org/trac>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Tue Dec  5 13:56:37 2006
+From: trac at haiku-os.org (Haiku)
+Date: Tue, 05 Dec 2006 12:56:37 -0000
+Subject: [Haiku-bugs] [Haiku] #887: [Icon-O-Matic] problems with icon
+In-Reply-To: <041.2dd7caf296869472885bf26eb2d99484@haiku-os.org>
+References: <041.2dd7caf296869472885bf26eb2d99484@haiku-os.org>
+Message-ID: <050.2bea93eb0bad3803e90b15ed4c740ae7@haiku-os.org>
+
+#887: [Icon-O-Matic] problems with icon
+-----------------------------------+----------------------------------------
+  Reporter:  diver                 |       Owner:  stippi        
+      Type:  bug                   |      Status:  closed        
+  Priority:  normal                |   Milestone:  Haiku R1      
+ Component:  Applications/Deskbar  |     Version:  R1 development
+Resolution:  invalid               |    Platform:  All           
+-----------------------------------+----------------------------------------
+Changes (by jackburton):
+
+  * status:  new => closed
+  * resolution:  => invalid
+
+Comment:
+
+ Works now.
+
+-- 
+Ticket URL: <http://haiku-os.org/trac/ticket/887#comment:2>
+Haiku <http://haiku-os.org/trac>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Tue Dec  5 18:02:59 2006
+From: trac at haiku-os.org (Haiku)
+Date: Tue, 05 Dec 2006 17:02:59 -0000
+Subject: [Haiku-bugs] [Haiku] #957: after boot;
+ kernel: PANIC vm_page_fault: unhandled page fault in kernel space
+ at 0xcccccd44, ip 0x9070fdda
+Message-ID: <042.0a301de826c00f35f959f10b2e89e16b@haiku-os.org>
+
+#957: after boot; kernel: PANIC vm_page_fault: unhandled page fault in kernel
+space at 0xcccccd44, ip 0x9070fdda
+---------------------------+------------------------------------------------
+ Reporter:  nutela         |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  Haiku R1      
+Component:  System/Kernel  |     Version:  R1 development
+ Platform:  x86            |  
+---------------------------+------------------------------------------------
+ and second boot 0x906ebdda
+
+ This is the built from haiku-os.org 4th december. Booting in safe mode
+ helped but then again it's a whole diff Haiku in safe mode ;-)
+
+ So directly after boot, 3-4 times tested, the above happens, I see the
+ desktop for a split second then this above happens. Happy tweaking.
+
+-- 
+Ticket URL: <http://haiku-os.org/trac/ticket/957>
+Haiku <http://haiku-os.org/trac>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Tue Dec  5 18:03:21 2006
+From: trac at haiku-os.org (Haiku)
+Date: Tue, 05 Dec 2006 17:03:21 -0000
+Subject: [Haiku-bugs] [Haiku] #958: after boot;
+ kernel: PANIC vm_page_fault: unhandled page fault in kernel space
+ at 0xcccccd44, ip 0x9070fdda
+Message-ID: <042.99550e509ea095890afb1877a26fcec1@haiku-os.org>
+
+#958: after boot; kernel: PANIC vm_page_fault: unhandled page fault in kernel
+space at 0xcccccd44, ip 0x9070fdda
+---------------------------+------------------------------------------------
+ Reporter:  nutela         |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  Haiku R1      
+Component:  System/Kernel  |     Version:  R1 development
+ Platform:  x86            |  
+---------------------------+------------------------------------------------
+ and second boot 0x906ebdda
+
+ This is the built from haiku-os.org 4th december. Booting in safe mode
+ helped but then again it's a whole diff Haiku in safe mode ;-)
+
+ So directly after boot, 3-4 times tested, the above happens, I see the
+ desktop for a split second then this above happens. Happy tweaking.
+
+-- 
+Ticket URL: <http://haiku-os.org/trac/ticket/958>
+Haiku <http://haiku-os.org/trac>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Tue Dec  5 18:24:34 2006
+From: trac at haiku-os.org (Haiku)
+Date: Tue, 05 Dec 2006 17:24:34 -0000
+Subject: [Haiku-bugs] [Haiku] #958: after boot;
+ kernel: PANIC vm_page_fault: unhandled page fault in kernel space
+ at 0xcccccd44, ip 0x9070fdda
+In-Reply-To: <042.99550e509ea095890afb1877a26fcec1@haiku-os.org>
+References: <042.99550e509ea095890afb1877a26fcec1@haiku-os.org>
+Message-ID: <051.29d7c28d3e9f938bb6d0a3b730f99377@haiku-os.org>
+
+#958: after boot; kernel: PANIC vm_page_fault: unhandled page fault in kernel
+space at 0xcccccd44, ip 0x9070fdda
+----------------------------+-----------------------------------------------
+  Reporter:  nutela         |       Owner:  axeld         
+      Type:  bug            |      Status:  closed        
+  Priority:  normal         |   Milestone:  Haiku R1      
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:  duplicate      |    Platform:  x86           
+----------------------------+-----------------------------------------------
+Changes (by axeld):
+
+  * status:  new => closed
+  * resolution:  => duplicate
+
+Comment:
+
+ Duplicate of #957
+
+-- 
+Ticket URL: <http://haiku-os.org/trac/ticket/958#comment:1>
+Haiku <http://haiku-os.org/trac>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Tue Dec  5 18:25:04 2006
+From: trac at haiku-os.org (Haiku)
+Date: Tue, 05 Dec 2006 17:25:04 -0000
+Subject: [Haiku-bugs] [Haiku] #957: after boot;
+ kernel: PANIC vm_page_fault: unhandled page fault in kernel space
+ at 0xcccccd44, ip 0x9070fdda
+In-Reply-To: <042.0a301de826c00f35f959f10b2e89e16b@haiku-os.org>
+References: <042.0a301de826c00f35f959f10b2e89e16b@haiku-os.org>
+Message-ID: <051.3b21a53e922621d25226fbcc82600efe@haiku-os.org>
+
+#957: after boot; kernel: PANIC vm_page_fault: unhandled page fault in kernel
+space at 0xcccccd44, ip 0x9070fdda
+----------------------------+-----------------------------------------------
+  Reporter:  nutela         |       Owner:  axeld         
+      Type:  bug            |      Status:  new           
+  Priority:  normal         |   Milestone:  Haiku R1      
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |    Platform:  x86           
+----------------------------+-----------------------------------------------
+Comment (by axeld):
+
+ Thanks for the report. Can you please enter "sc" in the kernel debugger
+ and post its output? (also via a photo if that's all you can do :-))
+ Also, your system configuration might be helpful.
+
+-- 
+Ticket URL: <http://haiku-os.org/trac/ticket/957#comment:1>
+Haiku <http://haiku-os.org/trac>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Wed Dec  6 08:40:44 2006
+From: trac at haiku-os.org (Haiku)
+Date: Wed, 06 Dec 2006 07:40:44 -0000
+Subject: [Haiku-bugs] [Haiku] #890: [Deskbar] icons are broken for
+	supertypes
+In-Reply-To: <041.e122ab3f7a89db4a493c5f9d1a0f7083@haiku-os.org>
+References: <041.e122ab3f7a89db4a493c5f9d1a0f7083@haiku-os.org>
+Message-ID: <050.23758ee660a586b8d04ea7e717ead8cd@haiku-os.org>
+
+#890: [Deskbar] icons are broken for supertypes
+---------------------------------------------+------------------------------
+  Reporter:  diver                           |       Owner:  stippi        
+      Type:  bug                             |      Status:  new           
+  Priority:  normal                          |   Milestone:  Haiku R1      
+ Component:  User Interface/Application Kit  |     Version:  R1 development
+Resolution:                                  |    Platform:  All           
+---------------------------------------------+------------------------------
+Comment (by jackburton):
+
+ Also, the generic application icon in deskbar is still the old style 8 bit
+ icon (and that's why my change fixed the problem)
+
+-- 
+Ticket URL: <http://haiku-os.org/trac/ticket/890#comment:7>
+Haiku <http://haiku-os.org/trac>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Wed Dec  6 10:08:04 2006
+From: trac at haiku-os.org (Haiku)
+Date: Wed, 06 Dec 2006 09:08:04 -0000
+Subject: [Haiku-bugs] [Haiku] #340: scrolling back in Terminal is broken
+In-Reply-To: <051.76e10a942204b8eee6eaebda97c3ea8f@haiku-os.org>
+References: <051.76e10a942204b8eee6eaebda97c3ea8f@haiku-os.org>
+Message-ID: <060.1b376cdb00920ce679ba40be77c022f2@haiku-os.org>
+
+#340: scrolling back in Terminal is broken
+------------------------------+---------------------------------------------
+  Reporter:  marcusoverhagen  |       Owner:  stippi  
+      Type:  bug              |      Status:  closed  
+  Priority:  normal           |   Milestone:  Haiku R1
+ Component:  Applications     |     Version:          
+Resolution:  fixed            |    Platform:  All     
+------------------------------+---------------------------------------------
+Changes (by jackburton):
+
+  * status:  new => closed
+  * resolution:  => fixed
+
+Comment:
+
+ stippi's r19391 fixed various scrolling related issues, this included.
+
+-- 
+Ticket URL: <http://haiku-os.org/trac/ticket/340#comment:10>
+Haiku <http://haiku-os.org/trac>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Wed Dec  6 17:48:03 2006
+From: trac at haiku-os.org (Haiku)
+Date: Wed, 06 Dec 2006 16:48:03 -0000
+Subject: [Haiku-bugs] [Haiku] #957: after boot;
+ kernel: PANIC vm_page_fault: unhandled page fault in kernel space
+ at 0xcccccd44, ip 0x9070fdda
+In-Reply-To: <042.0a301de826c00f35f959f10b2e89e16b@haiku-os.org>
+References: <042.0a301de826c00f35f959f10b2e89e16b@haiku-os.org>
+Message-ID: <051.bb1e3d9bad24bec0555b8b50fa35d646@haiku-os.org>
+
+#957: after boot; kernel: PANIC vm_page_fault: unhandled page fault in kernel
+space at 0xcccccd44, ip 0x9070fdda
+----------------------------+-----------------------------------------------
+  Reporter:  nutela         |       Owner:  axeld         
+      Type:  bug            |      Status:  new           
+  Priority:  normal         |   Milestone:  Haiku R1      
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |    Platform:  x86           
+----------------------------+-----------------------------------------------
+Comment (by nutela):
+
+ ..."If that's all you can do" Well how about you tell me how to save the
+ output from KDL? Anybody tried GOCR on such photo's?
+
+ System: PIII @ 800, 384MB RAM, Ati vga, SCSI Adaptec 7890?, Sound
+ Guillemot Maxi sound (crap sndcard) All BeOSes run fine btw I made this
+ machine so it could run BeOS well
+
+-- 
+Ticket URL: <http://haiku-os.org/trac/ticket/957#comment:2>
+Haiku <http://haiku-os.org/trac>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Wed Dec  6 22:49:02 2006
+From: trac at haiku-os.org (Haiku)
+Date: Wed, 06 Dec 2006 21:49:02 -0000
+Subject: [Haiku-bugs] [Haiku] #957: after boot;
+ kernel: PANIC vm_page_fault: unhandled page fault in kernel space
+ at 0xcccccd44, ip 0x9070fdda
+In-Reply-To: <042.0a301de826c00f35f959f10b2e89e16b@haiku-os.org>
+References: <042.0a301de826c00f35f959f10b2e89e16b@haiku-os.org>
+Message-ID: <051.ae0a410ba54db33e27fe1c1032b2a241@haiku-os.org>
+
+#957: after boot; kernel: PANIC vm_page_fault: unhandled page fault in kernel
+space at 0xcccccd44, ip 0x9070fdda
+----------------------------+-----------------------------------------------
+  Reporter:  nutela         |       Owner:  axeld         
+      Type:  bug            |      Status:  new           
+  Priority:  normal         |   Milestone:  Haiku R1      
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |    Platform:  x86           
+----------------------------+-----------------------------------------------
+Comment (by axeld):
+
+ You would need a serial cable to save the output - and you'd probably know
+ if you had one. Anyway, a photo is fine! :-)
+
+-- 
+Ticket URL: <http://haiku-os.org/trac/ticket/957#comment:3>
+Haiku <http://haiku-os.org/trac>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Thu Dec  7 16:47:38 2006
+From: trac at haiku-os.org (Haiku)
+Date: Thu, 07 Dec 2006 15:47:38 -0000
+Subject: [Haiku-bugs] [Haiku] #957: after boot;
+ kernel: PANIC vm_page_fault: unhandled page fault in kernel space
+ at 0xcccccd44, ip 0x9070fdda
+In-Reply-To: <042.0a301de826c00f35f959f10b2e89e16b@haiku-os.org>
+References: <042.0a301de826c00f35f959f10b2e89e16b@haiku-os.org>
+Message-ID: <051.b3722b467b6de8935f3ddfb90212327f@haiku-os.org>
+
+#957: after boot; kernel: PANIC vm_page_fault: unhandled page fault in kernel
+space at 0xcccccd44, ip 0x9070fdda
+----------------------------+-----------------------------------------------
+  Reporter:  nutela         |       Owner:  axeld         
+      Type:  bug            |      Status:  new           
+  Priority:  normal         |   Milestone:  Haiku R1      
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |    Platform:  x86           
+----------------------------+-----------------------------------------------
+Comment (by nutela):
+
+ No serial port on my notebook, hm maybe may wife's got one, have to check
+ it out :-)
+
+ Any reading/web you can recomend me, or can I use redirection, dd etc.?
+
+-- 
+Ticket URL: <http://haiku-os.org/trac/ticket/957#comment:4>
+Haiku <http://haiku-os.org/trac>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Mon Dec 11 10:12:59 2006
+From: trac at haiku-os.org (Haiku)
+Date: Mon, 11 Dec 2006 09:12:59 -0000
+Subject: [Haiku-bugs] [Haiku] #901: Drag and drop from ShowImage hangs
+ app + empty clipping
+In-Reply-To: <044.982ef05ab8e5021e3dbd4b6b9f8a066c@haiku-os.org>
+References: <044.982ef05ab8e5021e3dbd4b6b9f8a066c@haiku-os.org>
+Message-ID: <053.807a8af0c896ff8bcdd7cd5f42b50a22@haiku-os.org>
+
+#901: Drag and drop from ShowImage hangs app + empty clipping
+-------------------------------------+--------------------------------------
+  Reporter:  darkwyrm                |       Owner:  axeld         
+      Type:  bug                     |      Status:  new           
+  Priority:  normal                  |   Milestone:  Haiku R1      
+ Component:  Applications/ShowImage  |     Version:  R1 development
+Resolution:                          |    Platform:  All           
+-------------------------------------+--------------------------------------
+Changes (by mmlr):
+
+  * owner:  leavengood => axeld
+  * status:  reopened => new
+
+Comment:
+
+ I've tracked down this bug (by checking out different revisions). It
+ worked with r18596 while it does not anymore with r18605. So I would
+ pinpoint the problem to be caused by r18601/r18605 which changed the
+ behavior of mouse message handling. Assigning this to Axel as he made the
+ change.
+
+-- 
+Ticket URL: <http://haiku-os.org/trac/ticket/901#comment:6>
+Haiku <http://haiku-os.org/trac>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Tue Dec 12 14:34:42 2006
+From: trac at haiku-os.org (Haiku)
+Date: Tue, 12 Dec 2006 13:34:42 -0000
+Subject: [Haiku-bugs] [Haiku] #113: Ctrl+C kills applications that
+	shouldn't be killed
+In-Reply-To: <054.0eebcb8d67af47d067596d4495892bbd@haiku-os.org>
+References: <054.0eebcb8d67af47d067596d4495892bbd@haiku-os.org>
+Message-ID: <063.d42872251f490882ba3f20f85fc8667e@haiku-os.org>
+
+#113: Ctrl+C kills applications that shouldn't be killed
+---------------------------------+------------------------------------------
+  Reporter:  genki at bredband.net  |       Owner:  korli   
+      Type:  bug                 |      Status:  new     
+  Priority:  critical            |   Milestone:  Haiku R1
+ Component:  Applications        |     Version:          
+Resolution:                      |    Platform:  x86     
+---------------------------------+------------------------------------------
+Comment (by jackburton):
+
+ More testing:
+ - start terminal
+ - hit CTRL-C. It doesn't close the terminal (correctly).
+ - start top with "top -n 1" (so it does one iteration then exits)
+ - when top quits, hit CTRL-C again. The terminal will now quit.
+
+-- 
+Ticket URL: <http://haiku-os.org/trac/ticket/113#comment:21>
+Haiku <http://haiku-os.org/trac>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Tue Dec 12 14:57:15 2006
+From: trac at haiku-os.org (Haiku)
+Date: Tue, 12 Dec 2006 13:57:15 -0000
+Subject: [Haiku-bugs] [Haiku] #113: Ctrl+C kills applications that
+	shouldn't be killed
+In-Reply-To: <054.0eebcb8d67af47d067596d4495892bbd@haiku-os.org>
+References: <054.0eebcb8d67af47d067596d4495892bbd@haiku-os.org>
+Message-ID: <063.b13da8e94075a550c746355702b0c484@haiku-os.org>
+
+#113: Ctrl+C kills applications that shouldn't be killed
+---------------------------------+------------------------------------------
+  Reporter:  genki at bredband.net  |       Owner:  korli   
+      Type:  bug                 |      Status:  new     
+  Priority:  critical            |   Milestone:  Haiku R1
+ Component:  Applications        |     Version:          
+Resolution:                      |    Platform:  x86     
+---------------------------------+------------------------------------------
+Comment (by axeld):
+
+ Still doesn't happen over here :-/
+
+-- 
+Ticket URL: <http://haiku-os.org/trac/ticket/113#comment:22>
+Haiku <http://haiku-os.org/trac>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Tue Dec 12 15:25:39 2006
+From: trac at haiku-os.org (Haiku)
+Date: Tue, 12 Dec 2006 14:25:39 -0000
+Subject: [Haiku-bugs] [Haiku] #959: Trac: view new tickets + crash
+Message-ID: <042.3da9ae24b32f0428e4ce0989a182e71d@haiku-os.org>
+
+#959: Trac: view new tickets + crash
+--------------------------+-------------------------------------------------
+ Reporter:  nutela        |       Owner:  wkornewald    
+     Type:  bug           |      Status:  new           
+ Priority:  normal        |   Milestone:  Haiku R1      
+Component:  Website/Trac  |     Version:  R1 development
+ Platform:  x86           |  
+--------------------------+-------------------------------------------------
+ I can't seem to change the 'view' in the new tickets view in Trac, if I
+ add status and full descr. etc. the site loads or forever or nothing gets
+ loaded. Got a crash as well;
+ Traceback (most recent call last):
+   File "/home/haikuos//lib/python2.4/site-packages/trac/web/main.py", line
+ 387, in dispatch_request
+     dispatcher.dispatch(req)
+   File "/home/haikuos//lib/python2.4/site-packages/trac/web/main.py", line
+ 243, in dispatch
+     req.session.save()
+   File "/home/waldemar//lib/python2.4/site-packages/trac/web/session.py",
+ line 182, in save
+     "VALUES(%s,%s,%s,%s)", attrs)
+   File "/home/haikuos//lib/python2.4/site-packages/trac/db/util.py", line
+ 57, in executemany
+     return self.cursor.executemany(sql_escape_percent(sql), args)
+   File "/home/haikuos//lib/python2.4/site-packages/trac/db/util.py", line
+ 57, in executemany
+     return self.cursor.executemany(sql_escape_percent(sql), args)
+   File "/home/waldemar//lib/python2.4/site-packages/MySQLdb/cursors.py",
+ line 216, in executemany
+     r = self._query(',\n'.join(q))
+   File "/home/waldemar//lib/python2.4/site-packages/MySQLdb/cursors.py",
+ line 309, in _query
+     rowcount = self._do_query(q)
+   File "/home/waldemar//lib/python2.4/site-packages/MySQLdb/cursors.py",
+ line 273, in _do_query
+     db.query(q)
+ IntegrityError: (1062, "Duplicate entry 'nutela-1-query_href' for key 1")
+
+ webbrowser Firefox 1.5.0.7 on CentOS 4 linux, squid add blocker that's
+ what I know of, remote X server on 1Gb lan which seems to work fine.
+
+ Paul
+
+-- 
+Ticket URL: <http://haiku-os.org/trac/ticket/959>
+Haiku <http://haiku-os.org/trac>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Tue Dec 12 18:36:05 2006
+From: trac at haiku-os.org (Haiku)
+Date: Tue, 12 Dec 2006 17:36:05 -0000
+Subject: [Haiku-bugs] [Haiku] #959: Trac: view new tickets + crash
+In-Reply-To: <042.3da9ae24b32f0428e4ce0989a182e71d@haiku-os.org>
+References: <042.3da9ae24b32f0428e4ce0989a182e71d@haiku-os.org>
+Message-ID: <051.2e698dbe1ab8f479aa991513ff49cd14@haiku-os.org>
+
+#959: Trac: view new tickets + crash
+---------------------------+------------------------------------------------
+  Reporter:  nutela        |       Owner:  wkornewald
+      Type:  bug           |      Status:  assigned  
+  Priority:  blocker       |   Milestone:  Website R1
+ Component:  Website/Trac  |     Version:            
+Resolution:                |    Platform:  All       
+---------------------------+------------------------------------------------
+Changes (by wkornewald):
+
+  * priority:  normal => blocker
+  * platform:  x86 => All
+  * version:  R1 development =>
+  * status:  new => assigned
+  * milestone:  Haiku R1 => Website R1
+
+Comment:
+
+ We're working on a solution for this problem.
+
+-- 
+Ticket URL: <http://haiku-os.org/trac/ticket/959#comment:1>
+Haiku <http://haiku-os.org/trac>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Tue Dec 12 22:27:24 2006
+From: trac at haiku-os.org (Haiku)
+Date: Tue, 12 Dec 2006 21:27:24 -0000
+Subject: [Haiku-bugs] [Haiku] #960: Divide by zero error on atapi drives in
+	diskprobe
+Message-ID: <042.4922abb3191fd6458682f48daf881090@haiku-os.org>
+
+#960: Divide by zero error on atapi drives in diskprobe
+------------------------------------+---------------------------------------
+ Reporter:  genki0                  |       Owner:  axeld         
+     Type:  bug                     |      Status:  new           
+ Priority:  normal                  |   Milestone:  Haiku R1      
+Component:  Applications/DiskProbe  |     Version:  R1 development
+ Platform:  x86                     |  
+------------------------------------+---------------------------------------
+ Hello,
+
+ Starting diskprobe and selecting and probing my (empty) atapi drive
+ will crash like this:
+
+ Thread 487 caused an exception: Divide error
+ <cut>
+
+ [Switching to team /boot/beos/apps/DiskProbe (487) thread DiskProbe (487)]
+ 0x006bb9bf in __divdi3 () from /boot/beos/system/lib/libroot.so
+ (gdb) bt
+ #0  0x006bb9bf in __divdi3 () from /boot/beos/system/lib/libroot.so
+ #1  0x00228f7d in HeaderView::UpdateFileSizeView ()
+ #2  0x00227cbf in HeaderView::HeaderView ()
+ #3  0x0022a546 in ProbeView::ProbeView ()
+ #4  0x00220d1d in FileWindow::FileWindow ()
+ #5  0x0021753d in DiskProbe::Probe ()
+ #6  0x002177c3 in DiskProbe::RefsReceived ()
+ #7  0x002f0785 in BApplication::DispatchMessage ()
+    from /boot/beos/system/lib/libbe.so
+ #8  0x002faff5 in BLooper::task_looper () from
+ /boot/beos/system/lib/libbe.so
+ #9  0x002eef27 in BApplication::Run () from /boot/beos/system/lib/libbe.so
+ #10 0x002183b7 in main ()
+ (gdb)
+
+-- 
+Ticket URL: <http://haiku-os.org/trac/ticket/960>
+Haiku <http://haiku-os.org/trac>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Fri Dec 15 15:39:34 2006
+From: trac at haiku-os.org (Haiku)
+Date: Fri, 15 Dec 2006 14:39:34 -0000
+Subject: [Haiku-bugs] [Haiku] #959: Trac: view new tickets + crash
+In-Reply-To: <042.3da9ae24b32f0428e4ce0989a182e71d@haiku-os.org>
+References: <042.3da9ae24b32f0428e4ce0989a182e71d@haiku-os.org>
+Message-ID: <051.fbc66130203381cc8bb700c3386c25b0@haiku-os.org>
+
+#959: Trac: view new tickets + crash
+---------------------------+------------------------------------------------
+  Reporter:  nutela        |       Owner:  wkornewald
+      Type:  bug           |      Status:  assigned  
+  Priority:  blocker       |   Milestone:  Website R1
+ Component:  Website/Trac  |     Version:            
+Resolution:                |    Platform:  All       
+---------------------------+------------------------------------------------
+Comment (by netster403):
+
+ been having lots of problems accessing trac lately.  This really hurts the
+ development process, and causes large delays in debugging.
+
+ Trac is pretty and goes with the website design well, but maybe haiku
+ should try an alternate bug system before the bug database grows any
+ further?
+
+ A few bugsystems floating around:
+ http://flyspray.org/ -- really nice system
+ http://www.mantisbt.org/
+ http://www.bugzilla.org/ -- yech
+ http://phpbt.sourceforge.net/
+ http://www.fogcreek.com/FogBugz/ -- not free
+
+
+ Any way, just my 2 cents :)
+
+-- 
+Ticket URL: <http://haiku-os.org/trac/ticket/959#comment:2>
+Haiku <http://haiku-os.org/trac>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Fri Dec 15 17:34:26 2006
+From: trac at haiku-os.org (Haiku)
+Date: Fri, 15 Dec 2006 16:34:26 -0000
+Subject: [Haiku-bugs] [Haiku] #959: Trac: view new tickets + crash
+In-Reply-To: <042.3da9ae24b32f0428e4ce0989a182e71d@haiku-os.org>
+References: <042.3da9ae24b32f0428e4ce0989a182e71d@haiku-os.org>
+Message-ID: <051.d1aa6c97557b9c06d87cc1551e8f135b@haiku-os.org>
+
+#959: Trac: view new tickets + crash
+---------------------------+------------------------------------------------
+  Reporter:  nutela        |       Owner:  wkornewald
+      Type:  bug           |      Status:  assigned  
+  Priority:  blocker       |   Milestone:  Website R1
+ Component:  Website/Trac  |     Version:            
+Resolution:                |    Platform:  All       
+---------------------------+------------------------------------------------
+Comment (by wkornewald):
+
+ We had that search, already and our developers don't want to do yet
+ another switch. Anyway, we'll soon switch our host, so hopefully those
+ problems will be gone.
+
+-- 
+Ticket URL: <http://haiku-os.org/trac/ticket/959#comment:3>
+Haiku <http://haiku-os.org/trac>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Sat Dec 16 00:15:53 2006
+From: trac at haiku-os.org (Haiku)
+Date: Fri, 15 Dec 2006 23:15:53 -0000
+Subject: [Haiku-bugs] [Haiku] #961: app_server allows resizing of window
+ frame when it's not supposed to
+Message-ID: <042.19d12f45f62ba76551e24a4c88e71520@haiku-os.org>
+
+#961: app_server allows resizing of window frame when it's not supposed to
+---------------------------------------+------------------------------------
+ Reporter:  genki0                     |       Owner:  axeld         
+     Type:  bug                        |      Status:  new           
+ Priority:  normal                     |   Milestone:  Haiku R1      
+Component:  User Interface/app_server  |     Version:  R1 development
+ Platform:  x86                        |  
+---------------------------------------+------------------------------------
+ Hi,
+
+ It's possible to resize a window when it's set to avoid focus
+ or something similiar.
+
+ Start media player, show about box, now start resizing window.
+ Notice how the window contents are not updated..
+
+ Also, it seems that the update events are leaked
+ or possibly queued inside the app_server, because
+ every time you resize the window, app_server
+ memory usage will grow slightly.
+ (use processcontroller to see)
+
+ /jens
+
+-- 
+Ticket URL: <http://haiku-os.org/trac/ticket/961>
+Haiku <http://haiku-os.org/trac>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Sat Dec 16 08:46:26 2006
+From: trac at haiku-os.org (Haiku)
+Date: Sat, 16 Dec 2006 07:46:26 -0000
+Subject: [Haiku-bugs] [Haiku] #957: after boot;
+ kernel: PANIC vm_page_fault: unhandled page fault in kernel space
+ at 0xcccccd44, ip 0x9070fdda
+In-Reply-To: <042.0a301de826c00f35f959f10b2e89e16b@haiku-os.org>
+References: <042.0a301de826c00f35f959f10b2e89e16b@haiku-os.org>
+Message-ID: <051.060c17425ccdbb7a2f5371b22d67889b@haiku-os.org>
+
+#957: after boot; kernel: PANIC vm_page_fault: unhandled page fault in kernel
+space at 0xcccccd44, ip 0x9070fdda
+----------------------------+-----------------------------------------------
+  Reporter:  nutela         |       Owner:  axeld         
+      Type:  bug            |      Status:  new           
+  Priority:  normal         |   Milestone:  Haiku R1      
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |    Platform:  x86           
+----------------------------+-----------------------------------------------
+Changes (by marcusoverhagen):
+
+ * cc: marcusoverhagen (added)
+
+Comment:
+
+ Unfortunately, it is only possible to redirect KDL
+ output to serial port or screen. The "sc" information
+ is required to pinpoint why the fault happens.
+
+ Please either write down the information generated by
+ the sc command, or take a screenshot with a digital
+ camera and attach it to this bugreport.
+
+ There is no other way to capture it, sorry.
+
+-- 
+Ticket URL: <http://haiku-os.org/trac/ticket/957#comment:5>
+Haiku <http://haiku-os.org/trac>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Sat Dec 16 08:49:32 2006
+From: trac at haiku-os.org (Haiku)
+Date: Sat, 16 Dec 2006 07:49:32 -0000
+Subject: [Haiku-bugs] [Haiku] #962: trac unstable
+Message-ID: <051.f012f6b0ddccedd780482469770dc589@haiku-os.org>
+
+#962: trac unstable
+-----------------------------+----------------------------------------------
+ Reporter:  marcusoverhagen  |       Owner:  wkornewald    
+     Type:  bug              |      Status:  new           
+ Priority:  normal           |   Milestone:  Website R1    
+Component:  Website/Trac     |     Version:  R1 development
+ Platform:  All              |  
+-----------------------------+----------------------------------------------
+ The http://haiku-os.org/trac/ website is very unstable and hard to use.
+
+ At home, I very often get just blank pages, as the server seems to close
+ the connection before sending any data.
+
+ At work, I get proxy errors:
+
+ Fehler - 500 Server Error
+
+ Fehlermeldung : [code=SERVER_RESPONSE_CLOSE] The server closed the
+ connection while reading the response. Contact your system administrator.
+ Proxy-Server : pr-inet-13
+ Datum des Zugriffs : Sat, 16 Dec 2006 07:38:49 GMT
+ Aufgerufene URL : http://haiku-
+ os.org/trac/timeline?from=12%2F16%2F06&daysback=10&milestone=on&ticket=on&ticket_details=on&wiki=on&update=Update
+
+ Fehlermeldung : [code=SERVER_RESPONSE_CLOSE] The server closed the
+ connection while reading the response. Contact your system administrator.
+ Proxy-Server : pr-inet-13
+ Datum des Zugriffs : Sat, 16 Dec 2006 07:41:14 GMT
+ Aufgerufene URL : http://haiku-os.org/trac/ticket/957
+
+-- 
+Ticket URL: <http://haiku-os.org/trac/ticket/962>
+Haiku <http://haiku-os.org/trac>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Sat Dec 16 09:06:14 2006
+From: trac at haiku-os.org (Haiku)
+Date: Sat, 16 Dec 2006 08:06:14 -0000
+Subject: [Haiku-bugs] [Haiku] #951: PS/2 keyboard not recognized by
+	input_server
+In-Reply-To: <046.c5c971ad54e57c3453d48ab80eaa8329@haiku-os.org>
+References: <046.c5c971ad54e57c3453d48ab80eaa8329@haiku-os.org>
+Message-ID: <055.5e70f4307bb39be7a51cf60a2ebe21d4@haiku-os.org>
+
+#951: PS/2 keyboard not recognized by input_server
+-----------------------------------+----------------------------------------
+  Reporter:  wkornewald            |       Owner:  marcusoverhagen
+      Type:  bug                   |      Status:  assigned       
+  Priority:  critical              |   Milestone:  Haiku R1       
+ Component:  Drivers/Keyboard/PS2  |     Version:  R1 development 
+Resolution:                        |    Platform:  All            
+-----------------------------------+----------------------------------------
+Comment (by marcusoverhagen):
+
+ The results indicate that your keyboard still doing something
+ erattic, and I really don't like the current "solution".
+
+ According to the PS/2 active multiplexing specification,
+ (available at http://www.synaptics.com/decaf/utilities/ps2-mux.PDF )
+ the default of the AUX port is supposed to be disabled=0 after
+ switching to multiplexing.
+
+ This means we can hopefully drop the enable sequence completely.
+
+ Please modify ps2_setup_active_multiplexing() and remove the
+ lines below the dprintf, then compile test and attach a syslog.
+
+ {{{
+ [...]
+ dprintf("ps2: active multiplexing v%d.%d enabled\n", (in >> 4), in & 0xf);
+ // remove everything that was at this place
+ *enabled = true;
+ return B_OK;
+ [...]
+ }}}
+
+-- 
+Ticket URL: <http://haiku-os.org/trac/ticket/951#comment:10>
+Haiku <http://haiku-os.org/trac>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Sat Dec 16 09:20:37 2006
+From: trac at haiku-os.org (Haiku)
+Date: Sat, 16 Dec 2006 08:20:37 -0000
+Subject: [Haiku-bugs] [Haiku] #573: [Media] crash in BMenuBar
+In-Reply-To: <041.6f54a28b38e5c3d996db0fecd83a66f3@haiku-os.org>
+References: <041.6f54a28b38e5c3d996db0fecd83a66f3@haiku-os.org>
+Message-ID: <050.20d18968483f093bbf7a8f8bfa766aac@haiku-os.org>
+
+#573: [Media] crash in BMenuBar
+----------------------+-----------------------------------------------------
+  Reporter:  diver    |       Owner:  jackburton
+      Type:  bug      |      Status:  assigned  
+  Priority:  normal   |   Milestone:  Haiku R1  
+ Component:  General  |     Version:            
+Resolution:           |    Platform:  All       
+----------------------+-----------------------------------------------------
+Changes (by marcusoverhagen):
+
+ * cc: marcusoverhagen (added)
+  * platform:  => All
+
+Old description:
+
+> Start Media pref -> Audio Settings -> Channel, press None and then Audio
+> Mixer
+> in the left listview.
+> Tested with 17364 in vmware.
+>
+> On a side note if you click Channel label and then move your mouse over
+> None
+> menuitem it will change it's state to clicked, it works different in
+> BeOS.
+
+New description:
+
+ Start Media pref -> Audio Settings -> Channel, press None and then Audio
+ Mixer
+ in the left listview.
+ Tested with 17364 in vmware.
+
+ On a side note if you click Channel label and then move your mouse over
+ None
+ menuitem it will change it's state to clicked, it works different in BeOS.
+
+-- 
+Ticket URL: <http://haiku-os.org/trac/ticket/573#comment:8>
+Haiku <http://haiku-os.org/trac>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Sat Dec 16 09:21:07 2006
+From: trac at haiku-os.org (Haiku)
+Date: Sat, 16 Dec 2006 08:21:07 -0000
+Subject: [Haiku-bugs] [Haiku] #597: [Cortex] double click on audio mixer
+ opens non-resizable window
+In-Reply-To: <041.d3e5e46c489710cdb70dc39fe7814d57@haiku-os.org>
+References: <041.d3e5e46c489710cdb70dc39fe7814d57@haiku-os.org>
+Message-ID: <050.2381820d082343acfc8bead1e490d1de@haiku-os.org>
+
+#597: [Cortex] double click on audio mixer opens non-resizable window
+------------------------------+---------------------------------------------
+  Reporter:  diver            |       Owner:  axeld   
+      Type:  bug              |      Status:  new     
+  Priority:  normal           |   Milestone:  Haiku R1
+ Component:  Media/Media Kit  |     Version:          
+Resolution:                   |    Platform:  All     
+------------------------------+---------------------------------------------
+Changes (by marcusoverhagen):
+
+ * cc: marcusoverhagen (added)
+
+-- 
+Ticket URL: <http://haiku-os.org/trac/ticket/597#comment:3>
+Haiku <http://haiku-os.org/trac>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Sat Dec 16 09:25:17 2006
+From: trac at haiku-os.org (Haiku)
+Date: Sat, 16 Dec 2006 08:25:17 -0000
+Subject: [Haiku-bugs] [Haiku] #955: Haiku wont respond if you boot it
+ with mouse action
+In-Reply-To: <041.695bf3d87453fb1ac86fbde24488baa7@haiku-os.org>
+References: <041.695bf3d87453fb1ac86fbde24488baa7@haiku-os.org>
+Message-ID: <050.fee2a9e317df439908b4f9ed775f38e6@haiku-os.org>
+
+#955: Haiku wont respond if you boot it with mouse action
+----------------------+-----------------------------------------------------
+  Reporter:  diver    |       Owner:  marcusoverhagen
+      Type:  bug      |      Status:  new            
+  Priority:  normal   |   Milestone:  Haiku R1       
+ Component:  General  |     Version:  R1 development 
+Resolution:           |    Platform:  All            
+----------------------+-----------------------------------------------------
+Changes (by marcusoverhagen):
+
+ * cc: axeld (added)
+  * owner:  axeld => marcusoverhagen
+
+Comment:
+
+ Diver please attach a syslog or serial debug log.
+
+ I couldn't reproduce the behaviour and would like to close this bug.
+
+-- 
+Ticket URL: <http://haiku-os.org/trac/ticket/955#comment:3>
+Haiku <http://haiku-os.org/trac>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Sat Dec 16 09:27:58 2006
+From: trac at haiku-os.org (Haiku)
+Date: Sat, 16 Dec 2006 08:27:58 -0000
+Subject: [Haiku-bugs] [Haiku] #386: [app_server] freeze on pngdump
+In-Reply-To: <041.8c003b04e9a292a61cf5beaa3544b941@haiku-os.org>
+References: <041.8c003b04e9a292a61cf5beaa3544b941@haiku-os.org>
+Message-ID: <050.e7b33e24d3aed3964200300bd1e993f0@haiku-os.org>
+
+#386: [app_server] freeze on pngdump
+----------------------------------------+-----------------------------------
+  Reporter:  diver                      |       Owner:  axeld   
+      Type:  bug                        |      Status:  new     
+  Priority:  low                        |   Milestone:  Haiku R1
+ Component:  User Interface/app_server  |     Version:          
+Resolution:                             |    Platform:  All     
+----------------------------------------+-----------------------------------
+Changes (by marcusoverhagen):
+
+ * cc: marcusoverhagen (added)
+
+-- 
+Ticket URL: <http://haiku-os.org/trac/ticket/386#comment:5>
+Haiku <http://haiku-os.org/trac>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Sat Dec 16 11:49:58 2006
+From: trac at haiku-os.org (Haiku)
+Date: Sat, 16 Dec 2006 10:49:58 -0000
+Subject: [Haiku-bugs] [Haiku] #962: trac unstable
+In-Reply-To: <051.f012f6b0ddccedd780482469770dc589@haiku-os.org>
+References: <051.f012f6b0ddccedd780482469770dc589@haiku-os.org>
+Message-ID: <060.7f8c6c84540cbe0ad9d1604dbc490b2d@haiku-os.org>
+
+#962: trac unstable
+------------------------------+---------------------------------------------
+  Reporter:  marcusoverhagen  |       Owner:  wkornewald    
+      Type:  bug              |      Status:  closed        
+  Priority:  normal           |   Milestone:  Website R1    
+ Component:  Website/Trac     |     Version:  R1 development
+Resolution:  duplicate        |    Platform:  All           
+------------------------------+---------------------------------------------
+Changes (by wkornewald):
+
+  * status:  new => closed
+  * resolution:  => duplicate
+
+Comment:
+
+ duplicate of #959
+ We're working on it. Maybe it will be a Christmas present...
+
+-- 
+Ticket URL: <http://haiku-os.org/trac/ticket/962#comment:1>
+Haiku <http://haiku-os.org/trac>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Sun Dec 17 14:45:56 2006
+From: trac at haiku-os.org (Haiku)
+Date: Sun, 17 Dec 2006 13:45:56 -0000
+Subject: [Haiku-bugs] [Haiku] #945: why not /boot/haiku ?
+In-Reply-To: <044.88f70689a76dc7d6e067b3a7f8990d3c@haiku-os.org>
+References: <044.88f70689a76dc7d6e067b3a7f8990d3c@haiku-os.org>
+Message-ID: <053.f7b6b5ed0a55aff633722faeaaa1137c@haiku-os.org>
+
+#945: why not /boot/haiku ?
+--------------------------+-------------------------------------------------
+  Reporter:  kaoutsis     |       Owner:  axeld         
+      Type:  enhancement  |      Status:  new           
+  Priority:  normal       |   Milestone:  Haiku R1      
+ Component:  General      |     Version:  R1 development
+Resolution:               |    Platform:  All           
+--------------------------+-------------------------------------------------
+Comment (by netster403):
+
+ y not /boot/haiku (or system ;) ) with a alias from /boot/beos to
+ /boot/haiku? this would keep compatibility, and progressively move away
+ from beos
+
+-- 
+Ticket URL: <http://haiku-os.org/trac/ticket/945#comment:3>
+Haiku <http://haiku-os.org/trac>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Sun Dec 17 15:23:49 2006
+From: trac at haiku-os.org (Haiku)
+Date: Sun, 17 Dec 2006 14:23:49 -0000
+Subject: [Haiku-bugs] [Haiku] #945: why not /boot/haiku ?
+In-Reply-To: <044.88f70689a76dc7d6e067b3a7f8990d3c@haiku-os.org>
+References: <044.88f70689a76dc7d6e067b3a7f8990d3c@haiku-os.org>
+Message-ID: <053.7ad433c276a4716471c16bd77f97fb4d@haiku-os.org>
+
+#945: why not /boot/haiku ?
+--------------------------+-------------------------------------------------
+  Reporter:  kaoutsis     |       Owner:  axeld         
+      Type:  enhancement  |      Status:  new           
+  Priority:  normal       |   Milestone:  Haiku R1      
+ Component:  General      |     Version:  R1 development
+Resolution:               |    Platform:  All           
+--------------------------+-------------------------------------------------
+Comment (by axeld):
+
+ There is already a /boot/beos/system/ folder - so "system" would be at
+ least strange.
+ I'm not sure if we'd really break compatibility, though.
+ What application needs to access anything in /boot/beos/? If we've cleared
+ that issue, there is nothing preventing us from renaming this to "haiku"
+ for R1.
+
+-- 
+Ticket URL: <http://haiku-os.org/trac/ticket/945#comment:4>
+Haiku <http://haiku-os.org/trac>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Tue Dec 19 07:53:58 2006
+From: trac at haiku-os.org (Haiku)
+Date: Tue, 19 Dec 2006 06:53:58 -0000
+Subject: [Haiku-bugs] [Haiku] #748: kqemu pagefault with interrupts
+	disabled
+In-Reply-To: <053.08b4035c392d5074b6ac3cb74dc4a582@haiku-os.org>
+References: <053.08b4035c392d5074b6ac3cb74dc4a582@haiku-os.org>
+Message-ID: <062.c264b9e087ac9560afb9c7638cdc8c8b@haiku-os.org>
+
+#748: kqemu pagefault with interrupts disabled
+--------------------------------+-------------------------------------------
+  Reporter:  danny at blubinc.com  |       Owner:  axeld   
+      Type:  bug                |      Status:  new     
+  Priority:  low                |   Milestone:  Haiku R1
+ Component:  System/Kernel      |     Version:          
+Resolution:                     |    Platform:  x86     
+--------------------------------+-------------------------------------------
+Comment (by hollywoodb):
+
+ Same results here, can use QEMU in "user" mode, attempting to use the
+ kqemu accelerator module fails.  This is on a Slackware 11.0 install that
+ is completely stock with the exceptions qemu/kqemu and kernel version
+ 2.6.19
+
+
+ {{{
+ APM version 1.2 available, flags 3.
+ smp_probe: entry base 0x9fc00, limit 0xa0000
+ smp_probe: entry base 0xf0000, limit 0x100000
+ VESA version = 200
+ oem string: VGABIOS Cirrus extension
+ Welcome to the Haiku boot loader!
+ legacy base address 1f0
+ ATA device, master
+ number of drives: 1
+ add_partitions_for(0x001041cc, mountFS = no)
+ add_partitions_for(fd = 0, mountFS = no)
+ Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+ check for partitioning_system: Intel Partition Map
+ intel: pm_identify_partition(1, 1065628: 0, 120586240, 512)
+ Partition::SetTo(): active: 6f
+ intel: _ParsePrimary(): partition 0: bad location, ignoring
+ Partition::SetTo(): active: 74
+ Partition::SetTo(): active: 0
+ Partition::SetTo(): active: 0
+ check for partitioning_system: Intel Extended Partition
+ check for partitioning_system: Apple Partition Map
+ boot partition offset: 0
+ check for file_system: BFS Filesystem
+ load kernel...
+ unhandled pheader type 0x6
+ unhandled pheader type 0x3
+ kernel entry at 80027e40
+ Welcome to kernel debugger output!
+ vm_mark_page_range_inuse: page 0x9f in non-free state 7!
+ apm_init()
+   code32: 0xf000, 0x9cb2, length 0xfff0
+   code16: 0xf000, length 0xfff0
+   data: 0xf000, length 0xfff0
+ PANIC: page fault, but interrupts were disabled. Touching address
+ 0x0000005d from eip 0x8002bb97
+
+ Welcome to Kernel Debugging Land...
+ Running on CPU 0
+ kdebug> sc
+ stack trace for thread 0x1 "idle thread 1"
+     kernel stack: 0x80101000 to 0x80104000
+ frame            caller     <image>:function + offset
+ 80103d84 (+  48) 80078741   <kernel>:kernel_debugger_loop + 0x0109
+ 80103db4 (+  32) 8007917e   <kernel>:kernel_debugger + 0x009a
+ 80103dd4 (+ 176) 800790da   <kernel>:panic + 0x0036
+ 80103e84 (+ 160) 8007e528   <kernel>:i386_handle_trap + 0x0168
+ iframe at 0x80103f2c (end = 0x80103f80)
+  eax 0x1            ebx 0x1             ecx 0x8002e809   edx 0xb
+  esi 0x848e         edi 0x30005400      ebp 0x80103fa0   esp 0x80103f5c
+  eip 0x8002bb97  eflags 0x210096
+  vector: 0xe, error code: 0x0
+ 80103f24 (+ 124) 8002bb97   <kernel>:scheduler_reschedule + 0x000f
+ 80103fa0 (+  48) 8002bde0   <kernel>:scheduler_start + 0x0020
+ 80103fd0 (+  32) 80028083   <kernel>:_start + 0x0243
+ kdebug>
+ }}}
+
+-- 
+Ticket URL: <http://haiku-os.org/trac/ticket/748#comment:7>
+Haiku <http://haiku-os.org/trac>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Tue Dec 19 15:18:52 2006
+From: trac at haiku-os.org (Haiku)
+Date: Tue, 19 Dec 2006 14:18:52 -0000
+Subject: [Haiku-bugs] [Haiku] #963: BMail preferences crash while creating a
+	new account
+Message-ID: <045.55aa7dc15b6435cf12f138fe7dbb28b9@haiku-os.org>
+
+#963: BMail preferences crash while creating a new account
+------------------------------------------+---------------------------------
+ Reporter:  bnickname                     |       Owner:  axeld         
+     Type:  bug                           |      Status:  new           
+ Priority:  normal                        |   Milestone:  Haiku R1      
+Component:  Preferences/DataTranslations  |     Version:  R1 development
+ Platform:  x86                           |  
+------------------------------------------+---------------------------------
+ '''To reproduce:'''
+ - open mail prefs
+ - press add
+ - select the new account
+ - choose a type
+ - click on incoming or outgoing under the new account
+ - boom
+
+-- 
+Ticket URL: <http://haiku-os.org/trac/ticket/963>
+Haiku <http://haiku-os.org/trac>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Tue Dec 19 15:21:16 2006
+From: trac at haiku-os.org (Haiku)
+Date: Tue, 19 Dec 2006 14:21:16 -0000
+Subject: [Haiku-bugs] [Haiku] #963: BMail preferences crash while
+ creating a new account
+In-Reply-To: <045.55aa7dc15b6435cf12f138fe7dbb28b9@haiku-os.org>
+References: <045.55aa7dc15b6435cf12f138fe7dbb28b9@haiku-os.org>
+Message-ID: <054.a6a9f86a2778b8f24c979f3c831e9236@haiku-os.org>
+
+#963: BMail preferences crash while creating a new account
+-------------------------------+--------------------------------------------
+  Reporter:  bnickname         |       Owner:  axeld         
+      Type:  bug               |      Status:  new           
+  Priority:  normal            |   Milestone:  Haiku R1      
+ Component:  Preferences/Mail  |     Version:  R1 development
+Resolution:                    |    Platform:  x86           
+-------------------------------+--------------------------------------------
+Changes (by jackburton):
+
+  * component:  Preferences/DataTranslations => Preferences/Mail
+
+-- 
+Ticket URL: <http://haiku-os.org/trac/ticket/963#comment:1>
+Haiku <http://haiku-os.org/trac>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Tue Dec 19 17:21:26 2006
+From: trac at haiku-os.org (Haiku)
+Date: Tue, 19 Dec 2006 16:21:26 -0000
+Subject: [Haiku-bugs] [Haiku] #951: PS/2 keyboard not recognized by
+	input_server
+In-Reply-To: <046.c5c971ad54e57c3453d48ab80eaa8329@haiku-os.org>
+References: <046.c5c971ad54e57c3453d48ab80eaa8329@haiku-os.org>
+Message-ID: <055.7b760bf558d8b2257bc3c50353af8a30@haiku-os.org>
+
+#951: PS/2 keyboard not recognized by input_server
+-----------------------------------+----------------------------------------
+  Reporter:  wkornewald            |       Owner:  marcusoverhagen
+      Type:  bug                   |      Status:  assigned       
+  Priority:  critical              |   Milestone:  Haiku R1       
+ Component:  Drivers/Keyboard/PS2  |     Version:  R1 development 
+Resolution:                        |    Platform:  All            
+-----------------------------------+----------------------------------------
+Comment (by wkornewald):
+
+ I hope this helps. Sorry that it took so long...
+
+-- 
+Ticket URL: <http://haiku-os.org/trac/ticket/951#comment:11>
+Haiku <http://haiku-os.org/trac>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Tue Dec 19 23:23:01 2006
+From: trac at haiku-os.org (Haiku)
+Date: Tue, 19 Dec 2006 22:23:01 -0000
+Subject: [Haiku-bugs] [Haiku] #951: PS/2 keyboard not recognized by
+	input_server
+In-Reply-To: <046.c5c971ad54e57c3453d48ab80eaa8329@haiku-os.org>
+References: <046.c5c971ad54e57c3453d48ab80eaa8329@haiku-os.org>
+Message-ID: <055.9c61c9e88d82fa7c7365f85e8639a35a@haiku-os.org>
+
+#951: PS/2 keyboard not recognized by input_server
+-----------------------------------+----------------------------------------
+  Reporter:  wkornewald            |       Owner:  marcusoverhagen
+      Type:  bug                   |      Status:  closed         
+  Priority:  critical              |   Milestone:  Haiku R1       
+ Component:  Drivers/Keyboard/PS2  |     Version:  R1 development 
+Resolution:  fixed                 |    Platform:  All            
+-----------------------------------+----------------------------------------
+Changes (by marcusoverhagen):
+
+  * status:  assigned => closed
+  * resolution:  => fixed
+
+Comment:
+
+ Fixed in r19566
+
+-- 
+Ticket URL: <http://haiku-os.org/trac/ticket/951#comment:12>
+Haiku <http://haiku-os.org/trac>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Wed Dec 20 15:15:03 2006
+From: trac at haiku-os.org (Haiku)
+Date: Wed, 20 Dec 2006 14:15:03 -0000
+Subject: [Haiku-bugs] [Haiku] #171: [kernel] PANIC: double fault!
+In-Reply-To: <041.369c632e33250ae952c62a3c227aaf12@haiku-os.org>
+References: <041.369c632e33250ae952c62a3c227aaf12@haiku-os.org>
+Message-ID: <050.a67e7cc2c5d9fd45d9399dce44c276d6@haiku-os.org>
+
+#171: [kernel] PANIC: double fault!
+----------------------------+-----------------------------------------------
+  Reporter:  diver          |       Owner:  axeld   
+      Type:  bug            |      Status:  closed  
+  Priority:  blocker        |   Milestone:  Haiku R1
+ Component:  System/Kernel  |     Version:          
+Resolution:  fixed          |    Platform:  All     
+----------------------------+-----------------------------------------------
+Changes (by axeld):
+
+  * status:  reopened => closed
+  * platform:  => All
+  * resolution:  => fixed
+
+Old description:
+
+> PANIC: double fault! error code 0x0
+> screenshot will follow.
+> I've got this only once under vmware with rev16392.
+
+New description:
+
+ PANIC: double fault! error code 0x0
+ screenshot will follow.
+ I've got this only once under vmware with rev16392.
+
+Comment:
+
+ This one should have been fixed by geist in r19549.
+
+-- 
+Ticket URL: <http://haiku-os.org/trac/ticket/171#comment:19>
+Haiku <http://haiku-os.org/trac>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Wed Dec 20 15:53:28 2006
+From: trac at haiku-os.org (Haiku)
+Date: Wed, 20 Dec 2006 14:53:28 -0000
+Subject: [Haiku-bugs] [Haiku] #751: [kernel] PANIC if all apps in
+ /boot/beos/bin opened at once
+In-Reply-To: <041.8d04a869204ecb5f460a6762cfb01aac@haiku-os.org>
+References: <041.8d04a869204ecb5f460a6762cfb01aac@haiku-os.org>
+Message-ID: <050.3917cad86d329bcb50c6e06b59fc51c4@haiku-os.org>
+
+#751: [kernel] PANIC if all apps in /boot/beos/bin opened at once
+----------------------------+-----------------------------------------------
+  Reporter:  diver          |       Owner:  axeld   
+      Type:  bug            |      Status:  new     
+  Priority:  blocker        |   Milestone:  Haiku R1
+ Component:  System/Kernel  |     Version:          
+Resolution:                 |    Platform:  All     
+----------------------------+-----------------------------------------------
+Old description:
+
+> Tested with r18522 under vmware.
+> Go to /boot/beos/bin, selecat all (alt+a) end press enter.
+> After several seconds Haiku will crash.
+> Stack crawl will follow...
+
+New description:
+
+ Tested with r18522 under vmware.
+ Go to /boot/beos/bin, selecat all (alt+a) end press enter.
+ After several seconds Haiku will crash.
+ Stack crawl will follow...
+
+Comment (by axeld):
+
+ Can you still reproduce this? It doesn't happen anymore over here.
+ (Probably since r19549 or r19571)
+
+-- 
+Ticket URL: <http://haiku-os.org/trac/ticket/751#comment:4>
+Haiku <http://haiku-os.org/trac>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Fri Dec 22 17:28:00 2006
+From: trac at haiku-os.org (Haiku)
+Date: Fri, 22 Dec 2006 16:28:00 -0000
+Subject: [Haiku-bugs] [Haiku] #964: test
+In-Reply-To: <055.b0ca932e9ecc765b795b9f9027a495b7@haiku-os.org>
+References: <055.b0ca932e9ecc765b795b9f9027a495b7@haiku-os.org>
+Message-ID: <064.542e7b0ac48c94e63afbc652ee9c82eb@haiku-os.org>
+
+#964: test
+-------------------------+--------------------------------------------------
+  Reporter:  wkornewald  |       Owner:  wkornewald    
+      Type:  bug         |      Status:  new           
+  Priority:  normal      |   Milestone:  R1            
+ Component:  General     |     Version:  R1 development
+Resolution:              |    Platform:  All           
+-------------------------+--------------------------------------------------
+Comment (by wkornewald):
+
+ Maybe with actual email forward to mailbox?
+
+-- 
+Ticket URL: <http://dev.haiku.webfactional.com/ticket/964#comment:4>
+Haiku <http://dev.haiku.webfactional.com>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Fri Dec 22 17:29:21 2006
+From: trac at haiku-os.org (Haiku)
+Date: Fri, 22 Dec 2006 16:29:21 -0000
+Subject: [Haiku-bugs] [Haiku] #964: test
+In-Reply-To: <055.b0ca932e9ecc765b795b9f9027a495b7@haiku-os.org>
+References: <055.b0ca932e9ecc765b795b9f9027a495b7@haiku-os.org>
+Message-ID: <064.484a1603bbff8d729afcf9f039688940@haiku-os.org>
+
+#964: test
+-------------------------+--------------------------------------------------
+  Reporter:  wkornewald  |       Owner:  wkornewald    
+      Type:  bug         |      Status:  closed        
+  Priority:  normal      |   Milestone:  R1            
+ Component:  General     |     Version:  R1 development
+Resolution:  fixed       |    Platform:  All           
+-------------------------+--------------------------------------------------
+Changes (by wkornewald):
+
+  * status:  new => closed
+  * resolution:  => fixed
+
+Comment:
+
+ Yeehaaa!
+
+-- 
+Ticket URL: <http://dev.haiku.webfactional.com/ticket/964#comment:5>
+Haiku <http://dev.haiku.webfactional.com>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Tue Dec 26 14:28:28 2006
+From: trac at haiku-os.org (Haiku)
+Date: Tue, 26 Dec 2006 13:28:28 -0000
+Subject: [Haiku-bugs] [Haiku] #839: multiple utf-8 string vulnerabilities
+In-Reply-To: <060.41efc3bfece62c9dfaa78c56d37cf400@haiku-os.org>
+References: <060.41efc3bfece62c9dfaa78c56d37cf400@haiku-os.org>
+Message-ID: <069.48c28b74dc688a7315365a25ea5ad285@haiku-os.org>
+
+#839: multiple utf-8 string vulnerabilities
+-------------------------------------------+--------------------------------
+  Reporter:  marcusoverhagen               |       Owner:  mmlr  
+      Type:  bug                           |      Status:  closed
+  Priority:  normal                        |   Milestone:  R1    
+ Component:  User Interface/Interface Kit  |     Version:        
+Resolution:  fixed                         |    Platform:  All   
+-------------------------------------------+--------------------------------
+Changes (by mmlr):
+
+  * status:  new => closed
+  * resolution:  => fixed
+
+Old description:
+
+> Multiple UTF-8 functions are unsave and vulnerable to
+> denial of service attacks or buffer overflow attacks.
+>
+> This includes:
+>
+> count_utf8_bytes
+>
+> UTF8CountBytes
+>
+> UTF8CountChars
+>
+> UTF8ToCharCode
+>
+> UTF8ToLength
+>
+> It is dangerous to look only at the first byte to determine how
+> long an character sequence is. A malformed sequence can be used
+> to skip a string's terminating zero byte.
+>
+> Example (2 bytes and terminating zero):
+>
+> 0xE0 0x81 0x00
+>
+> The first byte tells that it's 3 bytes long, and the above
+> mentioned functions will skip the terminating zero.
+
+New description:
+
+ Multiple UTF-8 functions are unsafe and vulnerable to
+ denial of service attacks or buffer overflow attacks.
+
+ This includes:
+
+ count_utf8_bytes
+
+ UTF8CountBytes
+
+ UTF8CountChars
+
+ UTF8ToCharCode
+
+ UTF8ToLength
+
+ It is dangerous to look only at the first byte to determine how
+ long an character sequence is. A malformed sequence can be used
+ to skip a string's terminating zero byte.
+
+ Example (2 bytes and terminating zero):
+
+ 0xE0 0x81 0x00
+
+ The first byte tells that it's 3 bytes long, and the above
+ mentioned functions will skip the terminating zero.
+
+Comment:
+
+ Fixed in r19624.
+
+-- 
+Ticket URL: <http://dev.haiku.webfactional.com/ticket/839#comment:3>
+Haiku <http://dev.haiku.webfactional.com>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Tue Dec 26 14:40:41 2006
+From: trac at haiku-os.org (Haiku)
+Date: Tue, 26 Dec 2006 13:40:41 -0000
+Subject: [Haiku-bugs] [Haiku] #850: crash in BPrivate::ConvertBits
+In-Reply-To: <050.400a2525328f02f53998f58b41fa5ca9@haiku-os.org>
+References: <050.400a2525328f02f53998f58b41fa5ca9@haiku-os.org>
+Message-ID: <059.9e5abd363c711a7899bcb2d327b15e55@haiku-os.org>
+
+#850: crash in BPrivate::ConvertBits
+----------------------------------------+-----------------------------------
+  Reporter:  diver                      |       Owner:  mmlr          
+      Type:  bug                        |      Status:  assigned      
+  Priority:  normal                     |   Milestone:  R1            
+ Component:  User Interface/app_server  |     Version:  R1 development
+Resolution:                             |    Platform:  All           
+----------------------------------------+-----------------------------------
+Changes (by mmlr):
+
+  * status:  new => assigned
+
+Comment:
+
+ Crashing bug fixed in r19626. There remains an endless loop when using the
+ TextFader therefore I'll leave this bug open.
+
+-- 
+Ticket URL: <http://dev.haiku.webfactional.com/ticket/850#comment:5>
+Haiku <http://dev.haiku.webfactional.com>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Tue Dec 26 18:12:04 2006
+From: trac at haiku-os.org (Haiku)
+Date: Tue, 26 Dec 2006 17:12:04 -0000
+Subject: [Haiku-bugs] [Haiku] #788: improve admin interface for
+	components
+In-Reply-To: <052.5de860e8c3ce93586268625f7ebd6b6f@haiku-os.org>
+References: <052.5de860e8c3ce93586268625f7ebd6b6f@haiku-os.org>
+Message-ID: <061.60c145315fb57ad64e873641e75519de@haiku-os.org>
+
+#788: improve admin interface for components
+---------------------------+------------------------------------------------
+  Reporter:  charlie       |       Owner:  wkornewald
+      Type:  bug           |      Status:  assigned  
+  Priority:  normal        |   Milestone:  Website R1
+ Component:  Website/Trac  |     Version:            
+Resolution:                |    Platform:  All       
+---------------------------+------------------------------------------------
+Changes (by wkornewald):
+
+ * cc: wkornewald (removed)
+  * owner:  => wkornewald
+  * status:  new => assigned
+  * platform:  => All
+
+-- 
+Ticket URL: <http://dev.haiku.webfactional.com/ticket/788#comment:5>
+Haiku <http://dev.haiku.webfactional.com>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Tue Dec 26 18:13:58 2006
+From: trac at haiku-os.org (Haiku)
+Date: Tue, 26 Dec 2006 17:13:58 -0000
+Subject: [Haiku-bugs] [Haiku] #788: improve admin interface for
+	components
+In-Reply-To: <052.5de860e8c3ce93586268625f7ebd6b6f@haiku-os.org>
+References: <052.5de860e8c3ce93586268625f7ebd6b6f@haiku-os.org>
+Message-ID: <061.0df543a913cb6782e01b9a629535d6f5@haiku-os.org>
+
+#788: improve admin interface for components
+---------------------------+------------------------------------------------
+  Reporter:  charlie       |       Owner:  wkornewald
+      Type:  bug           |      Status:  closed    
+  Priority:  normal        |   Milestone:  Website R1
+ Component:  Website/Trac  |     Version:            
+Resolution:  fixed         |    Platform:  All       
+---------------------------+------------------------------------------------
+Changes (by wkornewald):
+
+  * status:  assigned => closed
+  * resolution:  => fixed
+
+Comment:
+
+ Now it's possible to rename subcomponents together with the parent. This
+ should be good enough.
+
+-- 
+Ticket URL: <http://dev.haiku.webfactional.com/ticket/788#comment:6>
+Haiku <http://dev.haiku.webfactional.com>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Tue Dec 26 18:21:13 2006
+From: trac at haiku-os.org (Haiku)
+Date: Tue, 26 Dec 2006 17:21:13 -0000
+Subject: [Haiku-bugs] [Haiku] #843: Bug dependencies not possible
+In-Reply-To: <060.03b18ed3798da1c8ec2ce2bbfd457316@haiku-os.org>
+References: <060.03b18ed3798da1c8ec2ce2bbfd457316@haiku-os.org>
+Message-ID: <069.37adb9c494a0fd2b5b779d64951963a8@haiku-os.org>
+
+#843: Bug dependencies not possible
+------------------------------+---------------------------------------------
+  Reporter:  marcusoverhagen  |       Owner:  wkornewald  
+      Type:  enhancement      |      Status:  new         
+  Priority:  high             |   Milestone:  Website R1.5
+ Component:  Website/Trac     |     Version:              
+Resolution:                   |    Platform:  All         
+------------------------------+---------------------------------------------
+Changes (by wkornewald):
+
+  * milestone:  Website R1 => Website R1.5
+
+Comment:
+
+ This will be available in a later Trac release. For now, what we have
+ should work well enough.
+
+-- 
+Ticket URL: <http://dev.haiku.webfactional.com/ticket/843#comment:5>
+Haiku <http://dev.haiku.webfactional.com>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Tue Dec 26 18:26:06 2006
+From: trac at haiku-os.org (Haiku)
+Date: Tue, 26 Dec 2006 17:26:06 -0000
+Subject: [Haiku-bugs] [Haiku] #783: subcomponents should be able to
+ inherit parent's owner
+In-Reply-To: <055.f211e50c888078f3b1d964d2d5b817fd@haiku-os.org>
+References: <055.f211e50c888078f3b1d964d2d5b817fd@haiku-os.org>
+Message-ID: <064.31725745867d73797d0350d3fdd84a2f@haiku-os.org>
+
+#783: subcomponents should be able to inherit parent's owner
+---------------------------+------------------------------------------------
+  Reporter:  wkornewald    |       Owner:  wkornewald  
+      Type:  enhancement   |      Status:  assigned    
+  Priority:  low           |   Milestone:  Website R1.5
+ Component:  Website/Trac  |     Version:              
+Resolution:                |    Platform:  All         
+---------------------------+------------------------------------------------
+Changes (by wkornewald):
+
+ * cc: wkornewald (removed)
+  * owner:  => wkornewald
+  * status:  new => assigned
+  * platform:  => All
+  * milestone:  Website R1 => Website R1.5
+
+Comment:
+
+ Postponed because it's not important enough for Website R1. We don't have
+ so many components that this becomes a real problem. It was a low-priority
+ item, anyway.
+
+-- 
+Ticket URL: <http://dev.haiku.webfactional.com/ticket/783#comment:3>
+Haiku <http://dev.haiku.webfactional.com>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Tue Dec 26 18:28:34 2006
+From: trac at haiku-os.org (Haiku)
+Date: Tue, 26 Dec 2006 17:28:34 -0000
+Subject: [Haiku-bugs] [Haiku] #816: create a nice Drupal theme
+In-Reply-To: <055.94d3a73b6639f5bc3ab35d78331a21f5@haiku-os.org>
+References: <055.94d3a73b6639f5bc3ab35d78331a21f5@haiku-os.org>
+Message-ID: <064.ea2b6cb7f29a502b0ff7508d16ff63f5@haiku-os.org>
+
+#816: create a nice Drupal theme
+--------------------------+-------------------------------------------------
+  Reporter:  wkornewald   |       Owner:  koki      
+      Type:  enhancement  |      Status:  new       
+  Priority:  high         |   Milestone:  Website R1
+ Component:  Website/CMS  |     Version:            
+Resolution:               |    Platform:  All       
+--------------------------+-------------------------------------------------
+Changes (by wkornewald):
+
+  * owner:  => koki
+  * platform:  => All
+
+Old description:
+
+> Run a contest. Post a news item with instructions.
+
+New description:
+
+ It must look better than our current theme. :)
+
+Comment:
+
+ Jorge, I'm assigning this to you because you've become responsible for the
+ new Drupal website incarnation. I hope you don't mind. I'll also create a
+ list of other tasks for Website R1.
+
+-- 
+Ticket URL: <http://dev.haiku.webfactional.com/ticket/816#comment:3>
+Haiku <http://dev.haiku.webfactional.com>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Tue Dec 26 18:37:05 2006
+From: trac at haiku-os.org (Haiku)
+Date: Tue, 26 Dec 2006 17:37:05 -0000
+Subject: [Haiku-bugs] [Haiku] #965: migrate mailing lists to
+	lists.haiku-os.org
+Message-ID: <055.0cddb2cc17d9dfc1ee280780501899d8@haiku-os.org>
+
+#965: migrate mailing lists to lists.haiku-os.org
+-------------------------+--------------------------------------------------
+ Reporter:  wkornewald   |       Owner:  bga       
+     Type:  enhancement  |      Status:  new       
+ Priority:  low          |   Milestone:  Website R1
+Component:  Website      |     Version:            
+ Platform:  All          |  
+-------------------------+--------------------------------------------------
+ Move our lists to Bruno's server. On the admin list we agreed on the
+ following mailing lists:
+  * general
+  * developers
+  * admins
+  * commits (probably stays at berlios)
+  * tickets
+  * data-translation
+  * ideas
+  * kernel
+  * media
+  * midi
+  * network
+  * printing
+  * storage
+  * user-interface
+  * website
+
+ The list addresses should not have a "haiku-" prefix. For instance, the
+ "developers" list should have this address: developers at lists.haiku-os...
+ The list name should have the prefix "Haiku-" (e.g.: "Haiku-Developers").
+
+ The last step is to update our lists domain to point to Bruno's server.
+
+-- 
+Ticket URL: <http://dev.haiku.webfactional.com/ticket/965>
+Haiku <http://dev.haiku.webfactional.com>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Tue Dec 26 18:41:03 2006
+From: trac at haiku-os.org (Haiku)
+Date: Tue, 26 Dec 2006 17:41:03 -0000
+Subject: [Haiku-bugs] [Haiku] #966: integrate our repository with Trac
+Message-ID: <055.7470f0b9cb5365b5838fb7a500fdc529@haiku-os.org>
+
+#966: integrate our repository with Trac
+-------------------------+--------------------------------------------------
+ Reporter:  wkornewald   |       Owner:  wkornewald  
+     Type:  enhancement  |      Status:  new         
+ Priority:  normal       |   Milestone:  Website R1.5
+Component:  Website      |     Version:              
+ Platform:  All          |  
+-------------------------+--------------------------------------------------
+ This requires either mirroring the repository or moving it to our server.
+ In order to decrease bandwidth usage and server load the latter requires
+ setting up an anonymous mirror at SourceForge, for example. This means
+ we'll need to upgrade to SVN 1.4.x (WebFaction will do this on request).
+
+-- 
+Ticket URL: <http://dev.haiku.webfactional.com/ticket/966>
+Haiku <http://dev.haiku.webfactional.com>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Tue Dec 26 18:46:59 2006
+From: trac at haiku-os.org (Haiku)
+Date: Tue, 26 Dec 2006 17:46:59 -0000
+Subject: [Haiku-bugs] [Haiku] #966: integrate our repository with Trac
+In-Reply-To: <055.7470f0b9cb5365b5838fb7a500fdc529@haiku-os.org>
+References: <055.7470f0b9cb5365b5838fb7a500fdc529@haiku-os.org>
+Message-ID: <064.5133dc08cebc290fcc2b93d321474a8d@haiku-os.org>
+
+#966: integrate our repository with Trac
+--------------------------+-------------------------------------------------
+  Reporter:  wkornewald   |       Owner:  wkornewald  
+      Type:  enhancement  |      Status:  new         
+  Priority:  normal       |   Milestone:  Website R1.5
+ Component:  Website      |     Version:              
+Resolution:               |    Platform:  All         
+--------------------------+-------------------------------------------------
+Comment (by wkornewald):
+
+ I tried svk and tailor for mirroring our BerliOS repository.
+ Unfortunately, both mess up the revision numbers. The best solution is to
+ use svnsync which requires SVN 1.4.x, but BerliOS has an older version. I
+ asked them (politely) if they could update their svn install, but I
+ received no answer, yet (well, it's Christmas).
+
+ I failed to install svm (SVN::Mirror) on our server and I can't tell
+ whether it preserves revision numbers.
+
+-- 
+Ticket URL: <http://dev.haiku.webfactional.com/ticket/966#comment:1>
+Haiku <http://dev.haiku.webfactional.com>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Tue Dec 26 18:52:24 2006
+From: trac at haiku-os.org (Haiku)
+Date: Tue, 26 Dec 2006 17:52:24 -0000
+Subject: [Haiku-bugs] [Haiku] #967: create a backup script for the website
+Message-ID: <055.fa4ae1b92980fa39a794001c73c78bf8@haiku-os.org>
+
+#967: create a backup script for the website
+-------------------------+--------------------------------------------------
+ Reporter:  wkornewald   |       Owner:  wkornewald
+     Type:  enhancement  |      Status:  new       
+ Priority:  high         |   Milestone:  Website R1
+Component:  Website      |     Version:            
+ Platform:  All          |  
+-------------------------+--------------------------------------------------
+ It should create daily backups of our DBs and weekly backups of Trac, the
+ repos, and all uploaded website files. Old backups (one month old?) should
+ automatically be deleted.
+
+ All backups should be transferred to a backup server. Before transferring
+ the files they should be encrypted with GPG. The private key must not be
+ stored on any of our servers. Only import the public key on the main
+ server (the backup server doesn't need any keys).
+
+-- 
+Ticket URL: <http://dev.haiku.webfactional.com/ticket/967>
+Haiku <http://dev.haiku.webfactional.com>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Tue Dec 26 18:55:13 2006
+From: trac at haiku-os.org (Haiku)
+Date: Tue, 26 Dec 2006 17:55:13 -0000
+Subject: [Haiku-bugs] [Haiku] #967: create a backup script for the
+	website
+In-Reply-To: <055.fa4ae1b92980fa39a794001c73c78bf8@haiku-os.org>
+References: <055.fa4ae1b92980fa39a794001c73c78bf8@haiku-os.org>
+Message-ID: <064.6c47373980e1ea4c612e9221362637d6@haiku-os.org>
+
+#967: create a backup script for the website
+--------------------------+-------------------------------------------------
+  Reporter:  wkornewald   |       Owner:  wkornewald
+      Type:  enhancement  |      Status:  new       
+  Priority:  high         |   Milestone:  Website R1
+ Component:  Website      |     Version:            
+Resolution:               |    Platform:  All       
+--------------------------+-------------------------------------------------
+Changes (by wkornewald):
+
+ * cc: mphipps (added)
+
+Comment:
+
+ I already created a script for site5 and I have a GPG key which we could
+ use. The script must be adapted because of different DB names and
+ passwords. Also, files aren't encrypted, yet. The files ("backup_dbs",
+ "backup_files") are in the "backups" folder.
+
+ Michael, could you please sign-up for a backup account?
+
+-- 
+Ticket URL: <http://dev.haiku.webfactional.com/ticket/967#comment:1>
+Haiku <http://dev.haiku.webfactional.com>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Thu Dec 28 13:17:22 2006
+From: trac at haiku-os.org (Haiku)
+Date: Thu, 28 Dec 2006 12:17:22 -0000
+Subject: [Haiku-bugs] [Haiku] #967: create a backup script for the
+	website
+In-Reply-To: <055.fa4ae1b92980fa39a794001c73c78bf8@haiku-os.org>
+References: <055.fa4ae1b92980fa39a794001c73c78bf8@haiku-os.org>
+Message-ID: <064.e16984ddda63a3a36cf609c994f9c466@haiku-os.org>
+
+#967: create a backup script for the website
+--------------------------+-------------------------------------------------
+  Reporter:  wkornewald   |       Owner:  wkornewald
+      Type:  enhancement  |      Status:  assigned  
+  Priority:  high         |   Milestone:  Website R1
+ Component:  Website      |     Version:            
+Resolution:               |    Platform:  All       
+--------------------------+-------------------------------------------------
+Changes (by wkornewald):
+
+  * status:  new => assigned
+
+Comment:
+
+ Finished most of the backup script. Only encryption and upload to backup
+ server is missing.
+
+-- 
+Ticket URL: <http://dev.haiku.webfactional.com/ticket/967#comment:2>
+Haiku <http://dev.haiku.webfactional.com>
+The Haiku operating system.
+
+
+From trac at haiku-os.org  Thu Dec 28 15:34:22 2006
+From: trac at haiku-os.org (Haiku)
+Date: Thu, 28 Dec 2006 14:34:22 -0000
+Subject: [Haiku-bugs] [Haiku] #823: fix AF_INET domain in PAP
+In-Reply-To: <055.9c71b40914f733a8ea5dfd4c3611ce52@haiku-os.org>
+References: <055.9c71b40914f733a8ea5dfd4c3611ce52@haiku-os.org>
+Message-ID: <064.198b954c37d1a4f4267d7b45212c27b4@haiku-os.org>
+
+#823: fix AF_INET domain in PAP
+--------------------------+-------------------------------------------------
+  Reporter:  wkornewald   |       Owner:                  
+      Type:  bug          |      Status:  closed          
+  Priority:  low          |   Milestone:  R1 Network Stack
+ Component:  Network/PPP  |     Version:                  
+Resolution:  fixed        |    Platform:  All             
+--------------------------+-------------------------------------------------
+Changes (by wkornewald):
+
+  * status:  new => closed
+  * platform:  => All
+  * resolution:  => fixed
+
+Comment:
+
+ Finally fixed this. :)
+
+-- 
+Ticket URL: <http://dev.haiku.webfactional.com/ticket/823#comment:2>
+Haiku <http://dev.haiku.webfactional.com>
+The Haiku operating system.
+
+

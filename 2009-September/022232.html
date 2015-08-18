@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4681: linkcatkeys fails when building on	PPC
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234681%3A%20linkcatkeys%20fails%20when%20building%20on%0A%09PPC&In-Reply-To=%3C049.4a828fa791a8aa253bd61b5f4ff84e96%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="022230.html">
+   <LINK REL="Next"  HREF="022233.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4681: linkcatkeys fails when building on	PPC</H1>
+    <B>titer</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234681%3A%20linkcatkeys%20fails%20when%20building%20on%0A%09PPC&In-Reply-To=%3C049.4a828fa791a8aa253bd61b5f4ff84e96%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4681: linkcatkeys fails when building on	PPC">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Sep 30 21:12:16 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="022230.html">[Haiku-bugs] [Haiku] #4681: linkcatkeys fails when building on	PPC
+</A></li>
+        <LI>Next message: <A HREF="022233.html">[Haiku-bugs] [Haiku] #4681: linkcatkeys fails when building on	PPC
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22232">[ date ]</a>
+              <a href="thread.html#22232">[ thread ]</a>
+              <a href="subject.html#22232">[ subject ]</a>
+              <a href="author.html#22232">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4681: linkcatkeys fails when building on PPC
+-----------------------------+----------------------------------------------
+ Reporter:  titer            |       Owner:  pulkomandy    
+     Type:  bug              |      Status:  assigned      
+ Priority:  normal           |   Milestone:  R1            
+Component:  Kits/Locale Kit  |     Version:  R1/Development
+Blockedby:                   |    Platform:  All           
+ Blocking:                   |  
+-----------------------------+----------------------------------------------
+
+Comment(by titer):
+
+ {{{
+ % head -1 src/preferences/*/fr.catkeys
+ ==&gt; src/preferences/appearance/fr.catkeys &lt;==
+ 1       french  x-vnd.Haiku-Appearance  959674221
+ ==&gt; src/preferences/bluetooth/fr.catkeys &lt;==
+ 1       french  x-vnd.Haiku-BluetoothPrefs      2566651844
+ ==&gt; src/preferences/cpufrequency/fr.catkeys &lt;==
+ 1       french  x-vnd.Haiku-CPUFrequencyPref    2623066734
+ ==&gt; src/preferences/locale/fr.catkeys &lt;==
+ 1       french  x-vnd.Haiku-Locale      3822351296
+ }}}
+
+ without the change to HashMapCatalog.cpp:
+ {{{
+ % head -1 generated/objects/haiku/common/preferences/*/en.catkeys
+ ==&gt; generated/objects/haiku/common/preferences/appearance/en.catkeys &lt;==
+ 1       english x-vnd.Haiku-Appearance  2205627685
+ ==&gt; generated/objects/haiku/common/preferences/bluetooth/en.catkeys &lt;==
+ 1       english x-vnd.Haiku-BluetoothPrefs      2566651844
+ ==&gt; generated/objects/haiku/common/preferences/cpufrequency/en.catkeys &lt;==
+ 1       english x-vnd.Haiku-CPUFrequencyPref    2623066734
+ ==&gt; generated/objects/haiku/common/preferences/locale/en.catkeys &lt;==
+ 1       english x-vnd.Haiku-Locale      3822351296
+ }}}
+
+ with the change to HashMapCatalog.cpp:
+ {{{
+ % head -1 generated/objects/haiku/common/preferences/*/en.catkeys
+ ==&gt; generated/objects/haiku/common/preferences/appearance/en.catkeys &lt;==
+ 1       english x-vnd.Haiku-Appearance  959674221
+ ==&gt; generated/objects/haiku/common/preferences/bluetooth/en.catkeys &lt;==
+ 1       english x-vnd.Haiku-BluetoothPrefs      2566651844
+ ==&gt; generated/objects/haiku/common/preferences/cpufrequency/en.catkeys &lt;==
+ 1       english x-vnd.Haiku-CPUFrequencyPref    2623066734
+ ==&gt; generated/objects/haiku/common/preferences/locale/en.catkeys &lt;==
+ 1       english x-vnd.Haiku-Locale      3822351296
+ }}}
+
+ So they do match with the change, now isn't that a little weird that
+ &quot;appearance&quot; is the only preference for which there is a mismatch?
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4681#comment:3">http://dev.haiku-os.org/ticket/4681#comment:3</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="022230.html">[Haiku-bugs] [Haiku] #4681: linkcatkeys fails when building on	PPC
+</A></li>
+	<LI>Next message: <A HREF="022233.html">[Haiku-bugs] [Haiku] #4681: linkcatkeys fails when building on	PPC
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22232">[ date ]</a>
+              <a href="thread.html#22232">[ thread ]</a>
+              <a href="subject.html#22232">[ subject ]</a>
+              <a href="author.html#22232">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

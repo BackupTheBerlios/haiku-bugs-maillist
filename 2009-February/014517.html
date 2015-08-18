@@ -1,0 +1,167 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3249: Jukebox can't run on GCC4/GCC2	hibryd build
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-February/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233249%3A%20Jukebox%20can%27t%20run%20on%20GCC4/GCC2%0A%09hibryd%20build&In-Reply-To=%3C050.cb3cc06b81460a33448595df417be2de%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="014515.html">
+   <LINK REL="Next"  HREF="014518.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3249: Jukebox can't run on GCC4/GCC2	hibryd build</H1>
+    <B>mt</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233249%3A%20Jukebox%20can%27t%20run%20on%20GCC4/GCC2%0A%09hibryd%20build&In-Reply-To=%3C050.cb3cc06b81460a33448595df417be2de%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3249: Jukebox can't run on GCC4/GCC2	hibryd build">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Feb 20 14:14:31 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="014515.html">[Haiku-bugs] [Haiku] #3460: redundant redeclarations
+</A></li>
+        <LI>Next message: <A HREF="014518.html">[Haiku-bugs] [Haiku] #3044: [JPEG2000] shows an alert if it can't find his settings (easy)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14517">[ date ]</a>
+              <a href="thread.html#14517">[ thread ]</a>
+              <a href="subject.html#14517">[ subject ]</a>
+              <a href="author.html#14517">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3249: Jukebox can't run on GCC4/GCC2 hibryd build
+--------------------------+-------------------------------------------------
+ Reporter:  miqlas        |       Owner:  axeld         
+     Type:  bug           |      Status:  new           
+ Priority:  normal        |   Milestone:  R1            
+Component:  Applications  |     Version:  R1 development
+Blockedby:                |    Platform:  x86           
+ Blocking:                |  
+--------------------------+-------------------------------------------------
+
+Comment(by mt):
+
+ It seems that BePDF fails in gcc4/gcc2 hybrid system because of
+ /boot/beos/system/lib/gcc2/libtranslation.so 's problem.
+ I think gcc2/libtranslation.so try to load gcc4 version of Translator add-
+ ons instead of gcc2's .[[BR]]
+ syslogs:[[BR]]
+ {{{
+ KERN: runtime_loader: elf_resolve_symbol: could not resolve symbol
+ '_ZNK11BArchivable7ArchiveEP8BMessageb'
+ KERN: runtime_loader: troubles relocating: 0x80001304 (image:
+ /boot/beos/system/add-ons/Translators/BMPTranslator, BMPTranslator)
+ KERN: runtime_loader: elf_resolve_symbol: could not resolve symbol
+ '_ZNK5BView7ArchiveEP8BMessageb'
+ KERN: runtime_loader: troubles relocating: 0x80001304 (image:
+ /boot/beos/system/add-ons/Translators/EXRTranslator, EXRTranslator)
+ KERN: runtime_loader: elf_resolve_symbol: could not resolve symbol
+ '_ZNK12BApplication7ArchiveEP8BMessageb'
+ KERN: runtime_loader: troubles relocating: 0x80001304 (image:
+ /boot/beos/system/add-ons/Translators/GIFTranslator, GIFTranslator)
+ KERN: runtime_loader: elf_resolve_symbol: could not resolve symbol
+ '_ZNK5BView7ArchiveEP8BMessageb'
+ KERN: runtime_loader: troubles relocating: 0x80001304 (image:
+ /boot/beos/system/add-ons/Translators/JPEG2000Translator,
+ JPEG2000Translator)
+ KERN: runtime_loader: elf_resolve_symbol: could not resolve symbol
+ '_ZNK5BView7ArchiveEP8BMessageb'
+ KERN: runtime_loader: troubles relocating: 0x80001304 (image:
+ /boot/beos/system/add-ons/Translators/JPEGTranslator, JPEGTranslator)
+ KERN: runtime_loader: elf_resolve_symbol: could not resolve symbol
+ '_ZNK11BArchivable7ArchiveEP8BMessageb'
+ KERN: runtime_loader: troubles relocating: 0x80001304 (image:
+ /boot/beos/system/add-ons/Translators/PCXTranslator, PCXTranslator)
+ KERN: runtime_loader: elf_resolve_symbol: could not resolve symbol
+ '_ZNK11BArchivable7ArchiveEP8BMessageb'
+ KERN: runtime_loader: troubles relocating: 0x80001304 (image:
+ /boot/beos/system/add-ons/Translators/PNGTranslator, PNGTranslator)
+ KERN: runtime_loader: elf_resolve_symbol: could not resolve symbol
+ '_ZNK7BWindow7ArchiveEP8BMessageb'
+ KERN: runtime_loader: troubles relocating: 0x80001304 (image:
+ /boot/beos/system/add-ons/Translators/PPMTranslator, PPMTranslator)
+ KERN: runtime_loader: elf_resolve_symbol: could not resolve symbol
+ '_ZNK11BArchivable7ArchiveEP8BMessageb'
+ KERN: runtime_loader: troubles relocating: 0x80001304 (image:
+ /boot/beos/system/add-ons/Translators/RAWTranslator, RAWTranslator)
+ KERN: runtime_loader: elf_resolve_symbol: could not resolve symbol
+ '_ZNK11BArchivable7ArchiveEP8BMessageb'
+ KERN: runtime_loader: troubles relocating: 0x80001304 (image:
+ /boot/beos/system/add-ons/Translators/RTF-Translator, RTF-Translator)
+ KERN: runtime_loader: elf_resolve_symbol: could not resolve symbol
+ '_ZTVN10__cxxabiv117__class_type_infoE'
+ KERN: runtime_loader: troubles relocating: 0x80001304 (image:
+ /boot/beos/system/add-ons/Translators/SGITranslator, SGITranslator)
+ KERN: runtime_loader: elf_resolve_symbol: could not resolve symbol
+ '_ZNK11BArchivable7ArchiveEP8BMessageb'
+ KERN: runtime_loader: troubles relocating: 0x80001304 (image:
+ /boot/beos/system/add-ons/Translators/STXTTranslator, STXTTranslator)
+ KERN: runtime_loader: elf_resolve_symbol: could not resolve symbol
+ '_ZNK11BArchivable7ArchiveEP8BMessageb'
+ KERN: runtime_loader: troubles relocating: 0x80001304 (image:
+ /boot/beos/system/add-ons/Translators/TGATranslator, TGATranslator)
+ KERN: runtime_loader: elf_resolve_symbol: could not resolve symbol
+ '_ZNK11BArchivable7ArchiveEP8BMessageb'
+ KERN: runtime_loader: troubles relocating: 0x80001304 (image:
+ /boot/beos/system/add-ons/Translators/TIFFTranslator, TIFFTranslator)
+ KERN: runtime_loader: elf_resolve_symbol: could not resolve symbol
+ '_ZN5BList14_ReservedList1Ev'
+ KERN: runtime_loader: troubles relocating: 0x80001304 (image:
+ /boot/beos/system/add-ons/Translators/WonderBrushTranslator,
+ WonderBrushTranslator)
+ KERN: 246: DEBUGGER: Need to set the 'disabled' pictures for this
+ BPictureButton
+ KERN: debug_server: Thread 246 entered the debugger: Debugger call: `Need
+ to set the 'disabled' pictures for this BPictureButton '
+ KERN: stack trace, current PC 0xffff0102  :
+ KERN:   (0x78184c4c)  0x5da3aa  Draw__14BPictureButtonG5BRect + 0x7a
+ KERN:   (0x78184c8c)  0x28d5b0  Draw__12BitmapButtonG5BRect + 0x7c
+ KERN:   (0x78184cfc)  0x625ed8  _Draw__5BViewG5BRect + 0x94
+ KERN:   (0x78184d3c)  0x62a7c9
+ DispatchMessage__7BWindowP8BMessageP8BHandler + 0x1469
+ KERN:   (0x78184f1c)  0x62e438  task_looper__7BWindow + 0x270
+ KERN:   (0x78184f7c)  0x5734cb  _task0___7BLooperPv + 0x3f
+ KERN:   (0x78184fac)  0x7c6b98  thread_entry + 0x20
+ KERN: debug_server: Killing team 232 (/boot/apps/BePDF/BePDF)
+ KERN: debug_server: TeamDebugHandler::Init(): Failed to get info for team
+ 232: Operation on invalid team
+ KERN: debug_server: KillTeam(): Error getting info for team 232: Operation
+ on invalid team
+ KERN: debug_server: Killing team 232 ()
+
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3249#comment:3">http://dev.haiku-os.org/ticket/3249#comment:3</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="014515.html">[Haiku-bugs] [Haiku] #3460: redundant redeclarations
+</A></li>
+	<LI>Next message: <A HREF="014518.html">[Haiku-bugs] [Haiku] #3044: [JPEG2000] shows an alert if it can't find his settings (easy)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14517">[ date ]</a>
+              <a href="thread.html#14517">[ thread ]</a>
+              <a href="subject.html#14517">[ subject ]</a>
+              <a href="author.html#14517">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

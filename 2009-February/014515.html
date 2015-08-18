@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3460: redundant redeclarations
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-February/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233460%3A%20redundant%20redeclarations&In-Reply-To=%3C042.e0cc5d5d93b92518e6d5e1463881fb31%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="014514.html">
+   <LINK REL="Next"  HREF="014517.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3460: redundant redeclarations</H1>
+    <B>scottmc</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233460%3A%20redundant%20redeclarations&In-Reply-To=%3C042.e0cc5d5d93b92518e6d5e1463881fb31%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3460: redundant redeclarations">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Feb 20 05:12:35 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="014514.html">[Haiku-bugs] [Haiku] #2305: [Preferences::Time] crashes on	startup
+</A></li>
+        <LI>Next message: <A HREF="014517.html">[Haiku-bugs] [Haiku] #3249: Jukebox can't run on GCC4/GCC2	hibryd build
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14515">[ date ]</a>
+              <a href="thread.html#14515">[ thread ]</a>
+              <a href="subject.html#14515">[ subject ]</a>
+              <a href="author.html#14515">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3460: redundant redeclarations
+-----------------------+----------------------------------------------------
+ Reporter:  scottmc    |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+Blockedby:             |    Platform:  All           
+ Blocking:             |  
+-----------------------+----------------------------------------------------
+ Not sure if this a an issue or not, but I've been seeing a lot of
+ redundant redeclaration warnings lately... here's a snippet of a recent
+ series of them.
+
+ {{{
+ /boot/develop/headers/bsd/stdlib.h:16: warning: redundant redeclaration of
+ `daemon' in same scope
+ /boot/develop/headers/posix/stdlib.h:63: warning: previous declaration of
+ `daemon'
+ In file included from /boot/home/ffmpeg/libavformat/avformat.h:44,
+                  from /boot/home/ffmpeg/ffserver.c:32:
+ /boot/develop/headers/bsd/stdio.h:16: warning: redundant redeclaration of
+ `fgetln' in same scope
+ /boot/develop/headers/posix/stdio.h:138: warning: previous declaration of
+ `fgetln'
+ In file included from /boot/develop/headers/bsd/unistd.h:9,
+                  from /boot/home/ffmpeg/ffserver.c:42:
+ /boot/develop/headers/posix/unistd.h:193: warning: redundant redeclaration
+ of `clock' in same scope
+ /boot/develop/headers/posix/time.h:58: warning: previous declaration of
+ `clock'
+ /boot/develop/headers/posix/unistd.h:251: warning: redundant redeclaration
+ of `environ' in same scope
+ /boot/develop/headers/posix/stdlib.h:76: warning: previous declaration of
+ `environ'
+ In file included from /boot/develop/headers/bsd/signal.h:9,
+                  from /boot/develop/headers/posix/sys/select.h:10,
+                  from /boot/develop/headers/posix/sys/time.h:16,
+                  from /boot/home/ffmpeg/ffserver.c:49:
+ /boot/develop/headers/posix/signal.h:177: warning: redundant redeclaration
+ of `strsignal' in same scope
+ /boot/develop/headers/posix/string.h:74: warning: previous declaration of
+ `strsignal'
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3460">http://dev.haiku-os.org/ticket/3460</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="014514.html">[Haiku-bugs] [Haiku] #2305: [Preferences::Time] crashes on	startup
+</A></li>
+	<LI>Next message: <A HREF="014517.html">[Haiku-bugs] [Haiku] #3249: Jukebox can't run on GCC4/GCC2	hibryd build
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14515">[ date ]</a>
+              <a href="thread.html#14515">[ thread ]</a>
+              <a href="subject.html#14515">[ subject ]</a>
+              <a href="author.html#14515">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

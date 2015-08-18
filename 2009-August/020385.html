@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4347: R1 alpha1 Installer go to KDL during install process.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234347%3A%20R1%20alpha1%20Installer%20go%20to%20KDL%0A%20during%20install%20process.&In-Reply-To=%3C046.d54609573fe5f1b6e58b94ff42366824%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="020358.html">
+   <LINK REL="Next"  HREF="020234.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4347: R1 alpha1 Installer go to KDL during install process.</H1>
+    <B>mmlr</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234347%3A%20R1%20alpha1%20Installer%20go%20to%20KDL%0A%20during%20install%20process.&In-Reply-To=%3C046.d54609573fe5f1b6e58b94ff42366824%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4347: R1 alpha1 Installer go to KDL during install process.">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Aug 29 18:27:22 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="020358.html">[Haiku-bugs] [Haiku] #4347: R1 alpha1 Installer go to KDL during install process.
+</A></li>
+        <LI>Next message: <A HREF="020234.html">[Haiku-bugs] [Haiku] #2842: ScsiSynchronizeCache message	flooding
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20385">[ date ]</a>
+              <a href="thread.html#20385">[ thread ]</a>
+              <a href="subject.html#20385">[ subject ]</a>
+              <a href="author.html#20385">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4347: R1 alpha1 Installer go to KDL during install process.
+---------------------------+------------------------------------------------
+  Reporter:  mt            |       Owner:  mmlr     
+      Type:  bug           |      Status:  closed   
+  Priority:  normal        |   Milestone:  R1/alpha1
+ Component:  File Systems  |     Version:  R1 alpha1
+Resolution:  fixed         |   Blockedby:           
+  Platform:  x86           |    Blocking:           
+---------------------------+------------------------------------------------
+Changes (by mmlr):
+
+  * status:  assigned =&gt; closed
+  * resolution:  =&gt; fixed
+
+
+Comment:
+
+ Fixed in r32815. A virtual node was put and therefore destroyed. Then it
+ was iterated again and it was tried to get the node again, which didn't
+ exist anymore. Therefore the request got through to the underlaying
+ iso9660 filesystem, for which the inode number was invalid. The reason why
+ you see it under emulation and not under real hardware is that you have
+ less memory under emulation, so the node is put due to the low memory
+ situation. Under real hardware memory pressure is not that high, so the
+ node stayed in memory (pure luck really).
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4347#comment:5">http://dev.haiku-os.org/ticket/4347#comment:5</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="020358.html">[Haiku-bugs] [Haiku] #4347: R1 alpha1 Installer go to KDL during install process.
+</A></li>
+	<LI>Next message: <A HREF="020234.html">[Haiku-bugs] [Haiku] #2842: ScsiSynchronizeCache message	flooding
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20385">[ date ]</a>
+              <a href="thread.html#20385">[ thread ]</a>
+              <a href="subject.html#20385">[ subject ]</a>
+              <a href="author.html#20385">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

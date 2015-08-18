@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1590: Updated Broadcom Tigon3 ethernet	driver
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231590%3A%20Updated%20Broadcom%20Tigon3%20ethernet%0A%09driver&In-Reply-To=%3C053.968df012777708b3bd3366a329dbe7e8%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010632.html">
+   <LINK REL="Next"  HREF="010634.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1590: Updated Broadcom Tigon3 ethernet	driver</H1>
+    <B>PieterPanman</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231590%3A%20Updated%20Broadcom%20Tigon3%20ethernet%0A%09driver&In-Reply-To=%3C053.968df012777708b3bd3366a329dbe7e8%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1590: Updated Broadcom Tigon3 ethernet	driver">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Sep 28 21:26:14 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010632.html">[Haiku-bugs] [Haiku] #2782: implement sticky windows
+</A></li>
+        <LI>Next message: <A HREF="010634.html">[Haiku-bugs] [Haiku] #1590: Updated Broadcom Tigon3 ethernet	driver
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10633">[ date ]</a>
+              <a href="thread.html#10633">[ thread ]</a>
+              <a href="subject.html#10633">[ subject ]</a>
+              <a href="author.html#10633">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1590: Updated Broadcom Tigon3 ethernet driver
+------------------------------+---------------------------------------------
+  Reporter:  pieterpan        |       Owner:  axeld         
+      Type:  enhancement      |      Status:  new           
+  Priority:  normal           |   Milestone:  R1            
+ Component:  Drivers/Network  |     Version:  R1 development
+Resolution:                   |   Blockedby:                
+  Platform:  All              |    Blocking:                
+------------------------------+---------------------------------------------
+
+Comment(by PieterPanman):
+
+ I managed to get it to compile (with some cheats), but it does not work
+ quite yet. See the attached diff for what I did to make it compile. I
+ still have to implement m_cljget, but I get stuck on other things first.
+ Besides, if it is called, it will panic, then I'll implement it :) It's
+ something to do with jumbo frames.
+
+ When I start Haiku with the driver added to the image, it gets to the red
+ rocket, where things go haywire. (without this driver it boots fine) See
+ the attached pictures of the debugging output: it is very exciting to at
+ least see it is identifying my device and initializing it.
+
+ My suspicion is that I'm messing up the interrupts, because everything
+ else is rather bothered by my driver's actions. I have very little driver
+ writing experience, so this is mostly trial and error for me.
+
+ I also tried these two below, but that doesn't help at all. Probably this
+ device generates interrupts, and this does not apply.
+ NO_HAIKU_CHECK_DISABLE_INTERRUPTS();
+ NO_HAIKU_REENABLE_INTERRUPTS();
+
+ I also tried with the latest driver from
+ <A HREF="http://www.freebsd.org/cgi/cvsweb.cgi/src/sys/dev/bge/">http://www.freebsd.org/cgi/cvsweb.cgi/src/sys/dev/bge/</A> but they now added
+ m_collapse, which still needs to be added to the layer. So I figured I'd
+ focus on the current driver, can always update later.
+
+ Any advise would be greatly appreciated.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1590#comment:5">http://dev.haiku-os.org/ticket/1590#comment:5</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010632.html">[Haiku-bugs] [Haiku] #2782: implement sticky windows
+</A></li>
+	<LI>Next message: <A HREF="010634.html">[Haiku-bugs] [Haiku] #1590: Updated Broadcom Tigon3 ethernet	driver
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10633">[ date ]</a>
+              <a href="thread.html#10633">[ thread ]</a>
+              <a href="subject.html#10633">[ subject ]</a>
+              <a href="author.html#10633">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

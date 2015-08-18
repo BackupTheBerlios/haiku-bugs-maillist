@@ -1,0 +1,123 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #156: syslog is corrupted
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23156%3A%20syslog%20is%20corrupted&In-Reply-To=%3C059.dc7ac6c9f29e97ce3b5434d8acaa3d19%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011303.html">
+   <LINK REL="Next"  HREF="011122.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #156: syslog is corrupted</H1>
+    <B>Adek336</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23156%3A%20syslog%20is%20corrupted&In-Reply-To=%3C059.dc7ac6c9f29e97ce3b5434d8acaa3d19%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #156: syslog is corrupted">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Oct 19 00:11:44 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011303.html">[Haiku-bugs] [Haiku] #2872: Desktop Folder Missing in Tracker	Window
+</A></li>
+        <LI>Next message: <A HREF="011122.html">[Haiku-bugs] [Haiku] #2840: via_rhine II ethernet controller:	svn hangs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11121">[ date ]</a>
+              <a href="thread.html#11121">[ thread ]</a>
+              <a href="subject.html#11121">[ subject ]</a>
+              <a href="author.html#11121">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#156: syslog is corrupted
+------------------------------+---------------------------------------------
+  Reporter:  marcusoverhagen  |       Owner:  axeld
+      Type:  bug              |      Status:  new  
+  Priority:  high             |   Milestone:  R1   
+ Component:  System/Kernel    |     Version:       
+Resolution:                   |   Blockedby:       
+  Platform:  All              |    Blocking:       
+------------------------------+---------------------------------------------
+
+Comment(by Adek336):
+
+ {{{
+ - 74    #define SYSLOG_BUFFER_SIZE 65536
+ + 74    #define SYSLOG_BUFFER_SIZE 131072
+ }}}
+ With 128 kb of buffer space, even with the additional message-number and
+ free-space-in-buffer data stored in the buffer, the peak usage is around
+ 100 kb. So by increasing the buffer space by 64 kb we ensure that the
+ ~1000 messages previously dropped aren't anymore. Each of these messages
+ is sent to the log because a programmer thought it was an important
+ message, so loosing a thousand of them is very unfortunate and I think
+ preserving them is worth the 64 kbs.
+
+ Perhaps SYSLOG_BUFFER_SIZE could be specified at build time in
+ UserBuildConfig - so that if one day there is even more messages to be
+ logged and they get dropped, one may fix the problem by tuning the build
+ config; on the other hand, if the default buffer size was set to huge,
+ somebody who wants to conserve memory can set it low.
+
+ {{{
+         length = ring_buffer_readable(sSyslogBuffer);
+         if (length &gt; (int32)SYSLOG_MAX_MESSAGE_LENGTH)
+              length = SYSLOG_MAX_MESSAGE_LENGTH;
+
+         length = ring_buffer_read(sSyslogBuffer,
+             (uint8 *)sSyslogMessage-&gt;message, length);
+   932   if (sSyslogDropped) {
+   933   // add drop marker
+ - 934      if (length &lt; (int32)SYSLOG_MAX_MESSAGE_LENGTH - 6)
+ - 935             strlcat(sSyslogMessage-&gt;message, &quot;&lt;DROP&gt;&quot;,
+ SYSLOG_MAX_MESSAGE_LENGTH);
+ - 936      else if (length &gt; 7)
+ - 937           strcpy(sSyslogMessage-&gt;message + length - 7, &quot;&lt;DROP&gt;&quot;);
+ + 934      ring_buffer_write(sSyslogBuffer, (uint8 *) &quot;&lt;DROP&gt;&quot;, 6);
+
+         sSyslogDropped = false;
+ }
+ }}}
+ This fixes a problem with the &lt;DROP&gt; message being emitted in the wrong
+ place. In the old code, if the buffer is full, sSyslogDropped is set and
+ then, after sending approx MIN(SYSLOG_MAX_MESSAGE_LENGTH,
+ SYSLOG_BUFFER_SIZE) the &lt;DROP&gt; message is emitted.
+ SYSLOG_MAX_MESSAGE_LENGTH = approx 8192 so this is erroneus.
+
+ The proposed fix helps: &lt;DROP&gt; are emitted in the place, where a message
+ has been indeed dropped.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/156#comment:5">http://dev.haiku-os.org/ticket/156#comment:5</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011303.html">[Haiku-bugs] [Haiku] #2872: Desktop Folder Missing in Tracker	Window
+</A></li>
+	<LI>Next message: <A HREF="011122.html">[Haiku-bugs] [Haiku] #2840: via_rhine II ethernet controller:	svn hangs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11121">[ date ]</a>
+              <a href="thread.html#11121">[ thread ]</a>
+              <a href="subject.html#11121">[ subject ]</a>
+              <a href="author.html#11121">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3176: swapping control and caps lock keys makes Menu and Team Monitor do weird things
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233176%3A%20swapping%20control%20and%20caps%20lock%20keys%0A%20makes%20Menu%20and%20Team%20Monitor%20do%20weird%20things&In-Reply-To=%3C041.f5a6f7b4f8cd6bc997bb8b5fe7aaa42c%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012798.html">
+   <LINK REL="Next"  HREF="012800.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3176: swapping control and caps lock keys makes Menu and Team Monitor do weird things</H1>
+    <B>karmak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233176%3A%20swapping%20control%20and%20caps%20lock%20keys%0A%20makes%20Menu%20and%20Team%20Monitor%20do%20weird%20things&In-Reply-To=%3C041.f5a6f7b4f8cd6bc997bb8b5fe7aaa42c%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3176: swapping control and caps lock keys makes Menu and Team Monitor do weird things">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Nov 27 18:44:51 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012798.html">[Haiku-bugs] [Haiku] #2824: vim: no syntax highlight
+</A></li>
+        <LI>Next message: <A HREF="012800.html">[Haiku-bugs] [Haiku] #3176: swapping control and caps lock keys makes Menu and Team Monitor do weird things
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12799">[ date ]</a>
+              <a href="thread.html#12799">[ thread ]</a>
+              <a href="subject.html#12799">[ subject ]</a>
+              <a href="author.html#12799">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3176: swapping control and caps lock keys makes Menu and Team Monitor do weird
+things
+----------------------------------+-----------------------------------------
+ Reporter:  karmak                |       Owner:  korli         
+     Type:  bug                   |      Status:  new           
+ Priority:  normal                |   Milestone:  R1            
+Component:  Servers/input_server  |     Version:  R1 development
+Blockedby:                        |    Platform:  x86           
+ Blocking:                        |  
+----------------------------------+-----------------------------------------
+ Haiku r28735, IBM R52. I use a French keymap and &quot;Alt&quot; as default shortcut
+ in Menu Preferences.
+
+ Creating a custom French keymap (attached) with `keymap` command works
+ like expected : i can swap control and caps lock. Apps (SpicyKeys,
+ Terminal, StyledEdit and others) act like I expect them to, e.g. pressing
+ CapsLock acts as Control was pressed. &quot;Alt&quot; remains active as the default
+ shortcut (Alt-W closes windows, and so on). Cool !
+
+ BUT: Opening Menu Preferences shows that &quot;Control&quot; is my default shortcut,
+ which is definitely false. I didn't change it from Haiku defaults, and
+ &quot;Alt&quot; is the active one, refering to reality of what happens on my
+ computer.
+
+ Checking back &quot;Alt&quot; in the Menu preference makes the thing more weird :
+ When checked, Control (CapsLock key) doesn't work any more (pressing
+ CapsLock-C in Terminal doesn't send Control-C signal), CapsLock (Control
+ key) still works (Caps LED goes on/off), and &quot;Alt&quot; key doesn't do anything
+ (no way to send Control-C signal in Terminal).
+
+ Checking back &quot;Control&quot; as shortcut in Menu preference doesn't solve the
+ situation : Alt-C sends Control-C signal in Terminal, Control key works as
+ CapsLock (expected behaviour), but CapsLock key doesn't produce Control ;
+ I can't do Alt-W and Haiku shortcuts, no way.
+
+ To definitely solve the situation, I must reload my custom keymap. From
+ then, initial situation is restored, e.g. Control and CapsLock are
+ swapped, Alt is my Haiku shortcut, and Control is displayed as default
+ Haiku shortcut in Menu preferences, which doesn't correspond to reality.
+
+ Note : I always load/reload my keymap from the binary one. Trying to load
+ it from the human-readable form does nothing but hang in the terminal. I
+ must send Control-C signal and load the binary one.
+
+ Note2: binary keymap is simply the human-readable form obtained with
+ keymap -c.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3176">http://dev.haiku-os.org/ticket/3176</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012798.html">[Haiku-bugs] [Haiku] #2824: vim: no syntax highlight
+</A></li>
+	<LI>Next message: <A HREF="012800.html">[Haiku-bugs] [Haiku] #3176: swapping control and caps lock keys makes Menu and Team Monitor do weird things
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12799">[ date ]</a>
+              <a href="thread.html#12799">[ thread ]</a>
+              <a href="subject.html#12799">[ subject ]</a>
+              <a href="author.html#12799">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

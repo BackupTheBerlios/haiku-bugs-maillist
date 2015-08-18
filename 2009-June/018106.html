@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2780: Video out of range on GeForce 6100	(KM51G-754)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232780%3A%20Video%20out%20of%20range%20on%20GeForce%206100%0A%09%28KM51G-754%29&In-Reply-To=%3C055.e9881b5953287a2db1ad33b724305518%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="018105.html">
+   <LINK REL="Next"  HREF="018107.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2780: Video out of range on GeForce 6100	(KM51G-754)</H1>
+    <B>rudolfc</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232780%3A%20Video%20out%20of%20range%20on%20GeForce%206100%0A%09%28KM51G-754%29&In-Reply-To=%3C055.e9881b5953287a2db1ad33b724305518%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2780: Video out of range on GeForce 6100	(KM51G-754)">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Jun 24 22:35:45 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="018105.html">[Haiku-bugs] [Haiku] #2643: Black screen when DVI connected (non-native resolution)
+</A></li>
+        <LI>Next message: <A HREF="018107.html">[Haiku-bugs] [Haiku] #1026: Black screen when Haiku switch to graphical mode after bootscreen GeForce 6150
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18106">[ date ]</a>
+              <a href="thread.html#18106">[ thread ]</a>
+              <a href="subject.html#18106">[ subject ]</a>
+              <a href="author.html#18106">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2780: Video out of range on GeForce 6100 (KM51G-754)
+-------------------------------------+--------------------------------------
+ Reporter:  richienyhus              |       Owner:  rudolfc       
+     Type:  bug                      |      Status:  new           
+ Priority:  normal                   |   Milestone:  R1            
+Component:  Drivers/Graphics/nVidia  |     Version:  R1 development
+Blockedby:                           |    Platform:  All           
+ Blocking:                           |  
+-------------------------------------+--------------------------------------
+
+Comment(by rudolfc):
+
+ Hi,
+
+ Since Haiku R31213 the nVidia driver uses DDC/EDID to detect ws screens
+ that are connected using a VGA cable. Also the force_ws setting is reset
+ to being false by default.
+
+ This should fix the dvi connected non-widescreen monitors shutting
+ off/displaying blackness in non-native modes I think. Furthermore the
+ driver now logs the pixelPLL programming settings done by the BIOS during
+ startup, which could give me some important info on why some monitors shut
+ off or detect a wrong refreshrate, so maybe it's interesting to upload
+ another logfile from the current nVidia driver.
+
+ If the current driver doesn't solve the problem, it might be interesting
+ to test a special version of the driver to see if a shutting-off monitor
+ would remain on and display the desktop if the pixelPLL's aren't
+ programmed at all.
+
+ See <A HREF="http://dev.haiku-os.org/ticket/1026#comment:27">http://dev.haiku-os.org/ticket/1026#comment:27</A>
+
+ You'll find a zip archive there with info and the special driver.
+
+ If anyone tests some more, please let me know the results.. :-)
+
+ Bye!
+
+ Rudolf.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2780#comment:21">http://dev.haiku-os.org/ticket/2780#comment:21</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="018105.html">[Haiku-bugs] [Haiku] #2643: Black screen when DVI connected (non-native resolution)
+</A></li>
+	<LI>Next message: <A HREF="018107.html">[Haiku-bugs] [Haiku] #1026: Black screen when Haiku switch to graphical mode after bootscreen GeForce 6150
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18106">[ date ]</a>
+              <a href="thread.html#18106">[ thread ]</a>
+              <a href="subject.html#18106">[ subject ]</a>
+              <a href="author.html#18106">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

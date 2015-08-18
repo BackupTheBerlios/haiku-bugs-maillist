@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1656: the get_system_info_test.cpp fails
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-December/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231656%3A%20the%20get_system_info_test.cpp%20fails&In-Reply-To=%3C043.bada3c298ef83c429c24b20dd59cc34f%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003809.html">
+   <LINK REL="Next"  HREF="003812.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1656: the get_system_info_test.cpp fails</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231656%3A%20the%20get_system_info_test.cpp%20fails&In-Reply-To=%3C043.bada3c298ef83c429c24b20dd59cc34f%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1656: the get_system_info_test.cpp fails">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Dec  3 14:54:05 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003809.html">[Haiku-bugs] [Haiku] #1444: SATA testing on real hardware -	fails to boot
+</A></li>
+        <LI>Next message: <A HREF="003812.html">[Haiku-bugs] [Haiku] #1656: the get_system_info_test.cpp fails
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3810">[ date ]</a>
+              <a href="thread.html#3810">[ thread ]</a>
+              <a href="subject.html#3810">[ subject ]</a>
+              <a href="author.html#3810">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1656: the get_system_info_test.cpp fails
+-----------------------+----------------------------------------------------
+ Reporter:  kaoutsis   |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+ Platform:  All        |  
+-----------------------+----------------------------------------------------
+ the get_system_info_test.cpp always fails on Haiku;
+ on beos however passes successfully.
+
+ I will also attach the memory_monitor.cpp which shows
+ clearly that the memory is freed, and the get_system_info
+ succeeded on haiku (if the events are monitored from
+ another team).
+
+ the problem may be:
+ * thread can't get the updated system infos,
+ namely, get_sytem_info fails inside the thread
+ that performs the changes to the resources.
+ or
+ * free() although has freed the memory, the
+ thread hasn't been notified for this event.
+ or both?
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1656">http://dev.haiku-os.org/ticket/1656</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003809.html">[Haiku-bugs] [Haiku] #1444: SATA testing on real hardware -	fails to boot
+</A></li>
+	<LI>Next message: <A HREF="003812.html">[Haiku-bugs] [Haiku] #1656: the get_system_info_test.cpp fails
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3810">[ date ]</a>
+              <a href="thread.html#3810">[ thread ]</a>
+              <a href="subject.html#3810">[ subject ]</a>
+              <a href="author.html#3810">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

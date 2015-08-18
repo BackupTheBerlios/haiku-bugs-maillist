@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1072: Write an HDA audio driver and add-on
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-January/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231072%3A%20Write%20an%20HDA%20audio%20driver%20and%20add-on&In-Reply-To=%3C049.97469903ab85ef49b7c2b764ba85b411%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="013379.html">
+   <LINK REL="Next"  HREF="013381.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1072: Write an HDA audio driver and add-on</H1>
+    <B>tqh</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231072%3A%20Write%20an%20HDA%20audio%20driver%20and%20add-on&In-Reply-To=%3C049.97469903ab85ef49b7c2b764ba85b411%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1072: Write an HDA audio driver and add-on">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Jan  3 14:36:28 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="013379.html">[Haiku-bugs] [Haiku] #1072: Write an HDA audio driver and add-on
+</A></li>
+        <LI>Next message: <A HREF="013381.html">[Haiku-bugs] [Haiku] #2342: No system timer interrupt on some	ATI chipsets
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13380">[ date ]</a>
+              <a href="thread.html#13380">[ thread ]</a>
+              <a href="subject.html#13380">[ subject ]</a>
+              <a href="author.html#13380">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1072: Write an HDA audio driver and add-on
+---------------------------+------------------------------------------------
+ Reporter:  axeld          |       Owner:  ithamar       
+     Type:  enhancement    |      Status:  assigned      
+ Priority:  normal         |   Milestone:  R1            
+Component:  Drivers/Audio  |     Version:  R1 development
+Blockedby:                 |    Platform:  All           
+ Blocking:  3193           |  
+---------------------------+------------------------------------------------
+
+Comment(by tqh):
+
+ Looking at scottmc's and #3193 it seems it has the right class_base and
+ class_sub:
+
+ {{{
+ device Multimedia controller (Audio device) [4|3|0]
+   vendor 10de: nVidia Corporation
+   device 0774: MCP78S [GeForce 8200] High Definition Audio
+ }}}
+
+ So first question to scottmc or luposian, have you enabled the hda driver,
+ before building?
+ To do so, add it to BEOS_ADD_ONS_DRIVERS_AUDIO in build/jam/HaikuImage, so
+ it looks something like this:
+
+ {{{
+ BEOS_ADD_ONS_DRIVERS_AUDIO = auich auvia echo3g emuxki hda ;
+ }}}
+
+ If you have we need more info from syslog, and maybe add more debugging to
+ driver.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1072#comment:23">http://dev.haiku-os.org/ticket/1072#comment:23</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="013379.html">[Haiku-bugs] [Haiku] #1072: Write an HDA audio driver and add-on
+</A></li>
+	<LI>Next message: <A HREF="013381.html">[Haiku-bugs] [Haiku] #2342: No system timer interrupt on some	ATI chipsets
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13380">[ date ]</a>
+              <a href="thread.html#13380">[ thread ]</a>
+              <a href="subject.html#13380">[ subject ]</a>
+              <a href="author.html#13380">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

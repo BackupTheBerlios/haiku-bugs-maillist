@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4578: U3 USB Stick not mounting fat when inserting second time
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234578%3A%20U3%20USB%20Stick%20not%20mounting%20fat%20when%0A%20inserting%20second%20time&In-Reply-To=%3C050.369be7590c90c44a69360259c06e96a3%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="021830.html">
+   <LINK REL="Next"  HREF="021644.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4578: U3 USB Stick not mounting fat when inserting second time</H1>
+    <B>leszek</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234578%3A%20U3%20USB%20Stick%20not%20mounting%20fat%20when%0A%20inserting%20second%20time&In-Reply-To=%3C050.369be7590c90c44a69360259c06e96a3%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4578: U3 USB Stick not mounting fat when inserting second time">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Sep 27 11:19:56 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="021830.html">[Haiku-bugs] [Haiku] #4578: U3 USB Stick not mounting fat when inserting second time
+</A></li>
+        <LI>Next message: <A HREF="021644.html">[Haiku-bugs] [Haiku] #2084: ipro100 driver makes the system	crawl
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22067">[ date ]</a>
+              <a href="thread.html#22067">[ thread ]</a>
+              <a href="subject.html#22067">[ subject ]</a>
+              <a href="author.html#22067">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4578: U3 USB Stick not mounting fat when inserting second time
+-------------------------+--------------------------------------------------
+ Reporter:  leszek       |       Owner:  mmlr     
+     Type:  bug          |      Status:  new      
+ Priority:  normal       |   Milestone:  R1       
+Component:  Drivers/USB  |     Version:  R1/alpha1
+Blockedby:               |    Platform:  x86      
+ Blocking:               |  
+-------------------------+--------------------------------------------------
+
+Comment(by leszek):
+
+ I found a another random behavior. When pulling the stick out before
+ unmounting (after a sync and everything got written on it, nice led
+ backlight showing if writting or sleeping) there might be a big chance
+ that after this and reputting the stick in again, the partitions will be
+ recognized again.
+
+ I am guessing the problem has something to do which partition table on the
+ stick gets recognized sooner. If its the U3 virtual CD-ROM part then the
+ FAT partition is ignored and not even mountable. If its the FAT partition
+ it is getting mount and then the U3 virtual CD drive gets recognized.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4578#comment:5">http://dev.haiku-os.org/ticket/4578#comment:5</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="021830.html">[Haiku-bugs] [Haiku] #4578: U3 USB Stick not mounting fat when inserting second time
+</A></li>
+	<LI>Next message: <A HREF="021644.html">[Haiku-bugs] [Haiku] #2084: ipro100 driver makes the system	crawl
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22067">[ date ]</a>
+              <a href="thread.html#22067">[ thread ]</a>
+              <a href="subject.html#22067">[ subject ]</a>
+              <a href="author.html#22067">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

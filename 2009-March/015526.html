@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3150: BFS directory corruption.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233150%3A%20BFS%20directory%20corruption.&In-Reply-To=%3C047.99085059032bdc03f2fcc25db5cf23a5%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="015525.html">
+   <LINK REL="Next"  HREF="015527.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3150: BFS directory corruption.</H1>
+    <B>miqlas</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233150%3A%20BFS%20directory%20corruption.&In-Reply-To=%3C047.99085059032bdc03f2fcc25db5cf23a5%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3150: BFS directory corruption.">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Mar 31 11:17:12 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="015525.html">[Haiku-bugs] [Haiku] #1840: Strange output from ls /dev
+</A></li>
+        <LI>Next message: <A HREF="015527.html">[Haiku-bugs] [Haiku] #3646: Terminal size problem with more tabs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15526">[ date ]</a>
+              <a href="thread.html#15526">[ thread ]</a>
+              <a href="subject.html#15526">[ subject ]</a>
+              <a href="author.html#15526">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3150: BFS directory corruption.
+------------------------------+---------------------------------------------
+ Reporter:  bga               |       Owner:  axeld         
+     Type:  bug               |      Status:  new           
+ Priority:  blocker           |   Milestone:  R1/alpha1     
+Component:  File Systems/BFS  |     Version:  R1 development
+Blockedby:                    |    Platform:  x86           
+ Blocking:                    |  
+------------------------------+---------------------------------------------
+Changes (by miqlas):
+
+ * cc: miqlas@&#8230; (added)
+
+
+Comment:
+
+ I have the same problem:
+ {{{
+ ~/Desktop/Trash/wine-1.1.17&gt; ls
+ ls: reading directory .: Bad data
+ }}}
+ in the syslog:
+ {{{
+ KERN: bfs: bfs_create_index:1980: File or Directory already exists
+ Last message repeated 2 times
+ KERN: bfs: InitCheck:310: Bad data
+ KERN: bfs: inode at 1572989 is already deleted!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 1572989 in index &quot;be:deskbar_item_status&quot;!
+ KERN: bfs: InitCheck:310: Bad data
+ KERN: bfs: inode at 1593323 is already deleted!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 1593323 in index &quot;be:deskbar_item_status&quot;!
+ KERN: bfs: InitCheck:310: Bad data
+ KERN: bfs: inode at 1593331 is already deleted!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 1593331 in index &quot;be:deskbar_item_status&quot;!
+ KERN: register_domain(9, unix)
+ KERN: B+tree header size 5917768436999877237 doesn't fit file size 2048!
+ KERN: bfs: SetTo:471: Bad data
+ KERN: bfs: inode tree at block 2632493 corrupt!
+ KERN: bfs: InitCheck:441: Bad data
+ KERN: B+tree header size 5917768436999877237 doesn't fit file size 2048!
+ KERN: bfs: SetTo:471: Bad data
+ KERN: bfs: KERN: inode tree at block 2632493 corrupt!
+ KERN: bfs: InitCheck:441: Bad data
+ KERN: B+tree header size 5917768436999877237 doesn't fit file size 2048!
+ KERN: bfs: SetTo:471: Bad data
+ KERN: bfs: inode tree at block 2632493 corrupt!
+ KERN: bfs: InitCheck:441: Bad data
+ }}}
+ The &quot;df&quot; command:
+ {{{
+ ~/Desktop/Trash/wine-1.1.17&gt; df
+ Mount           Type      Total     Free     Flags   Device
+ --------------- -------- --------- --------- -------
+ --------------------------
+ /boot           bfs           7.0G    760.2M QAM-P-W
+ /dev/disk/ata/1/master/1_1
+ }}}
+ The checkfs give error massage:
+ {{{
+ ~/Desktop/Trash/wine-1.1.17&gt; checkfs /dev/disk/ata/1/master/1_1
+ checkfs: Could not prepare the device for modifications: Invalid Argument
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3150#comment:14">http://dev.haiku-os.org/ticket/3150#comment:14</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="015525.html">[Haiku-bugs] [Haiku] #1840: Strange output from ls /dev
+</A></li>
+	<LI>Next message: <A HREF="015527.html">[Haiku-bugs] [Haiku] #3646: Terminal size problem with more tabs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15526">[ date ]</a>
+              <a href="thread.html#15526">[ thread ]</a>
+              <a href="subject.html#15526">[ subject ]</a>
+              <a href="author.html#15526">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

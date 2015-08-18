@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2789: writing to usb disks fail after 10-100Mb of writing files
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232789%3A%20writing%20to%20usb%20disks%20fail%20after%0A%2010-100Mb%20of%20writing%20files&In-Reply-To=%3C051.a3b0662aa59259fb7fdf659486d0277a%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012536.html">
+   <LINK REL="Next"  HREF="012538.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2789: writing to usb disks fail after 10-100Mb of writing files</H1>
+    <B>oco</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232789%3A%20writing%20to%20usb%20disks%20fail%20after%0A%2010-100Mb%20of%20writing%20files&In-Reply-To=%3C051.a3b0662aa59259fb7fdf659486d0277a%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2789: writing to usb disks fail after 10-100Mb of writing files">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Nov 15 17:58:03 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012536.html">[Haiku-bugs] [Haiku] #2789: writing to usb disks fail after 10-100Mb of writing files
+</A></li>
+        <LI>Next message: <A HREF="012538.html">[Haiku-bugs] [Haiku] #3137: Updated bison 2.4 package appears to not correctly generate ftpd's ftpcmd.c
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12537">[ date ]</a>
+              <a href="thread.html#12537">[ thread ]</a>
+              <a href="subject.html#12537">[ subject ]</a>
+              <a href="author.html#12537">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2789: writing to usb disks fail after 10-100Mb of writing files
+----------------------+-----------------------------------------------------
+  Reporter:  rudolfc  |       Owner:  mmlr          
+      Type:  bug      |      Status:  new           
+  Priority:  normal   |   Milestone:  R1            
+ Component:  Drivers  |     Version:  R1 development
+Resolution:           |   Blockedby:                
+  Platform:  x86      |    Blocking:                
+----------------------+-----------------------------------------------------
+
+Comment(by oco):
+
+ It is better with line breaks... I am using r28643.
+
+ Here is a partial backtrace :
+
+ kernel_x86 : panic[[BR]]
+ kernel_x86 : get_cached_block[[BR]]
+ kernel_x86 : block_cache_get_etc[[BR]]
+ kernel_x86 : block_cache_get[[BR]]
+ bfs : CachedNode::InternalSetTo[[BR]]
+ bfs : CachedNode::SetToHeader[[BR]]
+ bfs : BPlusTree::SetTo[[BR]]
+ bfs : __9BPlusTreep5Inode[[BR]]
+ bfs : __5Inodep6Volumex[[BR]]
+ bfs : bfs_get_vnode[[BR]]
+ kernel_x86 : get_vnode[[BR]]
+ kernel_x86 : fix_dirent[[BR]]
+ kernel_x86 : dir_read[[BR]]
+ kernel_x86 : dir_read[[BR]]
+ kernel_x86 : _user_read_dir[[BR]]
+ kernel_x86 : handle_syscall[[BR]]
+ commpage : commpage_syscall[[BR]]
+ jam : file_dirscan[[BR]]
+ jam : timestamp[[BR]]
+ jam : search[[BR]]
+ jam : make[[BR]]
+ ...[[BR]]
+ jam : main[[BR]]
+ jam : _start[[BR]]
+
+ syslog :
+
+ usb_disk : acquire_sem failed while waiting for data transfer[[BR]]
+ usb_disk : acquire_sem failed while waiting for data transfer[[BR]]
+ usb_disk : receiving the command status wrapper failed[[BR]]
+ usb_disk : read fails with 0x80000009[[BR]]
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2789#comment:3">http://dev.haiku-os.org/ticket/2789#comment:3</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012536.html">[Haiku-bugs] [Haiku] #2789: writing to usb disks fail after 10-100Mb of writing files
+</A></li>
+	<LI>Next message: <A HREF="012538.html">[Haiku-bugs] [Haiku] #3137: Updated bison 2.4 package appears to not correctly generate ftpd's ftpcmd.c
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12537">[ date ]</a>
+              <a href="thread.html#12537">[ thread ]</a>
+              <a href="subject.html#12537">[ subject ]</a>
+              <a href="author.html#12537">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

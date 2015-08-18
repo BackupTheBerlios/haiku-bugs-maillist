@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4796: Deskbar freeze: BMenu and workspace	interactions
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234796%3A%20Deskbar%20freeze%3A%20BMenu%20and%20workspace%0A%09interactions&In-Reply-To=%3C043.fed804fd69d0108b4af56d67d47f38b7%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="022843.html">
+   <LINK REL="Next"  HREF="022841.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4796: Deskbar freeze: BMenu and workspace	interactions</H1>
+    <B>rogueeve</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234796%3A%20Deskbar%20freeze%3A%20BMenu%20and%20workspace%0A%09interactions&In-Reply-To=%3C043.fed804fd69d0108b4af56d67d47f38b7%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4796: Deskbar freeze: BMenu and workspace	interactions">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Oct 17 01:53:12 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="022843.html">[Haiku-bugs] [Haiku] #4795: emacs' builtin malloc seems to cause memory-corrupting causing segfaults (was: segfault in the internals of malloc after emacs fdopen()s for the 6th time)
+</A></li>
+        <LI>Next message: <A HREF="022841.html">[Haiku-bugs] [Haiku] #4796: Deskbar freeze: BMenu and workspace	interactions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22840">[ date ]</a>
+              <a href="thread.html#22840">[ thread ]</a>
+              <a href="subject.html#22840">[ subject ]</a>
+              <a href="author.html#22840">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4796: Deskbar freeze: BMenu and workspace interactions
+--------------------------------+-------------------------------------------
+ Reporter:  rogueeve            |       Owner:  axeld    
+     Type:  bug                 |      Status:  new      
+ Priority:  normal              |   Milestone:  R1       
+Component:  Kits/Interface Kit  |     Version:  R1/alpha1
+Blockedby:                      |    Platform:  All      
+ Blocking:                      |  
+--------------------------------+-------------------------------------------
+ Ok, I'll admit I experimented specifically looking for this one, but it
+ still isn't quite right.
+
+ Open one of the menus on the Deskbar. You can click the Haiku leaf, or you
+ can open one of the pop-open menus for an open application. While the menu
+ is open, use a keyboard shortcut such as cmd+~ or cmd+f2 to switch the
+ workspace away. The menu will disappear, but the deskbar will become
+ completely unresponsive. If a submenu is open when you switch away, it
+ will glitch graphically as well.
+
+ I observed other odd albeit non-fatal behavior in other applications as
+ well (check menus on Tracker windows, they get stuck open), so I think the
+ problem may be that BMenus can partially close but do not properly notify
+ the app if the workspace is switched away. So I'm filing it under
+ interface kit.
+
+ My revision is r33565.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4796">http://dev.haiku-os.org/ticket/4796</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="022843.html">[Haiku-bugs] [Haiku] #4795: emacs' builtin malloc seems to cause memory-corrupting causing segfaults (was: segfault in the internals of malloc after emacs fdopen()s for the 6th time)
+</A></li>
+	<LI>Next message: <A HREF="022841.html">[Haiku-bugs] [Haiku] #4796: Deskbar freeze: BMenu and workspace	interactions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22840">[ date ]</a>
+              <a href="thread.html#22840">[ thread ]</a>
+              <a href="subject.html#22840">[ subject ]</a>
+              <a href="author.html#22840">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

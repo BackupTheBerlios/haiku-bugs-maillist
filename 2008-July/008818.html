@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2046: jam on haiku-host occasionally fails with the message: vfork: Out of memory
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-July/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232046%3A%20jam%20on%20haiku-host%20occasionally%0A%20fails%20with%20the%20message%3A%20vfork%3A%20Out%20of%20memory&In-Reply-To=%3C052.79b3108dce1209a5dfebfc3a00b371c0%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008835.html">
+   <LINK REL="Next"  HREF="008819.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2046: jam on haiku-host occasionally fails with the message: vfork: Out of memory</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232046%3A%20jam%20on%20haiku-host%20occasionally%0A%20fails%20with%20the%20message%3A%20vfork%3A%20Out%20of%20memory&In-Reply-To=%3C052.79b3108dce1209a5dfebfc3a00b371c0%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2046: jam on haiku-host occasionally fails with the message: vfork: Out of memory">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Jul  9 05:09:48 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008835.html">[Haiku-bugs] [Haiku] #2502: svn checkout via ssh prompts for password several times
+</A></li>
+        <LI>Next message: <A HREF="008819.html">[Haiku-bugs] [Haiku] #2046: jam on haiku-host occasionally fails with the message: vfork: Out of memory
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8818">[ date ]</a>
+              <a href="thread.html#8818">[ thread ]</a>
+              <a href="subject.html#8818">[ subject ]</a>
+              <a href="author.html#8818">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2046: jam on haiku-host occasionally fails with the message: vfork: Out of memory
+----------------------------+-----------------------------------------------
+  Reporter:  kaoutsis       |       Owner:  axeld         
+      Type:  bug            |      Status:  new           
+  Priority:  high           |   Milestone:  R1/alpha1     
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |   Blockedby:                
+  Platform:  All            |    Blocking:                
+----------------------------+-----------------------------------------------
+
+Comment(by anevilyak):
+
+ This might not necessarily be useful any more, but for reference, caches
+ tells me the following after an svn checkout:
+
+ total committed memory: 967630848, total used pages: 253214
+ 83254 caches (82965 root caches), sorted by page count per cache tree
+ 0x90d759d8: pages: 51203 - tracing log
+ 0x90d6bb40: pages: 4096 - kernel heap
+ 0x90d6ba50: pages: 2816 - page structures
+ 0x90d75d98: pages: 1664 - sem_table
+ 0x90e5b0f0: pages: 1536 - radeon local memory
+ - a cache tree for libbe with 73 pages committed.
+ 20 or so additional RAM caches for additional heap, all 1024 pages,
+ completely committed
+ 1024 pages for Radeon GATT
+ another 912 pages for heap
+ 854 pages for contig:/usr/home/rene/devel/haiku (where I had my checkout
+ going), though the /usr prefix confuses me.
+ 4 vnode caches, 617, 617, 602 and 602 pages
+ 512 pages for memalign area
+ 333 heap pages for team 120
+ 327 heap pages for team 117
+ 112 pages for a libroot cache tree
+ many many pages of block cache buffers, each 256 pages.
+ A few others, less significant.
+ All in all, I can confirm the block cache is definitely eating me alive
+ also. Anything else that'd be of interest?
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2046#comment:12">http://dev.haiku-os.org/ticket/2046#comment:12</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008835.html">[Haiku-bugs] [Haiku] #2502: svn checkout via ssh prompts for password several times
+</A></li>
+	<LI>Next message: <A HREF="008819.html">[Haiku-bugs] [Haiku] #2046: jam on haiku-host occasionally fails with the message: vfork: Out of memory
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8818">[ date ]</a>
+              <a href="thread.html#8818">[ thread ]</a>
+              <a href="subject.html#8818">[ subject ]</a>
+              <a href="author.html#8818">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

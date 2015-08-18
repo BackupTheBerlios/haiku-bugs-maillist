@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2771: Opening files by dragging to Deskbar
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232771%3A%20Opening%20files%20by%20dragging%20to%20Deskbar&In-Reply-To=%3C053.72999c5814c7540629f93c5dd5114442%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010899.html">
+   <LINK REL="Next"  HREF="010901.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2771: Opening files by dragging to Deskbar</H1>
+    <B>jackburton</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232771%3A%20Opening%20files%20by%20dragging%20to%20Deskbar&In-Reply-To=%3C053.72999c5814c7540629f93c5dd5114442%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2771: Opening files by dragging to Deskbar">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Oct  9 20:02:32 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010899.html">[Haiku-bugs] [Haiku] #2368: App-server crash when moving Deskbar modal window to another workspace
+</A></li>
+        <LI>Next message: <A HREF="010901.html">[Haiku-bugs] [Haiku] #2771: Opening files by dragging to Deskbar
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10900">[ date ]</a>
+              <a href="thread.html#10900">[ thread ]</a>
+              <a href="subject.html#10900">[ subject ]</a>
+              <a href="author.html#10900">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2771: Opening files by dragging to Deskbar
+---------------------------------+------------------------------------------
+  Reporter:  humdinger           |       Owner:  jackburton    
+      Type:  bug                 |      Status:  new           
+  Priority:  high                |   Milestone:  R1/alpha1     
+ Component:  Kits/Interface Kit  |     Version:  R1 development
+Resolution:                      |   Blockedby:                
+  Platform:  All                 |    Blocking:                
+---------------------------------+------------------------------------------
+
+Comment(by jackburton):
+
+ I had a look. The problem is that BarView sets the
+ _menu_info_ptr_-&gt;click_to_open flag to false. This flag is used in the
+ beos implementation to check if a menu is sticky or not (there was a
+ static BMenu::IsStickyPrefOn() method, which we removed since we decided
+ that non-sticky menus didn't make sense). So our implementation doesn't
+ check that flag at all.
+ By the way, the fact that BarView uses that private variable isn't that
+ nice, we should try to fix it in a different way, if possible.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2771#comment:6">http://dev.haiku-os.org/ticket/2771#comment:6</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010899.html">[Haiku-bugs] [Haiku] #2368: App-server crash when moving Deskbar modal window to another workspace
+</A></li>
+	<LI>Next message: <A HREF="010901.html">[Haiku-bugs] [Haiku] #2771: Opening files by dragging to Deskbar
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10900">[ date ]</a>
+              <a href="thread.html#10900">[ thread ]</a>
+              <a href="subject.html#10900">[ subject ]</a>
+              <a href="author.html#10900">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

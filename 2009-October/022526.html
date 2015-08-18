@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2789: writing to usb disks fail after 10-100Mb of writing files
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232789%3A%20writing%20to%20usb%20disks%20fail%20after%0A%2010-100Mb%20of%20writing%20files&In-Reply-To=%3C051.cda4fd87c9de75423ceb344bed554813%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="022524.html">
+   <LINK REL="Next"  HREF="022527.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2789: writing to usb disks fail after 10-100Mb of writing files</H1>
+    <B>mmlr</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232789%3A%20writing%20to%20usb%20disks%20fail%20after%0A%2010-100Mb%20of%20writing%20files&In-Reply-To=%3C051.cda4fd87c9de75423ceb344bed554813%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2789: writing to usb disks fail after 10-100Mb of writing files">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Oct  7 14:27:01 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="022524.html">[Haiku-bugs] [Haiku] #3185: Device Manager Application
+</A></li>
+        <LI>Next message: <A HREF="022527.html">[Haiku-bugs] [Haiku] #2789: writing to usb disks fail after 10-100Mb of writing files
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22526">[ date ]</a>
+              <a href="thread.html#22526">[ thread ]</a>
+              <a href="subject.html#22526">[ subject ]</a>
+              <a href="author.html#22526">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2789: writing to usb disks fail after 10-100Mb of writing files
+----------------------+-----------------------------------------------------
+  Reporter:  rudolfc  |       Owner:  mmlr         
+      Type:  bug      |      Status:  closed       
+  Priority:  normal   |   Milestone:  R1           
+ Component:  Drivers  |     Version:  R1/pre-alpha1
+Resolution:  fixed    |   Blockedby:               
+  Platform:  x86      |    Blocking:               
+----------------------+-----------------------------------------------------
+
+Comment(by mmlr):
+
+ YOU ARE WASTING YOUR TIME.
+
+ Ok. Please try to understand what I said above. The IO subsystem in the
+ kernel, basically the IO scheduler with its IO requests do abstract the
+ transfers. These are currently all operating on physical memory because
+ that's what the SCSI stack (and therefore the ATA stack attached to it)
+ work with most efficiently. As soon as these requests are handed to a
+ driver that does not operate on physical memory the request is mapped,
+ page wise, to virtual memory and then fed to the drivers read/write hook.
+ The transfer lengths resulting can only ever reach 4K for that reason.
+
+ The way to fix this is to either make the IO scheduler aware of the
+ restrictions down the path so it can make a better decision on what memory
+ space to operate, or to implement a physical IO path through USB.
+
+ While doing caching in the usb_disk driver does certainly work, it is not
+ the way to go. Since there already is the IO scheduler and the block/file
+ caches it also completely duplicates existing work.
+
+ As long as these fundamental things, which I am working on, aren't
+ resolved, benchmarks or hacks in usb_disk are a waste of time.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2789#comment:20">http://dev.haiku-os.org/ticket/2789#comment:20</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="022524.html">[Haiku-bugs] [Haiku] #3185: Device Manager Application
+</A></li>
+	<LI>Next message: <A HREF="022527.html">[Haiku-bugs] [Haiku] #2789: writing to usb disks fail after 10-100Mb of writing files
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22526">[ date ]</a>
+              <a href="thread.html#22526">[ thread ]</a>
+              <a href="subject.html#22526">[ subject ]</a>
+              <a href="author.html#22526">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

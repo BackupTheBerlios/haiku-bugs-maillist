@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1636: Tracker Assert On Start: Model.cpp:822,	IsNodeOpen()
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231636%3A%20Tracker%20Assert%20On%20Start%3A%20Model.cpp%3A822%2C%0A%09IsNodeOpen%28%29&In-Reply-To=%3C043.d23cc7065c73b3fd2e71415798775e6e%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003686.html">
+   <LINK REL="Next"  HREF="003688.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1636: Tracker Assert On Start: Model.cpp:822,	IsNodeOpen()</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231636%3A%20Tracker%20Assert%20On%20Start%3A%20Model.cpp%3A822%2C%0A%09IsNodeOpen%28%29&In-Reply-To=%3C043.d23cc7065c73b3fd2e71415798775e6e%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1636: Tracker Assert On Start: Model.cpp:822,	IsNodeOpen()">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Nov 22 23:57:50 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003686.html">[Haiku-bugs] [Haiku] #462: [Terminal] from R5 crashes
+</A></li>
+        <LI>Next message: <A HREF="003688.html">[Haiku-bugs] [Haiku] #462: [Terminal] from R5 crashes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3687">[ date ]</a>
+              <a href="thread.html#3687">[ thread ]</a>
+              <a href="subject.html#3687">[ subject ]</a>
+              <a href="author.html#3687">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1636: Tracker Assert On Start: Model.cpp:822, IsNodeOpen()
+------------------------------------+---------------------------------------
+ Reporter:  bonefish                |       Owner:  axeld         
+     Type:  bug                     |      Status:  new           
+ Priority:  normal                  |   Milestone:  R1            
+Component:  - Applications/Tracker  |     Version:  R1 development
+ Platform:  All                     |  
+------------------------------------+---------------------------------------
+ Revision r22979, VMware. libtracker.so compiled with DEBUG=1. (Since
+ r22966 _debuggerAssert() is implemented and asserts are actually
+ triggered.)
+
+ {{{
+ 135: ASSERT: Assert failed: File:
+ /home/bonefish/develop/haiku/haiku/src/kits/tracker/Model.cpp, Line: 822,
+ IsNodeOpen()
+ debug_server: Thread 135 entered the debugger: Debugger call: `Assert
+ failed: File:
+ /home/bonefish/develop/haiku/haiku/src/kits/tracker/Model.cpp, Line: 822,
+ IsNodeOpen()'
+ stack trace, current PC 0xffff0102  :
+   (0x7018459c)  0x698b4b  AttrChanged__Q28BPrivate5ModelPCc + 0x4b
+   (0x701846cc)  0x6cc590
+ AttributeChanged__Q28BPrivate9BPoseViewPC8BMessage + 0xe4
+   (0x7018473c)  0x6cb31a  FSNotification__Q28BPrivate9BPoseViewPC8BMessage
+ + 0x8b6
+   (0x701848dc)  0x6264fd
+ FSNotification__Q28BPrivate15DesktopPoseViewPC8BMessage + 0x2e5
+   (0x70184a2c)  0x6be81e  MessageReceived__Q28BPrivate9BPoseViewP8BMessage
+ + 0x72a
+   (0x70184bdc)  0x31aedc  DispatchMessage__7BLooperP8BMessageP8BHandler +
+ 0x74
+   (0x70184c0c)  0x3feacc  DispatchMessage__7BWindowP8BMessageP8BHandler +
+ 0x1f38
+   (0x70184eec)  0x402d66  task_looper__7BWindow + 0x326
+   (0x70184f6c)  0x31c9a3  _task0___7BLooperPv + 0x53
+   (0x70184fac)  0x7e10d0  _get_next_team_info + 0x5c (closest symbol)
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1636">http://dev.haiku-os.org/ticket/1636</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003686.html">[Haiku-bugs] [Haiku] #462: [Terminal] from R5 crashes
+</A></li>
+	<LI>Next message: <A HREF="003688.html">[Haiku-bugs] [Haiku] #462: [Terminal] from R5 crashes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3687">[ date ]</a>
+              <a href="thread.html#3687">[ thread ]</a>
+              <a href="subject.html#3687">[ subject ]</a>
+              <a href="author.html#3687">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

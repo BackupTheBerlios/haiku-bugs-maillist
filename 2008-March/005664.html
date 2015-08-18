@@ -1,0 +1,169 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1938: libroot: free bug - Segment	violation
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231938%3A%20libroot%3A%20free%20bug%20-%20Segment%0A%09violation&In-Reply-To=%3C049.2e9520712282589ffb19afd92f803710%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005655.html">
+   <LINK REL="Next"  HREF="005639.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1938: libroot: free bug - Segment	violation</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231938%3A%20libroot%3A%20free%20bug%20-%20Segment%0A%09violation&In-Reply-To=%3C049.2e9520712282589ffb19afd92f803710%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1938: libroot: free bug - Segment	violation">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Mar 19 11:34:53 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005655.html">[Haiku-bugs] [Haiku] #1938: libroot: free bug - Segment	violation
+</A></li>
+        <LI>Next message: <A HREF="005639.html">[Haiku-bugs] [Haiku] #1939: chart demo crashes when moved around
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5664">[ date ]</a>
+              <a href="thread.html#5664">[ thread ]</a>
+              <a href="subject.html#5664">[ subject ]</a>
+              <a href="author.html#5664">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1938: libroot: free bug - Segment violation
+--------------------------------+-------------------------------------------
+  Reporter:  thorn              |       Owner:  axeld         
+      Type:  bug                |      Status:  new           
+  Priority:  normal             |   Milestone:  R1            
+ Component:  System/libroot.so  |     Version:  R1 development
+Resolution:                     |    Platform:  x86           
+--------------------------------+-------------------------------------------
+Comment (by thorn):
+
+ full source
+ [<A HREF="http://www.google.com/codesearch?hl=en&amp;q=+old_locale+show:xLaUG3jobCQ:cIpfWKcXYcU:xLaUG3jobCQ&amp;sa=N&amp;cd=6&amp;ct=rc&amp;cs_p=cvs+:pserver:anonymous%40cvs.savannah.nongnu.org:/cvsroot/texinfo+texinfo&amp;cs_f=makeinfo/makeinfo.c#l4287">http://www.google.com/codesearch?hl=en&amp;q=+old_locale+show:xLaUG3jobCQ:cIpfWKcXYcU:xLaUG3jobCQ&amp;sa=N&amp;cd=6&amp;ct=rc&amp;cs_p=cvs+:pserver:anonymous%40cvs.savannah.nongnu.org:/cvsroot/texinfo+texinfo&amp;cs_f=makeinfo/makeinfo.c#l4287</A>
+ texinfo/makeinfo/makeinfo.c]
+
+ {{{
+ /* Translate MSGID according to the document language
+    (--document-language), rather than the environment language (LANG,
+    etc.).  This comes from the get_title function in gettext.  (xsetenv
+    and unsetenv come from the gnulib xsetenv module.)  */
+
+ char *
+ getdocumenttext (const char *msgid)
+ {
+   /* The original get_title also saves, sets, and restores
+      OUTPUT_CHARSET, so that the translation will be given in
+      the proper encoding (via canonical_locale_charset).  But defining
+      that function ends up pulling a whole lot of subsidiary functions.
+      Not sure how to handle it; skip the whole thing for now.  */
+   const char *tmp;
+   char *old_LC_ALL;
+   char *old_LANGUAGE;
+   const char *result;
+ #ifdef HAVE_SETLOCALE
+   char *old_locale;
+ #endif
+
+   /* Save LC_ALL, LANGUAGE environment variables.  */
+
+   tmp = getenv (&quot;LC_ALL&quot;);
+   old_LC_ALL = (tmp != NULL ? xstrdup (tmp) : NULL);
+
+   tmp = getenv (&quot;LANGUAGE&quot;);
+   old_LANGUAGE = (tmp != NULL ? xstrdup (tmp) : NULL);
+
+   xsetenv (&quot;LC_ALL&quot;, document_language, 1);
+   unsetenv (&quot;LANGUAGE&quot;);
+
+ #ifdef HAVE_SETLOCALE
+   old_locale = xstrdup (setlocale (LC_ALL, NULL));
+   if (setlocale (LC_ALL, &quot;&quot;) == NULL)
+     /* Nonexistent locale.  Use the original.  */
+     result = msgid;
+   else
+ #endif
+     {
+       /* Fetch the translation.  */
+       result = gettext (msgid);
+     }
+
+   /* Restore LC_ALL, LANGUAGE environment variables.  */
+
+   if (old_LC_ALL != NULL)
+     xsetenv (&quot;LC_ALL&quot;, old_LC_ALL, 1), free (old_LC_ALL);
+   else
+     unsetenv (&quot;LC_ALL&quot;);
+
+   if (old_LANGUAGE != NULL)
+     xsetenv (&quot;LANGUAGE&quot;, old_LANGUAGE, 1), free (old_LANGUAGE);
+   else
+     unsetenv (&quot;LANGUAGE&quot;);
+
+ #ifdef HAVE_SETLOCALE
+   setlocale (LC_ALL, old_locale);
+   free (old_locale);
+ #endif
+
+   return result;
+ }
+
+ }}}
+
+ and
+
+ {{{
+ /* Clone an object P of size S, with error checking.  There's no need
+    for xnmemdup (P, N, S), since xmemdup (P, N * S) works without any
+    need for an arithmetic overflow check.  */
+
+ void *
+ xmemdup (void const *p, size_t s)
+ {
+   return memcpy (xmalloc (s), p, s);
+ }
+
+ /* Clone STRING.  */
+
+ char *
+ xstrdup (char const *string)
+ {
+   return xmemdup (string, strlen (string) + 1);
+ }
+
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1938#comment:3">http://dev.haiku-os.org/ticket/1938#comment:3</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005655.html">[Haiku-bugs] [Haiku] #1938: libroot: free bug - Segment	violation
+</A></li>
+	<LI>Next message: <A HREF="005639.html">[Haiku-bugs] [Haiku] #1939: chart demo crashes when moved around
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5664">[ date ]</a>
+              <a href="thread.html#5664">[ thread ]</a>
+              <a href="subject.html#5664">[ subject ]</a>
+              <a href="author.html#5664">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

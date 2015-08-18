@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4467: Building on Linux to partition does not set partition type to 'eb'
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234467%3A%20Building%20on%20Linux%20to%20partition%20does%20not%0A%20set%20partition%20type%20to%20%27eb%27&In-Reply-To=%3C047.4c0ae658d392da239a8186245d9b6acc%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="021047.html">
+   <LINK REL="Next"  HREF="021097.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4467: Building on Linux to partition does not set partition type to 'eb'</H1>
+    <B>PieterPanman</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234467%3A%20Building%20on%20Linux%20to%20partition%20does%20not%0A%20set%20partition%20type%20to%20%27eb%27&In-Reply-To=%3C047.4c0ae658d392da239a8186245d9b6acc%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4467: Building on Linux to partition does not set partition type to 'eb'">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Sep 10 19:42:17 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="021047.html">[Haiku-bugs] [Haiku] #2296: no display graphics
+</A></li>
+        <LI>Next message: <A HREF="021097.html">[Haiku-bugs] [Haiku] #4467: Building on Linux to partition does not set partition type to 'eb'
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21048">[ date ]</a>
+              <a href="thread.html#21048">[ thread ]</a>
+              <a href="subject.html#21048">[ subject ]</a>
+              <a href="author.html#21048">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4467: Building on Linux to partition does not set partition type to 'eb'
+--------------------------+-------------------------------------------------
+ Reporter:  PieterPanman  |       Owner:  bonefish      
+     Type:  enhancement   |      Status:  new           
+ Priority:  normal        |   Milestone:  R1            
+Component:  Build System  |     Version:  R1 development
+Blockedby:                |    Platform:  All           
+ Blocking:                |  
+--------------------------+-------------------------------------------------
+ When I use fedora (probably doesn't matter which linux I use) to build
+ Haiku and install it to a partition ('disk' type in UserBuildConfig), the
+ partition type does not get set. For example, I had created a fat32
+ partition to install haiku onto (so overwrite it), but the partition
+ itself remains fat32 with a bfs filesystem.
+
+ In my case, partition sda6 and sda7 contain a bfs filesystem, but appear
+ to be fat32 from the partition table.
+
+ {{{
+ [<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">pieter at lappie</A> trunk]$ fdisk -l /dev/sda
+
+ Disk /dev/sda: 320.0 GB, 320072933376 bytes
+ 255 heads, 63 sectors/track, 38913 cylinders
+ Units = cylinders of 16065 * 512 = 8225280 bytes
+ Disk identifier: 0x968f296b
+
+    Device Boot      Start         End      Blocks   Id  System
+ /dev/sda1               1       12000    96389968+   7  HPFS/NTFS
+ /dev/sda2           12001       26165   113780362+   7  HPFS/NTFS
+ /dev/sda3           26166       26191      204800   83  Linux
+ /dev/sda4   *       26192       38913   102189465    5  Extended
+ /dev/sda5           26192       33840    61440000   83  Linux
+ /dev/sda6           36901       37673     6209091    b  W95 FAT32
+ /dev/sda7           37674       37928     2048256    b  W95 FAT32
+ /dev/sda8           37929       38183     2048256    b  W95 FAT32
+ /dev/sda9           33841       36390    20482843+  83  Linux
+ /dev/sda10          36391       36900     4096543+  82  Linux swap /
+ Solaris
+ /dev/sda11          38184       38209      204799+  83  Linux
+ /dev/sda12          38209       38913     5658623+  83  Linux
+
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4467">http://dev.haiku-os.org/ticket/4467</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="021047.html">[Haiku-bugs] [Haiku] #2296: no display graphics
+</A></li>
+	<LI>Next message: <A HREF="021097.html">[Haiku-bugs] [Haiku] #4467: Building on Linux to partition does not set partition type to 'eb'
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21048">[ date ]</a>
+              <a href="thread.html#21048">[ thread ]</a>
+              <a href="subject.html#21048">[ subject ]</a>
+              <a href="author.html#21048">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

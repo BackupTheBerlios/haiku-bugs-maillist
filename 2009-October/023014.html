@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4831: Tracker crash with New Mail query
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234831%3A%20Tracker%20crash%20with%20New%20Mail%20query&In-Reply-To=%3C044.85e62974b39a5d87d37a9ddc610a23b4%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="023013.html">
+   <LINK REL="Next"  HREF="023018.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4831: Tracker crash with New Mail query</H1>
+    <B>humdinger</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234831%3A%20Tracker%20crash%20with%20New%20Mail%20query&In-Reply-To=%3C044.85e62974b39a5d87d37a9ddc610a23b4%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4831: Tracker crash with New Mail query">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Oct 22 11:09:03 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="023013.html">[Haiku-bugs] [Haiku] #4830: &quot;Expand New Applications&quot; not always	practical
+</A></li>
+        <LI>Next message: <A HREF="023018.html">[Haiku-bugs] [Haiku] #4831: Tracker crash with New Mail query
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#23014">[ date ]</a>
+              <a href="thread.html#23014">[ thread ]</a>
+              <a href="subject.html#23014">[ subject ]</a>
+              <a href="author.html#23014">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4831: Tracker crash with New Mail query
+----------------------------------+-----------------------------------------
+ Reporter:  humdinger             |       Owner:  axeld         
+     Type:  bug                   |      Status:  new           
+ Priority:  normal                |   Milestone:  R1            
+Component:  Applications/Tracker  |     Version:  R1/Development
+Blockedby:                        |    Platform:  All           
+ Blocking:                        |  
+----------------------------------+-----------------------------------------
+ This is r33708.
+
+ I have a query for new mail open at all times.[[BR]]
+ Every 5 minutes the mail_daemon gathers new mail. Every once in a while,
+ maybe once an hour, newly arrived mail is crashing Tracker. Probably when
+ inserting new entries in the New Mail query result window. This is the
+ backtrace:
+
+ {{{
+ [Switching to team /boot/system/Tracker (110) thread w&gt;New E-mail (184)]
+ 0x00513c2c in BPrivate::Model::StatChanged ()
+    from /boot/system/lib/libtracker.so
+ (gdb) bt
+ #0  0x00513c2c in BPrivate::Model::StatChanged ()
+    from /boot/system/lib/libtracker.so
+ #1  0x00539093 in BPrivate::BPoseView::AttributeChanged ()
+    from /boot/system/lib/libtracker.so
+ #2  0x00539d70 in BPrivate::BPoseView::FSNotification ()
+    from /boot/system/lib/libtracker.so
+ #3  0x00542d07 in BPrivate::BPoseView::MessageReceived ()
+    from /boot/system/lib/libtracker.so
+ #4  0x0054a46f in BPrivate::BQueryPoseView::MessageReceived ()
+    from /boot/system/lib/libtracker.so
+ #5  0x002a878d in BLooper::DispatchMessage () from
+ /boot/system/lib/libbe.so
+ #6  0x0035e932 in BWindow::DispatchMessage () from
+ /boot/system/lib/libbe.so
+ #7  0x0035a329 in BWindow::task_looper () from /boot/system/lib/libbe.so
+ #8  0x002a9fb0 in BLooper::_task0_ () from /boot/system/lib/libbe.so
+ #9  0x005eb7bd in thread_entry () from /boot/system/lib/libroot.so
+ #10 0x70184fec in ?? ()
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4831">http://dev.haiku-os.org/ticket/4831</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="023013.html">[Haiku-bugs] [Haiku] #4830: &quot;Expand New Applications&quot; not always	practical
+</A></li>
+	<LI>Next message: <A HREF="023018.html">[Haiku-bugs] [Haiku] #4831: Tracker crash with New Mail query
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#23014">[ date ]</a>
+              <a href="thread.html#23014">[ thread ]</a>
+              <a href="subject.html#23014">[ subject ]</a>
+              <a href="author.html#23014">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

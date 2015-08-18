@@ -1,0 +1,150 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2907: strftime() doesn't support E, F, O and + conversion specifiers (was: strftime() doesn't support %F conversion specifier)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232907%3A%20strftime%28%29%20doesn%27t%20support%20E%2C%20F%2C%0A%20O%20and%20%2B%20conversion%20specifiers%20%28was%3A%20strftime%28%29%20doesn%27t%20support%20%25F%0A%20conversion%20specifier%29&In-Reply-To=%3C051.a49325f7974f195e74d2656d1934d965%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011298.html">
+   <LINK REL="Next"  HREF="011308.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2907: strftime() doesn't support E, F, O and + conversion specifiers (was: strftime() doesn't support %F conversion specifier)</H1>
+    <B>scottmc</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232907%3A%20strftime%28%29%20doesn%27t%20support%20E%2C%20F%2C%0A%20O%20and%20%2B%20conversion%20specifiers%20%28was%3A%20strftime%28%29%20doesn%27t%20support%20%25F%0A%20conversion%20specifier%29&In-Reply-To=%3C051.a49325f7974f195e74d2656d1934d965%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2907: strftime() doesn't support E, F, O and + conversion specifiers (was: strftime() doesn't support %F conversion specifier)">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Oct 23 01:56:09 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011298.html">[Haiku-bugs] [Haiku] #2907: strftime() doesn't support %F	conversion specifier
+</A></li>
+        <LI>Next message: <A HREF="011308.html">[Haiku-bugs] [Haiku] #2907: strftime() doesn't support E, F, O and + conversion specifiers
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11302">[ date ]</a>
+              <a href="thread.html#11302">[ thread ]</a>
+              <a href="subject.html#11302">[ subject ]</a>
+              <a href="author.html#11302">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2907: strftime() doesn't support E, F, O and + conversion specifiers
+------------------------+---------------------------------------------------
+  Reporter:  scottmc    |       Owner:  axeld         
+      Type:  bug        |      Status:  new           
+  Priority:  normal     |   Milestone:  R1            
+ Component:  - General  |     Version:  R1 development
+Resolution:             |   Blockedby:                
+  Platform:  All        |    Blocking:                
+------------------------+---------------------------------------------------
+
+Comment(by scottmc):
+
+ I added a strftime for every one of the modifiers listed in that link
+ above:
+ {{{
+ 416                     strftime(p, 100, &quot;%a&quot;, tim);
+
+ 418                     strftime(p, 100, &quot;%A&quot;, tim);
+ 419                     strftime(p, 100, &quot;%b&quot;, tim);
+ 420                     strftime(p, 100, &quot;%B&quot;, tim);
+ 421                     strftime(p, 100, &quot;%c&quot;, tim);
+ 422                     strftime(p, 100, &quot;%C&quot;, tim);
+ 423                     strftime(p, 100, &quot;%d&quot;, tim);
+ 424                     strftime(p, 100, &quot;%D&quot;, tim);
+ 425                     strftime(p, 100, &quot;%e&quot;, tim);
+ 426                     strftime(p, 100, &quot;%E&quot;, tim);
+ 427                     strftime(p, 100, &quot;%F&quot;, tim);
+ 428                     strftime(p, 100, &quot;%G&quot;, tim);
+ 429                     strftime(p, 100, &quot;%g&quot;, tim);
+ 430                     strftime(p, 100, &quot;%h&quot;, tim);
+ 431                     strftime(p, 100, &quot;%H&quot;, tim);
+ 432                     strftime(p, 100, &quot;%I&quot;, tim);
+ 433                     strftime(p, 100, &quot;%j&quot;, tim);
+ 434                     strftime(p, 100, &quot;%k&quot;, tim);
+ 435                     strftime(p, 100, &quot;%l&quot;, tim);
+ 436                     strftime(p, 100, &quot;%m&quot;, tim);
+ 437                     strftime(p, 100, &quot;%M&quot;, tim);
+ 438                     strftime(p, 100, &quot;%n&quot;, tim);
+ 439                     strftime(p, 100, &quot;%O&quot;, tim);
+ 440                     strftime(p, 100, &quot;%p&quot;, tim);
+ 441                     strftime(p, 100, &quot;%P&quot;, tim);
+ 442                     strftime(p, 100, &quot;%r&quot;, tim);
+ 443                     strftime(p, 100, &quot;%R&quot;, tim);
+ 444                     strftime(p, 100, &quot;%s&quot;, tim);
+ 445                     strftime(p, 100, &quot;%S&quot;, tim);
+ 446                     strftime(p, 100, &quot;%t&quot;, tim);
+ 447                     strftime(p, 100, &quot;%T&quot;, tim);
+ 448                     strftime(p, 100, &quot;%u&quot;, tim);
+ 449                     strftime(p, 100, &quot;%U&quot;, tim);
+ 450                     strftime(p, 100, &quot;%V&quot;, tim);
+ 451                     strftime(p, 100, &quot;%w&quot;, tim);
+ 452                     strftime(p, 100, &quot;%W&quot;, tim);
+ 453                     strftime(p, 100, &quot;%x&quot;, tim);
+ 454                     strftime(p, 100, &quot;%X&quot;, tim);
+ 455                     strftime(p, 100, &quot;%y&quot;, tim);
+ 456                     strftime(p, 100, &quot;%Y&quot;, tim);
+ 457                     strftime(p, 100, &quot;%z&quot;, tim);
+ 458                     strftime(p, 100, &quot;%Z&quot;, tim);
+ 459                     strftime(p, 100, &quot;%+&quot;, tim);
+ 460                     strftime(p, 100, &quot;%%&quot;, tim);
+ }}}
+
+ Build Results:
+ {{{
+ /boot/home/develop/pe/Extensions/HeaderHeader.cpp:421: warning: `%c'
+ yields only last 2 digits of year in some locales
+ /boot/home/develop/pe/Extensions/HeaderHeader.cpp:424: warning: `%D'
+ yields only last 2 digits of year
+ /boot/home/develop/pe/Extensions/HeaderHeader.cpp:426: warning: conversion
+ lacks type at end of format
+ /boot/home/develop/pe/Extensions/HeaderHeader.cpp:427: warning: unknown
+ conversion type character `F' in format
+ /boot/home/develop/pe/Extensions/HeaderHeader.cpp:429: warning: `%g'
+ yields only last 2 digits of year
+ /boot/home/develop/pe/Extensions/HeaderHeader.cpp:439: warning: conversion
+ lacks type at end of format
+ /boot/home/develop/pe/Extensions/HeaderHeader.cpp:453: warning: `%x'
+ yields only last 2 digits of year in some locales
+ /boot/home/develop/pe/Extensions/HeaderHeader.cpp:455: warning: `%y'
+ yields only last 2 digits of year
+ /boot/home/develop/pe/Extensions/HeaderHeader.cpp:459: warning: unknown
+ conversion type character `+' in format
+
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2907#comment:1">http://dev.haiku-os.org/ticket/2907#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011298.html">[Haiku-bugs] [Haiku] #2907: strftime() doesn't support %F	conversion specifier
+</A></li>
+	<LI>Next message: <A HREF="011308.html">[Haiku-bugs] [Haiku] #2907: strftime() doesn't support E, F, O and + conversion specifiers
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11302">[ date ]</a>
+              <a href="thread.html#11302">[ thread ]</a>
+              <a href="subject.html#11302">[ subject ]</a>
+              <a href="author.html#11302">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

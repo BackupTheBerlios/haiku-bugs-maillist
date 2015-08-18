@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4158: Unable to boot with r31957
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-July/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234158%3A%20Unable%20to%20boot%20with%20r31957&In-Reply-To=%3C053.9c5451a78f5bd990979e65d7682d0ab3%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="018848.html">
+   <LINK REL="Next"  HREF="018853.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4158: Unable to boot with r31957</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234158%3A%20Unable%20to%20boot%20with%20r31957&In-Reply-To=%3C053.9c5451a78f5bd990979e65d7682d0ab3%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4158: Unable to boot with r31957">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Jul 30 15:40:33 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="018848.html">[Haiku-bugs] [Haiku] #4158: Unable to boot with r31957
+</A></li>
+        <LI>Next message: <A HREF="018853.html">[Haiku-bugs] [Haiku] #4158: Unable to boot with r31942+ with kernel tracing enabled (was: Unable to boot with r31957)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18851">[ date ]</a>
+              <a href="thread.html#18851">[ thread ]</a>
+              <a href="subject.html#18851">[ subject ]</a>
+              <a href="author.html#18851">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4158: Unable to boot with r31957
+---------------------------+------------------------------------------------
+ Reporter:  anevilyak      |       Owner:  bonefish      
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1 development
+Blockedby:                 |    Platform:  All           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+
+Comment(by anevilyak):
+
+ Grr....too early in the morning. Here's the beginning of the function in
+ question:
+
+ {{{
+ 80074df5 &lt;_ZL14allocate_entrymt&gt;:
+ 80074df5:       55                      push   %ebp
+ 80074df6:       89 e5                   mov    %esp,%ebp
+ 80074df8:       57                      push   %edi
+ 80074df9:       56                      push   %esi
+ 80074dfa:       53                      push   %ebx
+ 80074dfb:       83 ec 1c                sub    $0x1c,%esp
+ 80074dfe:       89 c3                   mov    %eax,%ebx
+ 80074e00:       66 89 55 e2             mov    %dx,0xffffffe2(%ebp)
+ 80074e04:       a1 f0 56 13 80          mov    0x801356f0,%eax
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4158#comment:8">http://dev.haiku-os.org/ticket/4158#comment:8</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="018848.html">[Haiku-bugs] [Haiku] #4158: Unable to boot with r31957
+</A></li>
+	<LI>Next message: <A HREF="018853.html">[Haiku-bugs] [Haiku] #4158: Unable to boot with r31942+ with kernel tracing enabled (was: Unable to boot with r31957)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18851">[ date ]</a>
+              <a href="thread.html#18851">[ thread ]</a>
+              <a href="subject.html#18851">[ subject ]</a>
+              <a href="author.html#18851">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,190 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3804: getaddrinfo() reported buggy by Python ./configure script
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233804%3A%20getaddrinfo%28%29%20reported%20buggy%20by%0A%20Python%20./configure%20script&In-Reply-To=%3C049.8d64b3ee4595e109ac2436155e5e38c5%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="016466.html">
+   <LINK REL="Next"  HREF="016467.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3804: getaddrinfo() reported buggy by Python ./configure script</H1>
+    <B>haiqu</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233804%3A%20getaddrinfo%28%29%20reported%20buggy%20by%0A%20Python%20./configure%20script&In-Reply-To=%3C049.8d64b3ee4595e109ac2436155e5e38c5%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3804: getaddrinfo() reported buggy by Python ./configure script">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Apr 22 10:21:09 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="016466.html">[Haiku-bugs] [Haiku] #3804: getaddrinfo() reported buggy by Python ./configure script
+</A></li>
+        <LI>Next message: <A HREF="016467.html">[Haiku-bugs] [Haiku] #2197: KDL when starting Firefox
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16476">[ date ]</a>
+              <a href="thread.html#16476">[ thread ]</a>
+              <a href="subject.html#16476">[ subject ]</a>
+              <a href="author.html#16476">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3804: getaddrinfo() reported buggy by Python ./configure script
+---------------------------+------------------------------------------------
+ Reporter:  haiqu          |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1 development
+Blockedby:                 |    Platform:  x86           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+
+Comment(by haiqu):
+
+ Here's the relevant piece of test script taken from config.in:
+
+ {{{
+ AC_MSG_CHECKING(getaddrinfo bug)
+ AC_TRY_RUN([
+ #include &lt;sys/types.h&gt;
+ #include &lt;netdb.h&gt;
+ #include &lt;string.h&gt;
+ #include &lt;sys/socket.h&gt;
+ #include &lt;netinet/in.h&gt;
+
+ main()
+ {
+   int passive, gaierr, inet4 = 0, inet6 = 0;
+   struct addrinfo hints, *ai, *aitop;
+   char straddr[INET6_ADDRSTRLEN], strport[16];
+
+   for (passive = 0; passive &lt;= 1; passive++) {
+     memset(&amp;hints, 0, sizeof(hints));
+     hints.ai_family = AF_UNSPEC;
+     hints.ai_flags = passive ? AI_PASSIVE : 0;
+     hints.ai_socktype = SOCK_STREAM;
+     hints.ai_protocol = IPPROTO_TCP;
+     if ((gaierr = getaddrinfo(NULL, &quot;54321&quot;, &amp;hints, &amp;aitop)) != 0) {
+       (void)gai_strerror(gaierr);
+       goto bad;
+     }
+     for (ai = aitop; ai; ai = ai-&gt;ai_next) {
+       if (ai-&gt;ai_addr == NULL ||
+           ai-&gt;ai_addrlen == 0 ||
+           getnameinfo(ai-&gt;ai_addr, ai-&gt;ai_addrlen,
+                       straddr, sizeof(straddr), strport, sizeof(strport),
+                       NI_NUMERICHOST|NI_NUMERICSERV) != 0) {
+         goto bad;
+       }
+       switch (ai-&gt;ai_family) {
+       case AF_INET:
+         if (strcmp(strport, &quot;54321&quot;) != 0) {
+           goto bad;
+         }
+         if (passive) {
+           if (strcmp(straddr, &quot;0.0.0.0&quot;) != 0) {
+             goto bad;
+           }
+         } else {
+           if (strcmp(straddr, &quot;127.0.0.1&quot;) != 0) {
+             goto bad;
+           }
+         }
+         inet4++;
+         break;
+       case AF_INET6:
+         if (strcmp(strport, &quot;54321&quot;) != 0) {
+           goto bad;
+         }
+         if (passive) {
+           if (strcmp(straddr, &quot;::&quot;) != 0) {
+             goto bad;
+           }
+         } else {
+           if (strcmp(straddr, &quot;::1&quot;) != 0) {
+             goto bad;
+           }
+         }
+         inet6++;
+         break;
+       case AF_UNSPEC:
+         goto bad;
+         break;
+       default:
+         /* another family support? */
+         break;
+       }
+     }
+   }
+
+   if (!(inet4 == 0 || inet4 == 2))
+     goto bad;
+   if (!(inet6 == 0 || inet6 == 2))
+     goto bad;
+
+   if (aitop)
+     freeaddrinfo(aitop);
+   exit(0);
+
+  bad:
+   if (aitop)
+     freeaddrinfo(aitop);
+   exit(1);
+ }
+ ],
+ AC_MSG_RESULT(good)
+ buggygetaddrinfo=no,
+ AC_MSG_RESULT(buggy)
+ buggygetaddrinfo=yes,
+ AC_MSG_RESULT(buggy)
+ buggygetaddrinfo=yes)], [
+ AC_MSG_RESULT(no)
+ buggygetaddrinfo=yes
+ ])
+
+ if test &quot;$buggygetaddrinfo&quot; = &quot;yes&quot;; then
+         if test &quot;$ipv6&quot; = &quot;yes&quot;; then
+                 echo 'Fatal: You must get working getaddrinfo() function.'
+                 echo '       or you can specify &quot;--disable-ipv6&quot;'.
+                 exit 1
+         fi
+ else
+         AC_DEFINE(HAVE_GETADDRINFO, 1, [Define if you have the getaddrinfo
+ function.])
+ fi
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3804#comment:1">http://dev.haiku-os.org/ticket/3804#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="016466.html">[Haiku-bugs] [Haiku] #3804: getaddrinfo() reported buggy by Python ./configure script
+</A></li>
+	<LI>Next message: <A HREF="016467.html">[Haiku-bugs] [Haiku] #2197: KDL when starting Firefox
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16476">[ date ]</a>
+              <a href="thread.html#16476">[ thread ]</a>
+              <a href="subject.html#16476">[ subject ]</a>
+              <a href="author.html#16476">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

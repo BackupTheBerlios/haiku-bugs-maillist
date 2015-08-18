@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3265: Custom signal handlers always receive	SIGSEGV signals
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-January/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233265%3A%20Custom%20signal%20handlers%20always%20receive%0A%09SIGSEGV%20signals&In-Reply-To=%3C038.4b72c073ca986a8dc535380ec4517aa4%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="013426.html">
+   <LINK REL="Next"  HREF="013424.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3265: Custom signal handlers always receive	SIGSEGV signals</H1>
+    <B>oco</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233265%3A%20Custom%20signal%20handlers%20always%20receive%0A%09SIGSEGV%20signals&In-Reply-To=%3C038.4b72c073ca986a8dc535380ec4517aa4%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3265: Custom signal handlers always receive	SIGSEGV signals">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Jan  6 21:22:40 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="013426.html">[Haiku-bugs] [Haiku] #3264: KDL when checkfs hits 31800 nodes	processed
+</A></li>
+        <LI>Next message: <A HREF="013424.html">[Haiku-bugs] [Haiku] #3265: Custom signal handlers always receive SIGSEGV signals
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13416">[ date ]</a>
+              <a href="thread.html#13416">[ thread ]</a>
+              <a href="subject.html#13416">[ subject ]</a>
+              <a href="author.html#13416">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3265: Custom signal handlers always receive SIGSEGV signals
+---------------------------+------------------------------------------------
+ Reporter:  oco            |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1 development
+Blockedby:                 |    Platform:  All           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+ While tracking down remaining bugs in the freepascal test suite, i
+ discover that custom signal handlers only received SIGSEGV signal instead
+ of the one associated with the handler.
+
+ For example, in case of a zero divide, the signal handler associated with
+ SIGFPE (8) only receive SIGSEGV (11).
+
+ This behavior is also true for C programs (see attached file
+ test_custom_signal_handling.c).
+
+ I think this problem was introduced in r27757.
+
+ If i am not wrong, send_signal should send the real signal to the custom
+ handler instead of SIGSEGV (see attached patch).
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3265">http://dev.haiku-os.org/ticket/3265</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="013426.html">[Haiku-bugs] [Haiku] #3264: KDL when checkfs hits 31800 nodes	processed
+</A></li>
+	<LI>Next message: <A HREF="013424.html">[Haiku-bugs] [Haiku] #3265: Custom signal handlers always receive SIGSEGV signals
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13416">[ date ]</a>
+              <a href="thread.html#13416">[ thread ]</a>
+              <a href="subject.html#13416">[ subject ]</a>
+              <a href="author.html#13416">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

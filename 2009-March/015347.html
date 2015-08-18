@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3608: SpicyKeys-like dialog when pushing unknown keys on multimedia keyboards
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233608%3A%20SpicyKeys-like%20dialog%20when%20pushing%0A%20unknown%20keys%20on%20multimedia%20keyboards&In-Reply-To=%3C048.ce270102f6297e4de48e0bc43b06deab%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="015374.html">
+   <LINK REL="Next"  HREF="015348.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3608: SpicyKeys-like dialog when pushing unknown keys on multimedia keyboards</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233608%3A%20SpicyKeys-like%20dialog%20when%20pushing%0A%20unknown%20keys%20on%20multimedia%20keyboards&In-Reply-To=%3C048.ce270102f6297e4de48e0bc43b06deab%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3608: SpicyKeys-like dialog when pushing unknown keys on multimedia keyboards">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Mar 25 19:47:52 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="015374.html">[Haiku-bugs] [Haiku] #3607: Trac email notifications, missing user name in 'From' field
+</A></li>
+        <LI>Next message: <A HREF="015348.html">[Haiku-bugs] [Haiku] #3609: Crossbar presention of windows in	Twitcher
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15347">[ date ]</a>
+              <a href="thread.html#15347">[ thread ]</a>
+              <a href="subject.html#15347">[ subject ]</a>
+              <a href="author.html#15347">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3608: SpicyKeys-like dialog when pushing unknown keys on multimedia keyboards
+-----------------------------------+----------------------------------------
+ Reporter:  jonas.kirilla          |       Owner:  korli         
+     Type:  enhancement            |      Status:  new           
+ Priority:  normal                 |   Milestone:  R1            
+Component:  Add-Ons/Input Filters  |     Version:  R1 development
+ Keywords:                         |   Blockedby:                
+ Platform:  All                    |    Blocking:                
+-----------------------------------+----------------------------------------
+ I hope to eventually be able to simply press one of those extra keys and
+ have the OS open a dialog, asking me what action to assign to it.
+
+ I think the input_server keyboard device hardcodes the PS2-scancode to
+ keycode translation, filtering out unknown scancodes, meaning that an
+ input_server filter, like that of SpicyKeys, can not know that those
+ buttons were pressed.
+
+ I think what needs to be done is to make the keyboard device load the
+ scancode translation from disk (BeOS: AT_Keyboard_Info) and/or allow
+ changes at runtime.
+
+ The keyboard device could directly add unsupported scancodes to its lookup
+ table, but I think it might be better to pass them on
+ (B_UNKNOWN_SCANCODE?) to input_server filters, so e.g. SpicyKeys can react
+ on it (by opening a dialog) on every keypress until the user has chosen a
+ high-level action (or explicity no action) for the key to trigger.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3608">http://dev.haiku-os.org/ticket/3608</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="015374.html">[Haiku-bugs] [Haiku] #3607: Trac email notifications, missing user name in 'From' field
+</A></li>
+	<LI>Next message: <A HREF="015348.html">[Haiku-bugs] [Haiku] #3609: Crossbar presention of windows in	Twitcher
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15347">[ date ]</a>
+              <a href="thread.html#15347">[ thread ]</a>
+              <a href="subject.html#15347">[ subject ]</a>
+              <a href="author.html#15347">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

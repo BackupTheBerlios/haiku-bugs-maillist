@@ -1,0 +1,204 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1823: On some systems (real hardware) any direct to framebuffer drawing is really slow
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-July/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231823%3A%20On%20some%20systems%20%28real%20hardware%29%20any%0A%20direct%20to%20framebuffer%20drawing%20is%20really%20slow&In-Reply-To=%3C050.bef730912bcb6da098faa6f8f716371d%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008733.html">
+   <LINK REL="Next"  HREF="008735.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1823: On some systems (real hardware) any direct to framebuffer drawing is really slow</H1>
+    <B>stippi</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231823%3A%20On%20some%20systems%20%28real%20hardware%29%20any%0A%20direct%20to%20framebuffer%20drawing%20is%20really%20slow&In-Reply-To=%3C050.bef730912bcb6da098faa6f8f716371d%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1823: On some systems (real hardware) any direct to framebuffer drawing is really slow">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Jul  3 17:30:52 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008733.html">[Haiku-bugs] [Haiku] #2471: PANIC: page fault but interrupts were disabled. Touching address 0x00000008 from eip 0x80031f85 while building Haiku
+</A></li>
+        <LI>Next message: <A HREF="008735.html">[Haiku-bugs] [Haiku] #1823: On some systems (real hardware) any direct to framebuffer drawing is really slow
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8734">[ date ]</a>
+              <a href="thread.html#8734">[ thread ]</a>
+              <a href="subject.html#8734">[ subject ]</a>
+              <a href="author.html#8734">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1823: On some systems (real hardware) any direct to framebuffer drawing is really
+slow
+----------------------------+-----------------------------------------------
+  Reporter:  stippi         |       Owner:  axeld         
+      Type:  bug            |      Status:  new           
+  Priority:  normal         |   Milestone:  R1/alpha1     
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |   Blockedby:                
+  Platform:  All            |    Blocking:                
+----------------------------+-----------------------------------------------
+
+Comment(by stippi):
+
+ This seemed to have helped, I got a new syslog. However, I am getting
+ Internal Server Errors when I try to attach it. Therefor I am pasting what
+ seems to me to be the relevant output:
+
+ {{{
+ 2008-07-03 15:05:29 KERN: allocate_commpage_entry(4, 34) -&gt; 0xffff0118
+ 2008-07-03 15:05:29 KERN: set_memory_write_back base 0 length 3ff80000
+ 2008-07-03 15:05:29 KERN: find_nearest 3ff80000 0
+ 2008-07-03 15:05:29 KERN: find_nearest 1ff80000 1
+ 2008-07-03 15:05:29 KERN: find_nearest ff80000 2
+ 2008-07-03 15:05:29 KERN: find_nearest 7f80000 3
+ 2008-07-03 15:05:29 KERN: find_nearest 3f80000 4
+ 2008-07-03 15:05:29 KERN: find_nearest 1f80000 5
+ 2008-07-03 15:05:29 KERN: find_nearest 80000 5
+ 2008-07-03 15:05:29 KERN: find_nearest 80000 4
+ 2008-07-03 15:05:29 KERN: find_nearest 80000 3
+ 2008-07-03 15:05:29 KERN: find_nearest 80000 2
+ 2008-07-03 15:05:29 KERN: find_nearest 80000 1
+ 2008-07-03 15:05:29 KERN: solutions: 0x40000000 0x80000
+ 2008-07-03 15:05:29 KERN: allocate MTRR slot 0, base = 0, length =
+ 40000000, type=0x6
+ 2008-07-03 15:05:29 KERN: allocate MTRR slot 1, base = 3ff80000, length =
+ 80000, type=0x0
+ 2008-07-03 15:05:29 KERN: allocate MTRR slot 2, base = f0000000, length =
+ 400000, type=0x1
+
+ [...]
+
+ 2008-07-03 15:05:29 KERN: Radeon - init_hardware: Version: 5.1.6.0
+ 2008-07-03 15:05:29 KERN: Radeon - Radeon_FindRom: found ROM @0xc0000
+ 2008-07-03 15:05:29 KERN: Radeon - Radeon_CardDetect: found supported
+ device pci index 2, device 0x1002/0x5b60
+ 2008-07-03 15:05:29 KERN: Radeon - init_driver:
+ 2008-07-03 15:05:29 KERN: [36mAGP:[0m bus manager init
+ 2008-07-03 15:05:29 KERN: [36mAGP:[0m found 0 AGP devices
+ 2008-07-03 15:05:29 KERN: Radeon - GetDriverSettings:
+ 2008-07-03 15:05:29 KERN: Radeon - Radeon_FindRom: found ROM @0xc0000
+ 2008-07-03 15:05:29 KERN: Radeon - Radeon_MapDevice: device: 010000
+ 2008-07-03 15:05:29 KERN: Radeon - Radeon_MapDevice: old PCI command
+ state: 0x00000007
+ 2008-07-03 15:05:29 KERN: Radeon - Radeon_MapDevice: physical address of
+ memory-mapped I/O: 0xfe9e0000-0xfe9effff
+ 2008-07-03 15:05:29 KERN: Radeon - Radeon_GetPLLInfo: ref_clk=2700,
+ ref_div=12, xclk=20000, min_freq=20000, max_freq=40000 from Legacy BIOS
+ 2008-07-03 15:05:29 KERN: Radeon - Radeon_GetConnectorInfoFromBIOS: Port0:
+ DDCType-2, DACType-1, TMDSType-0, ConnectorType-3
+ 2008-07-03 15:05:29 KERN: Radeon - Radeon_GetConnectorInfoFromBIOS: Port1:
+ DDCType-3, DACType-0, TMDSType-1, ConnectorType-3
+ 2008-07-03 15:05:29 KERN: Radeon - Radeon_GetTMDSInfoFromBios: DFP table
+ revision: 4
+ 2008-07-03 15:05:29 KERN: Radeon - RADEON_GetAccessibleVRAM: Generation 2
+ PCI interface, using max accessible memory
+ 2008-07-03 15:05:29 KERN: Radeon - Radeon_DetectRAM: Detected total video
+ RAM=131072K, accessible=131072K (PCI BAR=131072K)
+ 2008-07-03 15:05:29 KERN: Radeon - Radeon_DetectRAM: 128 MB SDR SGRAM
+ found on 64 wide bus
+ 2008-07-03 15:05:29 KERN: Radeon - Radeon_UnmapDevice:
+ 2008-07-03 15:05:29 KERN: Radeon - probeDevice: found Radeon X300 (RV370)
+ 5B60; ASIC: rv380
+ 2008-07-03 15:05:29 KERN: Radeon - probeDevice: making
+ /dev/graphics/1002_5B60_010000
+ 2008-07-03 15:05:29 KERN: Radeon - Radeon_ProbeDevices: 1 supported
+ devices
+ 2008-07-03 15:05:29 KERN: loaded driver /boot/beos/system/add-
+ ons/kernel/drivers/dev/graphics/radeon
+ 2008-07-03 15:05:29 KERN: S3: init_hardware() - no supported devices
+ 2008-07-03 15:05:29 KERN: savage: init_hardware - no supported devices
+ 2008-07-03 15:05:29 KERN: vesa: init_hardware()
+ 2008-07-03 15:05:29 KERN: vesa: init_driver()
+ 2008-07-03 15:05:29 KERN: vesa: publish_devices()
+ 2008-07-03 15:05:29 KERN: vesa: find_device()
+ 2008-07-03 15:05:29 KERN: loaded driver /boot/beos/system/add-
+ ons/kernel/drivers/dev/graphics/vesa
+ 2008-07-03 15:05:29 KERN: Radeon - open_hook:
+ name=graphics/1002_5B60_010000, flags=2, cookie=0x90c5e720
+ 2008-07-03 15:05:29 KERN: Radeon - Radeon_MapDevice: device: 010000
+ 2008-07-03 15:05:29 KERN: Radeon - Radeon_MapDevice: old PCI command
+ state: 0x00000006
+ 2008-07-03 15:05:29 KERN: Radeon - Radeon_MapDevice: physical address of
+ memory-mapped I/O: 0xfe9e0000-0xfe9effff
+ 2008-07-03 15:05:29 KERN: Radeon - Radeon_MapDevice: physical address of
+ framebuffer: 0xf0000000-0xf7ffffff
+ 2008-07-03 15:05:29 KERN: allocate MTRR slot 3, base = f0000000, length =
+ 8000000, type=0x1
+ 2008-07-03 15:05:29 KERN: Radeon - Radeon_MapDevice: mapped frame buffer
+ @0x98000000
+ 2008-07-03 15:05:29 KERN: Radeon - Radeon_FirstOpen: Copy of Laptop
+ Display Regs for Reference:
+ 2008-07-03 15:05:29 KERN: Radeon - Radeon_FirstOpen: LVDS GEN =  804008a
+ 2008-07-03 15:05:29 KERN: Radeon - Radeon_FirstOpen: LVDS PLL =     128c
+ 2008-07-03 15:05:29 KERN: Radeon - Radeon_FirstOpen: TMDS PLL = 1fb800cd
+ 2008-07-03 15:05:29 KERN: Radeon - Radeon_FirstOpen: TMDS TRANS = 10000040
+ 2008-07-03 15:05:29 KERN: Radeon - Radeon_FirstOpen: FP1 GEN =  bc2c000
+ 2008-07-03 15:05:29 KERN: Radeon - Radeon_FirstOpen: FP2 GEN = 1240080c
+ 2008-07-03 15:05:29 KERN: Radeon - Radeon_FirstOpen: TV DAC =  7660142
+ 2008-07-03 15:05:29 KERN: Radeon - createGARTBuffer:
+ 2008-07-03 15:05:29 KERN: Radeon - initGATT:
+ 2008-07-03 15:05:29 KERN: Radeon - initGATT: GATT_ptr=0x93800000,
+ GATT_phys=0x02a61000
+ 2008-07-03 15:05:29 KERN: pci_gart_map_area: 2457
+ 2008-07-03 15:05:29 KERN: Radeon - Radeon_InitMemController: Graphics card
+ address mapping:
+ 2008-07-03 15:05:29 KERN: Radeon - Radeon_InitMemController:  local memory
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">0x8000000 at 0xf0000000</A>
+ 2008-07-03 15:05:29 KERN: Radeon - Radeon_InitMemController:  PCI GART
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">0x2000000 at 0x3ff80000</A>
+ 2008-07-03 15:05:29 KERN: Radeon - Radeon_InitMemController:  disabled AGP
+ GART <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">0x400000 at 0x42000000</A>
+ 2008-07-03 15:05:29 KERN: Radeon - Radeon_SetupIRQ: installed IRQ @ 11
+ 2008-07-03 15:05:29 KERN: [36mAGP:[0m get_nth_agp_info(index 0)
+ 2008-07-03 15:05:29 KERN: Radeon - Radeon_Set_AGP: No AGP capable devices
+ found.
+ 2008-07-03 15:05:29 KERN: Radeon - Radeon_FirstOpen: DMA is diabled using
+ PIO mode
+ 2008-07-03 15:05:29 KERN: Radeon - open_hook: returning 0x00000000
+ 2008-07-03 15:05:29 KERN: Radeon - Radeon_DetectTVOut:
+ 2008-07-03 15:05:29 KERN: DDC: ddc2_read(): DDC information read failure
+ 2008-07-03 15:05:29 KERN: Last message repeated 3 times.
+ 2008-07-03 15:05:29 KERN: Radeon - Radeon_ReadEDID: Found DDC-capable
+ monitor @0x0060
+ 2008-07-03 15:05:29 KERN: Radeon - Radeon_DetectDisplays: Edid Data for
+ CRTC 1 on line 3
+ }}}
+
+ Hope this is useful.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1823#comment:9">http://dev.haiku-os.org/ticket/1823#comment:9</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008733.html">[Haiku-bugs] [Haiku] #2471: PANIC: page fault but interrupts were disabled. Touching address 0x00000008 from eip 0x80031f85 while building Haiku
+</A></li>
+	<LI>Next message: <A HREF="008735.html">[Haiku-bugs] [Haiku] #1823: On some systems (real hardware) any direct to framebuffer drawing is really slow
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8734">[ date ]</a>
+              <a href="thread.html#8734">[ thread ]</a>
+              <a href="subject.html#8734">[ subject ]</a>
+              <a href="author.html#8734">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1167: USB stack built for BONE crashes in UHCI finish thread
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231167%3A%20USB%20stack%20built%20for%20BONE%20crashes%20in%0A%20UHCI%20finish%20thread&In-Reply-To=%3C057.6903e4388cebc61fb3f760d3384aee7a%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001111.html">
+   <LINK REL="Next"  HREF="001199.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1167: USB stack built for BONE crashes in UHCI finish thread</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231167%3A%20USB%20stack%20built%20for%20BONE%20crashes%20in%0A%20UHCI%20finish%20thread&In-Reply-To=%3C057.6903e4388cebc61fb3f760d3384aee7a%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1167: USB stack built for BONE crashes in UHCI finish thread">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Apr 24 20:19:24 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001111.html">[Haiku-bugs] [Haiku] #1167: USB stack built for BONE crashes in UHCI finish thread
+</A></li>
+        <LI>Next message: <A HREF="001199.html">[Haiku-bugs] [Haiku] #1167: USB stack built for BONE crashes in UHCI finish thread
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1113">[ date ]</a>
+              <a href="thread.html#1113">[ thread ]</a>
+              <a href="subject.html#1113">[ subject ]</a>
+              <a href="author.html#1113">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1167: USB stack built for BONE crashes in UHCI finish thread
+----------------------------+-----------------------------------------------
+  Reporter:  jonas.kirilla  |       Owner:  mmlr          
+      Type:  bug            |      Status:  assigned      
+  Priority:  normal         |   Milestone:  R1            
+ Component:  Drivers/USB    |     Version:  R1 development
+Resolution:                 |    Platform:  x86           
+----------------------------+-----------------------------------------------
+Comment (by jonas.kirilla):
+
+ I didn't know I had USB 2.0 ports, and I didn't think about EHCI = USB2.0.
+ I just picked one.
+
+ Anyway, this is what EHCI looks like:
+
+ {{{
+ Problems in ehci finish thread :
+ segment violation
+ address: 0x8024e610, op: 1 pc: 0x00175563, tmid: 2 thid: 6
+ kernel debugger: Welcome to Kernel Debugging Land...
+  eax 00000000  ebp 0121af84  cs 0008 | area 004b3768  (kernel_intel_text)
+  ebx 00001000  esp 0121af38  ss 0010 | addr 00100000  size 00086000
+  ecx 00001000  edi 300ff000  ds 0010 |
+  edx 00003000  esi 8024e610  es 0010 | Thread: ehci finish thread
+  eip 00175563 flag 00010206  fs 0000 | Team:  kernel_team
+ trap 0000000e  err 00000000  gs 0000 | Stack Trace follows:
+
+ 00000000  00175563  memcpy_pIII+0047
+ 0121af84  0020c347
+ FillQueueWithData__4EHCIP8TransferP7ehci_qhPP8ehci_qtdPb+008f
+ 0121afc4  0020bd09  FinishTransfers__4EHCI+03e1
+ 0121b044  0020b91f  FinishThread__4EHCIPv+001f
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1167#comment:7">http://dev.haiku-os.org/ticket/1167#comment:7</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001111.html">[Haiku-bugs] [Haiku] #1167: USB stack built for BONE crashes in UHCI finish thread
+</A></li>
+	<LI>Next message: <A HREF="001199.html">[Haiku-bugs] [Haiku] #1167: USB stack built for BONE crashes in UHCI finish thread
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1113">[ date ]</a>
+              <a href="thread.html#1113">[ thread ]</a>
+              <a href="subject.html#1113">[ subject ]</a>
+              <a href="author.html#1113">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

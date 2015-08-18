@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2073: User add-on driver does not have precedence over system add-on driver
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232073%3A%20User%20add-on%20driver%20does%20not%20have%0A%20precedence%20over%20system%20add-on%20driver&In-Reply-To=%3C047.2ca1857b16b2d3c88bfd00df3c445b7b%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006436.html">
+   <LINK REL="Next"  HREF="006444.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2073: User add-on driver does not have precedence over system add-on driver</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232073%3A%20User%20add-on%20driver%20does%20not%20have%0A%20precedence%20over%20system%20add-on%20driver&In-Reply-To=%3C047.2ca1857b16b2d3c88bfd00df3c445b7b%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2073: User add-on driver does not have precedence over system add-on driver">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Apr 15 04:20:54 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006436.html">[Haiku-bugs] [Haiku] #1644: the pthread_key_create_1-2 posix	test fails
+</A></li>
+        <LI>Next message: <A HREF="006444.html">[Haiku-bugs] [Haiku] #2073: User add-on driver does not have precedence over system add-on driver
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6443">[ date ]</a>
+              <a href="thread.html#6443">[ thread ]</a>
+              <a href="subject.html#6443">[ subject ]</a>
+              <a href="author.html#6443">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2073: User add-on driver does not have precedence over system add-on driver
+--------------------------+-------------------------------------------------
+ Reporter:  gerald zajac  |       Owner:  axeld         
+     Type:  bug           |      Status:  new           
+ Priority:  normal        |   Milestone:  R1            
+Component:  Drivers       |     Version:  R1 development
+ Platform:  All           |  
+--------------------------+-------------------------------------------------
+ If two drivers support the same device, the one installed as a '''user'''
+ add-on should take precedence over the one installed as a '''system'''
+ add-on.  For example, if there is a video card with a Savage chipset, it
+ will normally cause the '''s3savage''' driver which is installed as a
+ '''system''' add-on to be loaded and used.  However, if another driver
+ named '''S3''' supports the same chip and is installed as a '''user'''
+ add-on, it should take precedence and be loaded and used instead of the
+ '''system''' add-on driver, but this does not happen.  The following lines
+ from the syslog shows both driver are loaded, and the one installed as a
+ '''system''' add-on is opened.
+
+ KERN: savage: init_hardware - device supported
+ KERN: savage: probe_devices: match found; name: graphics/5333_8A22_010000
+ KERN: savage: probe_devices: 1 supported devices
+ KERN: loaded driver /boot/beos/system/add-
+ ons/kernel/drivers/dev/graphics/s3savage
+ KERN: vesa: init_hardware()
+ KERN: vesa: init_driver()
+ KERN: vesa: publish_devices()
+ KERN: vesa: find_device()
+ KERN: loaded driver /boot/beos/system/add-
+ ons/kernel/drivers/dev/graphics/vesa
+ KERN: S3: init_hardware() - device supported
+ KERN: S3: probe_devices(): match found; name: graphics/5333_8A22_010000
+ KERN: S3: probe_devices(): 1 supported devices
+ KERN: loaded driver /boot/home/config/add-
+ ons/kernel/drivers/dev/graphics/s3
+ KERN: savage: open_hook(graphics/5333_8A22_010000, 0x90d59e70)
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2073">http://dev.haiku-os.org/ticket/2073</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006436.html">[Haiku-bugs] [Haiku] #1644: the pthread_key_create_1-2 posix	test fails
+</A></li>
+	<LI>Next message: <A HREF="006444.html">[Haiku-bugs] [Haiku] #2073: User add-on driver does not have precedence over system add-on driver
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6443">[ date ]</a>
+              <a href="thread.html#6443">[ thread ]</a>
+              <a href="subject.html#6443">[ subject ]</a>
+              <a href="author.html#6443">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

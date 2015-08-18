@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3113: Fatal Exception &quot;NMI Interrupt&quot; on	kernel boot
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233113%3A%20Fatal%20Exception%20%22NMI%20Interrupt%22%20on%0A%09kernel%20boot&In-Reply-To=%3C041.f53f634435f357af3dd21b05f24738dd%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012328.html">
+   <LINK REL="Next"  HREF="012330.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3113: Fatal Exception &quot;NMI Interrupt&quot; on	kernel boot</H1>
+    <B>graham</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233113%3A%20Fatal%20Exception%20%22NMI%20Interrupt%22%20on%0A%09kernel%20boot&In-Reply-To=%3C041.f53f634435f357af3dd21b05f24738dd%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3113: Fatal Exception &quot;NMI Interrupt&quot; on	kernel boot">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Nov 10 13:15:33 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012328.html">[Haiku-bugs] [Haiku] #3112: Screenshot won't take screenshot of active window with FFM
+</A></li>
+        <LI>Next message: <A HREF="012330.html">[Haiku-bugs] [Haiku] #3113: Fatal Exception &quot;NMI Interrupt&quot; on	kernel boot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12329">[ date ]</a>
+              <a href="thread.html#12329">[ thread ]</a>
+              <a href="subject.html#12329">[ subject ]</a>
+              <a href="author.html#12329">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3113: Fatal Exception &quot;NMI Interrupt&quot; on kernel boot
+---------------------------+------------------------------------------------
+ Reporter:  graham         |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1 development
+Blockedby:                 |    Platform:  x86           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+ Recently I tried to boot Haiku off of a usb hard drive using my laptop.
+
+ Upon loading the kernel the spash screen remains grey (no color in icons)
+ for 5 seconds (even the virtual machine boots faster) where upon it jumps
+ to the 3rd icon and the kernel debugger starts.
+
+ As the kernel isn't fully loaded yet I cannot save the output to a file so
+ I had to manually write down the text and reproduce the output.
+
+ As it looks, the error seams to be with the PCI module. I tried to use
+ this bug as an oppertunity to learn the internals of the kernel and have
+ learned a lot in the past week about programming a kernel than I have done
+ reading about it for a year in books.
+
+ Unfortunatly I got lost at the device tree code (where are the preloaded
+ modules listed?) and since I don't have experiance in programming hardware
+ beyond basic assembly code I suspect I jumped in at the deep end. So I
+ will leave this to you.
+
+ I (hopefully) have uploaded a typed version of the kenel debugger output
+ and a basic profile of my hardware including the controllers and devices
+ on the PCI bus.
+
+ This was done using a windows program but if you require more information
+ I can boot Arch Linux off of another usb drive and give you another
+ profile.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3113">http://dev.haiku-os.org/ticket/3113</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012328.html">[Haiku-bugs] [Haiku] #3112: Screenshot won't take screenshot of active window with FFM
+</A></li>
+	<LI>Next message: <A HREF="012330.html">[Haiku-bugs] [Haiku] #3113: Fatal Exception &quot;NMI Interrupt&quot; on	kernel boot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12329">[ date ]</a>
+              <a href="thread.html#12329">[ thread ]</a>
+              <a href="subject.html#12329">[ subject ]</a>
+              <a href="author.html#12329">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

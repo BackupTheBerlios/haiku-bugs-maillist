@@ -1,0 +1,149 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4000: Haiku fails to compile buildtools for	other GCC
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234000%3A%20Haiku%20fails%20to%20compile%20buildtools%20for%0A%09other%20GCC&In-Reply-To=%3C041.4a83adb6e944cdbefb6bd7c5133eaced%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="017854.html">
+   <LINK REL="Next"  HREF="017857.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4000: Haiku fails to compile buildtools for	other GCC</H1>
+    <B>mmadia</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234000%3A%20Haiku%20fails%20to%20compile%20buildtools%20for%0A%09other%20GCC&In-Reply-To=%3C041.4a83adb6e944cdbefb6bd7c5133eaced%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4000: Haiku fails to compile buildtools for	other GCC">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Jun  5 23:10:40 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="017854.html">[Haiku-bugs] [Haiku] #3978: Update install from CD fails at	r30914
+</A></li>
+        <LI>Next message: <A HREF="017857.html">[Haiku-bugs] [Haiku] #3754: [PATCH] Done TODO In Mouse Preflet
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17856">[ date ]</a>
+              <a href="thread.html#17856">[ thread ]</a>
+              <a href="subject.html#17856">[ subject ]</a>
+              <a href="author.html#17856">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4000: Haiku fails to compile buildtools for other GCC
+--------------------------+-------------------------------------------------
+ Reporter:  mmadia        |       Owner:  bonefish      
+     Type:  bug           |      Status:  new           
+ Priority:  normal        |   Milestone:  R1            
+Component:  Build System  |     Version:  R1 development
+Blockedby:                |    Platform:  All           
+ Blocking:                |  
+--------------------------+-------------------------------------------------
+ r30928. Tried building x86gcc4 from within x86gcc2.
+ {{{
+ /builder/haiku&gt; svn update buildtools haiku
+ At revision 30976.
+ &lt;snip&gt;
+ Updated to revision 30976.
+
+ /generated/x86gcc4-crossbuilt&gt; ../../builder/haiku/haiku/configure
+ --build-cross-tools-gcc4 x86 ../../builder/haiku/buildtools/
+ }}}
+ Full output is included in the attachment. Here's some of the more obvious
+ errors/issues:
+ {{{
+ checking the maximum length of command line arguments... expr: syntax
+ error
+ expr: syntax error
+ }}}
+ {{{
+ gcc -c -DHAVE_CONFIG_H -O2 -I.
+ -I/builder/haiku/buildtools/binutils/libiberty/../include  -W -Wall
+ -Wwrite-strings -Wstrict-prototypes -pedantic
+ /builder/haiku/buildtools/binutils/libiberty/pex-unix.c -o pex-unix.o
+ /builder/haiku/buildtools/binutils/libiberty/pex-unix.c: In function
+ `pex_child_error':
+ /builder/haiku/buildtools/binutils/libiberty/pex-unix.c:352: warning:
+ `noreturn' function does return
+ }}}
+ {{{
+ /bin/sh ./libtool --tag=CC --mode=link gcc -W -Wall -Wstrict-prototypes
+ -Wmissing-prototypes -O2   -o libbfd.la -rpath
+ /generated/x86gcc4-crossbuilt/cross-tools/lib -release `cat libtool-
+ soversion`  archive.lo archures.lo bfd.lo bfdio.lo bfdwin.lo cache.lo
+ coffgen.lo corefile.lo format.lo init.lo libbfd.lo opncls.lo reloc.lo
+ section.lo syms.lo targets.lo hash.lo linker.lo srec.lo binary.lo
+ tekhex.lo ihex.lo stabs.lo stab-syms.lo merge.lo dwarf2.lo simple.lo
+ compress.lo `cat ofiles`  -lz
+ ./libtool: line 7380: test: : integer expression expected
+ ./libtool: line 7380: test: : integer expression expected
+ libtool: link: using piecewise archive linking...
+ ./libtool: line 7401: test: : integer expression expected
+ }}}
+ {{{
+ make[3]: Leaving directory `/generated/x86gcc4-crossbuilt/cross-tools-
+ build/binutils/libiberty/testsuite'
+ /bin/sh /builder/haiku/buildtools/binutils/libiberty/../mkinstalldirs
+ /generated/x86gcc4-crossbuilt/cross-tools/lib/`gcc -O2 -print-multi-os-
+ directory`
+ gcc: unrecognized option `-print-multi-os-directory'
+ gcc: No input files
+ /bin/install -c -m 644 ./libiberty.a /generated/x86gcc4-crossbuilt/cross-
+ tools/lib/`gcc -O2 -print-multi-os-directory`/./libiberty.an
+ gcc: unrecognized option `-print-multi-os-directory'
+ gcc: No input files
+ ( cd /generated/x86gcc4-crossbuilt/cross-tools/lib/`gcc -O2 -print-multi-
+ os-directory` ; chmod 644 ./libiberty.an ;ranlib ./libiberty.an )
+ gcc: unrecognized option `-print-multi-os-directory'
+ gcc: No input files
+ mv -f /generated/x86gcc4-crossbuilt/cross-tools/lib/`gcc -O2 -print-multi-
+ os-directory`/./libiberty.an /generated/x86gcc4-crossbuilt/cross-
+ tools/lib/`gcc -O2 -print-multi-os-directory`/./libiberty.a
+ gcc: unrecognized option `-print-multi-os-directory'
+ gcc: No input files
+ gcc: unrecognized option `-print-multi-os-directory'
+ gcc: No input files
+ }}}
+ {{{
+ checking how to compare bootstrapped objects... cmp --ignore-initial=16
+ $$f1 $$f2
+ *** This configuration is not supported in the following subdirectories:
+      target-libmudflap target-libgomp target-libiberty
+     (Any other directories should still work fine.)
+ *** --with-headers is only supported when cross compiling
+ /generated/x86gcc4-crossbuilt&gt;
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4000">http://dev.haiku-os.org/ticket/4000</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="017854.html">[Haiku-bugs] [Haiku] #3978: Update install from CD fails at	r30914
+</A></li>
+	<LI>Next message: <A HREF="017857.html">[Haiku-bugs] [Haiku] #3754: [PATCH] Done TODO In Mouse Preflet
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17856">[ date ]</a>
+              <a href="thread.html#17856">[ thread ]</a>
+              <a href="subject.html#17856">[ subject ]</a>
+              <a href="author.html#17856">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

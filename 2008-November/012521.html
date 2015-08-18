@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1590: Updated Broadcom Tigon3 ethernet	driver
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231590%3A%20Updated%20Broadcom%20Tigon3%20ethernet%0A%09driver&In-Reply-To=%3C053.5e613b0739fe1d191b4d798a2dfeb8fd%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012546.html">
+   <LINK REL="Next"  HREF="012527.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1590: Updated Broadcom Tigon3 ethernet	driver</H1>
+    <B>karmak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231590%3A%20Updated%20Broadcom%20Tigon3%20ethernet%0A%09driver&In-Reply-To=%3C053.5e613b0739fe1d191b4d798a2dfeb8fd%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1590: Updated Broadcom Tigon3 ethernet	driver">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Nov 15 14:38:13 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012546.html">[Haiku-bugs] [Haiku] #3135: gcc's link path does not contain the directory with the system libraries
+</A></li>
+        <LI>Next message: <A HREF="012527.html">[Haiku-bugs] [Haiku] #3136: 'long double' comparison against 0 does	not work
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12521">[ date ]</a>
+              <a href="thread.html#12521">[ thread ]</a>
+              <a href="subject.html#12521">[ subject ]</a>
+              <a href="author.html#12521">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1590: Updated Broadcom Tigon3 ethernet driver
+------------------------------+---------------------------------------------
+  Reporter:  pieterpan        |       Owner:  axeld         
+      Type:  enhancement      |      Status:  new           
+  Priority:  normal           |   Milestone:  R1            
+ Component:  Drivers/Network  |     Version:  R1 development
+Resolution:                   |   Blockedby:                
+  Platform:  x86              |    Blocking:                
+------------------------------+---------------------------------------------
+Changes (by karmak):
+
+ * cc: <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">olive at deep-ocean.net</A> (added)
+  * platform:  All =&gt; x86
+
+
+Comment:
+
+ Hi,
+
+ here on a Thinkpad R52 (BCM5751M), Haiku installed on ATA hard disk, built
+ from Linux.
+   * With stock broadcom570x driver (from SVN), system hangs (hard) after
+ rocket icon has appeared.
+   * with `broadcom_1.diff` (from PeterPanman) applyed, the network works
+ fine all the time I was using it (surfing with ffox 2.0.0.18, wget,
+ netpositive, fetching 10000 mails in IMAP configuration&#8230;), more than one
+ hour (after that i got a crash in `intel_accelerant`, will file another
+ bug later).
+     * sometimes network seems stalled (with either ffox, wget or net+) ;
+ clicking pause/unpause (or stopping wget and restarting it with -c)
+ resolves the situation and download continues normally. The stall happened
+ at max one time for each download i tryed ; i couldn't dertermine reliably
+ if the problems comes from inside haiku, the driver or from outside.
+     * the deskbar applet always reports &quot;link down&quot;, even though
+ everything works normally (network cable pluged in, DHCP OK, downloading
+ in progress&#8230;).
+
+ I didn't try to unplug/plug cable to see if it changes anything. Will do
+ next time I boot Haiku.
+ I didn't try with `against-26&#8230;.diff` since `broadcom_1.diff` alone makes
+ my card work.
+
+ Tell me if you have some other tests I should do, or syslog or anything
+ you want to help this.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1590#comment:38">http://dev.haiku-os.org/ticket/1590#comment:38</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012546.html">[Haiku-bugs] [Haiku] #3135: gcc's link path does not contain the directory with the system libraries
+</A></li>
+	<LI>Next message: <A HREF="012527.html">[Haiku-bugs] [Haiku] #3136: 'long double' comparison against 0 does	not work
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12521">[ date ]</a>
+              <a href="thread.html#12521">[ thread ]</a>
+              <a href="subject.html#12521">[ subject ]</a>
+              <a href="author.html#12521">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

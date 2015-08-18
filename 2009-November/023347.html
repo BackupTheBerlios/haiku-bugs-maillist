@@ -1,0 +1,169 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #725: Microsoft Natural Ergonomic Keyboard	4000 issues
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23725%3A%20Microsoft%20Natural%20Ergonomic%20Keyboard%0A%094000%20issues&In-Reply-To=%3C049.dda163310e307c2b551904a675417dba%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="023346.html">
+   <LINK REL="Next"  HREF="023348.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #725: Microsoft Natural Ergonomic Keyboard	4000 issues</H1>
+    <B>axeld</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23725%3A%20Microsoft%20Natural%20Ergonomic%20Keyboard%0A%094000%20issues&In-Reply-To=%3C049.dda163310e307c2b551904a675417dba%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #725: Microsoft Natural Ergonomic Keyboard	4000 issues">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Nov  2 12:07:16 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="023346.html">[Haiku-bugs] [Haiku] #4576: There should be a BTimer
+</A></li>
+        <LI>Next message: <A HREF="023348.html">[Haiku-bugs] [Haiku] #725: Microsoft Natural Ergonomic Keyboard	4000 issues
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#23347">[ date ]</a>
+              <a href="thread.html#23347">[ thread ]</a>
+              <a href="subject.html#23347">[ subject ]</a>
+              <a href="author.html#23347">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#725: Microsoft Natural Ergonomic Keyboard 4000 issues
+-----------------------------------+----------------------------------------
+  Reporter:  axeld                 |       Owner:  mmlr          
+      Type:  bug                   |      Status:  new           
+  Priority:  normal                |   Milestone:  R1            
+ Component:  Drivers/Keyboard/USB  |     Version:  R1/Development
+Resolution:                        |   Blockedby:                
+  Platform:  All                   |    Blocking:                
+-----------------------------------+----------------------------------------
+Changes (by axeld):
+
+  * owner:  axeld =&gt; mmlr
+  * platform:  =&gt; All
+  * version:  =&gt; R1/Development
+  * component:  System/Kernel =&gt; Drivers/Keyboard/USB
+
+
+Old description:
+
+&gt;<i> When pressing the F-lock key, its LED goes off, and the F-keys don't work
+</I>&gt;<i> anymore - as expected. Unfortunately, it doesn't go back anymore, the LED
+</I>&gt;<i> is not
+</I>&gt;<i> light again when you press the F-lock key again.
+</I>&gt;<i>
+</I>&gt;<i> Also, none of the extra (media, ...) keys seem to work.
+</I>&gt;<i>
+</I>&gt;<i> Here is a description of its HID report:
+</I>&gt;<i>
+</I>&gt;<i> 0501    USAGE_PAGE generic desktop
+</I>&gt;<i> 0906    USAGE keyboard
+</I>&gt;<i> a101    COLLECTION application
+</I>&gt;<i> 0508        USAGE_PAGE led
+</I>&gt;<i> 1901            USAGE_MIN num lock
+</I>&gt;<i> 2903            USAGE_MAX scroll lock
+</I>&gt;<i> 1500            LOGICAL_MIN 0
+</I>&gt;<i> 2501            LOGICAL_MAX 1
+</I>&gt;<i> 7501            REPORT_SIZE 1
+</I>&gt;<i> 9503            REPORT_COUNT 3
+</I>&gt;<i> 9102            OUTPUT variable
+</I>&gt;<i> 094b            USAGE 0x4b ???
+</I>&gt;<i> 9501            REPORT_COUNT 1
+</I>&gt;<i> 9102            OUTPUT variable
+</I>&gt;<i> 9504            REPORT_COUNT 4
+</I>&gt;<i> 9101            OUTPUT constant
+</I>&gt;<i> 0507        USAGE_PAGE keyboard
+</I>&gt;<i> 19e0            USAGE_MIN keyboard left control
+</I>&gt;<i> 29e7            USAGE_MAX keyboard right gui
+</I>&gt;<i> 9508            REPORT_COUNT 8
+</I>&gt;<i> 8102            INPUT variable
+</I>&gt;<i> 7508            REPORT_SIZE 8
+</I>&gt;<i> 9501            REPORT_COUNT 1
+</I>&gt;<i> 8101            INPUT constant
+</I>&gt;<i> 1900            USAGE_MIN 0 (reserved)
+</I>&gt;<i> 2991            USAGE_MAX 145 (keyboard lang2)
+</I>&gt;<i> 26ff00          LOGICAL_MAX 0xff / 255
+</I>&gt;<i> 9506            REPORT_COUNT 6
+</I>&gt;<i> 8100            INPUT
+</I>&gt;<i> c0      COLLECTION_END
+</I>
+New description:
+
+ When pressing the F-lock key, its LED goes off, and the F-keys don't work
+ anymore - as expected. Unfortunately, it doesn't go back anymore, the LED
+ is not
+ light again when you press the F-lock key again.
+
+ Also, none of the extra (media, ...) keys seem to work.
+
+ Here is a description of its HID report:
+ {{{
+ 0501    USAGE_PAGE generic desktop
+ 0906    USAGE keyboard
+ a101    COLLECTION application
+ 0508        USAGE_PAGE led
+ 1901            USAGE_MIN num lock
+ 2903            USAGE_MAX scroll lock
+ 1500            LOGICAL_MIN 0
+ 2501            LOGICAL_MAX 1
+ 7501            REPORT_SIZE 1
+ 9503            REPORT_COUNT 3
+ 9102            OUTPUT variable
+ 094b            USAGE 0x4b ???
+ 9501            REPORT_COUNT 1
+ 9102            OUTPUT variable
+ 9504            REPORT_COUNT 4
+ 9101            OUTPUT constant
+ 0507        USAGE_PAGE keyboard
+ 19e0            USAGE_MIN keyboard left control
+ 29e7            USAGE_MAX keyboard right gui
+ 9508            REPORT_COUNT 8
+ 8102            INPUT variable
+ 7508            REPORT_SIZE 8
+ 9501            REPORT_COUNT 1
+ 8101            INPUT constant
+ 1900            USAGE_MIN 0 (reserved)
+ 2991            USAGE_MAX 145 (keyboard lang2)
+ 26ff00          LOGICAL_MAX 0xff / 255
+ 9506            REPORT_COUNT 6
+ 8100            INPUT
+ c0      COLLECTION_END
+ }}}
+
+--
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/725#comment:3">http://dev.haiku-os.org/ticket/725#comment:3</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="023346.html">[Haiku-bugs] [Haiku] #4576: There should be a BTimer
+</A></li>
+	<LI>Next message: <A HREF="023348.html">[Haiku-bugs] [Haiku] #725: Microsoft Natural Ergonomic Keyboard	4000 issues
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#23347">[ date ]</a>
+              <a href="thread.html#23347">[ thread ]</a>
+              <a href="subject.html#23347">[ subject ]</a>
+              <a href="author.html#23347">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

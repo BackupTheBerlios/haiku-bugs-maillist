@@ -1,0 +1,295 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3308: Possible floating point failures in IEEE 754 tests (was: Possible math related issues)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-January/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233308%3A%20Possible%20floating%20point%20failures%20in%0A%20IEEE%20754%20tests%20%28was%3A%20Possible%20math%20related%20issues%29&In-Reply-To=%3C051.fec5f7cecdafd17d04c909a180791674%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="013779.html">
+   <LINK REL="Next"  HREF="013831.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3308: Possible floating point failures in IEEE 754 tests (was: Possible math related issues)</H1>
+    <B>scottmc</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233308%3A%20Possible%20floating%20point%20failures%20in%0A%20IEEE%20754%20tests%20%28was%3A%20Possible%20math%20related%20issues%29&In-Reply-To=%3C051.fec5f7cecdafd17d04c909a180791674%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3308: Possible floating point failures in IEEE 754 tests (was: Possible math related issues)">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Jan 20 08:25:52 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="013779.html">[Haiku-bugs] [Haiku] #3308: Possible math related issues
+</A></li>
+        <LI>Next message: <A HREF="013831.html">[Haiku-bugs] [Haiku] #3308: Possible floating point failures in IEEE 754 tests
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13826">[ date ]</a>
+              <a href="thread.html#13826">[ thread ]</a>
+              <a href="subject.html#13826">[ subject ]</a>
+              <a href="author.html#13826">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3308: Possible floating point failures in IEEE 754 tests
+-------------------------------+--------------------------------------------
+ Reporter:  scottmc            |       Owner:  axeld         
+     Type:  bug                |      Status:  new           
+ Priority:  normal             |   Milestone:  R1            
+Component:  System/libroot.so  |     Version:  R1 development
+Blockedby:                     |    Platform:  All           
+ Blocking:                     |  
+-------------------------------+--------------------------------------------
+
+Comment(by scottmc):
+
+ Searching around for a math test I located this one:[[BR]]
+ <A HREF="http://www.math.utah.edu/~beebe/software/ieee/">http://www.math.utah.edu/~beebe/software/ieee/</A> [[BR]]
+ [[BR]]
+
+ Compiled it and ran the tests, here's the results of most of them, some
+ passing a few failing:[[BR]]
+ {{{
+ ~/ieee&gt; chkinexact
+ ------------------------------------------------------------------------
+
+ Test at normal underflow limit
+
+ float: 2^(-126)
+ f = 1.17549e-38
+
+ double: 2^(-1022)
+ d = 2.22507e-308
+
+ LONG_DOUBLE: 2^(-16382)
+ q = 3.3621e-4932
+ ------------------------------------------------------------------------
+
+ Test of divide-by-two at normal underflow limit
+
+ float: 2^(-127)
+ f = 5.87747e-39
+
+ double: 2^(-1023)
+ d = 1.11254e-308
+
+ LONG_DOUBLE: 2^(-16383)
+ q = 1.68105e-4932
+ ------------------------------------------------------------------------
+
+ Test of divide-by-two at normal underflow limit
+
+ float: 2^(-128)
+ f = 2.93874e-39
+
+ double: 2^(-1024)
+ d = 5.56268e-309
+
+ LONG_DOUBLE: 2^(-16384)
+ q = 8.40526e-4933
+ ------------------------------------------------------------------------
+
+ Test of subnormal underflow limit
+
+ float: 2^(-149)
+ f = 1.4013e-45
+
+ double: 2^(-1074)
+ d = 4.94066e-324
+
+ LONG_DOUBLE: 2^(-16494)
+ q = 0
+ ------------------------------------------------------------------------
+
+ Test of divide-by-two at subnormal underflow limit
+
+ float: 2^(-150)
+ f = 0
+
+ double: 2^(-1075)
+ d = 0
+
+ LONG_DOUBLE: 2^(-16495)
+ q = 0
+ ------------------------------------------------------------------------
+ ~/ieee&gt; copysign
+ -0 &gt; +0: FALSE
+ -0 &lt; +0: FALSE
+ -0 == +0: TRUE
+ -0 == +0: TRUE
+ copysign(0,-1) = -0.000000
+ copysign(0,1) = 0.000000
+ ~/ieee&gt; datasize
+ Pointer sizes...
+         sizeof(char*)           = 4
+         sizeof(void*)           = 4
+         sizeof(void(*)(void))   = 4
+
+
+ Integer sizes...
+         sizeof(char)            = 1
+         sizeof(short)           = 2
+         sizeof(int)             = 4
+         sizeof(long)            = 4
+         sizeof(long long)       = 8
+
+
+ Floating-point sizes...
+         sizeof(float)           = 4
+         sizeof(double)          = 8
+         sizeof(long double)     = 12
+ ~/ieee&gt; fpinfo2
+ float:
+         sizeof(float) =               4
+         FLT_MANT_DIG =               24
+         machine epsilon =             1.19209e-07  [IEEE 754 32-bit
+ macheps]
+         smallest positive number =    1.40130e-45  [IEEE 754 smallest
+ 32-bit subnormal]
+
+ double:
+         sizeof(double) =              8
+         DBL_MANT_DIG =               53
+         machine epsilon =             2.22045e-16  [IEEE 754 64-bit
+ macheps]
+         smallest positive number =   4.94066e-324  [IEEE 754 smallest
+ 64-bit subnormal]
+
+ LONG_DOUBLE:
+         sizeof(LONG_DOUBLE) =        12
+         LDBL_MANT_DIG =              64
+         machine epsilon =             1.08420e-19  [IEEE 754 80-bit
+ macheps]
+         smallest positive number =  3.64520e-4951  [not IEEE 754
+ conformant]
+
+ ~/ieee&gt; fpshow
+ Single precision
+                        0        0x00000000
+                        1        0x3f800000
+                       -1        0xbf800000
+                        2        0x40000000
+                       -2        0xc0000000
+              1.19209e-07        0x34000000
+             -1.19209e-07        0xb4000000
+               1.4013e-45        0x00000001
+              -1.4013e-45        0x80000001
+              1.17549e-38        0x00800000
+             -1.17549e-38        0x80800000
+              3.40282e+38        0x7f7fffff
+             -3.40282e+38        0xff7fffff
+                      inf        0x7f800000
+                     -inf        0xff800000
+                      nan        0xffc00000
+
+ Double precision
+                        0        0x00000000 00000000
+                        1        0x00000000 3ff00000
+                       -1        0x00000000 bff00000
+                        2        0x00000000 40000000
+                       -2        0x00000000 c0000000
+              1.11022e-16        0x00000002 3ca00000
+             -1.11022e-16        0x00000002 bca00000
+             4.94066e-324        0x00000001 00000000
+            -4.94066e-324        0x00000001 80000000
+             2.22507e-308        0x00000000 00100000
+            -2.22507e-308        0x00000000 80100000
+             1.79769e+308        0xffffffff 7fefffff
+            -1.79769e+308        0xffffffff ffefffff
+                      inf        0x00000000 7ff00000
+                     -inf        0x00000000 fff00000
+                      nan        0x00000000 fff80000
+ ~/ieee&gt; ofl
+ Haiku haikubox 1 r28949 Jan 18 2009 18:24:39 BePC Haiku
+
+
+ Begin test: result = inf*zero
+ Floating-point exception flags = 0x00000001 [ FP_INVALID_OPERATION ]
+ Inf = inf       Zero = 0        Inf*Zero = nan
+
+
+ Begin test: result = one + inf*zero
+ Floating-point exception flags = 0x00000001 [ FP_INVALID_OPERATION ]
+ One = 1 Inf = inf       Zero = 0        One + Inf*Zero = nan
+
+
+ End tests
+ ~/ieee&gt; rwfp2a
+
+ ~/ieee&gt; rwinfnan2
+ NaN was written as: nan
+ Inf was written as: inf
+ NaN was INCORRECTLY input as 0x00000000 0
+ Inf was INCORRECTLY input as 0x00000000 0
+ ~/ieee&gt; rwinfnan3
+ NaN was written as: nan
+ Inf was written as: inf
+ NaN was read as: 999 [INCORRECT]
+ Inf was read as: 999 [INCORRECT]
+ ~/ieee&gt; zerocomp
+ float       comparision of 0 vs -0: OKAY
+ double      comparision of 0 vs -0: OKAY
+ long double comparision of 0 vs -0: OKAY
+ ~/ieee&gt; zerosdq
+
+ Zero handling in single-precision IEEE 754 arithmetic:
+ sizeof(float) = 4
+ +zero is unsigned               (CORRECT)
+ -zero is   signed               (CORRECT)
+ 0 - 0 is unsigned               (CORRECT)
+ (-0) - (+0) is   signed         (CORRECT)
+ (+1)*(0) is unsigned            (CORRECT)
+ (-1)*(0) is   signed            (CORRECT)
+
+ Zero handling in double-precision IEEE 754 arithmetic:
+ sizeof(double) = 8
+ +zero is unsigned               (CORRECT)
+ -zero is   signed               (CORRECT)
+ 0 - 0 is unsigned               (CORRECT)
+ (-0) - (+0) is   signed         (CORRECT)
+ (+1)*(0) is unsigned            (CORRECT)
+ (-1)*(0) is   signed            (CORRECT)
+
+ Zero handling in extended-precision IEEE 754 arithmetic:
+ sizeof(long double) = 12
+ +zero is unsigned               (CORRECT)
+ -zero is unsigned               (WRONG)
+ 0 - 0 is unsigned               (CORRECT)
+ (-0) - (+0) is unsigned         (WRONG)
+ (+1)*(0) is unsigned            (CORRECT)
+ (-1)*(0) is unsigned            (WRONG)
+ ~/ieee&gt;
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3308#comment:4">http://dev.haiku-os.org/ticket/3308#comment:4</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="013779.html">[Haiku-bugs] [Haiku] #3308: Possible math related issues
+</A></li>
+	<LI>Next message: <A HREF="013831.html">[Haiku-bugs] [Haiku] #3308: Possible floating point failures in IEEE 754 tests
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13826">[ date ]</a>
+              <a href="thread.html#13826">[ thread ]</a>
+              <a href="subject.html#13826">[ subject ]</a>
+              <a href="author.html#13826">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1599: Haiku Booting on a MacBook Info...(gets	stuck)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231599%3A%20Haiku%20Booting%20on%20a%20MacBook%20Info...%28gets%0A%09stuck%29&In-Reply-To=%3C041.087bc019eace8c6577ade1023106e25a%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003448.html">
+   <LINK REL="Next"  HREF="003450.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1599: Haiku Booting on a MacBook Info...(gets	stuck)</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231599%3A%20Haiku%20Booting%20on%20a%20MacBook%20Info...%28gets%0A%09stuck%29&In-Reply-To=%3C041.087bc019eace8c6577ade1023106e25a%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1599: Haiku Booting on a MacBook Info...(gets	stuck)">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Nov  2 01:56:27 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003448.html">[Haiku-bugs] [Haiku] #1106: Port USB mass storage driver to new SCSI module API
+</A></li>
+        <LI>Next message: <A HREF="003450.html">[Haiku-bugs] [Haiku] #1599: Haiku Booting on a MacBook	Info...(gets stuck)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3449">[ date ]</a>
+              <a href="thread.html#3449">[ thread ]</a>
+              <a href="subject.html#3449">[ subject ]</a>
+              <a href="author.html#3449">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1599: Haiku Booting on a MacBook Info...(gets stuck)
+--------------------------+-------------------------------------------------
+ Reporter:  kvdman        |       Owner:  axeld         
+     Type:  bug           |      Status:  new           
+ Priority:  normal        |   Milestone:  R1            
+Component:  Drivers/Disk  |     Version:  R1 development
+ Platform:  All           |  
+--------------------------+-------------------------------------------------
+ Ok, this is a little confusing.
+
+ I have a core 2 duo macbook.
+
+ Using Vmware Fusion, I've enabled a physical bootcamp partition, and used
+ Zeta to mount the disk, format it, install Haiku, and make it bootable.
+
+ Macbooks don't have a PS/2 controller, so I can't select any safe mode
+ settings or type anything.
+
+ From ReactOS:
+
+ 'ReactOS development builds (trunk) have run fine now for two days on
+ Intel Mac (with Bootcamp installed) computers. Intel Mac's consist of
+ standard hardware but there are some differences which had made it
+ impossible to run ReactOS before. Intel Mac's don't have PS/2 keyboard
+ controllers. GRUB as well as Darwin's BIOS loader had similar problems
+ sometime ago, good that it has been fixed in ReactOS too. Intel Mac's BIOS
+ has a &quot;serial port&quot; bug, it reports that COM1 exist, but no one is there
+ physically. Two other BIOS bug are related to reading CD/DVD drives.
+ ReactOS does support HID-compliant devices, especially USB keyboard and
+ mouse which is relevant for Intel Mac. We want to thank Michael Steil for
+ making this possible. Stay tuned for ReactOS 0.3.1 which will incorporate
+ these improvements and will be released in late december 2006.'
+
+ Anyways...
+
+ I was wondering if Haiku writes a log by default, that way I could mount
+ the physical disk Haiku is installed on and read it under Zeta...
+
+ What I have done, is booted the physical drive that Haiku is installed on
+ through Vmware Fusion in Mac OS X. I added a serial port, and got the log.
+ Vmware crashes though (see screenshot), and here's the log:
+ [<A HREF="http://rafb.net/p/jFLYHU40.html">http://rafb.net/p/jFLYHU40.html</A>]
+
+ When I boot the physical partition normally (no emulator), the system
+ shows the Haiku boot screen but will stay there forever.
+
+ Anyways, hope this info is useful.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1599">http://dev.haiku-os.org/ticket/1599</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003448.html">[Haiku-bugs] [Haiku] #1106: Port USB mass storage driver to new SCSI module API
+</A></li>
+	<LI>Next message: <A HREF="003450.html">[Haiku-bugs] [Haiku] #1599: Haiku Booting on a MacBook	Info...(gets stuck)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3449">[ date ]</a>
+              <a href="thread.html#3449">[ thread ]</a>
+              <a href="subject.html#3449">[ subject ]</a>
+              <a href="author.html#3449">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

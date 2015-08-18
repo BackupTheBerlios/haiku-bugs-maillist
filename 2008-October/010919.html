@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2817: setpriority and getpriority are missing to compile ocaml out of the box under Haiku
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232817%3A%20setpriority%20and%20getpriority%20are%20missing%0A%20to%20compile%20ocaml%20out%20of%20the%20box%20under%20Haiku&In-Reply-To=%3C038.e5d6a930f45aa0f22667523d4b2ddaca%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010918.html">
+   <LINK REL="Next"  HREF="010920.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2817: setpriority and getpriority are missing to compile ocaml out of the box under Haiku</H1>
+    <B>oco</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232817%3A%20setpriority%20and%20getpriority%20are%20missing%0A%20to%20compile%20ocaml%20out%20of%20the%20box%20under%20Haiku&In-Reply-To=%3C038.e5d6a930f45aa0f22667523d4b2ddaca%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2817: setpriority and getpriority are missing to compile ocaml out of the box under Haiku">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Oct 11 11:42:28 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010918.html">[Haiku-bugs] [Haiku] #2816: Gateway is not set correctly when	booting through pxe
+</A></li>
+        <LI>Next message: <A HREF="010920.html">[Haiku-bugs] [Haiku] #2680: Panic on boot: Fatal exception &quot;NMI Interrupt&quot; occurred!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10919">[ date ]</a>
+              <a href="thread.html#10919">[ thread ]</a>
+              <a href="subject.html#10919">[ subject ]</a>
+              <a href="author.html#10919">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2817: setpriority and getpriority are missing to compile ocaml out of the box
+under Haiku
+-------------------------------+--------------------------------------------
+ Reporter:  oco                |       Owner:  axeld         
+     Type:  bug                |      Status:  new           
+ Priority:  normal             |   Milestone:  R1            
+Component:  System/libroot.so  |     Version:  R1 development
+Blockedby:                     |    Platform:  All           
+ Blocking:                     |  
+-------------------------------+--------------------------------------------
+ setpriority and getpriority are not yet implemented. There is a TODO in
+ posix/sys/resource.h.
+
+ Does the algorithm used in the renice command line tool (in src/bin) could
+ be used in lib root ?
+
+ Basically, renice iterate over threads of a team to set the thread
+ priority on each one. A basic conversion function adapt the unix priority
+ to a beos thread one.
+
+ If so, maybe i can try to implement this.
+
+ This is the only thing missing to compile ocaml out of the box under Haiku
+ (after updating the usual config.sub and config.guess).
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2817">http://dev.haiku-os.org/ticket/2817</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010918.html">[Haiku-bugs] [Haiku] #2816: Gateway is not set correctly when	booting through pxe
+</A></li>
+	<LI>Next message: <A HREF="010920.html">[Haiku-bugs] [Haiku] #2680: Panic on boot: Fatal exception &quot;NMI Interrupt&quot; occurred!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10919">[ date ]</a>
+              <a href="thread.html#10919">[ thread ]</a>
+              <a href="subject.html#10919">[ subject ]</a>
+              <a href="author.html#10919">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

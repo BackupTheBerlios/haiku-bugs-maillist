@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2804: booting fail on PATA disks using AHCI capable chipsets?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232804%3A%20booting%20fail%20on%20PATA%20disks%20using%0A%20AHCI%20capable%20chipsets%3F&In-Reply-To=%3C051.997873d2e418075ad65048e480dd85ee%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010783.html">
+   <LINK REL="Next"  HREF="010786.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2804: booting fail on PATA disks using AHCI capable chipsets?</H1>
+    <B>rudolfc</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232804%3A%20booting%20fail%20on%20PATA%20disks%20using%0A%20AHCI%20capable%20chipsets%3F&In-Reply-To=%3C051.997873d2e418075ad65048e480dd85ee%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2804: booting fail on PATA disks using AHCI capable chipsets?">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Oct  6 20:45:01 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010783.html">[Haiku-bugs] [Haiku] #2804: booting fail on PATA disks using AHCI capable chipsets?
+</A></li>
+        <LI>Next message: <A HREF="010786.html">[Haiku-bugs] [Haiku] #2804: booting fail on PATA disks using AHCI capable chipsets?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10784">[ date ]</a>
+              <a href="thread.html#10784">[ thread ]</a>
+              <a href="subject.html#10784">[ subject ]</a>
+              <a href="author.html#10784">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2804: booting fail on PATA disks using AHCI capable chipsets?
+------------------------+---------------------------------------------------
+  Reporter:  rudolfc    |       Owner:  axeld         
+      Type:  bug        |      Status:  new           
+  Priority:  normal     |   Milestone:  R1            
+ Component:  - General  |     Version:  R1 development
+Resolution:             |   Blockedby:                
+  Platform:  All        |    Blocking:                
+------------------------+---------------------------------------------------
+
+Comment(by rudolfc):
+
+ Oh,
+
+ The ATA busmanager quits this way (on writing):
+ -it (thinks it) sends all sectors it should, so repeatedly sectors are
+ written code-wise.
+ -after it completed writing (it thinks), it waits for drq_down, but fails:
+ ata_exec_pio_transfer:ata_wait_for_drqdown failed
+ ata_exec_pio_transfer:error
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2804#comment:1">http://dev.haiku-os.org/ticket/2804#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010783.html">[Haiku-bugs] [Haiku] #2804: booting fail on PATA disks using AHCI capable chipsets?
+</A></li>
+	<LI>Next message: <A HREF="010786.html">[Haiku-bugs] [Haiku] #2804: booting fail on PATA disks using AHCI capable chipsets?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10784">[ date ]</a>
+              <a href="thread.html#10784">[ thread ]</a>
+              <a href="subject.html#10784">[ subject ]</a>
+              <a href="author.html#10784">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1970: VM's sAvailableMemory counter is	possibly inaccurate
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231970%3A%20VM%27s%20sAvailableMemory%20counter%20is%0A%09possibly%20inaccurate&In-Reply-To=%3C044.e921a4a64e1421d6e6a9995b312a64a9%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005838.html">
+   <LINK REL="Next"  HREF="005830.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1970: VM's sAvailableMemory counter is	possibly inaccurate</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231970%3A%20VM%27s%20sAvailableMemory%20counter%20is%0A%09possibly%20inaccurate&In-Reply-To=%3C044.e921a4a64e1421d6e6a9995b312a64a9%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1970: VM's sAvailableMemory counter is	possibly inaccurate">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Mar 27 16:42:41 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005838.html">[Haiku-bugs] [Haiku] #1969: No video driver for Intel 82845G/GL
+</A></li>
+        <LI>Next message: <A HREF="005830.html">[Haiku-bugs] [Haiku] #1970: VM's sAvailableMemory counter is possibly inaccurate
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5828">[ date ]</a>
+              <a href="thread.html#5828">[ thread ]</a>
+              <a href="subject.html#5828">[ subject ]</a>
+              <a href="author.html#5828">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1970: VM's sAvailableMemory counter is possibly inaccurate
+---------------------------+------------------------------------------------
+ Reporter:  anevilyak      |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1/alpha1     
+Component:  System/Kernel  |     Version:  R1 development
+ Platform:  All            |  
+---------------------------+------------------------------------------------
+ As exposed by the new way of doing get_system_info(), the number given by
+ sAvailableMemory appears to be incorrect. After doing something involving
+ heavy amounts of I/O / memory allocations, (i.e. a large svn checkout or
+ attempting a Haiku build from within Haiku), this number steadily grows
+ until it's significantly larger than the amount of physical RAM in the
+ system. As an example, after attempting the build, sAvailableMemory
+ reports back 4.8GB on a system that has only 1GB of physical RAM. Even
+ accounting for overcommits, this seems far too high, especially given lack
+ of swap.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1970">http://dev.haiku-os.org/ticket/1970</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005838.html">[Haiku-bugs] [Haiku] #1969: No video driver for Intel 82845G/GL
+</A></li>
+	<LI>Next message: <A HREF="005830.html">[Haiku-bugs] [Haiku] #1970: VM's sAvailableMemory counter is possibly inaccurate
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5828">[ date ]</a>
+              <a href="thread.html#5828">[ thread ]</a>
+              <a href="subject.html#5828">[ subject ]</a>
+              <a href="author.html#5828">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

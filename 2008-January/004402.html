@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1236: Intel 82801FB USB Controllers: BIOS Legacy USB Support: ON disables publishing USB2 devices.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-January/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231236%3A%20Intel%2082801FB%20USB%20Controllers%3A%20BIOS%0A%20Legacy%20USB%20Support%3A%20ON%20disables%20publishing%20USB2%20devices.&In-Reply-To=%3C052.90b74d04449e4e9fc35b352a331d6687%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="004401.html">
+   <LINK REL="Next"  HREF="004403.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1236: Intel 82801FB USB Controllers: BIOS Legacy USB Support: ON disables publishing USB2 devices.</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231236%3A%20Intel%2082801FB%20USB%20Controllers%3A%20BIOS%0A%20Legacy%20USB%20Support%3A%20ON%20disables%20publishing%20USB2%20devices.&In-Reply-To=%3C052.90b74d04449e4e9fc35b352a331d6687%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1236: Intel 82801FB USB Controllers: BIOS Legacy USB Support: ON disables publishing USB2 devices.">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Jan 22 07:42:02 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="004401.html">[Haiku-bugs] [Haiku] #1721: MouseDown don't reach Window for Mozilla menus/popups
+</A></li>
+        <LI>Next message: <A HREF="004403.html">[Haiku-bugs] [Haiku] #945: why not /boot/haiku ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4402">[ date ]</a>
+              <a href="thread.html#4402">[ thread ]</a>
+              <a href="subject.html#4402">[ subject ]</a>
+              <a href="author.html#4402">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1236: Intel 82801FB USB Controllers: BIOS Legacy USB Support: ON disables
+publishing USB2 devices.
+--------------------------+-------------------------------------------------
+  Reporter:  siarzhuk     |       Owner:  mmlr          
+      Type:  bug          |      Status:  assigned      
+  Priority:  normal       |   Milestone:  R1            
+ Component:  Drivers/USB  |     Version:  R1 development
+Resolution:               |    Platform:  All           
+--------------------------+-------------------------------------------------
+Comment (by siarzhuk):
+
+ I have tested described situations with Haiku r23691.
+
+ The Test:
+ Publishing and republishing USB1/USB2 devices both with enabled and
+ disabled &quot;Support Legacy USB&quot; BIOS option. Following USB devices were
+ used:
+  - Iomega ZIP 100. It is USB1. It was used in original test as &quot;USB1 Mass
+ Storage&quot;;
+  - Targa 250 USB2 external HDD. This one is new here. Unfortunately, used
+ in original test DiskOnKey 256 MB flash disk currently has some
+ malfunctions and cannot be used;
+  - Vivanco Twin-Tower USB1 Audio device. This buddy is also new here;
+  - USB1 D-Link DRU-H7 Hub in non-powered mode with mouse, keyboard and
+ Fritz! DSL modem attached to it;
+
+ Results:
+ Looks like hot-plug publishing and republishing works perfectly regards of
+ &quot;Legacy USB support&quot; BIOS option. Both single devices from list above and
+ USB hub with all attached devices republished correctly. Some unclear
+ situation was one time with USB audio - it was not published on very first
+ attach. But I could not reproduce it again. I think we investigate it
+ later during testing corresponding driver. ;-)
+
+ Conclusions:
+ 1) The &quot;Legacy BIOS option&quot; phenomena is not observed anymore;
+ 2) Republishing works.
+
+ I have no objections to close this ticket. On my side those problems are
+ not observed. Feel free to do it. And let me congratulate you with really
+ perfect work! :-) Hope I'll be able to help you with other components.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1236#comment:5">http://dev.haiku-os.org/ticket/1236#comment:5</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="004401.html">[Haiku-bugs] [Haiku] #1721: MouseDown don't reach Window for Mozilla menus/popups
+</A></li>
+	<LI>Next message: <A HREF="004403.html">[Haiku-bugs] [Haiku] #945: why not /boot/haiku ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4402">[ date ]</a>
+              <a href="thread.html#4402">[ thread ]</a>
+              <a href="subject.html#4402">[ subject ]</a>
+              <a href="author.html#4402">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

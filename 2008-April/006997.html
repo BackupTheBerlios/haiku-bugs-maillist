@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2182: Magnify quits
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232182%3A%20Magnify%20quits&In-Reply-To=%3C053.4ef58b9e16b8dce38cba6af59424b679%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006984.html">
+   <LINK REL="Next"  HREF="007009.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2182: Magnify quits</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232182%3A%20Magnify%20quits&In-Reply-To=%3C053.4ef58b9e16b8dce38cba6af59424b679%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2182: Magnify quits">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Apr 30 08:59:23 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006984.html">[Haiku-bugs] [Haiku] #2182: Magnify quits
+</A></li>
+        <LI>Next message: <A HREF="007009.html">[Haiku-bugs] [Haiku] #2182: Magnify quits
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6997">[ date ]</a>
+              <a href="thread.html#6997">[ thread ]</a>
+              <a href="subject.html#6997">[ subject ]</a>
+              <a href="author.html#6997">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2182: Magnify quits
+------------------------+---------------------------------------------------
+  Reporter:  meanwhile  |       Owner:  axeld         
+      Type:  bug        |      Status:  new           
+  Priority:  normal     |   Milestone:  R1            
+ Component:  - General  |     Version:  R1 development
+Resolution:             |    Platform:  All           
+------------------------+---------------------------------------------------
+Comment (by mmlr):
+
+ If you run Magnify from the Terminal it will tell you that it was run in
+ an unsupported colorspace. This is because Haiku will pick up higher bit
+ depth VESA modes now which will lead to 24bit being selected (if
+ available) instead of 16bit. Axel did some changes so 24bit modes are
+ advertised as 32bit AFAIR. This is more or less &quot;correct&quot; as it doesn't
+ really matter whether you are using 24bits or 32bits in the frame buffer,
+ as you never have an alpha channel in the frame buffer anyway which makes
+ 32bits modes simply waste a byte per pixel with the same result as if you
+ were running 24bits. But for functions that draw directly into the frame
+ buffer (BDirectWindow -&gt; Chart for example will run incorrectly in 24bit
+ mode too) or apps that grab parts of the frame buffer like Magnify does,
+ they need to be aware of the difference in 24bit vs. 32bit mode and need
+ to support each mode individually. Also the preflets should obviously
+ support it.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2182#comment:4">http://dev.haiku-os.org/ticket/2182#comment:4</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006984.html">[Haiku-bugs] [Haiku] #2182: Magnify quits
+</A></li>
+	<LI>Next message: <A HREF="007009.html">[Haiku-bugs] [Haiku] #2182: Magnify quits
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6997">[ date ]</a>
+              <a href="thread.html#6997">[ thread ]</a>
+              <a href="subject.html#6997">[ subject ]</a>
+              <a href="author.html#6997">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

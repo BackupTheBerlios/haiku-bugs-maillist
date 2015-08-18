@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2643: Black screen when DVI connected
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232643%3A%20Black%20screen%20when%20DVI%20connected&In-Reply-To=%3C052.afc427a001a79cb2d303cdc25806b3fb%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="017882.html">
+   <LINK REL="Next"  HREF="017884.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2643: Black screen when DVI connected</H1>
+    <B>andreasf</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232643%3A%20Black%20screen%20when%20DVI%20connected&In-Reply-To=%3C052.afc427a001a79cb2d303cdc25806b3fb%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2643: Black screen when DVI connected">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Jun  6 16:13:24 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="017882.html">[Haiku-bugs] [Haiku] #2643: Black screen when DVI connected
+</A></li>
+        <LI>Next message: <A HREF="017884.html">[Haiku-bugs] [Haiku] #1876: Media preferences, clicking on some checkboxes switches back to first tab
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17883">[ date ]</a>
+              <a href="thread.html#17883">[ thread ]</a>
+              <a href="subject.html#17883">[ subject ]</a>
+              <a href="author.html#17883">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2643: Black screen when DVI connected
+-------------------------------------+--------------------------------------
+ Reporter:  andreasf                 |       Owner:  rudolfc       
+     Type:  bug                      |      Status:  new           
+ Priority:  normal                   |   Milestone:  R1            
+Component:  Drivers/Graphics/nVidia  |     Version:  R1 development
+Blockedby:                           |    Platform:  x86           
+ Blocking:  1845                     |  
+-------------------------------------+--------------------------------------
+
+Comment(by andreasf):
+
+ I just tried with this patch
+ {{{
+ diff --git a/src/add-ons/kernel/drivers/graphics/nvidia/nvidia.settings
+ b/src/add-ons/kernel/drivers/graphics/nvidia/nvidia.settings
+ index 8474fd7..35482a2 100644
+ --- a/src/add-ons/kernel/drivers/graphics/nvidia/nvidia.settings
+ +++ b/src/add-ons/kernel/drivers/graphics/nvidia/nvidia.settings
+ @@ -26,7 +26,7 @@ block_acc     false           # if true disables the
+ acceleration engine
+
+  # WARNING: tweak alert! modify stuff below on your own risk...
+  unhide_fw      false           # if true 'unhide' cards AGP fastwrite
+ support on cards that hide it
+ -pgm_panel      false           # if false don't program DVI and laptop
+ panel pixelclocks (refreshrates)
+ +pgm_panel      true            # if false don't program DVI and laptop
+ panel pixelclocks (refreshrates)
+  vga_on_tv      false           # if true enables VGA output on the head
+ outputting to TV
+  #gpu_clk       150                     # in Mhz, (tries to) override
+ default GPU clockspeed (be carefull!!!)
+  #ram_clk       150                     # in Mhz, (tries to) override
+ default cardRAM clockspeed (be carefull!!!)
+ }}}
+ and it did not make a change.
+
+ I found an Apple DVI-to-VGA converter and was able to boot Haiku with two
+ VGA screens connected this way. The desktop image was displayed on the
+ original VGA screen, the other one went black, with no option to mirror or
+ extend the desktop. Am I correct to assume that it's simply not yet
+ implemented in Haiku?
+
+ If I connect via the DVI-to-VGA adapter only, the desktop is displayed
+ correctly on that screen.
+
+ So no issue with the connector apparently, more a DVI-specific issue here,
+ at r30978.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2643#comment:26">http://dev.haiku-os.org/ticket/2643#comment:26</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="017882.html">[Haiku-bugs] [Haiku] #2643: Black screen when DVI connected
+</A></li>
+	<LI>Next message: <A HREF="017884.html">[Haiku-bugs] [Haiku] #1876: Media preferences, clicking on some checkboxes switches back to first tab
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17883">[ date ]</a>
+              <a href="thread.html#17883">[ thread ]</a>
+              <a href="subject.html#17883">[ subject ]</a>
+              <a href="author.html#17883">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

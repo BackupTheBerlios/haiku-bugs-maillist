@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #732: [app_server] doesn't maintain per-application system fonts
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23732%3A%20%5Bapp_server%5D%20doesn%27t%20maintain%0A%20per-application%20system%20fonts&In-Reply-To=%3C049.f992ada4a072d4e388188e01fd354048%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="016369.html">
+   <LINK REL="Next"  HREF="016337.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #732: [app_server] doesn't maintain per-application system fonts</H1>
+    <B>stpere</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23732%3A%20%5Bapp_server%5D%20doesn%27t%20maintain%0A%20per-application%20system%20fonts&In-Reply-To=%3C049.f992ada4a072d4e388188e01fd354048%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #732: [app_server] doesn't maintain per-application system fonts">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Apr 18 23:30:13 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="016369.html">[Haiku-bugs] [Haiku] #3789: Rewrite DataTranslation using the	Layout API.
+</A></li>
+        <LI>Next message: <A HREF="016337.html">[Haiku-bugs] [Haiku] #3605: Template to restore customizations &amp; missing author info to blog teasers
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16335">[ date ]</a>
+              <a href="thread.html#16335">[ thread ]</a>
+              <a href="subject.html#16335">[ subject ]</a>
+              <a href="author.html#16335">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#732: [app_server] doesn't maintain per-application system fonts
+---------------------------------+------------------------------------------
+  Reporter:  diver               |       Owner:  stippi        
+      Type:  bug                 |      Status:  assigned      
+  Priority:  normal              |   Milestone:  R1            
+ Component:  Servers/app_server  |     Version:  R1 development
+Resolution:                      |   Blockedby:                
+  Platform:  All                 |    Blocking:                
+---------------------------------+------------------------------------------
+
+Comment(by stpere):
+
+ Okay, I'm glad to present this patch :) I'm proposing the patch for review
+ and comments, there might be some rough edges and I'm willing to fix them.
+
+ Highlights :
+
+ * This patch (should) keep binary compatibility with apps
+
+ * I introduced a new message (AS_GET_SYSTEM_FONT) in the app server
+ protocol
+
+ * There is a new constructor BFont(char *which) that fetch the current
+ system font for this application..
+
+ * The Decorator was reading its font from a DesktopSettings entity. It's
+ no longer the case, it reads it from its associated application
+
+
+ What is missing :
+
+ * The feedback mecanism between currently running apps and the app_server
+ to inform them that fonts are changing so that they can update their GUI
+ (or ignore the change).  It could be a function hook or a message I
+ suppose. Discussion on this topic is welcome.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/732#comment:8">http://dev.haiku-os.org/ticket/732#comment:8</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="016369.html">[Haiku-bugs] [Haiku] #3789: Rewrite DataTranslation using the	Layout API.
+</A></li>
+	<LI>Next message: <A HREF="016337.html">[Haiku-bugs] [Haiku] #3605: Template to restore customizations &amp; missing author info to blog teasers
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16335">[ date ]</a>
+              <a href="thread.html#16335">[ thread ]</a>
+              <a href="subject.html#16335">[ subject ]</a>
+              <a href="author.html#16335">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

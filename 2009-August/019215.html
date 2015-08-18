@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4201: Transaction getting too big for log when checkfs corrects too many errors
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234201%3A%20Transaction%20getting%20too%20big%20for%20log%0A%20when%20checkfs%20corrects%20too%20many%20errors&In-Reply-To=%3C039.757716486dea144d2938d89f64d3ec00%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="019214.html">
+   <LINK REL="Next"  HREF="019274.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4201: Transaction getting too big for log when checkfs corrects too many errors</H1>
+    <B>mmlr</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234201%3A%20Transaction%20getting%20too%20big%20for%20log%0A%20when%20checkfs%20corrects%20too%20many%20errors&In-Reply-To=%3C039.757716486dea144d2938d89f64d3ec00%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4201: Transaction getting too big for log when checkfs corrects too many errors">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Aug  8 20:13:28 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="019214.html">[Haiku-bugs] [Haiku] #2807: editing icons in the Leaf menu
+</A></li>
+        <LI>Next message: <A HREF="019274.html">[Haiku-bugs] [Haiku] #4201: Transaction getting too big for log when checkfs corrects too many errors
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19215">[ date ]</a>
+              <a href="thread.html#19215">[ thread ]</a>
+              <a href="subject.html#19215">[ subject ]</a>
+              <a href="author.html#19215">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4201: Transaction getting too big for log when checkfs corrects too many errors
+------------------------------+---------------------------------------------
+ Reporter:  mmlr              |       Owner:  axeld         
+     Type:  bug               |      Status:  new           
+ Priority:  normal            |   Milestone:  R1            
+Component:  File Systems/BFS  |     Version:  R1 development
+Blockedby:                    |    Platform:  All           
+ Blocking:                    |  
+------------------------------+---------------------------------------------
+ On my source partition that is riddled with name mismatches, correcting
+ them with checkfs causes a too large transaction to be generated. Just
+ after checkfs has run through a corresponding message is printed to the
+ syslog. When rebooting, many more such messages get printed with
+ increasing block counts. If I don't reboot after running checkfs but use
+ the system for a little while longer, there are sometimes panics that
+ indicate &quot;transaction aborted, inode xy still around!&quot;. Note that due to
+ #4196 I don't get that far unless I disable removing invalid nodes from
+ the BFS disk_system add-on.
+
+ {{{
+ KERN: transaction too large (14836 blocks, log size 2048)!
+ KERN: transaction too large (14837 blocks, log size 2048)!
+ KERN: transaction too large (14838 blocks, log size 2048)!
+ KERN: transaction too large (14839 blocks, log size 2048)!
+ KERN: transaction too large (14840 blocks, log size 2048)!
+ KERN: transaction too large (14841 blocks, log size 2048)!
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4201">http://dev.haiku-os.org/ticket/4201</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="019214.html">[Haiku-bugs] [Haiku] #2807: editing icons in the Leaf menu
+</A></li>
+	<LI>Next message: <A HREF="019274.html">[Haiku-bugs] [Haiku] #4201: Transaction getting too big for log when checkfs corrects too many errors
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19215">[ date ]</a>
+              <a href="thread.html#19215">[ thread ]</a>
+              <a href="subject.html#19215">[ subject ]</a>
+              <a href="author.html#19215">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

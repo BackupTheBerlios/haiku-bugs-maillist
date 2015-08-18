@@ -1,0 +1,278 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4322: [Tracker] crash in BList::ItemAt ()
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234322%3A%20%5BTracker%5D%20crash%20in%20BList%3A%3AItemAt%20%28%29&In-Reply-To=%3C040.578247a8fa3ca0b33db52601d06e23d5%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="019993.html">
+   <LINK REL="Next"  HREF="020000.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4322: [Tracker] crash in BList::ItemAt ()</H1>
+    <B>diver</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234322%3A%20%5BTracker%5D%20crash%20in%20BList%3A%3AItemAt%20%28%29&In-Reply-To=%3C040.578247a8fa3ca0b33db52601d06e23d5%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4322: [Tracker] crash in BList::ItemAt ()">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Aug 23 20:41:26 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="019993.html">[Haiku-bugs] [Haiku] #3075: [Deskbar] crash in BList::ItemAt () (was: [Deskbar] crash in BList::ItemAt)
+</A></li>
+        <LI>Next message: <A HREF="020000.html">[Haiku-bugs] [Haiku] #4322: [Tracker] crash in BList::ItemAt ()
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19994">[ date ]</a>
+              <a href="thread.html#19994">[ thread ]</a>
+              <a href="subject.html#19994">[ subject ]</a>
+              <a href="author.html#19994">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4322: [Tracker] crash in BList::ItemAt ()
+----------------------------------+-----------------------------------------
+ Reporter:  diver                 |       Owner:  axeld         
+     Type:  bug                   |      Status:  new           
+ Priority:  normal                |   Milestone:  R1            
+Component:  Applications/Tracker  |     Version:  R1 development
+Blockedby:                        |    Platform:  All           
+ Blocking:                        |  
+----------------------------------+-----------------------------------------
+ Tracker crashed after downloading a file in BeZilla to Desktop.
+
+ {{{
+ Thread 139 caused an exception: Segment violation
+ Reading symbols from /boot/system/runtime_loader...done.
+ Loaded symbols for /boot/system/runtime_loader
+ Reading symbols from /boot/system/lib/libbe.so...done.
+ Loaded symbols for /boot/system/lib/libbe.so
+ Reading symbols from /boot/system/lib/libtracker.so...done.
+ Loaded symbols for /boot/system/lib/libtracker.so
+ Reading symbols from /boot/system/lib/libroot.so...done.
+ Loaded symbols for /boot/system/lib/libroot.so
+ Reading symbols from /boot/system/lib/libstdc++.r4.so...done.
+ Loaded symbols for /boot/system/lib/libstdc++.r4.so
+ Reading symbols from /boot/system/lib/libtranslation.so...done.
+ Loaded symbols for /boot/system/lib/libtranslation.so
+ Reading symbols from /boot/system/lib/libtextencoding.so...done.
+ Loaded symbols for /boot/system/lib/libtextencoding.so
+ Reading symbols from /boot/system/apps/Workspaces...done.
+ Loaded symbols for /boot/system/apps/Workspaces
+ Reading symbols from /boot/system/add-
+ ons/Translators/BMPTranslator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/BMPTranslator
+ Reading symbols from /boot/system/add-
+ ons/Translators/EXRTranslator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/EXRTranslator
+ Reading symbols from /boot/system/lib/libilmimf.so...done.
+ Loaded symbols for /boot/system/lib/libilmimf.so
+ Reading symbols from /boot/system/lib/libz.so...done.
+ Loaded symbols for /boot/system/lib/libz.so
+ Reading symbols from /boot/system/add-
+ ons/Translators/GIFTranslator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/GIFTranslator
+ Reading symbols from /boot/system/add-
+ ons/Translators/JPEG2000Translator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/JPEG2000Translator
+ Reading symbols from /boot/system/add-
+ ons/Translators/JPEGTranslator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/JPEGTranslator
+ Reading symbols from /boot/system/add-
+ ons/Translators/PCXTranslator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/PCXTranslator
+ Reading symbols from /boot/system/add-
+ ons/Translators/PNGTranslator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/PNGTranslator
+ Reading symbols from /boot/system/add-
+ ons/Translators/PPMTranslator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/PPMTranslator
+ Reading symbols from /boot/system/add-
+ ons/Translators/RAWTranslator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/RAWTranslator
+ Reading symbols from /boot/system/add-ons/Translators/RTF-
+ Translator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/RTF-Translator
+ Reading symbols from /boot/system/add-
+ ons/Translators/SGITranslator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/SGITranslator
+ Reading symbols from /boot/system/add-
+ ons/Translators/STXTTranslator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/STXTTranslator
+ Reading symbols from /boot/system/add-
+ ons/Translators/TGATranslator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/TGATranslator
+ Reading symbols from /boot/system/add-
+ ons/Translators/TIFFTranslator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/TIFFTranslator
+ Reading symbols from /boot/system/add-
+ ons/Translators/WonderBrushTranslator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/WonderBrushTranslator
+ [tcsetpgrp failed in terminal_inferior: Invalid Argument]
+ [Switching to team /boot/system/Tracker (84) thread w&gt;/boot/home/Desktop
+ (139)]
+ 0x003e24f6 in BList::ItemAt () from /boot/system/lib/libbe.so
+ (gdb) bt
+ #0  0x003e24f6 in BList::ItemAt () from /boot/system/lib/libbe.so
+ #1  0x005ac851 in BPrivate::BPose::WidgetFor ()
+    from /boot/system/lib/libtracker.so
+ #2  0x005ad14d in BPrivate::BPose::CalcRect ()
+    from /boot/system/lib/libtracker.so
+ #3  0x005ca1ef in BPrivate::BPoseView::ClearSelection ()
+    from /boot/system/lib/libtracker.so
+ #4  0x005c74ca in BPrivate::BPoseView::AddRemoveSelectionRange ()
+    from /boot/system/lib/libtracker.so
+ #5  0x005c42d9 in BPrivate::BPoseView::MouseDown ()
+    from /boot/system/lib/libtracker.so
+ #6  0x00384aeb in BWindow::DispatchMessage () from
+ /boot/system/lib/libbe.so
+ #7  0x003892cc in BWindow::task_looper () from /boot/system/lib/libbe.so
+ #8  0x002c67e3 in BLooper::_task0_ () from /boot/system/lib/libbe.so
+ #9  0x0069f124 in thread_entry () from /boot/system/lib/libroot.so
+ #10 0x70184fec in ?? ()
+ (gdb)
+ }}}
+
+ After taking screenshot and saving to Desktop:
+
+ {{{
+ Thread 141 caused an exception: Segment violation
+ Reading symbols from /boot/system/runtime_loader...done.
+ Loaded symbols for /boot/system/runtime_loader
+ Reading symbols from /boot/system/lib/libbe.so...done.
+ Loaded symbols for /boot/system/lib/libbe.so
+ Reading symbols from /boot/system/lib/libtracker.so...done.
+ Loaded symbols for /boot/system/lib/libtracker.so
+ Reading symbols from /boot/system/lib/libroot.so...done.
+ Loaded symbols for /boot/system/lib/libroot.so
+ Reading symbols from /boot/system/lib/libstdc++.r4.so...done.
+ Loaded symbols for /boot/system/lib/libstdc++.r4.so
+ Reading symbols from /boot/system/lib/libtranslation.so...done.
+ Loaded symbols for /boot/system/lib/libtranslation.so
+ Reading symbols from /boot/system/lib/libtextencoding.so...done.
+ Loaded symbols for /boot/system/lib/libtextencoding.so
+ Reading symbols from /boot/system/apps/Workspaces...done.
+ Loaded symbols for /boot/system/apps/Workspaces
+ Reading symbols from /boot/system/add-
+ ons/Translators/BMPTranslator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/BMPTranslator
+ Reading symbols from /boot/system/add-
+ ons/Translators/EXRTranslator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/EXRTranslator
+ Reading symbols from /boot/system/lib/libilmimf.so...done.
+ Loaded symbols for /boot/system/lib/libilmimf.so
+ Reading symbols from /boot/system/lib/libz.so...done.
+ Loaded symbols for /boot/system/lib/libz.so
+ Reading symbols from /boot/system/add-
+ ons/Translators/GIFTranslator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/GIFTranslator
+ Reading symbols from /boot/system/add-
+ ons/Translators/JPEG2000Translator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/JPEG2000Translator
+ Reading symbols from /boot/system/add-
+ ons/Translators/JPEGTranslator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/JPEGTranslator
+ Reading symbols from /boot/system/add-
+ ons/Translators/PCXTranslator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/PCXTranslator
+ Reading symbols from /boot/system/add-
+ ons/Translators/PNGTranslator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/PNGTranslator
+ Reading symbols from /boot/system/add-
+ ons/Translators/PPMTranslator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/PPMTranslator
+ Reading symbols from /boot/system/add-
+ ons/Translators/RAWTranslator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/RAWTranslator
+ Reading symbols from /boot/system/add-ons/Translators/RTF-
+ Translator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/RTF-Translator
+ Reading symbols from /boot/system/add-
+ ons/Translators/SGITranslator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/SGITranslator
+ Reading symbols from /boot/system/add-
+ ons/Translators/STXTTranslator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/STXTTranslator
+ Reading symbols from /boot/system/add-
+ ons/Translators/TGATranslator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/TGATranslator
+ Reading symbols from /boot/system/add-
+ ons/Translators/TIFFTranslator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/TIFFTranslator
+ Reading symbols from /boot/system/add-
+ ons/Translators/WonderBrushTranslator...done.
+ Loaded symbols for /boot/system/add-ons/Translators/WonderBrushTranslator
+ [tcsetpgrp failed in terminal_inferior: Invalid Argument]
+ [Switching to team /boot/system/Tracker (82) thread w&gt;/boot/home/Desktop
+ (141)]
+ 0x003e2772 in BList::ItemAt () from /boot/system/lib/libbe.so
+ (gdb) bt
+ #0  0x003e2772 in BList::ItemAt () from /boot/system/lib/libbe.so
+ #1  0x005ac869 in BPrivate::BPose::WidgetFor ()
+    from /boot/system/lib/libtracker.so
+ #2  0x005ad165 in BPrivate::BPose::CalcRect ()
+    from /boot/system/lib/libtracker.so
+ #3  0x005b95af in BPrivate::BPoseView::SlotOccupied ()
+    from /boot/system/lib/libtracker.so
+ #4  0x005b8b72 in BPrivate::BPoseView::PlacePose ()
+    from /boot/system/lib/libtracker.so
+ #5  0x005b36ab in BPrivate::BPoseView::CreatePoses ()
+    from /boot/system/lib/libtracker.so
+ #6  0x005b2c9a in BPrivate::BPoseView::CreatePose ()
+    from /boot/system/lib/libtracker.so
+ #7  0x005bf3cf in BPrivate::BPoseView::EntryCreated ()
+    from /boot/system/lib/libtracker.so
+ #8  0x005bea39 in BPrivate::BPoseView::FSNotification ()
+    from /boot/system/lib/libtracker.so
+ #9  0x0053ff45 in BPrivate::DesktopPoseView::FSNotification ()
+    from /boot/system/lib/libtracker.so
+ #10 0x005b4b6c in BPrivate::BPoseView::MessageReceived ()
+    from /boot/system/lib/libtracker.so
+ #11 0x002c538b in BLooper::DispatchMessage () from
+ /boot/system/lib/libbe.so
+ #12 0x00385749 in BWindow::DispatchMessage () from
+ /boot/system/lib/libbe.so
+ #13 0x003894ac in BWindow::task_looper () from /boot/system/lib/libbe.so
+ ---Type &lt;return&gt; to continue, or q &lt;return&gt; to quit---
+ #14 0x002c68e7 in BLooper::_task0_ () from /boot/system/lib/libbe.so
+ #15 0x0069f124 in thread_entry () from /boot/system/lib/libroot.so
+ #16 0x70184fec in ?? ()
+ (gdb)
+ }}}
+ I'm trying to find a reproducible test case.
+
+ Tested with r32638 in VirtualBox 3.0.4
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4322">http://dev.haiku-os.org/ticket/4322</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="019993.html">[Haiku-bugs] [Haiku] #3075: [Deskbar] crash in BList::ItemAt () (was: [Deskbar] crash in BList::ItemAt)
+</A></li>
+	<LI>Next message: <A HREF="020000.html">[Haiku-bugs] [Haiku] #4322: [Tracker] crash in BList::ItemAt ()
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19994">[ date ]</a>
+              <a href="thread.html#19994">[ thread ]</a>
+              <a href="subject.html#19994">[ subject ]</a>
+              <a href="author.html#19994">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

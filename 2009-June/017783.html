@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3959: Wrong HDD size shown
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233959%3A%20Wrong%20HDD%20size%20shown&In-Reply-To=%3C049.da5461fe2f434c6c1ff5547870d7fc4b%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="017782.html">
+   <LINK REL="Next"  HREF="017784.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3959: Wrong HDD size shown</H1>
+    <B>mmlr</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233959%3A%20Wrong%20HDD%20size%20shown&In-Reply-To=%3C049.da5461fe2f434c6c1ff5547870d7fc4b%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3959: Wrong HDD size shown">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Jun  3 02:44:02 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="017782.html">[Haiku-bugs] [Haiku] #3964: PANIC: unhandled page fault in kernel space at 0xdeadbf1f, ip 0x8007481a
+</A></li>
+        <LI>Next message: <A HREF="017784.html">[Haiku-bugs] [Haiku] #3983: KDL when ejecting not mounted CD
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17783">[ date ]</a>
+              <a href="thread.html#17783">[ thread ]</a>
+              <a href="subject.html#17783">[ subject ]</a>
+              <a href="author.html#17783">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3959: Wrong HDD size shown
+------------------------------------+---------------------------------------
+ Reporter:  haiqu                   |       Owner:  korli         
+     Type:  bug                     |      Status:  new           
+ Priority:  normal                  |   Milestone:  R1            
+Component:  Applications/Installer  |     Version:  R1 development
+Blockedby:                          |    Platform:  All           
+ Blocking:                          |  
+------------------------------------+---------------------------------------
+
+Comment(by mmlr):
+
+ But the question is how big that FAT32 filesystem actually is. The
+ partition table is pretty much meaningless for Haiku except to discover
+ the start of partitions. What DriveSetup and Installer show may very well
+ differ, as they are not intended to show you the same data. DriveSetup
+ will show you the partition information as it's recorded in the MBR.
+ Installer on the other hand will show you filesystem information of the
+ filesystems contained in the partitions. It's valid for you to have a 10GB
+ partition and only put a filesystem on the first hundred megabytes. That
+ would happen when you'd dd a Haiku image on top of a partition for
+ example. In that case DriveSetup would show the 10GB partition and
+ Installer the BFS size of the image.
+
+ From what I gather, is it possible that the partition as stored in the MBR
+ is simply bigger than the actual drive? And Windows created a 2.1GB FAT32
+ fs in it as that's the space really left? This could also explain why
+ DriveSetup doesn't allow you to initialize the partition, as it regards it
+ as invalid?
+
+ The partition type field in the MBR is completely disregarded BTW. And
+ DriveSetup doesn't currently modify the MBR at all. As it (or more
+ correctly the disk device manager backend it uses) doesn't yet do
+ partitioning at all, it never touches the MBR. So it's expected that
+ initializing a partition doesn't change the partition type code. The field
+ is not relevant to Haiku as it probes the partitions for the different
+ filesystems.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3959#comment:9">http://dev.haiku-os.org/ticket/3959#comment:9</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="017782.html">[Haiku-bugs] [Haiku] #3964: PANIC: unhandled page fault in kernel space at 0xdeadbf1f, ip 0x8007481a
+</A></li>
+	<LI>Next message: <A HREF="017784.html">[Haiku-bugs] [Haiku] #3983: KDL when ejecting not mounted CD
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17783">[ date ]</a>
+              <a href="thread.html#17783">[ thread ]</a>
+              <a href="subject.html#17783">[ subject ]</a>
+              <a href="author.html#17783">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

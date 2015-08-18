@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2654: The Boot Menu doesn't work on Intel	Macs
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-December/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232654%3A%20The%20Boot%20Menu%20doesn%27t%20work%20on%20Intel%0A%09Macs&In-Reply-To=%3C050.89ee06e4a3baaf93eaf576247b9e68e1%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="013245.html">
+   <LINK REL="Next"  HREF="013247.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2654: The Boot Menu doesn't work on Intel	Macs</H1>
+    <B>VinDuv</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232654%3A%20The%20Boot%20Menu%20doesn%27t%20work%20on%20Intel%0A%09Macs&In-Reply-To=%3C050.89ee06e4a3baaf93eaf576247b9e68e1%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2654: The Boot Menu doesn't work on Intel	Macs">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Dec 23 18:13:44 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="013245.html">[Haiku-bugs] [Haiku] #3232: Patch for tty and some drivers n stuff ;	)
+</A></li>
+        <LI>Next message: <A HREF="013247.html">[Haiku-bugs] [Haiku] #2514: Enlarged Terminal wraps input line overwriting beginning
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13246">[ date ]</a>
+              <a href="thread.html#13246">[ thread ]</a>
+              <a href="subject.html#13246">[ subject ]</a>
+              <a href="author.html#13246">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2654: The Boot Menu doesn't work  on Intel Macs
+---------------------------------+------------------------------------------
+  Reporter:  VinDuv              |       Owner:  axeld         
+      Type:  bug                 |      Status:  new           
+  Priority:  normal              |   Milestone:  R1            
+ Component:  System/Boot Loader  |     Version:  R1 development
+Resolution:                      |   Blockedby:                
+  Platform:  x86                 |    Blocking:                
+---------------------------------+------------------------------------------
+
+Comment(by VinDuv):
+
+ I just made some more tests.
+
+ Since the problem seemed to be in the wait_for_key function (in
+ src/system/boot/platform/bios_ia32/keyboard.cpp), I replaced it with :
+
+ {{{
+ extern &quot;C&quot; union key
+ wait_for_key(void)
+ {
+         union key key;
+
+         do {
+                 key.ax = check_for_key();
+         } while(key.ax == 0);
+
+
+         return key;
+ }
+ }}}
+
+ Probably not the best way to do this, but it made the boot menu working...
+
+ The problem seems to be the &quot;regs.eax = 0; call_bios(0x16, &amp;regs);&quot; call
+ used in wait_for_keys. It seems to hang forever (I tried adding it to the
+ top of check_for_boot_keys, and got nothing but a blinking cursor at boot)
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2654#comment:1">http://dev.haiku-os.org/ticket/2654#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="013245.html">[Haiku-bugs] [Haiku] #3232: Patch for tty and some drivers n stuff ;	)
+</A></li>
+	<LI>Next message: <A HREF="013247.html">[Haiku-bugs] [Haiku] #2514: Enlarged Terminal wraps input line overwriting beginning
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13246">[ date ]</a>
+              <a href="thread.html#13246">[ thread ]</a>
+              <a href="subject.html#13246">[ subject ]</a>
+              <a href="author.html#13246">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

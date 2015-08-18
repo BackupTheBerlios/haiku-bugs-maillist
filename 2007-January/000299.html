@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #690: if the bootloader is interupted (by pressing the space bar) haiku is rebooting.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-January/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23690%3A%20if%20the%20bootloader%20is%20interupted%20%28by%0A%20pressing%20the%20space%20bar%29%20haiku%20is%20rebooting.&In-Reply-To=%3C059.73091b9debc846793281861c4b2b7058%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000295.html">
+   <LINK REL="Next"  HREF="000300.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #690: if the bootloader is interupted (by pressing the space bar) haiku is rebooting.</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23690%3A%20if%20the%20bootloader%20is%20interupted%20%28by%0A%20pressing%20the%20space%20bar%29%20haiku%20is%20rebooting.&In-Reply-To=%3C059.73091b9debc846793281861c4b2b7058%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #690: if the bootloader is interupted (by pressing the space bar) haiku is rebooting.">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Jan 28 16:03:04 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000295.html">[Haiku-bugs] [Haiku] #997: get_memory_map fails
+</A></li>
+        <LI>Next message: <A HREF="000300.html">[Haiku-bugs] [Haiku] #1000: [Tracker] selected icons disappering
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#299">[ date ]</a>
+              <a href="thread.html#299">[ thread ]</a>
+              <a href="subject.html#299">[ subject ]</a>
+              <a href="author.html#299">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#690: if the bootloader is interupted (by pressing the space bar) haiku is
+rebooting.
+---------------------------------+------------------------------------------
+  Reporter:  <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">kaoutsis at sch.gr</A>     |       Owner:  axeld
+      Type:  bug                 |      Status:  new  
+  Priority:  normal              |   Milestone:  R1   
+ Component:  System/Boot Loader  |     Version:       
+Resolution:                      |    Platform:  All  
+---------------------------------+------------------------------------------
+Comment (by kaoutsis):
+
+ A new testing:
+ First i do:
+ dd if=/haiku/beos/system/zbeos of=/dev/disk/floppy/raw
+ booting from floppy, haiku goes directly to boot menu.
+ Selecting haiku to boot.
+ I select &quot;Select safe mode options&quot;
+ and then &quot;Enable on screen debug output&quot;
+ Haiku is not rebooting, but continue.
+ Messages printed in my screen from debug output.
+ The last message of this boot process is:
+ bfs: mounted &quot;be-src&quot; (root node at ... etc)
+ error starting &quot;/bin/init&quot; error = -1
+ In that point the boot process stopped.
+
+ Note that &quot;be-src&quot; is currently the last bfs
+ partition of my disk.
+
+ Initialized an other partition with bfs and
+ this volume has the name &quot;test-vol&quot;
+ i do again the above process:
+
+ booting from floppy, haiku goes directly to boot menu.
+ I select &quot;Select safe mode options&quot;
+ and then &quot;Enable on screen debug output&quot;
+ Haiku is not rebooting, but continue.
+ Messages printed in my screen from debug output.
+ The last message of this boot process is:
+ bfs: mounted &quot;test-vol&quot; (root node at 65536, device =
+ /dev/disk/ata/0/master/1_4)
+ error starting &quot;/bin/init&quot; error = -1
+ In that point the boot process stopped.
+
+ For that i conclude that if the boot process
+ is interrupted by pressing the space bar,
+ to matter what,
+ Haiku tries to mount as root partition
+ the last bfs volume of the disk.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/690#comment:8">http://dev.haiku-os.org/ticket/690#comment:8</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000295.html">[Haiku-bugs] [Haiku] #997: get_memory_map fails
+</A></li>
+	<LI>Next message: <A HREF="000300.html">[Haiku-bugs] [Haiku] #1000: [Tracker] selected icons disappering
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#299">[ date ]</a>
+              <a href="thread.html#299">[ thread ]</a>
+              <a href="subject.html#299">[ subject ]</a>
+              <a href="author.html#299">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

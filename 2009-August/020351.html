@@ -1,0 +1,182 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4360: KDL during bootscript on waitfor on SMP x86 machine
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234360%3A%20KDL%20during%20bootscript%20on%20waitfor%20on%0A%20SMP%20x86%20machine&In-Reply-To=%3C052.5c275d37cb72635185d69253ba52c50f%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="020350.html">
+   <LINK REL="Next"  HREF="020356.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4360: KDL during bootscript on waitfor on SMP x86 machine</H1>
+    <B>phoudoin</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234360%3A%20KDL%20during%20bootscript%20on%20waitfor%20on%0A%20SMP%20x86%20machine&In-Reply-To=%3C052.5c275d37cb72635185d69253ba52c50f%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4360: KDL during bootscript on waitfor on SMP x86 machine">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Aug 29 03:49:27 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="020350.html">[Haiku-bugs] [Haiku] #4360: KDL during bootscript on waitfor on SMP x86 machine
+</A></li>
+        <LI>Next message: <A HREF="020356.html">[Haiku-bugs] [Haiku] #4360: KDL during bootscript on waitfor on SMP x86 machine
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20351">[ date ]</a>
+              <a href="thread.html#20351">[ thread ]</a>
+              <a href="subject.html#20351">[ subject ]</a>
+              <a href="author.html#20351">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4360: KDL during bootscript on waitfor on SMP x86 machine
+---------------------------+------------------------------------------------
+ Reporter:  phoudoin       |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  blocker        |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1 development
+Blockedby:                 |    Platform:  x86           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+
+Comment(by phoudoin):
+
+ A PS2 keyboard, a second computer and an USB-serial adapter give me more
+ info:
+
+ {{{
+ allocate MTRR slot 0, base = 7ff00000, length = 100000, type=0x0
+ allocate MTRR slot 1, base = 0, length = 80000000, type=0x6
+ kernel debugger extension &quot;debugger/disasm/v1&quot;: loaded
+ kernel debugger extension &quot;debugger/hangman/v1&quot;: loaded
+ kernel debugger extension &quot;debugger/invalidate_on_exit/v1&quot;: loaded
+ kernel debugger extension &quot;debugger/run_on_exit/v1&quot;: loaded
+ kernel debugger extension &quot;debugger/usb_keyboard/v1&quot;: loaded
+ allocate MTRR slot 2, base = e0000000, length = 800000, type=0x1
+ acpi: ACPI disabled
+ ahci: ahci_supports_device
+ PANIC: page fault, but interrupts were disabled. Touching address
+ 0x00020036 from eip 0x800d6d79
+
+ Welcome to Kernel Debugging Land...
+ Thread 65 &quot;waitfor&quot; running on CPU 0
+ kdebug&gt; sc
+ stack trace for thread 65 &quot;waitfor&quot;
+     kernel stack: 0x8020e000 to 0x80212000
+       user stack: 0x7efef000 to 0x7ffef000
+ frame               caller     &lt;image&gt;:function + offset
+  0 80211ab0 (+  32) 80065155   &lt;kernel_x86&gt;
+ invoke_command_trampoline(void*: 0x80211b30) + 0x0015
+  1 80211ad0 (+  12) 800caec3
+ &lt;kernel_x86&gt;:arch_debug_call_with_fault_handler + 0x001b
+  2 80211adc (+  48) 8006349b   &lt;kernel_x86&gt;:debug_call_with_fault_handler
+ + 0x004c
+  3 80211b0c (+  64) 80065523   &lt;kernel_x86&gt;:invoke_debugger_command +
+ 0x00bb
+  4 80211b4c (+  48) 80065640   &lt;kernel_x86&gt;
+ invoke_pipe_segment(debugger_command_pipe*: 0x8011b5c2, int32: 0, char*:
+ NULL) + 0x0083
+  5 80211b7c (+  32) 80065708   &lt;kernel_x86&gt;:invoke_debugger_command_pipe +
+ 0x008b
+  6 80211b9c (+ 128) 800695e7   &lt;kernel_x86&gt;
+ ExpressionParser&lt;0x80211c6c&gt;::_ParseCommandPipe(int&amp;: 0x80211c68) + 0x0aa3
+  7 80211c1c (+  48) 8006bd87   &lt;kernel_x86&gt;
+ ExpressionParser&lt;0x80211c6c&gt;::EvaluateCommand(char const*: 0x8011b5c0
+ &quot;sc&quot;, int&amp;: 0x8021
+ 1c68) + 0x06d5
+  8 80211c4c (+ 192) 8006bf00   &lt;kernel_x86&gt;:evaluate_debug_command +
+ 0x0084
+  9 80211d0c (+  96) 80064495   &lt;kernel_x86&gt; kernel_debugger_internal(char
+ const*: 0x819f4800 &quot;&quot;, int32: -2145313176) + 0x0395
+ 10 80211d6c (+  16) 8006461c   &lt;kernel_x86&gt;:kernel_debugger + 0x003f
+ 11 80211d7c (+ 160) 800646d9   &lt;kernel_x86&gt;:panic + 0x002a
+ 12 80211e1c (+  64) 800c7ebe   &lt;kernel_x86&gt; page_fault_exception(iframe*:
+ 0x80211e68) + 0x011e
+ 13 80211e5c (+  12) 800cb26d   &lt;kernel_x86&gt;:int_bottom + 0x003d
+ kernel iframe at 0x80211e68 (end = 0x80211eb8)
+  eax 0x20036        ebx 0x20002         ecx 0x0          edx 0x80120060
+  esi 0x80211f24     edi 0x20036         ebp 0x80211ec4   esp 0x80211e9c
+  eip 0x800d6d79  eflags 0x10086
+  vector: 0xe, error code: 0x0
+ 14 80211e68 (+  92) 800d6d79   &lt;kernel_x86&gt;:strcmp + 0x0011
+ 15 80211ec4 (+  64) 80058cb7   &lt;kernel_x86&gt;:find_thread + 0x006c
+ 16 80211f04 (+  64) 80058d7f   &lt;kernel_x86&gt;:_user_find_thread + 0x0049
+ 17 80211f44 (+ 100) 800cb4a2   &lt;kernel_x86&gt;:handle_syscall + 0x00af
+ user iframe at 0x80211fa8 (end = 0x80212000)
+  eax 0x2d           ebx 0x2c5e48        ecx 0x7ffeef1c   edx 0xffff0114
+  esi 0x7ffef538     edi 0x7ffef544      ebp 0x7ffeef38   esp 0x80211fdc
+  eip 0xffff0114  eflags 0x216      user esp 0x7ffeef1c
+  vector: 0x63, error code: 0x0
+ 18 80211fa8 (+   0) ffff0114   &lt;commpage&gt;:commpage_syscall + 0x0004
+ 19 7ffeef38 (+  48) 00200813   &lt;_APP_&gt;:main + 0x0057
+ 20 7ffeef68 (+  52) 0020069d   &lt;_APP_&gt;:_start + 0x0051
+ 21 7ffeef9c (+  64) 0010525b
+ &lt;/boot/system/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">runtime_loader at 0x00100000</A>&gt;:unknown + 0x525b
+ 22 7ffeefdc (+   0) 7ffeefec   1095:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">waitfor_main_stack at 0x7efef000</A> +
+ 0xffffec
+ kdebug&gt; teams
+ team           id  parent      name
+ 0x811b7000      1  0x00000000  kernel_team
+ 0x811b7330     64  0x811b7198  registrar
+ 0x811b74c8     65  0x811b7198  waitfor
+ 0x811b7198     55  0x811b7000  sh
+ kdebug&gt; threads
+ thread         id  state     wait for   object  cpu pri  stack      team
+ name
+ 0x819f8000     31  waiting   sem           115    -  20  0x809c3000    1
+ uhci finish thread
+ 0x819f8800     32  waiting   sem           116    -  10  0x809c7000    1
+ uhci cleanup thread
+ 0x801241a0      1  ready             -            -   0  0x80201000    1
+ idle thread 1
+ 0x848fe000     64  ready             -            -  10  0x80189000   64
+ registrar
+ 0x819f9000     33  waiting   sem           123    -  20  0x809cb000    1
+ uhci isochronous finish thread
+ 0x80124780      2  running           -            2   0  0x80980000    1
+ idle thread 2
+ 0x819f4800     65  running           -            0  10  0x8020e000   65
+ waitfor
+ 0x81a0a000     34  waiting   sem           128    -  20  0x809d0000    1
+ uhci finish thread
+ 0x80120060 -1073430524  UNKNOWN           -
+ [*** READ FAULT at 0xd508d508, pc: 0x800594ca ***]
+ kdebug&gt;
+ }}}
+
+ Something corrupts threads list.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4360#comment:7">http://dev.haiku-os.org/ticket/4360#comment:7</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="020350.html">[Haiku-bugs] [Haiku] #4360: KDL during bootscript on waitfor on SMP x86 machine
+</A></li>
+	<LI>Next message: <A HREF="020356.html">[Haiku-bugs] [Haiku] #4360: KDL during bootscript on waitfor on SMP x86 machine
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20351">[ date ]</a>
+              <a href="thread.html#20351">[ thread ]</a>
+              <a href="subject.html#20351">[ subject ]</a>
+              <a href="author.html#20351">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

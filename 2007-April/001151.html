@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #155: keyboard doesn't always work
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23155%3A%20keyboard%20doesn%27t%20always%20work&In-Reply-To=%3C059.6bdbabd4c6c5978b4cdf7a1d51ca348d%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001146.html">
+   <LINK REL="Next"  HREF="001152.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #155: keyboard doesn't always work</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23155%3A%20keyboard%20doesn%27t%20always%20work&In-Reply-To=%3C059.6bdbabd4c6c5978b4cdf7a1d51ca348d%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #155: keyboard doesn't always work">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Apr 26 09:20:31 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001146.html">[Haiku-bugs] [Haiku] #1181: B_UTF8_ELLIPSIS not used consistently in Deskbar's menu
+</A></li>
+        <LI>Next message: <A HREF="001152.html">[Haiku-bugs] [Haiku] #155: keyboard doesn't always work
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1151">[ date ]</a>
+              <a href="thread.html#1151">[ thread ]</a>
+              <a href="subject.html#1151">[ subject ]</a>
+              <a href="author.html#1151">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#155: keyboard doesn't always work
+------------------------------+---------------------------------------------
+  Reporter:  marcusoverhagen  |       Owner:  korli   
+      Type:  bug              |      Status:  reopened
+  Priority:  critical         |   Milestone:  R1      
+ Component:  - General        |     Version:          
+Resolution:                   |    Platform:  All     
+------------------------------+---------------------------------------------
+Changes (by marcusoverhagen):
+
+ * cc: jonas.kirilla (added)
+
+Old description:
+
+&gt;<i> The keyboard driver is not always opened by the input_server.
+</I>&gt;<i>
+</I>&gt;<i> The ps2 bus manager does a devfs_publish_device &quot;input/keyboard/at/0&quot;
+</I>&gt;<i> with result B_OK, but input_server does ignore the device sometimes,
+</I>&gt;<i> and then the driver open hook is not called, and it doesn't work.
+</I>&gt;<i>
+</I>&gt;<i> I added enough debug output to the normal (as in: not compiled as
+</I>&gt;<i> DEBUG=1) ps2
+</I>&gt;<i> driver to make this visible, search for &quot;keyboard_open&quot; and &quot;mouse_open&quot;.
+</I>
+New description:
+
+ The keyboard driver is not always opened by the input_server.
+
+ The ps2 bus manager does a devfs_publish_device &quot;input/keyboard/at/0&quot;
+ with result B_OK, but input_server does ignore the device sometimes,
+ and then the driver open hook is not called, and it doesn't work.
+
+ I added enough debug output to the normal (as in: not compiled as DEBUG=1)
+ ps2
+ driver to make this visible, search for &quot;keyboard_open&quot; and &quot;mouse_open&quot;.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/155#comment:15">http://dev.haiku-os.org/ticket/155#comment:15</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001146.html">[Haiku-bugs] [Haiku] #1181: B_UTF8_ELLIPSIS not used consistently in Deskbar's menu
+</A></li>
+	<LI>Next message: <A HREF="001152.html">[Haiku-bugs] [Haiku] #155: keyboard doesn't always work
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1151">[ date ]</a>
+              <a href="thread.html#1151">[ thread ]</a>
+              <a href="subject.html#1151">[ subject ]</a>
+              <a href="author.html#1151">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

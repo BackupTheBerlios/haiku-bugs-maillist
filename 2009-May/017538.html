@@ -1,0 +1,162 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3963: Haiku wrongly initialises volume	according to BeOS
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233963%3A%20Haiku%20wrongly%20initialises%20volume%0A%09according%20to%20BeOS&In-Reply-To=%3C041.b3a696bc8f0c7a0861a67b2a14a59895%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="017553.html">
+   <LINK REL="Next"  HREF="017539.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3963: Haiku wrongly initialises volume	according to BeOS</H1>
+    <B>idefix</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233963%3A%20Haiku%20wrongly%20initialises%20volume%0A%09according%20to%20BeOS&In-Reply-To=%3C041.b3a696bc8f0c7a0861a67b2a14a59895%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3963: Haiku wrongly initialises volume	according to BeOS">trac at haiku-os.org
+       </A><BR>
+    <I>Mon May 25 21:48:19 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="017553.html">[Haiku-bugs] [Haiku] #3962: vm_page_fault in media checker thread on usb-attached digital camera unmount
+</A></li>
+        <LI>Next message: <A HREF="017539.html">[Haiku-bugs] [Haiku] #3963: Haiku wrongly initialises volume according to BeOS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17538">[ date ]</a>
+              <a href="thread.html#17538">[ thread ]</a>
+              <a href="subject.html#17538">[ subject ]</a>
+              <a href="author.html#17538">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3963: Haiku wrongly initialises volume according to BeOS
+------------------------------+---------------------------------------------
+ Reporter:  idefix            |       Owner:  axeld         
+     Type:  bug               |      Status:  new           
+ Priority:  normal            |   Milestone:  R1            
+Component:  File Systems/BFS  |     Version:  R1 development
+Blockedby:                    |    Platform:  All           
+ Blocking:                    |  
+------------------------------+---------------------------------------------
+ An volume initialised under Haiku (r30847) with mkfs or DriveSetup has
+ block allocation mismatches according to chkbfs under BeOS. The repaired
+ volume will crash Haiku when trying to mount it.
+
+ Steps to reproduce:
+  - Initialise (and check) a volume with Haiku:
+ {{{
+ ~&gt; mkfs -t bfs -v /dev/disk/ata/1/master/0 test0mkfs
+ Preparing for modifications...
+
+ Parameters Validation...
+
+
+ About to initialize /dev/disk/ata/1/master/0 with Be File System
+ Are you sure you want to do this now?
+
+ ALL YOUR DATA in /dev/disk/ata/1/master/0 will be lost forever.
+ Continue (yes|[no])? yes
+ DiskDeviceJobQueue::Execute(): executing job: Q28BPrivate15UninitializeJob
+ DiskDeviceJobQueue::Execute(): executing job: Q28BPrivate13InitializeJob
+ Volume Partition 4 (test3) has been initialized successfully!
+
+ ~&gt; checkfs /test0mkfs/
+ checked 9 nodes, 0 blocks not allocated, 0 blocks already set, 0 blocks
+ could be freed
+         files           0
+         directories     5
+         attributes      0
+         attr. dirs      0
+         indices         4
+ }}}
+  - Check the volume with BeOS:
+ {{{
+ $ chkbfs /test0mkfs/
+ bfs: /dev/disk/ide/ata/1/master/0/0_0 is read-only!
+ Files processed:     11
+ BFS has 3 blocks allocated that should not be.
+
+     Block allocation mismatches detected.  Fixing.
+
+     File system check completed.
+ }}}
+  - Mount the volume with Haiku:
+ {{{
+ bfs: mounted &quot;test0mkfs&quot; (root node at 524288, device =
+ /dev/disk/ata/1/master/0)
+ bfs: bfs_stat_index:2020: No such file or directory
+ bfs: AllocationBlock::Allocate(): some blocks are already allocated, start
+ = 0, numBlocks = 4297
+ PANIC: blocks already set!
+ Welcome to Kernel Debugging Land...
+ Thread 173 &quot;bfs block allocator&quot; running on CPU 0
+ kdebug&gt; bt
+ stack trace for thread 173 &quot;bfs block allocator&quot;
+     kernel stack: 0x80dda000 to 0x80dde000
+ frame               caller     &lt;image&gt;:function + offset
+  0 80dddba8 (+  48) 80062e5d   &lt;kernel_x86&gt;:invoke_debugger_command +
+ 0x00f5
+  1 80dddbd8 (+  64) 80062c4d   &lt;kernel_x86&gt;
+ invoke_pipe_segment(debugger_command_pipe*: [34m0x80132380[0m, int32:
+ [34m0[0m, [34m0x0[0m [31m&quot;&lt;NULL&gt;&quot;[0m) + 0x0079
+  2 80dddc18 (+  64) 80062fd4   &lt;kernel_x86&gt;:invoke_debugger_command_pipe +
+ 0x009c
+  3 80dddc58 (+  48) 80064584   &lt;kernel_x86&gt;
+ ExpressionParser&lt;[32m0x80dddd0c[0m&gt;::_ParseCommandPipe([34m0x80dddd08[0m)
+ + 0x0234
+  4 80dddc88 (+  64) 800639be   &lt;kernel_x86&gt;
+ ExpressionParser&lt;[32m0x80dddd0c[0m&gt;::EvaluateCommand([34m0x80122c00[0m
+ [36m&quot;bt&quot;[0m, [34m0x80dddd08[0m) + 0x02ba
+  5 80dddcc8 (+ 224) 800659ac   &lt;kernel_x86&gt;:evaluate_debug_command +
+ 0x0088
+  6 80dddda8 (+  64) 80060cd6   &lt;kernel_x86&gt; kernel_debugger_loop() +
+ 0x01ae
+  7 80dddde8 (+  32) 80061bdd   &lt;kernel_x86&gt;:kernel_debugger + 0x004d
+  8 80ddde08 (+ 192) 80061b85   &lt;kernel_x86&gt;:panic + 0x0029
+  9 80dddec8 (+  96) 805c47ee   &lt;bfs&gt;
+ AllocationGroup&lt;[32m0x82d2f800[0m&gt;::Allocate(Transaction&amp;:
+ [34m0x80dddfcc[0m, uint16: [34m0x0[0m ([34m0[0m), int32:
+ [34m4329[0m) + 0x02b6
+ 10 80dddf28 (+ 176) 805c5240   &lt;bfs&gt;
+ BlockAllocator&lt;[32m0x811c87d4[0m&gt;::_Initialize(BlockAllocator*: NULL) +
+ 0x032c
+ 11 80dddfd8 (+  32) 80057007   &lt;kernel_x86&gt; _create_kernel_thread_kentry()
+ + 0x001b
+ 12 80dddff8 (+2132942856) 80056fa4   &lt;kernel_x86&gt; thread_kthread_exit() +
+ 0x0000
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3963">http://dev.haiku-os.org/ticket/3963</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="017553.html">[Haiku-bugs] [Haiku] #3962: vm_page_fault in media checker thread on usb-attached digital camera unmount
+</A></li>
+	<LI>Next message: <A HREF="017539.html">[Haiku-bugs] [Haiku] #3963: Haiku wrongly initialises volume according to BeOS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17538">[ date ]</a>
+              <a href="thread.html#17538">[ thread ]</a>
+              <a href="subject.html#17538">[ subject ]</a>
+              <a href="author.html#17538">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2998: bcm440x doesn't initialize the NIC
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232998%3A%20bcm440x%20doesn%27t%20initialize%20the%20NIC&In-Reply-To=%3C042.e99b300f5b777a67af0e6d7846300848%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011712.html">
+   <LINK REL="Next"  HREF="011743.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2998: bcm440x doesn't initialize the NIC</H1>
+    <B>cssvb94</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232998%3A%20bcm440x%20doesn%27t%20initialize%20the%20NIC&In-Reply-To=%3C042.e99b300f5b777a67af0e6d7846300848%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2998: bcm440x doesn't initialize the NIC">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Oct 29 11:32:18 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011712.html">[Haiku-bugs] [Haiku] #2363: Civilization game crashes at start	up
+</A></li>
+        <LI>Next message: <A HREF="011743.html">[Haiku-bugs] [Haiku] #2998: bcm440x doesn't initialize the NIC
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11715">[ date ]</a>
+              <a href="thread.html#11715">[ thread ]</a>
+              <a href="subject.html#11715">[ subject ]</a>
+              <a href="author.html#11715">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2998: bcm440x doesn't initialize the NIC
+-----------------------------+----------------------------------------------
+ Reporter:  cssvb94          |       Owner:  axeld         
+     Type:  bug              |      Status:  new           
+ Priority:  normal           |   Milestone:  R1            
+Component:  Drivers/Network  |     Version:  R1 development
+Blockedby:                   |    Platform:  x86           
+ Blocking:                   |  
+-----------------------------+----------------------------------------------
+ bcm440x driver compiles without a problem and reckognizes the NIC by
+ vendorID/productID, but does not initialize the network card.
+ I've put some debug messages and found that in b44um.c @ line 119:
+
+ if (b44_LM_GetAdapterInfo(&amp;be_b44_dev_cards[sCardsFound].lm_dev) !=
+ LM_STATUS_SUCCESS)
+
+ b44_LM_GetAdapterInfo() never returns LM_STATUS_SUCCESS.
+
+ in b44lm.c @ line 199:
+     /* check sprom version */
+     if ((eprom[126] != 1) &amp;&amp; (eprom[126] != 0x10))
+         return LM_STATUS_FAILURE;
+ Always return LM_STATUS_FAILURE, I don't know which are the correct values
+ or b44_LM_EepromReadBlock(pDevice, 0, eprom_dw, sizeof(eprom_dw)); doesn't
+ reads the values correctly.
+
+ I did the lamest thing and hacked some functions and recompiled to return
+ LM_STATUS_SUCCESS. I can see that during ping request NIC card's LEDs are
+ flashing, i.e. packets are sent, but DHCP server can not be found and even
+ after setting IP address and default GW the other machines in the network
+ can not be reached.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2998">http://dev.haiku-os.org/ticket/2998</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011712.html">[Haiku-bugs] [Haiku] #2363: Civilization game crashes at start	up
+</A></li>
+	<LI>Next message: <A HREF="011743.html">[Haiku-bugs] [Haiku] #2998: bcm440x doesn't initialize the NIC
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11715">[ date ]</a>
+              <a href="thread.html#11715">[ thread ]</a>
+              <a href="subject.html#11715">[ subject ]</a>
+              <a href="author.html#11715">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

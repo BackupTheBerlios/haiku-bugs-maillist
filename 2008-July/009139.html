@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2545: [kernel] GeForce MX420 lots of	stability issues
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-July/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232545%3A%20%5Bkernel%5D%20GeForce%20MX420%20lots%20of%0A%09stability%20issues&In-Reply-To=%3C040.4e30d608cc4ca7654053cf6c2360b9a9%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009138.html">
+   <LINK REL="Next"  HREF="009151.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2545: [kernel] GeForce MX420 lots of	stability issues</H1>
+    <B>diver</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232545%3A%20%5Bkernel%5D%20GeForce%20MX420%20lots%20of%0A%09stability%20issues&In-Reply-To=%3C040.4e30d608cc4ca7654053cf6c2360b9a9%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2545: [kernel] GeForce MX420 lots of	stability issues">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Jul 24 20:12:23 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009138.html">[Haiku-bugs] [Haiku] #2092: ActivityMonitor replicant does not display (replicant) handle
+</A></li>
+        <LI>Next message: <A HREF="009151.html">[Haiku-bugs] [Haiku] #2545: [kernel] GeForce MX420 lots of	stability issues
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9139">[ date ]</a>
+              <a href="thread.html#9139">[ thread ]</a>
+              <a href="subject.html#9139">[ subject ]</a>
+              <a href="author.html#9139">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2545: [kernel] GeForce MX420 lots of stability issues
+-----------------------+----------------------------------------------------
+ Reporter:  diver      |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+Blockedby:             |    Platform:  All           
+ Blocking:             |  
+-----------------------+----------------------------------------------------
+ Recently I changed my noname GeForce4 MX440 with Albatron GeForce4 MX420
+ I've got all sort of random problems.[[BR]]
+ {{{
+ &quot;(card A)&quot; 10de:0181 (rev 02) 01:00.0 VGA compatible controller: nVidia
+ Corporation NV18 [GeForce4 MX 440 AGP 8x] (rev a4)
+ &quot;(card B)&quot; 10de:0172 (rev a3) 01:00.0 VGA compatible controller: nVidia
+ Corporation NV17 [GeForce4 MX 420] (rev a3)
+ }}}
+
+ Boot logo appeared with &quot;Input is unsupported&quot; message from monitor,
+ though boot logo was just fine.
+ Several seconds later media_addon_server crashed.[[BR]]
+
+ {{{
+ Thread 144 called debugger(): Can't register system time source
+ [Switching to team /boot/beos/system/servers/media_addon_server (144)
+ thread media_addon_server (144)] 0xffff0102 in ?? ()
+ (gdb) bt
+ #0  0xffff0102 in ?? ()
+ #1  0x005255f6 in debugger () from /boot/beos/system/lib/libroot.so
+ #2  0x002063e0 in MediaAddonServer::ReadyToRun ()
+ #3  0x002b1965 in BApplication::DispatchMessage ()  from
+ /boot/beos/system/lib/libbe.so
+ #4  0x002bc011 in BLooper::task_looper () from
+ /boot/beos/system/lib/libbe.so
+ #5  0x002b01dd in BApplication::Run () from /boot/beos/system/lib/libbe.so
+ #6  0x002087e6 in main ()
+ (gdb)
+ }}}
+
+ Only Terminal and Deskbar have been loaded and ProcessController showed
+ constant cpu loading.[[BR]]
+ I typed &quot;top&quot; in terminal and media_server and fxp intr handler (I have an
+ Intel nic) both used 50% of cpu time.[[BR]]
+ With 1st (card A) I never saw this problems.
+ [[BR]]
+ USB mouse didn't work, even after hot replug.
+ [[BR]]
+ Also fonts looked a little better than with 1st card which i described in
+ #2415. [[BR]]
+ Could this font corruption be caused by some combination of modern wide
+ screen and old GeForce card?
+ [[BR]]
+
+ Then I created new tab in terminal and at this point app_server freezed. I
+ was able to access kdl via F12.
+ Then I rebooted and selected &quot;Use fail-safe video&quot; option, this didn't
+ change anything.[[BR]]
+ When I switched (card B) with (card A), all problems are gone. Also
+ surface of (card B) was very hot.
+ Ubuntu is working stable with this graphic card.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2545">http://dev.haiku-os.org/ticket/2545</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009138.html">[Haiku-bugs] [Haiku] #2092: ActivityMonitor replicant does not display (replicant) handle
+</A></li>
+	<LI>Next message: <A HREF="009151.html">[Haiku-bugs] [Haiku] #2545: [kernel] GeForce MX420 lots of	stability issues
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9139">[ date ]</a>
+              <a href="thread.html#9139">[ thread ]</a>
+              <a href="subject.html#9139">[ subject ]</a>
+              <a href="author.html#9139">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

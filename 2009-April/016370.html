@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #732: [app_server] doesn't maintain per-application system fonts
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23732%3A%20%5Bapp_server%5D%20doesn%27t%20maintain%0A%20per-application%20system%20fonts&In-Reply-To=%3C049.9637e1f61f966e6c9b4a8d40e3315873%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="016368.html">
+   <LINK REL="Next"  HREF="016371.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #732: [app_server] doesn't maintain per-application system fonts</H1>
+    <B>stpere</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23732%3A%20%5Bapp_server%5D%20doesn%27t%20maintain%0A%20per-application%20system%20fonts&In-Reply-To=%3C049.9637e1f61f966e6c9b4a8d40e3315873%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #732: [app_server] doesn't maintain per-application system fonts">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Apr 19 21:58:28 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="016368.html">[Haiku-bugs] [Haiku] #2777: Media checker KDL when booting from	USB (eeepc)
+</A></li>
+        <LI>Next message: <A HREF="016371.html">[Haiku-bugs] [Haiku] #2117: Many translator's about box text is clipped (easy)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16370">[ date ]</a>
+              <a href="thread.html#16370">[ thread ]</a>
+              <a href="subject.html#16370">[ subject ]</a>
+              <a href="author.html#16370">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#732: [app_server] doesn't maintain per-application system fonts
+---------------------------------+------------------------------------------
+  Reporter:  diver               |       Owner:  stippi        
+      Type:  bug                 |      Status:  assigned      
+  Priority:  normal              |   Milestone:  R1            
+ Component:  Servers/app_server  |     Version:  R1 development
+Resolution:                      |   Blockedby:                
+  Platform:  All                 |    Blocking:                
+---------------------------------+------------------------------------------
+
+Comment(by stpere):
+
+ There you go, I updated the patch to fix the points you mentionned stippi.
+
+ * Now, if you try to access be_*_font before an application is created, it
+ will be the old behaviour i.e. it will gives you the content of the system
+ wide fonts.  When an application is created, the app_server does read
+ those system wide fonts (from DesktopSettings) and bound them with that
+ application.  In the BApplication constructor, it changes its local value
+ of be_*_font to reflect those associated values.
+
+ * I reverted the changes on window decorator.  I have to admit it was a
+ bad move, the old behaviour looks a lot better.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/732#comment:11">http://dev.haiku-os.org/ticket/732#comment:11</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="016368.html">[Haiku-bugs] [Haiku] #2777: Media checker KDL when booting from	USB (eeepc)
+</A></li>
+	<LI>Next message: <A HREF="016371.html">[Haiku-bugs] [Haiku] #2117: Many translator's about box text is clipped (easy)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16370">[ date ]</a>
+              <a href="thread.html#16370">[ thread ]</a>
+              <a href="subject.html#16370">[ subject ]</a>
+              <a href="author.html#16370">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

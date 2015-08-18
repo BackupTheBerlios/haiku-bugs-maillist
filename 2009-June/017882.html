@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2643: Black screen when DVI connected
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232643%3A%20Black%20screen%20when%20DVI%20connected&In-Reply-To=%3C052.96e3b5004b0b99a13565a37a2c2b27d4%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="017881.html">
+   <LINK REL="Next"  HREF="017883.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2643: Black screen when DVI connected</H1>
+    <B>andreasf</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232643%3A%20Black%20screen%20when%20DVI%20connected&In-Reply-To=%3C052.96e3b5004b0b99a13565a37a2c2b27d4%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2643: Black screen when DVI connected">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Jun  6 14:39:05 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="017881.html">[Haiku-bugs] [Haiku] #3397: Screen: cannot set screen modes	anymore
+</A></li>
+        <LI>Next message: <A HREF="017883.html">[Haiku-bugs] [Haiku] #2643: Black screen when DVI connected
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17882">[ date ]</a>
+              <a href="thread.html#17882">[ thread ]</a>
+              <a href="subject.html#17882">[ subject ]</a>
+              <a href="author.html#17882">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2643: Black screen when DVI connected
+-------------------------------------+--------------------------------------
+ Reporter:  andreasf                 |       Owner:  rudolfc       
+     Type:  bug                      |      Status:  new           
+ Priority:  normal                   |   Milestone:  R1            
+Component:  Drivers/Graphics/nVidia  |     Version:  R1 development
+Blockedby:                           |    Platform:  x86           
+ Blocking:  1845                     |  
+-------------------------------------+--------------------------------------
+Changes (by andreasf):
+
+ * cc: planche2k@&#8230; (added)
+
+
+Comment:
+
+ Hi Rudolf,
+
+ Unfortunately for some reason I did not receive a mail notification for
+ your comment, so I apologize for my late reply as well. I had noticed your
+ recent commits and re-tried a couple of times, including DVI connected
+ before cold booting, then building Haiku under Linux and rebooting into
+ Haiku, without luck.
+
+ I had this line in my {{{UserBuildConfig}}}:
+ {{{
+ AddFilesToHaikuImage home config settings kernel drivers :
+ $(HAIKU_TOP)/src/add-ons/kernel/drivers/graphics/nvidia/nvidia.settings ;
+ }}}
+ Your settings file was unmodified - not sure whether that &quot;programs the
+ panel&quot; or not. VGA-only does work fine with that file in place.
+
+ My GeForce FX 5700LE (Leadtek LR2984) card has three different connectors:
+ VGA, S-VHS and DVI. So I cannot connect the non-working DVI connector to
+ the VGA connector or vice versa, they were always identical. (Connecting
+ the DVI monitor via VGA connector did work, the monitor also works on
+ other machines via DVI.)
+
+ The DVI panel, when connected, was powered but black whereas the VGA
+ screen went black and powered off after a while. That is, after the rocket
+ icon lighted up. Before, they showed the same image. This is reproducible,
+ VGA never worked when DVI is connected.
+
+ Where do I get a vesa settings file, where do I put it?
+
+ Thanks for investigating,
+
+ Andreas
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2643#comment:25">http://dev.haiku-os.org/ticket/2643#comment:25</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="017881.html">[Haiku-bugs] [Haiku] #3397: Screen: cannot set screen modes	anymore
+</A></li>
+	<LI>Next message: <A HREF="017883.html">[Haiku-bugs] [Haiku] #2643: Black screen when DVI connected
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17882">[ date ]</a>
+              <a href="thread.html#17882">[ thread ]</a>
+              <a href="subject.html#17882">[ subject ]</a>
+              <a href="author.html#17882">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

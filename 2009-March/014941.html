@@ -1,0 +1,167 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3530: nForce (MCP61 Ethernet) not work	correctly
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233530%3A%20nForce%20%28MCP61%20Ethernet%29%20not%20work%0A%09correctly&In-Reply-To=%3C041.a5f379237c17937911a9a26f8fc8f251%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="014940.html">
+   <LINK REL="Next"  HREF="014942.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3530: nForce (MCP61 Ethernet) not work	correctly</H1>
+    <B>Hubert</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233530%3A%20nForce%20%28MCP61%20Ethernet%29%20not%20work%0A%09correctly&In-Reply-To=%3C041.a5f379237c17937911a9a26f8fc8f251%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3530: nForce (MCP61 Ethernet) not work	correctly">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Mar  8 11:23:16 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="014940.html">[Haiku-bugs] [Haiku] #3200: Graphic games are showing a back border on left and top
+</A></li>
+        <LI>Next message: <A HREF="014942.html">[Haiku-bugs] [Haiku] #2389: [Terminal] Add a menu option to allow the user to give the terminal a custom name
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14941">[ date ]</a>
+              <a href="thread.html#14941">[ thread ]</a>
+              <a href="subject.html#14941">[ subject ]</a>
+              <a href="author.html#14941">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3530: nForce (MCP61 Ethernet) not work correctly
+------------------------------------+---------------------------------------
+ Reporter:  Hubert                  |       Owner:  axeld         
+     Type:  bug                     |      Status:  new           
+ Priority:  normal                  |   Milestone:  R1            
+Component:  Network &amp; Internet/TCP  |     Version:  R1 development
+Blockedby:                          |    Platform:  All           
+ Blocking:                          |  
+------------------------------------+---------------------------------------
+ My onboard ethernet card it be not able to establish address from DHCP ,
+ setting static address causes, that card sends and  receives packet but FF
+ be not able to load side etc. I tested now on r. 29323 but it the same was
+ in earlier revision.
+
+ BTW. How to establish in system, in order to second card had the priority
+ in working (Realtek 8139) on PCI  - the nForce turns on defaults always,
+ and after change, the Realtek be not able to alone pull down the IP from
+ DHCP, this does only near restart of system.
+
+ {{{
+ /dev/net/nforce/0
+ Hardware Type: Ethernet, Address: 00:1d:7d:52:9c:f2
+ Media Type: 100 MBit, 100BASE-TX
+ inet addr: 89.76.66.89, Bcast: 89.76.66.255, Mask: 255.255.255.0
+ MTU: 1500, Metric: 0, up broadcast link
+ Receive: 478 packets, 0 errors, 29552 bytes, 0 mcasts, 0 dropped
+ Transmit: 11 packets, 0 errors, 801 bytes, 0 mcasts, 0 dropped
+ Collisions: 0
+ }}}
+
+ {{{
+ device Bridge (Host bridge) [6|0|0]
+   vendor 1022: Advanced Micro Devices [AMD]
+   device 1103: K8 [Athlon64/Opteron] Miscellaneous Control
+
+ device Bridge (Host bridge) [6|0|0]
+   vendor 1022: Advanced Micro Devices [AMD]
+   device 1102: K8 [Athlon64/Opteron] DRAM Controller
+
+ device Bridge (Host bridge) [6|0|0]
+   vendor 1022: Advanced Micro Devices [AMD]
+   device 1101: K8 [Athlon64/Opteron] Address Map
+
+ device Bridge (Host bridge) [6|0|0]
+   vendor 1022: Advanced Micro Devices [AMD]
+   device 1100: K8 [Athlon64/Opteron] HyperTransport Technology
+ Configuration
+
+ device Display controller (VGA compatible controller, VGA controller)
+ [3|0|0]
+   vendor 10de: nVidia Corporation
+   device 03d0: GeForce 6150SE nForce 430
+
+ device Mass storage controller (IDE interface) [1|1|85]
+   vendor 10de: nVidia Corporation
+   device 03f6: MCP61 SATA Controller
+
+ device Bridge [6|80|0]
+   vendor 10de: nVidia Corporation
+   device 03ef: MCP61 Ethernet
+
+ device Mass storage controller (IDE interface) [1|1|8a]
+   vendor 10de: nVidia Corporation
+   device 03ec: MCP61 IDE
+
+ device Multimedia controller (Audio device) [4|3|0]
+   vendor 10de: nVidia Corporation
+   device 03f0: MCP61 High Definition Audio
+
+ device Network controller (Ethernet controller) [2|0|0]
+   vendor 10ec: Realtek Semiconductor Co., Ltd.
+   device 8139: RTL-8139/8139C/8139C+
+
+ device Bridge (PCI bridge, Subtractive decode) [6|4|1]
+   vendor 10de: nVidia Corporation
+   device 03f3: MCP61 PCI bridge
+
+ device Serial bus controller (USB Controller, EHCI) [c|3|20]
+   vendor 10de: nVidia Corporation
+   device 03f2: MCP61 USB Controller
+
+ device Serial bus controller (USB Controller, OHCI) [c|3|10]
+   vendor 10de: nVidia Corporation
+   device 03f1: MCP61 USB Controller
+
+ device Memory controller (RAM memory) [5|0|0]
+   vendor 10de: nVidia Corporation
+   device 03f5: MCP61 Memory Controller
+
+ device Serial bus controller (SMBus) [c|5|0]
+   vendor 10de: nVidia Corporation
+   device 03eb: MCP61 SMBus
+
+ device Bridge (ISA bridge) [6|1|0]
+   vendor 10de: nVidia Corporation
+   device 03e0: MCP61 LPC Bridge
+
+ device Memory controller (RAM memory) [5|0|0]
+   vendor 10de: nVidia Corporation
+   device 03ea: MCP61 Memory Controller
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3530">http://dev.haiku-os.org/ticket/3530</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="014940.html">[Haiku-bugs] [Haiku] #3200: Graphic games are showing a back border on left and top
+</A></li>
+	<LI>Next message: <A HREF="014942.html">[Haiku-bugs] [Haiku] #2389: [Terminal] Add a menu option to allow the user to give the terminal a custom name
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14941">[ date ]</a>
+              <a href="thread.html#14941">[ thread ]</a>
+              <a href="subject.html#14941">[ subject ]</a>
+              <a href="author.html#14941">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

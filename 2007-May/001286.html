@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1211: KVM returning exception 13 (0) booting Haiku (and crash)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231211%3A%20KVM%20returning%20exception%2013%20%280%29%20booting%0A%20Haiku%20%28and%20crash%29&In-Reply-To=%3C043.bb6de66b58f4cc64420050c7f706ab1f%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001297.html">
+   <LINK REL="Next"  HREF="001290.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1211: KVM returning exception 13 (0) booting Haiku (and crash)</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231211%3A%20KVM%20returning%20exception%2013%20%280%29%20booting%0A%20Haiku%20%28and%20crash%29&In-Reply-To=%3C043.bb6de66b58f4cc64420050c7f706ab1f%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1211: KVM returning exception 13 (0) booting Haiku (and crash)">trac at haiku-os.org
+       </A><BR>
+    <I>Sun May  6 20:19:05 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001297.html">[Haiku-bugs] [Haiku] #1210: IMAP: download only headers
+</A></li>
+        <LI>Next message: <A HREF="001290.html">[Haiku-bugs] [Haiku] #1211: KVM returning exception 13 (0) booting Haiku (and crash)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1286">[ date ]</a>
+              <a href="thread.html#1286">[ thread ]</a>
+              <a href="subject.html#1286">[ subject ]</a>
+              <a href="author.html#1286">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1211: KVM returning exception 13 (0) booting Haiku (and crash)
+--------------------------------+-------------------------------------------
+ Reporter:  leleobhz            |       Owner:  axeld         
+     Type:  bug                 |      Status:  new           
+ Priority:  normal              |   Milestone:  R1            
+Component:  System/Boot Loader  |     Version:  R1 development
+ Platform:  x86                 |  
+--------------------------------+-------------------------------------------
+ After start kvm, when show the haiku graphics (fast), it crashes.
+ Works without kvm (-no-kvm opt), with returns:
+
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">leleobhz at zorg</A>:~/COISASQUEGOSTO/OS/BeOS/HAIKU$ kvm -hda haiku.image
+ unhandled vm exit: 0x80000021
+ rax 0000000000000000 rbx 0000000000000000 rcx 0000000000000000 rdx
+ 0000000000000600
+ rsi 0000000000000000 rdi 0000000000000000 rsp 0000000000000000 rbp
+ 0000000000000000
+ r8 0000000000000000 r9 0000000000000000 r10 0000000000000000 r11
+ 0000000000000000
+ r12 0000000000000000 r13 0000000000000000 r14 0000000000000000 r15
+ 0000000000000000
+ rip 000000000000fff0 rflags 00023002
+ cs f000 (ffff0000/0000ffff p 1 dpl 3 db 0 s 1 type 3 l 0 g 0 avl 0)
+ ds 0000 (00000000/0000ffff p 1 dpl 3 db 0 s 1 type 3 l 0 g 0 avl 0)
+ es 0000 (00000000/0000ffff p 1 dpl 3 db 0 s 1 type 3 l 0 g 0 avl 0)
+ ss 0000 (00000000/0000ffff p 1 dpl 3 db 0 s 1 type 3 l 0 g 0 avl 0)
+ fs 0000 (00000000/0000ffff p 1 dpl 3 db 0 s 1 type 3 l 0 g 0 avl 0)
+ gs 0000 (00000000/0000ffff p 1 dpl 3 db 0 s 1 type 3 l 0 g 0 avl 0)
+ tr 0000 (08850000/00002088 p 1 dpl 0 db 0 s 0 type b l 0 g 0 avl 0)
+ ldt 0000 (00000000/0000ffff p 1 dpl 0 db 0 s 0 type 0 l 0 g 0 avl 0)
+ gdt 0/ffff
+ idt 0/ffff
+ cr0 60000010 cr2 0 cr3 0 cr4 0 cr8 0 efer 0
+ Cancelado (core dumped)
+
+ -no-acpi dont get results. Strace -f dont return notting than a lot of
+ ioctl and the crash on final. GDB returns notting more, but give-me time
+ for a screenshot (attached). Versions:
+
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">leleobhz at zorg</A>:~$ dpkg -l kvm
+ Desejado=U=Desconhecido/Instalar/Remover/aPagar/H=Manter
+ |
+ status=N&#227;o/Instalado/arquiv.-Config./U=Descomp./Falhou-config/H=semi-inst.
+
+ |/ Erro?=(nenhum)/H=Mantido/precisa-Reinst./X=os dois problemas
+ (status,Erro: mai&#250;sculas=ruim)
+ ||/ Nome Vers&#227;o
+ Descri&#231;&#227;o
+ +++-=============================-=============================-===========
+ ===============================================================
+ ii kvm 16-1ubuntu2 Full
+ virtualization on x86 hardware
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">leleobhz at zorg</A>:~$ uname -a
+ Linux zorg 2.6.20-15-generic #2 SMP Sun Apr 15 07:36:31 UTC 2007 i686
+ GNU/Linux
+
+ Mind note: KVM is a mod version of qemu to support intel and amd
+ virtualisation. As writed in the KVM page (<A HREF="http://kvm.qumranet.com/">http://kvm.qumranet.com/</A>):
+
+ &quot;With certain guest operating systems, booting gives an immediate
+ &quot;Execption 13&quot; or &quot;Exception 12&quot; message.
+
+ The problem is caused by the lack of real-mode virtualization on Intel
+ processors. Real mode is the 16-bit instruction set used in the 8088 cpu,
+ and is used for booting modern operating system, and by DOS. kvm uses a
+ hack that allows most, but not all, of real mode instructions to be used.
+ If your guest OS uses a real mode feature that kvm does not emulate, it
+ will crash.&quot;
+
+ So is why Haiku uses unsupported real mode instructions. Someone can make
+ it compatible?
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1211">http://dev.haiku-os.org/ticket/1211</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001297.html">[Haiku-bugs] [Haiku] #1210: IMAP: download only headers
+</A></li>
+	<LI>Next message: <A HREF="001290.html">[Haiku-bugs] [Haiku] #1211: KVM returning exception 13 (0) booting Haiku (and crash)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1286">[ date ]</a>
+              <a href="thread.html#1286">[ thread ]</a>
+              <a href="subject.html#1286">[ subject ]</a>
+              <a href="author.html#1286">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

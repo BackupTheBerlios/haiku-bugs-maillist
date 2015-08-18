@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1154: Menu Pref -- Always Show Triggers non-functional (easy)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231154%3A%20Menu%20Pref%20--%20Always%20Show%20Triggers%0A%20non-functional%20%28easy%29&In-Reply-To=%3C050.8bc9bd6262afcc8a63bee8f4017e5b05%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002349.html">
+   <LINK REL="Next"  HREF="002351.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1154: Menu Pref -- Always Show Triggers non-functional (easy)</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231154%3A%20Menu%20Pref%20--%20Always%20Show%20Triggers%0A%20non-functional%20%28easy%29&In-Reply-To=%3C050.8bc9bd6262afcc8a63bee8f4017e5b05%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1154: Menu Pref -- Always Show Triggers non-functional (easy)">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Aug 17 08:03:07 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002349.html">[Haiku-bugs] [Haiku] #1254: rtl8139 read_hook: Error in package reception: bits: 20704 length 26088!!!
+</A></li>
+        <LI>Next message: <A HREF="002351.html">[Haiku-bugs] [Haiku] #113: Ctrl+C kills applications that	shouldn't be killed
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2350">[ date ]</a>
+              <a href="thread.html#2350">[ thread ]</a>
+              <a href="subject.html#2350">[ subject ]</a>
+              <a href="author.html#2350">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1154: Menu Pref -- Always Show Triggers non-functional (easy)
+---------------------------------+------------------------------------------
+  Reporter:  mmadia              |       Owner:  axeld         
+      Type:  bug                 |      Status:  new           
+  Priority:  normal              |   Milestone:  R1            
+ Component:  Kits/Interface Kit  |     Version:  R1 development
+Resolution:                      |    Platform:  All           
+---------------------------------+------------------------------------------
+Comment (by anxiety):
+
+ I've been looking into this... and I think I have fixed the basic issue.
+ The menu's local cached version wasn't getting set to the system setting
+ when it was initialized.
+
+ I noticed another problem though... changing the setting in the Menu pref
+ app does not immediately change all menus in the system but the change
+ will show on any new menus that are created.  This is the same for all
+ menu settings, not just &quot;Always Show Triggers.&quot;  It would seem that there
+ should be some better way of caching the value (which is needed for when
+ custom data is sent) or some sort of global broadcast message alerting
+ each menu that it needs to reevaluate the system settings if it isn't
+ using custom settings.  I don't know enough about the system to have any
+ opinion on that.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1154#comment:9">http://dev.haiku-os.org/ticket/1154#comment:9</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002349.html">[Haiku-bugs] [Haiku] #1254: rtl8139 read_hook: Error in package reception: bits: 20704 length 26088!!!
+</A></li>
+	<LI>Next message: <A HREF="002351.html">[Haiku-bugs] [Haiku] #113: Ctrl+C kills applications that	shouldn't be killed
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2350">[ date ]</a>
+              <a href="thread.html#2350">[ thread ]</a>
+              <a href="subject.html#2350">[ subject ]</a>
+              <a href="author.html#2350">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

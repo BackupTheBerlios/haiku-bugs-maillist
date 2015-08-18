@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4514: Assist video decoding with multiple	threads
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234514%3A%20Assist%20video%20decoding%20with%20multiple%0A%09threads&In-Reply-To=%3C047.04db939eb23d4117605e1fbe40a29e9f%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="021325.html">
+   <LINK REL="Next"  HREF="021319.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4514: Assist video decoding with multiple	threads</H1>
+    <B>PieterPanman</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234514%3A%20Assist%20video%20decoding%20with%20multiple%0A%09threads&In-Reply-To=%3C047.04db939eb23d4117605e1fbe40a29e9f%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4514: Assist video decoding with multiple	threads">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Sep 14 23:52:33 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="021325.html">[Haiku-bugs] [Haiku] #4513: No network card recognized in VMWare
+</A></li>
+        <LI>Next message: <A HREF="021319.html">[Haiku-bugs] [Haiku] #4514: Assist video decoding with multiple	threads
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21315">[ date ]</a>
+              <a href="thread.html#21315">[ thread ]</a>
+              <a href="subject.html#21315">[ subject ]</a>
+              <a href="author.html#21315">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4514: Assist video decoding with multiple threads
+----------------------------------+-----------------------------------------
+ Reporter:  PieterPanman          |       Owner:  marcusoverhagen
+     Type:  bug                   |      Status:  new            
+ Priority:  normal                |   Milestone:  R1             
+Component:  Audio &amp; Video/Codecs  |     Version:  R1/Development 
+Blockedby:                        |    Platform:  All            
+ Blocking:                        |  
+----------------------------------+-----------------------------------------
+ My experiences from some hd videoclips shows that we're not taking
+ advantage of multiple cores for heavy video decoding. Since I have a nice
+ dual core system it is a shame it cannot play some videos smoothly. It
+ might be a while before we get video acceleration from GPU's, so maybe
+ video rendering can distribute frames across multiple threads. System is a
+ Core2Duo laptop 2.0 GHz.
+
+ From
+ <A HREF="http://www.microsoft.com/windows/windowsmedia/musicandvideo/hdvideo/contentshowcase.aspx">http://www.microsoft.com/windows/windowsmedia/musicandvideo/hdvideo/contentshowcase.aspx</A>
+ : Coral_Reef_Adventure_1080.wmv
+ Very stuttery, no sound. FrameGenerator thread full CPU (as expected I
+ guess)
+
+ I Am Legend - Trailer.mp4 (1080p, h264) <A HREF="http://www.h264info.com/clips.html">http://www.h264info.com/clips.html</A>
+ Extremely choppy, corrupted images, no sound. More problems but (see also
+ #4511)
+
+ The Simpsons Movie - Trailer.mp4 720p h264
+ Plays ok, slightly choppy. Still causes mouse pauses every 30 seconds for
+ 1 or 2 seconds. Sometimes it loses some frames and seems to have skipped a
+ key frame, after which you can really see how compression works :) Can
+ also crash mediaplayer, as with #4511
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4514">http://dev.haiku-os.org/ticket/4514</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="021325.html">[Haiku-bugs] [Haiku] #4513: No network card recognized in VMWare
+</A></li>
+	<LI>Next message: <A HREF="021319.html">[Haiku-bugs] [Haiku] #4514: Assist video decoding with multiple	threads
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21315">[ date ]</a>
+              <a href="thread.html#21315">[ thread ]</a>
+              <a href="subject.html#21315">[ subject ]</a>
+              <a href="author.html#21315">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

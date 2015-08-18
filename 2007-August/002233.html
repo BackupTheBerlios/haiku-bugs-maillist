@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1390: [app_server] Invalid opcode exception
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231390%3A%20%5Bapp_server%5D%20Invalid%20opcode%20exception&In-Reply-To=%3C040.c22ea4fb382184f71fd2a99eb3f6b578%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002285.html">
+   <LINK REL="Next"  HREF="002241.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1390: [app_server] Invalid opcode exception</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231390%3A%20%5Bapp_server%5D%20Invalid%20opcode%20exception&In-Reply-To=%3C040.c22ea4fb382184f71fd2a99eb3f6b578%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1390: [app_server] Invalid opcode exception">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Aug 12 16:44:39 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002285.html">[Haiku-bugs] [Haiku] #1389: [FlattenPictureTest] Not all tests	succeed
+</A></li>
+        <LI>Next message: <A HREF="002241.html">[Haiku-bugs] [Haiku] #1390: [app_server] Invalid opcode	exception
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2233">[ date ]</a>
+              <a href="thread.html#2233">[ thread ]</a>
+              <a href="subject.html#2233">[ subject ]</a>
+              <a href="author.html#2233">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1390: [app_server] Invalid opcode exception
+--------------------------------+-------------------------------------------
+ Reporter:  diver               |       Owner:  axeld         
+     Type:  bug                 |      Status:  new           
+ Priority:  normal              |   Milestone:  R1            
+Component:  Servers/app_server  |     Version:  R1 development
+ Platform:  All                 |  
+--------------------------------+-------------------------------------------
+ {{{
+ debug_server: Thread 84 entered the debugger: Invalid opcode exception
+ stack trace, current PC 0x524801  __Q23agg13vcgen_contour + 0x61:
+   (0x7024789c)  0x2aa373
+ __15AGGTextRendererRQ23aggt26renderer_scanline_aa_solid1ZQ23aggt15renderer_region1Z11PixelFormatRQ23aggt27renderer_scanline_bin_solid1ZQ23aggt15renderer_region1Z11PixelFormatRQ23agg11scanline_u8
+ + 0x29f
+   (0x702478dc)  0x28e285  __7Painter + 0x419
+   (0x7024791c)  0x284d34  __13DrawingEngineP11HWInterface + 0x48
+   (0x7024794c)  0x2769d5
+ MakeWindowLayer__12ServerWindowG5BRectPCc11window_look11window_feelUlUl +
+ 0x81
+   (0x7024798c)  0x27001f
+ Init__12ServerWindowG5BRect11window_look11window_feelUlUl + 0xcf
+   (0x702479dc)  0x264e64
+ _CreateWindow__9ServerApplRQ28BPrivate12LinkReceiverRl + 0x314
+   (0x70247a7c)  0x25fb9f
+ _DispatchMessage__9ServerApplRQ28BPrivate12LinkReceiver + 0x5b3
+   (0x70247f1c)  0x25f547  _MessageLooper__9ServerApp + 0x10b
+   (0x70247f7c)  0x25b274  _message_thread__13MessageLooperPv + 0x28
+   (0x70247fac)  0x7257d0  _get_next_team_info + 0x5c (closest symbol)
+ }}}
+
+ don't know yet how to reproduce it.
+ Happens in vmware under linux with r21900.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1390">http://dev.haiku-os.org/ticket/1390</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002285.html">[Haiku-bugs] [Haiku] #1389: [FlattenPictureTest] Not all tests	succeed
+</A></li>
+	<LI>Next message: <A HREF="002241.html">[Haiku-bugs] [Haiku] #1390: [app_server] Invalid opcode	exception
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2233">[ date ]</a>
+              <a href="thread.html#2233">[ thread ]</a>
+              <a href="subject.html#2233">[ subject ]</a>
+              <a href="author.html#2233">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3128: sh leaks memory
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233128%3A%20sh%20leaks%20memory&In-Reply-To=%3C051.a27b41daa39e64340b53f7eaf12ea920%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012452.html">
+   <LINK REL="Next"  HREF="012483.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3128: sh leaks memory</H1>
+    <B>bonefish</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233128%3A%20sh%20leaks%20memory&In-Reply-To=%3C051.a27b41daa39e64340b53f7eaf12ea920%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3128: sh leaks memory">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Nov 13 16:33:14 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012452.html">[Haiku-bugs] [Haiku] #3128: sh leaks memory
+</A></li>
+        <LI>Next message: <A HREF="012483.html">[Haiku-bugs] [Haiku] #3128: sh leaks memory
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12469">[ date ]</a>
+              <a href="thread.html#12469">[ thread ]</a>
+              <a href="subject.html#12469">[ subject ]</a>
+              <a href="author.html#12469">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3128: sh leaks memory
+----------------------------+-----------------------------------------------
+  Reporter:  bhaible        |       Owner:  axeld         
+      Type:  bug            |      Status:  new           
+  Priority:  normal         |   Milestone:  R1            
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |   Blockedby:                
+  Platform:  All            |    Blocking:                
+----------------------------+-----------------------------------------------
+Changes (by bonefish):
+
+  * component:  - General =&gt; System/Kernel
+
+
+Comment:
+
+ I don't see the growing shell memory size here. At least ProcessController
+ constantly shows a little more than 400 KB for the terminal's login shell
+ the whole time, and about 1.2 MB for the configure shell while it runs. I
+ do see an increase in kernel memory usage though, suggesting a memory leak
+ in the kernel.
+
+ The leak checking suggests that memory allocated in
+ arch_vm_translation_map_init_map() is leaked, so supposedly the ref-
+ counting doesn't work as it should. Will look into this later tonight,
+ unless someone beats me to it.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3128#comment:1">http://dev.haiku-os.org/ticket/3128#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012452.html">[Haiku-bugs] [Haiku] #3128: sh leaks memory
+</A></li>
+	<LI>Next message: <A HREF="012483.html">[Haiku-bugs] [Haiku] #3128: sh leaks memory
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12469">[ date ]</a>
+              <a href="thread.html#12469">[ thread ]</a>
+              <a href="subject.html#12469">[ subject ]</a>
+              <a href="author.html#12469">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

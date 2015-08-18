@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1646: the pthread_key_create_2-1 posix test invokes the debugger
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231646%3A%20the%20pthread_key_create_2-1%20posix%0A%20test%20invokes%20the%20debugger&In-Reply-To=%3C052.ef2931c4b27ec618cf3d53b6871fc77e%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003756.html">
+   <LINK REL="Next"  HREF="003758.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1646: the pthread_key_create_2-1 posix test invokes the debugger</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231646%3A%20the%20pthread_key_create_2-1%20posix%0A%20test%20invokes%20the%20debugger&In-Reply-To=%3C052.ef2931c4b27ec618cf3d53b6871fc77e%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1646: the pthread_key_create_2-1 posix test invokes the debugger">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Nov 27 01:43:36 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003756.html">[Haiku-bugs] [Haiku] #1646: the pthread_key_create_2-1 posix test invokes the debugger
+</A></li>
+        <LI>Next message: <A HREF="003758.html">[Haiku-bugs] [Haiku] #1646: the pthread_key_create_2-1 posix test invokes the debugger
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3757">[ date ]</a>
+              <a href="thread.html#3757">[ thread ]</a>
+              <a href="subject.html#3757">[ subject ]</a>
+              <a href="author.html#3757">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1646: the pthread_key_create_2-1 posix test invokes the debugger
+----------------------------+-----------------------------------------------
+  Reporter:  kaoutsis       |       Owner:  axeld         
+      Type:  bug            |      Status:  new           
+  Priority:  normal         |   Milestone:  R1            
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |    Platform:  All           
+----------------------------+-----------------------------------------------
+Comment (by kaoutsis):
+
+ Replying to [comment:8 korli]:
+ &gt; The test pass successfully with this change. Could you check ?
+ &gt;
+ &gt; Index:
+ src/tests/system/libroot/posix/posixtestsuite/conformance/interfaces/pthread_key_create/1-2.c
+ &gt; ===================================================================
+ &gt; ---
+ src/tests/system/libroot/posix/posixtestsuite/conformance/interfaces/pthread_key_create/1-2.c
+ (r&#233;vision 23000)
+ &gt; +++
+ src/tests/system/libroot/posix/posixtestsuite/conformance/interfaces/pthread_key_create/1-2.c
+ (copie de travail)
+ &gt; @@ -46,7 +46,7 @@
+ &gt;  int main()
+ &gt;  {
+ &gt;         pthread_t new_th;
+ &gt; -       void *value_ptr;
+ &gt; +       void *value_ptr = NULL;
+ &gt;
+ &gt;         /* Create a key */
+ &gt;         for(i = 0;i&lt;NUM_OF_THREADS;i++)
+ i checked and it passed, but to be frank, i don't understand what the
+ author wants
+ to achieve.  Note that the above fragment of code
+ is from 1-2.c which is the case of #1644 (this is ticket #1646 for the
+ file 2-1.c)
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1646#comment:9">http://dev.haiku-os.org/ticket/1646#comment:9</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003756.html">[Haiku-bugs] [Haiku] #1646: the pthread_key_create_2-1 posix test invokes the debugger
+</A></li>
+	<LI>Next message: <A HREF="003758.html">[Haiku-bugs] [Haiku] #1646: the pthread_key_create_2-1 posix test invokes the debugger
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3757">[ date ]</a>
+              <a href="thread.html#3757">[ thread ]</a>
+              <a href="subject.html#3757">[ subject ]</a>
+              <a href="author.html#3757">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

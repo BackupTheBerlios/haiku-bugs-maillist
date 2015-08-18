@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3772: Freeze on high memory load when not limiting available memory (reproduceable) (was: Freeze on Haiku tree compilation (reproduceable))
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233772%3A%20Freeze%20on%20high%20memory%20load%20when%20not%0A%20limiting%20available%20memory%20%28reproduceable%29%20%28was%3A%20Freeze%20on%20Haiku%20tree%0A%20compilation%20%28reproduceable%29%29&In-Reply-To=%3C060.a8aafc4c417022457b903372bebcc732%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="022915.html">
+   <LINK REL="Next"  HREF="022918.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3772: Freeze on high memory load when not limiting available memory (reproduceable) (was: Freeze on Haiku tree compilation (reproduceable))</H1>
+    <B>michael.weirauch</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233772%3A%20Freeze%20on%20high%20memory%20load%20when%20not%0A%20limiting%20available%20memory%20%28reproduceable%29%20%28was%3A%20Freeze%20on%20Haiku%20tree%0A%20compilation%20%28reproduceable%29%29&In-Reply-To=%3C060.a8aafc4c417022457b903372bebcc732%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3772: Freeze on high memory load when not limiting available memory (reproduceable) (was: Freeze on Haiku tree compilation (reproduceable))">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Oct 19 18:16:29 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="022915.html">[Haiku-bugs] [Haiku] #4508: Screen resolution problem with	intel GM965/GL960
+</A></li>
+        <LI>Next message: <A HREF="022918.html">[Haiku-bugs] [Haiku] #2949: Missing freetype2 headers, the freetype-config tool and its pkg-config files are missing.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22917">[ date ]</a>
+              <a href="thread.html#22917">[ thread ]</a>
+              <a href="subject.html#22917">[ subject ]</a>
+              <a href="author.html#22917">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3772: Freeze on high memory load when not limiting available memory
+(reproduceable)
+------------------------------+---------------------------------------------
+ Reporter:  michael.weirauch  |       Owner:  axeld         
+     Type:  bug               |      Status:  new           
+ Priority:  normal            |   Milestone:  R1            
+Component:  System            |     Version:  R1/Development
+Blockedby:                    |    Platform:  x86           
+ Blocking:                    |  
+------------------------------+---------------------------------------------
+Changes (by michael.weirauch):
+
+  * version:  R1/pre-alpha1 =&gt; R1/Development
+
+
+Comment:
+
+ r33655; gcc4hybrid;
+
+ Still persistent. Some mtrr info. Perhaps this sheds some more light into
+ the issue as it seems memory related. (Limiting memory to 3067MB works)
+
+ bott_mtrr_dump.diff from #4399
+ {{{
+ mtrr: 7 variable ranges
+ mtrr: default type: 0xc00 (uncacheable, variable enabled, fixed enabled)
+ mtrr: entry 0: base: 0x13c000000; length: 0x40007ff; type: 0 uncacheable
+ mtrr: entry 1: base: 0x0; length: 0x800007ff; type: 6 write-back
+ mtrr: entry 2: base: 0x80000000; length: 0x400007ff; type: 6 write-back
+ mtrr: entry 3: base: 0x100000000; length: 0x400007ff; type: 6 write-back
+ mtrr: entry 4: empty
+ mtrr: entry 5: empty
+ mtrr: entry 6: empty
+ }}}
+
+ /proc/mtrr from openSUSE:
+ {{{
+ reg00: base=0x13c000000 (5056MB), size=  64MB: uncachable, count=1
+ reg01: base=0x00000000 (   0MB), size=2048MB: write-back, count=1
+ reg02: base=0x80000000 (2048MB), size=1024MB: write-back, count=1
+ reg03: base=0x100000000 (4096MB), size=1024MB: write-back, count=1
+ reg04: base=0xd0000000 (3328MB), size= 256MB: write-combining, count=1
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3772#comment:32">http://dev.haiku-os.org/ticket/3772#comment:32</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="022915.html">[Haiku-bugs] [Haiku] #4508: Screen resolution problem with	intel GM965/GL960
+</A></li>
+	<LI>Next message: <A HREF="022918.html">[Haiku-bugs] [Haiku] #2949: Missing freetype2 headers, the freetype-config tool and its pkg-config files are missing.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22917">[ date ]</a>
+              <a href="thread.html#22917">[ thread ]</a>
+              <a href="subject.html#22917">[ subject ]</a>
+              <a href="author.html#22917">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

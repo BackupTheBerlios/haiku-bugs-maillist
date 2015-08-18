@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3710: Tracker crashes with	BColumnTitle::Draw
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-July/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233710%3A%20Tracker%20crashes%20with%0A%09BColumnTitle%3A%3ADraw&In-Reply-To=%3C056.c862ebad18d5a869401eb2cff3ca820f%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="018261.html">
+   <LINK REL="Next"  HREF="018263.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3710: Tracker crashes with	BColumnTitle::Draw</H1>
+    <B>aldeck</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233710%3A%20Tracker%20crashes%20with%0A%09BColumnTitle%3A%3ADraw&In-Reply-To=%3C056.c862ebad18d5a869401eb2cff3ca820f%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3710: Tracker crashes with	BColumnTitle::Draw">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Jul  3 02:11:47 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="018261.html">[Haiku-bugs] [Haiku] #2801: rtl8169 stops responding after a	while
+</A></li>
+        <LI>Next message: <A HREF="018263.html">[Haiku-bugs] [Haiku] #3828: Icon positioning/selection got	screwed up.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18262">[ date ]</a>
+              <a href="thread.html#18262">[ thread ]</a>
+              <a href="subject.html#18262">[ subject ]</a>
+              <a href="author.html#18262">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3710: Tracker crashes with BColumnTitle::Draw
+-----------------------------------+----------------------------------------
+  Reporter:  PieterPanman          |       Owner:  aldeck        
+      Type:  bug                   |      Status:  closed        
+  Priority:  normal                |   Milestone:  R1            
+ Component:  Applications/Tracker  |     Version:  R1 development
+Resolution:  fixed                 |   Blockedby:                
+  Platform:  All                   |    Blocking:  3914, 4038    
+-----------------------------------+----------------------------------------
+Changes (by aldeck):
+
+  * status:  assigned =&gt; closed
+  * resolution:  =&gt; fixed
+
+
+Comment:
+
+ Fixed in r31378
+
+ It ended up being a single window navigation issue, that would happen only
+ under certain conditions, see commit log.[[BR]]
+
+ For reference, here is the test case (100% reproducible) that i used after
+ understanding the problem:
+
+ 1) switch to single window navigation mode.[[BR]]
+    in any folder, add an additional attribute column[[BR]]
+    create a new sub folder[[BR]]
+    navigate immediately into it[[BR]]
+    trigger an invalidation on the column title bar (moving a window over
+ it, or switching workspaces)[[BR]]
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3710#comment:11">http://dev.haiku-os.org/ticket/3710#comment:11</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="018261.html">[Haiku-bugs] [Haiku] #2801: rtl8169 stops responding after a	while
+</A></li>
+	<LI>Next message: <A HREF="018263.html">[Haiku-bugs] [Haiku] #3828: Icon positioning/selection got	screwed up.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18262">[ date ]</a>
+              <a href="thread.html#18262">[ thread ]</a>
+              <a href="subject.html#18262">[ subject ]</a>
+              <a href="author.html#18262">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

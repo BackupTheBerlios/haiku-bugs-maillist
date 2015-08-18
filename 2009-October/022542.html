@@ -1,0 +1,168 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2789: writing to usb disks fail after 10-100Mb of writing files
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232789%3A%20writing%20to%20usb%20disks%20fail%20after%0A%2010-100Mb%20of%20writing%20files&In-Reply-To=%3C051.ea59f3868d9355d559b38dd9d6a9a011%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="022541.html">
+   <LINK REL="Next"  HREF="022547.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2789: writing to usb disks fail after 10-100Mb of writing files</H1>
+    <B>mmlr</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232789%3A%20writing%20to%20usb%20disks%20fail%20after%0A%2010-100Mb%20of%20writing%20files&In-Reply-To=%3C051.ea59f3868d9355d559b38dd9d6a9a011%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2789: writing to usb disks fail after 10-100Mb of writing files">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Oct  7 21:42:11 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="022541.html">[Haiku-bugs] [Haiku] #4741: Kernel never loads on Dell OptiPlex 755	- Core 2 duo
+</A></li>
+        <LI>Next message: <A HREF="022547.html">[Haiku-bugs] [Haiku] #4742: Could not open &quot;BeSmsPlus&quot; (Missing symbol: _ReservedJoystick2__9BJoystick)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22542">[ date ]</a>
+              <a href="thread.html#22542">[ thread ]</a>
+              <a href="subject.html#22542">[ subject ]</a>
+              <a href="author.html#22542">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2789: writing to usb disks fail after 10-100Mb of writing files
+----------------------+-----------------------------------------------------
+  Reporter:  rudolfc  |       Owner:  mmlr         
+      Type:  bug      |      Status:  closed       
+  Priority:  normal   |   Milestone:  R1           
+ Component:  Drivers  |     Version:  R1/pre-alpha1
+Resolution:  fixed    |   Blockedby:               
+  Platform:  x86      |    Blocking:               
+----------------------+-----------------------------------------------------
+
+Comment(by mmlr):
+
+ Replying to [comment:22 rudolfc]:
+ &gt; Well, mmlr, using capitals to kindly inform me of something does give me
+ a bit off pissed off feeling after all. Wouldn't that do the same for you?
+
+ It was intended to make more obvious what was more subtle in the other two
+ comments I added: That I know where the problem is and am actively working
+ on resolving it, so adding workarounds is not well spent effort. Since you
+ didn't seem to acknowledge that I tried to be more blunt about it. Of
+ course I can't restrict you in what you invest your time in, but I find it
+ sad to see someone going into a direction that in the long run doesn't pay
+ off. I usually like to be told before spending efforts. And since you
+ wrote that you are just about to implement the write cache as well as
+ wanted to invest time into further benchmarking I saw the chance of still
+ saving you from a bit more time that wouldn't go into the final direction.
+
+ &gt; Anyhow. I'm a practical kind of guy. Until you prove that what you say
+ works (because it's implemented), I am going forward with this workaround
+ as you call it, if only for my personal version of Haiku.
+
+ I'm sorry, but I do also have a bit of knowledge in this field and I
+ guarantee you that what I am saying is actually the case. Why do I know
+ this for sure? Because before the introduction of the IO scheduler and
+ related functionality this issue was not present, because you can easily
+ test if there is a general problem with USB performance or not (which it
+ isn't), and because I already have analyzed and tracked down the exact
+ place the problem is. DoIO::IO() in vfs_request_io.cpp for reading and how
+ writing is done in vm_page.cpp for writing.
+
+ &gt; Tell me, why did you create the usb_disk driver while that's a
+ workaround? The thing to do is complete the SCSI to USB connection
+ instead. Still you did this workaround.
+
+ Because the two things are on a completely different scale. The usb_disk
+ driver is a workaround, yes, but the usb_scsi part needs quite a lot of
+ rework to get integrated properly. Just compare the LOC of both and you
+ see that it wasn't exactly a huge task to implement usb_disk. Also the
+ intention of usb_disk was to provide only a very limited set of actual
+ SCSI, since many devices aren't strictly SCSI and actually have issues
+ when attached to an actual SCSI stack because they don't handle a lot of
+ commands. Taking a look at the quirks lists in other OSes you can easily
+ see that it might be simpler to attach a simplified driver with a limited
+ known good SCSI command set. That's what usb_disk is.
+
+ And indeed usb_scsi would run into the exactly same problem in this case
+ simply because there is no physical memory API in the USB stack yet.
+
+ &gt; I asked you some questions, will you answer them for me? I'd like to get
+ educated here. Oh, and please don't dismiss my hardware knowledge too
+ soon. You just _might_ overlook something...
+
+ I certainly don't dismiss your hardware knowledge, but please also
+ acknowledge that I have a very deep understanding of these parts of Haiku
+ since I've worked on most levels already and am kind of familiar with the
+ USB implementation since I've plain simply wrote most of it. If I wasn't
+ sure as to where the reasons are then I'd certainly be open to these
+ efforts, but as I said the issue is understood.
+
+ To your questions: Why 4K? -&gt; That's B_PAGE_SIZE, yes Why 2K block
+ reads/writes? -&gt; Because that's depending on a few factors, mostly FS
+ block size as well as device block size influence it. When BFS inodes are
+ read for example they will be 2K on default settings. If actual file
+ content is read/written the blocks will be 4K.
+
+ Plans: Short term: change the mapping strategy, which brings back the read
+ speeds to acceptable values (already done) and investigate the best
+ solution on implementing burst write backs of pages to get normal write
+ speeds. Right now all writing (except for directly accessing a device
+ through dd for example) is chopped up into B_PAGE_SIZE transfers. This is
+ simply because of how page write backs work right now and is mostly hidden
+ by the caches and by the low latency on harddisks in normal use cases. On
+ a USB stick you will clearly notice it though, especially if you're
+ waiting for the sync or unmount to complete when you want to finally
+ unplug the device.
+
+ Long term: Implement a physical memory API for the USB stack, possibly
+ migrating it to use IORequests right away. This can only work for EHCI
+ however and means a lot of work in general, so this won't be ready too
+ soon. Then usb_scsi can be revisited and be properly integrated. As
+ mentioned above though, it has a lot of features and therefore a higher
+ chance of provoking device issues compared to the limited SCSI implemented
+ in usb_disk, so this has to be very carefully planned and tested to ensure
+ compatibility. Note also that the protocols besides transparent SCSI
+ aren't really relevant anymore, as current devices almost never use
+ anything else (this is thanks to Microsoft which discourages anything else
+ than transparent SCSI, which I agree with because it makes things a lot
+ simpler and more standardized).
+
+ Let's move to #4690 for further discussion, as the original issue here has
+ been fixed and #4690 is specifically about the performance (there was
+ another one, but I can't seem to find it right now).
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2789#comment:25">http://dev.haiku-os.org/ticket/2789#comment:25</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="022541.html">[Haiku-bugs] [Haiku] #4741: Kernel never loads on Dell OptiPlex 755	- Core 2 duo
+</A></li>
+	<LI>Next message: <A HREF="022547.html">[Haiku-bugs] [Haiku] #4742: Could not open &quot;BeSmsPlus&quot; (Missing symbol: _ReservedJoystick2__9BJoystick)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22542">[ date ]</a>
+              <a href="thread.html#22542">[ thread ]</a>
+              <a href="subject.html#22542">[ subject ]</a>
+              <a href="author.html#22542">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

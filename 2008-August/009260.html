@@ -1,0 +1,198 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2562: Occasional hang
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232562%3A%20Occasional%20hang&In-Reply-To=%3C052.d54eca9d289cd33a94f6e4e43192040e%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009256.html">
+   <LINK REL="Next"  HREF="009261.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2562: Occasional hang</H1>
+    <B>andreasf</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232562%3A%20Occasional%20hang&In-Reply-To=%3C052.d54eca9d289cd33a94f6e4e43192040e%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2562: Occasional hang">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Aug  3 21:47:42 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009256.html">[Haiku-bugs] [Haiku] #2562: Occasional hang
+</A></li>
+        <LI>Next message: <A HREF="009261.html">[Haiku-bugs] [Haiku] #2562: Occasional hang
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9260">[ date ]</a>
+              <a href="thread.html#9260">[ thread ]</a>
+              <a href="subject.html#9260">[ subject ]</a>
+              <a href="author.html#9260">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2562: Occasional hang
+------------------------+---------------------------------------------------
+  Reporter:  andreasf   |       Owner:  axeld         
+      Type:  bug        |      Status:  new           
+  Priority:  normal     |   Milestone:  R1            
+ Component:  - General  |     Version:  R1 development
+Resolution:             |   Blockedby:                
+  Platform:  x86        |    Blocking:                
+------------------------+---------------------------------------------------
+
+Comment(by andreasf):
+
+ Next hang:
+ {{{
+ Welcome to Kernel Debugging Land...
+ Thread 171 &quot;sh&quot; running on CPU 0
+ kdebug&gt; teams
+ team           id  parent      name
+ 0x90b80744     62  0x90b80000  app_server
+ 0x90c0c000     94  0x90b80000  Terminal
+ 0x90b80000      1  0x00000000  kernel_team
+ 0x90c0c2e8     96  0x90b80000  media_server
+ 0x90c0c45c     99  0x90b80000  midi_server
+ 0x90c0c5d0    100  0x90b80000  print_server
+ 0x90b80e88    170  0x90c0c744  sh
+ 0x90b808b8     77  0x90b80000  syslog_daemon
+ 0x90c0c174    171  0x90b80e88  sh
+ 0x90c0c744    142  0x90c0c000  sh
+ 0x90b80ba0     81  0x90b80744  input_server
+ 0x90b802e8     53  0x90b80000  registrar
+ 0x90b80174    116  0x90c0c2e8  media_addon_server
+ 0x90b8045c     58  0x90b80000  debug_server
+ 0x90b805d0     59  0x90b80000  net_server
+ 0x90b80a2c     91  0x90b80000  Tracker
+ 0x90b80d14     92  0x90b80000  Deskbar
+ kdebug&gt; threads 171
+ thread         id  state     wait for   object  cpu pri  stack      team
+ name
+ 0x91488000    171  running           -            0  10  0x80777000  171
+ sh
+ kdebug&gt; sc 171
+ stack trace for thread 171 &quot;sh&quot;
+     kernel stack: 0x80777000 to 0x8077b000
+       user stack: 0x7efef000 to 0x7ffef000
+ frame            caller     &lt;image&gt;:function + offset
+  0 8077a584 (+  48) 80053e0d   &lt;kernel&gt;:invoke_debugger_command + 0x00ed
+  1 8077a5b4 (+  64) 80053c05
+ &lt;kernel&gt;:invoke_pipe_segment__FP21debugger_comma9
+  2 8077a5f4 (+  64) 80053f4d   &lt;kernel&gt;:invoke_debugger_command_pipe +
+ 0x009d
+  3 8077a634 (+  48) 80054e28
+ &lt;kernel&gt;:_ParseCommandPipe__16ExpressionParserRi4
+  4 8077a664 (+  48) 800547de
+ &lt;kernel&gt;:EvaluateCommand__16ExpressionParserPCcRe
+  5 8077a694 (+ 224) 800561f4   &lt;kernel&gt;:evaluate_debug_command + 0x0088
+  6 8077a774 (+  64) 80052286   &lt;kernel&gt;:kernel_debugger_loop__Fv + 0x01ae
+  7 8077a7b4 (+  48) 80052e1b   &lt;kernel&gt;:kernel_debugger + 0x0117
+  8 8077a7e4 (+ 192) 80052cf9   &lt;kernel&gt;:panic + 0x0029
+  9 8077a8a4 (+  48) 8079edf5   &lt;/boot/beos/system/add-
+ ons/kernel/bus_managers/pd
+ 10 8077a8d4 (+  64) 80035ba8   &lt;kernel&gt;:int_io_interrupt_handler + 0x00e0
+ 11 8077a914 (+  48) 800b2950   &lt;kernel&gt;:hardware_interrupt + 0x006c
+ 12 8077a944 (+  12) 800b5df6   &lt;kernel&gt;:int_bottom + 0x0036 (nearest)
+ iframe at 0x8077a950 (end = 0x8077a9a8)
+  eax 0x200          ebx 0x90b71030      ecx 0x0          edx 0x246
+  esi 0x1            edi 0x91bada10      ebp 0x8077a9a0   esp 0x8077a984
+  eip 0x800b25bc  eflags 0x246
+  vector: 0x21, error code: 0x0
+ 13 8077a950 (+  80) 800b25bc   &lt;kernel&gt;:arch_int_restore_interrupts +
+ 0x0020
+ 14 8077a9a0 (+  32) 80035d32   &lt;kernel&gt;:restore_interrupts + 0x0012
+ 15 8077a9c0 (+  48) 800b5384   &lt;kernel&gt;:flush_tmap__FP18vm_translation_map
+ + 0x0
+ 16 8077a9f0 (+  48) 800b4b0b
+ &lt;kernel&gt;:unlock_tmap__FP18vm_translation_map + 07
+ 17 8077aa20 (+  64) 800a5640   &lt;kernel&gt;:vm_map_page + 0x0078
+ 18 8077aa60 (+ 256) 800a7f07
+ &lt;kernel&gt;:vm_soft_fault__FP16vm_address_spaceUlbTf
+ 19 8077ab60 (+  64) 800a7028   &lt;kernel&gt;:vm_page_fault + 0x0080
+ 20 8077aba0 (+  64) 800b28cd   &lt;kernel&gt;:page_fault_exception + 0x00b1
+ 21 8077abe0 (+  12) 800b5df6   &lt;kernel&gt;:int_bottom + 0x0036 (nearest)
+ iframe at 0x8077abec (end = 0x8077ac44)
+  eax 0x0            ebx 0xffff00d6      ecx 0x1          edx 0x914882ec
+  esi 0x8077aca4     edi 0xffff00d6      ebp 0x8077ac70   esp 0x8077ac20
+  eip 0x800b5a94  eflags 0x10202
+  vector: 0xe, error code: 0x3
+ 22 8077abec (+ 132) 800b5a94   &lt;kernel&gt;:arch_cpu_user_memcpy + 0x001e
+ (nearest)
+ 23 8077ac70 (+ 640) 800b3b83   &lt;kernel&gt;:arch_setup_signal_frame + 0x004f
+ 24 8077aef0 (+  96) 800427d2   &lt;kernel&gt;:handle_signals + 0x03ce
+ 25 8077af50 (+  64) 8004c9e6   &lt;kernel&gt;:thread_at_kernel_exit + 0x0076
+ 26 8077af90 (+  12) 800b60fb   &lt;kernel&gt;:kernel_exit_handle_signals +
+ 0x0006 (ne)
+ iframe at 0x8077af9c (end = 0x8077aff4)
+  eax 0x0            ebx 0x341ac8        ecx 0x1          edx 0x4
+  esi 0x18150698     edi 0x18000000      ebp 0x7ffee91c   esp 0x8077afd0
+  eip 0x800b5f50  eflags 0x212
+  vector: 0xfd, error code: 0x0
+ 27 8077af9c (+   0) 800b5f50   &lt;kernel&gt;:trap99 + 0x0000 (nearest)
+ 28 7ffee91c (+  32) 002c92a4   &lt;libroot.so&gt;:malloc + 0x01a4
+ 29 7ffee93c (+  48) 00248ab5   &lt;_APP_&gt;:xrealloc + 0x0035
+ 30 7ffee96c (+ 192) 00233729   &lt;_APP_&gt;:unlink_fifo_list + 0x0459 (nearest)
+ 31 7ffeea2c (+  80) 00233b6d   &lt;_APP_&gt;:command_substitute + 0x0345
+ 32 7ffeea7c (+ 112) 002368c7   &lt;_APP_&gt;:pat_subst + 0x1bd7 (nearest)
+ 33 7ffeeaec (+  80) 002376dc   &lt;_APP_&gt;:expand_words_shellexp + 0x0420
+ (nearest)
+ 34 7ffeeb3c (+  48) 0023792c   &lt;_APP_&gt;:expand_words_shellexp + 0x0670
+ (nearest)
+ 35 7ffeeb6c (+  48) 0023728d   &lt;_APP_&gt;:expand_words + 0x0021
+ 36 7ffeeb9c (+ 112) 00226d09   &lt;_APP_&gt;:execute_command_internal + 0x2f65
+ (neare)
+ 37 7ffeec0c (+  96) 00224262   &lt;_APP_&gt;:execute_command_internal + 0x04be
+ 38 7ffeec6c (+  80) 00223bed   &lt;_APP_&gt;:execute_command + 0x0065
+ 39 7ffeecbc (+  48) 002264f6   &lt;_APP_&gt;:execute_command_internal + 0x2752
+ (neare)
+ 40 7ffeecec (+  80) 00224458   &lt;_APP_&gt;:execute_command_internal + 0x06b4
+ 41 7ffeed3c (+  64) 002253df   &lt;_APP_&gt;:execute_command_internal + 0x163b
+ (neare)
+ 42 7ffeed7c (+  96) 002244e4   &lt;_APP_&gt;:execute_command_internal + 0x0740
+ 43 7ffeeddc (+  80) 00223bed   &lt;_APP_&gt;:execute_command + 0x0065
+ 44 7ffeee2c (+  64) 00225614   &lt;_APP_&gt;:execute_command_internal + 0x1870
+ (neare)
+ 45 7ffeee6c (+  80) 00224380   &lt;_APP_&gt;:execute_command_internal + 0x05dc
+ 46 7ffeeebc (+  80) 00223bed   &lt;_APP_&gt;:execute_command + 0x0065
+ 47 7ffeef0c (+  48) 0021f8a5   &lt;_APP_&gt;:reader_loop + 0x01d1
+ 48 7ffeef3c (+  64) 0021dae2   &lt;_APP_&gt;:main + 0x07b2
+ 49 7ffeef7c (+  48) 0021679f   &lt;_APP_&gt;:_start + 0x005b
+ 50 7ffeefac (+  48) 001008ea   3562:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">runtime_loader_seg0ro at 0x00100000</A> +
+ 0x8ea
+ 51 7ffeefdc (+   0) 7ffeefec   3561:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">sh_main_stack at 0x7efef000</A> + 0xffffec
+ }}}
+ (This time, stack trace was taken after trying to Ctrl+C.)
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2562#comment:1">http://dev.haiku-os.org/ticket/2562#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009256.html">[Haiku-bugs] [Haiku] #2562: Occasional hang
+</A></li>
+	<LI>Next message: <A HREF="009261.html">[Haiku-bugs] [Haiku] #2562: Occasional hang
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9260">[ date ]</a>
+              <a href="thread.html#9260">[ thread ]</a>
+              <a href="subject.html#9260">[ subject ]</a>
+              <a href="author.html#9260">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

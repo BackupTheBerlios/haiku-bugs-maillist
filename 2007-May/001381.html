@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1180: SVN source revision in serial	output (easy)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231180%3A%20SVN%20source%20revision%20in%20serial%0A%09output%20%28easy%29&In-Reply-To=%3C057.d87adedbc1d38b2f36b0020082332a4d%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001380.html">
+   <LINK REL="Next"  HREF="001382.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1180: SVN source revision in serial	output (easy)</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231180%3A%20SVN%20source%20revision%20in%20serial%0A%09output%20%28easy%29&In-Reply-To=%3C057.d87adedbc1d38b2f36b0020082332a4d%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1180: SVN source revision in serial	output (easy)">trac at haiku-os.org
+       </A><BR>
+    <I>Sat May 19 17:19:18 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001380.html">[Haiku-bugs] [Haiku] #1180: SVN source revision in serial	output (easy)
+</A></li>
+        <LI>Next message: <A HREF="001382.html">[Haiku-bugs] [Haiku] #1180: SVN source revision in serial	output (easy)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1381">[ date ]</a>
+              <a href="thread.html#1381">[ thread ]</a>
+              <a href="subject.html#1381">[ subject ]</a>
+              <a href="author.html#1381">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1180: SVN source revision in serial output (easy)
+----------------------------+-----------------------------------------------
+  Reporter:  jonas.kirilla  |       Owner:  bonefish      
+      Type:  enhancement    |      Status:  assigned      
+  Priority:  low            |   Milestone:  R1            
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |    Platform:  All           
+----------------------------+-----------------------------------------------
+Changes (by bonefish):
+
+  * owner:  axeld =&gt; bonefish
+  * status:  new =&gt; assigned
+
+Comment:
+
+ Replying to [comment:2 jonas.kirilla]:
+ &gt; Would 'set_haiku_revision' and a similar uint32 sHaikuRevision work for
+ the kernel? Is it desirable to do it this way?
+
+ Yep.
+
+ &gt; What if a private revision.h file was created early in the build process
+ and this was used instead? Would that trigger a lot of recompiling even if
+ it was only referenced in the few places where it might be needed?
+
+ It wouldn't trigger much recompiling, but a lot of relinking. In case of
+ the kernel, every kernel add-on (module, driver) would be linked again. In
+ case of libroot every userland program would be relinked. Which is exactly
+ the reason why it is done using the injection trick.
+
+ Replying to [comment:3 wkornewald]:
+ &gt; I think that all libroot functions are available in the kernel, so you
+ should be able to simply call uname() and do the same as AboutHaiku. Or am
+ I missing something?
+
+ Only the libroot code that is explicitely included in the kernel (cf.
+ src/system/kernel/lib/Jamfile) is available. uname() isn't ATM. And just
+ doing that wouldn't help either, since the mechanism injecting the
+ revision number is performed right before copying the file to the image.
+
+ Anyway, I'm going to add the revision number to the kernel.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1180#comment:4">http://dev.haiku-os.org/ticket/1180#comment:4</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001380.html">[Haiku-bugs] [Haiku] #1180: SVN source revision in serial	output (easy)
+</A></li>
+	<LI>Next message: <A HREF="001382.html">[Haiku-bugs] [Haiku] #1180: SVN source revision in serial	output (easy)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1381">[ date ]</a>
+              <a href="thread.html#1381">[ thread ]</a>
+              <a href="subject.html#1381">[ subject ]</a>
+              <a href="author.html#1381">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

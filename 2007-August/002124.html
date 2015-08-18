@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1363: PANIC: vm_page_fault: unhandled page fault in kernel space (rev21847)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231363%3A%20PANIC%3A%20vm_page_fault%3A%20unhandled%20page%0A%20fault%20in%20kernel%20space%20%28rev21847%29&In-Reply-To=%3C042.0d495f1e0aba174c9f94ff817bfa40de%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002123.html">
+   <LINK REL="Next"  HREF="002125.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1363: PANIC: vm_page_fault: unhandled page fault in kernel space (rev21847)</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231363%3A%20PANIC%3A%20vm_page_fault%3A%20unhandled%20page%0A%20fault%20in%20kernel%20space%20%28rev21847%29&In-Reply-To=%3C042.0d495f1e0aba174c9f94ff817bfa40de%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1363: PANIC: vm_page_fault: unhandled page fault in kernel space (rev21847)">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Aug  7 20:11:37 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002123.html">[Haiku-bugs] [Haiku] #1362: Executing Opera seems to wipe out	IP settings
+</A></li>
+        <LI>Next message: <A HREF="002125.html">[Haiku-bugs] [Haiku] #1363: PANIC: vm_page_fault: unhandled page fault in kernel space (rev21847)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2124">[ date ]</a>
+              <a href="thread.html#2124">[ thread ]</a>
+              <a href="subject.html#2124">[ subject ]</a>
+              <a href="author.html#2124">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1363: PANIC: vm_page_fault: unhandled page fault in kernel space (rev21847)
+-----------------------+----------------------------------------------------
+ Reporter:  kaliber    |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+ Platform:  All        |  
+-----------------------+----------------------------------------------------
+ I'm using vmware image.
+ 1. wget ..../libxml2-2.6.27.tar.bz2
+ 2. tar xfvj libxml2-2.6.27.tar.bz2
+
+ {{{
+ vm_page_fault: vm_soft_fault returned error 'Bad address' on fault at
+ 0xa02e0000, ip 0x8009b758, write 0, user 0, thread 0x8d
+ PANIC: vm_page_fault: unhandled page fault in kernel space at 0xa02e0000,
+ ip 0x8009b758
+
+ Welcome to Kernel Debugging Land...
+ Running on CPU 0
+ kdebug&gt; bt
+ stack trace for thread 0x8d &quot;tar&quot;
+     kernel stack: 0x906a2000 to 0x906a6000
+       user stack: 0x7efe7000 to 0x7ffe7000
+ frame            caller     &lt;image&gt;:function + offset
+ 906a5500 (+  52) 80086fbc   &lt;kernel&gt;:invoke_command + 0x0074
+ 906a5534 (+  48) 800870da   &lt;kernel&gt;:kernel_debugger_loop + 0x00de
+ 906a5564 (+  32) 80087b66   &lt;kernel&gt;:kernel_debugger + 0x00b2
+ 906a5584 (+ 192) 80087aa9   &lt;kernel&gt;:panic + 0x0029
+ 906a5644 (+  64) 8005846b   &lt;kernel&gt;:vm_page_fault + 0x00ab
+ 906a5684 (+ 176) 8009025b   &lt;kernel&gt;:i386_handle_trap + 0x0217
+ iframe at 0x906a573c (end = 0x906a5790)
+  eax 0x0            ebx 0xa02e0000      ecx 0xa02dfe24   edx 0x1
+  esi 0x10           edi 0xa02dfe18      ebp 0x906a5794   esp 0x906a576c
+  eip 0x8009b758  eflags 0x10202
+  vector: 0xe, error code: 0x0
+ 906a5734 (+  96) 8009b758   &lt;kernel&gt;:memmove + 0x006c
+ 906a5794 (+ 128) 80236c36
+ &lt;bfs&gt;:_SplitNode__9BPlusTreeP14bplustree_nodexT1xPUsPUcT5Px + 0x06a2
+ 906a5814 (+ 496) 8023732d   &lt;bfs&gt;:Insert__9BPlusTreeR11TransactionPCUcUsx
+ + 0x0641
+ 906a5a04 (+  80) 8023b9e5
+ &lt;bfs&gt;:Update__5IndexR11TransactionPCclPCUcUsT4UsP5Inode + 0x0235
+ 906a5a54 (+  80) 8023bb0b
+ &lt;bfs&gt;:UpdateName__5IndexR11TransactionPCcT2P5Inode + 0x007f
+ 906a5aa4 (+  64) 8023ba4a
+ &lt;bfs&gt;:InsertName__5IndexR11TransactionPCcP5Inode + 0x002e
+ 906a5ae4 (+ 144) 802423fd
+ &lt;bfs&gt;:Create__5InodeR11TransactionP5InodePCcliUlPbPxPP5Inode + 0x07d1
+ 906a5b74 (+  96) 8024a205   &lt;bfs&gt;:bfs_create__FPvT0PCciiPPvPx + 0x0135
+ 906a5bd4 (+  80) 800477e1   &lt;kernel&gt;:create_vnode__FP5vnodePCciib + 0x0055
+ 906a5c24 (+ 320) 80047b9a   &lt;kernel&gt;:file_create__FiPciib + 0x005a
+ 906a5d64 (+  80) 8004cbf4   &lt;kernel&gt;:_user_open + 0x00bc
+ 906a5db4 (+ 336) 80034d38   &lt;kernel&gt;:syscall_dispatcher + 0x07dc
+ 906a5f04 (+ 160) 800902f4   &lt;kernel&gt;:i386_handle_trap + 0x02b0
+ iframe at 0x906a5fac (end = 0x906a6000)
+  eax 0x44           ebx 0x2c3770        ecx 0x1801c368   edx 0x8301
+  esi 0x8301         edi 0x1b4           ebp 0x7ffe6d8c   esp 0x906a5fdc
+  eip 0xffff0102  eflags 0x206
+  vector: 0x63, error code: 0x0
+ 906a5fa4 (+   0) ffff0102
+ 7ffe6d8c (+ 336) 0020e92f   &lt;/bin/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">tar at 0x00200000</A>&gt;:unknown + 0xe92f
+ 7ffe6edc (+ 112) 00212461   &lt;/bin/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">tar at 0x00200000</A>&gt;:unknown + 0x12461
+ 7ffe6f4c (+  48) 0021cd84   &lt;/bin/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">tar at 0x00200000</A>&gt;:unknown + 0x1cd84
+ 7ffe6f7c (+  48) 00207573   &lt;/bin/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">tar at 0x00200000</A>&gt;:unknown + 0x7573
+ 7ffe6fac (+  48) 001007ae   1379:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">runtime_loader_seg0ro at 0x00100000</A> + 0x7ae
+ 7ffe6fdc (+   0) 7ffe6fec   1378:/bin/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">tar_main_stack at 0x7efe7000</A> + 0xffffec
+ kdebug&gt;
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1363">http://dev.haiku-os.org/ticket/1363</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002123.html">[Haiku-bugs] [Haiku] #1362: Executing Opera seems to wipe out	IP settings
+</A></li>
+	<LI>Next message: <A HREF="002125.html">[Haiku-bugs] [Haiku] #1363: PANIC: vm_page_fault: unhandled page fault in kernel space (rev21847)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2124">[ date ]</a>
+              <a href="thread.html#2124">[ thread ]</a>
+              <a href="subject.html#2124">[ subject ]</a>
+              <a href="author.html#2124">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

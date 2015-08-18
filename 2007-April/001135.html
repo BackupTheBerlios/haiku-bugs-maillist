@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1157: Mesa Software Renderer add-on doesn't support direct mode
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231157%3A%20Mesa%20Software%20Renderer%20add-on%0A%20doesn%27t%20support%20direct%20mode&In-Reply-To=%3C052.06a34457a30888e95c49c3c6cc69048a%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001128.html">
+   <LINK REL="Next"  HREF="001145.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1157: Mesa Software Renderer add-on doesn't support direct mode</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231157%3A%20Mesa%20Software%20Renderer%20add-on%0A%20doesn%27t%20support%20direct%20mode&In-Reply-To=%3C052.06a34457a30888e95c49c3c6cc69048a%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1157: Mesa Software Renderer add-on doesn't support direct mode">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Apr 25 15:58:19 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001128.html">[Haiku-bugs] [Haiku] #1157: Mesa Software Renderer add-on doesn't support direct mode
+</A></li>
+        <LI>Next message: <A HREF="001145.html">[Haiku-bugs] [Haiku] #1157: Mesa Software Renderer add-on doesn't support direct mode
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1135">[ date ]</a>
+              <a href="thread.html#1135">[ thread ]</a>
+              <a href="subject.html#1135">[ subject ]</a>
+              <a href="author.html#1135">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1157: Mesa Software Renderer add-on doesn't support direct mode
+------------------------------+---------------------------------------------
+  Reporter:  phoudoin         |       Owner:  korli         
+      Type:  enhancement      |      Status:  assigned      
+  Priority:  normal           |   Milestone:  R1            
+ Component:  Kits/OpenGL Kit  |     Version:  R1 development
+Resolution:                   |    Platform:  All           
+------------------------------+---------------------------------------------
+Comment (by jackburton):
+
+ Replying to [comment:4 korli]:
+ &gt; Committed a working implementation in r20797. Works fine, though when
+ moving the window, it happens that GLTeapot draws outside of its window,
+ due to a lack of locking.
+ &gt; Also, each screen colorspace would have to be supported by the renderer
+ for direct draw. So a check on a supported colorspace should be done
+ before going to direct draw. This way we should still be able to display
+ something with BView::DrawBitmap()
+
+ I'll add locking.
+ On a side note... maybe it would also be worth to make the renderer addon
+ more generic and able to draw on a generic framebuffer ? That way we could
+ implement BGLWindow more easily.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1157#comment:5">http://dev.haiku-os.org/ticket/1157#comment:5</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001128.html">[Haiku-bugs] [Haiku] #1157: Mesa Software Renderer add-on doesn't support direct mode
+</A></li>
+	<LI>Next message: <A HREF="001145.html">[Haiku-bugs] [Haiku] #1157: Mesa Software Renderer add-on doesn't support direct mode
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1135">[ date ]</a>
+              <a href="thread.html#1135">[ thread ]</a>
+              <a href="subject.html#1135">[ subject ]</a>
+              <a href="author.html#1135">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

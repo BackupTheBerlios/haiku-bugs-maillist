@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3396: ahci_port.cpp: CDPlayer crashes on	play
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-February/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233396%3A%20ahci_port.cpp%3A%20CDPlayer%20crashes%20on%0A%09play&In-Reply-To=%3C053.bfd5185654cff244e686afe28394eb2d%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="014177.html">
+   <LINK REL="Next"  HREF="014178.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3396: ahci_port.cpp: CDPlayer crashes on	play</H1>
+    <B>marcusoverhagen</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233396%3A%20ahci_port.cpp%3A%20CDPlayer%20crashes%20on%0A%09play&In-Reply-To=%3C053.bfd5185654cff244e686afe28394eb2d%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3396: ahci_port.cpp: CDPlayer crashes on	play">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Feb  1 02:21:00 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="014177.html">[Haiku-bugs] [Haiku] #1949: Haiku: wireless Logitech mx3200 keyboard and mouse + USB receiver not working correctly
+</A></li>
+        <LI>Next message: <A HREF="014178.html">[Haiku-bugs] [Haiku] #3396: ahci_port.cpp: CDPlayer crashes on	play
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14179">[ date ]</a>
+              <a href="thread.html#14179">[ thread ]</a>
+              <a href="subject.html#14179">[ subject ]</a>
+              <a href="author.html#14179">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3396: ahci_port.cpp: CDPlayer crashes on play
+--------------------------+-------------------------------------------------
+ Reporter:  zaunpfahl     |       Owner:  marcusoverhagen
+     Type:  bug           |      Status:  new            
+ Priority:  normal        |   Milestone:  R1             
+Component:  Drivers/Disk  |     Version:  R1 development 
+Blockedby:                |    Platform:  x86            
+ Blocking:                |  
+--------------------------+-------------------------------------------------
+
+Comment(by marcusoverhagen):
+
+ Congratulations, you found a bug. Some code is calling ahci with a CDB
+ that has an invalid direction mask.
+
+ The panic should be changed later to abort the request in a non-debug
+ build, to avoid DOS attacks. Right now it helps to identify bugs.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3396#comment:4">http://dev.haiku-os.org/ticket/3396#comment:4</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="014177.html">[Haiku-bugs] [Haiku] #1949: Haiku: wireless Logitech mx3200 keyboard and mouse + USB receiver not working correctly
+</A></li>
+	<LI>Next message: <A HREF="014178.html">[Haiku-bugs] [Haiku] #3396: ahci_port.cpp: CDPlayer crashes on	play
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14179">[ date ]</a>
+              <a href="thread.html#14179">[ thread ]</a>
+              <a href="subject.html#14179">[ subject ]</a>
+              <a href="author.html#14179">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4548: At boot: &quot;PANIC: ref count of B_KEEP_LOADED module bus_manager s/pci/v1 dropped to 01&quot;
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234548%3A%20At%20boot%3A%20%22PANIC%3A%20ref%20count%20of%0A%20B_KEEP_LOADED%20module%20bus_manager%20s/pci/v1%20dropped%20to%2001%22&In-Reply-To=%3C043.70da3e6d133b6943f8f96758ff0ec380%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="021440.html">
+   <LINK REL="Next"  HREF="021450.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4548: At boot: &quot;PANIC: ref count of B_KEEP_LOADED module bus_manager s/pci/v1 dropped to 01&quot;</H1>
+    <B>nirbheek</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234548%3A%20At%20boot%3A%20%22PANIC%3A%20ref%20count%20of%0A%20B_KEEP_LOADED%20module%20bus_manager%20s/pci/v1%20dropped%20to%2001%22&In-Reply-To=%3C043.70da3e6d133b6943f8f96758ff0ec380%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4548: At boot: &quot;PANIC: ref count of B_KEEP_LOADED module bus_manager s/pci/v1 dropped to 01&quot;">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Sep 16 17:30:46 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="021440.html">[Haiku-bugs] [Haiku] #4053: USB MIDI not recognized
+</A></li>
+        <LI>Next message: <A HREF="021450.html">[Haiku-bugs] [Haiku] #4548: At boot: &quot;PANIC: ref count of B_KEEP_LOADED module bus_manager s/pci/v1 dropped to 01&quot;
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21449">[ date ]</a>
+              <a href="thread.html#21449">[ thread ]</a>
+              <a href="subject.html#21449">[ subject ]</a>
+              <a href="author.html#21449">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4548: At boot: &quot;PANIC: ref count of B_KEEP_LOADED module bus_manager s/pci/v1
+dropped to 01&quot;
+---------------------------+------------------------------------------------
+ Reporter:  nirbheek       |       Owner:  axeld    
+     Type:  bug            |      Status:  new      
+ Priority:  normal         |   Milestone:  R1       
+Component:  System/Kernel  |     Version:  R1/alpha1
+Blockedby:                 |    Platform:  x86      
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+ This happens when booting from an alpha1 RAW image cat-ed to a partition
+ (and makebootable-ed). None of the safe modes help. The output of debug
+ output to console while booting is attached below in the form of jpeg
+ photos.
+
+ I don't know what else you'd want to know, but this is hardware-specific
+ so here's my lspci:[[BR]]
+ ---[[BR]]
+ # lspci[[BR]]
+ 00:00.0 Host bridge: ATI Technologies Inc Radeon Xpress 200 Host Bridge
+ (rev 01)[[BR]]
+ 00:01.0 PCI bridge: ATI Technologies Inc RS480 PCI Bridge[[BR]]
+ 00:11.0 IDE interface: ATI Technologies Inc IXP SB400 Serial ATA
+ Controller (rev 80)[[BR]]
+ 00:12.0 IDE interface: ATI Technologies Inc IXP SB400 Serial ATA
+ Controller (rev 80)[[BR]]
+ 00:13.0 USB Controller: ATI Technologies Inc IXP SB400 USB Host Controller
+ (rev 80)[[BR]]
+ 00:13.1 USB Controller: ATI Technologies Inc IXP SB400 USB Host Controller
+ (rev 80)[[BR]]
+ 00:13.2 USB Controller: ATI Technologies Inc IXP SB400 USB2 Host
+ Controller (rev 80)[[BR]]
+ 00:14.0 SMBus: ATI Technologies Inc IXP SB400 SMBus Controller (rev
+ 81)[[BR]]
+ 00:14.1 IDE interface: ATI Technologies Inc IXP SB400 IDE Controller (rev
+ 80)[[BR]]
+ 00:14.2 Audio device: ATI Technologies Inc IXP SB4x0 High Definition Audio
+ Controller (rev 01)[[BR]]
+ 00:14.3 ISA bridge: ATI Technologies Inc IXP SB400 PCI-ISA Bridge (rev
+ 80)[[BR]]
+ 00:14.4 PCI bridge: ATI Technologies Inc IXP SB400 PCI-PCI Bridge (rev
+ 80)[[BR]]
+ 01:05.0 VGA compatible controller: ATI Technologies Inc RC410 [Radeon
+ Xpress 200][[BR]]
+ 02:02.0 Ethernet controller: Realtek Semiconductor Co., Ltd.
+ RTL-8139/8139C/8139C+ (rev 10)[[BR]]
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4548">http://dev.haiku-os.org/ticket/4548</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="021440.html">[Haiku-bugs] [Haiku] #4053: USB MIDI not recognized
+</A></li>
+	<LI>Next message: <A HREF="021450.html">[Haiku-bugs] [Haiku] #4548: At boot: &quot;PANIC: ref count of B_KEEP_LOADED module bus_manager s/pci/v1 dropped to 01&quot;
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21449">[ date ]</a>
+              <a href="thread.html#21449">[ thread ]</a>
+              <a href="subject.html#21449">[ subject ]</a>
+              <a href="author.html#21449">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2704: problems with links to long	pathnames
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232704%3A%20problems%20with%20links%20to%20long%0A%09pathnames&In-Reply-To=%3C051.a43028672a9bdd825ab5155f86406d58%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010148.html">
+   <LINK REL="Next"  HREF="010261.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2704: problems with links to long	pathnames</H1>
+    <B>emitrax</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232704%3A%20problems%20with%20links%20to%20long%0A%09pathnames&In-Reply-To=%3C051.a43028672a9bdd825ab5155f86406d58%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2704: problems with links to long	pathnames">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Sep  9 12:41:30 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010148.html">[Haiku-bugs] [Haiku] #2704: problems with links to long	pathnames
+</A></li>
+        <LI>Next message: <A HREF="010261.html">[Haiku-bugs] [Haiku] #2704: problems with links to long	pathnames
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10185">[ date ]</a>
+              <a href="thread.html#10185">[ thread ]</a>
+              <a href="subject.html#10185">[ subject ]</a>
+              <a href="author.html#10185">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2704: problems with links to long pathnames
+----------------------------+-----------------------------------------------
+  Reporter:  Adek336        |       Owner:  axeld         
+      Type:  bug            |      Status:  new           
+  Priority:  normal         |   Milestone:  R1            
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |   Blockedby:                
+  Platform:  All            |    Blocking:                
+----------------------------+-----------------------------------------------
+
+Comment(by emitrax):
+
+ Simple test case to reproduce the crash.
+
+ Create a bunch of subdirectories
+ {{{
+ for i in `seq 1 255`; do mkdir a; echo a - $i; cd a; done
+ }}}
+ back do the base directory and make the links
+ {{{
+ for i in `seq 1 255`; do ln -s `pwd`/a /boot/home/Desktop/link-to-$i; cd
+ a; done
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2704#comment:5">http://dev.haiku-os.org/ticket/2704#comment:5</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010148.html">[Haiku-bugs] [Haiku] #2704: problems with links to long	pathnames
+</A></li>
+	<LI>Next message: <A HREF="010261.html">[Haiku-bugs] [Haiku] #2704: problems with links to long	pathnames
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10185">[ date ]</a>
+              <a href="thread.html#10185">[ thread ]</a>
+              <a href="subject.html#10185">[ subject ]</a>
+              <a href="author.html#10185">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

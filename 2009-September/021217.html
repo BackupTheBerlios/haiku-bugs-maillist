@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4455: Deksbar crashes on mounting	non-boot partition
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234455%3A%20Deksbar%20crashes%20on%20mounting%0A%09non-boot%20partition&In-Reply-To=%3C060.ac84d095a499e473172ecdfa46479467%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="021014.html">
+   <LINK REL="Next"  HREF="021647.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4455: Deksbar crashes on mounting	non-boot partition</H1>
+    <B>michael.weirauch</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234455%3A%20Deksbar%20crashes%20on%20mounting%0A%09non-boot%20partition&In-Reply-To=%3C060.ac84d095a499e473172ecdfa46479467%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4455: Deksbar crashes on mounting	non-boot partition">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Sep 13 14:30:51 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="021014.html">[Haiku-bugs] [Haiku] #4455: Deksbar crashes on mounting	non-boot partition
+</A></li>
+        <LI>Next message: <A HREF="021647.html">[Haiku-bugs] [Haiku] #4455: Deksbar crashes on mounting	non-boot partition
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21217">[ date ]</a>
+              <a href="thread.html#21217">[ thread ]</a>
+              <a href="subject.html#21217">[ subject ]</a>
+              <a href="author.html#21217">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4455: Deksbar crashes on mounting non-boot partition
+------------------------------+---------------------------------------------
+ Reporter:  michael.weirauch  |       Owner:  axeld        
+     Type:  bug               |      Status:  new          
+ Priority:  normal            |   Milestone:  R1           
+Component:  File Systems/BFS  |     Version:  R1/pre-alpha1
+Blockedby:                    |    Platform:  x86          
+ Blocking:                    |  
+------------------------------+---------------------------------------------
+Changes (by michael.weirauch):
+
+  * component:  Applications/Deskbar =&gt; File Systems/BFS
+
+
+Comment:
+
+ Also reproduceable with
+
+ {{{
+ query be:deskbar_item_status==**
+ }}}
+
+
+ {{{
+ 2009-09-13 14:21:12 KERN: bfs: inode 7344212 in query has no name!
+ 2009-09-13 14:21:12 KERN: vm_soft_fault: va 0xc09f2000 not covered by area
+ in address space
+ 2009-09-13 14:21:12 KERN: vm_page_fault: vm_soft_fault returned error 'Bad
+ address' on fault at 0xc09f2101, ip 0x3fd002, write 1, user 1, thread
+ 0x15ba
+ 2009-09-13 14:21:12 KERN: vm_page_fault: thread &quot;query&quot; (5562) in team
+ &quot;query&quot; (5562) tried to write address 0xc09f2101, ip 0x3fd002 (&quot;???&quot;
+ +0x3fd002)
+ 2009-09-13 14:21:12 KERN: debug_server: Thread 5562 entered the debugger:
+ Segment violation
+ 2009-09-13 14:21:12 KERN: stack trace, current PC 0x3fd002
+ _ZN8BPrivate7Storage12ResourceFile17_ReadResourceInfoERNS0_19resource_parse_infoERKNS0_7MemAreaEPK13resource_infomPb
+ + 0xa2:
+ 2009-09-13 14:21:14 KERN: debug_server: Killing team 5562 (/bin/query
+ be:deskbar_item_status==**)
+ 2009-09-13 14:21:14 KERN: debug_server: TeamDebugHandler::Init(): Failed
+ to get info for team 5562: Operation on invalid team
+ 2009-09-13 14:21:14 KERN: debug_server: KillTeam(): Error getting info for
+ team 5562: Operation on invalid team
+ 2009-09-13 14:21:14 KERN: debug_server: Killing team 5562 ()
+ }}}
+
+ Doing a tracker based query with above shows results which shouldn't be
+ listed. See attached screenshot. listattr on these shows no
+ be:deskbar_item_status attribute, except for ProcessController.
+
+ Now for the funny part, if I rename a file on my desktop, it appears in
+ the query result as well. Renaming it back to it's old name, removes it
+ from the result list again.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4455#comment:6">http://dev.haiku-os.org/ticket/4455#comment:6</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="021014.html">[Haiku-bugs] [Haiku] #4455: Deksbar crashes on mounting	non-boot partition
+</A></li>
+	<LI>Next message: <A HREF="021647.html">[Haiku-bugs] [Haiku] #4455: Deksbar crashes on mounting	non-boot partition
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21217">[ date ]</a>
+              <a href="thread.html#21217">[ thread ]</a>
+              <a href="subject.html#21217">[ subject ]</a>
+              <a href="author.html#21217">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

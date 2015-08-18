@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3883: [patch] please implement	pthread_attr_getstack()
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233883%3A%20%5Bpatch%5D%20please%20implement%0A%09pthread_attr_getstack%28%29&In-Reply-To=%3C047.4fece8b996146e3025997c67a2caeba1%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="017112.html">
+   <LINK REL="Next"  HREF="017168.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3883: [patch] please implement	pthread_attr_getstack()</H1>
+    <B>mjw</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233883%3A%20%5Bpatch%5D%20please%20implement%0A%09pthread_attr_getstack%28%29&In-Reply-To=%3C047.4fece8b996146e3025997c67a2caeba1%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3883: [patch] please implement	pthread_attr_getstack()">trac at haiku-os.org
+       </A><BR>
+    <I>Fri May  8 21:27:10 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="017112.html">[Haiku-bugs] [Haiku] #3883: [patch] please implement	pthread_attr_getstack()
+</A></li>
+        <LI>Next message: <A HREF="017168.html">[Haiku-bugs] [Haiku] #3883: [patch] please implement	pthread_attr_getstack()
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17161">[ date ]</a>
+              <a href="thread.html#17161">[ thread ]</a>
+              <a href="subject.html#17161">[ subject ]</a>
+              <a href="author.html#17161">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3883: [patch] please implement pthread_attr_getstack()
+-------------------------------+--------------------------------------------
+ Reporter:  mjw                |       Owner:  axeld         
+     Type:  enhancement        |      Status:  new           
+ Priority:  normal             |   Milestone:  R1            
+Component:  System/libroot.so  |     Version:  R1 development
+Blockedby:                     |    Platform:  All           
+ Blocking:                     |  
+-------------------------------+--------------------------------------------
+
+Comment(by mjw):
+
+ Yes, you are right.  I was working to old docs.  It looks as though
+ pthread_attr_getstack() should return either NULL for the address base, or
+ the address you passed into pthread_attr_setstack().  The only way to get
+ a thread's stack base out of it is to call pthread_getattr_np() to get the
+ actual thread's attributes before calling pthread_attr_getstack().
+
+ I was porting Kaffe Java VM which uses pthread_attr_getstack() in its unix
+ pthreads code.  I believe mono needs to know the thread stack base as
+ well.
+
+ With that in mind, get_thread_info() looks like the correct thing to use,
+ so this can be closed as invalid if you like.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3883#comment:4">http://dev.haiku-os.org/ticket/3883#comment:4</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="017112.html">[Haiku-bugs] [Haiku] #3883: [patch] please implement	pthread_attr_getstack()
+</A></li>
+	<LI>Next message: <A HREF="017168.html">[Haiku-bugs] [Haiku] #3883: [patch] please implement	pthread_attr_getstack()
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17161">[ date ]</a>
+              <a href="thread.html#17161">[ thread ]</a>
+              <a href="subject.html#17161">[ subject ]</a>
+              <a href="author.html#17161">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

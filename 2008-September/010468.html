@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2757: regression: r27665 broke booting, panics at the red rocket
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232757%3A%20regression%3A%20r27665%20broke%20booting%2C%0A%20panics%20at%20the%20red%20rocket&In-Reply-To=%3C049.3ead19d7720090efbd6c609006c46d0b%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010467.html">
+   <LINK REL="Next"  HREF="010469.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2757: regression: r27665 broke booting, panics at the red rocket</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232757%3A%20regression%3A%20r27665%20broke%20booting%2C%0A%20panics%20at%20the%20red%20rocket&In-Reply-To=%3C049.3ead19d7720090efbd6c609006c46d0b%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2757: regression: r27665 broke booting, panics at the red rocket">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Sep 22 03:50:03 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010467.html">[Haiku-bugs] [Haiku] #2757: regression: r27665 broke booting, panics at the red rocket
+</A></li>
+        <LI>Next message: <A HREF="010469.html">[Haiku-bugs] [Haiku] #2757: regression: r27665 broke booting, panics at the red rocket
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10468">[ date ]</a>
+              <a href="thread.html#10468">[ thread ]</a>
+              <a href="subject.html#10468">[ subject ]</a>
+              <a href="author.html#10468">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2757: regression: r27665 broke booting, panics at the red rocket
+----------------------------+-----------------------------------------------
+  Reporter:  luroh          |       Owner:  axeld         
+      Type:  bug            |      Status:  new           
+  Priority:  normal         |   Milestone:  R1            
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |   Blockedby:                
+  Platform:  All            |    Blocking:                
+----------------------------+-----------------------------------------------
+
+Comment(by anevilyak):
+
+ Replying to [comment:14 bonefish]:
+ &gt; Did you check whether gPCI is indeed NULL in pci_get_nth_pci_info() when
+ crashing?
+
+ Just checked:
+ {{{
+ pci_get_nth_pci_info(0, 0x90e052d0) - gPCI = 0x00000000
+ vm_soft_fault: va 0x0 not covered by area in address space
+ vm_page_fault: vm_soft_fault returned error 'Bad address' on fault at 0x0,
+ ip 0xa0220b15, write 0, user 0, thread 0x3b
+ PANIC: vm_page_fault: unhandled page fault in kernel space at 0x0, ip
+ 0xa0220b15
+ }}}
+
+ Any way to verify if two images are in fact loaded? I'm modifying my TRACE
+ statements now to print the mem location of gPCI in both cases to see what
+ that yields now.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2757#comment:15">http://dev.haiku-os.org/ticket/2757#comment:15</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010467.html">[Haiku-bugs] [Haiku] #2757: regression: r27665 broke booting, panics at the red rocket
+</A></li>
+	<LI>Next message: <A HREF="010469.html">[Haiku-bugs] [Haiku] #2757: regression: r27665 broke booting, panics at the red rocket
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10468">[ date ]</a>
+              <a href="thread.html#10468">[ thread ]</a>
+              <a href="subject.html#10468">[ subject ]</a>
+              <a href="author.html#10468">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

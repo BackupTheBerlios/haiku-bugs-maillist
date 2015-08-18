@@ -1,0 +1,154 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3740: Fix ape_reader build under gcc4
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233740%3A%20Fix%20ape_reader%20build%20under%20gcc4&In-Reply-To=%3C054.76756a62ea7467cd81bb31d39ae3418f%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="015962.html">
+   <LINK REL="Next"  HREF="016018.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3740: Fix ape_reader build under gcc4</H1>
+    <B>umccullough</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233740%3A%20Fix%20ape_reader%20build%20under%20gcc4&In-Reply-To=%3C054.76756a62ea7467cd81bb31d39ae3418f%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3740: Fix ape_reader build under gcc4">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Apr 12 00:52:49 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="015962.html">[Haiku-bugs] [Haiku] #3740: Fix ape_reader build under gcc4
+</A></li>
+        <LI>Next message: <A HREF="016018.html">[Haiku-bugs] [Haiku] #3740: Fix ape_reader build under gcc4
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15984">[ date ]</a>
+              <a href="thread.html#15984">[ thread ]</a>
+              <a href="subject.html#15984">[ subject ]</a>
+              <a href="author.html#15984">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3740: Fix ape_reader build under gcc4
+----------------------------------+-----------------------------------------
+ Reporter:  pulkomandy            |       Owner:  marcusoverhagen
+     Type:  bug                   |      Status:  new            
+ Priority:  normal                |   Milestone:  R1             
+Component:  Audio &amp; Video/Codecs  |     Version:  R1 development 
+Blockedby:                        |    Platform:  All            
+ Blocking:                        |  
+----------------------------------+-----------------------------------------
+
+Comment(by umccullough):
+
+ Unfortunately, it seems when I apply this patch to my tree, it breaks gcc2
+ build:
+
+ {{{
+ C++ /work/haiku/haiku/trunk/generated-gcc2/objects/haiku/x86/release/add-
+ ons/media/plugins/ape_reader/MAClib/APEDecompress.o
+ In file included from
+ /work/haiku/haiku/trunk/headers/cpp/stl_algobase.h:45,
+                  from /work/haiku/haiku/trunk/headers/cpp/algorithm:30,
+                  from /work/haiku/haiku/trunk/src/add-
+ ons/media/plugins/ape_reader/MAClib/APEDecompress.cpp:4:
+ /work/haiku/haiku/trunk/headers/cpp/type_traits.h:132: redefinition of
+ `struct __type_traits&lt;char&gt;'
+ /work/haiku/haiku/trunk/headers/cpp/type_traits.h:112: previous definition
+ here
+ /work/haiku/haiku/trunk/headers/cpp/type_traits.h:132: explicit
+ specialization of non-template `__type_traits&lt;char&gt;'
+ /work/haiku/haiku/trunk/headers/cpp/type_traits.h:138: confused by earlier
+ errors, bailing out
+ cpp0: output pipe has been closed
+
+ /work/haiku/haiku/trunk/generated-gcc2/cross-tools/bin/i586-pc-haiku-gcc
+ -c &quot;/work/haiku/haiku/trunk/src/add-
+ ons/media/plugins/ape_reader/MAClib/APEDecompress.cpp&quot; -O -Wall -Wno-
+ trigraphs -Wno-ctor-dtor-privacy -Woverloaded-virtual -Wpointer-arith
+ -Wcast-align -Wsign-compare -Wno-multichar -pipe -nostdinc
+ -D_ZETA_USING_DEPRECATED_API_=1 -D_ZETA_TS_FIND_DIR_=1 -D__HAIKU__
+ -DHAIKU_DISTRO_COMPATIBILITY_DEFAULT -D__INTEL__ -DARCH_x86
+ -DBOOT_ARCHIVE_IMAGE_OFFSET=300 -D_BEOS_R5_COMPATIBLE_
+ -DHAIKU_TARGET_PLATFORM_HAIKU
+ -I/work/haiku/haiku/trunk/build/user_config_headers
+ -I/work/haiku/haiku/trunk/build/config_headers
+ -I/work/haiku/haiku/trunk/src/add-ons/media/plugins/ape_reader/MAClib
+ -I/work/haiku/haiku/trunk/generated-gcc2/objects/common/add-
+ ons/media/plugins/ape_reader/MAClib -I/work/haiku/haiku/trunk/generated-
+ gcc2/objects/linux/x86/common/add-ons/media/plugins/ape_reader/MAClib
+ -I/work/haiku/haiku/trunk/generated-gcc2/objects/haiku/x86/common/add-
+ ons/media/plugins/ape_reader/MAClib -I/work/haiku/haiku/trunk/src/add-
+ ons/media/plugins/ape_reader/MAClib/../LibMonkeysAudio -I-
+ -I/work/haiku/haiku/trunk/headers/cpp
+ -I/work/haiku/haiku/trunk/headers/build/gcc-2.95.3
+ -I/work/haiku/haiku/trunk/headers -I/work/haiku/haiku/trunk/headers/posix
+ -I/work/haiku/haiku/trunk/headers/gnu
+ -I/work/haiku/haiku/trunk/headers/glibc
+ -I/work/haiku/haiku/trunk/headers/os -I/work/haiku/haiku/trunk/headers/os
+ /add-ons -I/work/haiku/haiku/trunk/headers/os/add-ons/file_system
+ -I/work/haiku/haiku/trunk/headers/os/add-ons/graphics
+ -I/work/haiku/haiku/trunk/headers/os/add-ons/input_server
+ -I/work/haiku/haiku/trunk/headers/os/add-ons/registrar
+ -I/work/haiku/haiku/trunk/headers/os/add-ons/screen_saver
+ -I/work/haiku/haiku/trunk/headers/os/add-ons/tracker
+ -I/work/haiku/haiku/trunk/headers/os/app
+ -I/work/haiku/haiku/trunk/headers/os/device
+ -I/work/haiku/haiku/trunk/headers/os/drivers
+ -I/work/haiku/haiku/trunk/headers/os/game
+ -I/work/haiku/haiku/trunk/headers/os/interface
+ -I/work/haiku/haiku/trunk/headers/os/kernel
+ -I/work/haiku/haiku/trunk/headers/os/media
+ -I/work/haiku/haiku/trunk/headers/os/mail
+ -I/work/haiku/haiku/trunk/headers/os/midi
+ -I/work/haiku/haiku/trunk/headers/os/midi2
+ -I/work/haiku/haiku/trunk/headers/os/net
+ -I/work/haiku/haiku/trunk/headers/os/opengl
+ -I/work/haiku/haiku/trunk/headers/os/storage
+ -I/work/haiku/haiku/trunk/headers/os/support
+ -I/work/haiku/haiku/trunk/headers/os/translation
+ -I/work/haiku/haiku/trunk/headers/private/. -o &quot;/work/haiku/haiku/trunk
+ /generated-gcc2/objects/haiku/x86/release/add-
+ ons/media/plugins/ape_reader/MAClib/APEDecompress.o&quot; ;
+
+ ...failed C++ /work/haiku/haiku/trunk/generated-
+ gcc2/objects/haiku/x86/release/add-
+ ons/media/plugins/ape_reader/MAClib/APEDecompress.o ...
+ }}}
+
+ It does at least work for me when compiling gcc4 though.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3740#comment:1">http://dev.haiku-os.org/ticket/3740#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="015962.html">[Haiku-bugs] [Haiku] #3740: Fix ape_reader build under gcc4
+</A></li>
+	<LI>Next message: <A HREF="016018.html">[Haiku-bugs] [Haiku] #3740: Fix ape_reader build under gcc4
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15984">[ date ]</a>
+              <a href="thread.html#15984">[ thread ]</a>
+              <a href="subject.html#15984">[ subject ]</a>
+              <a href="author.html#15984">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

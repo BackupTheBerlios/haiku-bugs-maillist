@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2405: MediaPlayer doesn't use overlay altough it is available
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232405%3A%20MediaPlayer%20doesn%27t%20use%20overlay%0A%20altough%20it%20is%20available&In-Reply-To=%3C050.8f4a1df4a2cabbccaae4f8527eece40c%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008300.html">
+   <LINK REL="Next"  HREF="008302.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2405: MediaPlayer doesn't use overlay altough it is available</H1>
+    <B>stippi</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232405%3A%20MediaPlayer%20doesn%27t%20use%20overlay%0A%20altough%20it%20is%20available&In-Reply-To=%3C050.8f4a1df4a2cabbccaae4f8527eece40c%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2405: MediaPlayer doesn't use overlay altough it is available">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Jun 18 11:34:50 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008300.html">[Haiku-bugs] [Haiku] #2405: MediaPlayer doesn't use overlay altough it is available
+</A></li>
+        <LI>Next message: <A HREF="008302.html">[Haiku-bugs] [Haiku] #2405: MediaPlayer doesn't use overlay altough it is available
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8301">[ date ]</a>
+              <a href="thread.html#8301">[ thread ]</a>
+              <a href="subject.html#8301">[ subject ]</a>
+              <a href="author.html#8301">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2405: MediaPlayer doesn't use overlay altough it is available
+---------------------------------------+------------------------------------
+  Reporter:  nutela                    |       Owner:  marcusoverhagen
+      Type:  bug                       |      Status:  new            
+  Priority:  normal                    |   Milestone:  R1             
+ Component:  Applications/MediaPlayer  |     Version:  R1 development 
+Resolution:                            |   Blockedby:                 
+  Platform:  x86                       |    Blocking:                 
+---------------------------------------+------------------------------------
+
+Comment(by stippi):
+
+ Interesting. The get_area_info() call is made regardless of overlays. It
+ is needed to map media kit BBuffers to the memory of BBitmaps:
+
+ {{{
+ // figure out the bitmap creation flags
+ uint32 bitmapFlags = 0;
+ if (fTryOverlay) {
+         // try to use hardware overlay
+         bitmapFlags |= B_BITMAP_WILL_OVERLAY;
+         if (i == 0)
+                 bitmapFlags |= B_BITMAP_RESERVE_OVERLAY_CHANNEL;
+ } else
+         bitmapFlags = B_BITMAP_IS_LOCKED;
+
+ fBitmap[i] = new BBitmap(bounds, bitmapFlags, colorSpace);
+ status = fBitmap[i]-&gt;InitCheck();
+ if (status &gt;= B_OK) {
+         buffer_clone_info info;
+         uint8* bits = (uint8*)fBitmap[i]-&gt;Bits();
+         info.area = area_for(bits);
+         area_info bitmapAreaInfo;
+         status = get_area_info(info.area, &amp;bitmapAreaInfo);
+         if (status != B_OK) {
+                 fprintf(stderr, &quot;VideoConsumer::CreateBuffers() - &quot;
+                         &quot;get_area_info(): %s\n&quot;, strerror(status));
+                 return status;
+         }
+         info.offset = bits - (uint8*)bitmapAreaInfo.address;
+         info.size = (size_t)fBitmap[i]-&gt;BitsLength();
+         info.flags = 0;
+         info.buffer = 0;
+                 // the media buffer id
+         BBuffer *buffer = NULL;
+         if ((status = fBuffers-&gt;AddBuffer(info, &amp;buffer)) != B_OK) {
+                 ERROR(&quot;VideoConsumer::CreateBuffers - ERROR ADDING BUFFER
+ TO GROUP\n&quot;);
+                 return status;
+         } else
+                 PROGRESS(&quot;VideoConsumer::CreateBuffers - SUCCESSFUL ADD
+ BUFFER TO GROUP\n&quot;);
+ }
+ }}}
+
+ If you can watch the video without overlay, it means the exact same code
+ path works for non-overlay bitmaps, which is a bit strange. I guess the
+ team could indeed be different. For normal bitmaps, the app_server would
+ have allocated the area/memory, while for overlay bitmaps, it would have
+ actually been the graphics driver/kernel. Maybe some privilege thing is
+ preventing this from working?
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2405#comment:2">http://dev.haiku-os.org/ticket/2405#comment:2</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008300.html">[Haiku-bugs] [Haiku] #2405: MediaPlayer doesn't use overlay altough it is available
+</A></li>
+	<LI>Next message: <A HREF="008302.html">[Haiku-bugs] [Haiku] #2405: MediaPlayer doesn't use overlay altough it is available
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8301">[ date ]</a>
+              <a href="thread.html#8301">[ thread ]</a>
+              <a href="subject.html#8301">[ subject ]</a>
+              <a href="author.html#8301">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

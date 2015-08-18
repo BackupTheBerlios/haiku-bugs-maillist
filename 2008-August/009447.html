@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2591: haiku fail to boot load
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232591%3A%20haiku%20fail%20to%20boot%20load&In-Reply-To=%3C043.a83b713aec893fb875c0382761bb86cf%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009445.html">
+   <LINK REL="Next"  HREF="009448.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2591: haiku fail to boot load</H1>
+    <B>rvndrk32</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232591%3A%20haiku%20fail%20to%20boot%20load&In-Reply-To=%3C043.a83b713aec893fb875c0382761bb86cf%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2591: haiku fail to boot load">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Aug  8 22:02:44 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009445.html">[Haiku-bugs] [Haiku] #1853: RTL8168 recognized but not working
+</A></li>
+        <LI>Next message: <A HREF="009448.html">[Haiku-bugs] [Haiku] #2591: haiku fail to boot load
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9447">[ date ]</a>
+              <a href="thread.html#9447">[ thread ]</a>
+              <a href="subject.html#9447">[ subject ]</a>
+              <a href="author.html#9447">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2591: haiku fail to boot load
+-----------------------+----------------------------------------------------
+ Reporter:  rvndrk32   |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+Blockedby:             |    Platform:  x86           
+ Blocking:             |  
+-----------------------+----------------------------------------------------
+ 'Either you use a version of BeOS to do the setup with DriveSetup or mkbfs
+ or you use Haiku itself with the Installer or DriveSetup. Once you've
+ created and initialized the target partition you can mount the image
+ (using tools like Mount Image or through the Terminal) and copy over all
+ the files. If you are under Haiku, you can just as well use the Installer
+ to make a duplicate of your currently booted installation.'
+
+ no.try again.doesn't work.formats okay.not bootable.
+
+
+ 'If you for example copy such an image directly to a USB drive starting
+ from 0, overwriting the MBR (destoying all partitions already there), then
+ this will boot.'
+
+ like the dd command or the russian software that does this? dont think so,
+ tried and failed.
+
+ ' To make sure a partition boot record is there and it contains the right
+ partition offset, you can use the tool &quot;makebootable&quot;. Makebootable will
+ do both, write the partition boot code to the beginning of the partition
+ and detect and write the partition offset to where it is needed. You can
+ use the makebootable from BeOS if you have a BeOS installation that has
+ access to the partition in question.'
+
+ not quite.its SUPPOSED to do this.it doesn't.
+ ive used VBox and qemu, no luck.
+ i believe the images (JPEGs)i still have of the process, may have taken
+ them down from the net.
+
+ you have to use grub and/or makebootable from within linux.
+ its the only way i haven't tried yet.
+ -----
+ Michael Lotz wrote:
+ &gt; Hi Richard
+ &gt;
+ &gt;&gt; only issue with that is it doesnt boot.thus the need for grub
+ &gt;&gt; loader.
+ &gt;
+ &gt; I think you are missing some bits and pieces here. Haiku can very well
+ &gt; be booted on real hardware since a long time. I have it seen running on
+ &gt; many machines, rest assured, and configured booted through various
+ &gt; means (BeOS bootman, GRUB, directly from the partition boot code). It
+ &gt; also boots fine from USB sticks. In fact I have written an article
+ &gt; about this topic this very day to explain parts involved and what is
+ &gt; compatible with what. You can find it at <A HREF="http://www.haiku-">http://www.haiku-</A>
+ os.org/documents/user/how_to_get_haiku_booted.
+ &gt; Hope this helps.
+ &gt;
+ &gt; Regards
+ &gt; Michael
+ &gt;
+ &gt;
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2591">http://dev.haiku-os.org/ticket/2591</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009445.html">[Haiku-bugs] [Haiku] #1853: RTL8168 recognized but not working
+</A></li>
+	<LI>Next message: <A HREF="009448.html">[Haiku-bugs] [Haiku] #2591: haiku fail to boot load
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9447">[ date ]</a>
+              <a href="thread.html#9447">[ thread ]</a>
+              <a href="subject.html#9447">[ subject ]</a>
+              <a href="author.html#9447">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

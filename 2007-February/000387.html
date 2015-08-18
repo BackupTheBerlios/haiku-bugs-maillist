@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1008: Page Setup / Print Setup fails to	open
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-February/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231008%3A%20Page%20Setup%20/%20Print%20Setup%20fails%20to%0A%09open&In-Reply-To=%3C051.7b893bbcdfb0e780939c46b0076a415e%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000386.html">
+   <LINK REL="Next"  HREF="000395.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1008: Page Setup / Print Setup fails to	open</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231008%3A%20Page%20Setup%20/%20Print%20Setup%20fails%20to%0A%09open&In-Reply-To=%3C051.7b893bbcdfb0e780939c46b0076a415e%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1008: Page Setup / Print Setup fails to	open">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Feb  4 18:33:16 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000386.html">[Haiku-bugs] [Haiku] #1008: Page Setup / Print Setup fails to	open
+</A></li>
+        <LI>Next message: <A HREF="000395.html">[Haiku-bugs] [Haiku] #1008: Page Setup / Print Setup fails to	open
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#387">[ date ]</a>
+              <a href="thread.html#387">[ thread ]</a>
+              <a href="subject.html#387">[ subject ]</a>
+              <a href="author.html#387">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1008: Page Setup / Print Setup fails to open
+-------------------------+--------------------------------------------------
+  Reporter:  laplace     |       Owner:  laplace       
+      Type:  bug         |      Status:  new           
+  Priority:  blocker     |   Milestone:  R1            
+ Component:  - Printing  |     Version:  R1 development
+Resolution:              |    Platform:  All           
+-------------------------+--------------------------------------------------
+Changes (by bonefish):
+
+ * cc: axeld (added)
+
+Old description:
+
+&gt;<i> In StyledEdit the page setup dialog can be opened once.
+</I>&gt;<i> Subsequent attempts to open the page setup or print dialog fail because
+</I>&gt;<i> StyledEdit (actually BPrintJob) does not get a valid BMessenger to the
+</I>&gt;<i> print_server.
+</I>
+New description:
+
+ In StyledEdit the page setup dialog can be opened once.
+ Subsequent attempts to open the page setup or print dialog fail because
+ StyledEdit (actually BPrintJob) does not get a valid BMessenger to the
+ print_server.
+
+ (The print server must be running. E.g. add a printer via the Printers
+ preflet before.)
+
+Comment:
+
+ I've tracked the problem down to the point that a reply port reused for
+ synchronous messaging happens to be not empty, so that the
+ BRoster::GetAppInfo() invoked by the BMessenger constructor gets the wrong
+ reply from the registrar.
+
+ Uncommenting the #if 0'd check code in the synchronous
+ BMessage::_SendMessage() triggers the debugger (even earlier, when trying
+ to open the File menu the second time).
+
+ I wouldn't completely rule out, that the bug is in the StyledEdit or
+ printing code, but it seems very likely that the app kit is to blame. So I
+ throw axeld into the CC for good measure. :-P
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1008#comment:2">http://dev.haiku-os.org/ticket/1008#comment:2</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000386.html">[Haiku-bugs] [Haiku] #1008: Page Setup / Print Setup fails to	open
+</A></li>
+	<LI>Next message: <A HREF="000395.html">[Haiku-bugs] [Haiku] #1008: Page Setup / Print Setup fails to	open
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#387">[ date ]</a>
+              <a href="thread.html#387">[ thread ]</a>
+              <a href="subject.html#387">[ subject ]</a>
+              <a href="author.html#387">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

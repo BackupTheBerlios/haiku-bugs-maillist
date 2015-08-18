@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4604: USB errors after unplugging Wacom	tablet
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234604%3A%20USB%20errors%20after%20unplugging%20Wacom%0A%09tablet&In-Reply-To=%3C050.bc8306e910de337d931a331f2d42736b%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="021728.html">
+   <LINK REL="Next"  HREF="021753.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4604: USB errors after unplugging Wacom	tablet</H1>
+    <B>idefix</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234604%3A%20USB%20errors%20after%20unplugging%20Wacom%0A%09tablet&In-Reply-To=%3C050.bc8306e910de337d931a331f2d42736b%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4604: USB errors after unplugging Wacom	tablet">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Sep 21 10:20:16 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="021728.html">[Haiku-bugs] [Haiku] #4604: USB errors after unplugging Wacom	tablet
+</A></li>
+        <LI>Next message: <A HREF="021753.html">[Haiku-bugs] [Haiku] #4604: USB errors after unplugging Wacom	tablet
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21748">[ date ]</a>
+              <a href="thread.html#21748">[ thread ]</a>
+              <a href="subject.html#21748">[ subject ]</a>
+              <a href="author.html#21748">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4604: USB errors after unplugging Wacom tablet
+-------------------------------+--------------------------------------------
+ Reporter:  idefix             |       Owner:  mmlr     
+     Type:  bug                |      Status:  new      
+ Priority:  normal             |   Milestone:  R1       
+Component:  Drivers/Mouse/USB  |     Version:  R1/alpha1
+Blockedby:                     |    Platform:  All      
+ Blocking:                     |  
+-------------------------------+--------------------------------------------
+
+Comment(by idefix):
+
+ Replying to [comment:1 mmlr]:
+ &gt; It's not related to how long the tablet has been connected. It purely
+ depends on the poll. Device removal is detected from the explore thread
+ which runs once a second. If the thread just ran, the time for it to run
+ again is longer than if it happened to be close to running again.
+ But wouldn't you see much more variation then, instead of this linear
+ response?[[BR]]
+ And there would be an upper limit of 1 second. Because of the serial
+ output, this will be a higher limit, but there still should be one.
+
+ &gt; What is taking down the system is the serial and syslog output. Serial
+ should be disabled by default on the alpha builds though, so you shouldn't
+ see it there.
+ Yes, when I have serial output disabled, the system isn't taken down
+ although you see the CPU usage go to 100%.
+
+ I will perform another test in which I will connect the tablet for one,
+ two and three hours (with serial output disabled) and then measure the
+ duration of the 100% CPU usage. According to your explanation it should
+ never be more than 1 second.
+
+ One thing I still can't explain are the zero lines of error code when the
+ pen was in proximity of the tablet all the time. Have you any idea why
+ this causes no errors at all?
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4604#comment:2">http://dev.haiku-os.org/ticket/4604#comment:2</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="021728.html">[Haiku-bugs] [Haiku] #4604: USB errors after unplugging Wacom	tablet
+</A></li>
+	<LI>Next message: <A HREF="021753.html">[Haiku-bugs] [Haiku] #4604: USB errors after unplugging Wacom	tablet
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21748">[ date ]</a>
+              <a href="thread.html#21748">[ thread ]</a>
+              <a href="subject.html#21748">[ subject ]</a>
+              <a href="author.html#21748">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

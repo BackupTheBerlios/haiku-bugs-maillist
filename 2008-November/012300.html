@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3109: [kernel] vm_area_release_ref: area not found in aspace's area list
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233109%3A%20%5Bkernel%5D%20vm_area_release_ref%3A%20area%0A%20not%20found%20in%20aspace%27s%20area%20list&In-Reply-To=%3C049.a491d777d1eaea01c12b1e2fc1ed08cf%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012299.html">
+   <LINK REL="Next"  HREF="012301.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3109: [kernel] vm_area_release_ref: area not found in aspace's area list</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233109%3A%20%5Bkernel%5D%20vm_area_release_ref%3A%20area%0A%20not%20found%20in%20aspace%27s%20area%20list&In-Reply-To=%3C049.a491d777d1eaea01c12b1e2fc1ed08cf%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3109: [kernel] vm_area_release_ref: area not found in aspace's area list">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Nov 10 01:53:37 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012299.html">[Haiku-bugs] [Haiku] #3109: [kernel] vm_area_release_ref: area not found in aspace's area list
+</A></li>
+        <LI>Next message: <A HREF="012301.html">[Haiku-bugs] [Haiku] #3109: [kernel] vm_area_release_ref: area not found in aspace's area list
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12300">[ date ]</a>
+              <a href="thread.html#12300">[ thread ]</a>
+              <a href="subject.html#12300">[ subject ]</a>
+              <a href="author.html#12300">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3109: [kernel] vm_area_release_ref: area not found in aspace's area list
+----------------------------+-----------------------------------------------
+  Reporter:  diver          |       Owner:  axeld         
+      Type:  bug            |      Status:  new           
+  Priority:  normal         |   Milestone:  R1            
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |   Blockedby:                
+  Platform:  All            |    Blocking:                
+----------------------------+-----------------------------------------------
+
+Comment(by anevilyak):
+
+ Last few entries from syslog:
+ {{{
+ KERN: heap_add_area: area 19043 added to medium heap 0x81964000 - usable
+ range 0x94401000 - 0x94800000
+ KERN: vm_page_fault: vm_soft_fault returned error 'Bad address' on fault
+ at 0x42c, ip 0x27ce9a, write 0, user 1, thread 0x8a
+ KERN: vm_page_fault: thread &quot;a:94:x-vnd.Be-TRAK&quot; (138) in team
+ &quot;app_server&quot; (63) tried to read address 0x42c, ip 0x27ce9a
+ (&quot;app_server_seg0ro&quot; +0x7ce9a)
+ KERN: stack trace:
+ KERN:   0x00271fe7 (app_server_seg0ro + 0x71fe7)
+ KERN:   0x0026c46f (app_server_seg0ro + 0x6c46f)
+ KERN:   0x0026bd1b (app_server_seg0ro + 0x6bd1b)
+ KERN:   0x002675a8 (app_server_seg0ro + 0x675a8)
+ KERN:   0x006f49b8 (libroot.so_seg0ro + 0x259b8)
+ KERN:   0x7038cfec (a:94:x-vnd.Be-TRAK_138_stack + 0x3ffec)
+ KERN: vm_page_fault: vm_soft_fault returned error 'Bad address' on fault
+ at 0x0, ip 0x800cf994, write 0, user 0, thread 0x8a
+ KERN: user_debug_exception_occurred(): Failed to install debugger: thread:
+ 138: No more ports available
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3109#comment:7">http://dev.haiku-os.org/ticket/3109#comment:7</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012299.html">[Haiku-bugs] [Haiku] #3109: [kernel] vm_area_release_ref: area not found in aspace's area list
+</A></li>
+	<LI>Next message: <A HREF="012301.html">[Haiku-bugs] [Haiku] #3109: [kernel] vm_area_release_ref: area not found in aspace's area list
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12300">[ date ]</a>
+              <a href="thread.html#12300">[ thread ]</a>
+              <a href="subject.html#12300">[ subject ]</a>
+              <a href="author.html#12300">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

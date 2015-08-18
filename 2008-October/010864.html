@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2812: System appears sleepy with network	activity
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232812%3A%20System%20appears%20sleepy%20with%20network%0A%09activity&In-Reply-To=%3C045.a98c2b01f1ec1e157505753442b1cdb5%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010907.html">
+   <LINK REL="Next"  HREF="010871.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2812: System appears sleepy with network	activity</H1>
+    <B>jackburton</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232812%3A%20System%20appears%20sleepy%20with%20network%0A%09activity&In-Reply-To=%3C045.a98c2b01f1ec1e157505753442b1cdb5%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2812: System appears sleepy with network	activity">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Oct  9 11:30:11 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010907.html">[Haiku-bugs] [Haiku] #2811: Update firefox optional package
+</A></li>
+        <LI>Next message: <A HREF="010871.html">[Haiku-bugs] [Haiku] #2812: System appears sleepy with disk activity (was: System appears sleepy with network activity)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10864">[ date ]</a>
+              <a href="thread.html#10864">[ thread ]</a>
+              <a href="subject.html#10864">[ subject ]</a>
+              <a href="author.html#10864">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2812: System appears sleepy with network activity
+---------------------------+------------------------------------------------
+ Reporter:  jackburton     |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1 development
+Blockedby:                 |    Platform:  All           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+ While doing a svn checkout of the haiku repository on my system (an intel
+ core 2 DUO, with a core disabled due to ticket #2803),
+ the system appears cyclically aslept: if I try to open a tracker window,
+ it takes a couple of seconds to open, but this seems to happen cyclically,
+ as I said.
+ The cpu activity is low with some very occasional spikes, so it doesn't
+ seem related to the above ticket.
+ Top doesn't help much, althought it shows more or less the following
+ pattern:
+ svn spends a lot of time in kernel (while downloading the files),
+ then it stops downloading for a while, and the thread &quot;scsi scheduler&quot; is
+ the one which consumes most cpu (but never above 10% in that case), I
+ guess while updating the svn database,
+ and during that time, it seems like it blocks any other operation from/to
+ disk.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2812">http://dev.haiku-os.org/ticket/2812</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010907.html">[Haiku-bugs] [Haiku] #2811: Update firefox optional package
+</A></li>
+	<LI>Next message: <A HREF="010871.html">[Haiku-bugs] [Haiku] #2812: System appears sleepy with disk activity (was: System appears sleepy with network activity)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10864">[ date ]</a>
+              <a href="thread.html#10864">[ thread ]</a>
+              <a href="subject.html#10864">[ subject ]</a>
+              <a href="author.html#10864">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

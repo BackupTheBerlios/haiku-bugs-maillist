@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2482: Panic while automounting usb stick
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-July/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232482%3A%20Panic%20while%20automounting%20usb%20stick&In-Reply-To=%3C051.0e3c69d8529a97928f5021d22bc9ddbd%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008749.html">
+   <LINK REL="Next"  HREF="008750.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2482: Panic while automounting usb stick</H1>
+    <B>mmlr</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232482%3A%20Panic%20while%20automounting%20usb%20stick&In-Reply-To=%3C051.0e3c69d8529a97928f5021d22bc9ddbd%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2482: Panic while automounting usb stick">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Jul  4 16:12:33 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008749.html">[Haiku-bugs] [Haiku] #2482: Panic while automounting usb stick
+</A></li>
+        <LI>Next message: <A HREF="008750.html">[Haiku-bugs] [Haiku] #2483: [kernel] problems opening png image from ext3 partition
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8754">[ date ]</a>
+              <a href="thread.html#8754">[ thread ]</a>
+              <a href="subject.html#8754">[ subject ]</a>
+              <a href="author.html#8754">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2482: Panic while automounting usb stick
+------------------------+---------------------------------------------------
+  Reporter:  emitrax    |       Owner:  mmlr          
+      Type:  bug        |      Status:  assigned      
+  Priority:  normal     |   Milestone:  R1            
+ Component:  - General  |     Version:  R1 development
+Resolution:             |   Blockedby:                
+  Platform:  All        |    Blocking:                
+------------------------+---------------------------------------------------
+Changes (by mmlr):
+
+  * owner:  axeld =&gt; mmlr
+  * status:  new =&gt; assigned
+
+
+Comment:
+
+ This is not a race condition or anything, it's a plain simple timeout that
+ happens. The device does not respond quickly enough therefore usb_disk
+ will abort and return a timeout error (&quot;error: Operation timed out&quot;). The
+ timeout I (arbitrarily) set is 2 seconds right now, which might just not
+ be enough. Please increase the timeout in src/add-
+ ons/kernel/drivers/disk/usb/usb_disk/usb_disk.cpp line 145 by a second
+ until you don't see this happening anymore and report how much it needs.
+ Other subsystems seem to use timeouts of up to 20 seconds, but I don't
+ really want to increase it that much. Maybe 3 or 5 seconds would be
+ acceptable though.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2482#comment:1">http://dev.haiku-os.org/ticket/2482#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008749.html">[Haiku-bugs] [Haiku] #2482: Panic while automounting usb stick
+</A></li>
+	<LI>Next message: <A HREF="008750.html">[Haiku-bugs] [Haiku] #2483: [kernel] problems opening png image from ext3 partition
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8754">[ date ]</a>
+              <a href="thread.html#8754">[ thread ]</a>
+              <a href="subject.html#8754">[ subject ]</a>
+              <a href="author.html#8754">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

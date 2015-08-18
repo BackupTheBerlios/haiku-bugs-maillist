@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1269: Haiku's BMenu is is different from BeOS's in handling Escape and Alt-W/Q.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231269%3A%20Haiku%27s%20BMenu%20is%20is%20different%20from%0A%20BeOS%27s%20in%20handling%20Escape%20and%20Alt-W/Q.&In-Reply-To=%3C048.d060e14e8dfc607dcef4cf4a7fc839b1%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001615.html">
+   <LINK REL="Next"  HREF="001623.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1269: Haiku's BMenu is is different from BeOS's in handling Escape and Alt-W/Q.</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231269%3A%20Haiku%27s%20BMenu%20is%20is%20different%20from%0A%20BeOS%27s%20in%20handling%20Escape%20and%20Alt-W/Q.&In-Reply-To=%3C048.d060e14e8dfc607dcef4cf4a7fc839b1%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1269: Haiku's BMenu is is different from BeOS's in handling Escape and Alt-W/Q.">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Jun  8 00:56:44 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001615.html">[Haiku-bugs] [Haiku] #1268: Incorporation of the well known live cd scripts in the build.
+</A></li>
+        <LI>Next message: <A HREF="001623.html">[Haiku-bugs] [Haiku] #1269: Haiku's BMenu is is different from BeOS's in handling Escape and Alt-W/Q.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1619">[ date ]</a>
+              <a href="thread.html#1619">[ thread ]</a>
+              <a href="subject.html#1619">[ subject ]</a>
+              <a href="author.html#1619">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1269: Haiku's BMenu is is different from BeOS's in handling Escape and Alt-W/Q.
+--------------------------------+-------------------------------------------
+ Reporter:  jonas.kirilla       |       Owner:  axeld         
+     Type:  bug                 |      Status:  new           
+ Priority:  normal              |   Milestone:  R1            
+Component:  Kits/Interface Kit  |     Version:  R1 development
+ Platform:  All                 |  
+--------------------------------+-------------------------------------------
+ ** Escape
+
+ In BeOS, when the menu is sticky and the mouse pointer is not held over
+ it, the escape key closes only the topmost menu window, the last one in
+ the chain. This works the same in application menubars, in Tracker's
+ context menu and in Deskbar. Escape collapses piece by piece.
+
+ In Haiku, application menubars and Deskbar's Leaf menu are immediately
+ fully collapsed by the escape key, while Tracker's context menu is
+ unaffected. Both cases unlike BeOS.
+
+ ** Alt-W/Alt-Q
+
+ In a BeOS application, you can not Alt-W a window or Alt-Q the application
+ while the menubar has a menu open. (Not even shortcuts in the currently
+ open menu have any effect!)
+
+ In Haiku, Alt-W/Q work even when in a menu, and I'm guessing the other
+ shortcuts do too. (User error! ;) Anyway is the API safe if this is
+ allowed? Why did Be disallow shortcut use while a menu is open?)
+
+ Tracker's context menu/Deskbar's Leaf menu:
+
+ In BeOS, Alt-W has no effect on these menu hierarchies.
+ In Haiku, Tracker's menu is collapsed, the root menu left intact, with a
+ submenu saying &quot;&lt;empty&gt;&quot;. Deskbar's Leaf menu is reduced to a single
+ orphan menu saying &quot;&lt;emtpy&gt;&quot;.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1269">http://dev.haiku-os.org/ticket/1269</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001615.html">[Haiku-bugs] [Haiku] #1268: Incorporation of the well known live cd scripts in the build.
+</A></li>
+	<LI>Next message: <A HREF="001623.html">[Haiku-bugs] [Haiku] #1269: Haiku's BMenu is is different from BeOS's in handling Escape and Alt-W/Q.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1619">[ date ]</a>
+              <a href="thread.html#1619">[ thread ]</a>
+              <a href="subject.html#1619">[ subject ]</a>
+              <a href="author.html#1619">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

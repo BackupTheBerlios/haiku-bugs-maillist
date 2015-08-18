@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2598: sshd occasionally segfaults on connect (possibly when forking)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232598%3A%20sshd%20occasionally%20segfaults%20on%0A%20connect%20%28possibly%20when%20forking%29&In-Reply-To=%3C053.b9aa4f117f5872803a62a819e6a41bdf%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011016.html">
+   <LINK REL="Next"  HREF="011019.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2598: sshd occasionally segfaults on connect (possibly when forking)</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232598%3A%20sshd%20occasionally%20segfaults%20on%0A%20connect%20%28possibly%20when%20forking%29&In-Reply-To=%3C053.b9aa4f117f5872803a62a819e6a41bdf%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2598: sshd occasionally segfaults on connect (possibly when forking)">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Oct 16 07:34:20 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011016.html">[Haiku-bugs] [Haiku] #2784: Scroll bars disabled if window is	resized.
+</A></li>
+        <LI>Next message: <A HREF="011019.html">[Haiku-bugs] [Haiku] #2844: Fails to boot on Dual Atom 330
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11017">[ date ]</a>
+              <a href="thread.html#11017">[ thread ]</a>
+              <a href="subject.html#11017">[ subject ]</a>
+              <a href="author.html#11017">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2598: sshd occasionally segfaults on connect (possibly when forking)
+----------------------------+-----------------------------------------------
+  Reporter:  anevilyak      |       Owner:  bonefish      
+      Type:  bug            |      Status:  assigned      
+  Priority:  normal         |   Milestone:  R1            
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |   Blockedby:                
+  Platform:  All            |    Blocking:                
+----------------------------+-----------------------------------------------
+
+Comment(by anevilyak):
+
+ Finally hit this crash again with a current build. Oddly I've confirmed
+ one thing: it only happens with a stripped build, the one with symbols
+ results in the allocator crash every single time.
+
+ In any case, backtrace of sshd from the kernel:
+
+ {{{
+ stack trace for thread 264 &quot;sshd&quot;
+     kernel stack: 0xa1f3a000 to 0xa1f3e000
+       user stack: 0x7efef000 to 0x7ffef000
+ frame               caller     &lt;image&gt;:function + offset
+  0 a1f3d7ac (+  48) 80046020   &lt;kernel_x86&gt; context_switch(thread*:
+ 0x9fd1d800, thread*: 0x9fd2e000) + 0x003c
+  1 a1f3d7dc (+  64) 800462cc   &lt;kernel_x86&gt;:scheduler_reschedule + 0x0264
+  2 a1f3d81c (+  64) 80047660   &lt;kernel_x86&gt;:switch_sem_etc + 0x036c
+  3 a1f3d85c (+  64) 800472c6   &lt;kernel_x86&gt;:acquire_sem_etc + 0x0026
+  4 a1f3d89c (+  80) 80044802   &lt;kernel_x86&gt;:read_port_etc + 0x0152
+  5 a1f3d8ec (+1424) 800621be   &lt;kernel_x86&gt;
+ debug_debugger_message::thread_hit_debug_event_internal(0x8, int32:
+ -1577853208, true, 0x8006d801) + 0x02fa
+  6 a1f3de7c (+  64) 80062433   &lt;kernel_x86&gt;
+ debug_debugger_message::thread_hit_debug_event(0x8, int32: -1577853208,
+ true) + 0x002f
+  7 a1f3debc (+  80) 8006261f   &lt;kernel_x86&gt;:user_debug_exception_occurred
+ + 0x005b
+  8 a1f3df0c (+  80) 800bbad0   &lt;kernel_x86&gt;:vm_page_fault + 0x0314
+  9 a1f3df5c (+  64) 800cb655   &lt;kernel_x86&gt;:page_fault_exception + 0x00d9
+ 10 a1f3df9c (+  12) 800cecbf   &lt;kernel_x86&gt;:int_bottom_user + 0x005a
+ user iframe at 0xa1f3dfa8 (end = 0xa1f3e000)
+  eax 0x0            ebx 0x25fe04        ecx 0x7ffeed10   edx 0x2
+  esi 0x7ffeea80     edi 0x20cc88        ebp 0x7ffeea84   esp 0xa1f3dfdc
+  eip 0xb7d6      eflags 0x210213   user esp 0x7ffeea48
+  vector: 0xe, error code: 0x4
+ 11 a1f3dfa8 (+   0) 0000b7d6
+ 12 7ffeea84 (+ 712) 7ffeeaa0   6533:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">sshd_main_stack at 0x7efef000</A> + 0xfffaa0
+ 13 7ffeed4c (+ 224) 0020e4f1
+ &lt;/boot/home/config/bin/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">sshd at 0x00200000</A>&gt;:unknown + 0xe4f1
+ 14 7ffeee2c (+ 336) 0020fbe2
+ &lt;/boot/home/config/bin/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">sshd at 0x00200000</A>&gt;:unknown + 0xfbe2
+ 15 7ffeef7c (+  48) 0020c9af
+ &lt;/boot/home/config/bin/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">sshd at 0x00200000</A>&gt;:unknown + 0xc9af
+ 16 7ffeefac (+  48) 001008ea
+ &lt;/boot/beos/system/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">runtime_loader at 0x00100000</A>&gt;:unknown + 0x08ea
+ 17 7ffeefdc (+   0) 7ffeefec   6533:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">sshd_main_stack at 0x7efef000</A> + 0xffffec
+ }}}
+
+ For some reason, I have no trace entries whatsoever for that team though,
+ so the only other useful thing I can do is dump memory at the stack
+ address:
+
+ {{{
+ kdebug&gt; in_context 264 dw 0x7ffeeaa0 32
+ [0x7ffeeaa0]  ....9.........T$   b80cc483 00000039 000000b9 24548d00
+ [0x7ffeeab0]  .&#205;c....... ....   c363cd04 ffff0104 00200217 8000000a
+ [0x7ffeeac0]  .&#237;......&#220;&#223;&#243;&#161;L&#237;..   7ffeed10 00000000 a1f3dfdc 7ffeed4c
+ [0x7ffeead0]  .&#237;<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">....... at ......</A>   7ffeed10 ffff037f ffff4000 ffffffff
+ [0x7ffeeae0]  &#237;VK...}.=.p#...   004b56ed 077d001b 70143d84 ffff0023
+ [0x7ffeeaf0]  &#218;...............   0d0d0bda 00000000 0000ffff 00000000
+ [0x7ffeeb00]  ................   ffff0000 00000000 00000000 0000ffff
+ [0x7ffeeb10]  ................   00000000 ffff0000 00000000 00000000
+ kdebug&gt;
+ }}}
+
+ Hope this helps in some way.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2598#comment:33">http://dev.haiku-os.org/ticket/2598#comment:33</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011016.html">[Haiku-bugs] [Haiku] #2784: Scroll bars disabled if window is	resized.
+</A></li>
+	<LI>Next message: <A HREF="011019.html">[Haiku-bugs] [Haiku] #2844: Fails to boot on Dual Atom 330
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11017">[ date ]</a>
+              <a href="thread.html#11017">[ thread ]</a>
+              <a href="subject.html#11017">[ subject ]</a>
+              <a href="author.html#11017">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

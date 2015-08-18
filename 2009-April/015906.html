@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3730: checkfs must include removed vnodes
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233730%3A%20checkfs%20must%20include%20removed%20vnodes&In-Reply-To=%3C040.c2fd9f5008d65b68dca3f3dc4b8533a8%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="015905.html">
+   <LINK REL="Next"  HREF="016190.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3730: checkfs must include removed vnodes</H1>
+    <B>axeld</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233730%3A%20checkfs%20must%20include%20removed%20vnodes&In-Reply-To=%3C040.c2fd9f5008d65b68dca3f3dc4b8533a8%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3730: checkfs must include removed vnodes">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Apr  9 21:28:07 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="015905.html">[Haiku-bugs] [Haiku] #2481: USB mouse and keyboard sometimes	stop working
+</A></li>
+        <LI>Next message: <A HREF="016190.html">[Haiku-bugs] [Haiku] #3730: checkfs must include removed vnodes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15906">[ date ]</a>
+              <a href="thread.html#15906">[ thread ]</a>
+              <a href="subject.html#15906">[ subject ]</a>
+              <a href="author.html#15906">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3730: checkfs must include removed vnodes
+------------------------------+---------------------------------------------
+ Reporter:  axeld             |       Owner:  axeld         
+     Type:  bug               |      Status:  new           
+ Priority:  critical          |   Milestone:  R1            
+Component:  File Systems/BFS  |     Version:  R1 development
+Blockedby:                    |    Platform:  All           
+ Blocking:                    |  
+------------------------------+---------------------------------------------
+ When checkfs runs, it will free up the memory of files that are already
+ unlinked, but haven't actually been removed and freed yet (ie. there are
+ still open file handles).
+
+ Since it does not do this right now, checkfs might already do harm, as the
+ blocks could then be reused immediately.
+
+ We need some API in the VFS to allow for this.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3730">http://dev.haiku-os.org/ticket/3730</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="015905.html">[Haiku-bugs] [Haiku] #2481: USB mouse and keyboard sometimes	stop working
+</A></li>
+	<LI>Next message: <A HREF="016190.html">[Haiku-bugs] [Haiku] #3730: checkfs must include removed vnodes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15906">[ date ]</a>
+              <a href="thread.html#15906">[ thread ]</a>
+              <a href="subject.html#15906">[ subject ]</a>
+              <a href="author.html#15906">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1389: [FlattenPictureTest] Not all tests	succeed
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231389%3A%20%5BFlattenPictureTest%5D%20Not%20all%20tests%0A%09succeed&In-Reply-To=%3C051.464b6578c72959cd80323b53250235e9%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002730.html">
+   <LINK REL="Next"  HREF="002670.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1389: [FlattenPictureTest] Not all tests	succeed</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231389%3A%20%5BFlattenPictureTest%5D%20Not%20all%20tests%0A%09succeed&In-Reply-To=%3C051.464b6578c72959cd80323b53250235e9%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1389: [FlattenPictureTest] Not all tests	succeed">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Sep 10 14:43:20 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002730.html">[Haiku-bugs] [Haiku] #1470: Mouse Speed and Acceleration have limited positions
+</A></li>
+        <LI>Next message: <A HREF="002670.html">[Haiku-bugs] [Haiku] #1471: Deskbar's Auto Raise could be activated more specifically
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2669">[ date ]</a>
+              <a href="thread.html#2669">[ thread ]</a>
+              <a href="subject.html#2669">[ subject ]</a>
+              <a href="author.html#2669">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1389: [FlattenPictureTest] Not all tests succeed
+---------------------------------+------------------------------------------
+  Reporter:  laplace             |       Owner:  jackburton    
+      Type:  bug                 |      Status:  assigned      
+  Priority:  normal              |   Milestone:  R1            
+ Component:  Kits/Interface Kit  |     Version:  R1 development
+Resolution:                      |    Platform:  All           
+---------------------------------+------------------------------------------
+Comment (by jackburton):
+
+ Replying to [comment:10 laplace]:
+ &gt; I have no idea what's causing this. However I suppose its a Haiku bug,
+ since this does not happen under BeOS.
+ &gt;
+ &gt; The following tests still fail always:
+ &gt; - SetPenSize - the line with size 0 is not drawn
+ &gt; - SetPenSize2 - the line with size 4 before scaling with 0.5 is not
+ drawn
+ &gt;
+ I fixed these in r22213 and r22215 respectively.
+
+ &gt; These tests do not fail, but the result is not rendered correctly:
+ &gt; - DrawLargeBitmap - the 1024x768 bitmap is not drawn
+
+ I suspect this is due to the bitmap data not being correctly passed via
+ ports (port capacity limit, I'd guess).
+
+ &gt; BTW I have fixed the issue drawing the results. Actually this is a
+ workaround. Now the drawing mode is set to B_OP_COPY in
+ TestResultItem::DrawItem() before any drawing operations.
+
+ That's good. But that means there is a bug in haiku :)
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1389#comment:11">http://dev.haiku-os.org/ticket/1389#comment:11</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002730.html">[Haiku-bugs] [Haiku] #1470: Mouse Speed and Acceleration have limited positions
+</A></li>
+	<LI>Next message: <A HREF="002670.html">[Haiku-bugs] [Haiku] #1471: Deskbar's Auto Raise could be activated more specifically
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2669">[ date ]</a>
+              <a href="thread.html#2669">[ thread ]</a>
+              <a href="subject.html#2669">[ subject ]</a>
+              <a href="author.html#2669">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

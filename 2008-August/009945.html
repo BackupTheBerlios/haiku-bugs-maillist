@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2534: Menu background issues with R5 Apps
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232534%3A%20Menu%20background%20issues%20with%20R5%20Apps&In-Reply-To=%3C050.d3b8435e26b0c0dd373e0255765210b7%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009943.html">
+   <LINK REL="Next"  HREF="009946.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2534: Menu background issues with R5 Apps</H1>
+    <B>julun</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232534%3A%20Menu%20background%20issues%20with%20R5%20Apps&In-Reply-To=%3C050.d3b8435e26b0c0dd373e0255765210b7%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2534: Menu background issues with R5 Apps">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Aug 28 09:57:33 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009943.html">[Haiku-bugs] [Haiku] #2534: Menu background issues with R5 Apps
+</A></li>
+        <LI>Next message: <A HREF="009946.html">[Haiku-bugs] [Haiku] #2534: Menu background issues with R5 Apps
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9945">[ date ]</a>
+              <a href="thread.html#9945">[ thread ]</a>
+              <a href="subject.html#9945">[ subject ]</a>
+              <a href="author.html#9945">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2534: Menu background issues with R5 Apps
+---------------------------------+------------------------------------------
+  Reporter:  kvdman              |       Owner:  stippi        
+      Type:  bug                 |      Status:  new           
+  Priority:  normal              |   Milestone:  R1/alpha1     
+ Component:  Kits/Interface Kit  |     Version:  R1 development
+Resolution:                      |   Blockedby:                
+  Platform:  All                 |    Blocking:                
+---------------------------------+------------------------------------------
+
+Comment(by julun):
+
+ Hi,
+
+ it's not an problem of BPicture at all, moreover it is the combination of
+ how it is implemented client/ server side. Imagin the following:
+
+ create view, add view to window
+
+ pass view to function, call BeginPicture on it
+ set view high color for example
+ the call will succeed and go to app server, but won't recorded in the
+ current drawing state as it's handled in _DispatchPictureMessage
+ on the client side(libbe) the B_VIEW_HIGH_COLOR_BIT is set and the color
+ cached
+ call end picture on that view
+
+ now reuse the same view to draw a second picture
+ pass view to function, call BeginPicture on it
+ set view high color
+ the call will not succeed(go to app_server and added to BPicture) since
+ the view B_VIEW_HIGH_COLOR_BIT is set and the color is the same
+ this is where ServerPicture::SyncState should come into the game, but it
+ will sync the unmodified drawstate into the picture, because the first
+ function call did not modify the drawing state
+ so basically nothing happens, except that the view highcolor is now the
+ default, black while playing the picture
+ call end picture on that view
+
+ R5 shows that calls to a given view, e.g SetHighColor will modify the
+ current drawing state even after BeginPicture was called. Note also, that
+ the above applies to SetDrawingMode etc. as well.
+
+ So i'm on it, will attach a diff later today.
+
+ Regards,
+ Karsten
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2534#comment:9">http://dev.haiku-os.org/ticket/2534#comment:9</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009943.html">[Haiku-bugs] [Haiku] #2534: Menu background issues with R5 Apps
+</A></li>
+	<LI>Next message: <A HREF="009946.html">[Haiku-bugs] [Haiku] #2534: Menu background issues with R5 Apps
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9945">[ date ]</a>
+              <a href="thread.html#9945">[ thread ]</a>
+              <a href="subject.html#9945">[ subject ]</a>
+              <a href="author.html#9945">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

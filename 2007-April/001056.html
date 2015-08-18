@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1162: B_SILENT_RELAUNCH implemented but doesn't get sent?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231162%3A%20B_SILENT_RELAUNCH%20implemented%20but%0A%20doesn%27t%20get%20sent%3F&In-Reply-To=%3C057.b25135aa12ccac3fb0c9f19dd76bb41b%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001054.html">
+   <LINK REL="Next"  HREF="001058.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1162: B_SILENT_RELAUNCH implemented but doesn't get sent?</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231162%3A%20B_SILENT_RELAUNCH%20implemented%20but%0A%20doesn%27t%20get%20sent%3F&In-Reply-To=%3C057.b25135aa12ccac3fb0c9f19dd76bb41b%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1162: B_SILENT_RELAUNCH implemented but doesn't get sent?">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Apr 19 14:34:58 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001054.html">[Haiku-bugs] [Haiku] #1162: B_SILENT_RELAUNCH implemented but doesn't get sent?
+</A></li>
+        <LI>Next message: <A HREF="001058.html">[Haiku-bugs] [Haiku] #1162: B_SILENT_RELAUNCH implemented but doesn't get sent?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1056">[ date ]</a>
+              <a href="thread.html#1056">[ thread ]</a>
+              <a href="subject.html#1056">[ subject ]</a>
+              <a href="author.html#1056">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1162: B_SILENT_RELAUNCH implemented but doesn't get sent?
+-----------------------------------+----------------------------------------
+  Reporter:  jonas.kirilla         |       Owner:  bonefish      
+      Type:  bug                   |      Status:  closed        
+  Priority:  normal                |   Milestone:  R1            
+ Component:  Kits/Application Kit  |     Version:  R1 development
+Resolution:  fixed                 |    Platform:  All           
+-----------------------------------+----------------------------------------
+Comment (by jonas.kirilla):
+
+ Replying to [comment:4 bonefish]:
+ &gt; Not sure what duplicates you're referring to. The BApplication &quot;already
+ running&quot; code is executed when the app is started e.g. via the shell
+ (fork()+exec()). If someone requests to start an already running
+ (single/exclusive launch) app via BRoster::Launch() the app is never
+ started, and thus obviously the BApplication constructor is never executed
+ either.
+
+ By duplicates I meant &quot;attempts to launch multiple instances of a single
+ /exclusive-launch application&quot;. I meant that if the
+ BApplication::_InitData is meant to be a catch-all, I would have expected
+ the B_SILENT_RELAUNCH code that is there, to also work for attempts to
+ launch additional instances via BRoster::Launch(), (prior to the fix), as
+ the BApplication constructor is always called, (unless you can fork a
+ BApplication these days).
+
+ Prior to the fix, unless I'm completely mistaken, the B_SILENT_RELAUNCH
+ didn't get sent, for apps launched via BRoster. (At least observation of
+ the apps launched from Tracker hints to that there was none received.)
+
+ As both ways to try to launch additional instances of a single/exclusive-
+ launch app have checks added now, perhaps it doesn't matter that much.
+ Anyway, I'm not going to pursue this any further.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1162#comment:5">http://dev.haiku-os.org/ticket/1162#comment:5</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001054.html">[Haiku-bugs] [Haiku] #1162: B_SILENT_RELAUNCH implemented but doesn't get sent?
+</A></li>
+	<LI>Next message: <A HREF="001058.html">[Haiku-bugs] [Haiku] #1162: B_SILENT_RELAUNCH implemented but doesn't get sent?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1056">[ date ]</a>
+              <a href="thread.html#1056">[ thread ]</a>
+              <a href="subject.html#1056">[ subject ]</a>
+              <a href="author.html#1056">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

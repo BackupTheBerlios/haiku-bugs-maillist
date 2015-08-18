@@ -1,0 +1,154 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4287: Haiku Crashes With ATA Stack
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234287%3A%20Haiku%20Crashes%20With%20ATA%20Stack&In-Reply-To=%3C055.db931602667e33f016af0311a440c142%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="019792.html">
+   <LINK REL="Next"  HREF="019795.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4287: Haiku Crashes With ATA Stack</H1>
+    <B>tonestone57</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234287%3A%20Haiku%20Crashes%20With%20ATA%20Stack&In-Reply-To=%3C055.db931602667e33f016af0311a440c142%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4287: Haiku Crashes With ATA Stack">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Aug 19 19:53:55 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="019792.html">[Haiku-bugs] [Haiku] #4287: Haiku Crashes With ATA Stack
+</A></li>
+        <LI>Next message: <A HREF="019795.html">[Haiku-bugs] [Haiku] #4287: Haiku Crashes With ATA Stack
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19794">[ date ]</a>
+              <a href="thread.html#19794">[ thread ]</a>
+              <a href="subject.html#19794">[ subject ]</a>
+              <a href="author.html#19794">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4287: Haiku Crashes With ATA Stack
+--------------------------+-------------------------------------------------
+ Reporter:  tonestone57   |       Owner:  marcusoverhagen
+     Type:  bug           |      Status:  new            
+ Priority:  normal        |   Milestone:  R1             
+Component:  Drivers/Disk  |     Version:  R1 development 
+Blockedby:                |    Platform:  x86            
+ Blocking:                |  
+--------------------------+-------------------------------------------------
+
+Comment(by tonestone57):
+
+ Haiku Revision: 32522 (gcc2) w/ata stack
+
+ listdev output:
+
+ {{{
+ device Serial bus controller (SMBus) [c|5|0]
+   vendor 8086: Intel Corporation
+   device 27da: 82801G (ICH7 Family) SMBus Controller
+
+ device Mass storage controller (IDE interface) [1|1|8a]
+   vendor 8086: Intel Corporation
+   device 27df: 82801G (ICH7 Family) IDE Controller
+
+ device Bridge (ISA bridge) [6|1|0]
+   vendor 8086: Intel Corporation
+   device 27b8: 82801GB/GR (ICH7 Family) LPC Interface Bridge
+
+ device Display controller (VGA compatible controller, VGA controller)
+ [3|0|0]
+   vendor 102b: Matrox Graphics, Inc.
+   device 0519: MGA 2064W [Millennium]
+
+ device Bridge (PCI bridge, Subtractive decode) [6|4|1]
+   vendor 8086: Intel Corporation
+   device 244e: 82801 PCI Bridge
+
+ device Serial bus controller (USB Controller, EHCI) [c|3|20]
+   vendor 8086: Intel Corporation
+   device 27cc: 82801G (ICH7 Family) USB2 EHCI Controller
+
+ device Serial bus controller (USB Controller, UHCI) [c|3|0]
+   vendor 8086: Intel Corporation
+   device 27cb: 82801G (ICH7 Family) USB UHCI Controller #4
+
+ device Serial bus controller (USB Controller, UHCI) [c|3|0]
+   vendor 8086: Intel Corporation
+   device 27ca: 82801G (ICH7 Family) USB UHCI Controller #3
+
+ device Serial bus controller (USB Controller, UHCI) [c|3|0]
+   vendor 8086: Intel Corporation
+   device 27c9: 82801G (ICH7 Family) USB UHCI Controller #2
+
+ device Serial bus controller (USB Controller, UHCI) [c|3|0]
+   vendor 8086: Intel Corporation
+   device 27c8: 82801G (ICH7 Family) USB UHCI Controller #1
+
+ device Bridge (PCI bridge, Normal decode) [6|4|0]
+   vendor 8086: Intel Corporation
+   device 27d6: 82801G (ICH7 Family) PCI Express Port 4
+
+ device Bridge (PCI bridge, Normal decode) [6|4|0]
+   vendor 8086: Intel Corporation
+   device 27d4: 82801G (ICH7 Family) PCI Express Port 3
+
+ device Network controller (Ethernet controller) [2|0|0]
+   vendor 10ec: Realtek Semiconductor Co., Ltd.
+   device 8168: RTL8111/8168B PCI Express Gigabit Ethernet controller
+
+ device Bridge (PCI bridge, Normal decode) [6|4|0]
+   vendor 8086: Intel Corporation
+   device 27d0: 82801G (ICH7 Family) PCI Express Port 1
+
+ device Multimedia controller (Audio device) [4|3|0]
+   vendor 8086: Intel Corporation
+   device 27d8: 82801G (ICH7 Family) High Definition Audio Controller
+
+ device Display controller (VGA compatible controller, VGA controller)
+ [3|0|0]
+   vendor 8086: Intel Corporation
+   device 2772: 82945G/GZ Integrated Graphics Controller
+
+ device Bridge (Host bridge) [6|0|0]
+   vendor 8086: Intel Corporation
+   device 2770: 82945G/GZ/P/PL Memory Controller Hub
+ ~&gt;
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4287#comment:2">http://dev.haiku-os.org/ticket/4287#comment:2</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="019792.html">[Haiku-bugs] [Haiku] #4287: Haiku Crashes With ATA Stack
+</A></li>
+	<LI>Next message: <A HREF="019795.html">[Haiku-bugs] [Haiku] #4287: Haiku Crashes With ATA Stack
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19794">[ date ]</a>
+              <a href="thread.html#19794">[ thread ]</a>
+              <a href="subject.html#19794">[ subject ]</a>
+              <a href="author.html#19794">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

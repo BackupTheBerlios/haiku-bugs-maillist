@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1089: Appearance doesn't do anything
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231089%3A%20Appearance%20doesn%27t%20do%20anything&In-Reply-To=%3C054.9ef41fcc7e663e771f2ed50a897df132%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="016385.html">
+   <LINK REL="Next"  HREF="016387.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1089: Appearance doesn't do anything</H1>
+    <B>stpere</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231089%3A%20Appearance%20doesn%27t%20do%20anything&In-Reply-To=%3C054.9ef41fcc7e663e771f2ed50a897df132%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1089: Appearance doesn't do anything">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Apr 20 04:00:32 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="016385.html">[Haiku-bugs] [Haiku] #2854: [Terminal] midnight commander can't be controlled by a mouse
+</A></li>
+        <LI>Next message: <A HREF="016387.html">[Haiku-bugs] [Haiku] #3798: [PATCH] Arch-specific capabilities patch for HaikuImage
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16386">[ date ]</a>
+              <a href="thread.html#16386">[ thread ]</a>
+              <a href="subject.html#16386">[ subject ]</a>
+              <a href="author.html#16386">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1089: Appearance doesn't do anything
+------------------------------------+---------------------------------------
+ Reporter:  jackburton              |       Owner:  darkwyrm      
+     Type:  bug                     |      Status:  new           
+ Priority:  normal                  |   Milestone:  R1            
+Component:  Preferences/Appearance  |     Version:  R1 development
+Blockedby:                          |    Platform:  All           
+ Blocking:                          |  
+------------------------------------+---------------------------------------
+
+Comment(by stpere):
+
+ Regarding the impossibility to change the color of the tabs ..
+
+ There was two errors :
+
+ * It didn't read the colors from the desktop settings passed in the
+ allocator.. instead it read it from ..??? an other desktop settings
+ instance?
+
+ * The Zoom and Close buttons bitmaps didn't store the color it was used to
+ generate them, so changing the color wouldn't trigger a new redraw of
+ them..
+
+ My patch fixes those two issues.  After that patch, you can change the
+ color in appearance preflet and NEW windows will show the new tab color.
+ However, already opened ones won't change.  We need a feedback mecanism to
+ inform the windows that the color scheme changed.  We have a similar
+ mecanism to inform them that fonts changed, we might want to copy/adapt
+ it.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1089#comment:5">http://dev.haiku-os.org/ticket/1089#comment:5</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="016385.html">[Haiku-bugs] [Haiku] #2854: [Terminal] midnight commander can't be controlled by a mouse
+</A></li>
+	<LI>Next message: <A HREF="016387.html">[Haiku-bugs] [Haiku] #3798: [PATCH] Arch-specific capabilities patch for HaikuImage
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16386">[ date ]</a>
+              <a href="thread.html#16386">[ thread ]</a>
+              <a href="subject.html#16386">[ subject ]</a>
+              <a href="author.html#16386">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

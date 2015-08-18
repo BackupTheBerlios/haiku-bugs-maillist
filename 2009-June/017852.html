@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3999: Boot hangs (with a twist) as uhci driver tries to take ownership
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233999%3A%20Boot%20hangs%20%28with%20a%20twist%29%20as%20uhci%0A%20driver%20tries%20to%20take%20ownership&In-Reply-To=%3C044.f3f968229a44a2b8f7c30aa95dd8c270%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="017850.html">
+   <LINK REL="Next"  HREF="017862.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3999: Boot hangs (with a twist) as uhci driver tries to take ownership</H1>
+    <B>meianoite</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233999%3A%20Boot%20hangs%20%28with%20a%20twist%29%20as%20uhci%0A%20driver%20tries%20to%20take%20ownership&In-Reply-To=%3C044.f3f968229a44a2b8f7c30aa95dd8c270%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3999: Boot hangs (with a twist) as uhci driver tries to take ownership">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Jun  5 21:47:16 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="017850.html">[Haiku-bugs] [Haiku] #2696: unimplemented functions
+</A></li>
+        <LI>Next message: <A HREF="017862.html">[Haiku-bugs] [Haiku] #3999: Boot hangs (with a twist) as uhci driver tries to take ownership
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17852">[ date ]</a>
+              <a href="thread.html#17852">[ thread ]</a>
+              <a href="subject.html#17852">[ subject ]</a>
+              <a href="author.html#17852">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3999: Boot hangs (with a twist) as uhci driver tries to take ownership
+-----------------------+----------------------------------------------------
+ Reporter:  meianoite  |       Owner:  mmlr          
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  Drivers    |     Version:  R1 development
+Blockedby:             |    Platform:  All           
+ Blocking:             |  
+-----------------------+----------------------------------------------------
+ When I boot Haiku, the bootloader hangs on the third icon indefinitely.
+ The first time I saw this I intended to reboot and enable the onscreen
+ debug console, but for some reason I hit the power button instead of the
+ reset one. And the boot continued!!
+
+ Puzzled, I rebooted, enabled the debug console, hit &quot;p&quot; to disable paging,
+ and arrived at the text shown on the two attached pictures. &quot;before&quot; shows
+ the kernel hung at the &quot;usb ohci -1: smm is in control of the host
+ controller&quot; message. &quot;after&quot; shows what happens immediately after I hit
+ the power button.
+
+ Syslog with timestamps is attached as well. But it's from a different
+ session, as when I boot with onscreen debugging Haiku will hang on a black
+ screen at the very end of the boot instead of going to the desktop (and
+ that I tried using a FAT-formatted USB stick, but it KDL'd when I copied
+ the syslog to it). Notice that for some unknown (to me) reason, the
+ timestamps are within the same second, instead of being apart by the
+ several minutes I waited between taking both screenshots (and hitting the
+ power button, consequently). For example, JPEG EXIF data shows the
+ &quot;before&quot; picture was taken at 16h18m44s, and the &quot;after&quot; picture at
+ 16h21m18s. I guess what is timestamped is the buffer, and not the message
+ itself.
+
+ Also attached is the output from dmesg from a verbose boot of FreeBSD on
+ the same machine. Hope it helps.
+
+ I can of course change any compilation options to help debug this. The
+ image is build on FreeBSD, but I've built Haiku on Haiku proper (yay!) and
+ the same symptom shows. Makes no difference if I'm booting from a USB
+ stick or from the hard drive (syslog is from a HD boot).
+
+ The motherboard BIOS is flashed to the latest version found on Asus' site.
+ I have *no* idea why ACPI is showing _ASUS_ **Notebook** as the vendor
+ identifier, as this is straight from Asus, flashed scratch with bootblock
+ rewriting, ESCD cleared, CMOS cleared and everything I could think of to
+ make it as pristine as possible, and not any modded/hacked BIOS.
+
+ I tried both with USB peripherals attached or detached; made no
+ difference. Also tried inserting and removing peripherals while the boot
+ is hung, no difference as well. There's one peripheral I couldn't detach,
+ which is the RTL8187 WLAN interface that's build in on the motherboard; it
+ connects straight to a special, internal USB header. I hope it's not the
+ culprit, but still, only Haiku refuses to boot/requires hitting the power
+ button in the middle of the boot process to continue loading, so...
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3999">http://dev.haiku-os.org/ticket/3999</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="017850.html">[Haiku-bugs] [Haiku] #2696: unimplemented functions
+</A></li>
+	<LI>Next message: <A HREF="017862.html">[Haiku-bugs] [Haiku] #3999: Boot hangs (with a twist) as uhci driver tries to take ownership
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17852">[ date ]</a>
+              <a href="thread.html#17852">[ thread ]</a>
+              <a href="subject.html#17852">[ subject ]</a>
+              <a href="author.html#17852">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

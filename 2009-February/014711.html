@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3487: [gdb] repeatedly used stepi causes	double fault
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-February/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233487%3A%20%5Bgdb%5D%20repeatedly%20used%20stepi%20causes%0A%09double%20fault&In-Reply-To=%3C051.c1e7d722f4c17018b05695168c09f2f0%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="014704.html">
+   <LINK REL="Next"  HREF="014719.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3487: [gdb] repeatedly used stepi causes	double fault</H1>
+    <B>bonefish</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233487%3A%20%5Bgdb%5D%20repeatedly%20used%20stepi%20causes%0A%09double%20fault&In-Reply-To=%3C051.c1e7d722f4c17018b05695168c09f2f0%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3487: [gdb] repeatedly used stepi causes	double fault">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Feb 26 11:42:57 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="014704.html">[Haiku-bugs] [Haiku] #3487: [gdb] repeatedly used stepi causes	double fault
+</A></li>
+        <LI>Next message: <A HREF="014719.html">[Haiku-bugs] [Haiku] #3487: [gdb] repeatedly used stepi causes	double fault
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14711">[ date ]</a>
+              <a href="thread.html#14711">[ thread ]</a>
+              <a href="subject.html#14711">[ subject ]</a>
+              <a href="author.html#14711">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3487: [gdb] repeatedly used stepi causes double fault
+-----------------------+----------------------------------------------------
+ Reporter:  Adek336    |       Owner:  bonefish      
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+Blockedby:             |    Platform:  All           
+ Blocking:             |  
+-----------------------+----------------------------------------------------
+Changes (by bonefish):
+
+  * owner:  axeld =&gt; bonefish
+
+
+Comment:
+
+ I could reproduce this in VMware with just a single stepi. I attached a
+ gdb to an &quot;EscParse&quot; thread of a Terminal and hit some keys in it before
+ doing the stepi.
+
+ {{{
+ Welcome to Kernel Debugging Land...
+ Thread 165 &quot;EscParse&quot; running on CPU 0
+ kdebug&gt; sc
+ stack trace for thread 165 &quot;EscParse&quot;
+     kernel stack: 0x826d8000 to 0x826dc000
+       user stack: 0x70041000 to 0x70081000
+ frame               caller     &lt;image&gt;:function + offset
+  0 801383e8 (+  48) 8006015d   &lt;kernel_x86&gt;:invoke_debugger_command +
+ 0x00f5
+  1 80138418 (+  64) 8005ff4d   &lt;kernel_x86&gt;
+ invoke_pipe_segment(debugger_command_pipe*: 0x8012a400, int32: 0, 0x0
+ &quot;&lt;NULL&gt;&quot;) + 0x0079
+  2 80138458 (+  64) 800602d4   &lt;kernel_x86&gt;:invoke_debugger_command_pipe +
+ 0x009c
+  3 80138498 (+  48) 8006185c   &lt;kernel_x86&gt;
+ ExpressionParser&lt;0x8013854c&gt;::_ParseCommandPipe(0x80138548) + 0x0234
+  4 801384c8 (+  64) 80060c96   &lt;kernel_x86&gt;
+ ExpressionParser&lt;0x8013854c&gt;::EvaluateCommand(0x8011ad60 &quot;sc&quot;, 0x80138548)
+ + 0x02ba
+  5 80138508 (+ 224) 80062c84   &lt;kernel_x86&gt;:evaluate_debug_command +
+ 0x0088
+  6 801385e8 (+  64) 8005e05a   &lt;kernel_x86&gt; kernel_debugger_loop() +
+ 0x01ae
+  7 80138628 (+  32) 8005eedd   &lt;kernel_x86&gt;:kernel_debugger + 0x004d
+  8 80138648 (+ 192) 8005ee85   &lt;kernel_x86&gt;:panic + 0x0029
+  9 80138708 (+  48) 800d0bfb   &lt;kernel_x86&gt;:double_fault_exception +
+ 0x0087
+ 10 80138738 (+  12) 800d4512   &lt;kernel_x86&gt;:int_bottom_vm86 + 0x004d
+ kernel iframe at 0x80138744 (end = 0x80138794)
+  eax 0xb            ebx 0x76e030        ecx 0x70080c30   edx 0xffff0104
+  esi 0x0            edi 0x18054e50      ebp 0x70080c5c   esp 0x0
+  eip 0x800d4743  eflags 0x10103
+  vector: 0x8, error code: 0x0
+ 11 80138744 (+   0) 800d4743   &lt;kernel_x86&gt;:x86_sysenter + 0x0000
+ 70080c5c -- read fault
+ kdebug&gt; area 0x70080c30
+ [...]
+ AREA: 0x810e07d0
+ name:           'EscParse_165_stack'
+ owner:          0x9f
+ id:             0x10c1
+ base:           0x70041000
+ size:           0x41000
+ protection:     0x3b
+ wiring:         0x0
+ memory_type:    0x0
+ cache:          0x81078a2c
+ cache_type:     RAM
+ cache_offset:   0x0
+ cache_next:     0x00000000
+ cache_prev:     0x00000000
+ page mappings:  2
+ [...]
+ kdebug&gt; dl 0x70080c30 1
+ [0x70080c30]    read fault
+ }}}
+
+
+ If the stack crawl can be trusted the crash happens while executing a
+ sysenter. Which is somewhat weird, since the only exception a sysenter
+ raises is a #GP when SYSENTER_CS_MSR is 0. We initialize it during the
+ boot process and don't touch it again, though.
+
+ Did you test this on real hardware?
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3487#comment:2">http://dev.haiku-os.org/ticket/3487#comment:2</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="014704.html">[Haiku-bugs] [Haiku] #3487: [gdb] repeatedly used stepi causes	double fault
+</A></li>
+	<LI>Next message: <A HREF="014719.html">[Haiku-bugs] [Haiku] #3487: [gdb] repeatedly used stepi causes	double fault
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14711">[ date ]</a>
+              <a href="thread.html#14711">[ thread ]</a>
+              <a href="subject.html#14711">[ subject ]</a>
+              <a href="author.html#14711">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

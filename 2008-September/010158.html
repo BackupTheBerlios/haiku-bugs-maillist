@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2706: PANIC: vm_page_fault: unhandled page fault in kernel space at 0xdeadbf07, ip 0x9428897e
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232706%3A%20PANIC%3A%20vm_page_fault%3A%20unhandled%0A%20page%20fault%20in%20kernel%20space%20at%200xdeadbf07%2C%20ip%200x9428897e&In-Reply-To=%3C050.82be56378fef8d9c4d6c26a0c8d01923%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010151.html">
+   <LINK REL="Next"  HREF="010607.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2706: PANIC: vm_page_fault: unhandled page fault in kernel space at 0xdeadbf07, ip 0x9428897e</H1>
+    <B>stippi</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232706%3A%20PANIC%3A%20vm_page_fault%3A%20unhandled%0A%20page%20fault%20in%20kernel%20space%20at%200xdeadbf07%2C%20ip%200x9428897e&In-Reply-To=%3C050.82be56378fef8d9c4d6c26a0c8d01923%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2706: PANIC: vm_page_fault: unhandled page fault in kernel space at 0xdeadbf07, ip 0x9428897e">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Sep  7 18:45:37 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010151.html">[Haiku-bugs] [Haiku] #2706: PANIC: vm_page_fault: unhandled page fault in kernel space at 0xdeadbf07, ip 0x9428897e
+</A></li>
+        <LI>Next message: <A HREF="010607.html">[Haiku-bugs] [Haiku] #2706: PANIC: vm_page_fault: unhandled page fault in kernel space at 0xdeadbf07, ip 0x9428897e
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10158">[ date ]</a>
+              <a href="thread.html#10158">[ thread ]</a>
+              <a href="subject.html#10158">[ subject ]</a>
+              <a href="author.html#10158">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2706: PANIC: vm_page_fault: unhandled page fault in kernel space at 0xdeadbf07,
+ip 0x9428897e
+-------------------------------------+--------------------------------------
+  Reporter:  stippi                  |       Owner:  axeld         
+      Type:  bug                     |      Status:  new           
+  Priority:  critical                |   Milestone:  R1/alpha1     
+ Component:  Network &amp; Internet/TCP  |     Version:  R1 development
+Resolution:                          |   Blockedby:                
+  Platform:  All                     |    Blocking:                
+-------------------------------------+--------------------------------------
+Description changed by stippi:
+
+Old description:
+
+&gt;<i> Happens to me on recent revisions (going to tell the revision in a
+</I>&gt;<i> comment in a sec) when using Firefox. Here is the stack crawl:
+</I>&gt;<i> {{{
+</I>&gt;<i> stack trace for thread 80 &quot;/dev/net/ipro1000/0 consumer&quot;
+</I>&gt;<i>
+</I>&gt;<i> &lt;kernel&gt;vm_page_fault
+</I>&gt;<i> &lt;kernel&gt;page_fault_exception
+</I>&gt;<i> &lt;kernel&gt;int_bottom
+</I>&gt;<i>
+</I>&gt;<i> kernel iframe
+</I>&gt;<i>
+</I>&gt;<i> &lt;...network/protocols/tcp&gt;Compare__C24ConnectionHashDefinitionRCt4pair2ZPC8sockaddrZPC8sockaddrP11TCPEndpoint
+</I>&gt;<i> + 0x0022
+</I>&gt;<i> &lt;...network/protocols/tcp&gt;_LockupConnection__15EndpointManagerP8sockaddrT1
+</I>&gt;<i> + 0x0066
+</I>&gt;<i> &lt;...network/protocols/tcp&gt;FindConnection__15EndpointManagerP8sockaddrT1 +
+</I>&gt;<i> 0x0054
+</I>&gt;<i> &lt;...network/protocols/tcp&gt;tcp_receive_data__FP10net_buffer + 0x02e9
+</I>&gt;<i> &lt;...network/protocols/ipv4&gt;ipv4_receive_data__FP10net_buffer + 0x02ba
+</I>&gt;<i> &lt;...network/stack&gt;domain_receive_adapter__FPvP10net_deviceP10net_buffer +
+</I>&gt;<i> 0x003a
+</I>&gt;<i> &lt;...network/stack&gt;device_consumer_thread__FPv + 0x00c7
+</I>&gt;<i> [...]
+</I>&gt;<i> }}}
+</I>
+New description:
+
+ Happens to me when using Firefox on r27315. Here is the stack crawl:
+ {{{
+ stack trace for thread 80 &quot;/dev/net/ipro1000/0 consumer&quot;
+
+ &lt;kernel&gt;vm_page_fault
+ &lt;kernel&gt;page_fault_exception
+ &lt;kernel&gt;int_bottom
+
+ kernel iframe
+
+ &lt;...network/protocols/tcp&gt;Compare__C24ConnectionHashDefinitionRCt4pair2ZPC8sockaddrZPC8sockaddrP11TCPEndpoint
+ + 0x0022
+ &lt;...network/protocols/tcp&gt;_LockupConnection__15EndpointManagerP8sockaddrT1
+ + 0x0066
+ &lt;...network/protocols/tcp&gt;FindConnection__15EndpointManagerP8sockaddrT1 +
+ 0x0054
+ &lt;...network/protocols/tcp&gt;tcp_receive_data__FP10net_buffer + 0x02e9
+ &lt;...network/protocols/ipv4&gt;ipv4_receive_data__FP10net_buffer + 0x02ba
+ &lt;...network/stack&gt;domain_receive_adapter__FPvP10net_deviceP10net_buffer +
+ 0x003a
+ &lt;...network/stack&gt;device_consumer_thread__FPv + 0x00c7
+ [...]
+ }}}
+
+--
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2706#comment:1">http://dev.haiku-os.org/ticket/2706#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010151.html">[Haiku-bugs] [Haiku] #2706: PANIC: vm_page_fault: unhandled page fault in kernel space at 0xdeadbf07, ip 0x9428897e
+</A></li>
+	<LI>Next message: <A HREF="010607.html">[Haiku-bugs] [Haiku] #2706: PANIC: vm_page_fault: unhandled page fault in kernel space at 0xdeadbf07, ip 0x9428897e
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10158">[ date ]</a>
+              <a href="thread.html#10158">[ thread ]</a>
+              <a href="subject.html#10158">[ subject ]</a>
+              <a href="author.html#10158">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

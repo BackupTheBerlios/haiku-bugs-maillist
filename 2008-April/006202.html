@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2032: build bustage on r5bone  r24818
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232032%3A%20build%20bustage%20on%20r5bone%20%20r24818&In-Reply-To=%3C041.b918aa44fe1d4cccce705d7c0f5b2e03%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006212.html">
+   <LINK REL="Next"  HREF="006203.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2032: build bustage on r5bone  r24818</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232032%3A%20build%20bustage%20on%20r5bone%20%20r24818&In-Reply-To=%3C041.b918aa44fe1d4cccce705d7c0f5b2e03%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2032: build bustage on r5bone  r24818">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Apr  6 04:36:11 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006212.html">[Haiku-bugs] [Haiku] #2031: Crashed filesystem
+</A></li>
+        <LI>Next message: <A HREF="006203.html">[Haiku-bugs] [Haiku] #2032: build bustage on r5bone  r24818
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6202">[ date ]</a>
+              <a href="thread.html#6202">[ thread ]</a>
+              <a href="subject.html#6202">[ subject ]</a>
+              <a href="author.html#6202">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2032: build bustage on r5bone  r24818
+-----------------------+----------------------------------------------------
+ Reporter:  mmadia     |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+ Platform:  All        |  
+-----------------------+----------------------------------------------------
+ r24817 seems like the culprit,  pulling and testing 24816 atm.
+
+ r24818
+ ./configure --include-gpl-addons --use-gcc-pipe --target=haiku --cross-
+ tools-prefix /boot/apps/haiku/cross-tools/bin/i586-pc-haiku-
+ jam -q haiku-image
+
+ error:
+
+ <A HREF="http://pastebin.org/27737">http://pastebin.org/27737</A>
+ C++ generated/objects/bone/x86/release/tools/fs_shell/vfs.o
+ /source/haiku-svn/haiku/src/tools/fs_shell/vfs.cpp: In function
+ `fssh_status_t FSShell::vfs_get_fs_node_from_path(fssh_fs_volume *, const
+ char *, bool, void **)':
+ /source/haiku-svn/haiku/src/tools/fs_shell/vfs.cpp:2402: call of
+ overloaded `fssh_get_vnode (fssh_fs_volume *&amp;, fssh_vnode_id &amp;, void **&amp;)'
+ is ambiguous
+ /source/haiku-svn/haiku/src/tools/fs_shell/vfs.cpp:1989: candidates are:
+ fssh_status_t FSShell::fssh_get_vnode(fssh_fs_volume *, long long int,
+ void **)
+ /source/haiku-svn/haiku/headers/private/fs_shell/fssh_fs_interface.h:330:
+ fssh_status_t fssh_get_vnode(fssh_fs_volume *, long long int, void **)
+
+ gcc -c &quot;src/tools/fs_shell/vfs.cpp&quot; -O2 -Wall -Wno-trigraphs -Wno-ctor-
+ dtor-privacy -Woverloaded-virtual -Wpointer-arith -Wcast-align -Wsign-
+ compare -Wno-multichar -DFS_SHELL=1 -D_ZETA_USING_DEPRECATED_API_=1
+ -D_ZETA_TS_FIND_DIR_=1 -DARCH_x86 -D_NO_INLINE_ASM -DCOMPILE_FOR_R5
+ -DHAIKU_HOST_PLATFORM_BONE -Ibuild/user_config_headers
+ -Ibuild/config_headers -Isrc/tools/fs_shell
+ -Igenerated/objects/common/tools/fs_shell
+ -Igenerated/objects/bone/x86/common/tools/fs_shell
+ -Igenerated/objects/haiku/x86/common/tools/fs_shell -I- -Iheaders/build
+ -Iheaders/private/fs_shell -Iheaders/private/shared
+ -Iheaders/build/host/bone -Iheaders/build/host/beos_common -o
+ &quot;generated/objects/bone/x86/release/tools/fs_shell/vfs.o&quot; ;
+
+ ...failed C++ generated/objects/bone/x86/release/tools/fs_shell/vfs.o ...
+ ...skipped &lt;build&gt;fs_shell.a for lack of &lt;src!tools!fs_shell&gt;vfs.o...
+ ...skipped &lt;build&gt;bfs_shell for lack of &lt;build&gt;fs_shell.a...
+ ...skipped &lt;HaikuImage&gt;haiku.image-init-vars for lack of
+ &lt;build&gt;bfs_shell...
+ ...skipped walter.image for lack of &lt;HaikuImage&gt;haiku.image-init-vars...
+ ...failed updating 1 target(s)...
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2032">http://dev.haiku-os.org/ticket/2032</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006212.html">[Haiku-bugs] [Haiku] #2031: Crashed filesystem
+</A></li>
+	<LI>Next message: <A HREF="006203.html">[Haiku-bugs] [Haiku] #2032: build bustage on r5bone  r24818
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6202">[ date ]</a>
+              <a href="thread.html#6202">[ thread ]</a>
+              <a href="subject.html#6202">[ subject ]</a>
+              <a href="author.html#6202">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

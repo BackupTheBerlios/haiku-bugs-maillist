@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2452: [Subversion] svn co in haiku drops	to gdb or KDL
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232452%3A%20%5BSubversion%5D%20svn%20co%20in%20haiku%20drops%0A%09to%20gdb%20or%20KDL&In-Reply-To=%3C051.9c9e4fd793100ed73dc9fc1d01bea049%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008523.html">
+   <LINK REL="Next"  HREF="008526.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2452: [Subversion] svn co in haiku drops	to gdb or KDL</H1>
+    <B>mmlr</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232452%3A%20%5BSubversion%5D%20svn%20co%20in%20haiku%20drops%0A%09to%20gdb%20or%20KDL&In-Reply-To=%3C051.9c9e4fd793100ed73dc9fc1d01bea049%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2452: [Subversion] svn co in haiku drops	to gdb or KDL">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Jun 24 21:05:17 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008523.html">[Haiku-bugs] [Haiku] #2452: [Subversion] svn co in haiku drops	to gdb or KDL
+</A></li>
+        <LI>Next message: <A HREF="008526.html">[Haiku-bugs] [Haiku] #2452: [Subversion] svn co in haiku drops	to gdb or KDL
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8524">[ date ]</a>
+              <a href="thread.html#8524">[ thread ]</a>
+              <a href="subject.html#8524">[ subject ]</a>
+              <a href="author.html#8524">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2452: [Subversion] svn co in haiku drops to gdb or KDL
+---------------------------+------------------------------------------------
+  Reporter:  scottmc       |       Owner:  bonefish      
+      Type:  bug           |      Status:  new           
+  Priority:  normal        |   Milestone:  R1            
+ Component:  Build System  |     Version:  R1 development
+Resolution:                |   Blockedby:                
+  Platform:  x86           |    Blocking:                
+---------------------------+------------------------------------------------
+
+Comment(by mmlr):
+
+ Oh, you just installed that BeOS package? That could cause a few problems
+ indeed, as it contains an updated pipefs replacing the one present. This
+ was intended on BeOS because the pipefs there has issues. But on Haiku
+ it's not really a good idea to replace it, as this most certainly isn't
+ compatible with the current filesystem API. You should try a package that
+ only supplies the subversion binaries. For example you could try
+ <A HREF="http://haiku.mlotz.ch/subversion-1.1.3-bone.zip">http://haiku.mlotz.ch/subversion-1.1.3-bone.zip</A> or the more current
+ <A HREF="http://haiku.mlotz.ch/subversion-1.4.6-bone.zip.">http://haiku.mlotz.ch/subversion-1.4.6-bone.zip.</A> Note that these support
+ svn, http and https, but not svn+ssh, as the apr_proc_stub and some code
+ utilising it is missing from them.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2452#comment:7">http://dev.haiku-os.org/ticket/2452#comment:7</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008523.html">[Haiku-bugs] [Haiku] #2452: [Subversion] svn co in haiku drops	to gdb or KDL
+</A></li>
+	<LI>Next message: <A HREF="008526.html">[Haiku-bugs] [Haiku] #2452: [Subversion] svn co in haiku drops	to gdb or KDL
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8524">[ date ]</a>
+              <a href="thread.html#8524">[ thread ]</a>
+              <a href="subject.html#8524">[ subject ]</a>
+              <a href="author.html#8524">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

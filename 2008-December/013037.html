@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3191: glut programs with single buffer display a black window
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-December/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233191%3A%20glut%20programs%20with%20single%20buffer%0A%20display%20a%20black%20window&In-Reply-To=%3C054.0008485c2be6b1399196088016b11428%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="013030.html">
+   <LINK REL="Next"  HREF="013049.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3191: glut programs with single buffer display a black window</H1>
+    <B>mysticmike</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233191%3A%20glut%20programs%20with%20single%20buffer%0A%20display%20a%20black%20window&In-Reply-To=%3C054.0008485c2be6b1399196088016b11428%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3191: glut programs with single buffer display a black window">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Dec  5 21:53:18 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="013030.html">[Haiku-bugs] [Haiku] #3191: glut programs with single buffer display a black window
+</A></li>
+        <LI>Next message: <A HREF="013049.html">[Haiku-bugs] [Haiku] #3191: glut programs with single buffer display a black window
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13037">[ date ]</a>
+              <a href="thread.html#13037">[ thread ]</a>
+              <a href="subject.html#13037">[ subject ]</a>
+              <a href="author.html#13037">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3191: glut programs with single buffer display a black window
+------------------------------+---------------------------------------------
+  Reporter:  mysticmike       |       Owner:  korli         
+      Type:  bug              |      Status:  new           
+  Priority:  normal           |   Milestone:  R1            
+ Component:  Kits/OpenGL Kit  |     Version:  R1 development
+Resolution:                   |   Blockedby:                
+  Platform:  All              |    Blocking:                
+------------------------------+---------------------------------------------
+
+Comment(by mysticmike):
+
+ My comments on the above proposed solutions
+
+ 1) the short-term fix:
+ Sounds like it can be made to work.
+
+ The problem with just fixing glut is then this bug will crop up again in
+ any lib that can manage an openGL window, ie SDL or similar (is there an
+ SDL that works on Haiku ??).
+
+
+ 2) the longer-term solution:
+
+ if understand this right both the front and back buffers are bitmaps
+ stored in main memory, ie not the actual framebuffer, so what would
+ happens if thay were just made to point to the same actual memory and then
+ swap buffers could just do nothing (or maybe just glFlush or glFinish) ??
+
+ When rendering in single buffer mode I don't think there is any need to
+ update the framebuffer until the application issues a glFlush() or
+ glFinish(). That shouldn't effect the performance much even with the
+ software renderer, and it need not be to flicky.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3191#comment:4">http://dev.haiku-os.org/ticket/3191#comment:4</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="013030.html">[Haiku-bugs] [Haiku] #3191: glut programs with single buffer display a black window
+</A></li>
+	<LI>Next message: <A HREF="013049.html">[Haiku-bugs] [Haiku] #3191: glut programs with single buffer display a black window
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13037">[ date ]</a>
+              <a href="thread.html#13037">[ thread ]</a>
+              <a href="subject.html#13037">[ subject ]</a>
+              <a href="author.html#13037">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

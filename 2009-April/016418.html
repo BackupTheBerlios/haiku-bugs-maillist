@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3768: create_image -i 943718400 (or other large sizes) results in freeze
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233768%3A%20create_image%20-i%20943718400%20%28or%20other%0A%20large%20sizes%29%20results%20in%20freeze&In-Reply-To=%3C053.5c5183a3e041d61a0c892943bff1dd88%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="016359.html">
+   <LINK REL="Next"  HREF="016422.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3768: create_image -i 943718400 (or other large sizes) results in freeze</H1>
+    <B>bonefish</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233768%3A%20create_image%20-i%20943718400%20%28or%20other%0A%20large%20sizes%29%20results%20in%20freeze&In-Reply-To=%3C053.5c5183a3e041d61a0c892943bff1dd88%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3768: create_image -i 943718400 (or other large sizes) results in freeze">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Apr 20 17:16:06 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="016359.html">[Haiku-bugs] [Haiku] #3768: create_image -i 943718400 (or other large sizes) results in freeze
+</A></li>
+        <LI>Next message: <A HREF="016422.html">[Haiku-bugs] [Haiku] #3768: create_image -i 943718400 (or other large sizes) results in freeze
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16418">[ date ]</a>
+              <a href="thread.html#16418">[ thread ]</a>
+              <a href="subject.html#16418">[ subject ]</a>
+              <a href="author.html#16418">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3768: create_image -i 943718400 (or other large sizes) results in freeze
+---------------------------+------------------------------------------------
+ Reporter:  anevilyak      |       Owner:  bonefish      
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1 development
+Blockedby:                 |    Platform:  All           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+
+Comment(by bonefish):
+
+ Some ideas for improvements:
+  - Start with a significantly higher usage count for mapped pages.
+  - Let the page daemon penalize non-mapped active pages that haven't been
+ accessed more than mapped active pages (e.g. -2 vs. -1).
+  - Keep the inactive (maybe also the active) page queue sorted by
+ usage_count (introduce per-level markers for easy queuing), so we can
+ always pick the most inactive pages for recycling first.
+  - Maybe maintain per usage_count level numbers of pages so we can better
+ judge how much pressure the page daemon needs to apply.
+  - Join page daemon and page writer and let the page daemon look only at
+ interesting (active/inactive) pages (as in FreeBSD). Besides less work for
+ the page writer this also avoids the competition between the two -- as the
+ scheduling analysis data show, there's a lot of contention on commonly
+ used locks (e.g. the global cache list mutex). Moreover the page daemon
+ could starve the page writer due to its higher priority.
+
+ I'd like to play with these ideas, though I'd first want to make the
+ DebugAnalyzer useful, so it becomes easier to see what change has what
+ effects.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3768#comment:19">http://dev.haiku-os.org/ticket/3768#comment:19</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="016359.html">[Haiku-bugs] [Haiku] #3768: create_image -i 943718400 (or other large sizes) results in freeze
+</A></li>
+	<LI>Next message: <A HREF="016422.html">[Haiku-bugs] [Haiku] #3768: create_image -i 943718400 (or other large sizes) results in freeze
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16418">[ date ]</a>
+              <a href="thread.html#16418">[ thread ]</a>
+              <a href="subject.html#16418">[ subject ]</a>
+              <a href="author.html#16418">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

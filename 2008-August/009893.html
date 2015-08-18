@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2668: Haiku's partition map	representation looks weird.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232668%3A%20Haiku%27s%20partition%20map%0A%09representation%20looks%20weird.&In-Reply-To=%3C047.f1a04531fbaff1fc171a30ee5e9fba82%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009891.html">
+   <LINK REL="Next"  HREF="009894.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2668: Haiku's partition map	representation looks weird.</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232668%3A%20Haiku%27s%20partition%20map%0A%09representation%20looks%20weird.&In-Reply-To=%3C047.f1a04531fbaff1fc171a30ee5e9fba82%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2668: Haiku's partition map	representation looks weird.">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Aug 27 00:01:25 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009891.html">[Haiku-bugs] [Haiku] #2668: Haiku's partition map	representation looks weird.
+</A></li>
+        <LI>Next message: <A HREF="009894.html">[Haiku-bugs] [Haiku] #2668: Haiku's partition map	representation looks weird.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9893">[ date ]</a>
+              <a href="thread.html#9893">[ thread ]</a>
+              <a href="subject.html#9893">[ subject ]</a>
+              <a href="author.html#9893">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2668: Haiku's partition map representation looks weird.
+----------------------------+-----------------------------------------------
+  Reporter:  bga            |       Owner:  axeld         
+      Type:  bug            |      Status:  new           
+  Priority:  normal         |   Milestone:  R1            
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |   Blockedby:                
+  Platform:  All            |    Blocking:                
+----------------------------+-----------------------------------------------
+
+Comment(by anevilyak):
+
+ I actually get a somewhat strange list of partitions from Installer here
+ as well, though I'm not certain if that's a matter of Installer not
+ filtering what it gets back from the disk system properly, or the disk
+ manager weirdly interpreting the partition map. Specifically, I get:
+ {{{
+ (null) - 186.3GB (Intel Partition Map) [(null) partition: 0]
+ null (0B) [(null)] [/dev/disk/ata/3/master/raw partition: 2]
+ Haiku - 18.6GB [Be File System] [/dev/disk/ata/3/master/raw partition: 3]
+ HaikuData - 148.2GB [Be File System] [/dev/disk/ata/3/master/raw
+ partition: 4]
+ }}}
+
+ On the command line, Installer presents the following output:
+ {{{
+ SourceVisitor::Visit(BPartition *) : /dev/disk/ata/3/master/1
+ SourceVisitor::Visit(BPartition *) : (null)
+ ScanDisksPartitions partitions begin
+ TargetVisitor::Visit(BDiskDevice *) : /dev/disk/ata/3/master/raw
+ TargetVisitor::Visit(BPartition *) : /dev/disk/ata/3/master/0
+ TargetVisitor::Visit(BPartition *) : (null)
+ TargetVisitor::Visit(BPartition *) : /dev/disk/ata/3/master/1
+ TargetVisitor::Visit(BPartition *) : (null)
+ TargetVisitor::Visit(BPartition *) : /dev/disk/ata/3/master/2
+ TargetVisitor::Visit(BPartition *) : (null)
+ }}}
+
+ According to FreeBSD's fdisk, the partition map is:
+ {{{
+ ******* Working on device /dev/ad6 *******
+ parameters extracted from in-core disklabel are:
+ cylinders=387621 heads=16 sectors/track=63 (1008 blks/cyl)
+
+ Figures below won't work with BIOS for partitions not in cyl 1
+ parameters to be used for BIOS calculations are:
+ cylinders=387621 heads=16 sectors/track=63 (1008 blks/cyl)
+
+ Media sector size is 512
+ Warning: BIOS sector numbering starts with sector 1
+ Information from DOS bootblock is:
+ The data for partition 1 is:
+ sysid 165 (0xa5),(FreeBSD/NetBSD/386BSD)
+     start 63, size 40949622 (19994 Meg), flag 80 (active)
+         beg: cyl 0/ head 1/ sector 1;
+         end: cyl 1023/ head 254/ sector 63
+ The data for partition 2 is:
+ sysid 235 (0xeb),(BeOS file system)
+     start 40949685, size 39070080 (19077 Meg), flag 0
+         beg: cyl 1023/ head 254/ sector 63;
+         end: cyl 1023/ head 254/ sector 63
+ The data for partition 3 is:
+ sysid 235 (0xeb),(BeOS file system)
+     start 80019765, size 310697100 (151707 Meg), flag 0
+         beg: cyl 1023/ head 254/ sector 63;
+         end: cyl 1023/ head 254/ sector 63
+ The data for partition 4 is:
+ &lt;UNUSED&gt;
+ }}}
+
+ Is this related to Bruno's issue, or should I file a separate bug against
+ Installer for this?
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2668#comment:2">http://dev.haiku-os.org/ticket/2668#comment:2</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009891.html">[Haiku-bugs] [Haiku] #2668: Haiku's partition map	representation looks weird.
+</A></li>
+	<LI>Next message: <A HREF="009894.html">[Haiku-bugs] [Haiku] #2668: Haiku's partition map	representation looks weird.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9893">[ date ]</a>
+              <a href="thread.html#9893">[ thread ]</a>
+              <a href="subject.html#9893">[ subject ]</a>
+              <a href="author.html#9893">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

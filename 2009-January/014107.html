@@ -1,0 +1,166 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3381: bfs_shell crash on disk full
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-January/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233381%3A%20bfs_shell%20crash%20on%20disk%20full&In-Reply-To=%3C042.7e0943cc331efe34df0979ae12380696%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="014106.html">
+   <LINK REL="Next"  HREF="014108.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3381: bfs_shell crash on disk full</H1>
+    <B>Adek336</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233381%3A%20bfs_shell%20crash%20on%20disk%20full&In-Reply-To=%3C042.7e0943cc331efe34df0979ae12380696%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3381: bfs_shell crash on disk full">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Jan 28 21:49:12 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="014106.html">[Haiku-bugs] [Haiku] #2764: Scrambled video with intel i865 with r26762 and up
+</A></li>
+        <LI>Next message: <A HREF="014108.html">[Haiku-bugs] [Haiku] #3381: bfs_shell crash on disk full
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14107">[ date ]</a>
+              <a href="thread.html#14107">[ thread ]</a>
+              <a href="subject.html#14107">[ subject ]</a>
+              <a href="author.html#14107">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3381: bfs_shell crash on disk full
+--------------------------+-------------------------------------------------
+ Reporter:  Adek336       |       Owner:  bonefish      
+     Type:  bug           |      Status:  new           
+ Priority:  normal        |   Milestone:  R1            
+Component:  Build System  |     Version:  R1 development
+Blockedby:                |    Platform:  All           
+ Blocking:                |  
+--------------------------+-------------------------------------------------
+ {{{
+ skopiowane 134217728 bajt&#243;w (134 MB), 4,37744 s, 30,7 MB/s
+ Writing boot code to &quot;/mnt/media-3/haiku/gcc4/trunk/generated/haiku.image&quot;
+ (partition offset: 0 bytes, start offset = 0) ...
+ Populating image ...
+ Unzipping generated/download/gcc-4.3.3-haiku-090125.zip ...
+ Error while writing to file
+ `/myfs/./develop/tools/gcc-4.3.3-haiku-090125/lib/gcc/i586-pc-
+ haiku/4.3.3/cc1plus': No space left on device
+ Error: Command failed: No space left on device
+ Error: Command was:
+   cp -f -r :generated/tmp/unzip/. /myfs/.
+ Unzipping generated/download/perl-5.10.0-gcc2-2008-10-29.zip ...
+ Error while writing to file `/myfs/./common/lib/perl5/5.10.0/Net/Ping.pm':
+ No space left on device
+ Error: Command failed: No space left on device
+ Error: Command was:
+   cp -f -r :generated/tmp/unzip/. /myfs/.
+ Deleting old MIME database ...
+ *** glibc detected ***
+ generated/objects/linux/x86/release/tools/bfs_shell/bfs_shell: corrupted
+ double-linked list: 0x08436690 ***
+ ======= Backtrace: =========
+ /lib/i686/cmov/libc.so.6[0xb7ca614f]
+ /lib/i686/cmov/libc.so.6[0xb7ca7b6d]
+ /lib/i686/cmov/libc.so.6(__libc_malloc+0x95)[0xb7ca9655]
+ /lib/i686/cmov/libc.so.6(strerror+0x84)[0xb7cad214]
+ generated/objects/linux/lib/libroot_build.so(_haiku_build_strerror+0x22)[0xb7eb0de1]
+ generated/objects/linux/x86/release/tools/bfs_shell/bfs_shell[0x806f9c7]
+ generated/objects/linux/x86/release/tools/bfs_shell/bfs_shell[0x807754a]
+ generated/objects/linux/x86/release/tools/bfs_shell/bfs_shell[0x807769c]
+ generated/objects/linux/x86/release/tools/bfs_shell/bfs_shell[0x8076bf5]
+ generated/objects/linux/x86/release/tools/bfs_shell/bfs_shell[0x8079fed]
+ /lib/i686/cmov/libc.so.6(__libc_start_main+0xe5)[0xb7c4d455]
+ generated/objects/linux/x86/release/tools/bfs_shell/bfs_shell[0x804b001]
+ ======= Memory map: ========
+ 08048000-08092000 r-xp 00000000 08:0f 5492730
+ /mnt/media-3/haiku/gcc4/trunk/generated/objects/linux/x86/release/tools/bfs_shell/bfs_shell
+ 08092000-08093000 rw-p 0004a000 08:0f 5492730
+ /mnt/media-3/haiku/gcc4/trunk/generated/objects/linux/x86/release/tools/bfs_shell/bfs_shell
+ 080f7000-08736000 rw-p 080f7000 00:00 0          [heap]
+ b7b00000-b7b21000 rw-p b7b00000 00:00 0
+ b7b21000-b7c00000 ---p b7b21000 00:00 0
+ b7c10000-b7c11000 rw-p b7c10000 00:00 0
+ b7c11000-b7c35000 r-xp 00000000 08:08 957
+ /lib/i686/cmov/libm-2.7.so
+ b7c35000-b7c37000 rw-p 00023000 08:08 957
+ /lib/i686/cmov/libm-2.7.so
+ b7c37000-b7d8c000 r-xp 00000000 08:08 953
+ /lib/i686/cmov/libc-2.7.so
+ b7d8c000-b7d8d000 r--p 00155000 08:08 953
+ /lib/i686/cmov/libc-2.7.so
+ b7d8d000-b7d8f000 rw-p 00156000 08:08 953
+ /lib/i686/cmov/libc-2.7.so
+ b7d8f000-b7d92000 rw-p b7d8f000 00:00 0
+ b7d92000-b7d9e000 r-xp 00000000 08:08 1205328    /lib/libgcc_s.so.1
+ b7d9e000-b7d9f000 rw-p 0000c000 08:08 1205328    /lib/libgcc_s.so.1
+ b7d9f000-b7da0000 rw-p b7d9f000 00:00 0
+ b7da0000-b7e83000 r-xp 00000000 08:08 790304
+ /usr/lib/libstdc++.so.6.0.10
+ b7e83000-b7e86000 r--p 000e2000 08:08 790304
+ /usr/lib/libstdc++.so.6.0.10
+ b7e86000-b7e88000 rw-p 000e5000 08:08 790304
+ /usr/lib/libstdc++.so.6.0.10
+ b7e88000-b7e8e000 rw-p b7e88000 00:00 0
+ b7ea4000-b7ea5000 rw-p b7ea4000 00:00 0
+ b7ea5000-b7ec2000 r-xp 00000000 08:0f 5427333
+ /mnt/media-3/haiku/gcc4/trunk/generated/objects/linux/lib/libroot_build.so
+ b7ec2000-b7ec3000 rw-p 0001d000 08:0f 5427333
+ /mnt/media-3/haiku/gcc4/trunk/generated/objects/linux/lib/libroot_build.so
+ b7ec3000-b7f41000 rw-p b7ec3000 00:00 0
+ b7f41000-b7f42000 r-xp b7f41000 00:00 0          [vdso]
+ b7f42000-b7f5c000 r-xp 00000000 08:08 1205382    /lib/ld-2.7.so
+ b7f5c000-b7f5e000 rw-p 0001a000 08:08 1205382    /lib/ld-2.7.so
+ bff48000-bff5d000 rw-p bffeb000 00:00 0          [stack]
+ Error: Unexpected end of fs_shell reply. Was still expecting 4 bytes
+ build/scripts/build_haiku_image: line 204: 20456 Przerwane
+ $bfsShell -n $imageOffsetFlags &quot;$imagePath&quot; &gt; /dev/null
+ Installing MIME database ...
+ Error: Failed to open connection to FS shell: Connection refused
+ Error: Failed to open connection to FS shell: Connection refused
+ Unmounting ...
+ Error: Failed to open connection to FS shell: Connection refused
+ Error: Failed to open connection to FS shell: Connection refused
+ }}}
+
+ r29078 configured
+ {{{
+ ./configure --build-cross-tools-gcc4 x86 ../buildtools --include-3rdparty
+ --enable-multiuser --use-gcc-pipe
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3381">http://dev.haiku-os.org/ticket/3381</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="014106.html">[Haiku-bugs] [Haiku] #2764: Scrambled video with intel i865 with r26762 and up
+</A></li>
+	<LI>Next message: <A HREF="014108.html">[Haiku-bugs] [Haiku] #3381: bfs_shell crash on disk full
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14107">[ date ]</a>
+              <a href="thread.html#14107">[ thread ]</a>
+              <a href="subject.html#14107">[ subject ]</a>
+              <a href="author.html#14107">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

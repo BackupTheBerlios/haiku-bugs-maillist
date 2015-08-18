@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1281: MediaPlayer refuses to quit
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231281%3A%20MediaPlayer%20refuses%20to%20quit&In-Reply-To=%3C045.6a70bf1955d7d8325c02c2259581067c%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001703.html">
+   <LINK REL="Next"  HREF="001705.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1281: MediaPlayer refuses to quit</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231281%3A%20MediaPlayer%20refuses%20to%20quit&In-Reply-To=%3C045.6a70bf1955d7d8325c02c2259581067c%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1281: MediaPlayer refuses to quit">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Jun 24 06:40:48 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001703.html">[Haiku-bugs] [Haiku] #879: [kernel] Haiku reboots on	MediaPlayer launch
+</A></li>
+        <LI>Next message: <A HREF="001705.html">[Haiku-bugs] [Haiku] #1281: MediaPlayer refuses to quit
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1704">[ date ]</a>
+              <a href="thread.html#1704">[ thread ]</a>
+              <a href="subject.html#1704">[ subject ]</a>
+              <a href="author.html#1704">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1281: MediaPlayer refuses to quit
+----------------------------------------+-----------------------------------
+ Reporter:  leavengood                  |       Owner:  stippi        
+     Type:  bug                         |      Status:  new           
+ Priority:  normal                      |   Milestone:  R1            
+Component:  - Applications/MediaPlayer  |     Version:  R1 development
+ Platform:  All                         |  
+----------------------------------------+-----------------------------------
+ Selecting Quit from the MediaPlayer menu does nothing. Selecting Close All
+ from Deskbar does nothing. Selecting Close from the MediaPlayer menu
+ closes the window but leaves the app running. Then selecting Quit
+ Application from the DeskBar will finally quit. If you try to shutdown or
+ restart Haiku when MediaPlayer is running it will abort the shutdown
+ process. If you send QUIT with hey to MediaPlayer it returns false.
+
+ I've looked at the code and the window closing code is a bit confusing.
+ The MediaPlayer application class does not implement QuitRequested and I
+ think the version from BApplication is not playing well with the rest of
+ MediaPlayer. I may get around to fixing this but wanted to log a bug
+ first.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1281">http://dev.haiku-os.org/ticket/1281</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001703.html">[Haiku-bugs] [Haiku] #879: [kernel] Haiku reboots on	MediaPlayer launch
+</A></li>
+	<LI>Next message: <A HREF="001705.html">[Haiku-bugs] [Haiku] #1281: MediaPlayer refuses to quit
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1704">[ date ]</a>
+              <a href="thread.html#1704">[ thread ]</a>
+              <a href="subject.html#1704">[ subject ]</a>
+              <a href="author.html#1704">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

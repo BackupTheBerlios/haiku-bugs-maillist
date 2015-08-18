@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3334: radeon driver crashes on radeon x850
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-January/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233334%3A%20radeon%20driver%20crashes%20on%20radeon%20x850&In-Reply-To=%3C040.da2a5d34c1b9ebb27872afe8b2547f75%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="013830.html">
+   <LINK REL="Next"  HREF="013846.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3334: radeon driver crashes on radeon x850</H1>
+    <B>adamk</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233334%3A%20radeon%20driver%20crashes%20on%20radeon%20x850&In-Reply-To=%3C040.da2a5d34c1b9ebb27872afe8b2547f75%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3334: radeon driver crashes on radeon x850">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Jan 20 12:43:40 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="013830.html">[Haiku-bugs] [Haiku] #2197: KDL when starting Firefox
+</A></li>
+        <LI>Next message: <A HREF="013846.html">[Haiku-bugs] [Haiku] #3334: radeon driver crashes on radeon x850
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13832">[ date ]</a>
+              <a href="thread.html#13832">[ thread ]</a>
+              <a href="subject.html#13832">[ subject ]</a>
+              <a href="author.html#13832">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3334: radeon driver crashes on radeon x850
+---------------------+------------------------------------------------------
+ Reporter:  adamk    |       Owner:  axeld         
+     Type:  bug      |      Status:  new           
+ Priority:  normal   |   Milestone:  R1            
+Component:  Drivers  |     Version:  R1 development
+Blockedby:           |    Platform:  x86           
+ Blocking:           |  
+---------------------+------------------------------------------------------
+ Running Haiku on native hardware (a dualcore Xeon with 2 gigs of RAM).
+ The radeon driver crashes during the final stages of of the boot process.
+ I can see the mouse cursor, but the screen is completely corrupted.  The
+ debug log shows:
+
+ Radeon - SYNC_TO_TOKEN: Failed waiting for token 8 (active token: 0)
+ Radeon - Radeon_ResetEngine:
+ Radeon - SYNC_TO_TOKEN: Failed waiting for token 11 (active token: 0)
+ Radeon - Radeon_ResetEngine:
+ Radeon - Radeon_DiscardAllIndirectBuffers: 3
+ Radeon - Radeon_DiscardAllIndirectBuffers: 4
+ Radeon - SYNC_TO_TOKEN: Failed waiting for token 11 (active token: 0)
+ Radeon - Radeon_ResetEngine:
+ Radeon - SYNC_TO_TOKEN: Failed waiting for token 14 (active token: 0)
+ Radeon - Radeon_ResetEngine:
+ Radeon - Radeon_DiscardAllIndirectBuffers: 4
+ Radeon - Radeon_DiscardAllIndirectBuffers: 3
+
+ This continues indefinitely.  The token increases each time (by 3)
+
+ This is with haiku-pre-alpha-r28886-raw.zip
+
+ I've built a newer version from svn and will try it out shortly.
+
+ Adam
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3334">http://dev.haiku-os.org/ticket/3334</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="013830.html">[Haiku-bugs] [Haiku] #2197: KDL when starting Firefox
+</A></li>
+	<LI>Next message: <A HREF="013846.html">[Haiku-bugs] [Haiku] #3334: radeon driver crashes on radeon x850
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13832">[ date ]</a>
+              <a href="thread.html#13832">[ thread ]</a>
+              <a href="subject.html#13832">[ subject ]</a>
+              <a href="author.html#13832">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

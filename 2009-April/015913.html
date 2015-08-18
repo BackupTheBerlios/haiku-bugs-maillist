@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3731: Font preflet using Layout engine
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233731%3A%20Font%20preflet%20using%20Layout%20engine&In-Reply-To=%3C041.e0f4d579835c56a37bd2a983def5082d%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="015912.html">
+   <LINK REL="Next"  HREF="015918.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3731: Font preflet using Layout engine</H1>
+    <B>stpere</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233731%3A%20Font%20preflet%20using%20Layout%20engine&In-Reply-To=%3C041.e0f4d579835c56a37bd2a983def5082d%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3731: Font preflet using Layout engine">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Apr 10 01:36:59 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="015912.html">[Haiku-bugs] [Haiku] #3376: [easy] I want this and that added	to Haiku ; )
+</A></li>
+        <LI>Next message: <A HREF="015918.html">[Haiku-bugs] [Haiku] #3731: Font preflet using Layout engine
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15913">[ date ]</a>
+              <a href="thread.html#15913">[ thread ]</a>
+              <a href="subject.html#15913">[ subject ]</a>
+              <a href="author.html#15913">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3731: Font preflet using Layout engine
+-------------------------+--------------------------------------------------
+ Reporter:  stpere       |       Owner:  axeld         
+     Type:  enhancement  |      Status:  new           
+ Priority:  normal       |   Milestone:  R1            
+Component:  Preferences  |     Version:  R1 development
+Blockedby:               |    Platform:  All           
+ Blocking:               |  
+-------------------------+--------------------------------------------------
+ I experienced some bug/bad behaviour using the font preflet and decided to
+ fix it.
+
+ Here are the changes that I made :
+
+ * It's now using the layout engine (there was some clipping when using big
+ fonts that prevented going back to a smaller font)[[BR]]
+
+ * The &quot;Defaults&quot; button wouldn't be activated here by changing the menu
+ font. I fixed that. The function to get the default for menu font was
+ wrong, it did return a BAD_VALUE (that font isn't like the others).[[BR]]
+
+ * The Revert wouldn't work in all cases. The fSavedFont (it's used to know
+ what to revert to) was saved too soon.  We were saving the saved font at
+ the view creation, but it was changed right after that and used the
+ changed one for display (but still had the old one saved).. I did move the
+ saving right after the modification and it works now.[[BR]]
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3731">http://dev.haiku-os.org/ticket/3731</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="015912.html">[Haiku-bugs] [Haiku] #3376: [easy] I want this and that added	to Haiku ; )
+</A></li>
+	<LI>Next message: <A HREF="015918.html">[Haiku-bugs] [Haiku] #3731: Font preflet using Layout engine
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15913">[ date ]</a>
+              <a href="thread.html#15913">[ thread ]</a>
+              <a href="subject.html#15913">[ subject ]</a>
+              <a href="author.html#15913">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

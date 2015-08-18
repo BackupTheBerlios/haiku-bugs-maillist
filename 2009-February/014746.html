@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3496: r29341 build broken on /haiku/trunk/src/system/kernel/fs/vfs.cpp because of multiple parameters of attr_write_stat() with the same name
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-February/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233496%3A%20r29341%20build%20broken%20on%0A%20/haiku/trunk/src/system/kernel/fs/vfs.cpp%20because%20of%20multiple%20parameters%20of%0A%20attr_write_stat%28%29%20with%20the%20same%20name&In-Reply-To=%3C041.0c6f0df2d2bce93586891207df54d979%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="014745.html">
+   <LINK REL="Next"  HREF="014753.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3496: r29341 build broken on /haiku/trunk/src/system/kernel/fs/vfs.cpp because of multiple parameters of attr_write_stat() with the same name</H1>
+    <B>iFrodo</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233496%3A%20r29341%20build%20broken%20on%0A%20/haiku/trunk/src/system/kernel/fs/vfs.cpp%20because%20of%20multiple%20parameters%20of%0A%20attr_write_stat%28%29%20with%20the%20same%20name&In-Reply-To=%3C041.0c6f0df2d2bce93586891207df54d979%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3496: r29341 build broken on /haiku/trunk/src/system/kernel/fs/vfs.cpp because of multiple parameters of attr_write_stat() with the same name">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Feb 28 00:45:22 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="014745.html">[Haiku-bugs] [Haiku] #2083: EHCI bus hanging at boot.
+</A></li>
+        <LI>Next message: <A HREF="014753.html">[Haiku-bugs] [Haiku] #3496: r29341 build broken on /haiku/trunk/src/system/kernel/fs/vfs.cpp because of multiple parameters of attr_write_stat() with the same name
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14746">[ date ]</a>
+              <a href="thread.html#14746">[ thread ]</a>
+              <a href="subject.html#14746">[ subject ]</a>
+              <a href="author.html#14746">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3496: r29341 build broken on /haiku/trunk/src/system/kernel/fs/vfs.cpp because of
+multiple parameters of attr_write_stat() with the same name
+---------------------------+------------------------------------------------
+ Reporter:  iFrodo         |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1 development
+Blockedby:                 |    Platform:  All           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+ This ticket will not last very long as the fix is pretty obvious, but I
+ file it anyway;
+
+ On line 483 of ''/haiku/trunk/src/system/kernel/fs/vfs.cpp'',
+ ''attr_write_stat()'' is defined as follow on r29341:
+
+
+ {{{
+ static status_t attr_write_stat(struct file_descriptor* descriptor,
+         const struct stat* descriptor, int statMask);
+ }}}
+
+
+ As you can see, the two first parameters are named &quot;descriptor&quot;.
+
+ The fix is then obvious, just name one of them differently, example:
+
+
+ {{{
+ static status_t attr_write_stat(struct file_descriptor* descriptor,
+         const struct stat* descriptor2, int statMask);
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3496">http://dev.haiku-os.org/ticket/3496</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="014745.html">[Haiku-bugs] [Haiku] #2083: EHCI bus hanging at boot.
+</A></li>
+	<LI>Next message: <A HREF="014753.html">[Haiku-bugs] [Haiku] #3496: r29341 build broken on /haiku/trunk/src/system/kernel/fs/vfs.cpp because of multiple parameters of attr_write_stat() with the same name
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14746">[ date ]</a>
+              <a href="thread.html#14746">[ thread ]</a>
+              <a href="subject.html#14746">[ subject ]</a>
+              <a href="author.html#14746">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

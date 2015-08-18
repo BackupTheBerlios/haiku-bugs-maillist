@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3411: Programs that call setbuf(fp,	NULL) dump core
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-February/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233411%3A%20Programs%20that%20call%20setbuf%28fp%2C%0A%09NULL%29%20dump%20core&In-Reply-To=%3C050.3d1a4ad25d8a7177e8becd3ddec46ff6%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="014261.html">
+   <LINK REL="Next"  HREF="014307.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3411: Programs that call setbuf(fp,	NULL) dump core</H1>
+    <B>korli</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233411%3A%20Programs%20that%20call%20setbuf%28fp%2C%0A%09NULL%29%20dump%20core&In-Reply-To=%3C050.3d1a4ad25d8a7177e8becd3ddec46ff6%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3411: Programs that call setbuf(fp,	NULL) dump core">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Feb  5 23:42:00 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="014261.html">[Haiku-bugs] [Haiku] #3411: Programs that call setbuf(fp,	NULL) dump core
+</A></li>
+        <LI>Next message: <A HREF="014307.html">[Haiku-bugs] [Haiku] #3411: Programs that call setbuf(fp,	NULL) dump core
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14286">[ date ]</a>
+              <a href="thread.html#14286">[ thread ]</a>
+              <a href="subject.html#14286">[ subject ]</a>
+              <a href="author.html#14286">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3411: Programs that call setbuf(fp, NULL) dump core
+-----------------------+----------------------------------------------------
+ Reporter:  schily     |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+Blockedby:             |    Platform:  All           
+ Blocking:             |  
+-----------------------+----------------------------------------------------
+
+Comment(by korli):
+
+ Here is a stacktrace with smake:
+ {{{
+ vm_soft_fault: va 0x0 not covered by area in address space
+ vm_page_fault: vm_soft_fault returned error 'Bad address' on fault at 0x0,
+ ip 0x0, write 0, user 1, thread 0x2485
+ vm_page_fault: thread &quot;smake&quot; (9349) in team &quot;smake&quot; (9349) tried to read
+ address 0x0, ip 0x0 (&quot;???&quot; +0x0)
+ debug_server: Thread 9349 entered the debugger: Segment violation
+ stack trace, current PC (nil)  :
+   (0x7ffeee4c)  0x26b220  setbuf + 0x28
+   (0x7ffeee7c)  0x210691  _fcons + 0x71
+   (0x7ffeeeac)  0x21060c  fileopen + 0x6c
+   (0x7ffeeedc)  0x2066c0  readfile + 0x80
+   (0x7ffeef0c)  0x20350a  read_makefiles + 0xf2
+   (0x7ffeef4c)  0x204404  main + 0x37c
+   (0x7ffeef7c)  0x202f4f  _start + 0x5b
+   (0x7ffeefac)  0x10090a  runtime_loader + 0x14a
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3411#comment:1">http://dev.haiku-os.org/ticket/3411#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="014261.html">[Haiku-bugs] [Haiku] #3411: Programs that call setbuf(fp,	NULL) dump core
+</A></li>
+	<LI>Next message: <A HREF="014307.html">[Haiku-bugs] [Haiku] #3411: Programs that call setbuf(fp,	NULL) dump core
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14286">[ date ]</a>
+              <a href="thread.html#14286">[ thread ]</a>
+              <a href="subject.html#14286">[ subject ]</a>
+              <a href="author.html#14286">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

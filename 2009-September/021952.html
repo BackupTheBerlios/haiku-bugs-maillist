@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4620: Some Xvid files don't play in	MediaPlayer
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234620%3A%20Some%20Xvid%20files%20don%27t%20play%20in%0A%09MediaPlayer&In-Reply-To=%3C050.2459d9245f167a4fa1ddcb642c4809b5%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="021939.html">
+   <LINK REL="Next"  HREF="021981.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4620: Some Xvid files don't play in	MediaPlayer</H1>
+    <B>leszek</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234620%3A%20Some%20Xvid%20files%20don%27t%20play%20in%0A%09MediaPlayer&In-Reply-To=%3C050.2459d9245f167a4fa1ddcb642c4809b5%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4620: Some Xvid files don't play in	MediaPlayer">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Sep 24 18:28:06 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="021939.html">[Haiku-bugs] [Haiku] #4620: Some Xvid files don't play in	MediaPlayer
+</A></li>
+        <LI>Next message: <A HREF="021981.html">[Haiku-bugs] [Haiku] #4620: Some Xvid files don't play in	MediaPlayer
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21952">[ date ]</a>
+              <a href="thread.html#21952">[ thread ]</a>
+              <a href="subject.html#21952">[ subject ]</a>
+              <a href="author.html#21952">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4620: Some Xvid files don't play in MediaPlayer
+----------------------------------+-----------------------------------------
+ Reporter:  leszek                |       Owner:  dlmcpaul 
+     Type:  bug                   |      Status:  new      
+ Priority:  normal                |   Milestone:  R1       
+Component:  Audio &amp; Video/Codecs  |     Version:  R1/alpha1
+Blockedby:                        |    Platform:  All      
+ Blocking:                        |  
+----------------------------------+-----------------------------------------
+
+Comment(by leszek):
+
+ Hmm... ok [[BR]]
+ I fixed now my ffmpeg and libmp3lame installation (and those of ZEVENOS)
+ so that I will have valid files in the future. But I am still guessing
+ that there are some distros and encoding apps that use the buggy
+ libmp3lame and ffmpeg to encode their videos. (Didn't test the builds for
+ haiku)
+ [[BR]]
+ Another topic (maybe I should open up a new bug) OGV container format
+ seems to be supported but only audio is playing.
+ Here's the file info (ffmpeg -i): [[BR]]
+
+ {{{
+ Input #0, ogg, from '/leszek/Videos/Screencasts/custom-usplash.ogv':
+   Duration: 00:20:55.20, start: 0.000000, bitrate: 260 kb/s
+     Stream #0.0: Invalid Codec type -1
+     Stream #0.1: Video: theora, yuv420p, 720x480, PAR 1:1 DAR 3:2, 15 tbr,
+ 15 tbn, 15 tbc
+     Stream #0.2: Audio: vorbis, 44100 Hz, 2 channels, s16, 80 kb/s
+   Metadata
+     ENCODER         : ffmpeg2theora 0.21
+ }}}
+ Hope this helps for debugging. What is intersting is Stream #0.0 that is
+ recognized as invalid. I am not sure but I heard something about skeleton'
+ meta-data that is stored there.
+ The theora video decoder is still missing I suppose, so on normal ogg
+ files (with video) only audio playback starts. [[BR]]
+ [[BR]]
+ Another interesting file I found is here
+ [<A HREF="http://rapidshare.com/files/143692472/mtv.video.music.awards.2008.dsr.xvid">http://rapidshare.com/files/143692472/mtv.video.music.awards.2008.dsr.xvid</A>
+ .sample-sys.avi]. It says xvid sample movie.
+ I analyzed it with ffmpeg -i again and thats what appears:
+
+ {{{
+ Input #0, avi, from
+ '/media/disk/Videos/mtv.video.music.awards.2008.dsr.xvid.sample-sys.avi':
+   Duration: 00:01:04.63, start: 0.000000, bitrate: 1213 kb/s
+     Stream #0.0: Video: mpeg4, yuv420p, 512x384 [PAR 1:1 DAR 4:3], 29.97
+ tbr, 29.97 tbn, 29.97 tbc
+     Stream #0.1: Audio: mp3, 48000 Hz, 2 channels, s16, 127 kb/s
+ }}}
+ So I guess its a mpeg4 codec not libxvid or xvid. Only audio is playing
+ when opening that video.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4620#comment:9">http://dev.haiku-os.org/ticket/4620#comment:9</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="021939.html">[Haiku-bugs] [Haiku] #4620: Some Xvid files don't play in	MediaPlayer
+</A></li>
+	<LI>Next message: <A HREF="021981.html">[Haiku-bugs] [Haiku] #4620: Some Xvid files don't play in	MediaPlayer
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21952">[ date ]</a>
+              <a href="thread.html#21952">[ thread ]</a>
+              <a href="subject.html#21952">[ subject ]</a>
+              <a href="author.html#21952">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

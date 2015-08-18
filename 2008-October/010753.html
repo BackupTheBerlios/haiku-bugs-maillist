@@ -1,0 +1,190 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2799: Mesa Software Renderer crash with SSE optimization enabled
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232799%3A%20Mesa%20Software%20Renderer%20crash%20with%0A%20SSE%20optimization%20enabled&In-Reply-To=%3C052.6dce149e32d8f8cbceb6c7ea5736c60c%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010752.html">
+   <LINK REL="Next"  HREF="010755.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2799: Mesa Software Renderer crash with SSE optimization enabled</H1>
+    <B>phoudoin</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232799%3A%20Mesa%20Software%20Renderer%20crash%20with%0A%20SSE%20optimization%20enabled&In-Reply-To=%3C052.6dce149e32d8f8cbceb6c7ea5736c60c%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2799: Mesa Software Renderer crash with SSE optimization enabled">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Oct  4 15:56:03 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010752.html">[Haiku-bugs] [Haiku] #2799: Mesa Software Renderer crash with SSE optimization enabled
+</A></li>
+        <LI>Next message: <A HREF="010755.html">[Haiku-bugs] [Haiku] #2800: TemplateNotFound: Template	&quot;search.html&quot; not found
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10753">[ date ]</a>
+              <a href="thread.html#10753">[ thread ]</a>
+              <a href="subject.html#10753">[ subject ]</a>
+              <a href="author.html#10753">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2799: Mesa Software Renderer crash with SSE optimization enabled
+------------------------+---------------------------------------------------
+  Reporter:  phoudoin   |       Owner:  axeld         
+      Type:  bug        |      Status:  new           
+  Priority:  normal     |   Milestone:  R1            
+ Component:  - General  |     Version:  R1 development
+Resolution:             |   Blockedby:                
+  Platform:  All        |    Blocking:                
+------------------------+---------------------------------------------------
+
+Comment(by phoudoin):
+
+ Complete GDB log and faulty code disassembly:
+
+ {{{
+ GNU gdb 6.3
+ Copyright 2004 Free Software Foundation, Inc.
+ GDB is free software, covered by the GNU General Public License, and you
+ are
+ welcome to change it and/or distribute copies of it under certain
+ conditions.
+ Type &quot;show copying&quot; to see the conditions.
+ There is absolutely no warranty for GDB.  Type &quot;show warranty&quot; for
+ details.
+ This GDB was configured as &quot;i586-pc-haiku&quot;...(no debugging symbols found)
+
+ [tcsetpgrp failed in terminal_inferior: Invalid Argument]
+ Thread 334 caused an exception: Invalid opcode exception
+ Reading symbols from /boot/beos/system/runtime_loader...done.
+ Loaded symbols for /boot/beos/system/runtime_loader
+ Reading symbols from /boot/beos/system/lib/libbe.so...done.
+ Loaded symbols for /boot/beos/system/lib/libbe.so
+ Reading symbols from /boot/beos/system/lib/libgame.so...done.
+ Loaded symbols for /boot/beos/system/lib/libgame.so
+ Reading symbols from /boot/beos/system/lib/libGL.so...done.
+ Loaded symbols for /boot/beos/system/lib/libGL.so
+ Reading symbols from /boot/beos/system/lib/libroot.so...done.
+ Loaded symbols for /boot/beos/system/lib/libroot.so
+ Reading symbols from /boot/beos/system/lib/libstdc++.r4.so...done.
+ Loaded symbols for /boot/beos/system/lib/libstdc++.r4.so
+ Reading symbols from /boot/beos/system/lib/libmedia.so...done.
+ Loaded symbols for /boot/beos/system/lib/libmedia.so
+ Reading symbols from /boot/beos/system/add-ons/opengl/Mesa Software
+ Renderer...done.
+ Loaded symbols for /boot/beos/system/add-ons/opengl/Mesa Software Renderer
+ [tcsetpgrp failed in terminal_inferior: Invalid Argument]
+ [Switching to team /boot/beos/demos/GLDirectMode (334) thread GLDirectMode
+ (334)]
+ 0x00846e20 in _mesa_sse_transform_points3_general ()
+    from /boot/beos/system/add-ons/opengl/Mesa Software Renderer
+ (gdb) disassemble
+ Dump of assembler code for function _mesa_sse_transform_points3_general:
+ 0x00846de0 &lt;_mesa_sse_transform_points3_general+0&gt;:     push   %esi
+ 0x00846de1 &lt;_mesa_sse_transform_points3_general+1&gt;:     push   %edi
+ 0x00846de2 &lt;_mesa_sse_transform_points3_general+2&gt;:     mov
+ 0x14(%esp),%esi
+ 0x00846de6 &lt;_mesa_sse_transform_points3_general+6&gt;:     mov
+ 0xc(%esp),%edi
+ 0x00846dea &lt;_mesa_sse_transform_points3_general+10&gt;:    mov
+ 0x10(%esp),%edx
+ 0x00846dee &lt;_mesa_sse_transform_points3_general+14&gt;:    mov
+ 0x8(%esi),%ecx
+ 0x00846df1 &lt;_mesa_sse_transform_points3_general+17&gt;:    cmp    $0x0,%ecx
+ 0x00846df4 &lt;_mesa_sse_transform_points3_general+20&gt;:    je     0x846e78
+ &lt;_mesa_sse_transform_points3_general+152&gt;
+ 0x00846dfa &lt;_mesa_sse_transform_points3_general+26&gt;:    mov
+ 0xc(%esi),%eax
+ 0x00846dfd &lt;_mesa_sse_transform_points3_general+29&gt;:    orl
+ $0xf,0x14(%edi)
+ 0x00846e01 &lt;_mesa_sse_transform_points3_general+33&gt;:    mov
+ %ecx,0x8(%edi)
+ 0x00846e04 &lt;_mesa_sse_transform_points3_general+36&gt;:    movl
+ $0x4,0x10(%edi)
+ 0x00846e0b &lt;_mesa_sse_transform_points3_general+43&gt;:    shl    $0x4,%ecx
+ 0x00846e0e &lt;_mesa_sse_transform_points3_general+46&gt;:    mov
+ 0x4(%esi),%esi
+ 0x00846e11 &lt;_mesa_sse_transform_points3_general+49&gt;:    mov
+ 0x4(%edi),%edi
+ 0x00846e14 &lt;_mesa_sse_transform_points3_general+52&gt;:    add    %edi,%ecx
+ 0x00846e16 &lt;_mesa_sse_transform_points3_general+54&gt;:    lea
+ 0x0(%esi),%esi
+ 0x00846e19 &lt;_mesa_sse_transform_points3_general+57&gt;:    lea
+ 0x0(%edi),%edi
+ 0x00846e20 &lt;_mesa_sse_transform_points3_general+64&gt;:    movaps
+ (%edx),%xmm0
+ 0x00846e23 &lt;_mesa_sse_transform_points3_general+67&gt;:    movaps
+ 0x10(%edx),%xmm1
+ 0x00846e27 &lt;_mesa_sse_transform_points3_general+71&gt;:    movaps
+ 0x20(%edx),%xmm2
+ 0x00846e2b &lt;_mesa_sse_transform_points3_general+75&gt;:    movaps
+ 0x30(%edx),%xmm3
+ ---Type &lt;return&gt; to continue, or q &lt;return&gt; to quit---
+ 0x00846e2f &lt;_mesa_sse_transform_points3_general+79&gt;:    nop
+ 0x00846e30 &lt;_mesa_sse_transform_points3_general+80&gt;:    nop
+ 0x00846e31 &lt;_mesa_sse_transform_points3_general+81&gt;:    nop
+ 0x00846e32 &lt;_mesa_sse_transform_points3_general+82&gt;:    nop
+ 0x00846e33 &lt;_mesa_sse_transform_points3_general+83&gt;:    nop
+ 0x00846e34 &lt;_mesa_sse_transform_points3_general+84&gt;:    nop
+ 0x00846e35 &lt;_mesa_sse_transform_points3_general+85&gt;:    nop
+ 0x00846e36 &lt;_mesa_sse_transform_points3_general+86&gt;:    nop
+ 0x00846e37 &lt;_mesa_sse_transform_points3_general+87&gt;:    nop
+ 0x00846e38 &lt;_mesa_sse_transform_points3_general+88&gt;:    nop
+ 0x00846e39 &lt;_mesa_sse_transform_points3_general+89&gt;:    nop
+ 0x00846e3a &lt;_mesa_sse_transform_points3_general+90&gt;:    nop
+ 0x00846e3b &lt;_mesa_sse_transform_points3_general+91&gt;:    nop
+ 0x00846e3c &lt;_mesa_sse_transform_points3_general+92&gt;:    nop
+ 0x00846e3d &lt;_mesa_sse_transform_points3_general+93&gt;:    nop
+ 0x00846e3e &lt;_mesa_sse_transform_points3_general+94&gt;:    nop
+ 0x00846e3f &lt;_mesa_sse_transform_points3_general+95&gt;:    nop
+ 0x00846e40 &lt;_mesa_sse_transform_points3_general+96&gt;:    movss
+ (%esi),%xmm4
+ 0x00846e44 &lt;_mesa_sse_transform_points3_general+100&gt;:   shufps
+ $0x0,%xmm4,%xmm4
+ 0x00846e48 &lt;_mesa_sse_transform_points3_general+104&gt;:   movss
+ 0x4(%esi),%xmm5
+ 0x00846e4d &lt;_mesa_sse_transform_points3_general+109&gt;:   shufps
+ $0x0,%xmm5,%xmm5
+ 0x00846e51 &lt;_mesa_sse_transform_points3_general+113&gt;:   movss
+ 0x8(%esi),%xmm6
+ 0x00846e56 &lt;_mesa_sse_transform_points3_general+118&gt;:   shufps
+ $0x0,%xmm6,%xmm6
+ 0x00846e5a &lt;_mesa_sse_transform_points3_general+122&gt;:   mulps  %xmm0,%xmm4
+ ---Type &lt;return&gt; to continue, or q &lt;return&gt; to quit---
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2799#comment:1">http://dev.haiku-os.org/ticket/2799#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010752.html">[Haiku-bugs] [Haiku] #2799: Mesa Software Renderer crash with SSE optimization enabled
+</A></li>
+	<LI>Next message: <A HREF="010755.html">[Haiku-bugs] [Haiku] #2800: TemplateNotFound: Template	&quot;search.html&quot; not found
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10753">[ date ]</a>
+              <a href="thread.html#10753">[ thread ]</a>
+              <a href="subject.html#10753">[ subject ]</a>
+              <a href="author.html#10753">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3810: Segment violation in tgetent() call in ncurses implementation.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233810%3A%20Segment%20violation%20in%20tgetent%28%29%20call%20in%0A%20ncurses%20implementation.&In-Reply-To=%3C043.1c564794c21d1400b7632ba25b7610bb%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="016514.html">
+   <LINK REL="Next"  HREF="016516.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3810: Segment violation in tgetent() call in ncurses implementation.</H1>
+    <B>siarzhuk</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233810%3A%20Segment%20violation%20in%20tgetent%28%29%20call%20in%0A%20ncurses%20implementation.&In-Reply-To=%3C043.1c564794c21d1400b7632ba25b7610bb%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3810: Segment violation in tgetent() call in ncurses implementation.">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Apr 23 21:29:41 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="016514.html">[Haiku-bugs] [Haiku] #2817: setpriority and getpriority are missing to compile ocaml out of the box under Haiku
+</A></li>
+        <LI>Next message: <A HREF="016516.html">[Haiku-bugs] [Haiku] #3547: cc fails when compiling	bfs_disk_system.cpp
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16515">[ date ]</a>
+              <a href="thread.html#16515">[ thread ]</a>
+              <a href="subject.html#16515">[ subject ]</a>
+              <a href="author.html#16515">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3810: Segment violation in tgetent() call in ncurses implementation.
+-----------------------+----------------------------------------------------
+ Reporter:  siarzhuk   |       Owner:  axeld
+     Type:  bug        |      Status:  new  
+ Priority:  normal     |   Milestone:       
+Component:  - General  |     Version:       
+Blockedby:             |    Platform:  All  
+ Blocking:             |  
+-----------------------+----------------------------------------------------
+ Following program, compiled with libncurses, produce segment violation
+ error during run:
+
+ {{{
+ #include &lt;termcap.h&gt;
+ int main(int argc, char** argv)
+ {
+         char bp[2048] = {0};
+         return tgetent(bp, &quot;beos-ansi&quot;);
+ }
+ }}}
+
+ Stack backtrace:
+
+ {{{
+ Program received signal SIGSEGV, Segmentation fault.
+ 0x002b18b9 in strchr () from /boot/system/lib/libroot.so
+ (gdb) bt
+ #0  0x002b18b9 in strchr () from /boot/system/lib/libroot.so
+ #1  0x0020f977 in force_bar ()
+ #2  0x0020fa27 in _nc_entry_match ()
+ #3  0x0020fcc6 in _nc_resolve_uses2 ()
+ #4  0x0020ee5c in _nc_read_termcap_entry ()
+ #5  0x0020b665 in grab_entry ()
+ #6  0x0020bb43 in _nc_setupterm ()
+ #7  0x00209e46 in tgetent ()
+ #8  0x00209df2 in main ()
+ }}}
+
+ The History: This problem was found during porting vim 7.2 to Haiku. It
+ was observed after the start of the application from the Tracker. Normal
+ call of vim in Terminal was ok. Was resolved in vim by changing default
+ terminal from &quot;beos-ansi&quot; to &quot;xterm&quot;.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3810">http://dev.haiku-os.org/ticket/3810</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="016514.html">[Haiku-bugs] [Haiku] #2817: setpriority and getpriority are missing to compile ocaml out of the box under Haiku
+</A></li>
+	<LI>Next message: <A HREF="016516.html">[Haiku-bugs] [Haiku] #3547: cc fails when compiling	bfs_disk_system.cpp
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16515">[ date ]</a>
+              <a href="thread.html#16515">[ thread ]</a>
+              <a href="subject.html#16515">[ subject ]</a>
+              <a href="author.html#16515">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

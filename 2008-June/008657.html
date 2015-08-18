@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2461: PC reboots during copying files (new onto old revision on seperate partition)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232461%3A%20PC%20reboots%20during%20copying%20files%0A%20%28new%20onto%20old%20revision%20on%20seperate%20partition%29&In-Reply-To=%3C053.62588ad8ad437942b25af2124b1f602d%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008621.html">
+   <LINK REL="Next"  HREF="008658.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2461: PC reboots during copying files (new onto old revision on seperate partition)</H1>
+    <B>Bouncer</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232461%3A%20PC%20reboots%20during%20copying%20files%0A%20%28new%20onto%20old%20revision%20on%20seperate%20partition%29&In-Reply-To=%3C053.62588ad8ad437942b25af2124b1f602d%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2461: PC reboots during copying files (new onto old revision on seperate partition)">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Jun 30 06:31:36 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008621.html">[Haiku-bugs] [Haiku] #2461: PC reboots during copying files (new onto old revision on seperate partition)
+</A></li>
+        <LI>Next message: <A HREF="008658.html">[Haiku-bugs] [Haiku] #2461: PC reboots during copying files (new onto old revision on seperate partition)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8657">[ date ]</a>
+              <a href="thread.html#8657">[ thread ]</a>
+              <a href="subject.html#8657">[ subject ]</a>
+              <a href="author.html#8657">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2461: PC reboots during copying files (new onto old revision on seperate
+partition)
+------------------------+---------------------------------------------------
+  Reporter:  meanwhile  |       Owner:  axeld         
+      Type:  bug        |      Status:  closed        
+  Priority:  normal     |   Milestone:  R1            
+ Component:  - General  |     Version:  R1 development
+Resolution:  invalid    |   Blockedby:                
+  Platform:  All        |    Blocking:                
+------------------------+---------------------------------------------------
+
+Comment(by Bouncer):
+
+ I believe I have experienced this same problem:
+
+ Here are some of my observations. For what they are worth.
+
+ When I first encountered this problem - I got the Beos KDL.
+ With a message like &quot;Panic  ** error cache can't allocate data memory&quot;
+ From the  'MoveTask' thread in the tracker team.
+
+ I then tried increasing the Virtual Memory. It stopped KDL'ing.  Now the
+ BeOS was just hung!
+
+ Then I experimented with Initiallizing the target partition. This was
+ rather interesting.
+
+ Beos really does not like to copy files from the haiku image onto a
+ partition Initiallized with larger block sizes.  I.e.: It likes the target
+ partition to have a 1024 byte block size rather than a 2048 byte block
+ size. Almost never hangs or crashes when using the smaller block size.
+
+ I had initiallized with 2048 byte blocks because thats the 'recommended'
+ size according to haiku's disksetup. But
+
+ I know this is a 'BeoOS' problem.  But are we absolutly sure that a
+ similar problem does not
+ exist in  Haiku?.  If one drags/copies the image files onto another
+ filesystem having a different block size?
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2461#comment:11">http://dev.haiku-os.org/ticket/2461#comment:11</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008621.html">[Haiku-bugs] [Haiku] #2461: PC reboots during copying files (new onto old revision on seperate partition)
+</A></li>
+	<LI>Next message: <A HREF="008658.html">[Haiku-bugs] [Haiku] #2461: PC reboots during copying files (new onto old revision on seperate partition)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8657">[ date ]</a>
+              <a href="thread.html#8657">[ thread ]</a>
+              <a href="subject.html#8657">[ subject ]</a>
+              <a href="author.html#8657">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

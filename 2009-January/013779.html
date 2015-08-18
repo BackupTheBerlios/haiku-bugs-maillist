@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3308: Possible math related issues
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-January/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233308%3A%20Possible%20math%20related%20issues&In-Reply-To=%3C051.a3bc51d87fba9b248c92d2a7dff2aabc%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="013766.html">
+   <LINK REL="Next"  HREF="013826.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3308: Possible math related issues</H1>
+    <B>scottmc</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233308%3A%20Possible%20math%20related%20issues&In-Reply-To=%3C051.a3bc51d87fba9b248c92d2a7dff2aabc%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3308: Possible math related issues">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Jan 19 16:13:22 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="013766.html">[Haiku-bugs] [Haiku] #3308: Possible math related issues
+</A></li>
+        <LI>Next message: <A HREF="013826.html">[Haiku-bugs] [Haiku] #3308: Possible floating point failures in IEEE 754 tests (was: Possible math related issues)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13779">[ date ]</a>
+              <a href="thread.html#13779">[ thread ]</a>
+              <a href="subject.html#13779">[ subject ]</a>
+              <a href="author.html#13779">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3308: Possible math related issues
+-------------------------------+--------------------------------------------
+ Reporter:  scottmc            |       Owner:  axeld         
+     Type:  bug                |      Status:  new           
+ Priority:  normal             |   Milestone:  R1            
+Component:  System/libroot.so  |     Version:  R1 development
+Blockedby:                     |    Platform:  All           
+ Blocking:                     |  
+-------------------------------+--------------------------------------------
+
+Comment(by scottmc):
+
+ Here's a reply from Mark Dickinson on the python mailing list:
+
+ {{{
+ Most of these look like libm/libc precision problems to me,
+ of varying severity.  Some particular comments:
+
+  - the test_float result is worrying: there are a good few places
+   where Python depends on eval(repr(.)) round-tripping for
+   floats, and it looks as though either the eval or the repr
+   is losing significant accuracy.  Actually, there's so much
+   accuracy loss that I wonder whether something's being
+   cast from double precision to single precision at some
+   point.
+
+ - test_decimal failing was a bit of a surprise until I saw
+  which test was failing:  the decimal module quite
+  deliberately does all computation using integer
+  arithmetic, and avoids floating-point like the plague,
+  so it should be ultra-portable.  Except, of course, the
+  recently added from_float method, which converts
+  from floats to decimals.  So fix up the floating-point
+  and test_decimal should pass again.
+
+ - I don't understand where the test_marshall and
+  test_random failures are coming from.  These
+  could be Python problems (though I think it's
+  more likely that they're Haiku floating-point
+  problems).  I'd be interested to see short
+  code-snippets that reproduce these issues.
+
+ - I wouldn't worry so much about the test_math
+  and test_cmath failures until you get the others
+  sorted out;  the tests are probably stricter than
+  they need to be.
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3308#comment:3">http://dev.haiku-os.org/ticket/3308#comment:3</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="013766.html">[Haiku-bugs] [Haiku] #3308: Possible math related issues
+</A></li>
+	<LI>Next message: <A HREF="013826.html">[Haiku-bugs] [Haiku] #3308: Possible floating point failures in IEEE 754 tests (was: Possible math related issues)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13779">[ date ]</a>
+              <a href="thread.html#13779">[ thread ]</a>
+              <a href="subject.html#13779">[ subject ]</a>
+              <a href="author.html#13779">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

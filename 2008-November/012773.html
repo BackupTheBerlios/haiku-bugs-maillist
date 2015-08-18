@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3173: Make query string transformation behave more to expectations
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233173%3A%20Make%20query%20string%20transformation%20behave%0A%20more%20to%20expectations&In-Reply-To=%3C041.ee899bb89871d14776e486491dc121be%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012771.html">
+   <LINK REL="Next"  HREF="012775.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3173: Make query string transformation behave more to expectations</H1>
+    <B>stippi</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233173%3A%20Make%20query%20string%20transformation%20behave%0A%20more%20to%20expectations&In-Reply-To=%3C041.ee899bb89871d14776e486491dc121be%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3173: Make query string transformation behave more to expectations">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Nov 26 10:49:09 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012771.html">[Haiku-bugs] [Haiku] #2998: bcm440x doesn't initialize the NIC
+</A></li>
+        <LI>Next message: <A HREF="012775.html">[Haiku-bugs] [Haiku] #2514: Enlarged Terminal wraps input line overwriting beginning
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12773">[ date ]</a>
+              <a href="thread.html#12773">[ thread ]</a>
+              <a href="subject.html#12773">[ subject ]</a>
+              <a href="author.html#12773">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3173: Make query string transformation behave more to expectations
+----------------------------------+-----------------------------------------
+ Reporter:  stippi                |       Owner:  nobody        
+     Type:  enhancement           |      Status:  new           
+ Priority:  normal                |   Milestone:  Unscheduled   
+Component:  Applications/Tracker  |     Version:  R1 development
+Blockedby:                        |    Platform:  All           
+ Blocking:                        |  
+----------------------------------+-----------------------------------------
+ Users will have build up some experience doing web searches. Therefore,
+ the default/initial mode for Tracker queries should transform the input
+ string in a way that aligns with the expectations built up from using
+ Google and other search engines. To give an example: I knew I must have a
+ song somewhere which contains the words &quot;Love&quot; and &quot;Communication&quot;.
+ Command-F &gt; &quot;Love Communication&quot;, but the search didn't return anything.
+ The query string is as follows:
+ '''(name==&quot;*[lL][oO][vV][eE]
+ [cC][oO][mM][mM][uU][nN][iI][cC][aA][tT][iI][oO][nN]*&quot;)'''
+
+ It should have been this of course:
+
+ '''((name==&quot;*[lL][oO][vV][eE]*&quot;)&amp;&amp;(name==&quot;*[cC][oO][mM][mM][uU][nN][iI][cC][aA][tT][iI][oO][nN]*&quot;))'''
+
+ And that even finds the song.
+
+ Also, as can be seen from the resulting query string, it's really
+ expensive to make the query case insensitive. The FS query capabilities
+ should be more targeted towards these real-world uses and have some in-
+ built support for case-insensitive queries.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3173">http://dev.haiku-os.org/ticket/3173</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012771.html">[Haiku-bugs] [Haiku] #2998: bcm440x doesn't initialize the NIC
+</A></li>
+	<LI>Next message: <A HREF="012775.html">[Haiku-bugs] [Haiku] #2514: Enlarged Terminal wraps input line overwriting beginning
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12773">[ date ]</a>
+              <a href="thread.html#12773">[ thread ]</a>
+              <a href="subject.html#12773">[ subject ]</a>
+              <a href="author.html#12773">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

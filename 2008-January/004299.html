@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1682: AddSourceDirectoryToHaikuImage doesn't work with spaces in file names
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-January/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231682%3A%20AddSourceDirectoryToHaikuImage%0A%20doesn%27t%20work%20with%20spaces%20in%20file%20names&In-Reply-To=%3C050.e8fbd930c475914d863d1a3cae82bcbd%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="004298.html">
+   <LINK REL="Next"  HREF="004300.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1682: AddSourceDirectoryToHaikuImage doesn't work with spaces in file names</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231682%3A%20AddSourceDirectoryToHaikuImage%0A%20doesn%27t%20work%20with%20spaces%20in%20file%20names&In-Reply-To=%3C050.e8fbd930c475914d863d1a3cae82bcbd%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1682: AddSourceDirectoryToHaikuImage doesn't work with spaces in file names">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Jan 15 22:47:13 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="004298.html">[Haiku-bugs] [Haiku] #1682: AddSourceDirectoryToHaikuImage doesn't work with spaces in file names
+</A></li>
+        <LI>Next message: <A HREF="004300.html">[Haiku-bugs] [Haiku] #1130: Implement parse_expression() (KDL	feature)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4299">[ date ]</a>
+              <a href="thread.html#4299">[ thread ]</a>
+              <a href="subject.html#4299">[ subject ]</a>
+              <a href="author.html#4299">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1682: AddSourceDirectoryToHaikuImage doesn't work with spaces in file names
+---------------------------+------------------------------------------------
+  Reporter:  ekdahl        |       Owner:  bonefish      
+      Type:  bug           |      Status:  new           
+  Priority:  normal        |   Milestone:  R1            
+ Component:  Build System  |     Version:  R1 development
+Resolution:                |    Platform:  All           
+---------------------------+------------------------------------------------
+Comment (by bonefish):
+
+ Should be fixed in r23544. Please test.
+
+ Regarding copying test files to the image, you probably already know that
+ you can copy individual files using the AddFilesToHaikuImage rule. Copying
+ directories recursively is not provided by a rule. You can define the
+ build system variable HAIKU_IMAGE_LATE_USER_SCRIPTS to refer to a shell
+ script that will be sourced by the build_haiku_image script. In this
+ script you can customize your image/installation at your heart's desire.
+ E.g. copying a directory to the image would look like this:
+ {{{
+ $cp -r &quot;${sPrefix}/path/to/directory&quot; &quot;${tPrefix}home/whereever&quot;
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1682#comment:5">http://dev.haiku-os.org/ticket/1682#comment:5</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="004298.html">[Haiku-bugs] [Haiku] #1682: AddSourceDirectoryToHaikuImage doesn't work with spaces in file names
+</A></li>
+	<LI>Next message: <A HREF="004300.html">[Haiku-bugs] [Haiku] #1130: Implement parse_expression() (KDL	feature)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4299">[ date ]</a>
+              <a href="thread.html#4299">[ thread ]</a>
+              <a href="subject.html#4299">[ subject ]</a>
+              <a href="author.html#4299">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

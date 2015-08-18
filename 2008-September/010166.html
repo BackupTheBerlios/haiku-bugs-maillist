@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2710: Deadlock between clone_area(), Kernel Area Operation, I/O, and Page Fault
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232710%3A%20Deadlock%20between%20clone_area%28%29%2C%0A%20Kernel%20Area%20Operation%2C%20I/O%2C%20and%20Page%20Fault&In-Reply-To=%3C043.f7f06558b43cc9f659156dd8ff67ea57%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010184.html">
+   <LINK REL="Next"  HREF="010170.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2710: Deadlock between clone_area(), Kernel Area Operation, I/O, and Page Fault</H1>
+    <B>bonefish</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232710%3A%20Deadlock%20between%20clone_area%28%29%2C%0A%20Kernel%20Area%20Operation%2C%20I/O%2C%20and%20Page%20Fault&In-Reply-To=%3C043.f7f06558b43cc9f659156dd8ff67ea57%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2710: Deadlock between clone_area(), Kernel Area Operation, I/O, and Page Fault">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Sep  8 15:32:53 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010184.html">[Haiku-bugs] [Haiku] #2709: [bfs]: rm: FATAL: directory a/a/... changed dev/ino
+</A></li>
+        <LI>Next message: <A HREF="010170.html">[Haiku-bugs] [Haiku] #2711: shell does not restart itself upon &quot;exit&quot; command in safemode
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10166">[ date ]</a>
+              <a href="thread.html#10166">[ thread ]</a>
+              <a href="subject.html#10166">[ subject ]</a>
+              <a href="author.html#10166">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2710: Deadlock between clone_area(), Kernel Area Operation, I/O, and Page Fault
+---------------------------+------------------------------------------------
+ Reporter:  bonefish       |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  high           |   Milestone:  R1/alpha1     
+Component:  System/Kernel  |     Version:  R1 development
+Blockedby:                 |    Platform:  All           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+ r27377
+
+ When cloning a kernel area into userland (as done e.g. by the message
+ deliverer in the registrar) the following deadlock can occur:
+
+  - thread 1: clone_area() read-locks the kernel address space.
+  - thread 2: Some thread wants to create/delete a kernel area. It blocks
+ trying to write-lock the kernel address space.
+  - thread 3 (I/O scheduler notifier): Some sub-I/O-request (e.g. from the
+ block cache) goes through the I/O scheduler and is finished. The notifier
+ thread calls the iteration callback, which creates more subrequests and
+ tries to schedule them. lock_memory() is invoked, which blocks on the
+ kernel address space R/W lock.
+  - thread 4 (team mate of thread 1): Page faults on a mapped file. The
+ page fault handler read-locks the team's address space and tries to read
+ in the page in question. Since the I/O scheduler notifier thread is
+ blocked, this thread blocks too, waiting for the I/O request to finish.
+  - thread 1: clone_area() tries to write lock the team's address space and
+ blocks, since thread 4 has it read-locked.
+
+ To sum it up:
+  - thread 1: blocks trying to write-lock a team's address space (read-
+ locked by thread 4)
+  - thread 2: blocks trying to write-lock the kernel's address space (read-
+ locked by thread 1)
+  - thread 3: blocks trying to read-lock the kernel's address space
+ (waiting writer thread 2)
+  - thread 4: waits for I/O (to be finished by thread 3)
+
+ I've seen this while booting two times already (out of maybe 20 boots). It
+ seems to happen more likely with my soon-to-be-committed optimization to
+ pre-map pages of mapped files.
+
+ A solution would be to drop a team's address space lock while handling a
+ page fault. There's already a TODO to that effect in vm_soft_fault(),
+ though it mentions performance reasons only.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2710">http://dev.haiku-os.org/ticket/2710</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010184.html">[Haiku-bugs] [Haiku] #2709: [bfs]: rm: FATAL: directory a/a/... changed dev/ino
+</A></li>
+	<LI>Next message: <A HREF="010170.html">[Haiku-bugs] [Haiku] #2711: shell does not restart itself upon &quot;exit&quot; command in safemode
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10166">[ date ]</a>
+              <a href="thread.html#10166">[ thread ]</a>
+              <a href="subject.html#10166">[ subject ]</a>
+              <a href="author.html#10166">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

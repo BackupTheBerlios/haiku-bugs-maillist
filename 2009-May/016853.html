@@ -1,0 +1,668 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3859: Files disappear, always the same folder
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233859%3A%20Files%20disappear%2C%20always%20the%20same%20folder&In-Reply-To=%3C041.216d17635db51a3e4ce7bd4a4916ec03%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="016852.html">
+   <LINK REL="Next"  HREF="017080.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3859: Files disappear, always the same folder</H1>
+    <B>stippi</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233859%3A%20Files%20disappear%2C%20always%20the%20same%20folder&In-Reply-To=%3C041.216d17635db51a3e4ce7bd4a4916ec03%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3859: Files disappear, always the same folder">trac at haiku-os.org
+       </A><BR>
+    <I>Sun May  3 10:21:03 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="016852.html">[Haiku-bugs] [Haiku] #2222: Zenkaku/Hankaku key code in	Japanese keymap
+</A></li>
+        <LI>Next message: <A HREF="017080.html">[Haiku-bugs] [Haiku] #3859: Files disappear,	always the same folder
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16853">[ date ]</a>
+              <a href="thread.html#16853">[ thread ]</a>
+              <a href="subject.html#16853">[ subject ]</a>
+              <a href="author.html#16853">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3859: Files disappear, always the same folder
+------------------------------+---------------------------------------------
+ Reporter:  stippi            |       Owner:  axeld         
+     Type:  bug               |      Status:  new           
+ Priority:  high              |   Milestone:  R1            
+Component:  File Systems/BFS  |     Version:  R1 development
+Blockedby:                    |    Platform:  All           
+ Blocking:                    |  
+------------------------------+---------------------------------------------
+ I have a mail folder where I sort notifications from our Trac into.
+ Sometimes, after retrieving mails, the number of mails in this folder is
+ back down to 13 messages, even though additional messages have accumulated
+ there in the past days/weeks. It's like the second or third time that this
+ has happened. I retrieved mails with Beam. Beam showed 20 new messages
+ this morning after I last checked mails yesterday. When I clicked on the
+ mail folder, there were no new messages and quite a few older ones where
+ deleted. Only those 13 mails left. This is what the syslog has to say
+ about this:
+
+ {{{
+ KERN: bfs: mounted &quot;Traffic&quot; (root node at 524288, device =
+ /dev/disk/scsi/0/5/0/3_2)
+ KERN: /dev/net/rtl8139/0: media change, media 0x900026 quality 1000 speed
+ 10000
+ KERN: hda_stream_start() offset 80
+ KERN: hda_stream_start() offset 0
+ KERN: bfs: bfs_create_index:1986: File or Directory already exists
+ KERN: bfs: InitCheck:310: Bad data
+ KERN: bfs: inode at 790012 is already deleted!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 790012 in index &quot;be:deskbar_item_status&quot;!
+ KERN: bfs: InitCheck:310: Bad data
+ KERN: bfs: inode at 790012 is already deleted!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 790012 in index &quot;be:deskbar_item_status&quot;!
+ KERN: bfs: InitCheck:310: Bad data
+ KERN: bfs: inode at 790293 is already deleted!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 790293 in index &quot;be:deskbar_item_status&quot;!
+ KERN: bfs: InitCheck:310: Bad data
+ KERN: bfs: inode at 790293 is already deleted!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 790293 in index &quot;be:deskbar_item_status&quot;!
+ KERN: bfs: InitCheck:310: Bad data
+ KERN: bfs: inode at 790293 is already deleted!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 790293 in index &quot;be:deskbar_item_status&quot;!
+ KERN: bfs: InitCheck:310: Bad data
+ KERN: bfs: inode at 790293 is already deleted!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 790293 in index &quot;be:deskbar_item_status&quot;!
+ KERN: bfs: InitCheck:310: Bad data
+ KERN: bfs: inode at 790293 is already deleted!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 790293 in index &quot;be:deskbar_item_status&quot;!
+ KERN: bfs: InitCheck:310: Bad data
+ KERN: bfs: inode at 790293 is already deleted!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 790293 in index &quot;be:deskbar_item_status&quot;!
+ KERN: bfs: bfs_create_index:1986: File or Directory already exists
+ Last message repeated 1 time
+ KERN: ps2: probe_mouse Extended PS/2 mouse found
+ KERN: ps2: devfs_publish_device input/mouse/ps2/intelli_0, status =
+ 0x00000000
+ KERN: ps2: devfs_publish_device input/keyboard/at/0, status = 0x00000000
+ KERN: ps2: keyboard found
+ Last message repeated 1 time
+ KERN: bfs: bfs_open_dir:1528: Invalid Argument
+ KERN: bfs: inode at 281479271677984 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 281479271677984 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 281479271677984 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 281479271677984 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: KERN: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: KERN: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: KERN: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 43008 ==
+ 282720517226520!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 43008 ==
+ 282720517226520!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 43008 ==
+ 282720517226520!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 43008 ==
+ 282720517226520!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 43008 ==
+ 282720517226520!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 43008 ==
+ 282720517226520!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 43008 ==
+ 282720517226520!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 43008 ==
+ 282720517226520!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 43008 ==
+ 282720517226520!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 391168 == -1!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 43008 ==
+ 282720517226520!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 391168 == -1!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 43008 ==
+ 282720517226520!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 391168 == -1!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 43008 ==
+ 282720517226520!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 391168 == -1!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 43008 ==
+ 282720517226520!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 391168 == -1!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 43008 ==
+ 282720517226520!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 391168 == -1!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 43008 ==
+ 282720517226520!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 391168 == -1!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 43008 ==
+ 282720517226520!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 391168 == -1!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 43008 ==
+ 282720517226520!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 391168 == -1!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 43008 ==
+ 282720517226520!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 391168 == -1!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 43008 ==
+ 282720517226520!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 391168 == -1!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 43008 ==
+ 282720517226520!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 391168 == -1!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 43008 ==
+ 282720517226520!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 391168 == -1!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 43008 ==
+ 282720517226520!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 391168 == -1!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 1136640 == -1!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 43008 ==
+ 282720517226520!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 391168 == -1!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 43008 ==
+ 282720517226520!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 391168 == -1!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 43008 ==
+ 282720517226520!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 391168 == -1!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 43008 ==
+ 282720517226520!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 391168 == -1!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 43008 ==
+ 282720517226520!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 391168 == -1!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 43008 ==
+ 282720517226520!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 391168 == -1!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 43008 ==
+ 282720517226520!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 391168 == -1!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 43008 ==
+ 282720517226520!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 391168 == -1!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 43008 ==
+ 282720517226520!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 391168 == -1!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: invalid duplicate node: first left link points to 545460846595!
+ Last message repeated 12 times
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 924672 == -1!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 43008 ==
+ 282720517226520!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 391168 == -1!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 43008 ==
+ 282720517226520!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 391168 == -1!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 43008 ==
+ 282720517226520!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 391168 == -1!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: invalid duplicate node: first left link points to 545460846595!
+ KERN: bfs: InitCheck:310: Bad data
+ KERN: bfs: inode at 3688327 is already deleted!
+ KERN: bfs: InitCheck:310: Bad data
+ KERN: bfs: inode at 3688327 is already deleted!
+ KERN: bfs: bfs_open_dir:1528: Invalid Argument
+ KERN: bfs: inode at 281479271677984 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 281479271677984 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 281479271677984 requested!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 281479271677984 in index &quot;MAIL:status&quot;!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: bfs: inode at 0 requested!
+ KERN: bfs: GetNextMatching:1060: General system error
+ KERN: bfs: could not get inode 0 in index &quot;MAIL:status&quot;!
+ KERN: register_domain(9, unix)
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 43008 ==
+ 282720517226520!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: removeDuplicate: Invalid array size in duplicate 391168 == -1!
+ KERN: bfs: Insert:1300: Bad data
+ KERN: bfs: Update:290: Bad data
+ KERN: bfs: invalid duplicate node: first left link points to 545460846595!
+ KERN: bfs: Insert:1300: I/O error
+ KERN: bfs: Update:290: I/O error
+ }}}
+
+ I don't know what is special about this folder. Hm, IIRC, one time I
+ merged mails in this folder from my other machine. I zipped up all the
+ mails in that machines &quot;trac&quot; folder and copied the zip over to my main
+ work machine, unzipped it there and removed any duplicate mails. This was
+ after April 10.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3859">http://dev.haiku-os.org/ticket/3859</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="016852.html">[Haiku-bugs] [Haiku] #2222: Zenkaku/Hankaku key code in	Japanese keymap
+</A></li>
+	<LI>Next message: <A HREF="017080.html">[Haiku-bugs] [Haiku] #3859: Files disappear,	always the same folder
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16853">[ date ]</a>
+              <a href="thread.html#16853">[ thread ]</a>
+              <a href="subject.html#16853">[ subject ]</a>
+              <a href="author.html#16853">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4316: app_server resource cleanup issues
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234316%3A%20app_server%20resource%20cleanup%20issues&In-Reply-To=%3C044.98faa836d5a28a905e0a67239f9f815f%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="019975.html">
+   <LINK REL="Next"  HREF="019977.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4316: app_server resource cleanup issues</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234316%3A%20app_server%20resource%20cleanup%20issues&In-Reply-To=%3C044.98faa836d5a28a905e0a67239f9f815f%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4316: app_server resource cleanup issues">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Aug 23 04:07:08 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="019975.html">[Haiku-bugs] [Haiku] #698: [Tracker] could crash if many files	opened at once
+</A></li>
+        <LI>Next message: <A HREF="019977.html">[Haiku-bugs] [Haiku] #4316: app_server resource cleanup issues
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19976">[ date ]</a>
+              <a href="thread.html#19976">[ thread ]</a>
+              <a href="subject.html#19976">[ subject ]</a>
+              <a href="author.html#19976">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4316: app_server resource cleanup issues
+--------------------------------+-------------------------------------------
+ Reporter:  anevilyak           |       Owner:  axeld         
+     Type:  bug                 |      Status:  new           
+ Priority:  normal              |   Milestone:  R1            
+Component:  Servers/app_server  |     Version:  R1 development
+Blockedby:                      |    Platform:  All           
+ Blocking:                      |  
+--------------------------------+-------------------------------------------
+ While running Tracker in the debugger and trying to reproduce ticket #698,
+ I've been quite reliably able to seriously confuse the app_server
+ (incidentally, this is easier to reproduce by doing something like svn up
+ of the haiku source tree while taking the steps in the ticket, since this
+ will result in enough lag in processing the launch commands that the
+ tracker window won't immediately lose focus).  Every so often, the
+ debugger would die for as yet unclear reasons, but when this occurred,
+ quite a bit of cleanup doesn't seem to happen that should. For one, the
+ debugger's server-side app thread is still present, for another, one of
+ Tracker's window threads. Furthermore, associated with that window thread
+ I see something like 30 offscreen bitmap threads also still in the
+ app_server even though both the Debugger and Tracker teams are gone at
+ this point. This seems to have completely messed up the clipping
+ furthermore: when switching workspaces to the one the Debugger was
+ previously running in, the area of the former Debugger's window does not
+ invalidate properly and has garbage from the previous workspace.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4316">http://dev.haiku-os.org/ticket/4316</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="019975.html">[Haiku-bugs] [Haiku] #698: [Tracker] could crash if many files	opened at once
+</A></li>
+	<LI>Next message: <A HREF="019977.html">[Haiku-bugs] [Haiku] #4316: app_server resource cleanup issues
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19976">[ date ]</a>
+              <a href="thread.html#19976">[ thread ]</a>
+              <a href="subject.html#19976">[ subject ]</a>
+              <a href="author.html#19976">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

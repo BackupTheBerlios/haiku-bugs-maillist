@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1731: unmounting partitions hangs
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-January/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231731%3A%20unmounting%20partitions%20hangs&In-Reply-To=%3C041.4920eeefba4e7acd12083e209685a7d8%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="004485.html">
+   <LINK REL="Next"  HREF="004532.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1731: unmounting partitions hangs</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231731%3A%20unmounting%20partitions%20hangs&In-Reply-To=%3C041.4920eeefba4e7acd12083e209685a7d8%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1731: unmounting partitions hangs">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Jan 27 12:23:36 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="004485.html">[Haiku-bugs] [Haiku] #1677: Strange behaviour with images and	games...
+</A></li>
+        <LI>Next message: <A HREF="004532.html">[Haiku-bugs] [Haiku] #1731: unmounting partitions hangs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4489">[ date ]</a>
+              <a href="thread.html#4489">[ thread ]</a>
+              <a href="subject.html#4489">[ subject ]</a>
+              <a href="author.html#4489">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1731: unmounting partitions hangs
+---------------------------+------------------------------------------------
+ Reporter:  stippi         |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1/alpha      
+Component:  System/Kernel  |     Version:  R1 development
+ Platform:  All            |  
+---------------------------+------------------------------------------------
+ * Mount a BFS partition in Tracker
+ (Right clicking this volume's icon has the usual popup menu.)
+ * Unmount the partition
+ (The volume's icon will stay on the desktop, right-clicking it will show
+ the folder popup menu.)
+ * Try to invoke Tracker's mount menu -&gt; Tracker will now hang.
+ * Killing Tracker kills the complete team, but the windows will stay on
+ screen. Looking at the kernel team shows a thread named Tracker.
+
+ More info: When mounting/unmounting a partition using DriveSetup,
+ DriveSetup will hang at unmounting the same as Tracker. Killing it removes
+ the team completely, but the windows stay on screen and there is a thread
+ called DriveSetup in the kernel team. Trying to invoke the mount menu from
+ Tracker results in Tracker hanging too.
+
+ Can't investigate further with kernel debugger atm, because of USB
+ keyboard, but this is 100% reproducible for me.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1731">http://dev.haiku-os.org/ticket/1731</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="004485.html">[Haiku-bugs] [Haiku] #1677: Strange behaviour with images and	games...
+</A></li>
+	<LI>Next message: <A HREF="004532.html">[Haiku-bugs] [Haiku] #1731: unmounting partitions hangs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4489">[ date ]</a>
+              <a href="thread.html#4489">[ thread ]</a>
+              <a href="subject.html#4489">[ subject ]</a>
+              <a href="author.html#4489">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

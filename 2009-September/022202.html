@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4670: Screen resolution on GeForce Go 6100
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234670%3A%20Screen%20resolution%20on%20GeForce%20Go%206100&In-Reply-To=%3C048.b00c0db4b7d7abf4954f7aa6809a3c3a%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="022162.html">
+   <LINK REL="Next"  HREF="022204.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4670: Screen resolution on GeForce Go 6100</H1>
+    <B>rudolfc</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234670%3A%20Screen%20resolution%20on%20GeForce%20Go%206100&In-Reply-To=%3C048.b00c0db4b7d7abf4954f7aa6809a3c3a%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4670: Screen resolution on GeForce Go 6100">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Sep 29 20:28:33 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="022162.html">[Haiku-bugs] [Haiku] #4670: Screen resolution on GeForce Go 6100
+</A></li>
+        <LI>Next message: <A HREF="022204.html">[Haiku-bugs] [Haiku] #4670: Screen resolution on GeForce Go 6100
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22202">[ date ]</a>
+              <a href="thread.html#22202">[ thread ]</a>
+              <a href="subject.html#22202">[ subject ]</a>
+              <a href="author.html#22202">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4670: Screen resolution on GeForce Go 6100
+-------------------------------------+--------------------------------------
+ Reporter:  albb                     |       Owner:  rudolfc  
+     Type:  bug                      |      Status:  new      
+ Priority:  normal                   |   Milestone:  R1       
+Component:  Drivers/Graphics/nVidia  |     Version:  R1/alpha1
+Blockedby:                           |    Platform:  All      
+ Blocking:                           |  
+-------------------------------------+--------------------------------------
+
+Comment(by rudolfc):
+
+ Hi,
+
+ I am going to need the logfile from the driver itself. You need to create
+ a file called 'nvidia.settings' in your home/config/settings/kernel
+ folder. (You'll find a file called 'kernel' already there).
+
+ Please use a texteditor to create this file with the following text:
+ logmask 0xffffffff
+
+ This will enable logging for the driver upon the next boot.
+ The resulting logfile will be in your home folder, and will be called
+ something like:
+ nvidia.10de_01d1_010000.0.log
+
+ This file will probably only survive a reboot if you can orderly shut the
+ system down while having that strange picture.
+ After boot completes (HD becomes idle more or less) try hitting:
+ &lt;ALT&gt;&lt;sysRq&gt;, then release the key combination, then hit &lt;ALT&gt;&lt;D&gt;.
+ You should now be in kernel debugger land.
+ Since you don't have a working gfx driver, you can not see that though.
+ Now type:
+ reboot (followed by &lt;enter&gt;).
+
+ If you now boot in VESA mode (failsave video mode) you should be able to
+ find that file.
+
+
+ Can you upload that file here? Thanks!
+
+ Rudolf.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4670#comment:5">http://dev.haiku-os.org/ticket/4670#comment:5</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="022162.html">[Haiku-bugs] [Haiku] #4670: Screen resolution on GeForce Go 6100
+</A></li>
+	<LI>Next message: <A HREF="022204.html">[Haiku-bugs] [Haiku] #4670: Screen resolution on GeForce Go 6100
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22202">[ date ]</a>
+              <a href="thread.html#22202">[ thread ]</a>
+              <a href="subject.html#22202">[ subject ]</a>
+              <a href="author.html#22202">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

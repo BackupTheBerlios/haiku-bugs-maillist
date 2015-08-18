@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2686: &quot;failed C++ generated/objects/linux/x86/release/tools/fs_shell/unistd.o &quot;
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232686%3A%20%22failed%20C%2B%2B%0A%20generated/objects/linux/x86/release/tools/fs_shell/unistd.o%20%22&In-Reply-To=%3C054.30ff978c4c87de6c71dc0362388f6d8a%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010013.html">
+   <LINK REL="Next"  HREF="010060.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2686: &quot;failed C++ generated/objects/linux/x86/release/tools/fs_shell/unistd.o &quot;</H1>
+    <B>bonefish</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232686%3A%20%22failed%20C%2B%2B%0A%20generated/objects/linux/x86/release/tools/fs_shell/unistd.o%20%22&In-Reply-To=%3C054.30ff978c4c87de6c71dc0362388f6d8a%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2686: &quot;failed C++ generated/objects/linux/x86/release/tools/fs_shell/unistd.o &quot;">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Aug 31 15:30:13 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010013.html">[Haiku-bugs] [Haiku] #2686: &quot;failed C++ generated/objects/linux/x86/release/tools/fs_shell/unistd.o &quot;
+</A></li>
+        <LI>Next message: <A HREF="010060.html">[Haiku-bugs] [Haiku] #2686: &quot;failed C++ generated/objects/linux/x86/release/tools/fs_shell/unistd.o &quot;
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10021">[ date ]</a>
+              <a href="thread.html#10021">[ thread ]</a>
+              <a href="subject.html#10021">[ subject ]</a>
+              <a href="author.html#10021">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2686: &quot;failed C++ generated/objects/linux/x86/release/tools/fs_shell/unistd.o &quot;
+---------------------------+------------------------------------------------
+  Reporter:  revivaldbm    |       Owner:  bonefish      
+      Type:  bug           |      Status:  new           
+  Priority:  normal        |   Milestone:  R1            
+ Component:  Build System  |     Version:  R1 development
+Resolution:                |   Blockedby:                
+  Platform:  x86           |    Blocking:                
+---------------------------+------------------------------------------------
+
+Comment(by bonefish):
+
+ Replying to [comment:2 revivaldbm]:
+ &gt; Right then, as you have been able to tell, I'm running Linux, Fedora 9
+ is the distro, the cross-compiler was 2.95, and the output of jam in full
+ was (without the multiple &quot;patience&quot; messages):
+ &gt;
+ &gt; ...found 71264 target(s)...
+ &gt; ...updating 8244 target(s)...
+ &gt; InitScript1 generated/haiku.image-init-vars
+ &gt; C++ generated/objects/linux/x86/release/tools/fs_shell/unistd.o
+ &gt; src/tools/fs_shell/unistd.cpp:36:23: error: stropts.h: No such file or
+ directory
+
+ Seems to be that the Fedora (or Linux or glibc) folks have made a
+ brilliant move by removing the header which is the POSIXly correct place
+ for the ioctl() prototype:
+ [<A HREF="http://www.opengroup.org/onlinepubs/009695399/basedefs/stropts.h.html">http://www.opengroup.org/onlinepubs/009695399/basedefs/stropts.h.html</A>
+ stropts.h]. Google turned up [<A HREF="http://eatmyrandom.blogspot.com/2008/05">http://eatmyrandom.blogspot.com/2008/05</A>
+ /stroptsh-no-such-file-or-directory.html this article].
+
+ Unless more distributions start removing this header, I don't feel
+ particularly inclined to introduce special-casing for this idiocy. Please
+ just {{{touch /usr/include/stropts.h}}} for the time being.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2686#comment:3">http://dev.haiku-os.org/ticket/2686#comment:3</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010013.html">[Haiku-bugs] [Haiku] #2686: &quot;failed C++ generated/objects/linux/x86/release/tools/fs_shell/unistd.o &quot;
+</A></li>
+	<LI>Next message: <A HREF="010060.html">[Haiku-bugs] [Haiku] #2686: &quot;failed C++ generated/objects/linux/x86/release/tools/fs_shell/unistd.o &quot;
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10021">[ date ]</a>
+              <a href="thread.html#10021">[ thread ]</a>
+              <a href="subject.html#10021">[ subject ]</a>
+              <a href="author.html#10021">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

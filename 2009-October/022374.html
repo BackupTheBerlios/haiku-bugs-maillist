@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4721: app_server flag fixes (patch)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234721%3A%20app_server%20flag%20fixes%20%28patch%29&In-Reply-To=%3C052.9e1429f8b8052d3db69d5a23462a29a2%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="022342.html">
+   <LINK REL="Next"  HREF="022388.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4721: app_server flag fixes (patch)</H1>
+    <B>rogueeve</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234721%3A%20app_server%20flag%20fixes%20%28patch%29&In-Reply-To=%3C052.9e1429f8b8052d3db69d5a23462a29a2%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4721: app_server flag fixes (patch)">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Oct  5 10:17:18 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="022342.html">[Haiku-bugs] [Haiku] #4721: app_server flag fixes (patch)
+</A></li>
+        <LI>Next message: <A HREF="022388.html">[Haiku-bugs] [Haiku] #4721: app_server flag fixes (patch)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22374">[ date ]</a>
+              <a href="thread.html#22374">[ thread ]</a>
+              <a href="subject.html#22374">[ subject ]</a>
+              <a href="author.html#22374">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4721: app_server flag fixes (patch)
+--------------------------------+-------------------------------------------
+ Reporter:  rogueeve            |       Owner:  leavengood
+     Type:  bug                 |      Status:  new       
+ Priority:  normal              |   Milestone:  R1        
+Component:  Servers/app_server  |     Version:  R1/alpha1 
+Blockedby:                      |    Platform:  All       
+ Blocking:                      |  
+--------------------------------+-------------------------------------------
+
+Comment(by rogueeve):
+
+ Yes you're right, and that was something I was concerned about as well. I
+ found &quot;headers/build/private/interface/WindowPrivate.h&quot;, which I assume
+ would be the proper place for &quot;kValidWindowFlags&quot;. However, that still
+ necessitates the matching list of flags across two source files, possibly
+ leading to someone adding another flag later and forgetting to also add it
+ into WindowPrivate.h. If modifying the public presentation of the global
+ &lt;Window.h&gt; isn't acceptable I could add an #ifdef around
+ B_VALID_WINDOW_FLAGS such that it is only defined when included by the app
+ server, but that seems pretty ugly. Or I could just add a warning comment
+ about the need to update 2nd list, as was done with the FEEL and LOOK
+ constants.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4721#comment:4">http://dev.haiku-os.org/ticket/4721#comment:4</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="022342.html">[Haiku-bugs] [Haiku] #4721: app_server flag fixes (patch)
+</A></li>
+	<LI>Next message: <A HREF="022388.html">[Haiku-bugs] [Haiku] #4721: app_server flag fixes (patch)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22374">[ date ]</a>
+              <a href="thread.html#22374">[ thread ]</a>
+              <a href="subject.html#22374">[ subject ]</a>
+              <a href="author.html#22374">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1518: nVidia driver does not work with	N7600GS card
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231518%3A%20nVidia%20driver%20does%20not%20work%20with%0A%09N7600GS%20card&In-Reply-To=%3C041.6fd9222743858eb0021210d15066a0ca%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002874.html">
+   <LINK REL="Next"  HREF="003000.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1518: nVidia driver does not work with	N7600GS card</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231518%3A%20nVidia%20driver%20does%20not%20work%20with%0A%09N7600GS%20card&In-Reply-To=%3C041.6fd9222743858eb0021210d15066a0ca%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1518: nVidia driver does not work with	N7600GS card">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Oct  1 23:36:37 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002874.html">[Haiku-bugs] [Haiku] #1509: Tracker Crashes When Starting /	Booting Haiku
+</A></li>
+        <LI>Next message: <A HREF="003000.html">[Haiku-bugs] [Haiku] #1518: nVidia driver does not work with	N7600GS card
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2878">[ date ]</a>
+              <a href="thread.html#2878">[ thread ]</a>
+              <a href="subject.html#2878">[ subject ]</a>
+              <a href="author.html#2878">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1518: nVidia driver does not work with N7600GS card
+-------------------------------------+--------------------------------------
+ Reporter:  hitech                   |       Owner:  axeld         
+     Type:  bug                      |      Status:  new           
+ Priority:  normal                   |   Milestone:  R1            
+Component:  Drivers/Graphics/nVidia  |     Version:  R1 development
+ Platform:  x86                      |  
+-------------------------------------+--------------------------------------
+ I'm using the AGP graphics card ASUS N7600GS Silent based on nVidia
+ chipset. The Haiku driver is not working in Zeta 1.21. I receive screen
+ resolution of 800x600, 8 bits color and 60 Hz refresh rate, and I can't
+ change it.
+
+ Interesting, but this card is listed among supported ones:
+
+ In &quot;Devices&quot; system tool, under &quot;VGA&quot;, I have &quot;Vendor: Nvidia Corporation
+ (0x10de)&quot; and &quot;Card ID: 0x2e1&quot;. It also states that I have no resource
+ conflicts.
+
+ In file <A HREF="http://svn.berlios.de/viewcvs/haiku/haiku/trunk/src/add-">http://svn.berlios.de/viewcvs/haiku/haiku/trunk/src/add-</A>
+ ons/kernel/drivers/graphics/nvidia/driver.c, this card ID is listed among
+ supported:
+
+ . . . . . . . . .
+ static uint16 nvidia_device_list[] = { . . . . .
+         0x02e1, /* Nvidia GeForce 7600 GS */
+ . . . . . . }
+
+ Apparently, either the driver does not recognize my graphics card
+ correctly, or?..
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1518">http://dev.haiku-os.org/ticket/1518</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002874.html">[Haiku-bugs] [Haiku] #1509: Tracker Crashes When Starting /	Booting Haiku
+</A></li>
+	<LI>Next message: <A HREF="003000.html">[Haiku-bugs] [Haiku] #1518: nVidia driver does not work with	N7600GS card
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2878">[ date ]</a>
+              <a href="thread.html#2878">[ thread ]</a>
+              <a href="subject.html#2878">[ subject ]</a>
+              <a href="author.html#2878">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

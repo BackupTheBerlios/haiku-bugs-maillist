@@ -1,0 +1,172 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3991: random_file_actions: runs fail when disabling block cache
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233991%3A%20random_file_actions%3A%20runs%20fail%20when%0A%20disabling%20block%20cache&In-Reply-To=%3C051.f3737c84aada1b4a699c2948615a2902%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="017765.html">
+   <LINK REL="Next"  HREF="017793.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3991: random_file_actions: runs fail when disabling block cache</H1>
+    <B>michael.weirauch</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233991%3A%20random_file_actions%3A%20runs%20fail%20when%0A%20disabling%20block%20cache&In-Reply-To=%3C051.f3737c84aada1b4a699c2948615a2902%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3991: random_file_actions: runs fail when disabling block cache">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Jun  2 21:05:10 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="017765.html">[Haiku-bugs] [Haiku] #3983: KDL when ejecting not mounted CD
+</A></li>
+        <LI>Next message: <A HREF="017793.html">[Haiku-bugs] [Haiku] #3991: random_file_actions: runs fail when disabling block cache
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17766">[ date ]</a>
+              <a href="thread.html#17766">[ thread ]</a>
+              <a href="subject.html#17766">[ subject ]</a>
+              <a href="author.html#17766">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3991: random_file_actions: runs fail when disabling block cache
+------------------------------+---------------------------------------------
+ Reporter:  michael.weirauch  |       Owner:  axeld         
+     Type:  bug               |      Status:  new           
+ Priority:  normal            |   Milestone:  R1            
+Component:  File Systems/BFS  |     Version:  R1 development
+Blockedby:                    |    Platform:  x86           
+ Blocking:                    |  
+------------------------------+---------------------------------------------
+ r30944; ata-bm; acpi;
+
+ Running '''random_file_actions''' without block cache (-n), I get a
+ reproduceable error:
+
+ {{{
+ random_file_actions -m256000 -f20 -d10 -r2000 -vna
+ }}}
+
+ {{{
+     189  truncate &quot;./random_file_temp/file-13&quot;
+ generated: 0000  00000000 00000000 0e000000 0c000e00  ................
+ generated: 0010  10001200 14001600 18001a00 1c001e00  ...............
+ generated: 0020  20002200 24002600 28002a00 2c002e00   .&quot;.$.&amp;.(.*.,...
+ generated: 0030  30003200 34003600 38003a00 3c003e00  0.2.4.6.8.:.&lt;.&gt;.
+ generated: 0040  40004200 44004600 48004a00 4c004e00  @.B.D.F.H.J.L.N.
+ generated: 0050  50005200 54005600 58005a00 5c005e00  P.R.T.V.X.Z.\.^.
+ generated: 0060  60006200 64006600 68006a00 6c006e00  `.b.d.f.h.j.l.n.
+ generated: 0070  70007200 74007600 78007a00 7c007e00  p.r.t.v.x.z.|.~.
+ generated: 0080  80008200 84008600 88008a00 8c008e00  ................
+ generated: 0090  90009200 94009600 98009a00 9c009e00  ................
+ generated: 00a0  a000a200 a400a600 a800aa00 ac00ae00  ................
+ generated: 00b0  b000b200 b400b600 b800ba00 bc00be00  ................
+ generated: 00c0  c000c200 c400c600 c800ca00 cc00ce00  ................
+ generated: 00d0  d000d200 d400d600 d800da00 dc00de00  ................
+ generated: 00e0  e000e200 e400e600 e800ea00 ec00ee00  ................
+ generated: 00f0  f000f200 f400f600 f800fa00 fc00fe00  ................
+ read:      0000  00000000 00000000 08000000 0c000e00  ................
+ read:      0010  10001200 14001600 18001a00 1c001e00  ...............
+ read:      0020  20002200 24002600 28002a00 2c002e00   .&quot;.$.&amp;.(.*.,...
+ read:      0030  30003200 34003600 38003a00 3c003e00  0.2.4.6.8.:.&lt;.&gt;.
+ read:      0040  40004200 44004600 48004a00 4c004e00  @.B.D.F.H.J.L.N.
+ read:      0050  50005200 54005600 58005a00 5c005e00  P.R.T.V.X.Z.\.^.
+ read:      0060  60006200 64006600 68006a00 6c006e00  `.b.d.f.h.j.l.n.
+ read:      0070  70007200 74007600 78007a00 7c007e00  p.r.t.v.x.z.|.~.
+ read:      0080  80008200 84008600 88008a00 8c008e00  ................
+ read:      0090  90009200 94009600 98009a00 9c009e00  ................
+ read:      00a0  a000a200 a400a600 a800aa00 ac00ae00  ................
+ read:      00b0  b000b200 b400b600 b800ba00 bc00be00  ................
+ read:      00c0  c000c200 c400c600 c800ca00 cc00ce00  ................
+ read:      00d0  d000d200 d400d600 d800da00 dc00de00  ................
+ read:      00e0  e000e200 e400e600 e800ea00 ec00ee00  ................
+ read:      00f0  f000f200 f400f600 f800fa00 fc00fe00  ................
+ random_file_actions: block at 0 differ in &quot;./random_file_temp/file-13&quot;!
+ }}}
+
+ Running the same command without disabling the block cache,
+ {{{
+ random_file_actions -m256000 -f20 -d10 -r2000 -va
+ }}}
+ the runs complete successfully.
+
+ Repeating this in a tic-toc manner, always yields the same. W/o block
+ cache, failure, with block cache, ok.
+
+ PS: Just tested on a second partition and it yielded the same result as
+ above. Then wen't on to test on my main dev partition and got the
+ following which looks a bit different:
+
+ {{{
+     153  replace &quot;./random_file_temp/file-56&quot; contents
+                 write 203303 bytes
+ generated: 0000  00000000 00000000 33000000 0c000e00  ........3.......
+ generated: 0010  10001200 14001600 18001a00 1c001e00  ...............
+ generated: 0020  20002200 24002600 28002a00 2c002e00   .&quot;.$.&amp;.(.*.,...
+ generated: 0030  30003200 34003600 38003a00 3c003e00  0.2.4.6.8.:.&lt;.&gt;.
+ generated: 0040  40004200 44004600 48004a00 4c004e00  @.B.D.F.H.J.L.N.
+ generated: 0050  50005200 54005600 58005a00 5c005e00  P.R.T.V.X.Z.\.^.
+ generated: 0060  60006200 64006600 68006a00 6c006e00  `.b.d.f.h.j.l.n.
+ generated: 0070  70007200 74007600 78007a00 7c007e00  p.r.t.v.x.z.|.~.
+ generated: 0080  80008200 84008600 88008a00 8c008e00  ................
+ generated: 0090  90009200 94009600 98009a00 9c009e00  ................
+ generated: 00a0  a000a200 a400a600 a800aa00 ac00ae00  ................
+ generated: 00b0  b000b200 b400b600 b800ba00 bc00be00  ................
+ generated: 00c0  c000c200 c400c600 c800ca00 cc00ce00  ................
+ generated: 00d0  d000d200 d400d600 d800da00 dc00de00  ................
+ generated: 00e0  e000e200 e400e600 e800ea00 ec00ee00  ................
+ generated: 00f0  f000f200 f400f600 f800fa00 fc00fe00  ................
+ read:      0000  00500000 00000000 24000000 0c500e50  .P......$....P.P
+ read:      0010  10501250 14501650 18501a50 1c501e50  .P.P.P.P.P.P.PP
+ read:      0020  20502250 24502650 28502a50 2c502e50   P&quot;P$P&amp;P(P*P,P.P
+ read:      0030  30503250 34503650 38503a50 3c503e50  0P2P4P6P8P:P&lt;P&gt;P
+ read:      0040  40504250 44504650 48504a50 4c504e50  @PBPDPFPHPJPLPNP
+ read:      0050  50505250 54505650 58505a50 5c505e50  PPRPTPVPXPZP\P^P
+ read:      0060  60506250 64506650 68506a50 6c506e50  `PbPdPfPhPjPlPnP
+ read:      0070  70507250 74507650 78507a50 7c507e50  pPrPtPvPxPzP|P~P
+ read:      0080  80508250 84508650 88508a50 8c508e50  .P.P.P.P.P.P.P.P
+ read:      0090  90509250 94509650 98509a50 9c509e50  .P.P.P.P.P.P.P.P
+ read:      00a0  a050a250 a450a650 a850aa50 ac50ae50  .P.P.P.P.P.P.P.P
+ read:      00b0  b050b250 b450b650 b850ba50 bc50be50  .P.P.P.P.P.P.P.P
+ read:      00c0  c050c250 c450c650 c850ca50 cc50ce50  .P.P.P.P.P.P.P.P
+ read:      00d0  d050d250 d450d650 d850da50 dc50de50  .P.P.P.P.P.P.P.P
+ read:      00e0  e050e250 e450e650 e850ea50 ec50ee50  .P.P.P.P.P.P.P.P
+ read:      00f0  f050f250 f450f650 f850fa50 fc50fe50  .P.P.P.P.P.P.P.P
+ random_file_actions: block at 0 differ in
+ &quot;./random_file_temp/dir-48/file-50&quot;!
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3991">http://dev.haiku-os.org/ticket/3991</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="017765.html">[Haiku-bugs] [Haiku] #3983: KDL when ejecting not mounted CD
+</A></li>
+	<LI>Next message: <A HREF="017793.html">[Haiku-bugs] [Haiku] #3991: random_file_actions: runs fail when disabling block cache
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17766">[ date ]</a>
+              <a href="thread.html#17766">[ thread ]</a>
+              <a href="subject.html#17766">[ subject ]</a>
+              <a href="author.html#17766">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

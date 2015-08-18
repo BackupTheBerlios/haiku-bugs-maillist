@@ -1,0 +1,506 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4455: Deksbar crashes on mounting non-boot	partition
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234455%3A%20Deksbar%20crashes%20on%20mounting%20non-boot%0A%09partition&In-Reply-To=%3C051.9a000c5f4100d0897169c9f82b6d3a5d%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="020959.html">
+   <LINK REL="Next"  HREF="020962.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4455: Deksbar crashes on mounting non-boot	partition</H1>
+    <B>michael.weirauch</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234455%3A%20Deksbar%20crashes%20on%20mounting%20non-boot%0A%09partition&In-Reply-To=%3C051.9a000c5f4100d0897169c9f82b6d3a5d%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4455: Deksbar crashes on mounting non-boot	partition">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Sep  8 23:02:07 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="020959.html">[Haiku-bugs] [Haiku] #4390: boot fails after 4th icon is lit using default ata stack
+</A></li>
+        <LI>Next message: <A HREF="020962.html">[Haiku-bugs] [Haiku] #4455: Deksbar crashes on mounting	non-boot partition
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20960">[ date ]</a>
+              <a href="thread.html#20960">[ thread ]</a>
+              <a href="subject.html#20960">[ subject ]</a>
+              <a href="author.html#20960">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4455: Deksbar crashes on mounting non-boot partition
+----------------------------------+-----------------------------------------
+ Reporter:  michael.weirauch      |       Owner:  axeld         
+     Type:  bug                   |      Status:  new           
+ Priority:  normal                |   Milestone:  R1            
+Component:  Applications/Deskbar  |     Version:  R1 development
+Blockedby:                        |    Platform:  x86           
+ Blocking:                        |  
+----------------------------------+-----------------------------------------
+ r33301-trunk;gcc4;acpi;ata-bm; (fresh -qaj2 install)
+
+ Since some time Deskbar crashes 9/10 times when mounting my storage bfs
+ partition. When restarting, this happens to. Backtraces differ and
+ sometimes end in libbe, sometimes libroot.
+
+ Checkfs reports no issues on the partition.
+
+ Can this be related to r32894 as I am seeing quite some 0xdeadbeef in some
+ backtraces, otherwise &quot;can't access memory&quot; reports.
+
+ Can some threaded be:deskbaritemstatus index scanning cause this which is
+ choking since the heap allocator changes? (I know I have some binaries on
+ the storage partition which previously had their replicants in the
+ Deskbar) Just a gues...
+
+ Examples:
+
+ {{{
+ [Switching to team /boot/system/Deskbar (397) thread Deskbar (397)]
+ 0x003d7000 in BPrivate::Storage::ResourceFile::_ReadInfoTable ()
+    from /boot/system/lib/libbe.so
+ (gdb) bt
+ #0  0x003d7000 in BPrivate::Storage::ResourceFile::_ReadInfoTable ()
+    from /boot/system/lib/libbe.so
+ Cannot access memory at address 0x81088ed4
+ }}}
+
+ {{{
+ [Switching to team /boot/system/Deskbar (458) thread Deskbar (458)]
+ 0x003d1a4e in BQuery::GetNextRef () from /boot/system/lib/libbe.so
+ (gdb) bt
+ #0  0x003d1a4e in BQuery::GetNextRef () from /boot/system/lib/libbe.so
+ #1  0xdeadbeef in ?? ()
+ #2  0x81207360 in ?? ()
+ #3  0xdeadbeef in ?? ()
+ #4  0xdeadbeef in ?? ()
+ #5  0xdeadbeef in ?? ()
+ #6  0xdeadbeef in ?? ()
+ #7  0xdeadbeef in ?? ()
+ #8  0x81207378 in ?? ()
+ #9  0xdeadbeef in ?? ()
+ #10 0xdeadbeef in ?? ()
+ #11 0xdeadbeef in ?? ()
+ #12 0xdeadbeef in ?? ()
+ #13 0xdeadbeef in ?? ()
+ #14 0x81207390 in ?? ()
+ #15 0xdeadbeef in ?? ()
+ #16 0xdeadbeef in ?? ()
+ #17 0xdeadbeef in ?? ()
+ #18 0xdeadbeef in ?? ()
+ #19 0xdeadbeef in ?? ()
+ #20 0x812073a8 in ?? ()
+ #21 0xdeadbeef in ?? ()
+ #22 0xdeadbeef in ?? ()
+ #23 0xdeadbeef in ?? ()
+ ---Type &lt;return&gt; to continue, or q &lt;return&gt; to quit---
+ #24 0xdeadbeef in ?? ()
+ #25 0xdeadbeef in ?? ()
+ #26 0x812073c0 in ?? ()
+ #27 0xdeadbeef in ?? ()
+ #28 0xdeadbeef in ?? ()
+ #29 0xdeadbeef in ?? ()
+ #30 0xdeadbeef in ?? ()
+ #31 0xdeadbeef in ?? ()
+ #32 0x812073d8 in ?? ()
+ #33 0xdeadbeef in ?? ()
+ #34 0xdeadbeef in ?? ()
+ #35 0xdeadbeef in ?? ()
+ #36 0xdeadbeef in ?? ()
+ #37 0xdeadbeef in ?? ()
+ #38 0x812073f0 in ?? ()
+ #39 0xdeadbeef in ?? ()
+ #40 0xdeadbeef in ?? ()
+ #41 0xdeadbeef in ?? ()
+ #42 0xdeadbeef in ?? ()
+ #43 0xdeadbeef in ?? ()
+ #44 0x81207408 in ?? ()
+ #45 0xdeadbeef in ?? ()
+ #46 0xdeadbeef in ?? ()
+ #47 0xdeadbeef in ?? ()
+ ---Type &lt;return&gt; to continue, or q &lt;return&gt; to quit---
+ #48 0xdeadbeef in ?? ()
+ #49 0xdeadbeef in ?? ()
+ #50 0x81207420 in ?? ()
+ #51 0xdeadbeef in ?? ()
+ #52 0xdeadbeef in ?? ()
+ #53 0xdeadbeef in ?? ()
+ #54 0xdeadbeef in ?? ()
+ #55 0xdeadbeef in ?? ()
+ #56 0x81207438 in ?? ()
+ #57 0xdeadbeef in ?? ()
+ #58 0xdeadbeef in ?? ()
+ #59 0xdeadbeef in ?? ()
+ #60 0xdeadbeef in ?? ()
+ #61 0xdeadbeef in ?? ()
+ #62 0x81207450 in ?? ()
+ #63 0xdeadbeef in ?? ()
+ #64 0xdeadbeef in ?? ()
+ #65 0xdeadbeef in ?? ()
+ #66 0xdeadbeef in ?? ()
+ #67 0xdeadbeef in ?? ()
+ #68 0x81207468 in ?? ()
+ #69 0xdeadbeef in ?? ()
+ #70 0xdeadbeef in ?? ()
+ #71 0xdeadbeef in ?? ()
+ ---Type &lt;return&gt; to continue, or q &lt;return&gt; to quit---
+ #72 0xdeadbeef in ?? ()
+ #73 0xdeadbeef in ?? ()
+ #74 0x81207480 in ?? ()
+ #75 0xdeadbeef in ?? ()
+ #76 0xdeadbeef in ?? ()
+ #77 0xdeadbeef in ?? ()
+ #78 0xdeadbeef in ?? ()
+ #79 0xdeadbeef in ?? ()
+ #80 0x81207498 in ?? ()
+ #81 0xdeadbeef in ?? ()
+ #82 0xdeadbeef in ?? ()
+ #83 0xdeadbeef in ?? ()
+ #84 0xdeadbeef in ?? ()
+ #85 0xdeadbeef in ?? ()
+ #86 0x812074b0 in ?? ()
+ #87 0xdeadbeef in ?? ()
+ #88 0xdeadbeef in ?? ()
+ #89 0xdeadbeef in ?? ()
+ #90 0xdeadbeef in ?? ()
+ #91 0xdeadbeef in ?? ()
+ #92 0x812074c8 in ?? ()
+ #93 0xdeadbeef in ?? ()
+ #94 0xdeadbeef in ?? ()
+ #95 0xdeadbeef in ?? ()
+ ---Type &lt;return&gt; to continue, or q &lt;return&gt; to quit---
+ #96 0xdeadbeef in ?? ()
+ #97 0xdeadbeef in ?? ()
+ #98 0x812074e0 in ?? ()
+ #99 0xdeadbeef in ?? ()
+ #100 0xdeadbeef in ?? ()
+ #101 0xdeadbeef in ?? ()
+ #102 0xdeadbeef in ?? ()
+ #103 0xdeadbeef in ?? ()
+ #104 0x812074f8 in ?? ()
+ #105 0xdeadbeef in ?? ()
+ #106 0xdeadbeef in ?? ()
+ #107 0xdeadbeef in ?? ()
+ #108 0xdeadbeef in ?? ()
+ #109 0xdeadbeef in ?? ()
+ #110 0x81207510 in ?? ()
+ #111 0xdeadbeef in ?? ()
+ #112 0xdeadbeef in ?? ()
+ #113 0xdeadbeef in ?? ()
+ #114 0xdeadbeef in ?? ()
+ #115 0xdeadbeef in ?? ()
+ #116 0x81207528 in ?? ()
+ #117 0xdeadbeef in ?? ()
+ #118 0xdeadbeef in ?? ()
+ #119 0xdeadbeef in ?? ()
+ ---Type &lt;return&gt; to continue, or q &lt;return&gt; to quit---
+ #120 0xdeadbeef in ?? ()
+ #121 0xdeadbeef in ?? ()
+ #122 0x81207540 in ?? ()
+ #123 0xdeadbeef in ?? ()
+ #124 0xdeadbeef in ?? ()
+ #125 0xdeadbeef in ?? ()
+ #126 0xdeadbeef in ?? ()
+ #127 0xdeadbeef in ?? ()
+ #128 0x81207558 in ?? ()
+ #129 0xdeadbeef in ?? ()
+ #130 0xdeadbeef in ?? ()
+ #131 0xdeadbeef in ?? ()
+ #132 0xdeadbeef in ?? ()
+ #133 0xdeadbeef in ?? ()
+ #134 0x81207570 in ?? ()
+ #135 0xdeadbeef in ?? ()
+ #136 0xdeadbeef in ?? ()
+ #137 0xdeadbeef in ?? ()
+ #138 0xdeadbeef in ?? ()
+ #139 0xdeadbeef in ?? ()
+ #140 0x81207588 in ?? ()
+ #141 0xdeadbeef in ?? ()
+ #142 0xdeadbeef in ?? ()
+ #143 0xdeadbeef in ?? ()
+ ---Type &lt;return&gt; to continue, or q &lt;return&gt; to quit---
+ #144 0xdeadbeef in ?? ()
+ #145 0xdeadbeef in ?? ()
+ #146 0x812075a0 in ?? ()
+ #147 0xdeadbeef in ?? ()
+ #148 0xdeadbeef in ?? ()
+ #149 0xdeadbeef in ?? ()
+ #150 0xdeadbeef in ?? ()
+ #151 0xdeadbeef in ?? ()
+ #152 0x812075b8 in ?? ()
+ #153 0xdeadbeef in ?? ()
+ #154 0xdeadbeef in ?? ()
+ #155 0xdeadbeef in ?? ()
+ #156 0xdeadbeef in ?? ()
+ #157 0xdeadbeef in ?? ()
+ #158 0x812075d0 in ?? ()
+ #159 0xdeadbeef in ?? ()
+ #160 0xdeadbeef in ?? ()
+ #161 0xdeadbeef in ?? ()
+ #162 0xdeadbeef in ?? ()
+ #163 0xdeadbeef in ?? ()
+ #164 0x812075e8 in ?? ()
+ #165 0xdeadbeef in ?? ()
+ #166 0xdeadbeef in ?? ()
+ #167 0xdeadbeef in ?? ()
+ ---Type &lt;return&gt; to continue, or q &lt;return&gt; to quit---
+ #168 0xdeadbeef in ?? ()
+ #169 0xdeadbeef in ?? ()
+ #170 0x180c7600 in ?? ()
+ #171 0x7ffeea8c in ?? ()
+ #172 0x00245bea in typeinfo name for TShowHideMenuItem ()
+ #173 0x00480e80 in ?? () from /boot/system/lib/libbe.so
+ #174 0x180cd428 in ?? ()
+ #175 0x180cd1d8 in ?? ()
+ #176 0x7ffeeaa8 in ?? ()
+ #177 0x003a5e0b in BView::AddChild () from /boot/system/lib/libbe.so
+ Cannot access memory at address 0xdeadbeef
+ }}}
+
+ {{{
+ [Switching to team /system/Deskbar (541) thread Deskbar (541)]
+ 0x003d1a4e in BQuery::GetNextRef () from /boot/system/lib/libbe.so
+ (gdb) bt
+ #0  0x003d1a4e in BQuery::GetNextRef () from /boot/system/lib/libbe.so
+ #1  0xdeadbeef in ?? ()
+ #2  0xdeadbeef in ?? ()
+ #3  0x81207918 in ?? ()
+ #4  0xdeadbeef in ?? ()
+ #5  0xdeadbeef in ?? ()
+ #6  0xdeadbeef in ?? ()
+ #7  0xdeadbeef in ?? ()
+ #8  0xdeadbeef in ?? ()
+ #9  0x81207930 in ?? ()
+ #10 0xdeadbeef in ?? ()
+ #11 0xdeadbeef in ?? ()
+ #12 0xdeadbeef in ?? ()
+ #13 0xdeadbeef in ?? ()
+ #14 0xdeadbeef in ?? ()
+ #15 0x81207948 in ?? ()
+ #16 0xdeadbeef in ?? ()
+ #17 0xdeadbeef in ?? ()
+ #18 0xdeadbeef in ?? ()
+ #19 0xdeadbeef in ?? ()
+ #20 0xdeadbeef in ?? ()
+ #21 0x81207960 in ?? ()
+ #22 0xdeadbeef in ?? ()
+ #23 0xdeadbeef in ?? ()
+ ---Type &lt;return&gt; to continue, or q &lt;return&gt; to quit---
+ #24 0xdeadbeef in ?? ()
+ #25 0xdeadbeef in ?? ()
+ #26 0xdeadbeef in ?? ()
+ #27 0x81207978 in ?? ()
+ #28 0xdeadbeef in ?? ()
+ #29 0xdeadbeef in ?? ()
+ #30 0xdeadbeef in ?? ()
+ #31 0xdeadbeef in ?? ()
+ #32 0xdeadbeef in ?? ()
+ #33 0x81207990 in ?? ()
+ #34 0xdeadbeef in ?? ()
+ #35 0xdeadbeef in ?? ()
+ #36 0xdeadbeef in ?? ()
+ #37 0xdeadbeef in ?? ()
+ #38 0xdeadbeef in ?? ()
+ #39 0x812079a8 in ?? ()
+ #40 0xdeadbeef in ?? ()
+ #41 0xdeadbeef in ?? ()
+ #42 0xdeadbeef in ?? ()
+ #43 0xdeadbeef in ?? ()
+ #44 0xdeadbeef in ?? ()
+ #45 0x812079c0 in ?? ()
+ #46 0xdeadbeef in ?? ()
+ #47 0xdeadbeef in ?? ()
+ ---Type &lt;return&gt; to continue, or q &lt;return&gt; to quit---
+ #48 0xdeadbeef in ?? ()
+ #49 0xdeadbeef in ?? ()
+ #50 0xdeadbeef in ?? ()
+ #51 0x812079d8 in ?? ()
+ #52 0xdeadbeef in ?? ()
+ #53 0xdeadbeef in ?? ()
+ #54 0xdeadbeef in ?? ()
+ #55 0xdeadbeef in ?? ()
+ #56 0xdeadbeef in ?? ()
+ #57 0x812079f0 in ?? ()
+ #58 0xdeadbeef in ?? ()
+ #59 0xdeadbeef in ?? ()
+ #60 0xdeadbeef in ?? ()
+ #61 0xdeadbeef in ?? ()
+ #62 0xdeadbeef in ?? ()
+ #63 0x81207a08 in ?? ()
+ #64 0xdeadbeef in ?? ()
+ #65 0xdeadbeef in ?? ()
+ #66 0xdeadbeef in ?? ()
+ #67 0xdeadbeef in ?? ()
+ #68 0xdeadbeef in ?? ()
+ #69 0x81207a20 in ?? ()
+ #70 0xdeadbeef in ?? ()
+ #71 0xdeadbeef in ?? ()
+ ---Type &lt;return&gt; to continue, or q &lt;return&gt; to quit---
+ #72 0xdeadbeef in ?? ()
+ #73 0xdeadbeef in ?? ()
+ #74 0xdeadbeef in ?? ()
+ #75 0x81207a38 in ?? ()
+ #76 0xdeadbeef in ?? ()
+ #77 0xdeadbeef in ?? ()
+ #78 0xdeadbeef in ?? ()
+ #79 0xdeadbeef in ?? ()
+ #80 0xdeadbeef in ?? ()
+ #81 0x81207a50 in ?? ()
+ #82 0xdeadbeef in ?? ()
+ #83 0xdeadbeef in ?? ()
+ #84 0xdeadbeef in ?? ()
+ #85 0xdeadbeef in ?? ()
+ #86 0xdeadbeef in ?? ()
+ #87 0x81207a68 in ?? ()
+ #88 0xdeadbeef in ?? ()
+ #89 0xdeadbeef in ?? ()
+ #90 0xdeadbeef in ?? ()
+ #91 0xdeadbeef in ?? ()
+ #92 0xdeadbeef in ?? ()
+ #93 0x81207a80 in ?? ()
+ #94 0xdeadbeef in ?? ()
+ #95 0xdeadbeef in ?? ()
+ ---Type &lt;return&gt; to continue, or q &lt;return&gt; to quit---
+ #96 0xdeadbeef in ?? ()
+ #97 0xdeadbeef in ?? ()
+ #98 0xdeadbeef in ?? ()
+ #99 0x81207a98 in ?? ()
+ #100 0xdeadbeef in ?? ()
+ #101 0xdeadbeef in ?? ()
+ #102 0xdeadbeef in ?? ()
+ #103 0xdeadbeef in ?? ()
+ #104 0xdeadbeef in ?? ()
+ #105 0x81207ab0 in ?? ()
+ #106 0xdeadbeef in ?? ()
+ #107 0xdeadbeef in ?? ()
+ #108 0xdeadbeef in ?? ()
+ #109 0xdeadbeef in ?? ()
+ #110 0xdeadbeef in ?? ()
+ #111 0x81207ac8 in ?? ()
+ #112 0xdeadbeef in ?? ()
+ #113 0xdeadbeef in ?? ()
+ #114 0xdeadbeef in ?? ()
+ #115 0xdeadbeef in ?? ()
+ #116 0xdeadbeef in ?? ()
+ #117 0x81207ae0 in ?? ()
+ #118 0xdeadbeef in ?? ()
+ #119 0xdeadbeef in ?? ()
+ ---Type &lt;return&gt; to continue, or q &lt;return&gt; to quit---
+ #120 0xdeadbeef in ?? ()
+ #121 0xdeadbeef in ?? ()
+ #122 0xdeadbeef in ?? ()
+ #123 0x81207af8 in ?? ()
+ #124 0xdeadbeef in ?? ()
+ #125 0xdeadbeef in ?? ()
+ #126 0xdeadbeef in ?? ()
+ #127 0xdeadbeef in ?? ()
+ #128 0xdeadbeef in ?? ()
+ #129 0x81207b10 in ?? ()
+ #130 0xdeadbeef in ?? ()
+ #131 0xdeadbeef in ?? ()
+ #132 0xdeadbeef in ?? ()
+ #133 0xdeadbeef in ?? ()
+ #134 0xdeadbeef in ?? ()
+ #135 0x81207b28 in ?? ()
+ #136 0xdeadbeef in ?? ()
+ #137 0xdeadbeef in ?? ()
+ #138 0xdeadbeef in ?? ()
+ #139 0xdeadbeef in ?? ()
+ #140 0xdeadbeef in ?? ()
+ #141 0x81207b40 in ?? ()
+ #142 0xdeadbeef in ?? ()
+ #143 0xdeadbeef in ?? ()
+ ---Type &lt;return&gt; to continue, or q &lt;return&gt; to quit---
+ #144 0xdeadbeef in ?? ()
+ #145 0xdeadbeef in ?? ()
+ #146 0xdeadbeef in ?? ()
+ #147 0x81207b58 in ?? ()
+ #148 0xdeadbeef in ?? ()
+ #149 0xdeadbeef in ?? ()
+ #150 0xdeadbeef in ?? ()
+ #151 0xdeadbeef in ?? ()
+ #152 0xdeadbeef in ?? ()
+ #153 0x81207b70 in ?? ()
+ #154 0xdeadbeef in ?? ()
+ #155 0xdeadbeef in ?? ()
+ #156 0xdeadbeef in ?? ()
+ #157 0xdeadbeef in ?? ()
+ #158 0xdeadbeef in ?? ()
+ #159 0x81207b88 in ?? ()
+ #160 0xdeadbeef in ?? ()
+ #161 0xdeadbeef in ?? ()
+ #162 0xdeadbeef in ?? ()
+ #163 0xdeadbeef in ?? ()
+ #164 0xdeadbeef in ?? ()
+ #165 0x81207ba0 in ?? ()
+ #166 0xdeadbeef in ?? ()
+ #167 0xdeadbeef in ?? ()
+ ---Type &lt;return&gt; to continue, or q &lt;return&gt; to quit---
+ #168 0xdeadbeef in ?? ()
+ #169 0xdeadbeef in ?? ()
+ #170 0xdeadbeef in ?? ()
+ #171 0x81207bb8 in ?? ()
+ #172 0xdeadbeef in ?? ()
+ #173 0xdeadbeef in ?? ()
+ #174 0xdeadbeef in ?? ()
+ #175 0xdeadbeef in ?? ()
+ #176 0xdeadbeef in ?? ()
+ #177 0x81207bd0 in ?? ()
+ #178 0xdeadbeef in ?? ()
+ #179 0xdeadbeef in ?? ()
+ #180 0xdeadbeef in ?? ()
+ #181 0xdeadbeef in ?? ()
+ #182 0xdeadbeef in ?? ()
+ #183 0x81207be8 in ?? ()
+ #184 0xdeadbeef in ?? ()
+ #185 0xdeadbeef in ?? ()
+ #186 0xdeadbeef in ?? ()
+ #187 0xdeadbeef in ?? ()
+ #188 0xdeadbeef in ?? ()
+ #189 0x00227c00 in TBeMenu::~TBeMenu ()
+ #190 0x180cd1d8 in ?? ()
+ #191 0x00000000 in ?? ()
+ ---Type &lt;return&gt; to continue, or q &lt;return&gt; to quit---
+ #192 0x00480e80 in ?? () from /boot/system/lib/libbe.so
+ #193 0x00000000 in ?? ()
+ #194 0x180cd428 in ?? ()
+ #195 0xffd8d8d8 in ?? ()
+ #196 0x003a5cc0 in BView::_CreateSelf () from /boot/system/lib/libbe.so
+ Previous frame inner to this frame (corrupt stack?)
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4455">http://dev.haiku-os.org/ticket/4455</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="020959.html">[Haiku-bugs] [Haiku] #4390: boot fails after 4th icon is lit using default ata stack
+</A></li>
+	<LI>Next message: <A HREF="020962.html">[Haiku-bugs] [Haiku] #4455: Deksbar crashes on mounting	non-boot partition
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20960">[ date ]</a>
+              <a href="thread.html#20960">[ thread ]</a>
+              <a href="subject.html#20960">[ subject ]</a>
+              <a href="author.html#20960">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

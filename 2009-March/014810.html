@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3510: BWindow filters do not receive mouse	clicks
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233510%3A%20BWindow%20filters%20do%20not%20receive%20mouse%0A%09clicks&In-Reply-To=%3C042.8bfe2447bed248bd1c0855221facd1ad%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="014807.html">
+   <LINK REL="Next"  HREF="014811.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3510: BWindow filters do not receive mouse	clicks</H1>
+    <B>matjako</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233510%3A%20BWindow%20filters%20do%20not%20receive%20mouse%0A%09clicks&In-Reply-To=%3C042.8bfe2447bed248bd1c0855221facd1ad%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3510: BWindow filters do not receive mouse	clicks">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Mar  2 09:59:06 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="014807.html">[Haiku-bugs] [Haiku] #3449: Libraries installed with Net Surf cause trouble with Haiku built Firefox
+</A></li>
+        <LI>Next message: <A HREF="014811.html">[Haiku-bugs] [Haiku] #3511: gcc-4.3.3-haiku-090129 forbids undefined symbols in shared libraries
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14810">[ date ]</a>
+              <a href="thread.html#14810">[ thread ]</a>
+              <a href="subject.html#14810">[ subject ]</a>
+              <a href="author.html#14810">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3510: BWindow filters do not receive mouse clicks
+----------------------------------+-----------------------------------------
+ Reporter:  matjako               |       Owner:  axeld         
+     Type:  bug                   |      Status:  new           
+ Priority:  normal                |   Milestone:  R1            
+Component:  Kits/Application Kit  |     Version:  R1 development
+Blockedby:                        |    Platform:  All           
+ Blocking:                        |  
+----------------------------------+-----------------------------------------
+ A filter added to a BWindow instance with AddCommonFilter() does not
+ receive B_MOUSE_DOWN and B_MOUSE_UP messages, but it _does_ receive
+ B_MOUSE_MOVED. That inhibits simple implementation of a mouse capture
+ filter etc.
+
+ EXPECTED BEHAVIOUR
+
+ Like in BeOS R5 - all mouse messages are passed to a filter added to a
+ BLooper.
+
+ STEPS TO REPRODUCE
+
+ Take any application with a window and some views in it and add a common
+ filter to that window. Like so:
+
+ //... in window init
+
+ AddCommonFilter(new BMessageFilter(B_ANY_DELIVERY, B_LOCAL_SOURCE,
+ pass_thru_filter);
+
+ //...
+
+ filter_result pass_thru_filter(BMessage *message, BHandler **target,
+ BMessageFilter *messageFilter)
+ {
+     message-&gt;PrintToStream();
+     return B_DISPATCH_MESSAGE;
+ }
+
+ Run in Terminal. Click and hover over views in the window - only
+ B_MOUSE_MOVED messages print out, mouse clicks appear to be MIA.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3510">http://dev.haiku-os.org/ticket/3510</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="014807.html">[Haiku-bugs] [Haiku] #3449: Libraries installed with Net Surf cause trouble with Haiku built Firefox
+</A></li>
+	<LI>Next message: <A HREF="014811.html">[Haiku-bugs] [Haiku] #3511: gcc-4.3.3-haiku-090129 forbids undefined symbols in shared libraries
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14810">[ date ]</a>
+              <a href="thread.html#14810">[ thread ]</a>
+              <a href="subject.html#14810">[ subject ]</a>
+              <a href="author.html#14810">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

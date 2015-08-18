@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2973: ps2 driver recognizes 4 mices on	laptop
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232973%3A%20ps2%20driver%20recognizes%204%20mices%20on%0A%09laptop&In-Reply-To=%3C054.442e21e96638c61b84d43476674c8528%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011669.html">
+   <LINK REL="Next"  HREF="011682.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2973: ps2 driver recognizes 4 mices on	laptop</H1>
+    <B>stippi</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232973%3A%20ps2%20driver%20recognizes%204%20mices%20on%0A%09laptop&In-Reply-To=%3C054.442e21e96638c61b84d43476674c8528%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2973: ps2 driver recognizes 4 mices on	laptop">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Oct 28 11:54:37 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011669.html">[Haiku-bugs] [Haiku] #2973: ps2 driver recognizes 4 mices on	laptop
+</A></li>
+        <LI>Next message: <A HREF="011682.html">[Haiku-bugs] [Haiku] #2973: ps2 driver recognizes 4 mices on	laptop
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11677">[ date ]</a>
+              <a href="thread.html#11677">[ thread ]</a>
+              <a href="subject.html#11677">[ subject ]</a>
+              <a href="author.html#11677">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2973: ps2 driver recognizes 4 mices on laptop
+--------------------------------+-------------------------------------------
+  Reporter:  jackburton         |       Owner:  marcusoverhagen
+      Type:  bug                |      Status:  new            
+  Priority:  normal             |   Milestone:  R1             
+ Component:  Drivers/Mouse/PS2  |     Version:  R1 development 
+Resolution:                     |   Blockedby:                 
+  Platform:  All                |    Blocking:                 
+--------------------------------+-------------------------------------------
+
+Comment(by stippi):
+
+ The Wacom device running is my fault... seems I misunderstood
+ RegisterDevices() at the time I wrote the add-on. The Wacom add-on
+ registers one device type and is &quot;running&quot;, even though there are no child
+ devices. The mouse and keyboard add-ons do this differently and register
+ each individual child device. Which brings me to the next point: These
+ child devices will actually report a failure from Start(), because opening
+ the devfs device will fail. Then their threads are not running and the
+ latest revision (r28352) should also not report them running anymore. I
+ could maybe change this to UnregisterDevices() for devices that failed to
+ start. Of course, the driver could also be changed not to publish devices
+ that are not there. This currently causes quite a bit of unnecessary
+ things being performed in the input_server at the moment.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2973#comment:5">http://dev.haiku-os.org/ticket/2973#comment:5</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011669.html">[Haiku-bugs] [Haiku] #2973: ps2 driver recognizes 4 mices on	laptop
+</A></li>
+	<LI>Next message: <A HREF="011682.html">[Haiku-bugs] [Haiku] #2973: ps2 driver recognizes 4 mices on	laptop
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11677">[ date ]</a>
+              <a href="thread.html#11677">[ thread ]</a>
+              <a href="subject.html#11677">[ subject ]</a>
+              <a href="author.html#11677">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

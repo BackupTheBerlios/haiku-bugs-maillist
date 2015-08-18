@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1937: libroot: malloc bug - Thread 7445 called debugger(): _numBlocks &gt; 0
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231937%3A%20libroot%3A%20malloc%20bug%20-%20Thread%207445%0A%20called%20debugger%28%29%3A%20_numBlocks%20%3E%200&In-Reply-To=%3C040.96a04433cdbba2b96e60fd80b4cc61a4%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005635.html">
+   <LINK REL="Next"  HREF="005637.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1937: libroot: malloc bug - Thread 7445 called debugger(): _numBlocks &gt; 0</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231937%3A%20libroot%3A%20malloc%20bug%20-%20Thread%207445%0A%20called%20debugger%28%29%3A%20_numBlocks%20%3E%200&In-Reply-To=%3C040.96a04433cdbba2b96e60fd80b4cc61a4%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1937: libroot: malloc bug - Thread 7445 called debugger(): _numBlocks &gt; 0">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Mar 19 02:12:29 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005635.html">[Haiku-bugs] [Haiku] #724: Tracker and Terminal unable to delete files with non-ascii filenames
+</A></li>
+        <LI>Next message: <A HREF="005637.html">[Haiku-bugs] [Haiku] #1937: libroot: malloc bug - Thread 7445 called debugger(): _numBlocks &gt; 0
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5636">[ date ]</a>
+              <a href="thread.html#5636">[ thread ]</a>
+              <a href="subject.html#5636">[ subject ]</a>
+              <a href="author.html#5636">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1937: libroot: malloc bug - Thread 7445 called debugger(): _numBlocks &gt; 0
+-------------------------------+--------------------------------------------
+ Reporter:  thorn              |       Owner:  axeld         
+     Type:  bug                |      Status:  new           
+ Priority:  normal             |   Milestone:  R1            
+Component:  System/libroot.so  |     Version:  R1 development
+ Platform:  x86                |  
+-------------------------------+--------------------------------------------
+ env:
+ haiku - r24413
+ texinfo-4.11 / makeinfo
+
+ backtrace:
+
+ {{{
+
+ This GDB was configured as &quot;i586-pc-haiku&quot;...
+ [tcsetpgrp failed in terminal_inferior: Invalid Argument]
+ Thread 7445 called debugger(): _numBlocks &gt; 0
+ Reading symbols from /boot/beos/system/lib/libroot.so...done.
+ Loaded symbols for /boot/beos/system/lib/libroot.so
+ [tcsetpgrp failed in terminal_inferior: Invalid Argument]
+ [Switching to team makeinfo -I. ./autoconf.texi --no-split
+ --output=autoconf.info (7445) thread makeinfo (7445)]
+ 0xffff0104 in ?? ()
+ (gdb) bt full
+ #0  0xffff0104 in ?? ()
+ No symbol table info available.
+ #1  0x0026d326 in debugger () from /boot/beos/system/lib/libroot.so
+ No symbol table info available.
+ #2  0x00274491 in __assert_fail () from /boot/beos/system/lib/libroot.so
+ No symbol table info available.
+ #3  0x0027c84c in BPrivate::superblock::isValid ()
+    from /boot/beos/system/lib/libroot.so
+ No symbol table info available.
+ #4  0x0027ac6c in BPrivate::threadHeap::malloc ()
+    from /boot/beos/system/lib/libroot.so
+ No symbol table info available.
+ #5  0x0027b8c1 in malloc () from /boot/beos/system/lib/libroot.so
+ No symbol table info available.
+ #6  0x002371d0 in xmalloc (n=24) at xmalloc.c:50
+         p = (void *) 0x9c
+ #7  0x00225e8e in remember_brace_1 (proc=0x20dcf8 &lt;cm_code&gt;, position=8)
+     at makeinfo.c:2337
+         new = (struct brace_element *) 0x248a14
+ #8  0x00225f7d in remember_brace (proc=0x20dcf8 &lt;cm_code&gt;) at
+ makeinfo.c:2354
+ No locals.
+ #9  0x002255ab in read_command () at makeinfo.c:2075
+         entry = (struct {...} *) 0x245cbc
+         old_text_offset = 86164
+
+ }}}
+
+ and source:
+
+ {{{
+ void *
+ xmalloc (size_t n)
+ {
+   void *p = malloc (n);
+   if (!p &amp;&amp; n != 0)
+     xalloc_die ();
+   return p;
+ }
+
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1937">http://dev.haiku-os.org/ticket/1937</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005635.html">[Haiku-bugs] [Haiku] #724: Tracker and Terminal unable to delete files with non-ascii filenames
+</A></li>
+	<LI>Next message: <A HREF="005637.html">[Haiku-bugs] [Haiku] #1937: libroot: malloc bug - Thread 7445 called debugger(): _numBlocks &gt; 0
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5636">[ date ]</a>
+              <a href="thread.html#5636">[ thread ]</a>
+              <a href="subject.html#5636">[ subject ]</a>
+              <a href="author.html#5636">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

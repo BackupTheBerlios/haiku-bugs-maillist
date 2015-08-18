@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3400: PANIC: could not write back block 6293 (General system error) under heavy load
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-February/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233400%3A%20PANIC%3A%20could%20not%20write%20back%20block%206293%0A%20%28General%20system%20error%29%20under%20heavy%20load&In-Reply-To=%3C038.fd1870744d81b729f67f9cccf604dc44%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="014201.html">
+   <LINK REL="Next"  HREF="014204.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3400: PANIC: could not write back block 6293 (General system error) under heavy load</H1>
+    <B>oco</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233400%3A%20PANIC%3A%20could%20not%20write%20back%20block%206293%0A%20%28General%20system%20error%29%20under%20heavy%20load&In-Reply-To=%3C038.fd1870744d81b729f67f9cccf604dc44%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3400: PANIC: could not write back block 6293 (General system error) under heavy load">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Feb  1 22:19:28 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="014201.html">[Haiku-bugs] [Haiku] #1948: Make dl*() Functions Standard	Compliant
+</A></li>
+        <LI>Next message: <A HREF="014204.html">[Haiku-bugs] [Haiku] #3401: the Magnify application crashes at	launch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14202">[ date ]</a>
+              <a href="thread.html#14202">[ thread ]</a>
+              <a href="subject.html#14202">[ subject ]</a>
+              <a href="author.html#14202">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3400: PANIC: could not write back block 6293 (General system error) under heavy
+load
+---------------------+------------------------------------------------------
+ Reporter:  oco      |       Owner:  axeld         
+     Type:  bug      |      Status:  new           
+ Priority:  normal   |   Milestone:  R1            
+Component:  Add-Ons  |     Version:  R1 development
+Blockedby:           |    Platform:  All           
+ Blocking:           |  
+---------------------+------------------------------------------------------
+ It used to be an operation timed out, but i have added
+
+ '''result =''' acquire_sem_etc(device-&gt;notify, 1, B_RELATIVE_TIMEOUT, 0);
+
+ in usb_disk_transfer_data.
+ I have also increased the timeout to 5000000.
+ I am not sure if it is a good idea (i am a newbie in this area). It was to
+ get rid of the &quot;acquire_sem failed while waiting for data transfer&quot;
+ message.
+
+ The problem occur while running the freepascal test suite on a partition
+ on the USB drive. I can reproduce the problem each time. The test suite
+ run ok on an IDE partition.
+
+ Now, the syslog show this :
+
+ usb_disk: sending or receiving of the data failed[[BR]]
+ usb error control pipe 19: timeout wainting for queued request to
+ complete[[BR]]
+ usb error control pipe 19: timeout wainting for queued request to
+ complete[[BR]]
+ usb error control pipe 19: timeout wainting for queued request to
+ complete[[BR]]
+ usb_disk: write fails with 0xffffffff[[BR]]
+ usb error control pipe 19: timeout wainting for queued request to
+ complete[[BR]]
+ usb error control pipe 19: timeout wainting for queued request to
+ complete[[BR]]
+ usb error control pipe 19: timeout wainting for queued request to
+ complete[[BR]]
+ usb_disk: read fails with 0xffffffff[[BR]]
+ file_cache: read pages failed: General system error[[BR]]
+ usb_disk: sending the command block wrapper failed[[BR]]
+ usb error control pipe 19: timeout waiting for queud request to
+ complete[[BR]]
+ usb error control pipe 19: timeout waiting for queud request to
+ complete[[BR]]
+ usb error control pipe 19: timeout waiting for queud request to
+ complete[[BR]]
+ usb_disk: write fails with 0xffffffff[[BR]]
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3400">http://dev.haiku-os.org/ticket/3400</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="014201.html">[Haiku-bugs] [Haiku] #1948: Make dl*() Functions Standard	Compliant
+</A></li>
+	<LI>Next message: <A HREF="014204.html">[Haiku-bugs] [Haiku] #3401: the Magnify application crashes at	launch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14202">[ date ]</a>
+              <a href="thread.html#14202">[ thread ]</a>
+              <a href="subject.html#14202">[ subject ]</a>
+              <a href="author.html#14202">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

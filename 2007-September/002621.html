@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1389: [FlattenPictureTest] Not all tests	succeed
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231389%3A%20%5BFlattenPictureTest%5D%20Not%20all%20tests%0A%09succeed&In-Reply-To=%3C051.64973428c4cd5f60f938a9f859041800%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002620.html">
+   <LINK REL="Next"  HREF="002622.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1389: [FlattenPictureTest] Not all tests	succeed</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231389%3A%20%5BFlattenPictureTest%5D%20Not%20all%20tests%0A%09succeed&In-Reply-To=%3C051.64973428c4cd5f60f938a9f859041800%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1389: [FlattenPictureTest] Not all tests	succeed">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Sep  6 18:15:55 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002620.html">[Haiku-bugs] [Haiku] #1457: Build tools fails to build for	`x86_64-unknown'
+</A></li>
+        <LI>Next message: <A HREF="002622.html">[Haiku-bugs] [Haiku] #1458: Circle borders are rendered different	in Tracker
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2621">[ date ]</a>
+              <a href="thread.html#2621">[ thread ]</a>
+              <a href="subject.html#2621">[ subject ]</a>
+              <a href="author.html#2621">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1389: [FlattenPictureTest] Not all tests succeed
+---------------------------------+------------------------------------------
+  Reporter:  laplace             |       Owner:  jackburton    
+      Type:  bug                 |      Status:  assigned      
+  Priority:  normal              |   Milestone:  R1            
+ Component:  Kits/Interface Kit  |     Version:  R1 development
+Resolution:                      |    Platform:  All           
+---------------------------------+------------------------------------------
+Comment (by laplace):
+
+ I have no idea what's causing this. However I suppose its a Haiku bug,
+ since this does not happen under BeOS.
+
+ The following tests still fail always:
+ - SetPenSize - the line with size 0 is not drawn
+ - SetPenSize2 - the line with size 4 before scaling with 0.5 is not drawn
+
+ These tests do not fail, but the result is not rendered correctly:
+ - DrawLargeBitmap - the 1024x768 bitmap is not drawn
+
+ BTW I have fixed the issue drawing the results. Actually this is a
+ workaround. Now the drawing mode is set to B_OP_COPY in
+ TestResultItem::DrawItem() before any drawing operations.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1389#comment:10">http://dev.haiku-os.org/ticket/1389#comment:10</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002620.html">[Haiku-bugs] [Haiku] #1457: Build tools fails to build for	`x86_64-unknown'
+</A></li>
+	<LI>Next message: <A HREF="002622.html">[Haiku-bugs] [Haiku] #1458: Circle borders are rendered different	in Tracker
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2621">[ date ]</a>
+              <a href="thread.html#2621">[ thread ]</a>
+              <a href="subject.html#2621">[ subject ]</a>
+              <a href="author.html#2621">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

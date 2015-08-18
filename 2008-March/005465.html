@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1711: Haiku stops booting at allocate_commpage_entry(4, 34)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231711%3A%20Haiku%20stops%20booting%20at%0A%20allocate_commpage_entry%284%2C%2034%29&In-Reply-To=%3C048.0fe8566cd6e486b6ae7fe6a4ac28d720%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005464.html">
+   <LINK REL="Next"  HREF="005467.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1711: Haiku stops booting at allocate_commpage_entry(4, 34)</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231711%3A%20Haiku%20stops%20booting%20at%0A%20allocate_commpage_entry%284%2C%2034%29&In-Reply-To=%3C048.0fe8566cd6e486b6ae7fe6a4ac28d720%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1711: Haiku stops booting at allocate_commpage_entry(4, 34)">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Mar 10 03:35:04 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005464.html">[Haiku-bugs] [Haiku] #1799: sh: child setpgid (216 to 215): Operation not allowed
+</A></li>
+        <LI>Next message: <A HREF="005467.html">[Haiku-bugs] [Haiku] #1836: OpenGL output not visible on	screenshots
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5465">[ date ]</a>
+              <a href="thread.html#5465">[ thread ]</a>
+              <a href="subject.html#5465">[ subject ]</a>
+              <a href="author.html#5465">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1711: Haiku stops booting at allocate_commpage_entry(4, 34)
+----------------------------+-----------------------------------------------
+  Reporter:  euan           |       Owner:  korli         
+      Type:  bug            |      Status:  new           
+  Priority:  critical       |   Milestone:  R1            
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |    Platform:  All           
+----------------------------+-----------------------------------------------
+Comment (by dustin howett):
+
+ Haiku fails to boot when i have 3GB of RAM in my system (128 is shared
+ video ram), but works with 1 or 2 GB.
+ Linux MTRRs:
+ {{{
+ reg00: base=0x00000000 (   0MB), size=2048MB: write-back, count=1
+ reg01: base=0x80000000 (2048MB), size= 512MB: write-back, count=1
+ reg02: base=0xa0000000 (2560MB), size= 128MB: write-back, count=1
+ reg03: base=0xc0000000 (3072MB), size= 128MB: write-combining, count=1
+ }}}
+
+ Haiku MTRRs:
+ {{{
+ 0: base=0x00000000, size = 2048 MB.
+ 1: base=0x80000000, size = 1024 MB.
+ 2: base=0xc0000000, size = 1 MB.
+ }}}
+
+ {{{
+ (08:41:35 PM) DHowett: geist: Haiku's adds up to 3gb.. linux up to less
+ than that but i take that to be related to my 128 mb shared video ram
+ (08:43:33 PM) geist: could be
+ (08:43:45 PM) geist: yeah, bet haiku is marking over the video ram as
+ regular mem
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1711#comment:19">http://dev.haiku-os.org/ticket/1711#comment:19</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005464.html">[Haiku-bugs] [Haiku] #1799: sh: child setpgid (216 to 215): Operation not allowed
+</A></li>
+	<LI>Next message: <A HREF="005467.html">[Haiku-bugs] [Haiku] #1836: OpenGL output not visible on	screenshots
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5465">[ date ]</a>
+              <a href="thread.html#5465">[ thread ]</a>
+              <a href="subject.html#5465">[ subject ]</a>
+              <a href="author.html#5465">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

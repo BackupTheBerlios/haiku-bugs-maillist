@@ -1,0 +1,159 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4445: MIDI System Exclusive handling is inconsistent (and BeOS incompatible)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234445%3A%20MIDI%20System%20Exclusive%20handling%20is%0A%20inconsistent%20%28and%20BeOS%20incompatible%29&In-Reply-To=%3C048.d123de4b9baaa7388e65d9bf210a0126%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="020902.html">
+   <LINK REL="Next"  HREF="021041.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4445: MIDI System Exclusive handling is inconsistent (and BeOS incompatible)</H1>
+    <B>phoudoin</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234445%3A%20MIDI%20System%20Exclusive%20handling%20is%0A%20inconsistent%20%28and%20BeOS%20incompatible%29&In-Reply-To=%3C048.d123de4b9baaa7388e65d9bf210a0126%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4445: MIDI System Exclusive handling is inconsistent (and BeOS incompatible)">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Sep  9 16:17:48 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="020902.html">[Haiku-bugs] [Haiku] #4445: MIDI System Exclusive handling is inconsistent (and BeOS incompatible)
+</A></li>
+        <LI>Next message: <A HREF="021041.html">[Haiku-bugs] [Haiku] #4445: MIDI System Exclusive handling is inconsistent (and BeOS incompatible)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21000">[ date ]</a>
+              <a href="thread.html#21000">[ thread ]</a>
+              <a href="subject.html#21000">[ subject ]</a>
+              <a href="author.html#21000">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4445: MIDI System Exclusive handling is inconsistent (and BeOS incompatible)
+---------------------------------+------------------------------------------
+ Reporter:  Pete                 |       Owner:  korli         
+     Type:  bug                  |      Status:  new           
+ Priority:  normal               |   Milestone:  R1            
+Component:  Servers/midi_server  |     Version:  R1 development
+Blockedby:                       |    Platform:  All           
+ Blocking:                       |  
+---------------------------------+------------------------------------------
+
+Comment(by phoudoin):
+
+ Try to modify src/servers/midi/PortDrivers.cpp that way (changes between
+ &gt;&gt;&gt; &amp; &lt;&lt;&lt;)
+
+
+ {{{
+ !cpp
+ int32 MidiPortProducer::GetData()
+ {
+ [...]
+
+     while (keepRunning)
+     {
+         if (read(fd, &amp;next, 1) != 1)
+         {
+             perror(&quot;Error reading data from driver&quot;);
+             if (haveSysEx)
+             {
+                 free(sysexBuf);
+             }
+             return B_ERROR;
+         }
+
+ &gt;&gt;&gt;     if (haveSysEx &amp;&amp; next &lt; 0x80)  // System Exclusive data byte
+         {
+              sysexBuf[sysexSize++] = next;
+              if (sysexSize == sysexAlloc)
+              {
+                  sysexAlloc *= 2;
+                  sysexBuf = (uint8*) realloc(sysexBuf, sysexAlloc);
+              }
+              continue;
+         }
+ &lt;&lt;&lt;
+         if ((next &amp; 0xF8) == 0xF8)  // System Realtime
+         {
+              SpraySystemRealTime(next);
+         }
+         else if ((next &amp; 0xF0) == 0xF0)  // System Common
+         {
+              runningStatus = 0;
+              msgBuf[0] = next;
+              msgPtr = msgBuf + 1;
+              switch (next)
+              {
+                  case B_SYS_EX_START:
+                      sysexAlloc = 4096;
+                      sysexBuf = (uint8*) malloc(sysexAlloc);
+ &gt;&gt;&gt;
+                      // sysexBuf[0] = next;
+                      sysexSize = 0; // 1;
+ &lt;&lt;&lt;
+                      haveSysEx = true;
+                      break;
+
+                  case B_SONG_POSITION:
+                      needed = 2;
+                      msgSize = 3;
+                      break;
+
+                  case B_MIDI_TIME_CODE:
+                  case B_SONG_SELECT:
+                  case B_CABLE_MESSAGE:
+                      needed = 1;
+                      msgSize = 2;
+                      break;
+
+ &gt;&gt;&gt;              case B_SYS_EX_END:
+                      if (haveSysEx)
+                      {
+                          SpraySystemExclusive(sysexBuf, sysexSize);
+                          haveSysEx = false;
+                      }
+                      break;
+
+                  case B_TUNE_REQUEST:
+ &lt;&lt;&lt;                  SpraySystemCommon(next, 0, 0);
+                      break;
+              }
+ [...]
+
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4445#comment:3">http://dev.haiku-os.org/ticket/4445#comment:3</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="020902.html">[Haiku-bugs] [Haiku] #4445: MIDI System Exclusive handling is inconsistent (and BeOS incompatible)
+</A></li>
+	<LI>Next message: <A HREF="021041.html">[Haiku-bugs] [Haiku] #4445: MIDI System Exclusive handling is inconsistent (and BeOS incompatible)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21000">[ date ]</a>
+              <a href="thread.html#21000">[ thread ]</a>
+              <a href="subject.html#21000">[ subject ]</a>
+              <a href="author.html#21000">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

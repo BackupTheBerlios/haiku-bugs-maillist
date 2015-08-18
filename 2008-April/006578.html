@@ -1,0 +1,160 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2100: the libmicro test program	mallocT2_100k blocks
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232100%3A%20the%20libmicro%20test%20program%0A%09mallocT2_100k%20blocks&In-Reply-To=%3C052.f57d7b8d6b78fd166d60386642c44920%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006577.html">
+   <LINK REL="Next"  HREF="006579.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2100: the libmicro test program	mallocT2_100k blocks</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232100%3A%20the%20libmicro%20test%20program%0A%09mallocT2_100k%20blocks&In-Reply-To=%3C052.f57d7b8d6b78fd166d60386642c44920%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2100: the libmicro test program	mallocT2_100k blocks">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Apr 20 01:19:59 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006577.html">[Haiku-bugs] [Haiku] #2100: the libmicro test program mallocT2_100k	blocks
+</A></li>
+        <LI>Next message: <A HREF="006579.html">[Haiku-bugs] [Haiku] #2100: the libmicro test program	mallocT2_100k blocks
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6578">[ date ]</a>
+              <a href="thread.html#6578">[ thread ]</a>
+              <a href="subject.html#6578">[ subject ]</a>
+              <a href="author.html#6578">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2100: the libmicro test program mallocT2_100k blocks
+------------------------+---------------------------------------------------
+  Reporter:  kaoutsis   |       Owner:  axeld         
+      Type:  bug        |      Status:  new           
+  Priority:  normal     |   Milestone:  R1            
+ Component:  - General  |     Version:  R1 development
+Resolution:             |    Platform:  All           
+------------------------+---------------------------------------------------
+Comment (by kaoutsis):
+
+ while the test program is waiting,
+ entering the KDL, serial gives:
+ {{{
+ kdebug&gt; teams
+ team           id  parent      name
+ 0x90db0000     94  0x90b67780  media_server
+ 0x90b67780      1  0x00000000  kernel_team
+ 0x90db0900     95  0x90b67780  midi_server
+ 0x90f12780    313  0x90f12480  sh
+ 0x90db8000     96  0x90b67780  print_server
+ 0x90f1f780    317  0x90f12780  pe
+ 0x90cb4d80     75  0x90b67780  syslog_daemon
+ 0x90efe180   4263  0x90f12780  malloc
+ 0x90d8bd80     79  0x90cb4900  input_server
+ 0x90caa180     49  0x90b67780  registrar
+ 0x91004480    579  0x90b67780  mail_daemon
+ 0x90f2f300    362  0x90b67780  firefox-bin
+ 0x90e02480    116  0x90db0000  media_addon_server
+ 0x90caa780     54  0x90b67780  debug_server
+ 0x90cb4480     56  0x90b67780  net_server
+ 0x90d7e900     89  0x90b67780  Tracker
+ 0x90cb4900     58  0x90b67780  app_server
+ 0x90d90780     90  0x90b67780  Deskbar
+ 0x90f12480    309  0x90d7e900  Terminal
+ kdebug&gt; team malloc
+ TEAM: 0x90efe180
+ id:          4263 (0x10a7)
+ name:        'malloc'
+ args:        './malloc -1 -E -C 200 -L -S -W -N mallocT2_100k -s 100k -g
+ 10 -'
+ next:        0x00000000
+ parent:      0x90f12780 (id = 313)
+ children:    0x00000000
+ num_threads: 2
+ state:       0
+ flags:       0x1
+ io_context:  0x90f4cb00
+ address_space: 0x90d7fd80
+ main_thread: 0x90e4b800
+ thread_list: 0x90e4a800
+ group_id:    4263
+ session_id:  313
+ kdebug&gt; thread 4263
+ THREAD: 0x90e4b800
+ id:                 4263 (0x10a7)
+ name:               &quot;malloc&quot;
+ all_next:           0x91038000
+ team_next:          0x00000000
+ q_next:             0x90e4a800
+ priority:           10 (next 10)
+ state:              waiting
+ next_state:         waiting
+ cpu:                0x00000000
+ sig_pending:        0x0 (blocked: 0x0)
+ in_kernel:          1
+   sem.blocking:     116912
+   sem.count:        1
+   sem.acquire_status: 0x0
+   sem.flags:        0x5
+ condition variables:
+ fault_handler:      0x00000000
+ args:               0x90cefe80 0x00000000
+ entry:              0x80037b54
+ team:               0x90efe180, &quot;malloc&quot;
+   exit.sem:         116928
+   exit.status:      0x0 (No error)
+   exit.reason:      0x0
+   exit.signal:      0x0
+   exit.waiters:
+ kernel_stack_area:  13017
+ kernel_stack_base:  0x807dd000
+ user_stack_area:    13018
+ user_stack_base:    0x7efe7000
+ user_local_storage: 0x7ffe7000
+ kernel_errno:       0x0 (No error)
+ kernel_time:        4238
+ user_time:          16634
+ flags:              0x0
+ architecture dependant section:
+         esp: 0x807e0de8
+         ss: 0x807e0010
+         fpu_state at 0x90e4bb60
+ kdebug&gt; es
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2100#comment:1">http://dev.haiku-os.org/ticket/2100#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006577.html">[Haiku-bugs] [Haiku] #2100: the libmicro test program mallocT2_100k	blocks
+</A></li>
+	<LI>Next message: <A HREF="006579.html">[Haiku-bugs] [Haiku] #2100: the libmicro test program	mallocT2_100k blocks
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6578">[ date ]</a>
+              <a href="thread.html#6578">[ thread ]</a>
+              <a href="subject.html#6578">[ subject ]</a>
+              <a href="author.html#6578">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1044: USB OHCI support
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231044%3A%20USB%20OHCI%20support&In-Reply-To=%3C054.9ab6d66f9b1af0af14fd22f12e95c42a%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007480.html">
+   <LINK REL="Next"  HREF="007482.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1044: USB OHCI support</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231044%3A%20USB%20OHCI%20support&In-Reply-To=%3C054.9ab6d66f9b1af0af14fd22f12e95c42a%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1044: USB OHCI support">trac at haiku-os.org
+       </A><BR>
+    <I>Tue May 20 17:44:16 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007480.html">[Haiku-bugs] [Haiku] #1044: USB OHCI support
+</A></li>
+        <LI>Next message: <A HREF="007482.html">[Haiku-bugs] [Haiku] #1044: USB OHCI support
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7481">[ date ]</a>
+              <a href="thread.html#7481">[ thread ]</a>
+              <a href="subject.html#7481">[ subject ]</a>
+              <a href="author.html#7481">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1044: USB OHCI support
+--------------------------+-------------------------------------------------
+  Reporter:  wkornewald   |       Owner:  mmlr          
+      Type:  enhancement  |      Status:  assigned      
+  Priority:  blocker      |   Milestone:  R1/alpha1     
+ Component:  Drivers/USB  |     Version:  R1 development
+Resolution:               |    Platform:  All           
+--------------------------+-------------------------------------------------
+Comment (by mmlr):
+
+ Replying to [comment:21 j_freeman]:
+ &gt; Just tested r25573, and it still hangs at the same spot. I'll attach the
+ serial log. If there's anything else I can provide or do, just ask.
+
+ In fact it isn't the same spot. In the first syslog you attached the OHCI
+ didn't seem to be installed at all. Now in the new one it seems to be
+ present. It's interesting though that it hangs with and also without at
+ around the same stage.
+
+ Replying to [comment:22 jackburton]:
+ &gt; If I connect the external USB mouse on my laptop (OHCI), the system
+ hangs.
+
+ Is that if you boot with the mouse connected it hangs, or as soon as you
+ hot-plug the mouse in it hangs?
+
+ What you both could do is enable complete logging of all things USB by
+ adding &quot;#define TRACE_USB&quot; at the top of &quot;/haiku/trunk/src/add-
+ ons/kernel/bus_managers/usb/usb_p.h&quot;. This should give much more details
+ into the processes and might reveal where it actually hangs.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1044#comment:23">http://dev.haiku-os.org/ticket/1044#comment:23</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007480.html">[Haiku-bugs] [Haiku] #1044: USB OHCI support
+</A></li>
+	<LI>Next message: <A HREF="007482.html">[Haiku-bugs] [Haiku] #1044: USB OHCI support
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7481">[ date ]</a>
+              <a href="thread.html#7481">[ thread ]</a>
+              <a href="subject.html#7481">[ subject ]</a>
+              <a href="author.html#7481">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

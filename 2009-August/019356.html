@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4219: Oddities when querying for modified	files
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234219%3A%20Oddities%20when%20querying%20for%20modified%0A%09files&In-Reply-To=%3C044.aa750120d92f01822f9752787dcb7f5f%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="019354.html">
+   <LINK REL="Next"  HREF="019357.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4219: Oddities when querying for modified	files</H1>
+    <B>humdinger</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234219%3A%20Oddities%20when%20querying%20for%20modified%0A%09files&In-Reply-To=%3C044.aa750120d92f01822f9752787dcb7f5f%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4219: Oddities when querying for modified	files">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Aug 11 18:02:24 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="019354.html">[Haiku-bugs] [Haiku] #3033: [vlc] scroll wheel doesn't work in	Preferences
+</A></li>
+        <LI>Next message: <A HREF="019357.html">[Haiku-bugs] [Haiku] #3208: Queries don't work with special	&quot;parsedate&quot; terms
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19356">[ date ]</a>
+              <a href="thread.html#19356">[ thread ]</a>
+              <a href="subject.html#19356">[ subject ]</a>
+              <a href="author.html#19356">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4219: Oddities when querying for modified files
+----------------------------------+-----------------------------------------
+ Reporter:  humdinger             |       Owner:  axeld         
+     Type:  bug                   |      Status:  new           
+ Priority:  normal                |   Milestone:  R1            
+Component:  Applications/Tracker  |     Version:  R1 development
+Blockedby:                        |    Platform:  All           
+ Blocking:                        |  
+----------------------------------+-----------------------------------------
+ This is r32241.
+
+  * Do an &quot;by Attribute&quot; query for all modified files of the past 5 hours
+ (or whatever will return some files), i.e. (last_modified&gt;=%-5 hours%).
+  * Note how many files are returned (in my case 32).
+  * Press ALT+G to edit the query and choose another time that would result
+ in fewer hits (in my case 1 hours, which should return 13 files)
+  * Keep switching between -1 and -5 hours by ALT+G editing the query.
+
+ Sometimes it works as expected, but every so often, hitting the &quot;Search&quot;
+ button will lock the button and the panel will go into a several seconds
+ long pause. When it comes back, the result window hasn't been updated.
+ This bug doesn't appear, if you always close the result window before
+ clicking &quot;Search&quot; (at least in my tries).
+
+ It also seems to only affect queries for the modified attribute. I tried
+ the same with the name attribute and also &quot;by Name&quot; queries, and Artist
+ queries of mp3 files, but those seem to work fine every time.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4219">http://dev.haiku-os.org/ticket/4219</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="019354.html">[Haiku-bugs] [Haiku] #3033: [vlc] scroll wheel doesn't work in	Preferences
+</A></li>
+	<LI>Next message: <A HREF="019357.html">[Haiku-bugs] [Haiku] #3208: Queries don't work with special	&quot;parsedate&quot; terms
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19356">[ date ]</a>
+              <a href="thread.html#19356">[ thread ]</a>
+              <a href="subject.html#19356">[ subject ]</a>
+              <a href="author.html#19356">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

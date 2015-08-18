@@ -1,0 +1,158 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4053: USB MIDI not recognized dynamically
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234053%3A%20USB%20MIDI%20not%20recognized%20dynamically&In-Reply-To=%3C048.7edc378d1d6bfdcc114d72d95a78cf11%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="022680.html">
+   <LINK REL="Next"  HREF="022522.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4053: USB MIDI not recognized dynamically</H1>
+    <B>Pete</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234053%3A%20USB%20MIDI%20not%20recognized%20dynamically&In-Reply-To=%3C048.7edc378d1d6bfdcc114d72d95a78cf11%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4053: USB MIDI not recognized dynamically">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Oct  7 04:20:49 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="022680.html">[Haiku-bugs] [Haiku] #4738: enable tui mode in gdb
+</A></li>
+        <LI>Next message: <A HREF="022522.html">[Haiku-bugs] [Haiku] #2789: writing to usb disks fail after 10-100Mb of writing files
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22520">[ date ]</a>
+              <a href="thread.html#22520">[ thread ]</a>
+              <a href="subject.html#22520">[ subject ]</a>
+              <a href="author.html#22520">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4053: USB MIDI not recognized dynamically
+---------------------------------+------------------------------------------
+ Reporter:  Pete                 |       Owner:  phoudoin     
+     Type:  bug                  |      Status:  assigned     
+ Priority:  normal               |   Milestone:  R1           
+Component:  Servers/midi_server  |     Version:  R1/pre-alpha1
+Blockedby:                       |    Platform:  All          
+ Blocking:                       |  
+---------------------------------+------------------------------------------
+
+Comment(by Pete):
+
+ Replying to [comment:36 mmlr]:
+ &gt; Replying to [comment:35 Pete]:
+ &gt; The free hook is supposed to be called only after all open handles have
+ been close()d and all other calls like read/write/ioctl have completed. So
+ if there is still an open count in the free hook or access to the device
+ after the free hook returned that'd be a bug in the devfs code for legacy
+ drivers.
+
+ I'm afraid I got fairly confused trying to track the order of occurrences,
+ especially as the dprintfs often seemed to ''cause'' the page faults.  I'm
+ checking the open count in the free hook (as well as checking the active
+ flag) and with printouts enabled these seemed to be correct.
+
+ I'm not sure how to dig deeper.  I tried to recompile just the kernel
+ (from the slightly older sources I currently have) with some dprintfs in
+ legacy_drivers.cpp, but I got a (repeating!) page fault at boot.  I assume
+ I should be able to do that if everything matches (?) so I'll try again
+ when I get the alpha release and matching sources installed.
+
+ &gt;
+ &gt; &gt; I think this is because publish_devices is not invoked when the device
+ is finally removed; when it is called in response to a new device things
+ get corrected.
+ &gt;
+ &gt; Any add/remove of a device that matches the support descriptors of your
+ driver will also cause a rescan of the driver to happen. It should in that
+ case call publish_devices also after the unplug. That requires that you
+ have the list updated before returning from the device_removed hook you
+ provide. Again, if this doesn't work there might be a bug in the devfs
+ code.
+ Again, I'm not sure of the exact sequence, or what actually triggers the
+ call to publish_devices.  And I'm not sure what you mean by the
+ 'device_removed hook' -- I don't find that in the set of hooks.  There's a
+ 'close', a 'free', and an 'uninit_driver'.
+
+ 'remove_device_info' (in devlist.c) gets called (now) in 'usb_midi_close',
+ and adjusts the driver's own list of names (ready to be published), but
+ doesn't trigger any external action.  Then 'remove_device' gets called in
+ 'usb_midi_free'.  So it does rather sound to me as if 'publish_devices is
+ not getting invoked when it should be.
+
+ &gt;
+ &gt; &gt; I think I can live with this, but the user will need to be aware of
+ the need to adjust things if they replug the cable.
+ &gt;
+ &gt; Um, they are bugs, so living with them isn't really the way to go ;-)
+ Well, I suppose... (:-)) but I just checked, and Linux does pretty much
+ the same thing -- except that the device ''does'' disappear when
+ unplugged.  Here's what I got:
+
+ {{{
+ [Plug in the USB MIDI cable:]
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">pete at Lys</A>:~$ ls /dev/usbdev*
+ /dev/usbdev1.1_ep00  /dev/usbdev1.2_ep81  /dev/usbdev1.4_ep00
+ /dev/usbdev1.1_ep81  /dev/usbdev1.3_ep00  /dev/usbdev1.4_ep04
+ /dev/usbdev1.2_ep00  /dev/usbdev1.3_ep81  /dev/usbdev1.4_ep86
+ [Unplug it...:]
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">pete at Lys</A>:~$ ls /dev/usbdev*
+ /dev/usbdev1.1_ep00  /dev/usbdev1.2_ep00  /dev/usbdev1.3_ep00
+ /dev/usbdev1.1_ep81  /dev/usbdev1.2_ep81  /dev/usbdev1.3_ep81
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">pete at Lys</A>:~$ ls /dev/usbdev*
+ [and plug it in again...:]
+ /dev/usbdev1.1_ep00  /dev/usbdev1.2_ep81  /dev/usbdev1.6_ep00
+ /dev/usbdev1.1_ep81  /dev/usbdev1.3_ep00  /dev/usbdev1.6_ep04
+ /dev/usbdev1.2_ep00  /dev/usbdev1.3_ep81  /dev/usbdev1.6_ep86
+ }}}
+ The other difference is that alsa itself manages to keep the same 'client
+ number', and also lets you address the device by name.
+
+
+ &gt;
+ &gt; &gt; I've attached a zip of the sources (not a diff) that have changed
+ (since r33202).
+ &gt;
+ &gt; It's generally easier if you avoid attaching zips. That is because the
+ zips can't be viewed inline in the bug tracker.
+ Ah.  OK, sorry.  (I was really intending it for Philippe's use, thinking
+ it might be easier for him to grab and look at.)  I'll attach the source
+ of usb_midi.c, as I think that's the only one that's been affecting the
+ crash.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4053#comment:37">http://dev.haiku-os.org/ticket/4053#comment:37</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="022680.html">[Haiku-bugs] [Haiku] #4738: enable tui mode in gdb
+</A></li>
+	<LI>Next message: <A HREF="022522.html">[Haiku-bugs] [Haiku] #2789: writing to usb disks fail after 10-100Mb of writing files
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22520">[ date ]</a>
+              <a href="thread.html#22520">[ thread ]</a>
+              <a href="subject.html#22520">[ subject ]</a>
+              <a href="author.html#22520">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

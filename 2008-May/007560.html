@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1044: USB OHCI support
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231044%3A%20USB%20OHCI%20support&In-Reply-To=%3C054.ed56a69517950f2d5f7258c9a713d359%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007556.html">
+   <LINK REL="Next"  HREF="007561.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1044: USB OHCI support</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231044%3A%20USB%20OHCI%20support&In-Reply-To=%3C054.ed56a69517950f2d5f7258c9a713d359%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1044: USB OHCI support">trac at haiku-os.org
+       </A><BR>
+    <I>Fri May 23 02:31:09 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007556.html">[Haiku-bugs] [Haiku] #1919: Cursor hangs on startup
+</A></li>
+        <LI>Next message: <A HREF="007561.html">[Haiku-bugs] [Haiku] #1919: Cursor hangs on startup
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7560">[ date ]</a>
+              <a href="thread.html#7560">[ thread ]</a>
+              <a href="subject.html#7560">[ subject ]</a>
+              <a href="author.html#7560">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1044: USB OHCI support
+--------------------------+-------------------------------------------------
+  Reporter:  wkornewald   |       Owner:  mmlr          
+      Type:  enhancement  |      Status:  assigned      
+  Priority:  blocker      |   Milestone:  R1/alpha1     
+ Component:  Drivers/USB  |     Version:  R1 development
+Resolution:               |    Platform:  All           
+--------------------------+-------------------------------------------------
+Comment (by oco):
+
+ Here is the end of the console output when i boot r25614 with USB trace on
+ my laptop (ACER Aspire 1513 LMI). The boot process stop when booting
+ without a card in the flash reader (internally connected through USB) :
+
+ USB Stack: register driver &quot;usb_disk&quot;
+ USB Stack: installing notify hooks for driver &quot;usb_disk&quot;
+ USB Device 2: reporting device
+ USB Device 3: reporting device
+ usb_module: get_configuration(24)
+ usb_module: send_request(24, 0xa1, 0xfe, 0x0000, 0x0000, 1, 0x80281d03,
+ 0x80281d04)
+ usb_disk: device reports a lun count of 1
+ usb_module: queue_bulk(28, 0x80281c68, 31, 0x805236c4, 0x90cb3f80)
+ usb_module: queue_bulk(27, 0x80281cd4, 36, 0x805236c4, 0x90cb3f80)
+ usb_module: queue_bulk(27, 0x80281c58, 13, 0x805236c4, 0x90cb3f80)
+ usb_disk: vendor_identification    &quot;Generic &quot;
+ usb_disk: product_identification   &quot;Flash R/W       &quot;
+ usb_disk: product_revision_level   &quot;2002&quot;
+ usb_module: queue_bulk(28, 0x80281ca8, 31, 0x805236c4, 0x90cb3f80)
+ usb_module: queue_bulk(27, 0x80281c98, 13, 0x805236c4, 0x90cb3f80)
+ usb_disk: operation 0x00 failed at the SCSI level
+ usb_module: queue_bulk(28, 0x80281bc8, 31, 0x805236c4, 0x90cb3f80)
+ usb_module: queue_bulk(27, 0x80281c34, 18, 0x805236c4, 0x90cb3f80)
+ usb_module: queue_bulk(27, 0x80281bb8, 13, 0x805236c4, 0x90cb3f80)
+ usb_module: queue_bulk(28, 0x802813f8, 31, 0x805236c4, 0x90cb3f80)
+ usb_module: queue_bulk(27, 0x802813e8, 13, 0x805236c4, 0x90cb3f80)
+ usb_disk: operation 0x00 failed at the SCSI level
+ usb_module: queue_bulk(28, 0x80281318, 31, 0x805236c4, 0x90cb3f80)
+ usb_module: queue_bulk(27, 0x80281384, 18, 0x805236c4, 0x90cb3f80)
+ usb_module: queue_bulk(27, 0x80281308, 13, 0x805236c4, 0x90cb3f80)
+ usb_module: queue_bulk(28, 0x80281408, 31, 0x805236c4, 0x90cb3f80)
+ usb_module: queue_bulk(27, 0x8028146c, 13, 0x805236c4, 0x90cb3f80)
+ usb_ohci: td error: 0x00000004
+ usb_module: clear_feature(27, 0)
+ usb_module: queue_bulk(27, 0x802813f8, 13, 0x805236c4, 0x90cb3f80)
+
+ If i put a SD card in the reader, Haiku boot fine. And i can even write to
+ the card.
+ I have no serial port on this laptop but i have attached the syslog for
+ the two boot sequences : the first is incomplete because of the freeze.
+ The second (with the card) is ok.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1044#comment:39">http://dev.haiku-os.org/ticket/1044#comment:39</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007556.html">[Haiku-bugs] [Haiku] #1919: Cursor hangs on startup
+</A></li>
+	<LI>Next message: <A HREF="007561.html">[Haiku-bugs] [Haiku] #1919: Cursor hangs on startup
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7560">[ date ]</a>
+              <a href="thread.html#7560">[ thread ]</a>
+              <a href="subject.html#7560">[ subject ]</a>
+              <a href="author.html#7560">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

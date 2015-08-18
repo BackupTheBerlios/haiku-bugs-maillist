@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3124: ls /dev causes a page fault
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233124%3A%20ls%20/dev%20causes%20a%20page%20fault&In-Reply-To=%3C054.6fe9e76217b6be0684fdc826dcb1747b%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012435.html">
+   <LINK REL="Next"  HREF="012441.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3124: ls /dev causes a page fault</H1>
+    <B>apprentice</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233124%3A%20ls%20/dev%20causes%20a%20page%20fault&In-Reply-To=%3C054.6fe9e76217b6be0684fdc826dcb1747b%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3124: ls /dev causes a page fault">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Nov 12 21:50:56 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012435.html">[Haiku-bugs] [Haiku] #3124: ls /dev causes a page fault
+</A></li>
+        <LI>Next message: <A HREF="012441.html">[Haiku-bugs] [Haiku] #3124: ls /dev causes a page fault
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12440">[ date ]</a>
+              <a href="thread.html#12440">[ thread ]</a>
+              <a href="subject.html#12440">[ subject ]</a>
+              <a href="author.html#12440">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3124: ls /dev causes a page fault
+----------------------------+-----------------------------------------------
+  Reporter:  apprentice     |       Owner:  axeld         
+      Type:  bug            |      Status:  new           
+  Priority:  normal         |   Milestone:  R1            
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |   Blockedby:                
+  Platform:  x86            |    Blocking:                
+----------------------------+-----------------------------------------------
+
+Comment(by apprentice):
+
+ -&gt;listdev
+
+ device Multimedia controller (Multimedia audio controller) [4|1|0]
+   vendor 1106: VIA Technologies, Inc.
+   device 3059: VT8233/A/8235/8237 AC97 Audio Controller
+
+ device Mass storage controller (IDE interface) [1|1|8a]
+   vendor 1106: VIA Technologies, Inc.
+   device 0571: VT82C586A/B/VT82C686/A/B/VT823x/A/C PIPC Bus Master IDE
+
+ device Bridge (ISA bridge) [6|1|0]
+   vendor 1106: VIA Technologies, Inc.
+   device 3177: VT8235 ISA Bridge
+
+ device Serial bus controller (USB Controller, EHCI) [c|3|20]
+   vendor 1106: VIA Technologies, Inc.
+   device 3104: USB 2.0
+
+ device Serial bus controller (USB Controller, UHCI) [c|3|0]
+   vendor 1106: VIA Technologies, Inc.
+   device 3038: VT82xxxxx UHCI USB 1.1 Controller
+
+ device Serial bus controller (USB Controller, UHCI) [c|3|0]
+   vendor 1106: VIA Technologies, Inc.
+   device 3038: VT82xxxxx UHCI USB 1.1 Controller
+
+ device Serial bus controller (USB Controller, UHCI) [c|3|0]
+   vendor 1106: VIA Technologies, Inc.
+   device 3038: VT82xxxxx UHCI USB 1.1 Controller
+
+ device Network controller (Ethernet controller) [2|0|0]
+   vendor 10b7: 3Com Corporation
+   device 9001: 3c900 10Mbps Combo [Boomerang]
+
+ device Display controller (VGA compatible controller, VGA controller)
+ [3|0|0]
+   vendor 10de: nVidia Corporation
+   device 0322: NV34 [GeForce FX 5200]
+
+ device Bridge (PCI bridge, Normal decode) [6|4|0]
+   vendor 1106: VIA Technologies, Inc.
+   device b099: VT8366/A/7 [Apollo KT266/A/333 AGP]
+
+ device Bridge (Host bridge) [6|0|0]
+   vendor 1106: VIA Technologies, Inc.
+   device 3099: VT8366/A/7 [Apollo KT266/A/333]
+
+ ----
+
+ Seems that according to listdev the device is loaded and working.
+ If I have time tomorrow I'll remove the card from the mainboard and try to
+ read the contents of the /dev directory again. Can anyone tell me that
+ when the hardware is found but the device driver fails to initialize
+ itself, does it still create the device node. It shouldn't because the
+ device isn't working anyway (Duh!). Maybe it just thinks the device is
+ live and tries to use some structure uninitialized resulting into a null
+ pointer exception that crashes the system. Just poking thin ice, since I
+ don't really know what the kernel does when one tries to access the /dev
+ filesystem...
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3124#comment:2">http://dev.haiku-os.org/ticket/3124#comment:2</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012435.html">[Haiku-bugs] [Haiku] #3124: ls /dev causes a page fault
+</A></li>
+	<LI>Next message: <A HREF="012441.html">[Haiku-bugs] [Haiku] #3124: ls /dev causes a page fault
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12440">[ date ]</a>
+              <a href="thread.html#12440">[ thread ]</a>
+              <a href="subject.html#12440">[ subject ]</a>
+              <a href="author.html#12440">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

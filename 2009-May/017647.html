@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2949: Missing freetype2 headers, the freetype-config tool and its pkg-config files are missing.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232949%3A%20Missing%20freetype2%20headers%2C%0A%20the%20freetype-config%20tool%20and%20its%20pkg-config%20files%20are%20missing.&In-Reply-To=%3C051.caaed6f5f4697aa5658a90fe9998f34d%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="017645.html">
+   <LINK REL="Next"  HREF="017648.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2949: Missing freetype2 headers, the freetype-config tool and its pkg-config files are missing.</H1>
+    <B>korli</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232949%3A%20Missing%20freetype2%20headers%2C%0A%20the%20freetype-config%20tool%20and%20its%20pkg-config%20files%20are%20missing.&In-Reply-To=%3C051.caaed6f5f4697aa5658a90fe9998f34d%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2949: Missing freetype2 headers, the freetype-config tool and its pkg-config files are missing.">trac at haiku-os.org
+       </A><BR>
+    <I>Fri May 29 15:32:28 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="017645.html">[Haiku-bugs] [Haiku] #2949: Missing freetype2 headers, the freetype-config tool and its pkg-config files are missing.
+</A></li>
+        <LI>Next message: <A HREF="017648.html">[Haiku-bugs] [Haiku] #2710: Deadlock between clone_area(), Kernel Area Operation, I/O, and Page Fault
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17647">[ date ]</a>
+              <a href="thread.html#17647">[ thread ]</a>
+              <a href="subject.html#17647">[ subject ]</a>
+              <a href="author.html#17647">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2949: Missing freetype2 headers, the freetype-config tool and its pkg-config
+files are missing.
+-----------------------+----------------------------------------------------
+ Reporter:  scottmc    |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+Blockedby:             |    Platform:  All           
+ Blocking:  3167       |  
+-----------------------+----------------------------------------------------
+
+Comment(by korli):
+
+ Replying to [comment:13 bonefish]:
+ &gt; &gt; Libs reside in /boot/develop/lib/x86/. Should we then customize the
+ script with the arch ?
+ &gt;
+ &gt; I'm not quite sure, what the script is supposed to return. If it is the
+ path for the linker, it should be /boot/develop/lib/x86 (for x86) or more
+ generally /boot/develop/abi/current/lib. If it is the path where the
+ library is located at runtime, it would be /system/lib.
+
+ When used with --libs, it's supposed to return how to link :
+ -L/boot/develop/lib/x86 -lfreetype -lz
+ For the time being, we could use /boot/develop/abi/current/lib then.
+
+ &gt;
+ &gt; Other then that, I think the prefix in the script is incorrect anyway,
+ since with don't install freetype in /boot/common, but in /system.
+
+ Agreed, I committed it as is to have an initial version. I suppose in a
+ Linux environment, runtime and link libraries are at the same place.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2949#comment:14">http://dev.haiku-os.org/ticket/2949#comment:14</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="017645.html">[Haiku-bugs] [Haiku] #2949: Missing freetype2 headers, the freetype-config tool and its pkg-config files are missing.
+</A></li>
+	<LI>Next message: <A HREF="017648.html">[Haiku-bugs] [Haiku] #2710: Deadlock between clone_area(), Kernel Area Operation, I/O, and Page Fault
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17647">[ date ]</a>
+              <a href="thread.html#17647">[ thread ]</a>
+              <a href="subject.html#17647">[ subject ]</a>
+              <a href="author.html#17647">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

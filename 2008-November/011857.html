@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1590: Updated Broadcom Tigon3 ethernet	driver
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231590%3A%20Updated%20Broadcom%20Tigon3%20ethernet%0A%09driver&In-Reply-To=%3C053.1fd6c32ca7ebe6cfb1534fe16fdbada8%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011856.html">
+   <LINK REL="Next"  HREF="011858.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1590: Updated Broadcom Tigon3 ethernet	driver</H1>
+    <B>PieterPanman</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231590%3A%20Updated%20Broadcom%20Tigon3%20ethernet%0A%09driver&In-Reply-To=%3C053.1fd6c32ca7ebe6cfb1534fe16fdbada8%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1590: Updated Broadcom Tigon3 ethernet	driver">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Nov  1 00:45:02 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011856.html">[Haiku-bugs] [Haiku] #3011: Filling Tracker windows with many files takes too long
+</A></li>
+        <LI>Next message: <A HREF="011858.html">[Haiku-bugs] [Haiku] #3013: Bad date in Beam
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11857">[ date ]</a>
+              <a href="thread.html#11857">[ thread ]</a>
+              <a href="subject.html#11857">[ subject ]</a>
+              <a href="author.html#11857">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1590: Updated Broadcom Tigon3 ethernet driver
+------------------------------+---------------------------------------------
+  Reporter:  pieterpan        |       Owner:  axeld         
+      Type:  enhancement      |      Status:  new           
+  Priority:  normal           |   Milestone:  R1            
+ Component:  Drivers/Network  |     Version:  R1 development
+Resolution:                   |   Blockedby:                
+  Platform:  All              |    Blocking:                
+------------------------------+---------------------------------------------
+
+Comment(by PieterPanman):
+
+ Hmm unfortunately it doesn't work yet with my network chip. It does boot
+ properly, and the interrupts seem to be handled. But it does not give an
+ ip address, and setting one manually does not help. I cannot ping, nor go
+ online.
+ To get it to boot, I had to disable my USB drivers, as they also use that
+ irq, and I sometimes get more than 99% vectors unhandled during boot. With
+ USB removed, the broadcom chip only shares the IRQ with AHCI, and it at
+ least boots.
+
+ Relevant syslog output when it boots properly.
+ {{{
+ KERN: src/add-
+ ons/kernel/drivers/network/broadcom_bcm570x/dev/bge/if_bge.c:
+ bge_link_upd: 4428
+ KERN: src/add-
+ ons/kernel/drivers/network/broadcom_bcm570x/dev/bge/if_bge.c:
+ bge_link_upd: 4433
+ KERN: bge_link_upd, sc-&gt;bge_link=0x0
+ }}}
+
+ ifconfig output, after a while. It does not receive responses to dhcp
+ requests, but all of a sudden it did receive 2 packets.
+ {{{
+ loop    Hardware Type: Local Loopback, Address: none
+         inet addr: 127.0.0.1, Mask: 255.0.0.0
+         MTU: 16384, Metric: 0, up loopback link
+         Receive: 0 packets, 0 errors, 0 bytes, 0 mcasts, 0 dropped
+         Transmit: 0 packets, 0 errors, 0 bytes, 0 mcasts, 0 dropped
+         Collisions: 0
+
+ /dev/net/broadcom_bcm570x/0
+         Hardware Type: Ethernet, Address: 00:16:d4:dc:ca:f2
+         inet addr: 192.168.1.101, Bcast: 192.168.255.255, Mask:
+ 255.255.1.0
+         MTU: 1500, Metric: 0, up broadcast auto-configured
+         Receive: 2 packets, 0 errors, 497 bytes, 0 mcasts, 0 dropped
+         Transmit: 44 packets, 0 errors, 4134 bytes, 0 mcasts, 0 dropped
+         Collisions: 0
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1590#comment:25">http://dev.haiku-os.org/ticket/1590#comment:25</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011856.html">[Haiku-bugs] [Haiku] #3011: Filling Tracker windows with many files takes too long
+</A></li>
+	<LI>Next message: <A HREF="011858.html">[Haiku-bugs] [Haiku] #3013: Bad date in Beam
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11857">[ date ]</a>
+              <a href="thread.html#11857">[ thread ]</a>
+              <a href="subject.html#11857">[ subject ]</a>
+              <a href="author.html#11857">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

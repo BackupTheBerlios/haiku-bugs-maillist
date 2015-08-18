@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4752: BSlider chasing its tail
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234752%3A%20BSlider%20chasing%20its%20tail&In-Reply-To=%3C048.07d98acf2d648f3e97d33b20bc2116f8%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="022600.html">
+   <LINK REL="Next"  HREF="022625.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4752: BSlider chasing its tail</H1>
+    <B>Pete</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234752%3A%20BSlider%20chasing%20its%20tail&In-Reply-To=%3C048.07d98acf2d648f3e97d33b20bc2116f8%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4752: BSlider chasing its tail">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Oct 10 21:14:02 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="022600.html">[Haiku-bugs] [Haiku] #4752: BSlider chasing its tail
+</A></li>
+        <LI>Next message: <A HREF="022625.html">[Haiku-bugs] [Haiku] #4752: BSlider chasing its tail
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22609">[ date ]</a>
+              <a href="thread.html#22609">[ thread ]</a>
+              <a href="subject.html#22609">[ subject ]</a>
+              <a href="author.html#22609">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4752: BSlider chasing its tail
+--------------------------------+-------------------------------------------
+ Reporter:  Pete                |       Owner:  axeld        
+     Type:  bug                 |      Status:  new          
+ Priority:  normal              |   Milestone:  R1           
+Component:  Kits/Interface Kit  |     Version:  R1/pre-alpha1
+Blockedby:                      |    Platform:  All          
+ Blocking:                      |  
+--------------------------------+-------------------------------------------
+
+Comment(by Pete):
+
+ Replying to [comment:5 bonefish]:
+ &gt; To clarify my comment: I was identifying SetLimits() and
+ _ReservedSlider4(). The latter is just the old reserved vtable slot
+ function for the newly introduced SetLimits(). It is entered when someone
+ calls SetLimits() on a BSlider subclass compiled against the BeOS R5
+ headers.
+ OK -- I understand now.  (Hadn't looked into C++ vtables much before.)
+
+ Anyway, digging deeper, it became clear what's going on...  Some of those
+ modules haven't been recompiled since R4!  (But always were compatible
+ with R5.)  When I looked at the symbol list in the add-on that was
+ crashing, that area bore little relation to Slider.h in R5!
+
+ So I'll recompile all those old modules in R5 and expect it to cure the
+ problem.  (Eventually recompile in Haiku, of course.)
+
+ &gt; Can you describe a simple test case to reproduce the bug. After
+ unzipping the MusicWeaver zip file I feel utterly lost.
+ Oh dear... (:-/)  Probably why no one else seems to use it.
+ [And it's such a useful app. (:-)) Much more straightforward than the
+ Max/MSP everyone uses on the Mac!]
+
+ Anyway, obviously don't bother at the moment.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4752#comment:6">http://dev.haiku-os.org/ticket/4752#comment:6</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="022600.html">[Haiku-bugs] [Haiku] #4752: BSlider chasing its tail
+</A></li>
+	<LI>Next message: <A HREF="022625.html">[Haiku-bugs] [Haiku] #4752: BSlider chasing its tail
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22609">[ date ]</a>
+              <a href="thread.html#22609">[ thread ]</a>
+              <a href="subject.html#22609">[ subject ]</a>
+              <a href="author.html#22609">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

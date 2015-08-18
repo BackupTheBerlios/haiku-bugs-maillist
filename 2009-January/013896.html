@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2789: writing to usb disks fail after 10-100Mb of writing files
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-January/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232789%3A%20writing%20to%20usb%20disks%20fail%20after%0A%2010-100Mb%20of%20writing%20files&In-Reply-To=%3C051.a967b25c14d20ba96bcc65b51a649ce7%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="013895.html">
+   <LINK REL="Next"  HREF="013897.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2789: writing to usb disks fail after 10-100Mb of writing files</H1>
+    <B>rudolfc</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232789%3A%20writing%20to%20usb%20disks%20fail%20after%0A%2010-100Mb%20of%20writing%20files&In-Reply-To=%3C051.a967b25c14d20ba96bcc65b51a649ce7%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2789: writing to usb disks fail after 10-100Mb of writing files">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Jan 22 19:56:11 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="013895.html">[Haiku-bugs] [Haiku] #3347: PANIC: IORequest::_CopyData(): invalid range: (1837760000, 16320)
+</A></li>
+        <LI>Next message: <A HREF="013897.html">[Haiku-bugs] [Haiku] #2789: writing to usb disks fail after 10-100Mb of writing files
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13896">[ date ]</a>
+              <a href="thread.html#13896">[ thread ]</a>
+              <a href="subject.html#13896">[ subject ]</a>
+              <a href="author.html#13896">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2789: writing to usb disks fail after 10-100Mb of writing files
+---------------------+------------------------------------------------------
+ Reporter:  rudolfc  |       Owner:  mmlr          
+     Type:  bug      |      Status:  assigned      
+ Priority:  normal   |   Milestone:  R1            
+Component:  Drivers  |     Version:  R1 development
+Blockedby:           |    Platform:  x86           
+ Blocking:           |  
+---------------------+------------------------------------------------------
+
+Comment(by rudolfc):
+
+ Just compiled and tested R28980, BTW the AboutSystem app doesn't work for
+ some reason.
+
+ I am typing while still running with a stick inserted, though (all)
+ trouble isn't solved yet.
+ I attached two more files for a succesfull mount and a complete write to
+ stick of all files which make up the haiku system I am now running. A few
+ folders I had to copy back from stick to HD since I (again) mix up copy
+ and move actions in tracker.
+
+ I am still unable to unmount the stick, I'll re-attempt in a few minutes.
+
+ OK: things I see:
+ -first insert of stick: nogo
+ -second insert of stick: it appears in tracker in the mount menu
+ -first and third attempt to mount the stick:
+ I get KDL'd with:
+ Could not read block 1: bytesread: -1, error: operation timed out
+ This message appears three times after which the mount attempt is stopped
+ (stick icon disappears from desktop and system nolonger KDL's). Now I can
+ use Haiku normally  (it does not become unstable)
+ The timeout must be something below or about 1 second or so since I am not
+ aware of waiting time passing by between me selecting mount stick and the
+ KDL happening.
+
+ -second and fourth attempt to mount stick: no KDL's, just the icon
+ onscreen. (as it should).
+ -during the 4th attempt I wrote to and read from the stick as described
+ above. As usual, speed seems normal for some time, then copy comes to a
+ standstill but goes on after some time, slower, and with stopping
+ intervals.
+ -Apart from the slow copy running tracker remains responsive. I can still
+ mount/unmount other HD partitions.
+ -After tracker says it's completed I cannot unmount the stick. (I get the
+ force warning). So it looks like background copying is still running.
+
+ I'll be back shortly with an unmount attempt description.
+
+ Rudolf.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2789#comment:8">http://dev.haiku-os.org/ticket/2789#comment:8</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="013895.html">[Haiku-bugs] [Haiku] #3347: PANIC: IORequest::_CopyData(): invalid range: (1837760000, 16320)
+</A></li>
+	<LI>Next message: <A HREF="013897.html">[Haiku-bugs] [Haiku] #2789: writing to usb disks fail after 10-100Mb of writing files
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13896">[ date ]</a>
+              <a href="thread.html#13896">[ thread ]</a>
+              <a href="subject.html#13896">[ subject ]</a>
+              <a href="author.html#13896">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2998: bcm440x doesn't initialize the NIC
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-December/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232998%3A%20bcm440x%20doesn%27t%20initialize%20the%20NIC&In-Reply-To=%3C051.5124688415ad51dc79c64da4819e4821%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="013240.html">
+   <LINK REL="Next"  HREF="013242.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2998: bcm440x doesn't initialize the NIC</H1>
+    <B>Adek336</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232998%3A%20bcm440x%20doesn%27t%20initialize%20the%20NIC&In-Reply-To=%3C051.5124688415ad51dc79c64da4819e4821%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2998: bcm440x doesn't initialize the NIC">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Dec 21 15:39:23 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="013240.html">[Haiku-bugs] [Haiku] #2998: bcm440x doesn't initialize the NIC
+</A></li>
+        <LI>Next message: <A HREF="013242.html">[Haiku-bugs] [Haiku] #2998: bcm440x doesn't initialize the NIC
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13241">[ date ]</a>
+              <a href="thread.html#13241">[ thread ]</a>
+              <a href="subject.html#13241">[ subject ]</a>
+              <a href="author.html#13241">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2998: bcm440x doesn't initialize the NIC
+------------------------------+---------------------------------------------
+  Reporter:  cssvb94          |       Owner:  axeld         
+      Type:  bug              |      Status:  new           
+  Priority:  normal           |   Milestone:  R1            
+ Component:  Drivers/Network  |     Version:  R1 development
+Resolution:                   |   Blockedby:                
+  Platform:  x86              |    Blocking:                
+------------------------------+---------------------------------------------
+
+Comment(by Adek336):
+
+ Replying to [comment:55 korli]:
+ &gt; It could be interesting to check the memory for the next device on the
+ bus at 0xd0000000 ? It might indicate a bad configuration of the pci-pci
+ bus. Just an idea.
+
+ Haiku
+ {{{
+ 431     KERN: PCI: [dom 0, bus  0] bus   0, device 30, function  0: vendor
+ 8086, device 2448, revision e2
+ 432     KERN: PCI:   class_base 06, class_function 04, class_api 01
+ 433     KERN: PCI:   vendor 8086: Intel Corporation
+ 434     KERN: PCI:   device 2448: 82801 Mobile PCI Bridge
+ 435     KERN: PCI:   info: Bridge (PCI bridge, Subtractive decode)
+ 436     KERN: PCI:   line_size 00, latency 00, header_type 01, BIST 00
+ 437     KERN: PCI:   subsystem_id 0000, subsystem_vendor_id 0050
+ 438     KERN: PCI:   primary_bus 00, secondary_bus 06, subordinate_bus 07,
+ secondary_latency 20
+ 439     KERN: PCI:   io_base_upper_16  0000, io_base  f0
+ 440     KERN: PCI:   io_limit_upper_16 0000, io_limit 00
+ 441     KERN: PCI:   memory_base d000, memory_limit d000
+ 442     KERN: PCI:   prefetchable_memory_base_upper32  00000000,
+ prefetchable_memory_base  fff1
+ 443     KERN: PCI:   prefetchable_memory_limit_upper32 00000000,
+ prefetchable_memory_limit 0001
+ 444     KERN: PCI:   bridge_control 0823, secondary_status 0280
+ 445     KERN: PCI:   interrupt_line ff, interrupt_pin 00
+ 446     KERN: PCI:   ROM base host 00000000, pci 00000000, size ??
+ 447     KERN: PCI:   base reg 0: host 00000000, pci 00000000, size
+ 00000000, flags 00
+ 448     KERN: PCI:   base reg 1: hostKERN:  00000000, pci 00000000, size
+ 00000000, flags 00
+ 449     KERN: PCI:   Capabilities: 0x0d
+ }}}
+
+ Ubuntu
+ {{{
+ 282     00:1e.0 PCI bridge: Intel Corporation 82801 Mobile PCI Bridge (rev
+ e2) (prog-if 01)
+ 283             Control: I/O- Mem+ BusMaster+ SpecCycle- MemWINV-
+ VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx-
+ 284             Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast
+ &gt;TAbort- &lt;TAbort- &lt;MAbort- &gt;SERR- &lt;PERR- INTx-
+ 285             Latency: 0
+ 286             Bus: primary=00, secondary=06, subordinate=0a, sec-
+ latency=32
+ 287             I/O behind bridge: 0000f000-00000fff
+ 288             Memory behind bridge: d0000000-d00fffff
+ 289             Prefetchable memory behind bridge:
+ 00000000fff00000-00000000000fffff
+ 290             Secondary status: 66MHz- FastB2B+ ParErr- DEVSEL=medium
+ &gt;TAbort- &lt;TAbort- &lt;MAbort+ &lt;SERR- &lt;PERR-
+ 291             BridgeCtl: Parity- SERR- NoISA- VGA- MAbort- &gt;Reset-
+ FastB2B-
+ 292                     PriDiscTmr- SecDiscTmr- DiscTmrStat-
+ DiscTmrSERREn-
+ 293             Capabilities: [50] Subsystem: Acer Incorporated [ALI]
+ Device 0090
+ }}}
+
+
+ Given that neither the Atheros NIC, Broadcom NIC or cardbus bridge on pci6
+ seem to talk and that Haiku does not mention the 0xd0000000 - 0xd00fffff
+ range for the bridge, you might be right that the bridge needs more
+ configuring.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2998#comment:60">http://dev.haiku-os.org/ticket/2998#comment:60</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="013240.html">[Haiku-bugs] [Haiku] #2998: bcm440x doesn't initialize the NIC
+</A></li>
+	<LI>Next message: <A HREF="013242.html">[Haiku-bugs] [Haiku] #2998: bcm440x doesn't initialize the NIC
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13241">[ date ]</a>
+              <a href="thread.html#13241">[ thread ]</a>
+              <a href="subject.html#13241">[ subject ]</a>
+              <a href="author.html#13241">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

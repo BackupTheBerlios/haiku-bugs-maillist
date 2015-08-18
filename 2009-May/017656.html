@@ -1,0 +1,143 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3059: implement _IO_feof_unlocked and _IO_ferror_unlocked in libio.h [PATCH]
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233059%3A%20implement%20_IO_feof_unlocked%20and%0A%20_IO_ferror_unlocked%20in%20libio.h%20%5BPATCH%5D&In-Reply-To=%3C051.c24e391b8e9f30d730ce74956ef567c7%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="017655.html">
+   <LINK REL="Next"  HREF="017657.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3059: implement _IO_feof_unlocked and _IO_ferror_unlocked in libio.h [PATCH]</H1>
+    <B>korli</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233059%3A%20implement%20_IO_feof_unlocked%20and%0A%20_IO_ferror_unlocked%20in%20libio.h%20%5BPATCH%5D&In-Reply-To=%3C051.c24e391b8e9f30d730ce74956ef567c7%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3059: implement _IO_feof_unlocked and _IO_ferror_unlocked in libio.h [PATCH]">trac at haiku-os.org
+       </A><BR>
+    <I>Fri May 29 21:48:10 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="017655.html">[Haiku-bugs] [Haiku] #2859: Wesnoth Issues
+</A></li>
+        <LI>Next message: <A HREF="017657.html">[Haiku-bugs] [Haiku] #2859: Wesnoth Issues
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17656">[ date ]</a>
+              <a href="thread.html#17656">[ thread ]</a>
+              <a href="subject.html#17656">[ subject ]</a>
+              <a href="author.html#17656">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3059: implement _IO_feof_unlocked and _IO_ferror_unlocked in libio.h [PATCH]
+--------------------------------+-------------------------------------------
+  Reporter:  kaliber            |       Owner:  axeld         
+      Type:  bug                |      Status:  closed        
+  Priority:  normal             |   Milestone:  R1            
+ Component:  System/libroot.so  |     Version:  R1 development
+Resolution:  fixed              |   Blockedby:                
+  Platform:  All                |    Blocking:                
+--------------------------------+-------------------------------------------
+Changes (by korli):
+
+  * status:  new =&gt; closed
+  * resolution:  =&gt; fixed
+
+
+Old description:
+
+&gt;<i> {{{
+</I>&gt;<i> commit 359d499fd541d6eb43b42ac96c16a008e0d436bc
+</I>&gt;<i> Author: Grzegorz Dabrowski &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">grzegorz.dabrowski at gmail.com</A>&gt;
+</I>&gt;<i> Date:   Sun Nov 2 14:42:36 2008 +0100
+</I>&gt;<i>
+</I>&gt;<i>     implemented _IO_feof_unlocked and _IO_ferror_unlocked
+</I>&gt;<i>
+</I>&gt;<i> diff --git a/headers/posix/libio.h b/headers/posix/libio.h
+</I>&gt;<i> index 83caf1d..f284aec 100644
+</I>&gt;<i> --- a/headers/posix/libio.h
+</I>&gt;<i> +++ b/headers/posix/libio.h
+</I>&gt;<i> @@ -170,9 +170,9 @@ extern &quot;C&quot; {
+</I>&gt;<i>  #endif
+</I>&gt;<i>
+</I>&gt;<i>  extern int _IO_feof(_IO_FILE *stream);
+</I>&gt;<i> -extern int _IO_feof_unlocked(_IO_FILE *stream);
+</I>&gt;<i> +#define    _IO_feof_unlocked(__fp) (((__fp)-&gt;_flags &amp; _IO_EOF_SEEN) !=
+</I>&gt;<i> 0)
+</I>&gt;<i>  extern int _IO_ferror(_IO_FILE *stream);
+</I>&gt;<i> -extern int _IO_ferror_unlocked(_IO_FILE *stream);
+</I>&gt;<i> +#define    _IO_ferror_unlocked(__fp) (((__fp)-&gt;_flags &amp; _IO_ERR_SEEN) !=
+</I>&gt;<i> 0)
+</I>&gt;<i>  extern int _IO_putc(int c, _IO_FILE *stream);
+</I>&gt;<i>  extern int _IO_putc_unlocked(int c, _IO_FILE *stream);
+</I>&gt;<i>  extern int _IO_getc(_IO_FILE *stream);
+</I>&gt;<i> }}}
+</I>
+New description:
+
+ {{{
+ commit 359d499fd541d6eb43b42ac96c16a008e0d436bc
+ Author: Grzegorz Dabrowski &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">grzegorz.dabrowski at gmail.com</A>&gt;
+ Date:   Sun Nov 2 14:42:36 2008 +0100
+
+     implemented _IO_feof_unlocked and _IO_ferror_unlocked
+
+ diff --git a/headers/posix/libio.h b/headers/posix/libio.h
+ index 83caf1d..f284aec 100644
+ --- a/headers/posix/libio.h
+ +++ b/headers/posix/libio.h
+ @@ -170,9 +170,9 @@ extern &quot;C&quot; {
+  #endif
+
+  extern int _IO_feof(_IO_FILE *stream);
+ -extern int _IO_feof_unlocked(_IO_FILE *stream);
+ +#define    _IO_feof_unlocked(__fp) (((__fp)-&gt;_flags &amp; _IO_EOF_SEEN) != 0)
+  extern int _IO_ferror(_IO_FILE *stream);
+ -extern int _IO_ferror_unlocked(_IO_FILE *stream);
+ +#define    _IO_ferror_unlocked(__fp) (((__fp)-&gt;_flags &amp; _IO_ERR_SEEN) !=
+ 0)
+  extern int _IO_putc(int c, _IO_FILE *stream);
+  extern int _IO_putc_unlocked(int c, _IO_FILE *stream);
+  extern int _IO_getc(_IO_FILE *stream);
+ }}}
+
+--
+
+Comment:
+
+ Applied in r30861.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3059#comment:2">http://dev.haiku-os.org/ticket/3059#comment:2</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="017655.html">[Haiku-bugs] [Haiku] #2859: Wesnoth Issues
+</A></li>
+	<LI>Next message: <A HREF="017657.html">[Haiku-bugs] [Haiku] #2859: Wesnoth Issues
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17656">[ date ]</a>
+              <a href="thread.html#17656">[ thread ]</a>
+              <a href="subject.html#17656">[ subject ]</a>
+              <a href="author.html#17656">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

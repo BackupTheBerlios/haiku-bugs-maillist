@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4494: [Terminal] some default color settings are hard to read
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234494%3A%20%5BTerminal%5D%20some%20default%20color%0A%20settings%20are%20hard%20to%20read&In-Reply-To=%3C051.7acb69441fd21ea4d2c935e4d33c6a43%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="023165.html">
+   <LINK REL="Next"  HREF="023173.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4494: [Terminal] some default color settings are hard to read</H1>
+    <B>humdinger</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234494%3A%20%5BTerminal%5D%20some%20default%20color%0A%20settings%20are%20hard%20to%20read&In-Reply-To=%3C051.7acb69441fd21ea4d2c935e4d33c6a43%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4494: [Terminal] some default color settings are hard to read">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Oct 26 17:56:31 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="023165.html">[Haiku-bugs] [Haiku] #4494: [Terminal] some default color settings are hard to read
+</A></li>
+        <LI>Next message: <A HREF="023173.html">[Haiku-bugs] [Haiku] #4411: 7600go, only 16(?) bit depth
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#23168">[ date ]</a>
+              <a href="thread.html#23168">[ thread ]</a>
+              <a href="subject.html#23168">[ subject ]</a>
+              <a href="author.html#23168">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4494: [Terminal] some default color settings are hard to read
+-----------------------------------+----------------------------------------
+ Reporter:  scottmc                |       Owner:  jackburton
+     Type:  bug                    |      Status:  new       
+ Priority:  normal                 |   Milestone:  R1        
+Component:  Applications/Terminal  |     Version:  R1/alpha1 
+Blockedby:                         |    Platform:  All       
+ Blocking:                         |  
+-----------------------------------+----------------------------------------
+
+Comment(by humdinger):
+
+ {{{
+ dircolors -p &gt; /boot/system/etc/.dircolors
+ }}}
+
+ produces a list of the used default colors. I have looked for blue-on-
+ green (34;42) which was only found for STICKY_OTHER_WRITABLE and changed
+ that to black-on-green (30;42).
+
+ Putting
+ {{{
+ eval `dircolors -b /boot/system/etc/.dircolors`
+ }}}
+
+ into /boot/system/etc/profile should load these new color on every
+ Terminal start.
+ I couldn't test, because I couldn't find anything that was blue-on-green
+ to begin with.
+ I attached the slightly altered .dircolors. Maybe someone has another itch
+ to scratch and modifies a few more entries before committing it together
+ with the changes to the profile.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4494#comment:6">http://dev.haiku-os.org/ticket/4494#comment:6</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="023165.html">[Haiku-bugs] [Haiku] #4494: [Terminal] some default color settings are hard to read
+</A></li>
+	<LI>Next message: <A HREF="023173.html">[Haiku-bugs] [Haiku] #4411: 7600go, only 16(?) bit depth
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#23168">[ date ]</a>
+              <a href="thread.html#23168">[ thread ]</a>
+              <a href="subject.html#23168">[ subject ]</a>
+              <a href="author.html#23168">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

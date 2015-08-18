@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3124: ls /dev causes a page fault
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233124%3A%20ls%20/dev%20causes%20a%20page%20fault&In-Reply-To=%3C054.9732cec17f209c5b697aa3d34591ba59%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012640.html">
+   <LINK REL="Next"  HREF="012641.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3124: ls /dev causes a page fault</H1>
+    <B>Adek336</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233124%3A%20ls%20/dev%20causes%20a%20page%20fault&In-Reply-To=%3C054.9732cec17f209c5b697aa3d34591ba59%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3124: ls /dev causes a page fault">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Nov 18 14:39:42 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012640.html">[Haiku-bugs] [Haiku] #3124: ls /dev causes a page fault
+</A></li>
+        <LI>Next message: <A HREF="012641.html">[Haiku-bugs] [Haiku] #3124: ls /dev causes a page fault
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12642">[ date ]</a>
+              <a href="thread.html#12642">[ thread ]</a>
+              <a href="subject.html#12642">[ subject ]</a>
+              <a href="author.html#12642">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3124: ls /dev causes a page fault
+----------------------------+-----------------------------------------------
+  Reporter:  apprentice     |       Owner:  axeld         
+      Type:  bug            |      Status:  new           
+  Priority:  normal         |   Milestone:  R1            
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |   Blockedby:                
+  Platform:  x86            |    Blocking:                
+----------------------------+-----------------------------------------------
+
+Comment(by Adek336):
+
+ Thanks for the note!
+
+ It would be interesting to see how many lines of fix_dirent() are executed
+ before the crash.
+
+ To avoid slowing down the system with the syslog being written to disk,
+ it's better to use ktrace_printf.
+
+ It has to be enabled at build time: create a directory
+ build/user_config_headers, copy the file
+ build/config_headers/tracing_config.h to build/user_config_headers and
+ change the line
+ {{{
+ #  define ENABLE_TRACING 0
+ }}}
+ to
+ {{{
+ #  define ENABLE_TRACING 1
+ }}}
+ . Then you can apply fix_dirent-line-numbers.diff (against
+ src/system/kernel/fs/vfs.cpp) and build.
+
+ Let's also use tracing here:
+
+ {{{
+ in dir_read:
+ -                       dprintf(&quot;dir_read: enter fix_dirent, ioContext=%p,
+ &quot;
+ +                       ktrace_printf(&quot;dir_read: enter fix_dirent,
+ ioContext=%p, &quot;
+                                &quot;vnode=%p, cookie=%p, buffer=%p,
+ bufferSize=0x%x, _count=%p, i=0x%x\n&quot;,
+                                    ioContext, vnode, cookie, buffer,
+ (unsigned)bufferSize, _count, i);
+                        if ( ((unsigned)vnode) &amp;&amp; 0xffff0000 == 0xbeaf0000)
+                                panic(&quot;dir_read: vnode is beafdead&quot;);
+                         error = fix_dirent(vnode, buffer, ioContext,
+ &amp;length);
+ -                       dprintf(&quot;dir_read: leave fix_dirent\n&quot;);
+ +                       ktrace_printf(&quot;dir_read: leave fix_dirent\n&quot;);
+ }}}
+
+ Now with those changes, typing &quot;trac 1&quot; in the debugger gives the first 30
+ messages and typing &quot;trac&quot; gives the next sets of messages, &quot;trac 0&quot; gives
+ the last 30 messages.
+
+ Could you try this changes and see what are the last trace messages? That
+ may shed some light on the problem, thanks for the feedback!
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3124#comment:20">http://dev.haiku-os.org/ticket/3124#comment:20</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012640.html">[Haiku-bugs] [Haiku] #3124: ls /dev causes a page fault
+</A></li>
+	<LI>Next message: <A HREF="012641.html">[Haiku-bugs] [Haiku] #3124: ls /dev causes a page fault
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12642">[ date ]</a>
+              <a href="thread.html#12642">[ thread ]</a>
+              <a href="subject.html#12642">[ subject ]</a>
+              <a href="author.html#12642">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

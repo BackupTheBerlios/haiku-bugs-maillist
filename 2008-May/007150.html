@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2211: KDL: vm_page_fault: unhandled page fault in kernel space at 0xccccccd0, ip 0x80044480
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232211%3A%20KDL%3A%20vm_page_fault%3A%20unhandled%20page%0A%20fault%20in%20kernel%20space%20at%200xccccccd0%2C%20ip%200x80044480&In-Reply-To=%3C043.c03736721dd10f0d6eca1804015f49f9%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007141.html">
+   <LINK REL="Next"  HREF="007152.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2211: KDL: vm_page_fault: unhandled page fault in kernel space at 0xccccccd0, ip 0x80044480</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232211%3A%20KDL%3A%20vm_page_fault%3A%20unhandled%20page%0A%20fault%20in%20kernel%20space%20at%200xccccccd0%2C%20ip%200x80044480&In-Reply-To=%3C043.c03736721dd10f0d6eca1804015f49f9%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2211: KDL: vm_page_fault: unhandled page fault in kernel space at 0xccccccd0, ip 0x80044480">trac at haiku-os.org
+       </A><BR>
+    <I>Wed May  7 18:20:46 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007141.html">[Haiku-bugs] [Haiku] #2061: Installer button always shows	&quot;Begin&quot;
+</A></li>
+        <LI>Next message: <A HREF="007152.html">[Haiku-bugs] [Haiku] #2212: r25309 removed desktop icons from first	boot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7150">[ date ]</a>
+              <a href="thread.html#7150">[ thread ]</a>
+              <a href="subject.html#7150">[ subject ]</a>
+              <a href="author.html#7150">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2211: KDL: vm_page_fault: unhandled page fault in kernel space at 0xccccccd0, ip
+0x80044480
+-----------------------+----------------------------------------------------
+ Reporter:  kaoutsis   |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+ Platform:  All        |  
+-----------------------+----------------------------------------------------
+ where
+ stack trace for thread 9776 &quot;ScreenSaver&quot;
+     kernel stack: 0x93004000 to 0x93008000
+       user stack: 0x7efe7000 to 0x7ffe7000
+ frame            caller     &lt;image&gt;:function + offset
+ 93007ae8 (+  52) 8008baa7   &lt;kernel&gt;:invoke_debugger_command + 0x00cf
+ 93007b1c (+  64) 8008c850   &lt;kernel&gt;:_ParseCommand__16ExpressionParserRi +
+ 0x01f8
+ 93007b5c (+  48) 8008c242
+ &lt;kernel&gt;:EvaluateCommand__16ExpressionParserPCcRi + 0x01de
+ 93007b8c (+ 228) 8008d964   &lt;kernel&gt;:evaluate_debug_command + 0x0088
+ 93007c70 (+  64) 8008a5e2   &lt;kernel&gt;:kernel_debugger_loop__Fv + 0x017a
+ 93007cb0 (+  48) 8008b295   &lt;kernel&gt;:kernel_debugger + 0x010d
+ 93007ce0 (+ 192) 8008b17d   &lt;kernel&gt;:panic + 0x0029
+ 93007da0 (+  64) 800626df   &lt;kernel&gt;:vm_page_fault + 0x00ab
+ 93007de0 (+  64) 80098259   &lt;kernel&gt;:page_fault_exception + 0x00b1
+ 93007e20 (+  12) 8009b93d   &lt;kernel&gt;:int_bottom + 0x001d (nearest)
+ iframe at 0x93007e2c (end = 0x93007e84)
+  eax 0x910ce0f0     ebx 0xcccccccc      ecx 0x7          edx 0x246
+  esi 0x7            edi 0x910ce0f0      ebp 0x93007e94   esp 0x93007e60
+  eip 0x80044480  eflags 0x10286
+  vector: 0xe, error code: 0x0
+ 93007e2c (+ 104) 80044480
+ &lt;kernel&gt;:deselect_select_infos__FP15file_descriptorP11select_info + 0x0014
+ 93007e94 (+  64) 800441f0   &lt;kernel&gt;:remove_fd__FP10io_contexti + 0x00ac
+ 93007ed4 (+  48) 80043f9f   &lt;kernel&gt;:close_fd_index + 0x0017
+ 93007f04 (+  32) 80044a5d   &lt;kernel&gt;:common_close__Fib + 0x0031
+ 93007f24 (+  32) 80045334   &lt;kernel&gt;:_user_close + 0x0018
+ 93007f44 (+ 100) 8009bab2   &lt;kernel&gt;:pre_syscall_debug_done + 0x0002
+ (nearest)
+ iframe at 0x93007fa8 (end = 0x93008000)
+  eax 0x79           ebx 0x72c0e0        ecx 0x7ffd289c   edx 0x910ce0f4
+  esi 0x2a8          edi 0x7             ebp 0x7ffd255c   esp 0x93007fdc
+  eip 0xffff0102  eflags 0x203
+  vector: 0x63, error code: 0x0
+ 93007fa8 (+   0) ffff0102
+ 7ffd255c (+  64) 00577326   &lt;libbe.so&gt;:ReadAttr__C5BNodePCcUlxPvUl +
+ 0x005a
+ 7ffd259c (+1024) 0020a95a   &lt;_APP_&gt;:_term_after + 0x014e (nearest)
+ 7ffd299c (+  48) 0020a9ee   &lt;_APP_&gt;:_term_after + 0x01e2 (nearest)
+ 7ffd29cc (+82416) 0020b57b
+ &lt;_APP_&gt;:RefsReceived__14ScreenSaverAppP8BMessage + 0x0a7f
+ 7ffe6bbc (+ 496) 004aabae
+ &lt;libbe.so&gt;:DispatchMessage__12BApplicationP8BMessageP8BHandler + 0x02b2
+ 7ffe6dac (+  64) 004b51b9   &lt;libbe.so&gt;:task_looper__7BLooper + 0x0211
+ 7ffe6dec (+  64) 004a9535   &lt;libbe.so&gt;:Run__12BApplication + 0x0075
+ 7ffe6e2c (+ 336) 0020bd87   &lt;_APP_&gt;:main + 0x002f
+ 7ffe6f7c (+  48) 0020a72b   &lt;_APP_&gt;:_start + 0x005b
+ 7ffe6fac (+  48) 0010078e   21901:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">runtime_loader_seg0ro at 0x00100000</A> + 0x78e
+ 7ffe6fdc (+   0) 7ffe6fec   21900:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">ScreenSaver_main_stack at 0x7efe7000</A> +
+ 0xffffec
+ kdebug&gt;
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2211">http://dev.haiku-os.org/ticket/2211</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007141.html">[Haiku-bugs] [Haiku] #2061: Installer button always shows	&quot;Begin&quot;
+</A></li>
+	<LI>Next message: <A HREF="007152.html">[Haiku-bugs] [Haiku] #2212: r25309 removed desktop icons from first	boot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7150">[ date ]</a>
+              <a href="thread.html#7150">[ thread ]</a>
+              <a href="subject.html#7150">[ subject ]</a>
+              <a href="author.html#7150">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

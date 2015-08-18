@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2335: Boot failure with PATA disk on ATIIXP SB400 IDE controller
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232335%3A%20Boot%20failure%20with%20PATA%20disk%20on%20ATIIXP%0A%20SB400%20IDE%20controller&In-Reply-To=%3C043.7c284a18643d1fe2f9f95baa73bde8e1%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007811.html">
+   <LINK REL="Next"  HREF="008082.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2335: Boot failure with PATA disk on ATIIXP SB400 IDE controller</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232335%3A%20Boot%20failure%20with%20PATA%20disk%20on%20ATIIXP%0A%20SB400%20IDE%20controller&In-Reply-To=%3C043.7c284a18643d1fe2f9f95baa73bde8e1%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2335: Boot failure with PATA disk on ATIIXP SB400 IDE controller">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Jun  4 09:04:43 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007811.html">[Haiku-bugs] [Haiku] #2310: [StyledEdit] sometimes hangs during	start
+</A></li>
+        <LI>Next message: <A HREF="008082.html">[Haiku-bugs] [Haiku] #2335: Boot failure with PATA disk on ATIIXP SB400 IDE controller
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7812">[ date ]</a>
+              <a href="thread.html#7812">[ thread ]</a>
+              <a href="subject.html#7812">[ subject ]</a>
+              <a href="author.html#7812">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2335: Boot failure with PATA disk on ATIIXP SB400 IDE controller
+--------------------------+-------------------------------------------------
+ Reporter:  drackham      |       Owner:  marcusoverhagen
+     Type:  bug           |      Status:  new            
+ Priority:  normal        |   Milestone:  R1             
+Component:  Drivers/Disk  |     Version:  R1 development 
+ Platform:  All           |  
+--------------------------+-------------------------------------------------
+ I am unable to boot off a PATA disk with an ATIIXP SB400 IDE controller.
+ Booting stops at the disk icon.  Machine is a Gateway with MS-7173
+ motherboard and a single P4 processor.  Last tested with r25799.
+
+ My symptoms sound almost identical to #1444 except that I have no SATA
+ disks and generally disable the SATA controller in the BIOS, although I've
+ also tried with it enabled.  I've tried both the IDE and ATA bus_managers,
+ returning early from pci_fixup, and waiting over a minute for anything to
+ timeout.  I've also tried disabling/disconnecting all non-essential
+ hardware.  I tested every combination of these strategies.
+
+ Sticking dprintf in relevant places suggests that with the ATA bus_manager
+ any call to snooze in ata_reset_bus deadlocks, never returning from
+ scheduler_reschedule.  Likewise, with the IDE bus_manager, the call to
+ acquire_sem_etc in scan_device_int never returns.
+
+ I've attached serial debug output for both bus_managers with
+ TRACE_SCHEDULER enabled.  In both cases, after entering KDL with F12,
+ &quot;threads&quot; shows that all but the idle thread are either snoozing or
+ waiting for a sem.
+
+ Please let me know if additional information would be helpful.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2335">http://dev.haiku-os.org/ticket/2335</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007811.html">[Haiku-bugs] [Haiku] #2310: [StyledEdit] sometimes hangs during	start
+</A></li>
+	<LI>Next message: <A HREF="008082.html">[Haiku-bugs] [Haiku] #2335: Boot failure with PATA disk on ATIIXP SB400 IDE controller
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7812">[ date ]</a>
+              <a href="thread.html#7812">[ thread ]</a>
+              <a href="subject.html#7812">[ subject ]</a>
+              <a href="author.html#7812">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

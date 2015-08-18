@@ -1,0 +1,181 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2008: KDL: when running 'svn up' on	haiku-host (r24742)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232008%3A%20KDL%3A%20when%20running%20%27svn%20up%27%20on%0A%09haiku-host%20%28r24742%29&In-Reply-To=%3C052.4fa7b5f868a4b3cefeda75c479da8981%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006158.html">
+   <LINK REL="Next"  HREF="006161.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2008: KDL: when running 'svn up' on	haiku-host (r24742)</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232008%3A%20KDL%3A%20when%20running%20%27svn%20up%27%20on%0A%09haiku-host%20%28r24742%29&In-Reply-To=%3C052.4fa7b5f868a4b3cefeda75c479da8981%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2008: KDL: when running 'svn up' on	haiku-host (r24742)">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Apr  5 06:26:52 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006158.html">[Haiku-bugs] [Haiku] #2008: KDL: when running 'svn up' on	haiku-host (r24742)
+</A></li>
+        <LI>Next message: <A HREF="006161.html">[Haiku-bugs] [Haiku] #2008: KDL: when running 'svn up' on	haiku-host (r24742)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6159">[ date ]</a>
+              <a href="thread.html#6159">[ thread ]</a>
+              <a href="subject.html#6159">[ subject ]</a>
+              <a href="author.html#6159">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2008: KDL: when running 'svn up' on haiku-host (r24742)
+----------------------------+-----------------------------------------------
+  Reporter:  kaoutsis       |       Owner:  axeld         
+      Type:  bug            |      Status:  reopened      
+  Priority:  blocker        |   Milestone:  R1            
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |    Platform:  All           
+----------------------------+-----------------------------------------------
+Comment (by anevilyak):
+
+ I'm leaving that box in the kernel debugger until I'm asked to try a
+ change :) I can't get anything useful done in Haiku because of that
+ deadlock anyways, so I may as well leave it so I can pull as much useful
+ information about that state as possible. In any case, traces:
+
+ thread 8 -
+ &lt;kernel&gt;:context_switch__FP6threadT0
+ &lt;kernel&gt;:scheduler_reschedule
+ &lt;kernel&gt;:Wait__29PrivateConditionVariableEntryUl
+ &lt;kernel&gt;:wait_for_notifications__FP11block_cache
+ &lt;kernel&gt;:cache_sync_transaction
+ &lt;bfs&gt;:_WriteTransactionToLog__7Journal
+ &lt;bfs&gt;:_FlushLog__7JournalbT1
+ &lt;bfs&gt;:_TransactionListener__7JournalllPv
+ &lt;kernel&gt;:flush_pending_notifications__FP11block_cache
+ &lt;kernel&gt;:flush_pending_notifications__Fv
+ &lt;kernel&gt;:block_notifier_and_writer__FPv
+ &lt;kernel&gt;:_create_kernel_thread_kentry_Fv
+ &lt;kernel&gt;:thread_kthread_exit_Fv
+
+ thread 276:
+ &lt;kernel&gt;context_switch__FP6ThreadT0
+ &lt;kernel&gt;:scheduler_reschedule
+ &lt;kernel&gt;:switch_sem_etc
+ &lt;kernel&gt;:acquire_sem_etc
+ &lt;bfs&gt;:Lock__7JournalP11Transaction
+ &lt;bfs&gt;:Start__11TransactionP6Volumex
+ &lt;bfs&gt;:WriteAt__5InodeR11TransactionxPCUcPUl
+ &lt;bfs&gt;:bfs_write__FPvN20xPCvPUl
+ &lt;kernel&gt;:file_write__FP15file_descriptorxPCvPUl
+ &lt;kernel&gt;:common_user_io__FixPvUlb
+ &lt;kernel&gt;:_user_write
+ &lt;kernel&gt;:pre_syscall_debug_done
+ iframe at 0x94b03fa8 (end = 0x94b04000)
+ eax 0x70 ebx 0x460074 ecx 0x7ffe66dc edx 0xffff0104
+ esi 0x1a48e3b0 edi 0x19f022d8 ebp 0x7ffe6718 esp 0x94b03fdc
+ eip 0xffff0104 eflags 0x203
+ vector: 0x63, error code: 0x0
+ &lt;libapr-1.so&gt;:apr_file_write
+ &lt;snip&gt;lots of layers in APR/LibSVN that I assume is irrelevant here.
+
+ thread 6:
+ &lt;kernel&gt;:context_switch__FP6threadT0
+ &lt;kernel&gt;:scheduler_reschedule
+ &lt;kernel&gt;:switch_sem_etc
+ &lt;kernel&gt;:acquire_sem_etc
+ &lt;bfs&gt;:Lock__7JournalP11Transaction
+ &lt;bfs&gt;:Start__11TransactionP6Volumex
+ &lt;bfs&gt;:bfs_put_vnode__FPvT0b
+ &lt;kernel&gt;:free_vnode__FP5vnodeb
+ &lt;kernel&gt;:dec_vnode_ref_count__FP5vnodeb
+ &lt;kernel&gt;:vnode_low_memoy_handler__FPvl
+ &lt;kernel&gt;:call_handlers__Fl
+ &lt;kernel&gt;:low_memory__FPv
+ &lt;kernel&gt;:_create_kernel_thread_kentry__Fv
+ &lt;kernel&gt;:thread_kthread_exit__Fv
+
+ thread 181:
+ &lt;kernel&gt;:context_switch__FP6threadT0
+ &lt;kernel&gt;:scheduler_reschedule
+ &lt;kernel&gt;:switch_sem_etc
+ &lt;kernel&gt;:acquire_sem_etc
+ &lt;bfs&gt;:Lock__7JournalP11Transaction
+ &lt;bfs&gt;:Start__11TransactionP6Volumex
+ &lt;bfs&gt;:bfs_put_vnode__FPvT0b
+ &lt;kernel&gt;:free_vnode__FP5vnodeb
+ &lt;kernel&gt;:dec_vnode_ref_count__FP5vnodeb
+ &lt;kernel&gt;:fix_dirent__FP5vnodeP6direntP10io_context
+ &lt;kernel&gt;:dir_read__FP10io_contextP5vnodePvP6direntUlPUl
+ &lt;kernel&gt;:dir_read__FP10io_contextP15file_descriptorP6direntUlPUl
+ &lt;kernel&gt;:_user_read_dir
+ &lt;kernel&gt;:pre_syscall_debug_done
+ iframe at 0x94960fa8 (end = 0x94961000)
+ eax 0x73 ebx 0x42c818 ecx 0x70206be0 edx 0xffff0104
+ esi 0x70206c40 edi 0x18117f78 ebp 0x70206c0c esp 0x94960fdc
+ eip 0xffff0104 eflags 0x246
+ vector: 0x63 error code: 0x0
+ &lt;libbe.so&gt;:GetNextRef__10BDirectoryP9entry_ref + 0x008e
+ &lt;snip&gt;
+
+ thread 170:
+ &lt;kernel&gt;:context_switch__FP6threadT0
+ &lt;kernel&gt;:scheduler_reschedule
+ &lt;kernel&gt;:switch_sem_etc
+ &lt;kernel&gt;:acquire_sem_etc
+ &lt;bfs&gt;:Lock__7JournalP11Transaction
+ &lt;bfs&gt;:Start__11TransactionP6Volumex
+ &lt;bfs&gt;:bfs_put_vnode__FPvT0b
+ &lt;kernel&gt;:free_vnode__FP5vnodeb
+ &lt;kernel&gt;:dec_vnode_ref_count__FP5vnodeb
+ &lt;kernel&gt;:dir_free_fd__FP15file_descriptor
+ &lt;kernel&gt;:put_fd
+ &lt;kernel&gt;:common_close
+ &lt;kernel&gt;:_user_close
+ &lt;kernel&gt;:pre_syscall_debug_done
+ iframe at 0x947a9fa8 (end = 0x947aa000)
+ eax 0x77 ebx 0x45f818 ecx 0x700c12e0 edx 0xffff0104
+ esi 0x700c15bc edi 0x700c15bc ebp 0x700c130c esp 0x947a9fdc
+ eip 0xffff0104 eflags 0x207
+ vector: 0x63, error code: 0x0
+ &lt;libbe.so&gt;:_._6BEntry
+ &lt;libbe.so&gt;:_TranslateRef__C7BRosterB9entry_refP9BMimeTypeT1P5BFilePb
+ &lt;snip&gt;
+
+ Let me know if you need me to pull any other info out.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2008#comment:26">http://dev.haiku-os.org/ticket/2008#comment:26</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006158.html">[Haiku-bugs] [Haiku] #2008: KDL: when running 'svn up' on	haiku-host (r24742)
+</A></li>
+	<LI>Next message: <A HREF="006161.html">[Haiku-bugs] [Haiku] #2008: KDL: when running 'svn up' on	haiku-host (r24742)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6159">[ date ]</a>
+              <a href="thread.html#6159">[ thread ]</a>
+              <a href="subject.html#6159">[ subject ]</a>
+              <a href="author.html#6159">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

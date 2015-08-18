@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4940: Block notifier/writer KDL'ed. Called with NULL pointers.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234940%3A%20Block%20notifier/writer%20KDL%27ed.%0A%20Called%20with%20NULL%20pointers.&In-Reply-To=%3C051.ed03446044165c7ffbcc4c47c4e7e7db%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="023722.html">
+   <LINK REL="Next"  HREF="023727.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4940: Block notifier/writer KDL'ed. Called with NULL pointers.</H1>
+    <B>bonefish</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234940%3A%20Block%20notifier/writer%20KDL%27ed.%0A%20Called%20with%20NULL%20pointers.&In-Reply-To=%3C051.ed03446044165c7ffbcc4c47c4e7e7db%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4940: Block notifier/writer KDL'ed. Called with NULL pointers.">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Nov 12 13:14:17 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="023722.html">[Haiku-bugs] [Haiku] #4940: Block notifier/writer KDL'ed. Called with NULL pointers.
+</A></li>
+        <LI>Next message: <A HREF="023727.html">[Haiku-bugs] [Haiku] #4940: Block notifier/writer KDL'ed. Called with NULL pointers.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#23725">[ date ]</a>
+              <a href="thread.html#23725">[ thread ]</a>
+              <a href="subject.html#23725">[ subject ]</a>
+              <a href="author.html#23725">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4940: Block notifier/writer KDL'ed. Called with NULL pointers.
+--------------------------+-------------------------------------------------
+  Reporter:  emitrax      |       Owner:  nobody   
+      Type:  bug          |      Status:  closed   
+  Priority:  normal       |   Milestone:  R1       
+ Component:  Drivers/USB  |     Version:  R1/alpha1
+Resolution:  duplicate    |   Blockedby:  4901     
+  Platform:  All          |    Blocking:           
+--------------------------+-------------------------------------------------
+
+Comment(by bonefish):
+
+ Replying to [comment:5 axeld]:
+ &gt; So what has obviously happened is that the stack frame has not been
+ unwound correctly, therefore it does not show you the actual arguments
+ given.
+
+ The stack frames have been correctly unwound. The problem is that for
+ static functions GCC (4 only?) often uses registers to pass arguments.
+ Unfortunately there's no way to for our kernel debugger to known that
+ short of using the DWARF debug info -- which is neither loaded, nor even
+ built in by default.
+
+ The only real alternative is to force gcc never to pass arguments via
+ registers, which will, of course, neither help performance nor code size.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4940#comment:6">http://dev.haiku-os.org/ticket/4940#comment:6</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="023722.html">[Haiku-bugs] [Haiku] #4940: Block notifier/writer KDL'ed. Called with NULL pointers.
+</A></li>
+	<LI>Next message: <A HREF="023727.html">[Haiku-bugs] [Haiku] #4940: Block notifier/writer KDL'ed. Called with NULL pointers.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#23725">[ date ]</a>
+              <a href="thread.html#23725">[ thread ]</a>
+              <a href="subject.html#23725">[ subject ]</a>
+              <a href="author.html#23725">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

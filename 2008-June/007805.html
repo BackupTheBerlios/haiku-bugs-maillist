@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1883: Showing available jam targets
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231883%3A%20Showing%20available%20jam%20targets&In-Reply-To=%3C051.018bde939620c8b9eeb76a25b8375d32%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007804.html">
+   <LINK REL="Next"  HREF="007806.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1883: Showing available jam targets</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231883%3A%20Showing%20available%20jam%20targets&In-Reply-To=%3C051.018bde939620c8b9eeb76a25b8375d32%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1883: Showing available jam targets">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Jun  2 23:10:22 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007804.html">[Haiku-bugs] [Haiku] #2314: [ProcessController] double clicking it will restart Deskbar.
+</A></li>
+        <LI>Next message: <A HREF="007806.html">[Haiku-bugs] [Haiku] #256: [app_server] strange color conversion
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7805">[ date ]</a>
+              <a href="thread.html#7805">[ thread ]</a>
+              <a href="subject.html#7805">[ subject ]</a>
+              <a href="author.html#7805">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1883: Showing available jam targets
+---------------------------+------------------------------------------------
+  Reporter:  kaliber       |       Owner:  bonefish      
+      Type:  enhancement   |      Status:  new           
+  Priority:  normal        |   Milestone:  R1            
+ Component:  Build System  |     Version:  R1 development
+Resolution:                |    Platform:  All           
+---------------------------+------------------------------------------------
+Comment (by mmu_man):
+
+ I use this as a completion function for jam, but it doesn't seem to pick
+ all the possible targets (and it's slow):
+
+ {{{
+ _jam ()
+ {
+     local cur prev jamfiles jf f jf2 ft iter targets;
+     COMPREPLY=();
+     cur=${COMP_WORDS[COMP_CWORD]};
+     prev=${COMP_WORDS[COMP_CWORD-1]};
+     if [ &quot;$prev&quot; = &quot;-d&quot; ]; then
+         COMPREPLY=($( compgen -W 'a c d m x $(seq 0 9)' -- $cur ));
+     else
+         if [[ &quot;$cur&quot; == -* ]]; then
+             COMPREPLY=($( compgen -W '-a \
+                 -da -dc -dd -dm -dx -d0 -d1 -d2 -d3 -d4 -d5 -d6 -d7 -d8
+ -d9 \
+                 -f -g -j -n -o -q -s -t -v' -- $cur ));
+         else
+             if [ -z &quot;$_jam_targets_cache&quot; ]; then
+                 echo -en &quot; [building jam target cache...]\033[31D&quot;;
+                 _jam_targets_cache=&quot;$(jam -d 5a -n -q
+ veryunlikelytargetonlyusedforbuildingtargetlist | grep '\(NotFile \|set
+ targets  =\)' | sed 's/.*NotFile //;s/.*  =
+ //;s/&lt;/\\&lt;/g;s/&gt;/\\&gt;/g;s/!/\\!/g')&quot;;
+                 echo -en &quot;                               \033[31D&quot;;
+                 export _jam_targets_cache;
+             fi;
+             COMPREPLY=($( compgen -W &quot;$_jam_targets_cache&quot; -- $cur ));
+         fi;
+     fi;
+     return 0
+ }
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1883#comment:1">http://dev.haiku-os.org/ticket/1883#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007804.html">[Haiku-bugs] [Haiku] #2314: [ProcessController] double clicking it will restart Deskbar.
+</A></li>
+	<LI>Next message: <A HREF="007806.html">[Haiku-bugs] [Haiku] #256: [app_server] strange color conversion
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7805">[ date ]</a>
+              <a href="thread.html#7805">[ thread ]</a>
+              <a href="subject.html#7805">[ subject ]</a>
+              <a href="author.html#7805">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

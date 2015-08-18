@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2046: jam on haiku-host occasionally fails with the message: vfork: Out of memory
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-July/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232046%3A%20jam%20on%20haiku-host%20occasionally%0A%20fails%20with%20the%20message%3A%20vfork%3A%20Out%20of%20memory&In-Reply-To=%3C052.29cdcc52e7dfc4083ebb0ea886144485%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008814.html">
+   <LINK REL="Next"  HREF="008817.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2046: jam on haiku-host occasionally fails with the message: vfork: Out of memory</H1>
+    <B>bonefish</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232046%3A%20jam%20on%20haiku-host%20occasionally%0A%20fails%20with%20the%20message%3A%20vfork%3A%20Out%20of%20memory&In-Reply-To=%3C052.29cdcc52e7dfc4083ebb0ea886144485%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2046: jam on haiku-host occasionally fails with the message: vfork: Out of memory">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Jul  9 04:22:29 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008814.html">[Haiku-bugs] [Haiku] #2360: PS/2 keyboard and touchpad not working on cold boots
+</A></li>
+        <LI>Next message: <A HREF="008817.html">[Haiku-bugs] [Haiku] #2502: svn checkout via ssh prompts for password several times
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8816">[ date ]</a>
+              <a href="thread.html#8816">[ thread ]</a>
+              <a href="subject.html#8816">[ subject ]</a>
+              <a href="author.html#8816">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2046: jam on haiku-host occasionally fails with the message: vfork: Out of memory
+----------------------------+-----------------------------------------------
+  Reporter:  kaoutsis       |       Owner:  axeld         
+      Type:  bug            |      Status:  new           
+  Priority:  high           |   Milestone:  R1/alpha1     
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |   Blockedby:                
+  Platform:  All            |    Blocking:                
+----------------------------+-----------------------------------------------
+Changes (by bonefish):
+
+  * priority:  normal =&gt; high
+  * component:  - General =&gt; System/Kernel
+  * milestone:  R1 =&gt; R1/alpha1
+
+
+Comment:
+
+ I think I understand the core of the problem, now. One issue is, as
+ already mentioned, that jam uses a lot of heap (checking closer to the end
+ of the build process it was about 270 MB) and when fork()ing twice that
+ amount is reserved due to missing swap support.(*)
+
+ The second problem is, that the block cache unnecessarily binds reserved
+ memory in unused blocks. It doesn't free blocks until the low memory state
+ is at least B_LOW_MEMORY_NOTE, which happens when only 2048 free pages are
+ left. There are several issues. First of all the reserved memory and free
+ pages aren't directly related. The available memory is just the lower
+ boundary for pages that are either free or only used in caches (i.e. can
+ be freed at any time). If for instance only 10 MB available memory are
+ left although there are more than 2048 free pages, we won't be in any low
+ memory state. fork()ing jam at that point will fail, since additional 270
+ MB would need to be reserved. At the same time hundreds of MB could be
+ bound in unused blocks.
+
+ Possible changes to improve the situation:
+  - Low memory states might also need to be triggered by low amount of
+ available memory.
+  - The block cache needs to indicate somehow how much memory it could
+ free, if necessary.
+  - vm_try_reserve_memory() might need to trigger freeing of memory and
+ wait.
+
+ There might also be other problems. When checking the caches situation in
+ roughly the middle of a &quot;jam @image&quot; the kernel heap consisted of a 16 MB
+ area and 11 additional 4 MB areas. This sounds like quite a bit more than
+ it should be. Not sure to what degree this is indirectly caused by the
+ massive caching that happens (i.e. allocations for cache structures, vnode
+ structures, page mappings). Will examine this some more.
+
+
+ (*) ATM there's a bug (already fixed in my branch) that after the first
+ fork() + exec() there's no memory reserved for jam's heap itself. Whenever
+ the heap is resized (which should happen quite a few times during the
+ build process) that is remedied though, and the subsequent fork() will
+ indeed cause twice the heap size to be reserved.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2046#comment:11">http://dev.haiku-os.org/ticket/2046#comment:11</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008814.html">[Haiku-bugs] [Haiku] #2360: PS/2 keyboard and touchpad not working on cold boots
+</A></li>
+	<LI>Next message: <A HREF="008817.html">[Haiku-bugs] [Haiku] #2502: svn checkout via ssh prompts for password several times
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8816">[ date ]</a>
+              <a href="thread.html#8816">[ thread ]</a>
+              <a href="subject.html#8816">[ subject ]</a>
+              <a href="author.html#8816">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,150 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4004: Haiku booting hangs at the 5th icon	on Intel ICH9
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234004%3A%20Haiku%20booting%20hangs%20at%20the%205th%20icon%0A%09on%20Intel%20ICH9&In-Reply-To=%3C057.1da1dee1e9a6913433c5e5d5692a580d%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="017901.html">
+   <LINK REL="Next"  HREF="017886.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4004: Haiku booting hangs at the 5th icon	on Intel ICH9</H1>
+    <B>e_barsukowski</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234004%3A%20Haiku%20booting%20hangs%20at%20the%205th%20icon%0A%09on%20Intel%20ICH9&In-Reply-To=%3C057.1da1dee1e9a6913433c5e5d5692a580d%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4004: Haiku booting hangs at the 5th icon	on Intel ICH9">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Jun  7 15:21:19 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="017901.html">[Haiku-bugs] [Haiku] #4004: Haiku booting hangs at the 5th icon	on Intel ICH9
+</A></li>
+        <LI>Next message: <A HREF="017886.html">[Haiku-bugs] [Haiku] #2643: Black screen when DVI connected
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17907">[ date ]</a>
+              <a href="thread.html#17907">[ thread ]</a>
+              <a href="subject.html#17907">[ subject ]</a>
+              <a href="author.html#17907">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4004: Haiku booting hangs at the 5th icon on Intel ICH9
+---------------------------+------------------------------------------------
+ Reporter:  e_barsukowski  |       Owner:  marcusoverhagen
+     Type:  bug            |      Status:  new            
+ Priority:  normal         |   Milestone:  R1             
+Component:  Drivers/Disk   |     Version:  R1 development 
+Blockedby:                 |    Platform:  x86            
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+
+Comment(by e_barsukowski):
+
+ After a bit testing I found out the following.
+
+ 1) When SATA controller is configured in AHCI mode the system hangs at the
+ 5th icon half typing the message &quot;allocate_commpa&quot; or
+ &quot;allocate_commpage_entr&quot; or other variants on serial debug. After
+ disabling SMP (either in BIOS or via safe mode options) I finally get
+ {{{
+ &lt;...&gt;
+ ahci: AHCIPort::ResetPort port 4, deviceBusy 0, forceDeviceReset 0
+ ahci: AHCIPort::PostReset port 4
+ ahci: device signature 0xeb140101 (ATAPI)
+ allocate_commpage_entry(4, 34) -&gt; 0xffff0118
+ PANIC: Fatal exception &quot;Machine-Check Exception&quot; occurred! Error code: 0x0
+
+ Welcome to Kernel Debugging Land...
+ Thread 12 &quot;main2&quot; running on CPU 0
+ kdebug&gt;
+ }}}
+ This is bug #1711, so I'll post there.
+
+ 2) When SATA IDE emulation enabled the system hangs at the 4th icon with
+ message &quot;More than 99% interrupts of vector 11 are unhandled&quot;. Here's the
+ end of the debug log:
+ {{{
+ KDiskDeviceManager::_AddDiskSystem() done: No error
+ number of disk systems: 5
+ KDiskDeviceManager::_Scan(/dev/disk)
+ PCI-IDE: Controller in native mode: cmd 0x4448, ctrl 0x4466, irq 11
+ PCI-IDE: init channel...
+ PCI-IDE: channel index 0
+ PCI-IDE: bus master base 0x4410
+ PCI-IDE: init channel done
+ IDE: scan_device_worker: bus 0x80fb5a5c, device-number 0
+ IDE: create_device: bus 0x80fb5a5c, device-number 0
+ IDE: setup_device_links: bus 0x80fb5a5c, device 0x817cb740
+ IDE: scan_device_int: device 0x817cb740, atapi 0
+ IDE: scan_device_int: waiting 100ms...
+ More than 99% interrupts of vector 11 are unhandled
+ Last message repeated 129 times.
+ PANIC: Keyboard Requested Halt
+
+ Welcome to Kernel Debugging Land...
+ Thread 13 &quot;main2&quot; running on CPU 0
+ kdebug&gt; ints
+ int   1, enabled 1, handled        0, unhandled        0, ACTIVE
+ kernel_x86:debug_keyboard_interrupt (0x800d4510), data 0x00000000
+ int   9, enabled 2, handled        0, unhandled        0
+ ehci:InterruptHandler__4EHCIPv (0x805f8db4), data 0x80fbf660
+ uhci:InterruptHandler__4UHCIPv (0x80757d00), data 0x80fbe2a8
+ int  10, enabled 2, handled        0, unhandled        0
+ uhci:InterruptHandler__4UHCIPv (0x80757d00), data 0x80fbe6a4
+ uhci:InterruptHandler__4UHCIPv (0x80757d00), data 0x80fbe000
+ int  11, enabled 5, handled        1, unhandled  1309353
+ ide_adapter:ide_adapter_inthand (0x80619b38), data 0x80fc5000
+ ehci:InterruptHandler__4EHCIPv (0x805f8db4), data 0x80fbf880
+ uhci:InterruptHandler__4UHCIPv (0x80757d00), data 0x80fbe550
+ uhci:InterruptHandler__4UHCIPv (0x80757d00), data 0x80fbe3fc
+ uhci:InterruptHandler__4UHCIPv (0x80757d00), data 0x80fbe154
+ int 219, enabled 1, handled     5182, unhandled        0
+ kernel_x86:apic_timer_interrupt (0x800ddb20), data 0x00000000
+ int 221, enabled 1, handled     1108, unhandled        0
+ kernel_x86:i386_ici_interrupt (0x800d620c), data 0x00000000
+ int 222, enabled 1, handled        0, unhandled        0
+ kernel_x86:i386_smp_error_interrupt (0x800d6244), data 0x00000000
+ int 223, enabled 1, handled        0, unhandled        0
+ kernel_x86:i386_spurious_interrupt (0x800d6238), data 0x00000000
+ kdebug&gt;
+ }}}
+ Removing both uhci and ehci drivers or disabling USB controller in BIOS
+ helps: the boot process ends up at the first issue
+ (allocate_commpage_entry). This seems to be IRQ sharing conflict between
+ ide and usb drivers. Should I change the ticket header accordingly?
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4004#comment:5">http://dev.haiku-os.org/ticket/4004#comment:5</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="017901.html">[Haiku-bugs] [Haiku] #4004: Haiku booting hangs at the 5th icon	on Intel ICH9
+</A></li>
+	<LI>Next message: <A HREF="017886.html">[Haiku-bugs] [Haiku] #2643: Black screen when DVI connected
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17907">[ date ]</a>
+              <a href="thread.html#17907">[ thread ]</a>
+              <a href="subject.html#17907">[ subject ]</a>
+              <a href="author.html#17907">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

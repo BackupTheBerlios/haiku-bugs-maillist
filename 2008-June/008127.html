@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2375: Unmounting card in usb card reader	doesn't work
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232375%3A%20Unmounting%20card%20in%20usb%20card%20reader%0A%09doesn%27t%20work&In-Reply-To=%3C049.eaaa783e462a03e0263a053d71399b50%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008125.html">
+   <LINK REL="Next"  HREF="008136.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2375: Unmounting card in usb card reader	doesn't work</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232375%3A%20Unmounting%20card%20in%20usb%20card%20reader%0A%09doesn%27t%20work&In-Reply-To=%3C049.eaaa783e462a03e0263a053d71399b50%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2375: Unmounting card in usb card reader	doesn't work">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Jun 13 16:08:16 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008125.html">[Haiku-bugs] [Haiku] #2375: Unmounting card in usb card reader	doesn't work
+</A></li>
+        <LI>Next message: <A HREF="008136.html">[Haiku-bugs] [Haiku] #2375: Unmounting card in usb card reader	doesn't work
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8127">[ date ]</a>
+              <a href="thread.html#8127">[ thread ]</a>
+              <a href="subject.html#8127">[ subject ]</a>
+              <a href="author.html#8127">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2375: Unmounting card in usb card reader doesn't work
+---------------------------+------------------------------------------------
+  Reporter:  monni         |       Owner:  mmlr          
+      Type:  bug           |      Status:  closed        
+  Priority:  normal        |   Milestone:  R1            
+ Component:  Drivers/Disk  |     Version:  R1 development
+Resolution:  invalid       |    Platform:  All           
+---------------------------+------------------------------------------------
+Changes (by mmlr):
+
+  * status:  assigned =&gt; closed
+  * resolution:  =&gt; invalid
+
+Comment:
+
+ But Haiku cannot, as it has no provision to do so. Just unmounting all
+ volumes does not really indicate you want to remove the device. It would
+ be perfectly fine for you to remount the volume, or mount another
+ partition/card provided by the same device. If the volume was properly
+ unmounted though there is no reason for a surprise disconnect to be
+ unsafe. If there is data corruption occuring then the device would be
+ using a cache but doesn't implement the synchronize command. This is
+ highly unlikely though as the benefit of a cache for memory cards is
+ marginal at best. USB devices are made for hot-plugging and surprise
+ removal and as long as there is no cache involved that doesn't get flushed
+ there should be no issues.
+
+ What makes you think the device needs the actual power off from the port?
+ It's probably just a reminder to use &quot;safely remove hardware&quot; under
+ Windows, as there is no other way to unmount a volume under Windows
+ (except for removing the drive letter through the device manager). This
+ does not really apply to Haiku or other systems though that do provide
+ means to explicitly mount/unmount. Interesting to see would be how Linux
+ behaves in that situation. It might take unmounting all volumes as a
+ device shutdown.
+
+ I am closing this as invalid. If data corruption actually happens, please
+ reopen this, as then there is a bug somewhere. If you have reasons to
+ believe not shutting down port power leads to problems, please open an
+ enhancement ticket to implement a way to explicitly shut down USB ports,
+ as there currently is none. This will probably require an API change
+ though, so it won't happen too soon.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2375#comment:3">http://dev.haiku-os.org/ticket/2375#comment:3</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008125.html">[Haiku-bugs] [Haiku] #2375: Unmounting card in usb card reader	doesn't work
+</A></li>
+	<LI>Next message: <A HREF="008136.html">[Haiku-bugs] [Haiku] #2375: Unmounting card in usb card reader	doesn't work
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8127">[ date ]</a>
+              <a href="thread.html#8127">[ thread ]</a>
+              <a href="subject.html#8127">[ subject ]</a>
+              <a href="author.html#8127">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

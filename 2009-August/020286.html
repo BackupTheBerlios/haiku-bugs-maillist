@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4359: CopyRegion() with direct windows broken
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234359%3A%20CopyRegion%28%29%20with%20direct%20windows%20broken&In-Reply-To=%3C040.075aac1481451d9e314be37be71356dd%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="020417.html">
+   <LINK REL="Next"  HREF="020288.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4359: CopyRegion() with direct windows broken</H1>
+    <B>axeld</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234359%3A%20CopyRegion%28%29%20with%20direct%20windows%20broken&In-Reply-To=%3C040.075aac1481451d9e314be37be71356dd%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4359: CopyRegion() with direct windows broken">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Aug 28 12:30:19 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="020417.html">[Haiku-bugs] [Haiku] #4358: Be Menu items disappears after changing Tracker prefs
+</A></li>
+        <LI>Next message: <A HREF="020288.html">[Haiku-bugs] [Haiku] #4360: KDL during bootscript on waitfor on SMP	x86 machine
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20286">[ date ]</a>
+              <a href="thread.html#20286">[ thread ]</a>
+              <a href="subject.html#20286">[ subject ]</a>
+              <a href="author.html#20286">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4359: CopyRegion() with direct windows broken
+--------------------------------+-------------------------------------------
+ Reporter:  axeld               |       Owner:  stippi        
+     Type:  bug                 |      Status:  new           
+ Priority:  normal              |   Milestone:  R1            
+Component:  Servers/app_server  |     Version:  R1 development
+Blockedby:                      |    Platform:  All           
+ Blocking:                      |  
+--------------------------------+-------------------------------------------
+ Two easily see the problem, enable transparent background in
+ src/kits/opengl/GLView.cpp, line 206. Then move a GLTeapot window around,
+ and see that the original window contents are copied over and over;
+ instead of actually copying the window CopyRegion() only invalidates
+ everything which causes the back buffer to be copied, but that doesn't
+ contain the right data in case of a direct window.
+
+ If there is a direct window on the screen, either acceleration must be
+ used to move the window around, or it needs to be copied manually.
+
+ Maybe double buffering should simply work view based, not screen based.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4359">http://dev.haiku-os.org/ticket/4359</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="020417.html">[Haiku-bugs] [Haiku] #4358: Be Menu items disappears after changing Tracker prefs
+</A></li>
+	<LI>Next message: <A HREF="020288.html">[Haiku-bugs] [Haiku] #4360: KDL during bootscript on waitfor on SMP	x86 machine
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20286">[ date ]</a>
+              <a href="thread.html#20286">[ thread ]</a>
+              <a href="subject.html#20286">[ subject ]</a>
+              <a href="author.html#20286">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

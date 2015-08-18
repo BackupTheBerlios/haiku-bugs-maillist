@@ -1,0 +1,144 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4101: nVidia CK804 OHCI USB controller detects only 1 connected device
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234101%3A%20nVidia%20CK804%20OHCI%20USB%20controller%0A%20detects%20only%201%20connected%20device&In-Reply-To=%3C049.9e23805f2d46e158b587a6c3a7fc45fe%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="020195.html">
+   <LINK REL="Next"  HREF="020198.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4101: nVidia CK804 OHCI USB controller detects only 1 connected device</H1>
+    <B>mmlr</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234101%3A%20nVidia%20CK804%20OHCI%20USB%20controller%0A%20detects%20only%201%20connected%20device&In-Reply-To=%3C049.9e23805f2d46e158b587a6c3a7fc45fe%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4101: nVidia CK804 OHCI USB controller detects only 1 connected device">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Aug 26 14:07:56 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="020195.html">[Haiku-bugs] [Haiku] #4074: eMachines 19&quot; WS LCD monitor native resolution not avail. using AGP Geforce 2/3
+</A></li>
+        <LI>Next message: <A HREF="020198.html">[Haiku-bugs] [Haiku] #4101: nVidia CK804 OHCI USB controller detects only 1 connected device
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20197">[ date ]</a>
+              <a href="thread.html#20197">[ thread ]</a>
+              <a href="subject.html#20197">[ subject ]</a>
+              <a href="author.html#20197">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4101: nVidia CK804 OHCI USB controller detects only 1 connected device
+-------------------------+--------------------------------------------------
+ Reporter:  monni        |       Owner:  mmlr          
+     Type:  bug          |      Status:  assigned      
+ Priority:  normal       |   Milestone:  R1            
+Component:  Drivers/USB  |     Version:  R1 development
+Blockedby:               |    Platform:  All           
+ Blocking:               |  
+-------------------------+--------------------------------------------------
+
+Comment(by mmlr):
+
+ Replying to [comment:15 oruizdorantes]:
+ &gt; &gt; So it's like the first one is too long with useless data and the
+ second one is too short?
+ &gt;
+ &gt; First is too long with usefull data(even complete packet) and 0's.
+ &gt; Second one is again with useful data, but too short 2 bytes, missing 12
+ more... I am able to say I miss 12 because, the incoming 2 bytes already
+ contained information about the size.
+
+ Yeah I guess the mixed up transfer length of the last packet would explain
+ this totally.
+
+ &gt; &gt; * The files need a _serious_ review concerning coding style
+ &gt;
+ &gt; Feel free to comment the most appearing ones. I guess this is the
+ Identifier rule for functions and var names(underscores), But I expected
+ it was ok in a C file.
+
+ Take h2generic.c:
+ 272: No spaces after &quot;(&quot;.
+ 273: We don't indent like that, we only indent one tab, in this case
+ though you'd indent two because of the sub-expression &quot;() pair&quot; you are
+ in, the operators &quot;||/&amp;&amp;&quot; go on the next line.
+ 305: The only opening brace that opens on the next line is the one after
+ the &quot;case:&quot; because this one has a different semantical meaning. All
+ others go on the same line.
+ 307: 80 chars per line.
+ 344: Spaces after commas and operators.
+ 369: No braces for single line blocks (ifs, loops)
+ 370: I would avoid special characters in code (the upside down question
+ mark isn't an ascii char).
+
+ In general, variable names are supposed to be obvious, and camel cased. So
+ &quot;ep&quot; -&gt; &quot;endPoint&quot;, &quot;new_bt_dev&quot; -&gt; &quot;newBTDevice&quot; and all such. They are
+ even inconsistently named, some are camel cased, some not, some are
+ abbreviated some aren't, you get the drift.
+
+ &gt; &gt; * You may want to think about locking the device structures [...]
+ &gt;
+ &gt; Yep, this is in the TODO list once the number of threads in the
+ playground is clear.
+
+ Through the async callbacks the thread count already is &gt; 1, so locking
+ already makes sense.
+
+ &gt; &gt; Meaning that if there is a max packet size of 8 bytes this does by no
+ means mean that you can or should only schedule 8 bytes at a time. The
+ only thing it means is that if you schedule more bytes that those it will
+ (internally) split these up into multiple USB packets.
+ &gt;
+ &gt; So would be fine to schedule the size just as the biggest packet I am
+ expecting to receive?
+
+ Yes that's exactly what you'd want to do.
+
+ &gt; &gt; With that context, is it possible that the event you are receiving
+ simply doesn't fit into that buffer?
+ &gt;
+ &gt; I remember those interrupt endpoints use to be 16, but I have been
+ receiving completelly in one hook buffers of 256.
+ &gt; So being honest never understood the size parameter in the queue call,
+ as I could get bigger or smaller buffers.
+
+ If you ever get bigger sizes than the buffers you handed in, this is a
+ severe bug and must be reported. Because in that case random buffers would
+ be overwritten, which must not happen.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4101#comment:17">http://dev.haiku-os.org/ticket/4101#comment:17</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="020195.html">[Haiku-bugs] [Haiku] #4074: eMachines 19&quot; WS LCD monitor native resolution not avail. using AGP Geforce 2/3
+</A></li>
+	<LI>Next message: <A HREF="020198.html">[Haiku-bugs] [Haiku] #4101: nVidia CK804 OHCI USB controller detects only 1 connected device
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20197">[ date ]</a>
+              <a href="thread.html#20197">[ thread ]</a>
+              <a href="subject.html#20197">[ subject ]</a>
+              <a href="author.html#20197">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1101: Cannot add background image
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231101%3A%20Cannot%20add%20background%20image&In-Reply-To=%3C051.c40b72f98ff1f5255cc0c3734cfeb7ac%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000824.html">
+   <LINK REL="Next"  HREF="000826.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1101: Cannot add background image</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231101%3A%20Cannot%20add%20background%20image&In-Reply-To=%3C051.c40b72f98ff1f5255cc0c3734cfeb7ac%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1101: Cannot add background image">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Mar 20 13:38:33 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000824.html">[Haiku-bugs] [Haiku] #1101: Cannot add background image
+</A></li>
+        <LI>Next message: <A HREF="000826.html">[Haiku-bugs] [Haiku] #1101: Cannot add background image
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#825">[ date ]</a>
+              <a href="thread.html#825">[ thread ]</a>
+              <a href="subject.html#825">[ subject ]</a>
+              <a href="author.html#825">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1101: Cannot add background image
+----------------------------------------+-----------------------------------
+  Reporter:  kaliber                    |       Owner:  korli         
+      Type:  bug                        |      Status:  new           
+  Priority:  normal                     |   Milestone:  R1            
+ Component:  - Preferences/Backgrounds  |     Version:  R1 development
+Resolution:                             |    Platform:  All           
+----------------------------------------+-----------------------------------
+Comment (by bonefish):
+
+ I suppose a good start would be to change wget (and apps that could cause
+ the same problem, like browsers etc.) to invoke update_mime_info() after a
+ file has been downloaded.
+
+ A real solution in this case would be to modify the file panel filter to
+ do a BMimeType::GuessMimeType() (or even a update_mime_info()), if a file
+ doesn't have a MIME type yet. Don't know how expensive that would be in
+ the end -- since usually all files on a BFS volume will have a MIME type
+ it might be not that bad.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1101#comment:4">http://dev.haiku-os.org/ticket/1101#comment:4</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000824.html">[Haiku-bugs] [Haiku] #1101: Cannot add background image
+</A></li>
+	<LI>Next message: <A HREF="000826.html">[Haiku-bugs] [Haiku] #1101: Cannot add background image
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#825">[ date ]</a>
+              <a href="thread.html#825">[ thread ]</a>
+              <a href="subject.html#825">[ subject ]</a>
+              <a href="author.html#825">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

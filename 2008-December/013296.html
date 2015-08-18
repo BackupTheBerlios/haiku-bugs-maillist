@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3241: Lights Off crashes on startup
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-December/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233241%3A%20Lights%20Off%20crashes%20on%20startup&In-Reply-To=%3C052.7d6c729872a3f221425a063b20259465%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="013276.html">
+   <LINK REL="Next"  HREF="013277.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3241: Lights Off crashes on startup</H1>
+    <B>korli</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233241%3A%20Lights%20Off%20crashes%20on%20startup&In-Reply-To=%3C052.7d6c729872a3f221425a063b20259465%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3241: Lights Off crashes on startup">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Dec 29 12:54:59 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="013276.html">[Haiku-bugs] [Haiku] #3241: Lights Off crashes on startup
+</A></li>
+        <LI>Next message: <A HREF="013277.html">[Haiku-bugs] [Haiku] #3117: svn co while emptying trash makes trash in checked out data
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13296">[ date ]</a>
+              <a href="thread.html#13296">[ thread ]</a>
+              <a href="subject.html#13296">[ subject ]</a>
+              <a href="author.html#13296">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3241: Lights Off crashes on startup
+----------------------------+-----------------------------------------------
+ Reporter:  darkwyrm        |       Owner:  marcusoverhagen
+     Type:  bug             |      Status:  new            
+ Priority:  normal          |   Milestone:  R1             
+Component:  Kits/Media Kit  |     Version:  R1 development 
+Blockedby:                  |    Platform:  All            
+ Blocking:                  |  
+----------------------------+-----------------------------------------------
+Description changed by korli:
+
+Old description:
+
+&gt;<i> As of r28815, the version on BeBits (www.bebits.com/app/4252) crashes
+</I>&gt;<i> immediately after starting up.
+</I>&gt;<i>
+</I>&gt;<i> #0  0x0061fdf7 in BMediaTrack::ReadFrames ()
+</I>&gt;<i>    from /boot/beos/system/lib/libmedia.so
+</I>&gt;<i> #1  0x0061fdd2 in BMediaTrack::ReadFrames ()
+</I>&gt;<i>    from /boot/beos/system/lib/libmedia.so
+</I>&gt;<i> #2  0x00498c16 in BFileGameSound::Load () from
+</I>&gt;<i> /boot/beos/system/lib/libgame.so
+</I>&gt;<i> #3  0x00498409 in BFileGameSound::Preload ()
+</I>&gt;<i>    from /boot/beos/system/lib/libgame.so
+</I>&gt;<i> #4  0x0020cd49 in GridView::StartupPreferences ()
+</I>&gt;<i> #5  0x00209dce in GridView::GridView ()
+</I>&gt;<i> #6  0x0020d1e8 in MainWindow::MainWindow ()
+</I>&gt;<i> #7  0x00208eb2 in MyApp::MyApp ()
+</I>&gt;<i> #8  0x00208fb5 in main ()
+</I>
+New description:
+
+ As of r28815, the version on [<A HREF="http://www.bebits.com/app/4252">http://www.bebits.com/app/4252</A> Bebits]
+ crashes immediately after starting up.
+ {{{
+ #0  0x0061fdf7 in BMediaTrack::ReadFrames ()
+    from /boot/beos/system/lib/libmedia.so
+ #1  0x0061fdd2 in BMediaTrack::ReadFrames ()
+    from /boot/beos/system/lib/libmedia.so
+ #2  0x00498c16 in BFileGameSound::Load () from
+ /boot/beos/system/lib/libgame.so
+ #3  0x00498409 in BFileGameSound::Preload ()
+    from /boot/beos/system/lib/libgame.so
+ #4  0x0020cd49 in GridView::StartupPreferences ()
+ #5  0x00209dce in GridView::GridView ()
+ #6  0x0020d1e8 in MainWindow::MainWindow ()
+ #7  0x00208eb2 in MyApp::MyApp ()
+ #8  0x00208fb5 in main ()
+ }}}
+
+--
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3241#comment:1">http://dev.haiku-os.org/ticket/3241#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="013276.html">[Haiku-bugs] [Haiku] #3241: Lights Off crashes on startup
+</A></li>
+	<LI>Next message: <A HREF="013277.html">[Haiku-bugs] [Haiku] #3117: svn co while emptying trash makes trash in checked out data
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13296">[ date ]</a>
+              <a href="thread.html#13296">[ thread ]</a>
+              <a href="subject.html#13296">[ subject ]</a>
+              <a href="author.html#13296">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

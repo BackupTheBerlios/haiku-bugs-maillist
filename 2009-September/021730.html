@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4472: pauses during desktop use
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234472%3A%20pauses%20during%20desktop%20use&In-Reply-To=%3C053.1e333639d711ea7c41ee9d61ce61728e%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="021723.html">
+   <LINK REL="Next"  HREF="021735.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4472: pauses during desktop use</H1>
+    <B>mmlr</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234472%3A%20pauses%20during%20desktop%20use&In-Reply-To=%3C053.1e333639d711ea7c41ee9d61ce61728e%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4472: pauses during desktop use">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Sep 21 00:14:05 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="021723.html">[Haiku-bugs] [Haiku] #4472: pauses during desktop use
+</A></li>
+        <LI>Next message: <A HREF="021735.html">[Haiku-bugs] [Haiku] #4472: pauses during desktop use
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21730">[ date ]</a>
+              <a href="thread.html#21730">[ thread ]</a>
+              <a href="subject.html#21730">[ subject ]</a>
+              <a href="author.html#21730">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4472: pauses during desktop use
+-------------------------+--------------------------------------------------
+ Reporter:  zebrandao    |       Owner:  mmlr     
+     Type:  bug          |      Status:  assigned 
+ Priority:  normal       |   Milestone:  R1       
+Component:  Drivers/USB  |     Version:  R1 alpha1
+Blockedby:               |    Platform:  All      
+ Blocking:               |  
+-------------------------+--------------------------------------------------
+Changes (by mmlr):
+
+  * owner:  nobody =&gt; mmlr
+  * status:  new =&gt; assigned
+
+
+Comment:
+
+ Replying to [comment:6 zebrandao]:
+ &gt; The mouse was a usb mouse connected through a usb hub (the same with the
+ keyboard). I have re-installed Haiku, this time from the R1 alpha image.
+ Connecting the mouse through the usb hub, the problem persists, but
+ connecting directly to one of the laptop's usb plug, the mouse works
+ flawlessly.
+
+ Curious thing. I haven't seen something like that here. Is there any
+ output on the syslog when this happens? How often does this happen on
+ average? Is it like once a minute or more like once every few seconds or
+ even every second? What you could try is suspending the explore thread to
+ see if this one causes the trouble. To do so, enter KDL and use &quot;threads |
+ grep explore&quot;. You should see the usb explore thread, with the second
+ number (a number somewhere around 20-50) being the thread id. Then use
+ &quot;suspend &lt;thread number of usb explore thread&gt;&quot;, then leave KDL with
+ &quot;continue&quot;.
+
+ &gt; An aside: to refresh my hard drive installation, I used a usb stick on
+ which the raw image was copied. Booting from the usb stick, the booting
+ time is unnaturally long, several times slower than from the hard drive.
+ Could there be a problem with the usb driver?
+
+ No, that's just because of it using a suboptimal way of transferring data
+ between the subsystems. I'm working on that.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4472#comment:7">http://dev.haiku-os.org/ticket/4472#comment:7</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="021723.html">[Haiku-bugs] [Haiku] #4472: pauses during desktop use
+</A></li>
+	<LI>Next message: <A HREF="021735.html">[Haiku-bugs] [Haiku] #4472: pauses during desktop use
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21730">[ date ]</a>
+              <a href="thread.html#21730">[ thread ]</a>
+              <a href="subject.html#21730">[ subject ]</a>
+              <a href="author.html#21730">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

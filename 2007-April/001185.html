@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1185: Yet another story about non-working ps2 keyboards on laptop.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231185%3A%20Yet%20another%20story%20about%20non-working%0A%20ps2%20keyboards%20on%20laptop.&In-Reply-To=%3C052.7eeb4ca44b2643d0bf207e4828e27bb1%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001181.html">
+   <LINK REL="Next"  HREF="001188.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1185: Yet another story about non-working ps2 keyboards on laptop.</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231185%3A%20Yet%20another%20story%20about%20non-working%0A%20ps2%20keyboards%20on%20laptop.&In-Reply-To=%3C052.7eeb4ca44b2643d0bf207e4828e27bb1%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1185: Yet another story about non-working ps2 keyboards on laptop.">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Apr 28 19:16:53 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001181.html">[Haiku-bugs] [Haiku] #1185: Yet another story about non-working ps2 keyboards on laptop.
+</A></li>
+        <LI>Next message: <A HREF="001188.html">[Haiku-bugs] [Haiku] #1185: Yet another story about non-working ps2 keyboards on laptop.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1185">[ date ]</a>
+              <a href="thread.html#1185">[ thread ]</a>
+              <a href="subject.html#1185">[ subject ]</a>
+              <a href="author.html#1185">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1185: Yet another story about non-working ps2 keyboards on laptop.
+-----------------------------------+----------------------------------------
+  Reporter:  siarzhuk              |       Owner:  marcusoverhagen
+      Type:  bug                   |      Status:  closed         
+  Priority:  high                  |   Milestone:  R1             
+ Component:  Drivers/Keyboard/PS2  |     Version:  R1 development 
+Resolution:  fixed                 |    Platform:  All            
+-----------------------------------+----------------------------------------
+Changes (by siarzhuk):
+
+  * status:  assigned =&gt; closed
+  * resolution:  =&gt; fixed
+
+Comment:
+
+ I have rebuild the modules with your changes and tried following test
+ scenarios:
+
+ 1) Boot Haiku without external ps2 devices. The keyboard stay active
+ (unfreezes) about 20 seconds after main Terminal window appears on the
+ screen. All this time I push the key &quot;i&quot; every second. Just after first
+ &quot;i&quot; symbol was displayed in Terminal I have stopped typing and rebooted
+ the system. Attached &quot;syslog.with.inbound.keyboard&quot; file is slightly
+ purged system log for this test.
+
+ 2) Boot Haiku with external keyboard attached to extension ps2 port of my
+ laptop. Now, the external keyboard become available just after Terminal
+ opens. The inbound keyboard still require that 20-seconds delay for
+ activation. Both inbound and external keyboards are functional
+ simultaneously. Attached &quot;syslog.external.keyboard&quot; file represent tracing
+ for this test.
+
+ 3) Boot Haiku without external keyboard attached to ps2 extension port.
+ After Tracker  windows appear on the screen I plugged the external
+ keyboard into ps2 port. This keyboard is become active and functional just
+ after plugging. But inbound keyboard still &quot;wait&quot; for 20 seconds before
+ activation. Both inbound and external keyboards are functional
+ simultaneously.
+
+ 4) The last test I have provided - is booting Haiku with attached external
+ keyboard and plugging it out after system finish to boot. The inbound
+ keyboard is also available in this scenario. Of course after this
+ 20-seconds delay. I have plugged the external keyboard back to port and it
+ becomes available too. Do you want to look into tracing for this and
+ previous tests?
+
+ In other words it works now. Thank you.
+
+ By the way this &quot;initial&quot; 20-seconds delay is still exists. It is not
+ observed with the same hardware on BeOS R5. It is a bit annoying but not
+ critical. May be you have idea about the source of this delay?
+ I do not think that is related to this bug. Probably I should write
+ another ticket for this problem with lower priority?
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1185#comment:3">http://dev.haiku-os.org/ticket/1185#comment:3</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001181.html">[Haiku-bugs] [Haiku] #1185: Yet another story about non-working ps2 keyboards on laptop.
+</A></li>
+	<LI>Next message: <A HREF="001188.html">[Haiku-bugs] [Haiku] #1185: Yet another story about non-working ps2 keyboards on laptop.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1185">[ date ]</a>
+              <a href="thread.html#1185">[ thread ]</a>
+              <a href="subject.html#1185">[ subject ]</a>
+              <a href="author.html#1185">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

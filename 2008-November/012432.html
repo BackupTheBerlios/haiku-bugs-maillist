@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3123: improve text entry boxes/fields refocus = update mechanism
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233123%3A%20improve%20text%20entry%20boxes/fields%0A%20refocus%20%3D%20update%20mechanism&In-Reply-To=%3C050.043cca2d031cc82aeacd67e1942cc748%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012428.html">
+   <LINK REL="Next"  HREF="012434.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3123: improve text entry boxes/fields refocus = update mechanism</H1>
+    <B>stippi</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233123%3A%20improve%20text%20entry%20boxes/fields%0A%20refocus%20%3D%20update%20mechanism&In-Reply-To=%3C050.043cca2d031cc82aeacd67e1942cc748%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3123: improve text entry boxes/fields refocus = update mechanism">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Nov 12 15:29:28 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012428.html">[Haiku-bugs] [Haiku] #3123: improve text entry boxes/fields refocus = update mechanism
+</A></li>
+        <LI>Next message: <A HREF="012434.html">[Haiku-bugs] [Haiku] #3123: Playground: improve text entry boxes/fields refocus (was: improve text entry boxes/fields refocus = update mechanism)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12432">[ date ]</a>
+              <a href="thread.html#12432">[ thread ]</a>
+              <a href="subject.html#12432">[ subject ]</a>
+              <a href="author.html#12432">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3123: improve text entry boxes/fields refocus = update mechanism
+---------------------------+------------------------------------------------
+  Reporter:  nutela        |       Owner:  stippi        
+      Type:  enhancement   |      Status:  assigned      
+  Priority:  normal        |   Milestone:  R1            
+ Component:  Applications  |     Version:  R1 development
+Resolution:                |   Blockedby:                
+  Platform:  All           |    Blocking:                
+---------------------------+------------------------------------------------
+
+Comment(by stippi):
+
+ As I have tried to explain, those are problems of the respective
+ applications, not Haiku's system libraries. If you still don't believe me,
+ BSlider and BTextControl have a method SetModificationMessage(). If the
+ application does not set it, the controls will deliver the normal &quot;value
+ changed&quot; message when the user confirms his changes (pressing Enter in a
+ BTextControl, releasing the mouse in a BSlider). Focus changes are another
+ way, at least for BTextControls, to trigger the final value changed
+ message, since it's impossible for the user to still modify the text.
+
+ If a modification message is set, both the BSlider and the BTextControl
+ *will* send a message for every small live change. For most applications,
+ they wouldn't not make sense to generate and process. In the example of
+ Appearance, it *could* process the last modification message after a
+ timeout. The reason is that the app_server has to discard the complete
+ font cache for every font visible on screen when the filter level changes.
+ So this operation is something *very* heavy under the hood.
+
+ In the case of Playground, it simply uses the wrong controls. For colors,
+ we have BColorControl, but at the time this part of Playground was
+ written, I was happy it worked at all, and right now there is still more
+ important stuff to worry about. That's why I simply changed the component
+ of your bug report, because I agree it's a problem (in Playground). As I
+ have previously written, there are quite a few applications that make such
+ GUI mistakes, and you have provided more examples.
+
+ However, please believe me that it's not a problem of the libraries or the
+ controls.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3123#comment:3">http://dev.haiku-os.org/ticket/3123#comment:3</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012428.html">[Haiku-bugs] [Haiku] #3123: improve text entry boxes/fields refocus = update mechanism
+</A></li>
+	<LI>Next message: <A HREF="012434.html">[Haiku-bugs] [Haiku] #3123: Playground: improve text entry boxes/fields refocus (was: improve text entry boxes/fields refocus = update mechanism)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12432">[ date ]</a>
+              <a href="thread.html#12432">[ thread ]</a>
+              <a href="subject.html#12432">[ subject ]</a>
+              <a href="author.html#12432">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

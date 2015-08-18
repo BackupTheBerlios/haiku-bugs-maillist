@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4731: Wacom causes erratic mouse cursor	movement
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234731%3A%20Wacom%20causes%20erratic%20mouse%20cursor%0A%09movement&In-Reply-To=%3C041.5af2fc9b426d851e15fb2ccb69a72a21%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="022521.html">
+   <LINK REL="Next"  HREF="022427.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4731: Wacom causes erratic mouse cursor	movement</H1>
+    <B>idefix</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234731%3A%20Wacom%20causes%20erratic%20mouse%20cursor%0A%09movement&In-Reply-To=%3C041.5af2fc9b426d851e15fb2ccb69a72a21%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4731: Wacom causes erratic mouse cursor	movement">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Oct  5 23:06:35 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="022521.html">[Haiku-bugs] [Haiku] #4730: ShowImage doesn't stop at	first/last image
+</A></li>
+        <LI>Next message: <A HREF="022427.html">[Haiku-bugs] [Haiku] #4731: Wacom causes erratic mouse cursor	movement
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22412">[ date ]</a>
+              <a href="thread.html#22412">[ thread ]</a>
+              <a href="subject.html#22412">[ subject ]</a>
+              <a href="author.html#22412">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4731: Wacom causes erratic mouse cursor movement
+-------------------------------+--------------------------------------------
+ Reporter:  idefix             |       Owner:  mmlr     
+     Type:  bug                |      Status:  new      
+ Priority:  normal             |   Milestone:  R1       
+Component:  Drivers/Mouse/USB  |     Version:  R1/alpha1
+Blockedby:                     |    Platform:  All      
+ Blocking:                     |  
+-------------------------------+--------------------------------------------
+ When you hold the Wacom pen in one position, you'll notice that the mouse
+ cursor erratically moves a couple of pixels around one spot. In BeOS,
+ Ubuntu and Windows this movement is a lot less, if not non-existent.
+
+ I noticed that the Linux Wacom driver uses a simple moving average filter
+ to provide noise correction, so I hacked-up [attachment:wacom_filter.patch
+ a patch] that implements this in the Haiku driver.
+
+ Unfortunately this filter doesn't fix the erratic movements completely, so
+ I decided to compare the 'raw' tablet data:
+  - x-movement (BeOS on the left, Haiku on the right):
+  [[Image(x-BeOS.png, 300px)]][[Image(x-Haiku.png, 300px)]]
+  - y-movement (BeOS on the left, Haiku on the right):
+  [[Image(y-BeOS.png, 300px)]][[Image(y-Haiku.png, 300px)]]
+ The horizontal gridlines represent the pixel-boundaries on my
+ monitor.[[BR]]
+ You can see that the 'raw' movement is a lot bigger in Haiku than in BeOS,
+ but I have no idea where the cause of this difference lies.
+
+ Also note the difference in the time between two samples, between BeOS
+ (left) and Haiku (right):
+  [[Image(dt-BeOS.png, 250px)]][[Image(dt-Haiku.png, 250px)]]
+ Although this could have been caused by the different methods used to
+ capture the data: to a file in BeOS, to the serial port in Haiku.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4731">http://dev.haiku-os.org/ticket/4731</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="022521.html">[Haiku-bugs] [Haiku] #4730: ShowImage doesn't stop at	first/last image
+</A></li>
+	<LI>Next message: <A HREF="022427.html">[Haiku-bugs] [Haiku] #4731: Wacom causes erratic mouse cursor	movement
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22412">[ date ]</a>
+              <a href="thread.html#22412">[ thread ]</a>
+              <a href="subject.html#22412">[ subject ]</a>
+              <a href="author.html#22412">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

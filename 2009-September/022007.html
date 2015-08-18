@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4516: Flash card partition table not parsed correctly (r33137)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234516%3A%20Flash%20card%20partition%20table%20not%0A%20parsed%20correctly%20%28r33137%29&In-Reply-To=%3C049.6a7e1c3edd24f3b429f522ee6a2d2eb6%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="022003.html">
+   <LINK REL="Next"  HREF="021322.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4516: Flash card partition table not parsed correctly (r33137)</H1>
+    <B>monni</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234516%3A%20Flash%20card%20partition%20table%20not%0A%20parsed%20correctly%20%28r33137%29&In-Reply-To=%3C049.6a7e1c3edd24f3b429f522ee6a2d2eb6%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4516: Flash card partition table not parsed correctly (r33137)">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Sep 25 17:58:55 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="022003.html">[Haiku-bugs] [Haiku] #4516: Flash card partition table not parsed correctly (r33137)
+</A></li>
+        <LI>Next message: <A HREF="021322.html">[Haiku-bugs] [Haiku] #4517: i440BX sometimes freezes during boot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22007">[ date ]</a>
+              <a href="thread.html#22007">[ thread ]</a>
+              <a href="subject.html#22007">[ subject ]</a>
+              <a href="author.html#22007">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4516: Flash card partition table not parsed correctly (r33137)
+--------------------------+-------------------------------------------------
+ Reporter:  monni         |       Owner:  mmlr     
+     Type:  bug           |      Status:  new      
+ Priority:  normal        |   Milestone:  R1       
+Component:  Drivers/Disk  |     Version:  R1/alpha1
+Blockedby:                |    Platform:  x86      
+ Blocking:                |  
+--------------------------+-------------------------------------------------
+
+Comment(by monni):
+
+ Linux shows two devices for it: /dev/sdd1 and /dev/sdi1
+
+ {{{
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">mika at palermo</A>:~$ scsi_readcap /dev/sdd1
+ sg_readcap   /dev/sdd1
+ Read Capacity results:
+    Last logical block address=1966079 (0x1dffff), Number of blocks=1966080
+    Logical block length=512 bytes
+ Hence:
+    Device size: 1006632960 bytes, 960.0 MiB, 1.01 GB
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">mika at palermo</A>:~$ scsi_readcap /dev/sdi1
+ sg_readcap   /dev/sdi1
+ Read Capacity results:
+    Last logical block address=3932159 (0x3bffff), Number of blocks=3932160
+    Logical block length=512 bytes
+ Hence:
+    Device size: 2013265920 bytes, 1920.0 MiB, 2.01 GB
+ }}}
+
+ First one looks same as Haiku detects now, which seems weird... Both
+ device paths are readable.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4516#comment:4">http://dev.haiku-os.org/ticket/4516#comment:4</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="022003.html">[Haiku-bugs] [Haiku] #4516: Flash card partition table not parsed correctly (r33137)
+</A></li>
+	<LI>Next message: <A HREF="021322.html">[Haiku-bugs] [Haiku] #4517: i440BX sometimes freezes during boot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22007">[ date ]</a>
+              <a href="thread.html#22007">[ thread ]</a>
+              <a href="subject.html#22007">[ subject ]</a>
+              <a href="author.html#22007">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

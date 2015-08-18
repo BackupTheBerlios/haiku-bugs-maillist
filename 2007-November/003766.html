@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1654: Text file empty(?) after copying
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231654%3A%20Text%20file%20empty%28%3F%29%20after%20copying&In-Reply-To=%3C044.d30a06697631cc33eb82016a773d09fb%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003762.html">
+   <LINK REL="Next"  HREF="003775.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1654: Text file empty(?) after copying</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231654%3A%20Text%20file%20empty%28%3F%29%20after%20copying&In-Reply-To=%3C044.d30a06697631cc33eb82016a773d09fb%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1654: Text file empty(?) after copying">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Nov 27 18:05:27 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003762.html">[Haiku-bugs] [Haiku] #1653: BSoundPlayer::SetHasData() doesn't	behave like in R5
+</A></li>
+        <LI>Next message: <A HREF="003775.html">[Haiku-bugs] [Haiku] #1655: vm_page_fault on boot (probably because intel_extreme driver)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3766">[ date ]</a>
+              <a href="thread.html#3766">[ thread ]</a>
+              <a href="subject.html#3766">[ subject ]</a>
+              <a href="author.html#3766">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1654: Text file empty(?) after copying
+------------------------------------+---------------------------------------
+ Reporter:  humdinger               |       Owner:  axeld         
+     Type:  bug                     |      Status:  new           
+ Priority:  normal                  |   Milestone:  R1            
+Component:  - Applications/Tracker  |     Version:  R1 development
+ Platform:  All                     |  
+------------------------------------+---------------------------------------
+ This is in vmware, r23003
+
+ This is a strange bug I have experienced for quite some revisions.
+ Probably ever since I use a UserBootscript.
+
+ Before updating to a new vmware image, I backup the ~/config folder to a
+ second BFS-image. After updating the Haiku image, I mount that image and
+ simply copy back the backuped config folder, overwriting the existing one.
+ Note, that there isn't yet a ~/config/boot folder in the default Haiku
+ image.
+
+ Now to the strange part: After copying the whole backuped config folder
+ the UserBootscript is always shown empty (&quot;cat UserBootscript&quot; returning
+ nothing) but is reported with the correct size (496 bytes).
+ If copy the backuped UserBootscript alone into ~/config/boot it's all
+ there.
+
+ I have no idea if any other files are suffering the same problem. Only
+ with the UserBootscript you notice it at once as it's not executed at
+ startup...
+
+ I attached the mamed UserBootscript.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1654">http://dev.haiku-os.org/ticket/1654</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003762.html">[Haiku-bugs] [Haiku] #1653: BSoundPlayer::SetHasData() doesn't	behave like in R5
+</A></li>
+	<LI>Next message: <A HREF="003775.html">[Haiku-bugs] [Haiku] #1655: vm_page_fault on boot (probably because intel_extreme driver)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3766">[ date ]</a>
+              <a href="thread.html#3766">[ thread ]</a>
+              <a href="subject.html#3766">[ subject ]</a>
+              <a href="author.html#3766">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

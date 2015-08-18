@@ -1,0 +1,152 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #956: Building on linux fails during	configuring
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2006-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23956%3A%20Building%20on%20linux%20fails%20during%0A%09configuring&In-Reply-To=%3C040.0e5826901017c5c9a5df4aa673c7de59%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000012.html">
+   <LINK REL="Next"  HREF="000014.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #956: Building on linux fails during	configuring</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23956%3A%20Building%20on%20linux%20fails%20during%0A%09configuring&In-Reply-To=%3C040.0e5826901017c5c9a5df4aa673c7de59%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #956: Building on linux fails during	configuring">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Nov 30 04:41:08 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000012.html">[Haiku-bugs] [Haiku] #835: Trac could detect SVN revisions and add a link for them
+</A></li>
+        <LI>Next message: <A HREF="000014.html">[Haiku-bugs] [Haiku] #748: kqemu pagefault with interrupts	disabled
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13">[ date ]</a>
+              <a href="thread.html#13">[ thread ]</a>
+              <a href="subject.html#13">[ subject ]</a>
+              <a href="author.html#13">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#956: Building on linux fails during configuring
+--------------------------+-------------------------------------------------
+ Reporter:  elmo          |       Owner:  bonefish      
+     Type:  bug           |      Status:  new           
+ Priority:  normal        |   Milestone:  Haiku R1      
+Component:  Build System  |     Version:  R1 development
+ Platform:  x86           |  
+--------------------------+-------------------------------------------------
+ I'm trying to build buildtools and Haiku on Linux, Pentium-M, GCC 4.1.1,
+ glibc 2.4-r3.
+
+ I followed the instructions here: <A HREF="http://haiku-">http://haiku-</A>
+ os.org/wiki/index.php?title=Getting_Linux_Developer_Tools
+ but ran into problems. Then I discovered that a README is supplied with
+ the sources, but it gave the same errors. Here's the log:
+
+
+ ~/haiku $ ./configure --build-cross-tools-gcc4 x86 ../beos/buildtools
+ creating cache ./config.cache
+ checking host system type... i686-pc-linux-gnu
+ checking target system type... config.sub: invalid option --targeti586-pc-
+ haiku
+ Try `config.sub --help' for more information.
+ checking build system type... i686-pc-linux-gnu
+ checking for a BSD compatible install... /usr/bin/install -c
+ checking whether ln works... yes
+ checking whether ln -s works... yes
+ checking for gcc... gcc
+ checking whether the C compiler (gcc -O2 ) works... yes
+ checking whether the C compiler (gcc -O2 ) is a cross-compiler... no
+ checking whether we are using GNU C... yes
+ checking whether gcc accepts -g... yes
+ checking for gnatbind... no
+ checking whether compiler driver understands Ada... no
+ checking how to compare bootstrapped objects... cmp --ignore-initial=16
+ $$f1 $$f2
+ checking for correct version of gmp.h... yes
+ checking for MPFR... yes
+ checking for bison... bison
+ checking for bison... bison -y
+ checking for gm4... no
+ checking for gnum4... no
+ checking for m4... m4
+ checking for flex... flex
+ checking for flex... flex
+ checking for makeinfo... makeinfo
+ checking for i686-pc-linux-gnu-ar... i686-pc-linux-gnu-ar
+ checking for i686-pc-linux-gnu-as... i686-pc-linux-gnu-as
+ checking for i686-pc-linux-gnu-dlltool... no
+ checking for dlltool... dlltool
+ checking for i686-pc-linux-gnu-ld... /usr/lib/gcc/i686-pc-linux-
+ gnu/4.1.1/../../../../i686-pc-linux-gnu/bin/ld
+ checking for i686-pc-linux-gnu-nm... i686-pc-linux-gnu-nm
+ checking for i686-pc-linux-gnu-ranlib... i686-pc-linux-gnu-ranlib
+ checking for i686-pc-linux-gnu-windres... no
+ checking for windres... windres
+ checking for i686-pc-linux-gnu-objcopy... i686-pc-linux-gnu-objcopy
+ checking for i686-pc-linux-gnu-objdump... i686-pc-linux-gnu-objdump
+ checking for --targeti586-pc-haiku-ar... no
+ /home/elmo/beos/buildtools/binutils/configure: line 4289: test: too many
+ arguments
+ checking for --targeti586-pc-haiku-as... no
+ /home/elmo/beos/buildtools/binutils/configure: line 4361: test: too many
+ arguments
+ checking for --targeti586-pc-haiku-dlltool... no
+ /home/elmo/beos/buildtools/binutils/configure: line 4433: test: too many
+ arguments
+ checking for --targeti586-pc-haiku-ld... no
+ /home/elmo/beos/buildtools/binutils/configure: line 4505: test: too many
+ arguments
+ checking for --targeti586-pc-haiku-nm... no
+ /home/elmo/beos/buildtools/binutils/configure: line 4577: test: too many
+ arguments
+ checking for --targeti586-pc-haiku-ranlib... no
+ /home/elmo/beos/buildtools/binutils/configure: line 4649: test: too many
+ arguments
+ checking for --targeti586-pc-haiku-windres... no
+ /home/elmo/beos/buildtools/binutils/configure: line 4721: test: too many
+ arguments
+ checking whether to enable maintainer-specific portions of Makefiles... no
+ checking if symbolic links between directories work... yes
+ updating cache ./config.cache
+ creating ./config.status
+ creating Makefile
+ sed: file conftest.s1 line 68: unterminated `s' command
+ make: *** No targets.  Stop.
+
+-- 
+Ticket URL: &lt;<A HREF="http://haiku-os.org/trac/ticket/956">http://haiku-os.org/trac/ticket/956</A>&gt;
+Haiku &lt;<A HREF="http://haiku-os.org/trac">http://haiku-os.org/trac</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000012.html">[Haiku-bugs] [Haiku] #835: Trac could detect SVN revisions and add a link for them
+</A></li>
+	<LI>Next message: <A HREF="000014.html">[Haiku-bugs] [Haiku] #748: kqemu pagefault with interrupts	disabled
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13">[ date ]</a>
+              <a href="thread.html#13">[ thread ]</a>
+              <a href="subject.html#13">[ subject ]</a>
+              <a href="author.html#13">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

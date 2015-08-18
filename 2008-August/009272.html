@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2559: [pthreads] Define PTHREAD_STACK_MIN
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232559%3A%20%5Bpthreads%5D%20Define%20PTHREAD_STACK_MIN&In-Reply-To=%3C052.a7597b55108c1ad0c25f68f9cabccdd3%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009230.html">
+   <LINK REL="Next"  HREF="009331.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2559: [pthreads] Define PTHREAD_STACK_MIN</H1>
+    <B>andreasf</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232559%3A%20%5Bpthreads%5D%20Define%20PTHREAD_STACK_MIN&In-Reply-To=%3C052.a7597b55108c1ad0c25f68f9cabccdd3%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2559: [pthreads] Define PTHREAD_STACK_MIN">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Aug  4 16:33:22 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009230.html">[Haiku-bugs] [Haiku] #2559: [pthreads] Define PTHREAD_STACK_MIN
+</A></li>
+        <LI>Next message: <A HREF="009331.html">[Haiku-bugs] [Haiku] #2559: [pthreads] Define PTHREAD_STACK_MIN
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9272">[ date ]</a>
+              <a href="thread.html#9272">[ thread ]</a>
+              <a href="subject.html#9272">[ subject ]</a>
+              <a href="author.html#9272">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2559: [pthreads] Define PTHREAD_STACK_MIN
+--------------------------+-------------------------------------------------
+  Reporter:  andreasf     |       Owner:  axeld         
+      Type:  enhancement  |      Status:  new           
+  Priority:  low          |   Milestone:  R1            
+ Component:  - General    |     Version:  R1 development
+Resolution:               |   Blockedby:                
+  Platform:  x86          |    Blocking:                
+--------------------------+-------------------------------------------------
+
+Comment(by andreasf):
+
+ FYI in this particular case, using 4096 in place of
+ {{{PTHREAD_STACK_MIN}}} badly freezes the system. Same for 8192 (seen on
+ OSX in {{{limits.h}}}). Using 65536 doesn't.
+
+ {{{
+ vm_page_fault: vm_soft_fault returned error 'Bad address' on fault at
+ 0x70002007
+ create_thread: unable to create proper user stack!
+ CPU 0 halted!
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2559#comment:2">http://dev.haiku-os.org/ticket/2559#comment:2</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009230.html">[Haiku-bugs] [Haiku] #2559: [pthreads] Define PTHREAD_STACK_MIN
+</A></li>
+	<LI>Next message: <A HREF="009331.html">[Haiku-bugs] [Haiku] #2559: [pthreads] Define PTHREAD_STACK_MIN
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9272">[ date ]</a>
+              <a href="thread.html#9272">[ thread ]</a>
+              <a href="subject.html#9272">[ subject ]</a>
+              <a href="author.html#9272">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

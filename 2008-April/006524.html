@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2086: BTextControl::BTextControl(BMessage* msg) causes segment violation
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232086%3A%0A%20BTextControl%3A%3ABTextControl%28BMessage%2A%20msg%29%20causes%20segment%20violation&In-Reply-To=%3C050.278fed554cfab2b1cf80cf5cf734d922%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006520.html">
+   <LINK REL="Next"  HREF="006525.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2086: BTextControl::BTextControl(BMessage* msg) causes segment violation</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232086%3A%0A%20BTextControl%3A%3ABTextControl%28BMessage%2A%20msg%29%20causes%20segment%20violation&In-Reply-To=%3C050.278fed554cfab2b1cf80cf5cf734d922%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2086: BTextControl::BTextControl(BMessage* msg) causes segment violation">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Apr 18 14:23:13 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006520.html">[Haiku-bugs] [Haiku] #2086: BTextControl::BTextControl(BMessage* msg) causes segment violation
+</A></li>
+        <LI>Next message: <A HREF="006525.html">[Haiku-bugs] [Haiku] #2086: BTextControl::BTextControl(BMessage* msg) causes segment violation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6524">[ date ]</a>
+              <a href="thread.html#6524">[ thread ]</a>
+              <a href="subject.html#6524">[ subject ]</a>
+              <a href="author.html#6524">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2086: BTextControl::BTextControl(BMessage* msg) causes segment violation
+---------------------------------+------------------------------------------
+  Reporter:  shinta              |       Owner:  axeld         
+      Type:  bug                 |      Status:  new           
+  Priority:  normal              |   Milestone:  R1            
+ Component:  Kits/Interface Kit  |     Version:  R1 development
+Resolution:                      |    Platform:  x86           
+---------------------------------+------------------------------------------
+Comment (by shinta):
+
+ Thank you for your investigation.
+
+ I think that archived class name and instantiate class name are
+ different.When I modified TextInput.cpp as follows,
+ BTextControl::BTextcontrol(BMessage*) works well.
+
+ _BTextInput_::Instantiate(BMessage* archive)
+ {
+ if (validate_instantiation(archive, &quot;BPrivate::_BTextInput_&quot;));
+ ...(omit)...
+ }
+
+ Currently, archived BMessage has the class name &quot;BPrivate::_BTextInput_&quot;.
+ But, archived BMessage in ZETA (and maybe in BeOS, too) has the class name
+ &quot;_BTextInput_&quot;.
+
+ I think it is better to archive with the name &quot;_BTextInput_&quot; for backwards
+ compatibility, then we don't need to modify _BTextInput_::Instantiate().
+
+ [<A HREF="http://www2u.biglobe.ne.jp/~shinta/be/">http://www2u.biglobe.ne.jp/~shinta/be/</A> SHINTA]
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2086#comment:2">http://dev.haiku-os.org/ticket/2086#comment:2</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006520.html">[Haiku-bugs] [Haiku] #2086: BTextControl::BTextControl(BMessage* msg) causes segment violation
+</A></li>
+	<LI>Next message: <A HREF="006525.html">[Haiku-bugs] [Haiku] #2086: BTextControl::BTextControl(BMessage* msg) causes segment violation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6524">[ date ]</a>
+              <a href="thread.html#6524">[ thread ]</a>
+              <a href="subject.html#6524">[ subject ]</a>
+              <a href="author.html#6524">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

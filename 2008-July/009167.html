@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2549: Can't change video mode when monitor can't display current video mode
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-July/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232549%3A%20Can%27t%20change%20video%20mode%20when%20monitor%0A%20can%27t%20display%20current%20video%20mode&In-Reply-To=%3C041.26e7c8bcc69ce7ad54f7c6bf25988948%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009170.html">
+   <LINK REL="Next"  HREF="009171.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2549: Can't change video mode when monitor can't display current video mode</H1>
+    <B>idefix</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232549%3A%20Can%27t%20change%20video%20mode%20when%20monitor%0A%20can%27t%20display%20current%20video%20mode&In-Reply-To=%3C041.26e7c8bcc69ce7ad54f7c6bf25988948%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2549: Can't change video mode when monitor can't display current video mode">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Jul 26 19:06:44 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009170.html">[Haiku-bugs] [Haiku] #2548: Drive Setup reports wrong volume name after an initilization
+</A></li>
+        <LI>Next message: <A HREF="009171.html">[Haiku-bugs] [Haiku] #2550: [ReiserFS] PANIC: Had reserved page, but there is none!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9167">[ date ]</a>
+              <a href="thread.html#9167">[ thread ]</a>
+              <a href="subject.html#9167">[ subject ]</a>
+              <a href="author.html#9167">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2549: Can't change video mode when monitor can't display current video mode
+--------------------------------+-------------------------------------------
+ Reporter:  idefix              |       Owner:  axeld         
+     Type:  bug                 |      Status:  new           
+ Priority:  normal              |   Milestone:  R1            
+Component:  Preferences/Screen  |     Version:  R1 development
+Blockedby:                      |    Platform:  All           
+ Blocking:                      |  
+--------------------------------+-------------------------------------------
+ I have a nVidia TNT2 card which used to have a CRT monitor connected to
+ it, working at 1024x768 @ 85 Hz. Now I have connected a LCD monitor, but
+ it doesn't like the 85 Hz so it displays a warning message. No matter what
+ I try, I can't set the video mode to 60 Hz without connecting the CRT
+ monitor again.
+
+ At first I tried to set in the bootloader the 'safe video mode' to
+ 800x600. Haiku boots then with the bootscreen at 800x600 @ 60 Hz, but as
+ soon the desktop loads the video mode is set to 1024x768 @ 85 Hz.
+
+ Secondly I tried to set the 'safe video mode' to 800x600 and also set the
+ 'use save video mode'-flag. Haiku boots then into a desktop at 800x600 @
+ 60 Hz, but as it is using the vesa driver I can't change the video mode
+ for the nVidia driver. So when it boots normally again, it's 1024x768 @ 85
+ Hz.
+
+ Thirdly I remembered the [Ctrl]-[Alt]-[Shift]-[F12] keystroke which in
+ BeOS causes the display to VGA mode @ 60 Hz. In Haiku however I go into
+ the kernel debugger (as I discovered in the serial output, the monitor
+ still displayed a warning).
+
+ At this moment I can't see how I can change the video mode without
+ connecting the CRT monitor.
+
+ A couple of solutions to this problem:[[BR]]
+ First, the nVidia driver should detect that the new monitor can't handle
+ the current video mode. See bug #1696.
+
+ Secondly the [Ctrl]-[Alt]-[Shift]-[F12] keystroke should work the same as
+ in BeOS.
+
+ Thirdly, as the bootloader already differentiate between the 'safe video
+ mode'-setting with the 'use save video mode'-flag on or off, the setting
+ with the flag off could be used to tell the nVidia driver the new
+ resolution. The 'save video mode' should then be renamed to 'video mode'.
+ When it has a value other than default, that video mode would be sent to
+ the videocard-driver. If the 'use save video mode'-flag is on, that value
+ would be used by the vesa-driver.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2549">http://dev.haiku-os.org/ticket/2549</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009170.html">[Haiku-bugs] [Haiku] #2548: Drive Setup reports wrong volume name after an initilization
+</A></li>
+	<LI>Next message: <A HREF="009171.html">[Haiku-bugs] [Haiku] #2550: [ReiserFS] PANIC: Had reserved page, but there is none!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9167">[ date ]</a>
+              <a href="thread.html#9167">[ thread ]</a>
+              <a href="subject.html#9167">[ subject ]</a>
+              <a href="author.html#9167">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

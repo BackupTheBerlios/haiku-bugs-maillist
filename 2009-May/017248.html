@@ -1,0 +1,345 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3921: New ATA stack and audio CD problem.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233921%3A%20New%20ATA%20stack%20and%20audio%20CD%20problem.&In-Reply-To=%3C038.8a80311c3775123ba4d53763426abb77%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="017246.html">
+   <LINK REL="Next"  HREF="017250.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3921: New ATA stack and audio CD problem.</H1>
+    <B>bga</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233921%3A%20New%20ATA%20stack%20and%20audio%20CD%20problem.&In-Reply-To=%3C038.8a80311c3775123ba4d53763426abb77%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3921: New ATA stack and audio CD problem.">trac at haiku-os.org
+       </A><BR>
+    <I>Mon May 11 01:22:16 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="017246.html">[Haiku-bugs] [Haiku] #1583: Fallback when Preferred App is	missing
+</A></li>
+        <LI>Next message: <A HREF="017250.html">[Haiku-bugs] [Haiku] #3921: New ATA stack and audio CD problem.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17248">[ date ]</a>
+              <a href="thread.html#17248">[ thread ]</a>
+              <a href="subject.html#17248">[ subject ]</a>
+              <a href="author.html#17248">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3921: New ATA stack and audio CD problem.
+--------------------------+-------------------------------------------------
+ Reporter:  bga           |       Owner:  marcusoverhagen
+     Type:  bug           |      Status:  new            
+ Priority:  normal        |   Milestone:  R1             
+Component:  Drivers/Disk  |     Version:  R1 development 
+Blockedby:                |    Platform:  All            
+ Blocking:                |  
+--------------------------+-------------------------------------------------
+ Whenever I try to mount an audio CD (with cdda-fs), I get the following in
+ syslog:
+
+ {{{
+ 2009-05-10 20:17:19 KERN: Media changed from /dev/disk/atapi/1/master/raw
+ 2009-05-10 20:17:19 KERN:
+ KDiskDeviceManager::_ScanPartition(/dev/disk/atapi/1/master/raw)
+ 2009-05-10 20:17:19 KERN:   trying: partitioning_systems/intel/extended/v1
+ 2009-05-10 20:17:19 KERN:   returned: -1
+ 2009-05-10 20:17:19 KERN:   trying: partitioning_systems/intel/map/v1
+ 2009-05-10 20:17:19 KERN: intel: pm_identify_partition(11, 1: 0,
+ 367243264, 2048)
+ 2009-05-10 20:17:19 KERN: ata 1 error: command failed, error bit is set:
+ 0x50
+ 2009-05-10 20:17:19 KERN: atapi 1-0 error: device indicates transfer error
+ after dma
+ 2009-05-10 20:17:19 KERN: check_sense: Illegal request
+ 2009-05-10 20:17:19 KERN: cd_read(): request.Wait() returned: General
+ system error
+ 2009-05-10 20:17:19 KERN:   returned: -1
+ 2009-05-10 20:17:19 KERN:   trying: file_systems/bfs/v1
+ 2009-05-10 20:17:19 KERN: ata 1 error: command failed, error bit is set:
+ 0x50
+ 2009-05-10 20:17:19 KERN: atapi 1-0 error: device indicates transfer error
+ after dma
+ 2009-05-10 20:17:19 KERN: check_sense: Illegal request
+ 2009-05-10 20:17:19 KERN: cd_read(): request.Wait() returned: General
+ system error
+ 2009-05-10 20:17:19 KERN:   returned: -1
+ 2009-05-10 20:17:19 KERN:   trying: file_systems/devfs/v1
+ 2009-05-10 20:17:19 KERN:   returned: -1
+ 2009-05-10 20:17:19 KERN:   trying: file_systems/rootfs/v1
+ 2009-05-10 20:17:19 KERN:   returned: -1
+ 2009-05-10 20:17:19 KERN:   trying: partitioning_systems/session/v1
+ 2009-05-10 20:17:19 KERN: raw_command:
+ 2009-05-10 20:17:19 KERN:   returned: 0.699
+ 2009-05-10 20:17:19 KERN:   trying: file_systems/attribute_overlay/v1
+ 2009-05-10 20:17:19 KERN:   returned: -1
+ 2009-05-10 20:17:19 KERN:   trying: file_systems/cdda/v1
+ 2009-05-10 20:17:19 KERN: raw_command:
+ 2009-05-10 20:17:19 KERN: 01. 00:02.33 (length 02:02.32)
+ 2009-05-10 20:17:19 KERN: 02. 02:04.65 (length 02:44.00)
+ 2009-05-10 20:17:19 KERN: 03. 04:48.65 (length 03:28.33)
+ 2009-05-10 20:17:19 KERN: 04. 08:17.23 (length 02:47.65)
+ 2009-05-10 20:17:19 KERN: 05. 11:05.13 (length 02:36.47)
+ 2009-05-10 20:17:19 KERN: 06. 13:41.60 (length 03:35.03)
+ 2009-05-10 20:17:19 KERN: 07. 17:16.63 (length 02:37.07)
+ 2009-05-10 20:17:19 KERN: 08. 19:53.70 (length 05:05.05)
+ 2009-05-10 20:17:19 KERN: 09. 24:59.00 (length 02:37.53)
+ 2009-05-10 20:17:19 KERN: 10. 27:36.53 (length 02:42.07)
+ 2009-05-10 20:17:19 KERN: 11. 30:18.60 (length 02:41.23)
+ 2009-05-10 20:17:19 KERN: 12. 33:00.08 (length 01:18.67)
+ 2009-05-10 20:17:19 KERN: 13. 34:19.00 (length 05:33.68)
+ 2009-05-10 20:17:19 KERN:   returned: 0.8
+ 2009-05-10 20:17:19 KERN:   trying: file_systems/ext2/v1
+ 2009-05-10 20:17:19 KERN: ata 1 error: command failed, error bit is set:
+ 0x50
+ 2009-05-10 20:17:19 KERN: atapi 1-0 error: device indicates transfer error
+ after dma
+ 2009-05-10 20:17:19 KERN: check_sense: Illegal request
+ 2009-05-10 20:17:19 KERN: cd_read(): request.Wait() returned: General
+ system error
+ 2009-05-10 20:17:19 KERN:   returned: -2147483648
+ 2009-05-10 20:17:19 KERN:   trying: file_systems/fat/v1
+ 2009-05-10 20:17:19 KERN: ata 1 error: command failed, error bit is set:
+ 0x50
+ 2009-05-10 20:17:19 KERN: atapi 1-0 error: device indicates transfer error
+ after dma
+ 2009-05-10 20:17:19 KERN: check_sense: Illegal request
+ 2009-05-10 20:17:19 KERN: cd_read(): request.Wait() returned: General
+ system error
+ 2009-05-10 20:17:19 KERN:   returned: -1
+ 2009-05-10 20:17:19 KERN:   trying: file_systems/iso9660/v1
+ 2009-05-10 20:17:19 KERN: identify(11, 0x81404d80)
+ 2009-05-10 20:17:19 KERN: ata 1 error: command failed, error bit is set:
+ 0x50
+ 2009-05-10 20:17:19 KERN: atapi 1-0 error: device indicates transfer error
+ after dma
+ 2009-05-10 20:17:19 KERN: check_sense: Illegal request
+ 2009-05-10 20:17:19 KERN: cd_read(): request.Wait() returned: General
+ system error
+ 2009-05-10 20:17:19 KERN:   returned: -1
+ 2009-05-10 20:17:19 KERN:   trying: file_systems/nfs/v1
+ 2009-05-10 20:17:19 KERN:   returned: -1
+ 2009-05-10 20:17:19 KERN:   trying: file_systems/ntfs/v1
+ 2009-05-10 20:17:19 KERN: ata 1 error: command failed, error bit is set:
+ 0x50
+ 2009-05-10 20:17:19 KERN: atapi 1-0 error: device indicates transfer error
+ after dma
+ 2009-05-10 20:17:19 KERN: check_sense: Illegal request
+ 2009-05-10 20:17:19 KERN: cd_read(): request.Wait() returned: General
+ system error
+ 2009-05-10 20:17:19 KERN:   returned: -1
+ 2009-05-10 20:17:19 KERN:   trying: file_systems/reiserfs/v1
+ 2009-05-10 20:17:19 KERN: ata 1 error: command failed, error bit is set:
+ 0x50
+ 2009-05-10 20:17:19 KERN: atapi 1-0 error: device indicates transfer error
+ after dma
+ 2009-05-10 20:17:19 KERN: check_sense: Illegal request
+ 2009-05-10 20:17:19 KERN: cd_read(): request.Wait() returned: General
+ system error
+ 2009-05-10 20:17:19 KERN: ata 1 error: command failed, error bit is set:
+ 0x50
+ 2009-05-10 20:17:19 KERN: atapi 1-0 error: device indicates transfer error
+ after dma
+ 2009-05-10 20:17:19 KERN: check_sense: Illegal request
+ 2009-05-10 20:17:19 KERN: cd_read(): request.Wait() returned: General
+ system error
+ 2009-05-10 20:17:19 KERN:   returned: -1
+ 2009-05-10 20:17:19 KERN:   trying: file_systems/userlandfs/v1
+ 2009-05-10 20:17:19 KERN:   returned: -1
+ 2009-05-10 20:17:19 KERN:   trying: file_systems/write_overlay/v1
+ 2009-05-10 20:17:19 KERN:   returned: -1
+ 2009-05-10 20:17:19 KERN:   scanning with: file_systems/cdda/v1
+ 2009-05-10 20:17:19 KERN: raw_command:
+ 2009-05-10 20:17:21 KERN: ata 1 error: command failed, error bit is set:
+ 0x50
+ 2009-05-10 20:17:21 KERN: raw_command:
+ 2009-05-10 20:17:23 KERN: ata 1 error: command failed, error bit is set:
+ 0x50
+ 2009-05-10 20:17:23 KERN: raw_command:
+ 2009-05-10 20:17:23 KERN: 01. 00:02.33 (length 02:02.32)
+ 2009-05-10 20:17:23 KERN: 02. 02:04.65 (length 02:44.00)
+ 2009-05-10 20:17:23 KERN: 03. 04:48.65 (length 03:28.33)
+ 2009-05-10 20:17:23 KERN: 04. 08:17.23 (length 02:47.65)
+ 2009-05-10 20:17:23 KERN: 05. 11:05.13 (length 02:36.47)
+ 2009-05-10 20:17:23 KERN: 06. 13:41.60 (length 03:35.03)
+ 2009-05-10 20:17:23 KERN: 07. 17:16.63 (length 02:37.07)
+ 2009-05-10 20:17:23 KERN: 08. 19:53.70 (length 05:05.05)
+ 2009-05-10 20:17:23 KERN: 09. 24:59.00 (length 02:37.53)
+ 2009-05-10 20:17:23 KERN: 10. 27:36.53 (length 02:42.07)
+ 2009-05-10 20:17:23 KERN: 11. 30:18.60 (length 02:41.23)
+ 2009-05-10 20:17:23 KERN: 12. 33:00.08 (length 01:18.67)
+ 2009-05-10 20:17:23 KERN: 13. 34:19.00 (length 05:33.68)
+ 2009-05-10 20:17:24 KERN: Media changed from /dev/disk/atapi/1/master/raw
+ 2009-05-10 20:17:24 KERN:
+ KDiskDeviceManager::_ScanPartition(/dev/disk/atapi/1/master/raw)
+ 2009-05-10 20:17:24 KERN:   trying: partitioning_systems/intel/extended/v1
+ 2009-05-10 20:17:24 KERN:   returned: -1
+ 2009-05-10 20:17:24 KERN:   trying: partitioning_systems/intel/map/v1
+ 2009-05-10 20:17:24 KERN: intel: pm_identify_partition(11, 1: 0,
+ 367243264, 2048)
+ 2009-05-10 20:17:24 KERN: ata 1 error: command failed, error bit is set:
+ 0x50
+ 2009-05-10 20:17:24 KERN: atapi 1-0 error: device indicates transfer error
+ after dma
+ 2009-05-10 20:17:24 KERN: check_sense: Illegal request
+ 2009-05-10 20:17:24 KERN: cd_read(): request.Wait() returned: General
+ system error
+ 2009-05-10 20:17:24 KERN:   returned: -1
+ 2009-05-10 20:17:24 KERN:   trying: file_systems/bfs/v1
+ 2009-05-10 20:17:24 KERN: ata 1 error: command failed, error bit is set:
+ 0x50
+ 2009-05-10 20:17:24 KERN: atapi 1-0 error: device indicates transfer error
+ after dma
+ 2009-05-10 20:17:24 KERN: check_sense: Illegal request
+ 2009-05-10 20:17:24 KERN: cd_read(): request.Wait() returned: General
+ system error
+ 2009-05-10 20:17:24 KERN:   returned: -1
+ 2009-05-10 20:17:24 KERN:   trying: file_systems/devfs/v1
+ 2009-05-10 20:17:24 KERN:   returned: -1
+ 2009-05-10 20:17:24 KERN:   trying: file_systems/rootfs/v1
+ 2009-05-10 20:17:24 KERN:   returned: -1
+ 2009-05-10 20:17:24 KERN:   trying: partitioning_systems/session/v1
+ 2009-05-10 20:17:24 KERN: raw_command:
+ 2009-05-10 20:17:24 KERN:   returned: 0.699
+ 2009-05-10 20:17:24 KERN:   trying: file_systems/attribute_overlay/v1
+ 2009-05-10 20:17:24 KERN:   returned: -1
+ 2009-05-10 20:17:24 KERN:   trying: file_systems/cdda/v1
+ 2009-05-10 20:17:24 KERN: raw_command:
+ 2009-05-10 20:17:24 KERN: 01. 00:02.33 (length 02:02.32)
+ 2009-05-10 20:17:24 KERN: 02. 02:04.65 (length 02:44.00)
+ 2009-05-10 20:17:24 KERN: 03. 04:48.65 (length 03:28.33)
+ 2009-05-10 20:17:24 KERN: 04. 08:17.23 (length 02:47.65)
+ 2009-05-10 20:17:24 KERN: 05. 11:05.13 (length 02:36.47)
+ 2009-05-10 20:17:24 KERN: 06. 13:41.60 (length 03:35.03)
+ 2009-05-10 20:17:24 KERN: 07. 17:16.63 (length 02:37.07)
+ 2009-05-10 20:17:24 KERN: 08. 19:53.70 (length 05:05.05)
+ 2009-05-10 20:17:24 KERN: 09. 24:59.00 (length 02:37.53)
+ 2009-05-10 20:17:24 KERN: 10. 27:36.53 (length 02:42.07)
+ 2009-05-10 20:17:24 KERN: 11. 30:18.60 (length 02:41.23)
+ 2009-05-10 20:17:24 KERN: 12. 33:00.08 (length 01:18.67)
+ 2009-05-10 20:17:24 KERN: 13. 34:19.00 (length 05:33.68)
+ 2009-05-10 20:17:24 KERN:   returned: 0.8
+ 2009-05-10 20:17:24 KERN:   trying: file_systems/ext2/v1
+ 2009-05-10 20:17:24 KERN: ata 1 error: command failed, error bit is set:
+ 0x50
+ 2009-05-10 20:17:24 KERN: atapi 1-0 error: device indicates transfer error
+ after dma
+ 2009-05-10 20:17:24 KERN: check_sense: Illegal request
+ 2009-05-10 20:17:24 KERN: cd_read(): request.Wait() returned: General
+ system error
+ 2009-05-10 20:17:24 KERN:   returned: -2147483648
+ 2009-05-10 20:17:24 KERN:   trying: file_systems/fat/v1
+ 2009-05-10 20:17:24 KERN: ata 1 error: command failed, error bit is set:
+ 0x50
+ 2009-05-10 20:17:24 KERN: atapi 1-0 error: device indicates transfer error
+ after dma
+ 2009-05-10 20:17:24 KERN: check_sense: Illegal request
+ 2009-05-10 20:17:24 KERN: cd_read(): request.Wait() returned: General
+ system error
+ 2009-05-10 20:17:24 KERN:   returned: -1
+ 2009-05-10 20:17:24 KERN:   trying: file_systems/iso9660/v1
+ 2009-05-10 20:17:24 KERN: identify(11, 0x81404f00)
+ 2009-05-10 20:17:24 KERN: ata 1 error: command failed, error bit is set:
+ 0x50
+ 2009-05-10 20:17:24 KERN: atapi 1-0 error: device indicates transfer error
+ after dma
+ 2009-05-10 20:17:24 KERN: check_sense: Illegal request
+ 2009-05-10 20:17:24 KERN: cd_read(): request.Wait() returned: General
+ system error
+ 2009-05-10 20:17:24 KERN:   returned: -1
+ 2009-05-10 20:17:24 KERN:   trying: file_systems/nfs/v1
+ 2009-05-10 20:17:24 KERN:   returned: -1
+ 2009-05-10 20:17:24 KERN:   trying: file_systems/ntfs/v1
+ 2009-05-10 20:17:24 KERN: ata 1 error: command failed, error bit is set:
+ 0x50
+ 2009-05-10 20:17:24 KERN: atapi 1-0 error: device indicates transfer error
+ after dma
+ 2009-05-10 20:17:24 KERN: check_sense: Illegal request
+ 2009-05-10 20:17:24 KERN: cd_read(): request.Wait() returned: General
+ system error
+ 2009-05-10 20:17:24 KERN:   returned: -1
+ 2009-05-10 20:17:24 KERN:   trying: file_systems/reiserfs/v1
+ 2009-05-10 20:17:24 KERN: ata 1 error: command failed, error bit is set:
+ 0x50
+ 2009-05-10 20:17:24 KERN: atapi 1-0 error: device indicates transfer error
+ after dma
+ 2009-05-10 20:17:24 KERN: check_sense: Illegal request
+ 2009-05-10 20:17:24 KERN: cd_read(): request.Wait() returned: General
+ system error
+ 2009-05-10 20:17:24 KERN: ata 1 error: command failed, error bit is set:
+ 0x50
+ 2009-05-10 20:17:24 KERN: atapi 1-0 error: device indicates transfer error
+ after dma
+ 2009-05-10 20:17:24 KERN: check_sense: Illegal request
+ 2009-05-10 20:17:24 KERN: cd_read(): request.Wait() returned: General
+ system error
+ 2009-05-10 20:17:24 KERN:   returned: -1
+ 2009-05-10 20:17:24 KERN:   trying: file_systems/userlandfs/v1
+ 2009-05-10 20:17:24 KERN:   returned: -1
+ 2009-05-10 20:17:24 KERN:   trying: file_systems/write_overlay/v1
+ 2009-05-10 20:17:24 KERN:   returned: -1
+ 2009-05-10 20:17:24 KERN:   scanning with: file_systems/cdda/v1
+ 2009-05-10 20:17:24 KERN: raw_command:
+ 2009-05-10 20:17:26 KERN: ata 1 error: command failed, error bit is set:
+ 0x50
+ 2009-05-10 20:17:26 KERN: raw_command:
+ 2009-05-10 20:17:28 KERN: ata 1 error: command failed, error bit is set:
+ 0x50
+ 2009-05-10 20:17:28 KERN: raw_command:
+ 2009-05-10 20:17:28 KERN: 01. 00:02.33 (length 02:02.32)
+ 2009-05-10 20:17:28 KERN: 02. 02:04.65 (length 02:44.00)
+ 2009-05-10 20:17:28 KERN: 03. 04:48.65 (length 03:28.33)
+ 2009-05-10 20:17:28 KERN: 04. 08:17.23 (length 02:47.65)
+ 2009-05-10 20:17:28 KERN: 05. 11:05.13 (length 02:36.47)
+ 2009-05-10 20:17:28 KERN: 06. 13:41.60 (length 03:35.03)
+ 2009-05-10 20:17:28 KERN: 07. 17:16.63 (length 02:37.07)
+ 2009-05-10 20:17:28 KERN: 08. 19:53.70 (length 05:05.05)
+ 2009-05-10 20:17:28 KERN: 09. 24:59.00 (length 02:37.53)
+ 2009-05-10 20:17:28 KERN: 10. 27:36.53 (length 02:42.07)
+ 2009-05-10 20:17:28 KERN: 11. 30:18.60 (length 02:41.23)
+ 2009-05-10 20:17:28 KERN: 12. 33:00.08 (length 01:18.67)
+ 2009-05-10 20:17:28 KERN: 13. 34:19.00 (length 05:33.68)
+ }}}
+
+ Also, in the root dir I can see 2 directories that were created: &quot;Audio
+ CD&quot; and &quot;Audio CD1&quot;. The second one is where the CD is actually mounted,
+ but the first one was created by mounting the CD too (in fact, I see the
+ CD icon show in the Desktop, disappear and show again.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3921">http://dev.haiku-os.org/ticket/3921</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="017246.html">[Haiku-bugs] [Haiku] #1583: Fallback when Preferred App is	missing
+</A></li>
+	<LI>Next message: <A HREF="017250.html">[Haiku-bugs] [Haiku] #3921: New ATA stack and audio CD problem.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17248">[ date ]</a>
+              <a href="thread.html#17248">[ thread ]</a>
+              <a href="subject.html#17248">[ subject ]</a>
+              <a href="author.html#17248">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2957: Applications stop in the middle of	start process
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232957%3A%20Applications%20stop%20in%20the%20middle%20of%0A%09start%20process&In-Reply-To=%3C041.5261c9cb422323909b7c7ff5e2b83b5c%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011543.html">
+   <LINK REL="Next"  HREF="011545.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2957: Applications stop in the middle of	start process</H1>
+    <B>stippi</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232957%3A%20Applications%20stop%20in%20the%20middle%20of%0A%09start%20process&In-Reply-To=%3C041.5261c9cb422323909b7c7ff5e2b83b5c%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2957: Applications stop in the middle of	start process">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Oct 26 13:30:18 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011543.html">[Haiku-bugs] [Haiku] #1689: acquire_sem doesn't timeout
+</A></li>
+        <LI>Next message: <A HREF="011545.html">[Haiku-bugs] [Haiku] #2957: Applications stop in the middle of	start process
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11544">[ date ]</a>
+              <a href="thread.html#11544">[ thread ]</a>
+              <a href="subject.html#11544">[ subject ]</a>
+              <a href="author.html#11544">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2957: Applications stop in the middle of start process
+-----------------------+----------------------------------------------------
+ Reporter:  stippi     |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  blocker    |   Milestone:  R1/alpha1     
+Component:  - General  |     Version:  R1 development
+Blockedby:             |    Platform:  All           
+ Blocking:             |  
+-----------------------+----------------------------------------------------
+ I've only seen this in recent revision (currently running r28334), but I
+ cannot say when it started. Sometimes, when I launch applications, they
+ get a Deskbar entry but open no window. This also affects very simple
+ applications, like a preflet. Printing the stack crawl in KDL for the
+ application thread (in my case here the only thread of the application
+ yet) gives this:
+
+ {{{
+ &lt;kernel_x86&gt; context_switch(thread*: 0x81a13000, thread*: 0x80110bf0) +
+ 0x003c
+ &lt;kernel_x86&gt; simple_reschedule() + 0x029f
+ &lt;kernel_x86&gt;:switch_sem_etc + 0x0319
+ &lt;kernel_x86&gt;:acquire_sem_etc + 0x0026
+ &lt;kernel_x86&gt;:_get_port_message_info_etc + 0x012e
+ &lt;kernel_x86&gt;:port_buffer_size_etc + 0x0025
+ &lt;kernel_x86&gt;:user_port_buffer_size_etc + 0x008d
+ &lt;kernel_x86&gt;:handle_syscall + 0x00af
+ user iframe at 0x83795fa8 (end = 0x83796000)
+  eax 0xc3           ebx 0x5112fc    ecx 0x3f        edx 0xbd02f
+  esi 0xffffffff     edi 0x7fffffff  ebp 0x7ffeebcc  esp 0x83795fdc
+  eip 0xffff0102  eflags 0x216  user esp 0x7ffeeba0
+  vector: 0x63, error code: 0x0
+ &lt;commpage&gt;:commpage_syscall + 0x0002
+ &lt;libbe.so&gt;:__c1__Q38BPrivate11BLooperList12FindPortPredRQ38BPrivate11BLooperList10LooperData
+ (nearest) + 0x015b
+ [*** READ FAULT at 0xffffffff, pc: 0x800d7f83 ***]
+ }}}
+
+ I have no idea what recent change could have caused this. Looks like the
+ thread is waiting for a reply, but there were no app_server or registrar
+ changes recently, were there?
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2957">http://dev.haiku-os.org/ticket/2957</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011543.html">[Haiku-bugs] [Haiku] #1689: acquire_sem doesn't timeout
+</A></li>
+	<LI>Next message: <A HREF="011545.html">[Haiku-bugs] [Haiku] #2957: Applications stop in the middle of	start process
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11544">[ date ]</a>
+              <a href="thread.html#11544">[ thread ]</a>
+              <a href="subject.html#11544">[ subject ]</a>
+              <a href="author.html#11544">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

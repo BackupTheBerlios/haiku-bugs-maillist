@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1266: Unrecognised Partition Table errors
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231266%3A%20Unrecognised%20Partition%20Table%20errors&In-Reply-To=%3C039.87acc4486e8656ddd16ec2e1dfd0277d%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001611.html">
+   <LINK REL="Next"  HREF="001616.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1266: Unrecognised Partition Table errors</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231266%3A%20Unrecognised%20Partition%20Table%20errors&In-Reply-To=%3C039.87acc4486e8656ddd16ec2e1dfd0277d%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1266: Unrecognised Partition Table errors">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Jun  7 14:45:40 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001611.html">[Haiku-bugs] [Haiku] #35: Implement a TTY module layer
+</A></li>
+        <LI>Next message: <A HREF="001616.html">[Haiku-bugs] [Haiku] #1266: Unrecognised Partition Table errors
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1613">[ date ]</a>
+              <a href="thread.html#1613">[ thread ]</a>
+              <a href="subject.html#1613">[ subject ]</a>
+              <a href="author.html#1613">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1266: Unrecognised Partition Table errors
+--------------------------+-------------------------------------------------
+ Reporter:  euan          |       Owner:  axeld         
+     Type:  bug           |      Status:  new           
+ Priority:  normal        |   Milestone:  R1            
+Component:  File Systems  |     Version:  R1 development
+ Platform:  All           |  
+--------------------------+-------------------------------------------------
+ Haiku doesn't seem to see the other partitons (one Ext3, the other fat32)
+ on my disk.
+
+ Partition Table:
+ check for partitioning_system: Intel Extended Partition
+ intel: ep_identify_partition(2, 32777740800, 1571028480, 512)
+ check for partitioning_system: Apple Partition Map
+ *** scan child 0x001077a8 (start = 34348769280, size = 6820208640,
+ parent = 0x00107440)!
+ Partition::Scan()
+ check for partitioning_system: Amiga Partition Map
+ check for partitioning_system: Intel Partition Map
+ intel: pm_identify_partition(2, 1079208: 34348769280, 6820208640, 512)
+ Partition::SetTo(): active: c3
+ intel: _ParsePrimary(): partition 0: bad location, ignoring
+ Partition::SetTo(): active: ad
+ intel: _ParsePrimary(): partition 1: bad location, ignoring
+ Partition::SetTo(): active: 69
+ intel: _ParsePrimary(): partition 2: bad location, ignoring
+ Partition::SetTo(): active: 79
+ intel: _ParsePrimary(): partition 3: bad location, ignoring
+ check for partitioning_system: Intel Extended Partition
+ intel: ep_identify_partition(2, 34348769280, 6820208640, 512)
+
+ {{{
+ Partition Table for /dev/hda (cfdisk in linux)
+
+         ---Starting---      ----Ending----    Start     Number of
+  # Flags Head Sect Cyl   ID  Head Sect Cyl     Sector    Sectors
+ -- ----- ---- ---- ---- ---- ---- ---- ---- ----------- -----------
+  1  0x80    1    1    0 0x83  254   63  504          63     8112762
+  2  0x00  254   63 1023 0x0F  254   63 1023    61448625    78445395
+  3  0x00  254   63 1023 0xEB  254   63 1023   139894020    11100915
+  4  0x00    0    0    0 0x00    0    0    0           0           0
+  5  0x00  254   63 1023 0x83  254   63 1023          63    62926542
+  6  0x00  254   63 1023 0x82  254   63 1023          63     4096512
+  7  0x00  254   63 1023 0x0B  254   63 1023          63    11422152
+
+ Partition Table for /dev/hda
+
+               First       Last
+  # Type       Sector      Sector   Offset    Length   Filesystem Type (ID)
+ Flag
+ -- ------- ----------- ----------- ------ ----------- --------------------
+ ----
+  1 Primary           0     8112824     63     8112825 Linux (83)
+ Boot
+   Pri/Log     8112825    61448624      0    53335800 Free Space
+ None
+  2 Primary    61448625   139894019      0    78445395 W95 Ext'd (LBA) (0F)
+ None
+  5 Logical    61448625   124375229     63    62926605 Linux (83)
+ None
+  6 Logical   124375230   128471804     63     4096575 Linux swap / So (82)
+ None
+  7 Logical   128471805   139894019     63    11422215 W95 FAT32 (0B)
+ None
+  3 Primary   139894020   150994934      0    11100915 BeOS fs (EB)
+ None
+   Primary   150994935   156296384      0     5301450 Free Space
+ None
+
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1266">http://dev.haiku-os.org/ticket/1266</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001611.html">[Haiku-bugs] [Haiku] #35: Implement a TTY module layer
+</A></li>
+	<LI>Next message: <A HREF="001616.html">[Haiku-bugs] [Haiku] #1266: Unrecognised Partition Table errors
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1613">[ date ]</a>
+              <a href="thread.html#1613">[ thread ]</a>
+              <a href="subject.html#1613">[ subject ]</a>
+              <a href="author.html#1613">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

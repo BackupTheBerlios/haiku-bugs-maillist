@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1764: USB Mouse Freezes after a While
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-February/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231764%3A%20USB%20Mouse%20Freezes%20after%20a%20While&In-Reply-To=%3C052.155cdc6d29992b0a418013fce3b838e2%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="004730.html">
+   <LINK REL="Next"  HREF="004714.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1764: USB Mouse Freezes after a While</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231764%3A%20USB%20Mouse%20Freezes%20after%20a%20While&In-Reply-To=%3C052.155cdc6d29992b0a418013fce3b838e2%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1764: USB Mouse Freezes after a While">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Feb 16 12:16:19 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="004730.html">[Haiku-bugs] [Haiku] #1764: USB Mouse Freezes after a While
+</A></li>
+        <LI>Next message: <A HREF="004714.html">[Haiku-bugs] [Haiku] #1366: /dev/urandom doesn't working?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4873">[ date ]</a>
+              <a href="thread.html#4873">[ thread ]</a>
+              <a href="subject.html#4873">[ subject ]</a>
+              <a href="author.html#4873">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1764: USB Mouse Freezes after a While
+--------------------------+-------------------------------------------------
+  Reporter:  bonefish     |       Owner:  mmlr          
+      Type:  bug          |      Status:  assigned      
+  Priority:  normal       |   Milestone:  R1            
+ Component:  Drivers/USB  |     Version:  R1 development
+Resolution:               |    Platform:  All           
+--------------------------+-------------------------------------------------
+Comment (by mmlr):
+
+ I had this happening for me yesterday, just for the keyboard and not the
+ mouse. The reason is the disabling of the interrupt. Like for you it
+ disabled interrupt 11 after about half to a three quarter of an hour. The
+ reason is clearly the disabling as this is a shared interrupt that in my
+ setup is used by VGA, some &quot;communication device&quot;, a video capture and
+ multimedia device, one of the SATA controllers and 3 UHCI and 1 EHCI
+ controller. My mouse kept working, as it apparently happened to be on one
+ of the other 3 UHCI controllers that use interrupt vector 9.
+ At first I thought it might be the multimedia device which should be HDA,
+ but enabling extra debug output revealed that there is an unhandled
+ interrupt for vectors 10 and 11 happening very frequently (more than once
+ a second). That's the two interrupts that the two SATA controllers use, so
+ I assume it really is a problem with that.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1764#comment:8">http://dev.haiku-os.org/ticket/1764#comment:8</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="004730.html">[Haiku-bugs] [Haiku] #1764: USB Mouse Freezes after a While
+</A></li>
+	<LI>Next message: <A HREF="004714.html">[Haiku-bugs] [Haiku] #1366: /dev/urandom doesn't working?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4873">[ date ]</a>
+              <a href="thread.html#4873">[ thread ]</a>
+              <a href="subject.html#4873">[ subject ]</a>
+              <a href="author.html#4873">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3768: create_image -i 943718400 (or other large sizes) results in freeze
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233768%3A%20create_image%20-i%20943718400%20%28or%20other%0A%20large%20sizes%29%20results%20in%20freeze&In-Reply-To=%3C053.daa316f2424980dfa769015bd5303f4b%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="016294.html">
+   <LINK REL="Next"  HREF="016297.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3768: create_image -i 943718400 (or other large sizes) results in freeze</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233768%3A%20create_image%20-i%20943718400%20%28or%20other%0A%20large%20sizes%29%20results%20in%20freeze&In-Reply-To=%3C053.daa316f2424980dfa769015bd5303f4b%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3768: create_image -i 943718400 (or other large sizes) results in freeze">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Apr 18 03:56:12 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="016294.html">[Haiku-bugs] [Haiku] #3768: create_image -i 943718400 (or other large sizes) results in freeze
+</A></li>
+        <LI>Next message: <A HREF="016297.html">[Haiku-bugs] [Haiku] #3768: create_image -i 943718400 (or other large sizes) results in freeze
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16295">[ date ]</a>
+              <a href="thread.html#16295">[ thread ]</a>
+              <a href="subject.html#16295">[ subject ]</a>
+              <a href="author.html#16295">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3768: create_image -i 943718400 (or other large sizes) results in freeze
+---------------------------+------------------------------------------------
+ Reporter:  anevilyak      |       Owner:  bonefish      
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1 development
+Blockedby:                 |    Platform:  All           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+
+Comment(by anevilyak):
+
+ Replying to [comment:13 bonefish]:
+ &gt; Mmh, that doesn't quite convince me. We have a fixed quantum of 3 ms
+ after which we reschedule and we reschedule in release_sem_etc(), if a
+ thread with a higher priority has been woken up (and B_DO_NOT_RESCHEDULE
+ was not set), as well as when sending signals (needs some fixing, but is
+ relatively rare anyway).
+ &gt;
+
+ Is it possible we're setting B_DO_NOT_RESCHEDULE in some cases where we
+ shouldn't be?
+
+ &gt; Regarding the mystery that almost every thread seems to do I/O, that can
+ actually be easily explained: Apparently the memory pressure is high
+ enough that read-only memory mapped executable pages are discarded, even
+ ones that are not really &quot;inactive&quot;. Hence we get a lot of page faults
+ that need to re-read the pages into memory. This would also explain why
+ the system is so unusable.
+
+ I can confirm this behavior here as well. With your and Axel's changes the
+ system does indeed now recover after 3-5 seconds (nice work!) of being
+ unresponsive, though it's quite obvious all apps have been swapped out by
+ the behavior afterwards (the first click to Deskbar takes several seconds
+ to respond while it's paged back in for instance). What puzzles me is why
+ memory pressure is being exerted in this manner at all. I would have
+ assumed the VM would discard file cache pages/buffers before going after
+ executables, so I would expect the inode being created/filled in this
+ instance to have its pages flushed and reused once the pressure gets to
+ that point. Is this not the case?
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3768#comment:15">http://dev.haiku-os.org/ticket/3768#comment:15</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="016294.html">[Haiku-bugs] [Haiku] #3768: create_image -i 943718400 (or other large sizes) results in freeze
+</A></li>
+	<LI>Next message: <A HREF="016297.html">[Haiku-bugs] [Haiku] #3768: create_image -i 943718400 (or other large sizes) results in freeze
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16295">[ date ]</a>
+              <a href="thread.html#16295">[ thread ]</a>
+              <a href="subject.html#16295">[ subject ]</a>
+              <a href="author.html#16295">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

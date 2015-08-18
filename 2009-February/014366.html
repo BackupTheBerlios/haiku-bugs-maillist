@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3423: Automate creation of cross-ssl dir
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-February/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233423%3A%20Automate%20creation%20of%20cross-ssl%20dir&In-Reply-To=%3C050.dc543ad1aba4a9480e9cbe0be209da64%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="014331.html">
+   <LINK REL="Next"  HREF="014532.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3423: Automate creation of cross-ssl dir</H1>
+    <B>mmadia</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233423%3A%20Automate%20creation%20of%20cross-ssl%20dir&In-Reply-To=%3C050.dc543ad1aba4a9480e9cbe0be209da64%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3423: Automate creation of cross-ssl dir">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Feb 10 02:35:35 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="014331.html">[Haiku-bugs] [Haiku] #3423: Automate creation of cross-ssl dir
+</A></li>
+        <LI>Next message: <A HREF="014532.html">[Haiku-bugs] [Haiku] #3423: Automate creation of cross-ssl dir
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14366">[ date ]</a>
+              <a href="thread.html#14366">[ thread ]</a>
+              <a href="subject.html#14366">[ subject ]</a>
+              <a href="author.html#14366">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3423: Automate creation of cross-ssl dir
+--------------------------+-------------------------------------------------
+ Reporter:  mmadia        |       Owner:  bonefish      
+     Type:  enhancement   |      Status:  new           
+ Priority:  normal        |   Milestone:  R1            
+Component:  Build System  |     Version:  R1 development
+Blockedby:                |    Platform:  All           
+ Blocking:                |  
+--------------------------+-------------------------------------------------
+
+Comment(by mmadia):
+
+ How's this look so far?
+
+ '''*UserBuildConfig and ReleaseBuildProfiles'''
+
+ {{{
+ instead of :
+         USE_SSL = 1 ;
+ do :
+         SetupCrossSSLDir ;
+ }}}
+
+
+ '''haiku/build/jam/MiscRules :'''
+
+ ( or a similar *Rules file )
+ {{{
+ rule SetupCrossSSLDir
+ {
+         if $(TARGET_ARCH) != x86 {
+                 Echo &quot;No optional package OpenSSL available for
+ $(TARGET_ARCH)&quot; ;
+         } else {
+ # check if cross-ssl dir exists
+ # if not, check if file archive exists
+ #       if not, download file,  extract file
+                 SSL_DIR = blah
+                 USE_SSL = 1 ;
+         }
+ }
+ }}}
+
+
+ A side effect of this, all packages that test &quot;if $USE_SSL = 1&quot;,  would be
+ able to expect SSL_DIR to be valid.
+
+ '''old:'''
+
+ {{{
+ if $(USE_SSL) {
+         SubDirC++Flags -DUSE_SSL ;
+         if ! $(SSL_DIR) {
+                 sslDir = [ FDirName $(HAIKU_OUTPUT_DIR) cross-ssl common ]
+ ;
+         } else {
+                 sslDir = $(SSL_DIR) ;
+         }
+         SubDirSysHdrs [ FDirName $(sslDir) include ] ;
+ }
+ }}}
+
+
+ '''new:'''
+
+ {{{
+ if $(USE_SSL) {
+         SubDirSysHdrs [ FDirName $(SSL_DIR) include ] ;
+ }
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3423#comment:1">http://dev.haiku-os.org/ticket/3423#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="014331.html">[Haiku-bugs] [Haiku] #3423: Automate creation of cross-ssl dir
+</A></li>
+	<LI>Next message: <A HREF="014532.html">[Haiku-bugs] [Haiku] #3423: Automate creation of cross-ssl dir
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14366">[ date ]</a>
+              <a href="thread.html#14366">[ thread ]</a>
+              <a href="subject.html#14366">[ subject ]</a>
+              <a href="author.html#14366">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

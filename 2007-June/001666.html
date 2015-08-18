@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1277: Build broken on BeOS R5
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231277%3A%20Build%20broken%20on%20BeOS%20R5&In-Reply-To=%3C050.cbe739b0cb0783d976721f2bd6efc24f%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001665.html">
+   <LINK REL="Next"  HREF="001667.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1277: Build broken on BeOS R5</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231277%3A%20Build%20broken%20on%20BeOS%20R5&In-Reply-To=%3C050.cbe739b0cb0783d976721f2bd6efc24f%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1277: Build broken on BeOS R5">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Jun 17 18:59:52 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001665.html">[Haiku-bugs] [Haiku] #1276: Menus don't work anymore
+</A></li>
+        <LI>Next message: <A HREF="001667.html">[Haiku-bugs] [Haiku] #1230: Crash on booting under VirtualBox
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1666">[ date ]</a>
+              <a href="thread.html#1666">[ thread ]</a>
+              <a href="subject.html#1666">[ subject ]</a>
+              <a href="author.html#1666">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1277: Build broken on BeOS R5
+-----------------------------+----------------------------------------------
+ Reporter:  marcusoverhagen  |       Owner:  korli         
+     Type:  bug              |      Status:  new           
+ Priority:  blocker          |   Milestone:  R1            
+Component:  Build System     |     Version:  R1 development
+ Platform:  All              |  
+-----------------------------+----------------------------------------------
+ Recent changes to fs_shell, r21436 or earlier, broke the Build on BeOS R5.
+ see below.
+ The older r21418 works.
+
+ $ cd develop/haiku/src/tools/fs_shell/
+ $ jam
+ ...found 182 target(s)...
+ ...updating 2 target(s)...
+ C++ ../../../generated/objects/r5/x86/release/tools/fs_shell/atomic.o
+ /boot/home/develop/haiku/src/tools/fs_shell/atomic.cpp: In function
+ `int64_t fssh_atomic_set64(volatile vint64_t *, long long int)':
+ /boot/home/develop/haiku/src/tools/fs_shell/atomic.cpp:58: implicit
+ declaration of function `int atomic_set64(...)'
+ /boot/home/develop/haiku/src/tools/fs_shell/atomic.cpp: In function
+ `int64_t fssh_atomic_test_and_set64(volatile vint64_t *, long long int,
+ long long int)':
+ /boot/home/develop/haiku/src/tools/fs_shell/atomic.cpp:65: implicit
+ declaration of function `int atomic_test_and_set64(...)'
+ /boot/home/develop/haiku/src/tools/fs_shell/atomic.cpp: In function
+ `int64_t fssh_atomic_add64(volatile vint64_t *, long long int)':
+ /boot/home/develop/haiku/src/tools/fs_shell/atomic.cpp:72: implicit
+ declaration of function `int atomic_add64(...)'
+ /boot/home/develop/haiku/src/tools/fs_shell/atomic.cpp: In function
+ `int64_t fssh_atomic_and64(volatile vint64_t *, long long int)':
+ /boot/home/develop/haiku/src/tools/fs_shell/atomic.cpp:79: implicit
+ declaration of function `int atomic_and64(...)'
+ /boot/home/develop/haiku/src/tools/fs_shell/atomic.cpp: In function
+ `int64_t fssh_atomic_or64(volatile vint64_t *, long long int)':
+ /boot/home/develop/haiku/src/tools/fs_shell/atomic.cpp:86: implicit
+ declaration of function `int atomic_or64(...)'
+ /boot/home/develop/haiku/src/tools/fs_shell/atomic.cpp: In function
+ `int64_t fssh_atomic_get64(volatile vint64_t *)':
+ /boot/home/develop/haiku/src/tools/fs_shell/atomic.cpp:93: implicit
+ declaration of function `int atomic_get64(...)'
+
+ gcc -c &quot;atomic.cpp&quot; -O2 -Wall -Wno-ctor-dtor-privacy -Woverloaded-virtual
+ -Wpointer-arith -Wcast-align -Wsign-compare -Wno-multichar
+ -D_ZETA_USING_DEPRECATED_API_=1 -D_ZETA_TS_FIND_DIR_=1 -DARCH_x86
+ -D_NO_INLINE_ASM -DCOMPILE_FOR_R5 -DHAIKU_HOST_PLATFORM_BEOS -I.
+ -I../../../generated/objects/common/tools/fs_shell
+ -I../../../generated/objects/r5/x86/common/tools/fs_shell
+ -I../../../generated/objects/haiku/x86/common/tools/fs_shell -I-
+ -I../../../headers/build -I../../../headers/private/fs_shell
+ -I../../../headers/private/shared -I../../../headers/build/host/r5 -o
+ &quot;../../../generated/objects/r5/x86/release/tools/fs_shell/atomic.o&quot; ;
+
+ ...failed C++
+ ../../../generated/objects/r5/x86/release/tools/fs_shell/atomic.o ...
+ ...skipped &lt;build&gt;fs_shell.a for lack of &lt;src!tools!fs_shell&gt;atomic.o...
+ ...failed updating 1 target(s)...
+ ...skipped 1 target(s)...
+ $
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1277">http://dev.haiku-os.org/ticket/1277</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001665.html">[Haiku-bugs] [Haiku] #1276: Menus don't work anymore
+</A></li>
+	<LI>Next message: <A HREF="001667.html">[Haiku-bugs] [Haiku] #1230: Crash on booting under VirtualBox
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1666">[ date ]</a>
+              <a href="thread.html#1666">[ thread ]</a>
+              <a href="subject.html#1666">[ subject ]</a>
+              <a href="author.html#1666">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

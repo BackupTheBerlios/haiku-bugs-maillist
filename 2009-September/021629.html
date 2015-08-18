@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4573: Haiku CD Fails to Boot: &quot;PANIC: I/O operation would need to be cut.&quot;
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234573%3A%20Haiku%20CD%20Fails%20to%20Boot%3A%20%22PANIC%3A%20I/O%0A%20operation%20would%20need%20to%20be%20cut.%22&In-Reply-To=%3C051.c69e7908ac0f4c6192576d04f71e18e3%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="021627.html">
+   <LINK REL="Next"  HREF="021628.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4573: Haiku CD Fails to Boot: &quot;PANIC: I/O operation would need to be cut.&quot;</H1>
+    <B>tmmagee</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234573%3A%20Haiku%20CD%20Fails%20to%20Boot%3A%20%22PANIC%3A%20I/O%0A%20operation%20would%20need%20to%20be%20cut.%22&In-Reply-To=%3C051.c69e7908ac0f4c6192576d04f71e18e3%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4573: Haiku CD Fails to Boot: &quot;PANIC: I/O operation would need to be cut.&quot;">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Sep 18 22:26:49 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="021627.html">[Haiku-bugs] [Haiku] #4573: Haiku CD Fails to Boot: &quot;PANIC: I/O operation would need to be cut.&quot;
+</A></li>
+        <LI>Next message: <A HREF="021628.html">[Haiku-bugs] [Haiku] #1853: RTL8168 recognized but not working
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21629">[ date ]</a>
+              <a href="thread.html#21629">[ thread ]</a>
+              <a href="subject.html#21629">[ subject ]</a>
+              <a href="author.html#21629">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4573: Haiku CD Fails to Boot: &quot;PANIC: I/O operation would need to be cut.&quot;
+---------------------------+------------------------------------------------
+ Reporter:  tmmagee        |       Owner:  axeld    
+     Type:  bug            |      Status:  new      
+ Priority:  normal         |   Milestone:  R1       
+Component:  System/Kernel  |     Version:  R1/alpha1
+Blockedby:                 |    Platform:  x86      
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+
+Comment(by tmmagee):
+
+ Okay, it has been a while since I have looked at a kernel stack trace, but
+ I think these are the important bits from the stack trace:
+
+ &lt;kernel_x86&gt; panic() ...[[BR]]
+ &lt;scsi_periph&gt; periph_io__ ...[[BR]]
+ &lt;scsi_cd&gt; do_io__ ...[[BR]]
+
+ So from what i am reading it appears that do_io (from scsi_cd) somehow
+ calls periph_io and then periph_io panics.
+
+ Don't know if this helped. Again, let me know if you have any specific
+ questions, and I apologize for the lack of camera.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4573#comment:3">http://dev.haiku-os.org/ticket/4573#comment:3</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="021627.html">[Haiku-bugs] [Haiku] #4573: Haiku CD Fails to Boot: &quot;PANIC: I/O operation would need to be cut.&quot;
+</A></li>
+	<LI>Next message: <A HREF="021628.html">[Haiku-bugs] [Haiku] #1853: RTL8168 recognized but not working
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21629">[ date ]</a>
+              <a href="thread.html#21629">[ thread ]</a>
+              <a href="subject.html#21629">[ subject ]</a>
+              <a href="author.html#21629">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

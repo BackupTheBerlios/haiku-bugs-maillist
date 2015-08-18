@@ -1,0 +1,123 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1359: PANIC: vm_cache_insert_page()
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231359%3A%20PANIC%3A%20vm_cache_insert_page%28%29&In-Reply-To=%3C048.34fb07bbd7de16153507a5db72f0cec3%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002077.html">
+   <LINK REL="Next"  HREF="002086.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1359: PANIC: vm_cache_insert_page()</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231359%3A%20PANIC%3A%20vm_cache_insert_page%28%29&In-Reply-To=%3C048.34fb07bbd7de16153507a5db72f0cec3%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1359: PANIC: vm_cache_insert_page()">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Aug  5 16:19:23 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002077.html">[Haiku-bugs] [Haiku] #1358: disallow signature in comments
+</A></li>
+        <LI>Next message: <A HREF="002086.html">[Haiku-bugs] [Haiku] #1359: PANIC: vm_cache_insert_page()
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2078">[ date ]</a>
+              <a href="thread.html#2078">[ thread ]</a>
+              <a href="subject.html#2078">[ subject ]</a>
+              <a href="author.html#2078">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1359: PANIC: vm_cache_insert_page()
+---------------------------+------------------------------------------------
+ Reporter:  jonas.kirilla  |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1 development
+ Platform:  All            |  
+---------------------------+------------------------------------------------
+ This panic is reproducible, withins seconds on my hardware,
+ by running either of these in Terminal:
+
+ - while (true); do sleep 0.001; done;
+ - while (true); do times &gt; /dev/null; done;
+
+ This is with Haiku r21827 on real hardware.
+
+ Sample: (KDL1)
+ {{{
+ PANIC: vm_cache_insert_page(): there's already page 0x928dfc08 with cache
+ offset 4095 in cache 0x90af3680; inserting page 0x928e0188
+ Welcome to Kernel Debugging Land...
+ Running on CPU 0
+ kdebug&gt; bt
+ stack trace for thread 0x7e &quot;sh&quot;
+     kernel stack: 0x9c80d000 to 0x9c811000
+       user stack: 0x7efe7000 to 0x7ffe7000
+ frame            caller     &lt;image&gt;:function + offset
+ 9c810c50 (+  52) 8008635b   &lt;kernel&gt;:invoke_command + 0x0073
+ 9c810c84 (+  48) 800864a2   &lt;kernel&gt;:kernel_debugger_loop + 0x0102
+ 9c810cb4 (+  32) 80086efa   &lt;kernel&gt;:kernel_debugger + 0x00b2
+ 9c810cd4 (+ 192) 80086e3d   &lt;kernel&gt;:panic + 0x0029
+ 9c810d94 (+  80) 8005ad28   &lt;kernel&gt;:vm_cache_insert_page + 0x00a8
+ 9c810de4 (+ 208) 8005892c   &lt;kernel&gt;:vm_soft_fault__FUlbT1 + 0x0868
+ 9c810eb4 (+  64) 80057ecd   &lt;kernel&gt;:vm_page_fault + 0x0031
+ 9c810ef4 (+ 176) 8008f68a   &lt;kernel&gt;:i386_handle_trap + 0x023a
+ iframe at 0x9c810fac (end = 0x9c811000)
+  eax 0x0            ebx 0x32bedc        ecx 0x7ffe6c68   edx 0x0
+  esi 0xf8           edi 0x0             ebp 0x7ffe6cac   esp 0x9c810fdc
+  eip 0x30ffcf    eflags 0x10207    user esp 0x7ffe6c88
+  vector: 0xe, error code: 0x7
+ 9c810fa4 (+   0) 0030ffcf
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libroot.so at 0x00295000</A>&gt;:unknown + 0x7afcf
+ 7ffe6cac (+  32) 0023c1ad   &lt;/bin/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">sh at 0x00200000</A>&gt;:unknown + 0x3c1ad
+ 7ffe6ccc (+  48) 0022762c   &lt;/bin/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">sh at 0x00200000</A>&gt;:unknown + 0x2762c
+ 7ffe6cfc (+  96) 00226b4b   &lt;/bin/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">sh at 0x00200000</A>&gt;:unknown + 0x26b4b
+ 7ffe6d5c (+  96) 00223cb7   &lt;/bin/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">sh at 0x00200000</A>&gt;:unknown + 0x23cb7
+ 7ffe6dbc (+  80) 00223682   &lt;/bin/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">sh at 0x00200000</A>&gt;:unknown + 0x23682
+ 7ffe6e0c (+  48) 00225f54   &lt;/bin/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">sh at 0x00200000</A>&gt;:unknown + 0x25f54
+ 7ffe6e3c (+  48) 00225e79   &lt;/bin/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">sh at 0x00200000</A>&gt;:unknown + 0x25e79
+ 7ffe6e6c (+  80) 00223e56   &lt;/bin/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">sh at 0x00200000</A>&gt;:unknown + 0x23e56
+ 7ffe6ebc (+  80) 00223682   &lt;/bin/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">sh at 0x00200000</A>&gt;:unknown + 0x23682
+ 7ffe6f0c (+  48) 0021f05e   &lt;/bin/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">sh at 0x00200000</A>&gt;:unknown + 0x1f05e
+ 7ffe6f3c (+  64) 0021d142   &lt;/bin/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">sh at 0x00200000</A>&gt;:unknown + 0x1d142
+ 7ffe6f7c (+  48) 00215c7f   &lt;/bin/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">sh at 0x00200000</A>&gt;:unknown + 0x15c7f
+ 7ffe6fac (+  48) 001007c8   1190:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">runtime_loader_seg0ro at 0x00100000</A> + 0x7c8
+ 7ffe6fdc (+   0) 7ffe6fec   1187:/bin/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">sh_main_stack at 0x7efe7000</A> + 0xffffec
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1359">http://dev.haiku-os.org/ticket/1359</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002077.html">[Haiku-bugs] [Haiku] #1358: disallow signature in comments
+</A></li>
+	<LI>Next message: <A HREF="002086.html">[Haiku-bugs] [Haiku] #1359: PANIC: vm_cache_insert_page()
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2078">[ date ]</a>
+              <a href="thread.html#2078">[ thread ]</a>
+              <a href="subject.html#2078">[ subject ]</a>
+              <a href="author.html#2078">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

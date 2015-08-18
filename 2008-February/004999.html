@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1823: On some systems (real hardware) any direct to framebuffer drawing is really slow
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-February/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231823%3A%20On%20some%20systems%20%28real%20hardware%29%20any%0A%20direct%20to%20framebuffer%20drawing%20is%20really%20slow&In-Reply-To=%3C041.7df384fc5474b32190f81eeeb4a63aa8%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="004998.html">
+   <LINK REL="Next"  HREF="005001.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1823: On some systems (real hardware) any direct to framebuffer drawing is really slow</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231823%3A%20On%20some%20systems%20%28real%20hardware%29%20any%0A%20direct%20to%20framebuffer%20drawing%20is%20really%20slow&In-Reply-To=%3C041.7df384fc5474b32190f81eeeb4a63aa8%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1823: On some systems (real hardware) any direct to framebuffer drawing is really slow">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Feb 20 15:08:17 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="004998.html">[Haiku-bugs] [Haiku] #1822: Implement and test creating and deleting partitions in DriveSetup
+</A></li>
+        <LI>Next message: <A HREF="005001.html">[Haiku-bugs] [Haiku] #1824: Can't open perl script
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4999">[ date ]</a>
+              <a href="thread.html#4999">[ thread ]</a>
+              <a href="subject.html#4999">[ subject ]</a>
+              <a href="author.html#4999">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1823: On some systems (real hardware) any direct to framebuffer drawing is really
+slow
+---------------------------+------------------------------------------------
+ Reporter:  stippi         |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1/alpha1     
+Component:  System/Kernel  |     Version:  R1 development
+ Platform:  All            |  
+---------------------------+------------------------------------------------
+ I have a system with supported graphics board (X300) which performs great
+ under ZETA with our Radeon driver. For some weird reason, directly
+ rendering to the screen is painfully slow in Haiku, while hw accelerated
+ calls work fine. For example, I can literally watch the text being
+ rendered in any app. I have seen the app_server perform much better on
+ much slower systems, so it cannot be a problem with slow drawing itself.
+ Maybe it is something with the MTRR setup, or maybe with the AGP setup
+ (it's a PCIe system btw). Maybe it has to do with the screen being in a
+ weird mode (1600x1200 while it should be 1920x1200). I have no idea, but
+ it should be fixed, maybe there are more systems out there with this
+ problem. I am filing this under System/Kernel since either of the three
+ things I am suspecting are living there (MTRR/AGP/EDID).
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1823">http://dev.haiku-os.org/ticket/1823</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="004998.html">[Haiku-bugs] [Haiku] #1822: Implement and test creating and deleting partitions in DriveSetup
+</A></li>
+	<LI>Next message: <A HREF="005001.html">[Haiku-bugs] [Haiku] #1824: Can't open perl script
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4999">[ date ]</a>
+              <a href="thread.html#4999">[ thread ]</a>
+              <a href="subject.html#4999">[ subject ]</a>
+              <a href="author.html#4999">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

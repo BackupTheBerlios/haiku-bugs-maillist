@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3963: Haiku wrongly initialises volume according to BeOS
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233963%3A%20Haiku%20wrongly%20initialises%20volume%0A%20according%20to%20BeOS&In-Reply-To=%3C050.4b3446b273ea4c8f916d2e95d3332cc3%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="018115.html">
+   <LINK REL="Next"  HREF="018117.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3963: Haiku wrongly initialises volume according to BeOS</H1>
+    <B>idefix</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233963%3A%20Haiku%20wrongly%20initialises%20volume%0A%20according%20to%20BeOS&In-Reply-To=%3C050.4b3446b273ea4c8f916d2e95d3332cc3%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3963: Haiku wrongly initialises volume according to BeOS">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Jun 25 19:39:32 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="018115.html">[Haiku-bugs] [Haiku] #2573: Files taking *A LOT* more space on disk than the sum of their sizes.
+</A></li>
+        <LI>Next message: <A HREF="018117.html">[Haiku-bugs] [Haiku] #4040: Blue 16x16 preview rect background	missing (easy)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18116">[ date ]</a>
+              <a href="thread.html#18116">[ thread ]</a>
+              <a href="subject.html#18116">[ subject ]</a>
+              <a href="author.html#18116">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3963: Haiku wrongly initialises volume according to BeOS
+-------------------------------+--------------------------------------------
+  Reporter:  idefix            |       Owner:  axeld         
+      Type:  bug               |      Status:  reopened      
+  Priority:  critical          |   Milestone:  R1            
+ Component:  File Systems/BFS  |     Version:  R1 development
+Resolution:                    |   Blockedby:                
+  Platform:  All               |    Blocking:                
+-------------------------------+--------------------------------------------
+Changes (by idefix):
+
+  * status:  closed =&gt; reopened
+  * resolution:  fixed =&gt;
+
+
+Comment:
+
+ Unfortunately, I can still reproduce this with r31230 following the same
+ steps. I also tried to not do a checkfs in the first step, but that didn't
+ matter.
+
+ The final crash is slightly different though (bfs_stat_index:2050 vs
+ 2020):
+ {{{
+ bfs: mounted &quot;test0mkfs&quot; (root node at 524288, device =
+ /dev/disk/ata/1/master/0)
+ bfs: bfs_stat_index:2050: No such file or directory
+ bfs: AllocationBlock::Allocate(): some blocks are already allocated, start
+ = 0, numBlocks = 4297
+ PANIC: blocks already set!
+ Welcome to Kernel Debugging Land...
+ Thread 170 &quot;bfs block allocator&quot; running on CPU 0
+ kdebug&gt; bt
+ stack trace for thread 170 &quot;bfs block allocator&quot;
+     kernel stack: 0x81d92000 to 0x81d96000
+ frame               caller     &lt;image&gt;:function + offset
+  0 81d95ba8 (+  48) 8006545d   &lt;kernel_x86&gt;:invoke_debugger_command +
+ 0x0105
+  1 81d95bd8 (+  64) 8006523d   &lt;kernel_x86&gt;
+ invoke_pipe_segment(debugger_command_pipe*: [34m0x81612030[0m, int32:
+ [34m0[0m, [34m0x0[0m [31m&quot;&lt;NULL&gt;&quot;[0m) + 0x0079
+  2 81d95c18 (+  64) 800655f0   &lt;kernel_x86&gt;:invoke_debugger_command_pipe +
+ 0x009c
+  3 81d95c58 (+  48) 80066fec   &lt;kernel_x86&gt;
+ ExpressionParser&lt;[32m0x81d95d08[0m&gt;::_ParseCommandPipe([34m0x81d95d04[0m)
+ + 0x0234
+  4 81d95c88 (+  64) 80066426   &lt;kernel_x86&gt;
+ ExpressionParser&lt;[32m0x81d95d08[0m&gt;::EvaluateCommand([34m0x80125c00[0m
+ [36m&quot;bt&quot;[0m, [34m0x81d95d04[0m) + 0x02ba
+  5 81d95cc8 (+ 224) 80068400   &lt;kernel_x86&gt;:evaluate_debug_command +
+ 0x0080
+  6 81d95da8 (+  64) 800632b6   &lt;kernel_x86&gt; kernel_debugger_loop() +
+ 0x01b6
+  7 81d95de8 (+  32) 800641cd   &lt;kernel_x86&gt;:kernel_debugger + 0x004d
+  8 81d95e08 (+ 192) 80064175   &lt;kernel_x86&gt;:panic + 0x0029
+  9 81d95ec8 (+  96) 805c5832   &lt;bfs&gt;
+ AllocationGroup&lt;[32m0x82d4b000[0m&gt;::Allocate(Transaction&amp;:
+ [34m0x81d95fcc[0m, uint16: [34m0x0[0m ([34m0[0m), int32:
+ [34m4329[0m) + 0x02b6
+ 10 81d95f28 (+ 176) 805c6284   &lt;bfs&gt;
+ BlockAllocator&lt;[32m0x811c8094[0m&gt;::_Initialize(BlockAllocator*: NULL) +
+ 0x032c
+ 11 81d95fd8 (+  32) 80057613   &lt;kernel_x86&gt; _create_kernel_thread_kentry()
+ + 0x001b
+ 12 81d95ff8 (+2116460552) 800575b0   &lt;kernel_x86&gt; thread_kthread_exit() +
+ 0x0000
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3963#comment:4">http://dev.haiku-os.org/ticket/3963#comment:4</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="018115.html">[Haiku-bugs] [Haiku] #2573: Files taking *A LOT* more space on disk than the sum of their sizes.
+</A></li>
+	<LI>Next message: <A HREF="018117.html">[Haiku-bugs] [Haiku] #4040: Blue 16x16 preview rect background	missing (easy)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18116">[ date ]</a>
+              <a href="thread.html#18116">[ thread ]</a>
+              <a href="subject.html#18116">[ subject ]</a>
+              <a href="author.html#18116">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

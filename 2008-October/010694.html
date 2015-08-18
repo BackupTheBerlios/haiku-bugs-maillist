@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2789: writing to usb disks fail after 10-100Mb of writing files
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232789%3A%20writing%20to%20usb%20disks%20fail%20after%0A%2010-100Mb%20of%20writing%20files&In-Reply-To=%3C042.f0e2b0f62d62e3210495ba76b252c463%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010693.html">
+   <LINK REL="Next"  HREF="010695.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2789: writing to usb disks fail after 10-100Mb of writing files</H1>
+    <B>rudolfc</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232789%3A%20writing%20to%20usb%20disks%20fail%20after%0A%2010-100Mb%20of%20writing%20files&In-Reply-To=%3C042.f0e2b0f62d62e3210495ba76b252c463%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2789: writing to usb disks fail after 10-100Mb of writing files">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Oct  1 22:31:35 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010693.html">[Haiku-bugs] [Haiku] #2781: files not written to disk (BFS)	after crash (KDL)
+</A></li>
+        <LI>Next message: <A HREF="010695.html">[Haiku-bugs] [Haiku] #2721: error starting &quot;/bin/sh&quot;
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10694">[ date ]</a>
+              <a href="thread.html#10694">[ thread ]</a>
+              <a href="subject.html#10694">[ subject ]</a>
+              <a href="author.html#10694">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2789: writing to usb disks fail after 10-100Mb of writing files
+---------------------+------------------------------------------------------
+ Reporter:  rudolfc  |       Owner:  mmlr          
+     Type:  bug      |      Status:  new           
+ Priority:  normal   |   Milestone:  R1            
+Component:  Drivers  |     Version:  R1 development
+Blockedby:           |    Platform:  x86           
+ Blocking:           |  
+---------------------+------------------------------------------------------
+ If I boot haiku, doesn't matter from where (USB or harddisk), and I mount
+ a USB disk for read/write, I can read perfectly from the disk. Writing a
+ single larger file or a multitude of smaller files (a folder for example)
+ works perfectly.
+
+ But if you drag another folder to the USB stick after the first one
+ completes, and maybe even another file or folder after the second one
+ completes: writing comes to a standstill.
+
+ It is now impossible to unmount the stick. It is also impossible to reboot
+ or shutdown.
+
+ The syslog (if tailing) reports:
+
+ KERN: usb_disk: acquire_sem failed while waiting for data transfer
+ KERN: usb_disk: write fails with 0x80000009
+
+ These two lines repeat forever.
+
+ Note: it's perfectly possible to boot haiku from the same stick (if an
+ image was written to it from outside haiku). Haiku is stable, until the
+ writing error occurs.
+
+ I tested different brands and different sizes of stick: the behaviour is
+ always the same.
+
+ I tested different revisions of haiku. The syslog message came from
+ R27770.
+ It doesn't matter which revision I use, the fault has been there for a few
+ months at least.
+
+ Good luck (and thanks in advance for looking at it!)
+
+ Rudolf.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2789">http://dev.haiku-os.org/ticket/2789</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010693.html">[Haiku-bugs] [Haiku] #2781: files not written to disk (BFS)	after crash (KDL)
+</A></li>
+	<LI>Next message: <A HREF="010695.html">[Haiku-bugs] [Haiku] #2721: error starting &quot;/bin/sh&quot;
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10694">[ date ]</a>
+              <a href="thread.html#10694">[ thread ]</a>
+              <a href="subject.html#10694">[ subject ]</a>
+              <a href="author.html#10694">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

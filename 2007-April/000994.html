@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1156: /bin/updatedb broken
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231156%3A%20/bin/updatedb%20broken&In-Reply-To=%3C039.650142cf47d394695a5a7a8353e01924%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000990.html">
+   <LINK REL="Next"  HREF="000997.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1156: /bin/updatedb broken</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231156%3A%20/bin/updatedb%20broken&In-Reply-To=%3C039.650142cf47d394695a5a7a8353e01924%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1156: /bin/updatedb broken">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Apr 15 01:03:19 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000990.html">[Haiku-bugs] [Haiku] #1155: Screen Saver Pref -- Settings aren't detected on-the-fly
+</A></li>
+        <LI>Next message: <A HREF="000997.html">[Haiku-bugs] [Haiku] #1156: /bin/updatedb broken
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#994">[ date ]</a>
+              <a href="thread.html#994">[ thread ]</a>
+              <a href="subject.html#994">[ subject ]</a>
+              <a href="author.html#994">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1156: /bin/updatedb broken
+-----------------------------------------------+----------------------------
+ Reporter:  elmo                               |       Owner:  axeld         
+     Type:  bug                                |      Status:  new           
+ Priority:  normal                             |   Milestone:  R1            
+Component:  - Applications/Command Line Tools  |     Version:  R1 development
+ Platform:  All                                |  
+-----------------------------------------------+----------------------------
+ First of all, it didn't have executable bit set, so I had to run it
+ manually with &quot;sh /bin/updatedb&quot;. Then, it's apparently missing some
+ component.
+
+ updatedb: line 105: frcode: command not found
+ updatedb: new database would be empty
+
+ And the relevant line of updatedb is
+ } | sort -f | $frcode &gt; $LOCATE_DB.n
+
+ The definition of $frcode is on line 83:
+ : ${frcode=frcode}
+
+ find / -name frcode doesn't give any results.
+
+ About Haiku says that the revision number is 20683.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1156">http://dev.haiku-os.org/ticket/1156</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000990.html">[Haiku-bugs] [Haiku] #1155: Screen Saver Pref -- Settings aren't detected on-the-fly
+</A></li>
+	<LI>Next message: <A HREF="000997.html">[Haiku-bugs] [Haiku] #1156: /bin/updatedb broken
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#994">[ date ]</a>
+              <a href="thread.html#994">[ thread ]</a>
+              <a href="subject.html#994">[ subject ]</a>
+              <a href="author.html#994">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3504: usb_webcam.media_addon and firewire_dv.media_addon makes system freeze on Acer Travelmate 6460
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233504%3A%20usb_webcam.media_addon%20and%0A%20firewire_dv.media_addon%20makes%20system%20freeze%20on%20Acer%20Travelmate%206460&In-Reply-To=%3C051.5dd6aebad1f50754bc2a967ad159891c%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="014841.html">
+   <LINK REL="Next"  HREF="014797.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3504: usb_webcam.media_addon and firewire_dv.media_addon makes system freeze on Acer Travelmate 6460</H1>
+    <B>vegardw</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233504%3A%20usb_webcam.media_addon%20and%0A%20firewire_dv.media_addon%20makes%20system%20freeze%20on%20Acer%20Travelmate%206460&In-Reply-To=%3C051.5dd6aebad1f50754bc2a967ad159891c%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3504: usb_webcam.media_addon and firewire_dv.media_addon makes system freeze on Acer Travelmate 6460">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Mar  4 21:19:18 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="014841.html">[Haiku-bugs] [Haiku] #3504: usb_webcam.media_addon and firewire_dv.media_addon makes system freeze on Acer Travelmate 6460
+</A></li>
+        <LI>Next message: <A HREF="014797.html">[Haiku-bugs] [Haiku] #3505: Checking file dialog position
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14876">[ date ]</a>
+              <a href="thread.html#14876">[ thread ]</a>
+              <a href="subject.html#14876">[ subject ]</a>
+              <a href="author.html#14876">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3504: usb_webcam.media_addon and firewire_dv.media_addon makes system freeze on
+Acer Travelmate 6460
+------------------------------+---------------------------------------------
+ Reporter:  vegardw           |       Owner:  absabs        
+     Type:  bug               |      Status:  new           
+ Priority:  normal            |   Milestone:  R1            
+Component:  Drivers/FireWire  |     Version:  R1 development
+Blockedby:                    |    Platform:  x86           
+ Blocking:                    |  
+------------------------------+---------------------------------------------
+
+Comment(by vegardw):
+
+ output of the &quot;ints&quot; command in the kdl with firewire bus_manager,
+ usb_webcam.media_addon and firewire_dv.media_addon included in the image:
+
+ {{{
+ kdebug&gt; ints
+ int   1, enabled 1, handled        1, unhandled        0, ACTIVE
+         ps2:ps2_interrupt (0x80f365d0), data 0x00000000
+ int   7, enabled 1, handled        0, unhandled        0
+         uhci:InterruptHandler__4UHCIPv (0x80749634), data 0x80f937fc
+ int  10, enabled 5, handled        2, unhandled        0
+         firewire:fwohci_intr (0x8357bde4), data 0x81de1000
+         firewire:fwohci_intr (0x8357bde4), data 0x81d29000
+         uhci:InterruptHandler__4UHCIPv (0x80749634), data 0x80f93920
+         uhci:InterruptHandler__4UHCIPv (0x80749634), data 0x80f936d8
+         broadcom570x:intr_wrapper (0x807e778c), data 0x81028488
+ int  11, enabled 3, handled      411, unhandled  1602771
+         oss:ossintr (0x848373e0), data 0x80fd67f8
+         ehci:InterruptHandler__4EHCIPv (0x805f3ae4), data 0x80fa3550
+         uhci:InterruptHandler__4UHCIPv (0x80749634), data 0x80f935b4
+ int  12, enabled 1, handled       20, unhandled        0
+         ps2:ps2_interrupt (0x80f365d0), data 0x00000000
+ int  14, enabled 1, handled     4291, unhandled        0
+         ide_adapter:ide_adapter_inthand (0x80614a74), data 0x80fbb038
+ int  15, enabled 1, handled       53, unhandled        1
+         ide_adapter:ide_adapter_inthand (0x80614a74), data 0x80fbb070
+ int 219, enabled 1, handled    21462, unhandled        0
+         kernel_x86:apic_timer_interrupt (0x800d2634), data 0x00000000
+ int 221, enabled 1, handled    59116, unhandled        0
+         kernel_x86:i386_ici_interrupt (0x800cb978), data 0x00000000
+ int 222, enabled 1, handled        0, unhandled        0
+         kernel_x86:i386_smp_error_interrupt (0x800cb9b0), data 0x00000000
+ int 223, enabled 1, handled        0, unhandled        0
+         kernel_x86:i386_spurious_interrupt (0x800cb9a4), data 0x00000000
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3504#comment:11">http://dev.haiku-os.org/ticket/3504#comment:11</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="014841.html">[Haiku-bugs] [Haiku] #3504: usb_webcam.media_addon and firewire_dv.media_addon makes system freeze on Acer Travelmate 6460
+</A></li>
+	<LI>Next message: <A HREF="014797.html">[Haiku-bugs] [Haiku] #3505: Checking file dialog position
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14876">[ date ]</a>
+              <a href="thread.html#14876">[ thread ]</a>
+              <a href="subject.html#14876">[ subject ]</a>
+              <a href="author.html#14876">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

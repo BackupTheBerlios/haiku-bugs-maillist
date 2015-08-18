@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1193: Build for R5 haiku-openglkit-cvs - No OpenGL Renderer
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231193%3A%20Build%20for%20R5%20haiku-openglkit-cvs%20-%0A%20No%20OpenGL%20Renderer&In-Reply-To=%3C050.ad9986924909482a12bc3faa8abd547d%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001488.html">
+   <LINK REL="Next"  HREF="001493.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1193: Build for R5 haiku-openglkit-cvs - No OpenGL Renderer</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231193%3A%20Build%20for%20R5%20haiku-openglkit-cvs%20-%0A%20No%20OpenGL%20Renderer&In-Reply-To=%3C050.ad9986924909482a12bc3faa8abd547d%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1193: Build for R5 haiku-openglkit-cvs - No OpenGL Renderer">trac at haiku-os.org
+       </A><BR>
+    <I>Wed May 23 18:18:07 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001488.html">[Haiku-bugs] [Haiku] #1244: create an .eps image translator
+</A></li>
+        <LI>Next message: <A HREF="001493.html">[Haiku-bugs] [Haiku] #1193: Build for R5 haiku-openglkit-cvs - No OpenGL Renderer
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1492">[ date ]</a>
+              <a href="thread.html#1492">[ thread ]</a>
+              <a href="subject.html#1492">[ subject ]</a>
+              <a href="author.html#1492">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1193: Build for R5 haiku-openglkit-cvs - No OpenGL Renderer
+------------------------------+---------------------------------------------
+  Reporter:  andybe           |       Owner:  korli         
+      Type:  enhancement      |      Status:  new           
+  Priority:  low              |   Milestone:  R1            
+ Component:  Kits/OpenGL Kit  |     Version:  R1 development
+Resolution:                   |    Platform:  All           
+------------------------------+---------------------------------------------
+Comment (by phoudoin):
+
+ Replying to [comment:6 andybe]:
+ &gt; add-on/opengl/Mesa Software Render
+ &gt; is missing by building this package.
+
+ I'm guilty there. I'll fix its Jamfile for that. I always forgot about
+ factory package!
+
+ &gt; The headers from Kits/opengl/GL got are from Mesa 6.3 and as I can see
+ we
+ &gt; are include the &quot;glut&quot; library in libGL.so. That isn't to hard, but
+ normal
+ &gt; it is seperated in libglut.so. That's why our libGL.so is 1MB big.
+ &gt;
+ &gt; Don't know about me. Should'nt it be better to splitte glut out of
+ libGL.so as
+ &gt; other does it also (BeOS, MacOSX, Linux).
+
+ Well, we've debated about this choice a little bit and decided to avoid
+ libs bloating, following the BeOS way (it's libbe.so, not libapp.so +
+ libinterface.so + ...). Like for our Haiku's specific libnetwork.so, which
+ replace both BONE's libsocket.so, libbind.so and libbnetapi.so, but
+ provides them for compatibility sake as symlinks to the single .so, we
+ could do the same and provides a libglut.so symlink to the single
+ libGL.so.
+
+ In the ends, only libGL.so page of code are loaded in memory, and embedded
+ vs separate GLUT code wont make a difference there. Meanwhile, the library
+ directories will looks less bloated.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1193#comment:9">http://dev.haiku-os.org/ticket/1193#comment:9</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001488.html">[Haiku-bugs] [Haiku] #1244: create an .eps image translator
+</A></li>
+	<LI>Next message: <A HREF="001493.html">[Haiku-bugs] [Haiku] #1193: Build for R5 haiku-openglkit-cvs - No OpenGL Renderer
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1492">[ date ]</a>
+              <a href="thread.html#1492">[ thread ]</a>
+              <a href="subject.html#1492">[ subject ]</a>
+              <a href="author.html#1492">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

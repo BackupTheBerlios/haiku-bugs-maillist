@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4122: Copying huge dirs to image fails in	populating image.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-July/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234122%3A%20Copying%20huge%20dirs%20to%20image%20fails%20in%0A%09populating%20image.&In-Reply-To=%3C038.1525fbe9dd6b8c713144e38cd5cb7046%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="018634.html">
+   <LINK REL="Next"  HREF="018646.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4122: Copying huge dirs to image fails in	populating image.</H1>
+    <B>tqh</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234122%3A%20Copying%20huge%20dirs%20to%20image%20fails%20in%0A%09populating%20image.&In-Reply-To=%3C038.1525fbe9dd6b8c713144e38cd5cb7046%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4122: Copying huge dirs to image fails in	populating image.">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Jul 24 21:13:31 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="018634.html">[Haiku-bugs] [Haiku] #4121: A link to WikiFormatting
+</A></li>
+        <LI>Next message: <A HREF="018646.html">[Haiku-bugs] [Haiku] #4122: Copying huge dirs to image fails in populating image.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18643">[ date ]</a>
+              <a href="thread.html#18643">[ thread ]</a>
+              <a href="subject.html#18643">[ subject ]</a>
+              <a href="author.html#18643">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4122: Copying huge dirs to image fails in populating image.
+--------------------------+-------------------------------------------------
+ Reporter:  tqh           |       Owner:  bonefish      
+     Type:  bug           |      Status:  new           
+ Priority:  normal        |   Milestone:  R1            
+Component:  Build System  |     Version:  R1 development
+Blockedby:                |    Platform:  All           
+ Blocking:                |  
+--------------------------+-------------------------------------------------
+ Adding mozilla source to image, fails with weird errors:
+ {{{
+ BuildHaikuImage1 /dev/sda3
+ /dev/sda3
+
+ Creating image ...
+ Writing boot code to &quot;/dev/sda3&quot; (partition offset: 120006835200 bytes,
+ start offset = 0) ...
+ Populating image ...
+ could not create mutexError: Unexpected end of fs_shell reply. Was still
+ expecting 4 bytes
+ Error: Failed to open connection to FS shell: Connection refused
+ Error: Failed to open connection to FS shell: Connection refused
+ Error: Failed to open connection to FS shell: Connection refused
+ Error: Failed to open connection to FS shell: Connection refused
+ ...
+ ...
+ }}}
+
+ I build from xubuntu-x64, sda3 is a 60GB partition and the added line to
+ UserBuildConfig that fails the build below:
+ {{{
+     CopyDirectoryToHaikuImage home : /home/frho/projects/mozilla : : -L ;
+ }}}
+ Removing it causes the build to succeed and I have another similar line
+ for a smaller dir that doesn't cause this.
+
+ The mozilla dir was created by:
+ {{{
+ export CVSROOT=:pserver:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">anonymous at cvs-mirror.mozilla.org</A>:/cvsroot
+ export MOZ_CO_PROJECT=browser
+ cvs co -r MOZILLA_1_8_BRANCH mozilla/client.mk
+ cd mozilla
+ make -f client.mk checkout
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4122">http://dev.haiku-os.org/ticket/4122</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="018634.html">[Haiku-bugs] [Haiku] #4121: A link to WikiFormatting
+</A></li>
+	<LI>Next message: <A HREF="018646.html">[Haiku-bugs] [Haiku] #4122: Copying huge dirs to image fails in populating image.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18643">[ date ]</a>
+              <a href="thread.html#18643">[ thread ]</a>
+              <a href="subject.html#18643">[ subject ]</a>
+              <a href="author.html#18643">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

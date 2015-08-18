@@ -1,0 +1,317 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4285: emuxki goes dead after media server	restart
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234285%3A%20emuxki%20goes%20dead%20after%20media%20server%0A%09restart&In-Reply-To=%3C053.02f8bbc10ab330ccc1dd6484ed75e58d%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="020179.html">
+   <LINK REL="Next"  HREF="019762.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4285: emuxki goes dead after media server	restart</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234285%3A%20emuxki%20goes%20dead%20after%20media%20server%0A%09restart&In-Reply-To=%3C053.02f8bbc10ab330ccc1dd6484ed75e58d%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4285: emuxki goes dead after media server	restart">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Aug 26 01:13:37 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="020179.html">[Haiku-bugs] [Haiku] #4285: emuxki goes dead after media server	restart
+</A></li>
+        <LI>Next message: <A HREF="019762.html">[Haiku-bugs] [Haiku] #4067: Kinesis USB Keyboard is removed after first key is pressed.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20180">[ date ]</a>
+              <a href="thread.html#20180">[ thread ]</a>
+              <a href="subject.html#20180">[ subject ]</a>
+              <a href="author.html#20180">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4285: emuxki goes dead after media server restart
+---------------------------+------------------------------------------------
+ Reporter:  anevilyak      |       Owner:  korli         
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1            
+Component:  Drivers/Audio  |     Version:  R1 development
+Blockedby:                 |    Platform:  All           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+
+Comment(by anevilyak):
+
+ Serial log starting from quitting media_server to restarting server,
+ starting media player, and attempting to play an mp3 (which appeared to
+ play as if at ~30x speed, though no audio was actually produced):
+ {{{
+ emuxki: close()
+ emuxki: free()
+ emuxki: emuxki_stream_halt
+ emuxki: emuxki_voice_halt
+ emuxki: emuxki_resched_timer begin
+ emuxki: emuxki_resched_timer state : 1
+ emuxki: emuxki_stream_halt
+ emuxki: emuxki_voice_halt
+ emuxki: emuxki_resched_timer begin
+ emuxki: emuxki_resched_timer state : 1
+ emuxki: emuxki_voice_halt
+ emuxki: emuxki_resched_timer begin
+ emuxki: emuxki_resched_timer state : 1
+ emuxki: emuxki_voice_halt
+ emuxki: emuxki_resched_timer begin
+ emuxki: emuxki_resched_timer state : 1
+ emuxki: emuxki_voice_halt
+ emuxki: emuxki_resched_timer begin
+ emuxki: emuxki_resched_timer written (old 256, new 0)
+ emuxki: emuxki_resched_timer : timer disabled
+ emuxki: emuxki_resched_timer state : 0
+ emuxki: emuxki_stream_halt
+ emuxki: emuxki_voice_halt
+ emuxki: emuxki_stream_halt
+ emuxki: emuxki_voice_halt
+ emuxki: emuxki_stream_delete
+ emuxki: emuxki_stream_halt
+ emuxki: emuxki_voice_halt
+ emuxki: emuxki_resched_timer begin
+ emuxki: emuxki_resched_timer state : 0
+ emuxki: emuxki_mem_free 1
+ emuxki: emuxki_mem_free 2
+ Last message repeated 6 times.
+ emuxki: emuxki_mem_free 3
+ emuxki: mem_size : 4096
+ emuxki: freeing mem
+ emuxki: emuxki_stream_delete
+ emuxki: emuxki_stream_halt
+ emuxki: emuxki_voice_halt
+ emuxki: emuxki_resched_timer begin
+ emuxki: emuxki_resched_timer state : 0
+ emuxki: emuxki_voice_halt
+ emuxki: emuxki_resched_timer begin
+ emuxki: emuxki_resched_timer state : 0
+ emuxki: emuxki_voice_halt
+ emuxki: emuxki_resched_timer begin
+ emuxki: emuxki_resched_timer state : 0
+ emuxki: emuxki_voice_halt
+ emuxki: emuxki_resched_timer begin
+ emuxki: emuxki_resched_timer state : 0
+ emuxki: emuxki_mem_free 1
+ emuxki: emuxki_mem_free 2
+ Last message repeated 2 times.
+ emuxki: emuxki_mem_free 3
+ emuxki: mem_size : 2048
+ emuxki: freeing mem
+ emuxki: emuxki_mem_free 1
+ emuxki: emuxki_mem_free 2
+ Last message repeated 2 times.
+ emuxki: emuxki_mem_free 3
+ emuxki: mem_size : 2048
+ emuxki: freeing mem
+ emuxki: emuxki_mem_free 1
+ emuxki: emuxki_mem_free 2
+ Last message repeated 2 times.
+ emuxki: emuxki_mem_free 3
+ emuxki: mem_size : 2048
+ emuxki: freeing mem
+ emuxki: emuxki_mem_free 1
+ emuxki: emuxki_mem_free 2
+ Last message repeated 2 times.
+ emuxki: emuxki_mem_free 3
+ emuxki: mem_size : 2048
+ emuxki: freeing mem
+ emuxki: emuxki_stream_delete
+ emuxki: emuxki_stream_halt
+ emuxki: emuxki_voice_halt
+ emuxki: emuxki_mem_free 1
+ emuxki: emuxki_mem_free 2
+ emuxki: emuxki_mem_free 2
+ emuxki: emuxki_mem_free 3
+ emuxki: freeing mem
+ emuxki: emuxki_stream_delete
+ emuxki: emuxki_stream_halt
+ emuxki: emuxki_voice_halt
+ emuxki: emuxki_mem_free 1
+ emuxki: emuxki_mem_free 2
+ emuxki: emuxki_mem_free 3
+ emuxki: freeing mem
+ emuxki: open()
+ emuxki: open() got card
+ emuxki: voice_new
+ emuxki: emuxki_stream_new
+ Last message repeated 3 times.
+ emuxki: voice_setaudio
+ emuxki: emuxki_stream_set_audioparms
+ emuxki: emuxki_voice_new
+ emuxki: emuxki_pmem_alloc : numblocks : 1
+ emuxki: emuxki_pmem_alloc : 0
+ emuxki: emuxki_pmem_alloc : j == numblocks 1
+ emuxki: allocating 4096 bytes for emuxki buffer
+ emuxki: area = 3443, size = 4096, log = 0X91331000, phy = 0XFC3E000
+ emuxki: emuxki_pmem_alloc : j == numblocks emuxki_mem_new ok
+ emuxki: emuxki_pmem_alloc : j == numblocks returning
+ emuxki: emuxki_stream_set_audioparms
+ emuxki: emuxki_voice_new
+ emuxki: emuxki_pmem_alloc : numblocks : 1
+ emuxki: emuxki_pmem_alloc : 0
+ emuxki: emuxki_pmem_alloc : 1
+ emuxki: emuxki_pmem_alloc : j == numblocks 1
+ emuxki: allocating 2048 bytes for emuxki buffer
+ emuxki: area = 3444, size = 4096, log = 0X91332000, phy = 0XFC3F000
+ emuxki: emuxki_pmem_alloc : j == numblocks emuxki_mem_new ok
+ emuxki: emuxki_pmem_alloc : j == numblocks returning
+ emuxki: emuxki_voice_new
+ emuxki: emuxki_pmem_alloc : numblocks : 1
+ emuxki: emuxki_pmem_alloc : 0
+ emuxki: emuxki_pmem_alloc : 1
+ emuxki: emuxki_pmem_alloc : 2
+ emuxki: emuxki_pmem_alloc : j == numblocks 1
+ emuxki: allocating 2048 bytes for emuxki buffer
+ emuxki: area = 3445, size = 4096, log = 0X91333000, phy = 0XFC4A000
+ emuxki: emuxki_pmem_alloc : j == numblocks emuxki_mem_new ok
+ emuxki: emuxki_pmem_alloc : j == numblocks returning
+ emuxki: emuxki_voice_new
+ emuxki: emuxki_pmem_alloc : numblocks : 1
+ emuxki: emuxki_pmem_alloc : 0
+ emuxki: emuxki_pmem_alloc : 1
+ emuxki: emuxki_pmem_alloc : 2
+ emuxki: emuxki_pmem_alloc : 3
+ emuxki: emuxki_pmem_alloc : j == numblocks 1
+ emuxki: allocating 2048 bytes for emuxki buffer
+ emuxki: area = 3446, size = 4096, log = 0X91338000, phy = 0XFC4B000
+ emuxki: emuxki_pmem_alloc : j == numblocks emuxki_mem_new ok
+ emuxki: emuxki_pmem_alloc : j == numblocks returning
+ emuxki: emuxki_voice_new
+ emuxki: emuxki_pmem_alloc : numblocks : 1
+ emuxki: emuxki_pmem_alloc : 0
+ emuxki: emuxki_pmem_alloc : 1
+ emuxki: emuxki_pmem_alloc : 2
+ emuxki: emuxki_pmem_alloc : 3
+ emuxki: emuxki_pmem_alloc : 4
+ emuxki: emuxki_pmem_alloc : j == numblocks 1
+ emuxki: allocating 2048 bytes for emuxki buffer
+ emuxki: area = 3447, size = 4096, log = 0X91339000, phy = 0XFC4C000
+ emuxki: emuxki_pmem_alloc : j == numblocks emuxki_mem_new ok
+ emuxki: emuxki_pmem_alloc : j == numblocks returning
+ emuxki: emuxki_stream_set_audioparms
+ emuxki: emuxki_voice_new
+ emuxki: allocating 4096 bytes for emuxki buffer
+ emuxki: area = 3448, size = 4096, log = 0X9133A000, phy = 0XFC4D000
+ emuxki: emuxki_stream_set_audioparms
+ emuxki: emuxki_voice_new
+ emuxki: allocating 4096 bytes for emuxki buffer
+ emuxki: area = 3449, size = 4096, log = 0X9133B000, phy = 0XFC55000
+ emuxki: emuxki_stream_set_recparms
+ emuxki: emuxki_stream_set_recparms
+ emuxki: emuxki_stream_commit_parms
+ Last message repeated 2 times.
+ emuxki: emuxki_voice_commit_parms idx_reg : 100
+ emuxki: emuxki_stream_commit_parms
+ emuxki: emuxki_voice_commit_parms idx_reg : 101
+ emuxki: B_MULTI_GET_DESCRIPTION
+ emuxki: request_channel_count = 32
+ emuxki: copying data
+ emuxki: B_MULTI_GET_ENABLED_CHANNELS
+ emuxki: B_MULTI_SET_ENABLED_CHANNELS
+ emuxki: set_enabled_channels 0 : enabled
+ emuxki: set_enabled_channels 1 : enabled
+ emuxki: set_enabled_channels 2 : enabled
+ emuxki: set_enabled_channels 3 : enabled
+ emuxki: B_MULTI_SET_GLOBAL_FORMAT
+ emuxki: B_MULTI_GET_GLOBAL_FORMAT
+ emuxki: B_MULTI_GET_BUFFERS
+ emuxki: flags = 0x0
+ emuxki: request_playback_buffers = 0x20
+ emuxki: request_playback_channels = 0x6
+ emuxki: request_playback_buffer_size = 0x0
+ emuxki: request_record_buffers = 0x20
+ emuxki: request_record_channels = 0x4
+ emuxki: request_record_buffer_size = 0x0
+ emuxki: emuxki_stream_get_nth_buffer
+ Last message repeated 19 times.
+ emuxki: B_MULTI_LIST_MIX_CONTROLS
+ emuxki: name : Record
+ emuxki: name : Master
+ emuxki: name : PCM Out
+ emuxki: name : CD
+ emuxki: name : Aux In
+ emuxki: name : TAD
+ emuxki: name : Mic
+ emuxki: name : Line In
+ emuxki: name : Center/Lfe
+ emuxki: multi-&gt;control_count 97
+ emuxki: emuxki_stream_start
+ emuxki: emuxki_voice_start
+ emuxki: emuxki_resched_timer begin
+ emuxki: emuxki_resched_timer : timer enabled
+ emuxki: emuxki_resched_timer state : 1
+ emuxki: emuxki_stream_start
+ emuxki: emuxki_voice_start
+ emuxki: emuxki_resched_timer begin
+ emuxki: emuxki_resched_timer state : 1
+ emuxki: emuxki_voice_start
+ emuxki: emuxki_resched_timer begin
+ emuxki: emuxki_resched_timer state : 1
+ emuxki: emuxki_voice_start
+ emuxki: emuxki_resched_timer begin
+ emuxki: emuxki_resched_timer state : 1
+ emuxki: emuxki_voice_start
+ emuxki: emuxki_resched_timer begin
+ emuxki: emuxki_resched_timer state : 1
+ emuxki: emuxki_stream_start
+ emuxki: emuxki_voice_start
+ emuxki: emuxki_voice_start adccr_value : 0
+ emuxki: emuxki_voice_start adccr_value : 24, 24
+ emuxki: emuxki_stream_start
+ emuxki: emuxki_voice_start
+ register_domain(9, unix)
+ emuxki: Got unhandled interrupt
+ heap_add_area: area 3974 added to large heap 0x81e62ccc - usable range
+ 0x91801000 - 0x91c00000
+ runtime_loader: Cannot open file /boot/apps/BeZillaBrowser/libnssckbi.so:
+ No such file or directory
+ runtime_loader: Cannot open file
+ /boot/home/config/settings/Mozilla/Firefox/Profiles/sy83m4h8.default/libnssckbi.so:
+ No such file or directory
+ runtime_loader: Cannot open file /boot/apps/BeZillaBrowser/libnssckbi.so:
+ No such file or directory
+ runtime_loader: Cannot open file /boot/apps/BeZillaBrowser/libnssckbi.so:
+ No such file or directory
+ emuxki: Got unhandled interrupt
+ emuxki: Got unhandled interrupt
+
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4285#comment:2">http://dev.haiku-os.org/ticket/4285#comment:2</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="020179.html">[Haiku-bugs] [Haiku] #4285: emuxki goes dead after media server	restart
+</A></li>
+	<LI>Next message: <A HREF="019762.html">[Haiku-bugs] [Haiku] #4067: Kinesis USB Keyboard is removed after first key is pressed.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20180">[ date ]</a>
+              <a href="thread.html#20180">[ thread ]</a>
+              <a href="subject.html#20180">[ subject ]</a>
+              <a href="author.html#20180">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

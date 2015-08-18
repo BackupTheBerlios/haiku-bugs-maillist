@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3139: Recompiling unchanged files
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-January/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233139%3A%20Recompiling%20unchanged%20files&In-Reply-To=%3C051.2a8837c9b17d2ec2217e9822c691c856%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="013629.html">
+   <LINK REL="Next"  HREF="013631.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3139: Recompiling unchanged files</H1>
+    <B>bonefish</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233139%3A%20Recompiling%20unchanged%20files&In-Reply-To=%3C051.2a8837c9b17d2ec2217e9822c691c856%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3139: Recompiling unchanged files">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Jan 12 23:12:23 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="013629.html">[Haiku-bugs] [Haiku] #2706: PANIC: vm_page_fault: unhandled page fault in kernel space at 0xdeadbf07, ip 0x9428897e
+</A></li>
+        <LI>Next message: <A HREF="013631.html">[Haiku-bugs] [Haiku] #3139: Recompiling unchanged files
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13630">[ date ]</a>
+              <a href="thread.html#13630">[ thread ]</a>
+              <a href="subject.html#13630">[ subject ]</a>
+              <a href="author.html#13630">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3139: Recompiling unchanged files
+--------------------------+-------------------------------------------------
+ Reporter:  Adek336       |       Owner:  bonefish      
+     Type:  enhancement   |      Status:  new           
+ Priority:  normal        |   Milestone:  R1            
+Component:  Build System  |     Version:  R1 development
+Blockedby:                |    Platform:  All           
+ Blocking:                |  
+--------------------------+-------------------------------------------------
+
+Comment(by bonefish):
+
+ Replying to [comment:1 Adek336]:
+ &gt; Possibly HAIKU_DONT_CLEAR_IMAGE = 1 helps here.
+
+ Nope.
+
+ Replying to [comment:2 Adek336]:
+ &gt; or jam -q @profile update-all
+
+ Nope.
+
+ Replying to [comment:3 umccullough]:
+ &gt; Since UserBuildConfig is included as part of the jam build system
+ developed for Haiku - I'm guessing that changes to it will cause a rebuild
+ of many targets regardless of whether any code actually changed. It may be
+ that Jam just isn't smart enough to determine dependency changes when a
+ file such as UserBuildConfig is altered and may affect all targets system-
+ wide simply based on the timestamp change of the UserBuildConfig (can be
+ tested by touching it I suppose).
+
+ Actually that does not happen. None of the build system files (Jamfiles,
+ Jamrules, rule files, UserBuildConfig) is declared as a dependency of
+ anything that is built. So just touching one of them will have no effect.
+ BTW, that's why occasionally one has to delete some generated file or
+ directory, if a Jamfile has been changed in a certain way. It doesn't
+ happen particularly often, though.
+
+ &gt; AFAIK, HAIKU_DONT_CLEAR_IMAGE just determines if the image will be wiped
+ with zeros or not before initializing it as BFS.
+
+ Yep.
+
+ &gt; and I believe the &quot;update-all&quot; target just mounts an existing image (or
+ partition) without re-inializing it as BFS, and copies all targets over
+ the top of existing ones.
+
+ Exactly.
+
+ &gt; Thus - it seems neither of these are likely to fix the problem you're
+ describing - which seems to be a deeper Jam dependency issue.
+
+ If targets are recompiled, there might indeed be a dependency problem. Jam
+ saying that targets are updated, doesn't mean that something has been
+ recompiled, though. There are a lot of pseudo targets involved in creating
+ the shell scripts that populate the image. Those are always made, if you
+ build an image, regardless of how many executables/libraries have to be
+ updated.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3139#comment:4">http://dev.haiku-os.org/ticket/3139#comment:4</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="013629.html">[Haiku-bugs] [Haiku] #2706: PANIC: vm_page_fault: unhandled page fault in kernel space at 0xdeadbf07, ip 0x9428897e
+</A></li>
+	<LI>Next message: <A HREF="013631.html">[Haiku-bugs] [Haiku] #3139: Recompiling unchanged files
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13630">[ date ]</a>
+              <a href="thread.html#13630">[ thread ]</a>
+              <a href="subject.html#13630">[ subject ]</a>
+              <a href="author.html#13630">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

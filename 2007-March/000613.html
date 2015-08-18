@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1056: Kernel Space Page Fault during Late	Boot Process
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231056%3A%20Kernel%20Space%20Page%20Fault%20during%20Late%0A%09Boot%20Process&In-Reply-To=%3C052.3f8774e8eec1afa7c0546dee498101e5%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000595.html">
+   <LINK REL="Next"  HREF="000724.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1056: Kernel Space Page Fault during Late	Boot Process</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231056%3A%20Kernel%20Space%20Page%20Fault%20during%20Late%0A%09Boot%20Process&In-Reply-To=%3C052.3f8774e8eec1afa7c0546dee498101e5%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1056: Kernel Space Page Fault during Late	Boot Process">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Mar  3 01:31:45 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000595.html">[Haiku-bugs] [Haiku] #1056: Kernel Space Page Fault during Late	Boot Process
+</A></li>
+        <LI>Next message: <A HREF="000724.html">[Haiku-bugs] [Haiku] #1056: Kernel Space Page Fault during Late	Boot Process
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#613">[ date ]</a>
+              <a href="thread.html#613">[ thread ]</a>
+              <a href="subject.html#613">[ subject ]</a>
+              <a href="author.html#613">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1056: Kernel Space Page Fault during Late Boot Process
+----------------------------+-----------------------------------------------
+  Reporter:  bonefish       |       Owner:  axeld         
+      Type:  bug            |      Status:  new           
+  Priority:  normal         |   Milestone:  R1            
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |    Platform:  All           
+----------------------------+-----------------------------------------------
+Comment (by bonefish):
+
+ This bug is becoming my favorite... :-)
+ Still r20288:
+
+ {{{
+ PANIC: cacheRef 0x908ad620 ref count too low!
+
+ Welcome to Kernel Debugging Land...
+ Running on CPU 0
+ kdebug&gt; sc
+ stack trace for thread 0x32 &quot;sh&quot;
+     kernel stack: 0x803fd000 to 0x80400000
+       user stack: 0x7efe7000 to 0x7ffe7000
+ frame            caller     &lt;image&gt;:function + offset
+ 803ff744 (+  48) 8007a44d   &lt;kernel&gt;:kernel_debugger_loop + 0x00dd
+ 803ff774 (+  32) 8007aec2   &lt;kernel&gt;:kernel_debugger + 0x009a
+ 803ff794 (+ 176) 8007ae1e   &lt;kernel&gt;:panic + 0x0036
+ 803ff844 (+  64) 80052dc9   &lt;kernel&gt;:vm_cache_remove_consumer + 0x0225
+ 803ff884 (+  48) 8005288c   &lt;kernel&gt;:vm_cache_release_ref + 0x0128
+ 803ff8b4 (+  64) 8004dd67   &lt;kernel&gt;:_vm_put_area__FP7vm_areab + 0x011f
+ 803ff8f4 (+  48) 8004f186   &lt;kernel&gt;:vm_delete_areas + 0x008a
+ 803ff924 (+  64) 800325a1   &lt;kernel&gt;:exec_team + 0x0131
+ 803ff964 (+1088) 80033aca   &lt;kernel&gt;:_user_exec + 0x006a
+ 803ffda4 (+ 352) 8002fd0b   &lt;kernel&gt;:syscall_dispatcher + 0x043b
+ 803fff04 (+ 160) 80080984   &lt;kernel&gt;:i386_handle_trap + 0x0238
+ iframe at 0x803fffac (end = 0x80400000)
+  eax 0x18           ebx 0x3250cc        ecx 0xffffff00   edx 0x2
+  esi 0x7ffe7008     edi 0x15            ebp 0x7ffe6b70   esp 0x803fffdc
+  eip 0xffff0102  eflags 0x207
+  vector: 0x63, error code: 0x0
+ 803fffa4 (+   0) ffff0102
+ 7ffe6b70 (+ 192) 00227148   533:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">sh_seg0ro at 0x00200000</A> + 0x27148
+ 7ffe6c30 (+  76) 00226fdf   533:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">sh_seg0ro at 0x00200000</A> + 0x26fdf
+ 7ffe6c7c (+  96) 002264b9   533:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">sh_seg0ro at 0x00200000</A> + 0x264b9
+ 7ffe6cdc (+  96) 002237a6   533:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">sh_seg0ro at 0x00200000</A> + 0x237a6
+ 7ffe6d3c (+  64) 00224897   533:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">sh_seg0ro at 0x00200000</A> + 0x24897
+ 7ffe6d7c (+  96) 00223a30   533:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">sh_seg0ro at 0x00200000</A> + 0x23a30
+ 7ffe6ddc (+  80) 0022315d   533:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">sh_seg0ro at 0x00200000</A> + 0x2315d
+ 7ffe6e2c (+  48) 00225a0e   533:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">sh_seg0ro at 0x00200000</A> + 0x25a0e
+ 7ffe6e5c (+  80) 002239a4   533:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">sh_seg0ro at 0x00200000</A> + 0x239a4
+ 7ffe6eac (+  80) 0022315d   533:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">sh_seg0ro at 0x00200000</A> + 0x2315d
+ 7ffe6efc (+  48) 0021ee19   533:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">sh_seg0ro at 0x00200000</A> + 0x1ee19
+ 7ffe6f2c (+  64) 0021d0b2   533:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">sh_seg0ro at 0x00200000</A> + 0x1d0b2
+ 7ffe6f6c (+  64) 00215d9f   533:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">sh_seg0ro at 0x00200000</A> + 0x15d9f
+ 7ffe6fac (+  48) 001007ae
+ 7ffe6fdc (+   0) 7ffe6fec   540:/bin/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">sh_main_stack at 0x7efe7000</A> + 0xffffec
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1056#comment:5">http://dev.haiku-os.org/ticket/1056#comment:5</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000595.html">[Haiku-bugs] [Haiku] #1056: Kernel Space Page Fault during Late	Boot Process
+</A></li>
+	<LI>Next message: <A HREF="000724.html">[Haiku-bugs] [Haiku] #1056: Kernel Space Page Fault during Late	Boot Process
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#613">[ date ]</a>
+              <a href="thread.html#613">[ thread ]</a>
+              <a href="subject.html#613">[ subject ]</a>
+              <a href="author.html#613">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

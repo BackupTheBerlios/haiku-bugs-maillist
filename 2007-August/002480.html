@@ -1,0 +1,144 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1434: device manager loads driver too often
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231434%3A%20device%20manager%20loads%20driver%20too%20often&In-Reply-To=%3C050.e3f1b2a2b21352b7f4852cd6c0743e73%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002477.html">
+   <LINK REL="Next"  HREF="002481.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1434: device manager loads driver too often</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231434%3A%20device%20manager%20loads%20driver%20too%20often&In-Reply-To=%3C050.e3f1b2a2b21352b7f4852cd6c0743e73%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1434: device manager loads driver too often">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Aug 28 23:18:20 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002477.html">[Haiku-bugs] [Haiku] #1104: Random crashes
+</A></li>
+        <LI>Next message: <A HREF="002481.html">[Haiku-bugs] [Haiku] #1434: device manager loads driver too	often
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2480">[ date ]</a>
+              <a href="thread.html#2480">[ thread ]</a>
+              <a href="subject.html#2480">[ subject ]</a>
+              <a href="author.html#2480">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1434: device manager loads driver too often
+-----------------------------+----------------------------------------------
+ Reporter:  marcusoverhagen  |       Owner:  axeld         
+     Type:  bug              |      Status:  new           
+ Priority:  normal           |   Milestone:  R1            
+Component:  System/Kernel    |     Version:  R1 development
+ Platform:  All              |  
+-----------------------------+----------------------------------------------
+ [23:05] &lt;dr_evil&gt; hi _stippi_
+ [23:05] &lt;_stippi_&gt; hi dr_evil
+ [23:06] &lt;_stippi_&gt; I hope you are making good progress now?
+ [23:06] &lt;_stippi_&gt; :-)
+ [23:06] &lt;dr_evil&gt; _stippi_ no, there is a strange bug in the device
+ manager, concerning loading the driver
+ [23:07] * hUMUNGUs has joined #haiku
+ [23:07] &lt;_stippi_&gt; dr_evil: still?
+ [23:08] &lt;_stippi_&gt; I thought it already loaded the driver. :-(
+ [23:08] &lt;dr_evil&gt; yes, it is loaded 4 times for the same PCI device
+ [23:08] &lt;_stippi_&gt; grrr
+ [23:09] &lt;_stippi_&gt; but when I scaned the tickets today, I saw you already
+ had some PCI manager tickets assigned to you... :-)
+ [23:09] &lt;dr_evil&gt; the PCI manager is working perfectly well, at the R5
+ level :)
+ [23:10] &lt;dr_evil&gt; let me show you something fyi
+ [23:10] &lt;cps1966&gt; maybe it has multi functions
+ [23:10] &lt;CIA-22&gt; marcusoverhagen * r22099 /haiku/trunk/src/add-
+ ons/kernel/busses/scsi/ahci/ (ahci_controller.cpp ahci_controller.h
+ ahci_sim.cpp): added a workaround to prevent loading the driver multiple
+ times for the same device
+ [23:11] &lt;_stippi_&gt; oh wait I'm in Haiku
+ [23:11] &lt;dr_evil&gt; no, wait
+ [23:11] &lt;_stippi_&gt; do you have a URL for the diff? I mean berlios?
+ [23:12] &lt;dr_evil&gt; I wanted to show you something diffrent:
+ <A HREF="http://overhagen.de/temp/ahci-serial.txt">http://overhagen.de/temp/ahci-serial.txt</A>
+ [23:12] &lt;dr_evil&gt; it starts with
+ [23:12] &lt;dr_evil&gt; [35mahci:[0m controller found! vendor 0x8086, device
+ 0x7111
+ [23:12] * stargater has joined #haiku
+ [23:12] &lt;stargater&gt; hi
+ [23:13] &lt;dr_evil&gt; the driver is loaded for the first time:
+ [23:13] &lt;dr_evil&gt; [35mahci:[0m controller found! vendor 0x8086, device
+ 0x7111
+ [23:13] * DeadYak has quit IRC (&quot;using sirc version 2.211+KSIRC/1.3.12&quot;)
+ [23:13] &lt;dr_evil&gt; [34mahci:[0m AHCIController::Init 0:7:1 vendor 8086,
+ device 7111
+ [23:13] &lt;dr_evil&gt; and then unloaded
+ [23:13] &lt;dr_evil&gt; [34mahci:[0m AHCIController::Uninit
+ [23:13] &lt;dr_evil&gt; then it's loaded again:
+ [23:13] &lt;dr_evil&gt; AHCIController::Init 0:7:1 vendor 8086, device 7111
+ [23:13] * PulkoMandy has quit IRC (Remote closed the connection)
+ [23:14] &lt;stargater&gt; dr_evil:  thats not so good ?
+ [23:14] &lt;dr_evil&gt; but this time, the scsi stack doesn't try to scan
+ devices!?!
+ [23:14] &lt;dr_evil&gt; and later, we get this:
+ [23:14] &lt;dr_evil&gt; [34mahci:[0m AHCIController::Init 0:7:1 vendor 8086,
+ device 7111
+ [23:14] &lt;dr_evil&gt; AHCIController::Init ERROR: an instance for object 0:7:1
+ already exists
+ [23:14] &lt;dr_evil&gt; init driver failed (node 0x90ac6100,
+ busses/scsi/ahci/sim/v1): General system error
+ [23:14] &lt;dr_evil&gt; init driver failed (node 0x90ac6180,
+ bus_managers/scsi/bus/v1): General system error
+ [23:14] &lt;dr_evil&gt; [34mahci:[0m ahci_sim_init_bus, userCookie 0x90ac8000
+ [23:14] &lt;dr_evil&gt; AHCIController::Init ERROR: getting PCI info failed!
+ [23:14] &lt;dr_evil&gt; init driver failed (node 0x90ac6100,
+ busses/scsi/ahci/sim/v1): General system error
+ [23:14] &lt;dr_evil&gt; init driver failed (node 0x90ac6180,
+ bus_managers/scsi/bus/v1): General system error
+ [23:14] &lt;dr_evil&gt; init driver failed (node 0x90ac6200,
+ bus_managers/scsi/bus/raw): General system error
+ [23:15] &lt;dr_evil&gt; the driver wasn't unloaded, but gets loaded again, which
+ failes because I added a workarond#
+ [23:15] &lt;dr_evil&gt; then it's loaded again, which seems to fail because the
+ PCI manager pointer is invalid
+ [23:15] &lt;_stippi_&gt; I am afraid I can't help much
+ [23:16] &lt;_stippi_&gt; I have absolutely no knowledge of the code, didn't even
+ read any of it
+ [23:16] &lt;dr_evil&gt; yes ok, I'll file a bug report :/
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1434">http://dev.haiku-os.org/ticket/1434</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002477.html">[Haiku-bugs] [Haiku] #1104: Random crashes
+</A></li>
+	<LI>Next message: <A HREF="002481.html">[Haiku-bugs] [Haiku] #1434: device manager loads driver too	often
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2480">[ date ]</a>
+              <a href="thread.html#2480">[ thread ]</a>
+              <a href="subject.html#2480">[ subject ]</a>
+              <a href="author.html#2480">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

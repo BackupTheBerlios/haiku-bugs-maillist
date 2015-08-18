@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3472: gcc4 and shared libraries
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-February/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233472%3A%20gcc4%20and%20shared%20libraries&In-Reply-To=%3C051.1f15b9cda1ca6c5aa8b18e2bf4633dd8%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="014582.html">
+   <LINK REL="Next"  HREF="014611.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3472: gcc4 and shared libraries</H1>
+    <B>aljen</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233472%3A%20gcc4%20and%20shared%20libraries&In-Reply-To=%3C051.1f15b9cda1ca6c5aa8b18e2bf4633dd8%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3472: gcc4 and shared libraries">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Feb 23 08:40:48 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="014582.html">[Haiku-bugs] [Haiku] #3472: gcc4 and shared libraries
+</A></li>
+        <LI>Next message: <A HREF="014611.html">[Haiku-bugs] [Haiku] #3472: gcc4 and shared libraries
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14586">[ date ]</a>
+              <a href="thread.html#14586">[ thread ]</a>
+              <a href="subject.html#14586">[ subject ]</a>
+              <a href="author.html#14586">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3472: gcc4 and shared libraries
+--------------------------+-------------------------------------------------
+ Reporter:  kaliber       |       Owner:  mmlr          
+     Type:  bug           |      Status:  new           
+ Priority:  normal        |   Milestone:  R1            
+Component:  Build System  |     Version:  R1 development
+Blockedby:                |    Platform:  All           
+ Blocking:                |  
+--------------------------+-------------------------------------------------
+
+Comment(by aljen):
+
+ I investigated shared version of libstdc++ yesterday (see patches, with
+ kaliber patch already applied) and there is a chicken egg problem, when
+ building gcc with --enable-shared=libstdc++ (according to gcc docs it's
+ builded as shared, rest is static like with --disable-shared)[[BR]]
+ It fails to build because of missing crti.o crtn.o start_dyn.o
+ init_term_dyn.o which are haiku specific.
+ I moved them from src/system/glue to gcc dir and now it builds fine, but
+ linker wants libroot which isn't available yet.[[BR]]
+ I think we have two choices if we want to have shared libstdc++:[[BR]]
+
+
+ * cross-build gcc with static libstdc++, build libroot and rebuild
+ libstdc++
+
+
+ * move building haiku to haiku itself
+
+ Maybe i missed something, but that's so far i get into trying to make it
+ work
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3472#comment:2">http://dev.haiku-os.org/ticket/3472#comment:2</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="014582.html">[Haiku-bugs] [Haiku] #3472: gcc4 and shared libraries
+</A></li>
+	<LI>Next message: <A HREF="014611.html">[Haiku-bugs] [Haiku] #3472: gcc4 and shared libraries
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14586">[ date ]</a>
+              <a href="thread.html#14586">[ thread ]</a>
+              <a href="subject.html#14586">[ subject ]</a>
+              <a href="author.html#14586">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

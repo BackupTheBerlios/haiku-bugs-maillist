@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4500: Haiku can't boot on XenServer 5.5
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234500%3A%20Haiku%20can%27t%20boot%20on%20XenServer%205.5&In-Reply-To=%3C054.95db8292b9103bebcc840e0a94bd2eed%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="021585.html">
+   <LINK REL="Next"  HREF="021642.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4500: Haiku can't boot on XenServer 5.5</H1>
+    <B>jackburton</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234500%3A%20Haiku%20can%27t%20boot%20on%20XenServer%205.5&In-Reply-To=%3C054.95db8292b9103bebcc840e0a94bd2eed%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4500: Haiku can't boot on XenServer 5.5">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Sep 18 09:46:37 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="021585.html">[Haiku-bugs] [Haiku] #4500: Haiku can't boot on XenServer 5.5
+</A></li>
+        <LI>Next message: <A HREF="021642.html">[Haiku-bugs] [Haiku] #4500: Haiku can't boot on XenServer 5.5
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21607">[ date ]</a>
+              <a href="thread.html#21607">[ thread ]</a>
+              <a href="subject.html#21607">[ subject ]</a>
+              <a href="author.html#21607">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4500: Haiku can't boot on XenServer 5.5
+------------------------+---------------------------------------------------
+ Reporter:  jackburton  |       Owner:  axeld         
+     Type:  bug         |      Status:  new           
+ Priority:  normal      |   Milestone:  R1            
+Component:  System      |     Version:  R1/Development
+Blockedby:              |    Platform:  All           
+ Blocking:              |  
+------------------------+---------------------------------------------------
+
+Comment(by jackburton):
+
+ I found the problem: the PIT isn't set to one shot mode, in
+ pit_set_hardware_timer(), line 58.
+ The correct line would read:
+
+ {{{
+ out8(0x38, 0x43);
+ }}}
+
+ Though I can't understand how it could work anywhere else until now, and
+ how this would affect booting while not using the PIT timer (and using the
+ LAPIC instead).
+
+ With this change, Haiku boots to the initial alert where you choose to
+ launch the installer or the desktop. Mouse doesn't seem to work correctly,
+ though. But this should be a different bug.
+
+ BTW, I also tested on virtualBox and Haiku continues to work correctly.
+ I'll also test on real hardware (this evening) before committing the
+ change, though. Unless someone else do that before.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4500#comment:12">http://dev.haiku-os.org/ticket/4500#comment:12</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="021585.html">[Haiku-bugs] [Haiku] #4500: Haiku can't boot on XenServer 5.5
+</A></li>
+	<LI>Next message: <A HREF="021642.html">[Haiku-bugs] [Haiku] #4500: Haiku can't boot on XenServer 5.5
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21607">[ date ]</a>
+              <a href="thread.html#21607">[ thread ]</a>
+              <a href="subject.html#21607">[ subject ]</a>
+              <a href="author.html#21607">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

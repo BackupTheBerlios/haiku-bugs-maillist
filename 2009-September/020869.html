@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4445: MIDI System Exclusive handling is inconsistent (and BeOS incompatible)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234445%3A%20MIDI%20System%20Exclusive%20handling%20is%0A%20inconsistent%20%28and%20BeOS%20incompatible%29&In-Reply-To=%3C039.b59b66a075734fb1b3da6e942538d183%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="020868.html">
+   <LINK REL="Next"  HREF="020895.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4445: MIDI System Exclusive handling is inconsistent (and BeOS incompatible)</H1>
+    <B>Pete</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234445%3A%20MIDI%20System%20Exclusive%20handling%20is%0A%20inconsistent%20%28and%20BeOS%20incompatible%29&In-Reply-To=%3C039.b59b66a075734fb1b3da6e942538d183%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4445: MIDI System Exclusive handling is inconsistent (and BeOS incompatible)">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Sep  7 08:15:38 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="020868.html">[Haiku-bugs] [Haiku] #2487: [MediaPlayer] crash in avcodec
+</A></li>
+        <LI>Next message: <A HREF="020895.html">[Haiku-bugs] [Haiku] #4445: MIDI System Exclusive handling is inconsistent (and BeOS incompatible)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20869">[ date ]</a>
+              <a href="thread.html#20869">[ thread ]</a>
+              <a href="subject.html#20869">[ subject ]</a>
+              <a href="author.html#20869">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4445: MIDI System Exclusive handling is inconsistent (and BeOS incompatible)
+---------------------+------------------------------------------------------
+ Reporter:  Pete     |       Owner:  axeld         
+     Type:  bug      |      Status:  new           
+ Priority:  normal   |   Milestone:  R1            
+Component:  Servers  |     Version:  R1 development
+Blockedby:           |    Platform:  All           
+ Blocking:           |  
+---------------------+------------------------------------------------------
+ Under BeOS, when one outputs System Exclusive MIDI data with
+ SpraySystemExclusive(), or receives it via the SystemExclusive method, one
+ deals with only the actual data portion of the sequence -- the '0xF0'
+ start byte and '0xF7' trailer are omitted (supplied and removed as
+ necessary by the midi_server).
+
+ With Haiku, SpraySystemExclusive seems to behave the same, sending a
+ properly formatted SysEx sequence to the output device, but
+ SystemExclusive passes the ''whole'' received sequence, including the
+ start and end bytes.
+
+ Not only is this bad for BeOS apps, but it's inconsistent with the
+ handling of other MIDI events, where the status byte is stripped and
+ processed before the appropriate method is invoked.  It's also internally
+ inconsistent, because if a SysEx sequence is recorded and resent, it ends
+ up with two start and two end bytes!
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4445">http://dev.haiku-os.org/ticket/4445</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="020868.html">[Haiku-bugs] [Haiku] #2487: [MediaPlayer] crash in avcodec
+</A></li>
+	<LI>Next message: <A HREF="020895.html">[Haiku-bugs] [Haiku] #4445: MIDI System Exclusive handling is inconsistent (and BeOS incompatible)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20869">[ date ]</a>
+              <a href="thread.html#20869">[ thread ]</a>
+              <a href="subject.html#20869">[ subject ]</a>
+              <a href="author.html#20869">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

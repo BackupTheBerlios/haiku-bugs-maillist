@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3973: ioctl FIONREAD does not propagate errors
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233973%3A%20ioctl%20FIONREAD%20does%20not%20propagate%20errors&In-Reply-To=%3C040.9afcfcba81665b379863be1a77d5fd7c%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="017624.html">
+   <LINK REL="Next"  HREF="017626.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3973: ioctl FIONREAD does not propagate errors</H1>
+    <B>titer</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233973%3A%20ioctl%20FIONREAD%20does%20not%20propagate%20errors&In-Reply-To=%3C040.9afcfcba81665b379863be1a77d5fd7c%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3973: ioctl FIONREAD does not propagate errors">trac at haiku-os.org
+       </A><BR>
+    <I>Thu May 28 17:39:19 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="017624.html">[Haiku-bugs] [Haiku] #2868: [Tracker] Update directory size info
+</A></li>
+        <LI>Next message: <A HREF="017626.html">[Haiku-bugs] [Haiku] #3973: ioctl FIONREAD does not propagate	errors
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17625">[ date ]</a>
+              <a href="thread.html#17625">[ thread ]</a>
+              <a href="subject.html#17625">[ subject ]</a>
+              <a href="author.html#17625">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3973: ioctl FIONREAD does not propagate errors
+--------------------------------+-------------------------------------------
+ Reporter:  titer               |       Owner:  axeld         
+     Type:  bug                 |      Status:  new           
+ Priority:  normal              |   Milestone:  R1            
+Component:  Network &amp; Internet  |     Version:  R1 development
+Blockedby:                      |    Platform:  All           
+ Blocking:                      |  
+--------------------------------+-------------------------------------------
+ Test case with a not connected socket:
+ {{{
+ #include &lt;stdio.h&gt;
+ #include &lt;unistd.h&gt;
+ #include &lt;sys/ioctl.h&gt;
+ #include &lt;sys/socket.h&gt;
+
+ int main()
+ {
+     int fd = socket(AF_INET, SOCK_STREAM, 0);
+     int n = 0x42;
+     int ret = ioctl(fd, FIONREAD, &amp;n);
+     printf(&quot;ret %d, n %d / %X\n&quot;, ret, n, n);
+     return 0;
+ }
+ }}}
+ gives:
+ {{{
+ ret 0, n -2147454946 / 8000701E
+ }}}
+
+ The ioctl should return -1 and set errno, rather than saying there are
+ ENOTCONN bytes available for reading.
+
+ I noticed this from running libevent tests - since ioctl returns 0, it
+ (legitimately IMO) assumes the value is &gt;= 0 and ends up trying to
+ allocate some GBs of memory.
+
+ Haiku r30805 gcc4
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3973">http://dev.haiku-os.org/ticket/3973</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="017624.html">[Haiku-bugs] [Haiku] #2868: [Tracker] Update directory size info
+</A></li>
+	<LI>Next message: <A HREF="017626.html">[Haiku-bugs] [Haiku] #3973: ioctl FIONREAD does not propagate	errors
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17625">[ date ]</a>
+              <a href="thread.html#17625">[ thread ]</a>
+              <a href="subject.html#17625">[ subject ]</a>
+              <a href="author.html#17625">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

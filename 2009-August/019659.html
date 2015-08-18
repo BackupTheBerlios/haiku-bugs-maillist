@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4268: document resize knob not invalidated on	look change
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234268%3A%20document%20resize%20knob%20not%20invalidated%20on%0A%09look%20change&In-Reply-To=%3C040.4db1b7ea174207d6f21514ff27b1760c%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="019658.html">
+   <LINK REL="Next"  HREF="019660.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4268: document resize knob not invalidated on	look change</H1>
+    <B>axeld</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234268%3A%20document%20resize%20knob%20not%20invalidated%20on%0A%09look%20change&In-Reply-To=%3C040.4db1b7ea174207d6f21514ff27b1760c%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4268: document resize knob not invalidated on	look change">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Aug 17 21:06:44 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="019658.html">[Haiku-bugs] [Haiku] #507: [VLC] slider flickering
+</A></li>
+        <LI>Next message: <A HREF="019660.html">[Haiku-bugs] [Haiku] #4084: Lack 1440x900 resolutoion
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19659">[ date ]</a>
+              <a href="thread.html#19659">[ thread ]</a>
+              <a href="subject.html#19659">[ subject ]</a>
+              <a href="author.html#19659">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4268: document resize knob not invalidated on look change
+--------------------------------+-------------------------------------------
+ Reporter:  axeld               |       Owner:  stippi        
+     Type:  bug                 |      Status:  new           
+ Priority:  normal              |   Milestone:  R1            
+Component:  Servers/app_server  |     Version:  R1 development
+Blockedby:                      |    Platform:  All           
+ Blocking:                      |  
+--------------------------------+-------------------------------------------
+ When using the LookAndFeel test app, change the look from &quot;Document&quot; to
+ &quot;Title&quot;.
+
+ You'll see that the knob is not visually removed inside of the window
+ frame; it is redrawn when changing in the other direction, though.
+
+ I briefly looked into it, and the region is made dirty, but it seems the
+ client doesn't overwrite, maybe because it's clipping hasn't been changed
+ (although the clipping regions seem to be invalidated correctly in
+ Window).
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4268">http://dev.haiku-os.org/ticket/4268</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="019658.html">[Haiku-bugs] [Haiku] #507: [VLC] slider flickering
+</A></li>
+	<LI>Next message: <A HREF="019660.html">[Haiku-bugs] [Haiku] #4084: Lack 1440x900 resolutoion
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19659">[ date ]</a>
+              <a href="thread.html#19659">[ thread ]</a>
+              <a href="subject.html#19659">[ subject ]</a>
+              <a href="author.html#19659">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

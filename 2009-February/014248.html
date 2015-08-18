@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3356: intermittant and out of order audio
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-February/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233356%3A%20intermittant%20and%20out%20of%20order%20audio&In-Reply-To=%3C051.ec3a7aa6baa9707b4621fbff13ebb0cf%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="014247.html">
+   <LINK REL="Next"  HREF="014249.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3356: intermittant and out of order audio</H1>
+    <B>rudolfc</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233356%3A%20intermittant%20and%20out%20of%20order%20audio&In-Reply-To=%3C051.ec3a7aa6baa9707b4621fbff13ebb0cf%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3356: intermittant and out of order audio">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Feb  4 22:06:44 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="014247.html">[Haiku-bugs] [Haiku] #2667: Loading graphic files in SDL games
+</A></li>
+        <LI>Next message: <A HREF="014249.html">[Haiku-bugs] [Haiku] #3356: intermittant and out of order audio
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14248">[ date ]</a>
+              <a href="thread.html#14248">[ thread ]</a>
+              <a href="subject.html#14248">[ subject ]</a>
+              <a href="author.html#14248">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3356: intermittant and out of order audio
+-----------------------+----------------------------------------------------
+ Reporter:  rudolfc    |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+Blockedby:             |    Platform:  All           
+ Blocking:             |  
+-----------------------+----------------------------------------------------
+
+Comment(by rudolfc):
+
+ Hi,
+
+ I've got an important update. I found out what was troubling me!!
+ It turns out that there are actually two faults haunting me:
+
+ one:
+ the audio files were corrupted by Haiku. I copied over the files once
+ again from the original source (exact same creation time and date and
+ size) and half the distortions went away!!
+ Unfortunately I don't know when this happened, probably half a year ago
+ already. Since then some updates to bfs were made if I remember correctly,
+ so I'm hoping I won't encounter this again!
+
+ (though on system crashes I see the last few lines of sourcefiles
+ dissappear regurarly, which I discover because builds later-on fail).
+
+ second, and _very_ interesting:
+ the function dprintf() messes up audio INT timing! So probably all INT
+ timing is messed up by this function.
+
+ Here's what I found:
+ It turns out the SCSI AHCI driver caused the audio intermitting. This only
+ happens if I have no CD in the SATA DVD burner. If I have no disc in, you
+ see port4 errors (that's my HD), and port5 errors (which is the DVD
+ burner). As soon as I put in a data CD: all AHCI error messages are gone.
+ You can simply check the (first) syslog already attached to this
+ bugreport, you'll find the errors in there.
+
+ If I remove all TRACE and dprintf() calls in the AHCI driver: audio is
+ perfectly OK. So, the actual behaviour of the ACHI driver isn't changed,
+ though audio is now OK!
+
+ OK, I was interested in short interruptions in audio as well because of
+ having the Media prefs app running: if you select the HDA driver tab for
+ all slider settings then audio skips as well.
+ It turns out this driver does some dprintf() calls (directly or via
+ TRACE). Simply disabling these calls solve the intermittant audio while
+ playing around with the Media prefs app.
+
+ --&gt;&gt;&gt; dprintf() seems to be the problem, and I expect for many users!!!
+
+ What are we going to do? Close this burreport and create a new one for
+ dprintf()???
+
+ Bye!
+
+ Rudolf.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3356#comment:14">http://dev.haiku-os.org/ticket/3356#comment:14</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="014247.html">[Haiku-bugs] [Haiku] #2667: Loading graphic files in SDL games
+</A></li>
+	<LI>Next message: <A HREF="014249.html">[Haiku-bugs] [Haiku] #3356: intermittant and out of order audio
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14248">[ date ]</a>
+              <a href="thread.html#14248">[ thread ]</a>
+              <a href="subject.html#14248">[ subject ]</a>
+              <a href="author.html#14248">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4551: Hard reset when unzipping large file
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234551%3A%20Hard%20reset%20when%20unzipping%20large%20file&In-Reply-To=%3C043.0c2f2ad12f2a890014016dd4b9fdfc45%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="021484.html">
+   <LINK REL="Next"  HREF="021495.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4551: Hard reset when unzipping large file</H1>
+    <B>moochris</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234551%3A%20Hard%20reset%20when%20unzipping%20large%20file&In-Reply-To=%3C043.0c2f2ad12f2a890014016dd4b9fdfc45%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4551: Hard reset when unzipping large file">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Sep 16 21:58:21 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="021484.html">[Haiku-bugs] [Haiku] #4321: Black screen with GeForce 7900 GT
+</A></li>
+        <LI>Next message: <A HREF="021495.html">[Haiku-bugs] [Haiku] #4551: Hard reset when unzipping large file
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21485">[ date ]</a>
+              <a href="thread.html#21485">[ thread ]</a>
+              <a href="subject.html#21485">[ subject ]</a>
+              <a href="author.html#21485">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4551: Hard reset when unzipping large file
+---------------------------+------------------------------------------------
+ Reporter:  moochris       |       Owner:  axeld    
+     Type:  bug            |      Status:  new      
+ Priority:  normal         |   Milestone:  R1       
+Component:  System/Kernel  |     Version:  R1/alpha1
+Blockedby:                 |    Platform:  x86      
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+ I copied a zipped qemu image from a FAT32 partition to a BFS partition,
+ then tried unzipping.  After around 6 seconds the machine rebooted, no
+ KDL.
+ After trying this a few times I actually lost that BFS partition.  Tried
+ it from my other BFS partition (boot) also, with the same reset (not lost
+ it yet though!).
+
+ The file is 2.3 GB in size and I watched the cache memory go up to about
+ 1600MB at the point where it reset.
+
+ syslog is attached and my specs are as follows (running on the metal btw
+ if that's not apparent):
+
+ Asus P5KPL-CM motherboard
+ Intel Core 2 Duo E8400 @ 3GHz
+ 4GB ram
+ SATA HD - 2 partitions 25GB BFS boot, 210GB BFS spare (now gone).
+ ATI 4770HD (running in VESA)
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4551">http://dev.haiku-os.org/ticket/4551</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="021484.html">[Haiku-bugs] [Haiku] #4321: Black screen with GeForce 7900 GT
+</A></li>
+	<LI>Next message: <A HREF="021495.html">[Haiku-bugs] [Haiku] #4551: Hard reset when unzipping large file
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21485">[ date ]</a>
+              <a href="thread.html#21485">[ thread ]</a>
+              <a href="subject.html#21485">[ subject ]</a>
+              <a href="author.html#21485">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1044: USB OHCI support
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231044%3A%20USB%20OHCI%20support&In-Reply-To=%3C054.035b6b4956e5104c7b6e92e2583ca98c%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007500.html">
+   <LINK REL="Next"  HREF="007502.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1044: USB OHCI support</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231044%3A%20USB%20OHCI%20support&In-Reply-To=%3C054.035b6b4956e5104c7b6e92e2583ca98c%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1044: USB OHCI support">trac at haiku-os.org
+       </A><BR>
+    <I>Tue May 20 22:09:43 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007500.html">[Haiku-bugs] [Haiku] #1580: Mouse freezes (permanently or intermittently) after brief movement
+</A></li>
+        <LI>Next message: <A HREF="007502.html">[Haiku-bugs] [Haiku] #1044: USB OHCI support
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7501">[ date ]</a>
+              <a href="thread.html#7501">[ thread ]</a>
+              <a href="subject.html#7501">[ subject ]</a>
+              <a href="author.html#7501">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1044: USB OHCI support
+--------------------------+-------------------------------------------------
+  Reporter:  wkornewald   |       Owner:  mmlr          
+      Type:  enhancement  |      Status:  assigned      
+  Priority:  blocker      |   Milestone:  R1/alpha1     
+ Component:  Drivers/USB  |     Version:  R1 development
+Resolution:               |    Platform:  All           
+--------------------------+-------------------------------------------------
+Comment (by mmlr):
+
+ That's perfect, it's exactly what I expected. When booting with devices
+ plugged in it will cause the roothub change interrupt to be triggered
+ pretty much right away. This is not a problem, and it does in fact get
+ handled (otherwise the unhandled count would be a huge number instead).
+ The problem is that these interrupts do not seem to get acknowledged for
+ some reason, so that as soon as the interrupt is handled, another one is
+ generated right away and so on, which brings the system to a halt.
+
+ {{{
+ usb_ohci_roothub: request: 0
+ usb_ohci: port 0 status 0x0100 change 0x0000
+ }}}
+
+ That's normal behaviour. The hubs are polled for status changes every
+ second to detect changes on connection status and handle them correctly.
+ Once you plug something in the, change and status field will first get
+ different, then the change will be cleared and the device becomes usable.
+ This could be further optimized by instead of polling using the
+ notification mechanisms to only do on demand bus exploration. USB hubs
+ support that with a dedicated interrupt endpoint, OHCI and EHCI provide an
+ interrupt (the very same one that probably causes the hangs in this case).
+ These could be leveraged to remove the need for polling. Sadly UHCI does
+ not provide such a mechanism so the polling cannot be completely removed
+ (although it could be moved into the UHCI driver). However as it is not
+ really an expensive thing (as the roothubs are short-circuited and do
+ pretty direct register reads to get the status) this enhancement is not
+ urgent at all.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1044#comment:30">http://dev.haiku-os.org/ticket/1044#comment:30</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007500.html">[Haiku-bugs] [Haiku] #1580: Mouse freezes (permanently or intermittently) after brief movement
+</A></li>
+	<LI>Next message: <A HREF="007502.html">[Haiku-bugs] [Haiku] #1044: USB OHCI support
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7501">[ date ]</a>
+              <a href="thread.html#7501">[ thread ]</a>
+              <a href="subject.html#7501">[ subject ]</a>
+              <a href="author.html#7501">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

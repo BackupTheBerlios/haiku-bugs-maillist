@@ -1,0 +1,310 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1914: PANIC: vnode 5:45465 already exists (node = 0x90c1b300, vnode-&gt;node = 0x91053d80)!
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-July/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231914%3A%20PANIC%3A%20vnode%205%3A45465%20already%20exists%0A%20%28node%20%3D%200x90c1b300%2C%20vnode-%3Enode%20%3D%200x91053d80%29%21&In-Reply-To=%3C049.1ee8cf2390a25faae5f355701366dade%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008959.html">
+   <LINK REL="Next"  HREF="008963.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1914: PANIC: vnode 5:45465 already exists (node = 0x90c1b300, vnode-&gt;node = 0x91053d80)!</H1>
+    <B>mmlr</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231914%3A%20PANIC%3A%20vnode%205%3A45465%20already%20exists%0A%20%28node%20%3D%200x90c1b300%2C%20vnode-%3Enode%20%3D%200x91053d80%29%21&In-Reply-To=%3C049.1ee8cf2390a25faae5f355701366dade%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1914: PANIC: vnode 5:45465 already exists (node = 0x90c1b300, vnode-&gt;node = 0x91053d80)!">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Jul 12 16:04:56 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008959.html">[Haiku-bugs] [Haiku] #2046: jam on haiku-host occasionally fails with the message: vfork: Out of memory
+</A></li>
+        <LI>Next message: <A HREF="008963.html">[Haiku-bugs] [Haiku] #2470: DriveSetup error preparing disk
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8962">[ date ]</a>
+              <a href="thread.html#8962">[ thread ]</a>
+              <a href="subject.html#8962">[ subject ]</a>
+              <a href="author.html#8962">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1914: PANIC: vnode 5:45465 already exists (node = 0x90c1b300, vnode-&gt;node =
+0x91053d80)!
+----------------------------+-----------------------------------------------
+  Reporter:  thorn          |       Owner:  axeld         
+      Type:  bug            |      Status:  reopened      
+  Priority:  critical       |   Milestone:  R1/alpha1     
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |   Blockedby:                
+  Platform:  x86            |    Blocking:                
+----------------------------+-----------------------------------------------
+
+Old description:
+
+&gt;<i> and again, r24348
+</I>&gt;<i>
+</I>&gt;<i> bfs: Insert:1301: Name in use
+</I>&gt;<i> Last message repeated 2 times.
+</I>&gt;<i> wait interval 524536, scan pages 4356, free 2046, target 2050
+</I>&gt;<i> wait interval 524304, scan pages 4358, free 2045, target 2051
+</I>&gt;<i> wait interval 524072, scan pages 4360, free 2044, target 2052
+</I>&gt;<i> wait interval 524072, scan pages 4360, free 2044, target 2052
+</I>&gt;<i> bfs: Insert:1301: Name in use
+</I>&gt;<i> PANIC: vnode 5:45465 already exists (node = 0x90c1b300, vnode-&gt;node =
+</I>&gt;<i> 0x91053d80)!
+</I>&gt;<i> Welcome to Kernel Debugging Land...
+</I>&gt;<i> Running on CPU 0
+</I>&gt;<i> kdebug&gt; bt
+</I>&gt;<i> stack trace for thread 298 &quot;svn&quot;
+</I>&gt;<i>     kernel stack: 0x93af4000 to 0x93af8000
+</I>&gt;<i>       user stack: 0x7efe7000 to 0x7ffe7000
+</I>&gt;<i> frame            caller     &lt;image&gt;:function + offset
+</I>&gt;<i> 93af797c (+  52) 80082db3   &lt;kernel&gt;:invoke_debugger_command + 0x00cf
+</I>&gt;<i> 93af79b0 (+  64) 80083b54   &lt;kernel&gt;:_ParseCommand__16ExpressionParserRi
+</I>&gt;<i> + 0x01f8
+</I>&gt;<i> 93af79f0 (+  48) 80083546
+</I>&gt;<i> &lt;kernel&gt;:EvaluateCommand__16ExpressionParserPCcRi + 0x01de
+</I>&gt;<i> 93af7a20 (+ 228) 80084c68   &lt;kernel&gt;:evaluate_debug_command + 0x0088
+</I>&gt;<i> 93af7b04 (+  64) 80081986   &lt;kernel&gt;:kernel_debugger_loop__Fv + 0x017a
+</I>&gt;<i> 93af7b44 (+  48) 800825d1   &lt;kernel&gt;:kernel_debugger + 0x010d
+</I>&gt;<i> 93af7b74 (+ 192) 800824b9   &lt;kernel&gt;:panic + 0x0029
+</I>&gt;<i> 93af7c34 (+  64) 800486d6   &lt;kernel&gt;:new_vnode + 0x005a
+</I>&gt;<i> 93af7c74 (+  64) 802d6d72
+</I>&gt;<i> &lt;bfs&gt;:New__14InodeAllocatorP9block_runUiR9block_runPP5Inode + 0x014a
+</I>&gt;<i> 93af7cb4 (+ 176) 802dd3f1
+</I>&gt;<i> &lt;bfs&gt;:Create__5InodeR11TransactionP5InodePCcliUlPbPxPP5Inode + 0x0571
+</I>&gt;<i> 93af7d64 (+  96) 802e78eb   &lt;bfs&gt;:bfs_create_dir__FPvT0PCciPx + 0x0107
+</I>&gt;<i> 93af7dc4 (+ 320) 8004ab0a   &lt;kernel&gt;:dir_create__FiPcib + 0x0082
+</I>&gt;<i> 93af7f04 (+  64) 8004ff78   &lt;kernel&gt;:_user_create_dir + 0x0094
+</I>&gt;<i> 93af7f44 (+ 100) 80092652   &lt;kernel&gt;:pre_syscall_debug_done + 0x0002
+</I>&gt;<i> (nearest)
+</I>&gt;<i> iframe at 0x93af7fa8 (end = 0x93af8000)
+</I>&gt;<i>  eax 0x50           ebx 0x458bc8        ecx 0x7ffe6734   edx 0xffff0104
+</I>&gt;<i>  esi 0x0            edi 0x19754e08      ebp 0x7ffe6760   esp 0x93af7fdc
+</I>&gt;<i>  eip 0xffff0104  eflags 0x206
+</I>&gt;<i>  vector: 0x63, error code: 0x0
+</I>&gt;<i> 93af7fa8 (+   0) ffff0104
+</I>&gt;<i> 7ffe6760 (+  48) 0032691f
+</I>&gt;<i> &lt;/boot/common/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libapr-1.so at 0x00317000</A>&gt;:unknown + 0xf91f
+</I>&gt;<i> 7ffe6790 (+ 144) 002c8516
+</I>&gt;<i> &lt;/boot/common/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libsvn_subr-1.so at 0x002bb000</A>&gt;:unknown + 0xd516
+</I>&gt;<i> 7ffe6820 (+  64) 002c861b
+</I>&gt;<i> &lt;/boot/common/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libsvn_subr-1.so at 0x002bb000</A>&gt;:unknown + 0xd61b
+</I>&gt;<i> 7ffe6860 (+  64) 0024fd35
+</I>&gt;<i> &lt;/boot/common/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libsvn_wc-1.so at 0x00235000</A>&gt;:unknown + 0x1ad35
+</I>&gt;<i> 7ffe68a0 (+  48) 0024d45f
+</I>&gt;<i> &lt;/boot/common/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libsvn_wc-1.so at 0x00235000</A>&gt;:unknown + 0x1845f
+</I>&gt;<i> 7ffe68d0 (+ 176) 0024dd6d
+</I>&gt;<i> &lt;/boot/common/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libsvn_wc-1.so at 0x00235000</A>&gt;:unknown + 0x18d6d
+</I>&gt;<i> 7ffe6980 (+  64) 002b4bc5
+</I>&gt;<i> &lt;/boot/common/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libsvn_delta-1.so at 0x002b3000</A>&gt;:unknown + 0x1bc5
+</I>&gt;<i> 7ffe69c0 (+  96) 00299f78
+</I>&gt;<i> &lt;/boot/common/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libsvn_ra_svn-1.so at 0x00292000</A>&gt;:unknown + 0x7f78
+</I>&gt;<i> 7ffe6a20 (+ 112) 0029ab5a
+</I>&gt;<i> &lt;/boot/common/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libsvn_ra_svn-1.so at 0x00292000</A>&gt;:unknown + 0x8b5a
+</I>&gt;<i> 7ffe6a90 (+  80) 00299126
+</I>&gt;<i> &lt;/boot/common/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libsvn_ra_svn-1.so at 0x00292000</A>&gt;:unknown + 0x7126
+</I>&gt;<i> 7ffe6ae0 (+  64) 00295466
+</I>&gt;<i> &lt;/boot/common/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libsvn_ra_svn-1.so at 0x00292000</A>&gt;:unknown + 0x3466
+</I>&gt;<i> 7ffe6b20 (+ 176) 0023a1dc
+</I>&gt;<i> &lt;/boot/common/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libsvn_wc-1.so at 0x00235000</A>&gt;:unknown + 0x51dc
+</I>&gt;<i> 7ffe6bd0 (+ 160) 00230426
+</I>&gt;<i> &lt;/boot/common/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libsvn_client-1.so at 0x00218000</A>&gt;:unknown + 0x18426
+</I>&gt;<i> 7ffe6c70 (+  64) 002304f3
+</I>&gt;<i> &lt;/boot/common/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libsvn_client-1.so at 0x00218000</A>&gt;:unknown + 0x184f3
+</I>&gt;<i> 7ffe6cb0 (+  80) 0020c9b1   &lt;/boot/common/bin/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">svn at 0x00200000</A>&gt;:unknown +
+</I>&gt;<i> 0xc9b1
+</I>&gt;<i> 7ffe6d00 (+ 640) 002091fc   &lt;/boot/common/bin/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">svn at 0x00200000</A>&gt;:unknown +
+</I>&gt;<i> 0x91fc
+</I>&gt;<i> 7ffe6f80 (+  44) 00204c45   &lt;/boot/common/bin/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">svn at 0x00200000</A>&gt;:unknown +
+</I>&gt;<i> 0x4c45
+</I>&gt;<i> 7ffe6fac (+  48) 001007ca   3453:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">runtime_loader_seg0ro at 0x00100000</A> + 0x7ca
+</I>&gt;<i> 7ffe6fdc (+   0) 7ffe6fec   3452:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">svn_main_stack at 0x7efe7000</A> + 0xffffec
+</I>&gt;<i> kdebug&gt; vnode 0x90c1b300
+</I>&gt;<i> VNODE: 0x90c1b300
+</I>&gt;<i>  device:        -858993460
+</I>&gt;<i>  id:            0
+</I>&gt;<i>  ref_count:     78233
+</I>&gt;<i>  private_node:  0x00000000
+</I>&gt;<i>  mount:         0x3bbe0ad9
+</I>&gt;<i>  covered_by:    0x00000001
+</I>&gt;<i>  cache:         0xffffffff
+</I>&gt;<i>  flags:         ---
+</I>&gt;<i>  advisory_lock: 0x00000000
+</I>&gt;<i> kdebug&gt;
+</I>&gt;<i> kdebug&gt; mount [1D [1Ds
+</I>&gt;<i> address     id root       covers     cookie     fs_name
+</I>&gt;<i> 0x908ade00   1 0x908ade40 0x00000000 0x90861980 rootfs
+</I>&gt;<i> 0x908ade80   2 0x908adf00 0x908adec0 0x908619c0 devfs
+</I>&gt;<i> 0x908adf40   3 0x908adfc0 0x908adf80 0x908c4a50 pipefs
+</I>&gt;<i> 0x908e2540   4 0x908e2600 0x908e2580 0x908f1000 bfs
+</I>&gt;<i> 0x90b17880   5 0x90b17940 0x90b178c0 0x909d0c00 bfs
+</I>&gt;<i> kdebug&gt; mount 5
+</I>&gt;<i> MOUNT: 0x90b17880
+</I>&gt;<i>  id:            5
+</I>&gt;<i>  device_name:   /dev/disk/ata/0/slave/raw
+</I>&gt;<i>  fs_name:       bfs
+</I>&gt;<i>  cookie:        0x909d0c00
+</I>&gt;<i>  root_vnode:    0x90b17940
+</I>&gt;<i>  covers_vnode:  0x90b178c0
+</I>&gt;<i>  partition:     0x908e9600
+</I>&gt;<i>  lock:          4807
+</I>&gt;<i>  flags:
+</I>&gt;<i> kdebug&gt;
+</I>
+New description:
+
+ and again, r24348
+
+ {{{
+ bfs: Insert:1301: Name in use
+ Last message repeated 2 times.
+ wait interval 524536, scan pages 4356, free 2046, target 2050
+ wait interval 524304, scan pages 4358, free 2045, target 2051
+ wait interval 524072, scan pages 4360, free 2044, target 2052
+ wait interval 524072, scan pages 4360, free 2044, target 2052
+ bfs: Insert:1301: Name in use
+ PANIC: vnode 5:45465 already exists (node = 0x90c1b300, vnode-&gt;node =
+ 0x91053d80)!
+ Welcome to Kernel Debugging Land...
+ Running on CPU 0
+ kdebug&gt; bt
+ stack trace for thread 298 &quot;svn&quot;
+     kernel stack: 0x93af4000 to 0x93af8000
+       user stack: 0x7efe7000 to 0x7ffe7000
+ frame            caller     &lt;image&gt;:function + offset
+ 93af797c (+  52) 80082db3   &lt;kernel&gt;:invoke_debugger_command + 0x00cf
+ 93af79b0 (+  64) 80083b54   &lt;kernel&gt;:_ParseCommand__16ExpressionParserRi +
+ 0x01f8
+ 93af79f0 (+  48) 80083546
+ &lt;kernel&gt;:EvaluateCommand__16ExpressionParserPCcRi + 0x01de
+ 93af7a20 (+ 228) 80084c68   &lt;kernel&gt;:evaluate_debug_command + 0x0088
+ 93af7b04 (+  64) 80081986   &lt;kernel&gt;:kernel_debugger_loop__Fv + 0x017a
+ 93af7b44 (+  48) 800825d1   &lt;kernel&gt;:kernel_debugger + 0x010d
+ 93af7b74 (+ 192) 800824b9   &lt;kernel&gt;:panic + 0x0029
+ 93af7c34 (+  64) 800486d6   &lt;kernel&gt;:new_vnode + 0x005a
+ 93af7c74 (+  64) 802d6d72
+ &lt;bfs&gt;:New__14InodeAllocatorP9block_runUiR9block_runPP5Inode + 0x014a
+ 93af7cb4 (+ 176) 802dd3f1
+ &lt;bfs&gt;:Create__5InodeR11TransactionP5InodePCcliUlPbPxPP5Inode + 0x0571
+ 93af7d64 (+  96) 802e78eb   &lt;bfs&gt;:bfs_create_dir__FPvT0PCciPx + 0x0107
+ 93af7dc4 (+ 320) 8004ab0a   &lt;kernel&gt;:dir_create__FiPcib + 0x0082
+ 93af7f04 (+  64) 8004ff78   &lt;kernel&gt;:_user_create_dir + 0x0094
+ 93af7f44 (+ 100) 80092652   &lt;kernel&gt;:pre_syscall_debug_done + 0x0002
+ (nearest)
+ iframe at 0x93af7fa8 (end = 0x93af8000)
+  eax 0x50           ebx 0x458bc8        ecx 0x7ffe6734   edx 0xffff0104
+  esi 0x0            edi 0x19754e08      ebp 0x7ffe6760   esp 0x93af7fdc
+  eip 0xffff0104  eflags 0x206
+  vector: 0x63, error code: 0x0
+ 93af7fa8 (+   0) ffff0104
+ 7ffe6760 (+  48) 0032691f
+ &lt;/boot/common/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libapr-1.so at 0x00317000</A>&gt;:unknown + 0xf91f
+ 7ffe6790 (+ 144) 002c8516
+ &lt;/boot/common/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libsvn_subr-1.so at 0x002bb000</A>&gt;:unknown + 0xd516
+ 7ffe6820 (+  64) 002c861b
+ &lt;/boot/common/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libsvn_subr-1.so at 0x002bb000</A>&gt;:unknown + 0xd61b
+ 7ffe6860 (+  64) 0024fd35
+ &lt;/boot/common/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libsvn_wc-1.so at 0x00235000</A>&gt;:unknown + 0x1ad35
+ 7ffe68a0 (+  48) 0024d45f
+ &lt;/boot/common/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libsvn_wc-1.so at 0x00235000</A>&gt;:unknown + 0x1845f
+ 7ffe68d0 (+ 176) 0024dd6d
+ &lt;/boot/common/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libsvn_wc-1.so at 0x00235000</A>&gt;:unknown + 0x18d6d
+ 7ffe6980 (+  64) 002b4bc5
+ &lt;/boot/common/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libsvn_delta-1.so at 0x002b3000</A>&gt;:unknown + 0x1bc5
+ 7ffe69c0 (+  96) 00299f78
+ &lt;/boot/common/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libsvn_ra_svn-1.so at 0x00292000</A>&gt;:unknown + 0x7f78
+ 7ffe6a20 (+ 112) 0029ab5a
+ &lt;/boot/common/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libsvn_ra_svn-1.so at 0x00292000</A>&gt;:unknown + 0x8b5a
+ 7ffe6a90 (+  80) 00299126
+ &lt;/boot/common/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libsvn_ra_svn-1.so at 0x00292000</A>&gt;:unknown + 0x7126
+ 7ffe6ae0 (+  64) 00295466
+ &lt;/boot/common/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libsvn_ra_svn-1.so at 0x00292000</A>&gt;:unknown + 0x3466
+ 7ffe6b20 (+ 176) 0023a1dc
+ &lt;/boot/common/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libsvn_wc-1.so at 0x00235000</A>&gt;:unknown + 0x51dc
+ 7ffe6bd0 (+ 160) 00230426
+ &lt;/boot/common/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libsvn_client-1.so at 0x00218000</A>&gt;:unknown + 0x18426
+ 7ffe6c70 (+  64) 002304f3
+ &lt;/boot/common/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libsvn_client-1.so at 0x00218000</A>&gt;:unknown + 0x184f3
+ 7ffe6cb0 (+  80) 0020c9b1   &lt;/boot/common/bin/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">svn at 0x00200000</A>&gt;:unknown +
+ 0xc9b1
+ 7ffe6d00 (+ 640) 002091fc   &lt;/boot/common/bin/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">svn at 0x00200000</A>&gt;:unknown +
+ 0x91fc
+ 7ffe6f80 (+  44) 00204c45   &lt;/boot/common/bin/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">svn at 0x00200000</A>&gt;:unknown +
+ 0x4c45
+ 7ffe6fac (+  48) 001007ca   3453:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">runtime_loader_seg0ro at 0x00100000</A> + 0x7ca
+ 7ffe6fdc (+   0) 7ffe6fec   3452:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">svn_main_stack at 0x7efe7000</A> + 0xffffec
+ kdebug&gt; vnode 0x90c1b300
+ VNODE: 0x90c1b300
+  device:        -858993460
+  id:            0
+  ref_count:     78233
+  private_node:  0x00000000
+  mount:         0x3bbe0ad9
+  covered_by:    0x00000001
+  cache:         0xffffffff
+  flags:         ---
+  advisory_lock: 0x00000000
+ kdebug&gt;
+ kdebug&gt; mount [1D [1Ds
+ address     id root       covers     cookie     fs_name
+ 0x908ade00   1 0x908ade40 0x00000000 0x90861980 rootfs
+ 0x908ade80   2 0x908adf00 0x908adec0 0x908619c0 devfs
+ 0x908adf40   3 0x908adfc0 0x908adf80 0x908c4a50 pipefs
+ 0x908e2540   4 0x908e2600 0x908e2580 0x908f1000 bfs
+ 0x90b17880   5 0x90b17940 0x90b178c0 0x909d0c00 bfs
+ kdebug&gt; mount 5
+ MOUNT: 0x90b17880
+  id:            5
+  device_name:   /dev/disk/ata/0/slave/raw
+  fs_name:       bfs
+  cookie:        0x909d0c00
+  root_vnode:    0x90b17940
+  covers_vnode:  0x90b178c0
+  partition:     0x908e9600
+  lock:          4807
+  flags:
+ kdebug&gt;
+ }}}
+
+--
+
+Comment(by mmlr):
+
+ Closed #2518 as a duplicate of this one.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1914#comment:10">http://dev.haiku-os.org/ticket/1914#comment:10</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008959.html">[Haiku-bugs] [Haiku] #2046: jam on haiku-host occasionally fails with the message: vfork: Out of memory
+</A></li>
+	<LI>Next message: <A HREF="008963.html">[Haiku-bugs] [Haiku] #2470: DriveSetup error preparing disk
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8962">[ date ]</a>
+              <a href="thread.html#8962">[ thread ]</a>
+              <a href="subject.html#8962">[ subject ]</a>
+              <a href="author.html#8962">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

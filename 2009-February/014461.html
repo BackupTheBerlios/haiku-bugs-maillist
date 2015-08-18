@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2573: Files taking *A LOT* more space on disk than the sum of their sizes.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-February/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232573%3A%20Files%20taking%20%2AA%20LOT%2A%20more%20space%20on%0A%20disk%20than%20the%20sum%20of%20their%20sizes.&In-Reply-To=%3C047.da988034ff44ef82a86e271919103e4a%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="014457.html">
+   <LINK REL="Next"  HREF="014462.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2573: Files taking *A LOT* more space on disk than the sum of their sizes.</H1>
+    <B>Darknesss</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232573%3A%20Files%20taking%20%2AA%20LOT%2A%20more%20space%20on%0A%20disk%20than%20the%20sum%20of%20their%20sizes.&In-Reply-To=%3C047.da988034ff44ef82a86e271919103e4a%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2573: Files taking *A LOT* more space on disk than the sum of their sizes.">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Feb 16 22:28:39 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="014457.html">[Haiku-bugs] [Haiku] #3366: [SoundRecorder] no need in first 2px white row in ScopeView
+</A></li>
+        <LI>Next message: <A HREF="014462.html">[Haiku-bugs] [Haiku] #3451: [HaikuCD] vmware server 1.xx can't boot	off ISO
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14461">[ date ]</a>
+              <a href="thread.html#14461">[ thread ]</a>
+              <a href="subject.html#14461">[ subject ]</a>
+              <a href="author.html#14461">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2573: Files taking *A LOT* more space on disk than the sum of their sizes.
+------------------------------+---------------------------------------------
+ Reporter:  bga               |       Owner:  axeld         
+     Type:  bug               |      Status:  new           
+ Priority:  high              |   Milestone:  R1            
+Component:  File Systems/BFS  |     Version:  R1 development
+Blockedby:                    |    Platform:  All           
+ Blocking:                    |  
+------------------------------+---------------------------------------------
+
+Comment(by Darknesss):
+
+ Disregard this if it is totally unrelated, but I thought I'd point out a
+ possibly related thing...
+
+
+ Is it actually the files taking up the space or the directories?
+
+ Try creating a shitload of directories and see what happens to the
+ diskspace.
+ At the SkyOS bugtracker, we have a similar bug with SkyFS which is mostly
+ the same as BFS.
+
+ I don't have a haiku installation at the moment where I can verify this
+ but perhaps it is related to this bug:
+
+ <A HREF="http://www.skyos.org/bugs/view.php?id=1570">http://www.skyos.org/bugs/view.php?id=1570</A>
+
+ Explanation of Robert Szeleney:
+ Looks like directory inodes are not trimmed on close.
+
+ For instance:
+ 10000 empty files require 20MB of diskspace, which is normal. (2048 byte
+ block size)
+
+ 10000 empty directories require 664MB of diskspace. :)
+ Reason: Whenever a directory is created, disk space is preallocated to
+ speed up file creation. Normally, disk preallocated size should be freed
+ when the directory gets closed. Obvisously, this isn't so.
+ ---end quote
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2573#comment:10">http://dev.haiku-os.org/ticket/2573#comment:10</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="014457.html">[Haiku-bugs] [Haiku] #3366: [SoundRecorder] no need in first 2px white row in ScopeView
+</A></li>
+	<LI>Next message: <A HREF="014462.html">[Haiku-bugs] [Haiku] #3451: [HaikuCD] vmware server 1.xx can't boot	off ISO
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14461">[ date ]</a>
+              <a href="thread.html#14461">[ thread ]</a>
+              <a href="subject.html#14461">[ subject ]</a>
+              <a href="author.html#14461">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

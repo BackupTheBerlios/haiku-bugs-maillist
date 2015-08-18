@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1644: the pthread_key_create_1-2 posix	test fails
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231644%3A%20the%20pthread_key_create_1-2%20posix%0A%09test%20fails&In-Reply-To=%3C052.d325be6c544706902556e2039397cf6f%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006427.html">
+   <LINK REL="Next"  HREF="006431.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1644: the pthread_key_create_1-2 posix	test fails</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231644%3A%20the%20pthread_key_create_1-2%20posix%0A%09test%20fails&In-Reply-To=%3C052.d325be6c544706902556e2039397cf6f%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1644: the pthread_key_create_1-2 posix	test fails">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Apr 14 21:09:33 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006427.html">[Haiku-bugs] [Haiku] #1997: Restart dialog occasionally comes up with infinite (or extremely large) height
+</A></li>
+        <LI>Next message: <A HREF="006431.html">[Haiku-bugs] [Haiku] #1644: the pthread_key_create_1-2 posix	test fails
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6430">[ date ]</a>
+              <a href="thread.html#6430">[ thread ]</a>
+              <a href="subject.html#6430">[ subject ]</a>
+              <a href="author.html#6430">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1644: the pthread_key_create_1-2 posix test fails
+------------------------+---------------------------------------------------
+  Reporter:  kaoutsis   |       Owner:  axeld         
+      Type:  bug        |      Status:  reopened      
+  Priority:  normal     |   Milestone:  R1            
+ Component:  - General  |     Version:  R1 development
+Resolution:             |    Platform:  All           
+------------------------+---------------------------------------------------
+Changes (by kaoutsis):
+
+  * status:  closed =&gt; reopened
+  * resolution:  fixed =&gt;
+
+Comment:
+
+ r24958
+
+ {{{
+ Thread 9026 caused an exception: Segment violation
+ Reading symbols from /boot/beos/system/lib/libroot.so...done.
+ Loaded symbols for /boot/beos/system/lib/libroot.so
+ [tcsetpgrp failed in terminal_inferior: Invalid Argument]
+ [Switching to team ./pthread_key_create_1-2 (9025) thread pthread func
+ (9026)]
+ 0x002352f5 in __pthread_cleanup_pop_handler ()
+    from /boot/beos/system/lib/libroot.so
+ (gdb) where
+ #0  0x002352f5 in __pthread_cleanup_pop_handler ()
+    from /boot/beos/system/lib/libroot.so
+ #1  0x00234df1 in pthread_destroy_thread ()
+    from /boot/beos/system/lib/libroot.so
+ #2  0x0022601e in _thread_do_exit_notification ()
+    from /boot/beos/system/lib/libroot.so
+ #3  0x00225fa8 in exit_thread () from /boot/beos/system/lib/libroot.so
+ #4  0x00234fdb in pthread_exit () from /boot/beos/system/lib/libroot.so
+ #5  0x00200a5a in a_thread_func ()
+ #6  0x00234e67 in pthread_thread_entry () from
+ /boot/beos/system/lib/libroot.so
+ #7  0x00225e60 in thread_entry () from /boot/beos/system/lib/libroot.so
+ #8  0x7003ffec in ?? ()
+ (gdb)
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1644#comment:2">http://dev.haiku-os.org/ticket/1644#comment:2</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006427.html">[Haiku-bugs] [Haiku] #1997: Restart dialog occasionally comes up with infinite (or extremely large) height
+</A></li>
+	<LI>Next message: <A HREF="006431.html">[Haiku-bugs] [Haiku] #1644: the pthread_key_create_1-2 posix	test fails
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6430">[ date ]</a>
+              <a href="thread.html#6430">[ thread ]</a>
+              <a href="subject.html#6430">[ subject ]</a>
+              <a href="author.html#6430">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

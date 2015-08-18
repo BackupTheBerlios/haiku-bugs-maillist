@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1315: [ScreenSaver] shifted images
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231315%3A%20%5BScreenSaver%5D%20shifted%20images&In-Reply-To=%3C049.83cc42192584035801a9141489f95226%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006657.html">
+   <LINK REL="Next"  HREF="006660.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1315: [ScreenSaver] shifted images</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231315%3A%20%5BScreenSaver%5D%20shifted%20images&In-Reply-To=%3C049.83cc42192584035801a9141489f95226%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1315: [ScreenSaver] shifted images">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Apr 22 12:27:43 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006657.html">[Haiku-bugs] [Haiku] #1802: [Printers] icons in printer prefs have rough (hard) edges.
+</A></li>
+        <LI>Next message: <A HREF="006660.html">[Haiku-bugs] [Haiku] #1599: Haiku Booting on a MacBook	Info...(gets stuck)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6658">[ date ]</a>
+              <a href="thread.html#6658">[ thread ]</a>
+              <a href="subject.html#6658">[ subject ]</a>
+              <a href="author.html#6658">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1315: [ScreenSaver] shifted images
+---------------------------------+------------------------------------------
+  Reporter:  diver               |       Owner:  axeld         
+      Type:  bug                 |      Status:  new           
+  Priority:  normal              |   Milestone:  R1            
+ Component:  Servers/app_server  |     Version:  R1 development
+Resolution:                      |    Platform:  All           
+---------------------------------+------------------------------------------
+Comment (by stippi):
+
+ The problem is two-fold. AGG works with sub-pixel coordinates. This simply
+ means that the coordinate (5.0, 4.0) refers to the top left &quot;corner&quot; of
+ the pixel at index (5, 4) in a bitmap buffer. It also refers to the bottom
+ right &quot;corner&quot; of the pixel at index (4, 3). In BeOS terms, (5.0, 4.0)
+ refers to the center of (5, 4).
+
+ Here is why the problem is two-fold: When drawing strokes, it helps to
+ apply an offset to all coordinates. This is what app_server is already
+ doing, unless the view flags specify B_SUBPIXEL_PRECISE. This flag existed
+ on BeOS already, and seems to be meant to do the same thing, but produces
+ graphics glitches.
+
+ The other part of the problem is when drawing filled shapes: Imaging
+ drawing a triangle on (5.0, 4.0 - 10.0, 4.0 - 7.0, 8.0). In order to
+ produce the same visual results as BeOS, the left-top coordinate is
+ already at the correct position. However, the right-top and the bottom
+ coordinate need to be adjusted. The right-top should become (11.0, 4.0)
+ (note how Y stays the same) and the bottom one should be (7.5, 9.0). The
+ perfect results would be achieved by shifting all triangle coords by an
+ offset of (0.5, 0.5) and then dilating the whole shape outward by (0.5,
+ 0.5). Dilating can of course be quite a challenging operation.
+ Fortunately, AGG comes with the suitable vector converter
+ (agg::conv_contour). I don't know how expensive agg::conv_contour is in
+ real life, maybe I should just adopt the code to use it for triangles and
+ BShapes.
+
+ Note: I don't know if any of this applies to the bug at all, since for
+ ellipses and strokes, I already _should_ have the code to handle them.
+ Maybe there is just a problem in those code paths.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1315#comment:8">http://dev.haiku-os.org/ticket/1315#comment:8</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006657.html">[Haiku-bugs] [Haiku] #1802: [Printers] icons in printer prefs have rough (hard) edges.
+</A></li>
+	<LI>Next message: <A HREF="006660.html">[Haiku-bugs] [Haiku] #1599: Haiku Booting on a MacBook	Info...(gets stuck)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6658">[ date ]</a>
+              <a href="thread.html#6658">[ thread ]</a>
+              <a href="subject.html#6658">[ subject ]</a>
+              <a href="author.html#6658">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

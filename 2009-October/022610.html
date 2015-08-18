@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2789: writing to usb disks fail after 10-100Mb of writing files
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232789%3A%20writing%20to%20usb%20disks%20fail%20after%0A%2010-100Mb%20of%20writing%20files&In-Reply-To=%3C051.3ad77faa738977008cbf7ac819320e7f%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="022606.html">
+   <LINK REL="Next"  HREF="022612.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2789: writing to usb disks fail after 10-100Mb of writing files</H1>
+    <B>rudolfc</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232789%3A%20writing%20to%20usb%20disks%20fail%20after%0A%2010-100Mb%20of%20writing%20files&In-Reply-To=%3C051.3ad77faa738977008cbf7ac819320e7f%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2789: writing to usb disks fail after 10-100Mb of writing files">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Oct 10 21:42:07 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="022606.html">[Haiku-bugs] [Haiku] #4625: locale preflet windows size to large
+</A></li>
+        <LI>Next message: <A HREF="022612.html">[Haiku-bugs] [Haiku] #4759: Touchpad won't work on Acer Aspire 1640	laptop
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22610">[ date ]</a>
+              <a href="thread.html#22610">[ thread ]</a>
+              <a href="subject.html#22610">[ subject ]</a>
+              <a href="author.html#22610">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2789: writing to usb disks fail after 10-100Mb of writing files
+----------------------+-----------------------------------------------------
+  Reporter:  rudolfc  |       Owner:  mmlr         
+      Type:  bug      |      Status:  closed       
+  Priority:  normal   |   Milestone:  R1           
+ Component:  Drivers  |     Version:  R1/pre-alpha1
+Resolution:  fixed    |   Blockedby:               
+  Platform:  x86      |    Blocking:               
+----------------------+-----------------------------------------------------
+
+Comment(by rudolfc):
+
+ Hi there mmlr,
+
+ Thanks for your detailed in-depth response, I appreciate that a lot. And
+ thanks for you trying to warn me as well, that's appreciated as well. It
+ was the way you wrote that and the just partly response I got that
+ triggered me this way.
+
+ Since I've looked at USB's inner workins as well in the past (though I did
+ not actually create something with that yet), I know it's a hell of a job
+ getting it implemented, so I appreciate that a big lot too you did that.
+
+ Before I'll switch to the other bugreport I just want to complete this
+ stuff here and tell you what I had to say more or less.
+
+ I am a person who will doublecheck everything I do. This goes for Haiku as
+ well, since I kind of love that thing. Since speed performance is real bad
+ in this area and this hasn't changed as far as I could see (measure, black
+ box style) for at least a year.
+
+ I was very happy with your pointers, since that gave me the opportunity to
+ start doing just that: verify some stuff. And learn on the way.
+
+ Well, I still have my original feeling: there is not one problem, but two.
+ (Of course, that can just be my own stupidity in not recognizing
+ something, but I want to understand the reason anyhow.) Because, if I run
+ dd in windows, on 4kb blocks, I get 8Mb/sec reading speed. If stuff
+ performed reasonably well on Haiku, with 4kB blocks because of
+ B_PAGE_SIZE, I would expect not 8MB read speed, but also not 1Mb read
+ speed. say 3-5Mb would be reasonably well performance in my eyes.
+
+ I think this speed fact I neglected to mention to you, while it might be
+ the most important thing I could say about this.
+
+ BTW With dd in Haiku, using 4kb blocks, I get the same read and write
+ speed as if I were just plain copying files using Tracker.
+
+ Oh, you have to understand a well that I never planned to implement the
+ cache stuff inside Haiku, just for myself over here as a proof of stuff,
+ trying to nail why I think there are two problems. I let you know because
+ I think the results might be interesting/ of importance to make you see
+ that there just might be a possible second issue.
+
+ About cache in general: I don't agree per se that you are correct that
+ there should only be one cache. Looking at PC hardware there are more than
+ one as well. I am convinced they exist only because it makes sense to have
+ them. (level1, 2, and 3 cache between CPU en memory, another is MTRR-WC
+ I'd say).
+
+ So I am not that convinced yet that in the end you will not end up using
+ some sort of a second cache on the lower levels to deal with the quirks of
+ hardware (to minimize bottlenecks specific to certain kind of hardware).
+
+ Well, I suggest to forget about my tests now since it seems from your
+ words you got it all fully under control.
+
+ It would be cool if you could point me(us) to the extensions you are doing
+ in this area in that other bugreport (#4690) so things can be tested/tried
+ when they arive.
+
+ I would appreciate it if I can follow that since the low speed bothers me
+ this much.
+
+ For instance you already mentioned 'change the mapping strategy'. Which
+ revision should I look at for playing with that? I'll look in #4690 from
+ now on, would be nice if you would answer this question there?
+
+ Bye! Keep up the good work :-)
+
+ Rudolf.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2789#comment:26">http://dev.haiku-os.org/ticket/2789#comment:26</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="022606.html">[Haiku-bugs] [Haiku] #4625: locale preflet windows size to large
+</A></li>
+	<LI>Next message: <A HREF="022612.html">[Haiku-bugs] [Haiku] #4759: Touchpad won't work on Acer Aspire 1640	laptop
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22610">[ date ]</a>
+              <a href="thread.html#22610">[ thread ]</a>
+              <a href="subject.html#22610">[ subject ]</a>
+              <a href="author.html#22610">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

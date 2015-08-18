@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2154: haiku doen't recognize all the bfs	partitions
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232154%3A%20haiku%20doen%27t%20recognize%20all%20the%20bfs%0A%09partitions&In-Reply-To=%3C043.e937ca79f3c0119a4ea460f01d70f1c8%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006792.html">
+   <LINK REL="Next"  HREF="006990.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2154: haiku doen't recognize all the bfs	partitions</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232154%3A%20haiku%20doen%27t%20recognize%20all%20the%20bfs%0A%09partitions&In-Reply-To=%3C043.e937ca79f3c0119a4ea460f01d70f1c8%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2154: haiku doen't recognize all the bfs	partitions">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Apr 25 01:53:40 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006792.html">[Haiku-bugs] [Haiku] #1222: check if AboutHaiku lists an acknowledgment for all packages
+</A></li>
+        <LI>Next message: <A HREF="006990.html">[Haiku-bugs] [Haiku] #2154: haiku doesn't recognize all the bfs	partitions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6793">[ date ]</a>
+              <a href="thread.html#6793">[ thread ]</a>
+              <a href="subject.html#6793">[ subject ]</a>
+              <a href="author.html#6793">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2154: haiku doen't recognize all the bfs partitions
+-----------------------+----------------------------------------------------
+ Reporter:  kaoutsis   |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+ Platform:  All        |  
+-----------------------+----------------------------------------------------
+ from linux, fdisk -l gives:
+
+ Disk /dev/sda: 160.0 GB, 160041885696 bytes
+ 255 heads, 63 sectors/track, 19457 cylinders
+ Units = cylinders of 16065 * 512 = 8225280 bytes
+ Disk identifier: 0x866d7921
+
+    Device Boot      Start         End      Blocks   Id  System
+ /dev/sda1               1        1530    12288000   27  Unknown
+ /dev/sda2   *        1531        5430    31326750    7  HPFS/NTFS
+ /dev/sda3           13567       14509     7569462+  83  Linux
+ /dev/sda4            5431       19457   112671877+   5  Extended
+ /dev/sda5            5431       13566    65352388+  83  Linux
+ /dev/sda6           14510       15429     7389868+  83  Linux
+ /dev/sda7           15430       15536      859446   82  Linux swap /
+ Solaris
+ /dev/sda8           15537       16555     8185086   83  Linux
+ /dev/sda9           16556       17816    10128951    b  W95 FAT32
+ /dev/sda10          17817       18531     5743206   83  Linux
+ /dev/sda11          18532       19457     7438063+  83  Linux
+
+ Partition table entries are not in disk order
+
+ sda7 is a bfs volume, booted r24167
+ sda11 is also a bfs volume, which r24167 doesn't recognize it,
+ and booting from that volume with r25137 fails with kdl message:
+ Did not find any boot partitions.
+
+ attached
+ syslog, booting haiku r24167 from sda7
+ screen1.png showing mountvolume -lh
+
+ Note: don't conclude that r24167 boot successfully this machine
+ and r25137 couldn't, because in the first try r24167 in sda7
+ also failed with the kdl message:
+ Did not find any boot partitions.
+ But what happens?
+ After the first failure, i tried a haiku-cd,
+ from that cd, at boot prompt, i selected that volume, and
+ it booted successfully. Then i changed the volume name from Haiku to Hsm,
+ and from that point it boots r24167 successfully without the need of the
+ cd!
+ Anyway, this notebook has it's own ticket #1871.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2154">http://dev.haiku-os.org/ticket/2154</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006792.html">[Haiku-bugs] [Haiku] #1222: check if AboutHaiku lists an acknowledgment for all packages
+</A></li>
+	<LI>Next message: <A HREF="006990.html">[Haiku-bugs] [Haiku] #2154: haiku doesn't recognize all the bfs	partitions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6793">[ date ]</a>
+              <a href="thread.html#6793">[ thread ]</a>
+              <a href="subject.html#6793">[ subject ]</a>
+              <a href="author.html#6793">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

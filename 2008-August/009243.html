@@ -1,0 +1,169 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2557: PANIC: rw_lock_read_unlock(): lock 0x90bf5550 not read-locked
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232557%3A%20PANIC%3A%20rw_lock_read_unlock%28%29%3A%20lock%0A%200x90bf5550%20not%20read-locked&In-Reply-To=%3C051.5b0129a14efe78ebbe80de8ef8a226c9%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009242.html">
+   <LINK REL="Next"  HREF="009246.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2557: PANIC: rw_lock_read_unlock(): lock 0x90bf5550 not read-locked</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232557%3A%20PANIC%3A%20rw_lock_read_unlock%28%29%3A%20lock%0A%200x90bf5550%20not%20read-locked&In-Reply-To=%3C051.5b0129a14efe78ebbe80de8ef8a226c9%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2557: PANIC: rw_lock_read_unlock(): lock 0x90bf5550 not read-locked">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Aug  3 07:27:45 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009242.html">[Haiku-bugs] [Haiku] #2522: KDL - invalid opcode
+</A></li>
+        <LI>Next message: <A HREF="009246.html">[Haiku-bugs] [Haiku] #2558: File corruption
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9243">[ date ]</a>
+              <a href="thread.html#9243">[ thread ]</a>
+              <a href="subject.html#9243">[ subject ]</a>
+              <a href="author.html#9243">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2557: PANIC: rw_lock_read_unlock(): lock 0x90bf5550 not read-locked
+----------------------------+-----------------------------------------------
+  Reporter:  scottmc        |       Owner:  axeld         
+      Type:  bug            |      Status:  new           
+  Priority:  normal         |   Milestone:  R1            
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |   Blockedby:                
+  Platform:  All            |    Blocking:                
+----------------------------+-----------------------------------------------
+Changes (by anevilyak):
+
+  * component:  - General =&gt; System/Kernel
+
+
+Comment:
+
+ I can confirm this one on 26751 also:
+
+ {{{
+ stack trace for thread 5 &quot;page writer&quot;
+     kernel stack: 0x80157000 to 0x8015b000
+ frame            caller     &lt;image&gt;:function + offset
+  0 8015a568 (+  48) 80056fd5   &lt;kernel&gt;:invoke_debugger_command + 0x00ed
+  1 8015a598 (+  64) 80056dcd
+ &lt;kernel&gt;:invoke_pipe_segment__FP21debugger_command_pipelPc + 0x0079
+  2 8015a5d8 (+  64) 80057115   &lt;kernel&gt;:invoke_debugger_command_pipe +
+ 0x009d
+  3 8015a618 (+  48) 80057ff0
+ &lt;kernel&gt;:_ParseCommandPipe__16ExpressionParserRi + 0x0234
+  4 8015a648 (+  48) 800579a6
+ &lt;kernel&gt;:EvaluateCommand__16ExpressionParserPCcRi + 0x01de
+  5 8015a678 (+ 224) 800593bc   &lt;kernel&gt;:evaluate_debug_command + 0x0088
+  6 8015a758 (+  64) 8005544e   &lt;kernel&gt;:kernel_debugger_loop__Fv + 0x01ae
+  7 8015a798 (+  48) 80055fe3   &lt;kernel&gt;:kernel_debugger + 0x0117
+  8 8015a7c8 (+ 192) 80055ec1   &lt;kernel&gt;:panic + 0x0029
+  9 8015a888 (+  48) 8003896c   &lt;kernel&gt;:rw_lock_read_unlock + 0x0074
+ 10 8015a8b8 (+  48) 807a07c6
+ &lt;bfs&gt;:iterative_io_finished_hook__FPvP9IORequestlbUl + 0x0022
+ 11 8015a8e8 (+  64) 800953e6
+ &lt;kernel&gt;:do_iterative_fd_io_finish__FPvP9IORequestlbUl + 0x0032
+ 12 8015a928 (+  96) 8006d126   &lt;kernel&gt;:NotifyFinished__9IORequest +
+ 0x016a
+ 13 8015a988 (+  48) 8006d220   &lt;kernel&gt;:SetStatusAndNotify__9IORequestl +
+ 0x006c
+ 14 8015a9b8 (+  64) 80095ca9   &lt;kernel&gt;:do_iterative_fd_io + 0x0191
+ 15 8015a9f8 (+  80) 807a154f
+ &lt;bfs&gt;:bfs_io__FP9fs_volumeP8fs_vnodePvP9IORequest + 0x008f
+ 16 8015aa48 (+  64) 80095a15   &lt;kernel&gt;:vfs_vnode_io + 0x0029
+ 17 8015aa88 (+ 192) 8008ce9f   &lt;kernel&gt;:vfs_write_pages + 0x0063
+ 18 8015ab48 (+  64) 800311a7
+ &lt;kernel&gt;:Write__12VMVnodeCachexPC5iovecUlPUl + 0x002b
+ 19 8015ab88 (+  80) 800b1db8   &lt;kernel&gt;:write_page__FP7vm_page + 0x0074
+ 20 8015abd8 (+1024) 800b22a3   &lt;kernel&gt;:page_writer__FPv + 0x0307
+ 21 8015afd8 (+  32) 8004d0cf   &lt;kernel&gt;:_create_kernel_thread_kentry__Fv +
+ 0x001b
+ 22 8015aff8 (+2146062344) 8004d06c   &lt;kernel&gt;:thread_kthread_exit__Fv +
+ 0x0000
+
+ mutex 0xc2e8e554:
+   name:            bfs inode 40.38
+   flags:           0x0
+   holder:          307
+   waiting threads:
+
+ thread 307:
+ THREAD: 0x916d9000
+ id:                 307 (0x133)
+ name:               &quot;jam&quot;
+ all_next:           0x916bf800
+ team_next:          0x00000000
+ q_next:             0x80102fe0
+ priority:           10 (next 10)
+ state:              ready
+ next_state:         ready
+ cpu:                0x00000000
+ sig_pending:        0x0 (blocked: 0x0)
+ in_kernel:          1
+ fault_handler:      0x00000000
+ args:               0x910d47f8 0x00000000
+ entry:              0x80049d48
+ team:               0x90e37ba0, &quot;jam&quot;
+   exit.sem:         23892
+   exit.status:      0x0 (No error)
+   exit.reason:      0x0
+   exit.signal:      0x0
+   exit.waiters:
+ kernel_stack_area:  7721
+ kernel_stack_base:  0xa10da000
+ user_stack_area:    7723
+ user_stack_base:    0x7efef000
+ user_local_storage: 0x7ffef000
+ kernel_errno:       0x0 (No error)
+ kernel_time:        46873355
+ user_time:          13489276
+ flags:              0x200
+ architecture dependant section:
+         esp: 0xa10ddcb8
+         ss: 0x00000010
+         fpu_state at 0x916d9380
+
+ }}}
+
+ This was during the patience... section of jam -aq.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2557#comment:2">http://dev.haiku-os.org/ticket/2557#comment:2</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009242.html">[Haiku-bugs] [Haiku] #2522: KDL - invalid opcode
+</A></li>
+	<LI>Next message: <A HREF="009246.html">[Haiku-bugs] [Haiku] #2558: File corruption
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9243">[ date ]</a>
+              <a href="thread.html#9243">[ thread ]</a>
+              <a href="subject.html#9243">[ subject ]</a>
+              <a href="author.html#9243">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

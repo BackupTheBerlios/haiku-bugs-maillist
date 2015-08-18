@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4917: BeZilla does not relaunch properly
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234917%3A%20BeZilla%20does%20not%20relaunch%20properly&In-Reply-To=%3C050.02273a5b927348815fc521e2615d8ca3%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="023561.html">
+   <LINK REL="Next"  HREF="023534.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4917: BeZilla does not relaunch properly</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234917%3A%20BeZilla%20does%20not%20relaunch%20properly&In-Reply-To=%3C050.02273a5b927348815fc521e2615d8ca3%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4917: BeZilla does not relaunch properly">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Nov 10 01:28:18 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="023561.html">[Haiku-bugs] [Haiku] #4917: BeZilla does not relaunch properly
+</A></li>
+        <LI>Next message: <A HREF="023534.html">[Haiku-bugs] [Haiku] #4918: USB causing slow boot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#23571">[ date ]</a>
+              <a href="thread.html#23571">[ thread ]</a>
+              <a href="subject.html#23571">[ subject ]</a>
+              <a href="author.html#23571">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4917: BeZilla does not relaunch properly
+---------------------------+------------------------------------------------
+ Reporter:  mmadia         |       Owner:  axeld    
+     Type:  bug            |      Status:  new      
+ Priority:  normal         |   Milestone:  R1       
+Component:  System/Kernel  |     Version:  R1/alpha1
+Blockedby:                 |    Platform:  All      
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+
+Comment(by anevilyak):
+
+ Replying to [comment:1 axeld]:
+ &gt; Unlikely, but who knows. I've seen this problem as well, btw. Sometimes
+ it even comes up again, but most of the time, once this happens you're
+ struck. I didn't look into it yet, though.
+
+ I can confirm the same here, prior to the ports subsystem rewrite I'd
+ never seen this behavior before, now I can reproduce it trivially. If the
+ rewrite isn't directly at fault, it's at least caused a behavior change
+ somewhere that results in this bug being uncovered, whatever it might be.
+ Looking at the thread states unfortunately doesn't seem to yield much of a
+ hint, the main app thread is waiting in read_port() via BLooper and the
+ other mozilla worker threads are waiting on NSPR condition variables
+ (currently implemented via semaphores), so I really don't see what else
+ might be responsible.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4917#comment:6">http://dev.haiku-os.org/ticket/4917#comment:6</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="023561.html">[Haiku-bugs] [Haiku] #4917: BeZilla does not relaunch properly
+</A></li>
+	<LI>Next message: <A HREF="023534.html">[Haiku-bugs] [Haiku] #4918: USB causing slow boot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#23571">[ date ]</a>
+              <a href="thread.html#23571">[ thread ]</a>
+              <a href="subject.html#23571">[ subject ]</a>
+              <a href="author.html#23571">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

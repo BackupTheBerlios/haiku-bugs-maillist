@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2643: Black screen when DVI connected (non-native resolution)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232643%3A%20Black%20screen%20when%20DVI%20connected%0A%20%28non-native%20resolution%29&In-Reply-To=%3C052.439b957fc006e7a54d97e40d5303dad0%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="017935.html">
+   <LINK REL="Next"  HREF="017937.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2643: Black screen when DVI connected (non-native resolution)</H1>
+    <B>andreasf</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232643%3A%20Black%20screen%20when%20DVI%20connected%0A%20%28non-native%20resolution%29&In-Reply-To=%3C052.439b957fc006e7a54d97e40d5303dad0%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2643: Black screen when DVI connected (non-native resolution)">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Jun  8 22:35:59 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="017935.html">[Haiku-bugs] [Haiku] #3914: Tracker crash
+</A></li>
+        <LI>Next message: <A HREF="017937.html">[Haiku-bugs] [Haiku] #3689: No splash screen at boot with nVidia GeForce MX440
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17936">[ date ]</a>
+              <a href="thread.html#17936">[ thread ]</a>
+              <a href="subject.html#17936">[ subject ]</a>
+              <a href="author.html#17936">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2643: Black screen when DVI connected (non-native resolution)
+-------------------------------------+--------------------------------------
+ Reporter:  andreasf                 |       Owner:  rudolfc       
+     Type:  bug                      |      Status:  new           
+ Priority:  normal                   |   Milestone:  R1            
+Component:  Drivers/Graphics/nVidia  |     Version:  R1 development
+Blockedby:                           |    Platform:  x86           
+ Blocking:  1845                     |  
+-------------------------------------+--------------------------------------
+
+Comment(by andreasf):
+
+ Hi,
+
+ Bingo! I just confirmed it does work with {{{force_ws false}}} - it then
+ shows the desktop fine at <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">1024x768 at 32bpp</A>, as seen for VGA. This seems
+ independent of the {{{pgm_panel}}} option. Still at r30980.
+
+ So, I was curious and checked on a widescreen DVI monitor: there, it
+ worked just fine without {{{nvidia.settings}}} file, defaulting to
+ 1024x768 non-native resolution. I then set the resolution to the native
+ 1680x1050, cold-rebooted with the 1280x1024 monitor connected, and then it
+ did come up okay at 1280x1024 without a settings file. (The only thing
+ unexpected was some odd 83.8 Hz refresh rate according to the Screen
+ preflet.)
+
+ For comparison, after exchanging my 1280x1024 monitor against a 1024x768
+ one on VGA, the latter still tried to display at 1280x1024 and needed to
+ be set down to its native resolution through Screen preferences.
+
+ Regarding #3850, it does show the splash screen in nice colours, although
+ I can't say for sure whether it's 32bpp or 16bpp.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2643#comment:31">http://dev.haiku-os.org/ticket/2643#comment:31</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="017935.html">[Haiku-bugs] [Haiku] #3914: Tracker crash
+</A></li>
+	<LI>Next message: <A HREF="017937.html">[Haiku-bugs] [Haiku] #3689: No splash screen at boot with nVidia GeForce MX440
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17936">[ date ]</a>
+              <a href="thread.html#17936">[ thread ]</a>
+              <a href="subject.html#17936">[ subject ]</a>
+              <a href="author.html#17936">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

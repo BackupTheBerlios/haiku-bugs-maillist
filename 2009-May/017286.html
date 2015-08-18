@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3925: swap-file size
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233925%3A%20swap-file%20size&In-Reply-To=%3C051.910b438f9a8507b6fa24808ce8c93df0%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="017284.html">
+   <LINK REL="Next"  HREF="017293.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3925: swap-file size</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233925%3A%20swap-file%20size&In-Reply-To=%3C051.910b438f9a8507b6fa24808ce8c93df0%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3925: swap-file size">trac at haiku-os.org
+       </A><BR>
+    <I>Tue May 12 01:46:12 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="017284.html">[Haiku-bugs] [Haiku] #3925: swap-file size
+</A></li>
+        <LI>Next message: <A HREF="017293.html">[Haiku-bugs] [Haiku] #3925: swap-file size
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17286">[ date ]</a>
+              <a href="thread.html#17286">[ thread ]</a>
+              <a href="subject.html#17286">[ subject ]</a>
+              <a href="author.html#17286">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3925: swap-file size
+-------------------------+--------------------------------------------------
+ Reporter:  smashIt      |       Owner:  axeld         
+     Type:  enhancement  |      Status:  new           
+ Priority:  normal       |   Milestone:  R1            
+Component:  System       |     Version:  R1 development
+Blockedby:               |    Platform:  All           
+ Blocking:               |  
+-------------------------+--------------------------------------------------
+
+Comment(by anevilyak):
+
+ With respect to the swap space + physical RAM adding up to &gt; 4GB, this is
+ entirely irrelevant. The 4GB address space limit is virtual per app (with
+ the usual 2GB user / 2GB kernel split applying). As such you could
+ hypothetically have, say, 6 apps all completely using their 2GB of
+ userspace address area completely. This is perfectly acceptable and
+ possible, but obviously you wouldn't be able to fit all that into RAM
+ since on a 32-bit sys you can't have &gt; 4GB physical without resorting to
+ PAE hacks. As such you'd need at least 8GB of swap, probably more to
+ support the above setup, and this is entirely possible, though you likely
+ wouldn't do this in practice since saying it wouldn't be fun to use a
+ system under such a load is a mild understatement.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3925#comment:3">http://dev.haiku-os.org/ticket/3925#comment:3</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="017284.html">[Haiku-bugs] [Haiku] #3925: swap-file size
+</A></li>
+	<LI>Next message: <A HREF="017293.html">[Haiku-bugs] [Haiku] #3925: swap-file size
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17286">[ date ]</a>
+              <a href="thread.html#17286">[ thread ]</a>
+              <a href="subject.html#17286">[ subject ]</a>
+              <a href="author.html#17286">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

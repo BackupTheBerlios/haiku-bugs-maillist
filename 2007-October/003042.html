@@ -1,0 +1,194 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1538: Page fault during installing perl from	sources
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231538%3A%20Page%20fault%20during%20installing%20perl%20from%0A%09sources&In-Reply-To=%3C042.0dde8fab91dee81d44fdc12b6183f486%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003041.html">
+   <LINK REL="Next"  HREF="003086.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1538: Page fault during installing perl from	sources</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231538%3A%20Page%20fault%20during%20installing%20perl%20from%0A%09sources&In-Reply-To=%3C042.0dde8fab91dee81d44fdc12b6183f486%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1538: Page fault during installing perl from	sources">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Oct  7 09:30:46 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003041.html">[Haiku-bugs] [Haiku] #1537: Freecell 0.92 quits responding
+</A></li>
+        <LI>Next message: <A HREF="003086.html">[Haiku-bugs] [Haiku] #1538: Page fault during installing perl	from sources
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3042">[ date ]</a>
+              <a href="thread.html#3042">[ thread ]</a>
+              <a href="subject.html#3042">[ subject ]</a>
+              <a href="author.html#3042">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1538: Page fault during installing perl from sources
+---------------------+------------------------------------------------------
+ Reporter:  kaliber  |       Owner:  axeld         
+     Type:  bug      |      Status:  new           
+ Priority:  normal   |   Milestone:  R1            
+Component:  System   |     Version:  R1 development
+ Platform:  All      |  
+---------------------+------------------------------------------------------
+ I've successfully compiled (gcc 2.9.x) perl-5.8.8 under Haiku using:
+
+ {{{
+ export LDLOADLIBS=&quot;-lnet&quot;
+ ./Configure -ds -e -Dosname=beos -Dcc=gcc -Duseshrplib
+ }}}
+
+ but during install (e.g. make install DESTDIR=/boot/home/perl) perl
+ crashes:
+
+
+ {{{
+ vm_soft_fault: va 0x0 not covered by area in address space
+ vm_page_fault: vm_soft_fault returned error 'Bad address' on fault at 0x0,
+ ip 0x6a6689, write 0, user 1, thread 0x27e5
+ vm_page_fault: sending team &quot;./perl&quot; 0x27e5 SIGSEGV, ip 0x6a6689
+ (&quot;Cwd.so_seg0ro&quot; +0x1689)
+ stack trace:
+   0x002762a2 (libperl.so_seg0ro + 0x722a2)
+   0x0026f603 (libperl.so_seg0ro + 0x6b603)
+   0x00220d49 (libperl.so_seg0ro + 0x1cd49)
+   0x00220abe (libperl.so_seg0ro + 0x1cabe)
+   0x002242dc (libperl.so_seg0ro + 0x202dc)
+   0x00223fbc (libperl.so_seg0ro + 0x1ffbc)
+   0x0024b609 (libperl.so_seg0ro + 0x47609)
+   0x002488cc (libperl.so_seg0ro + 0x448cc)
+   0x002419bf (libperl.so_seg0ro + 0x3d9bf)
+   0x0021fe77 (libperl.so_seg0ro + 0x1be77)
+   0x0021efe0 (libperl.so_seg0ro + 0x1afe0)
+   0x002017b7 (perl_seg0ro + 0x17b7)
+   0x002013ef (perl_seg0ro + 0x13ef)
+   0x001007be (runtime_loader_seg0ro + 0x7be)
+   0x7ffe6fec (./perl_main_stack + 0xffffec)
+ vm_soft_fault: va 0x0 not covered by area in address space
+ vm_page_fault: vm_soft_fault returned error 'Bad address' on fault at 0x0,
+ ip 0x8009b1ec, write 0, user 0, thread 0x27e5
+ debug_server: Thread 10213 entered the debugger: Segment violation
+ stack trace, current PC 0x6a6689  boot_Cwd + 0x25:
+   (0x7ffe6b2c)  0x2762a2  Perl_pp_entersub + 0x4f2
+   (0x7ffe6b8c)  0x26f603  Perl_runops_standard + 0x33
+   (0x7ffe6bac)  0x220d49  Perl_call_sv + 0x6b9 (closest symbol)
+   (0x7ffe6bcc)  0x220abe  Perl_call_sv + 0x42e
+   (0x7ffe6c7c)  0x2242dc  Perl_call_list + 0x454 (closest symbol)
+   (0x7ffe6cac)  0x223fbc  Perl_call_list + 0x134
+   (0x7ffe6d0c)  0x24b609  Perl_newATTRSUB + 0xc0d
+   (0x7ffe6dac)  0x2488cc  Perl_utilize + 0x358
+   (0x7ffe6e1c)  0x2419bf  Perl_yyparse + 0xf4f
+   (0x7ffe6e8c)  0x21fe77  perl_parse + 0x118b (closest symbol)
+   (0x7ffe6edc)  0x21efe0  perl_parse + 0x2f4
+   (0x7ffe6f3c)  0x2017b7  main + 0xa7
+   (0x7ffe6f7c)  0x2013ef  _start + 0x5b
+   (0x7ffe6fac)  0x1007be  (runtime_loader_seg0ro + 0x7be)
+ }}}
+
+ and GDB says:
+
+ {{{
+ GNU gdb 6.3
+ Copyright 2004 Free Software Foundation, Inc.
+ GDB is free software, covered by the GNU General Public License, and you
+ are
+ welcome to change it and/or distribute copies of it under certain
+ conditions.
+ Type &quot;show copying&quot; to see the conditions.
+ There is absolutely no warranty for GDB.  Type &quot;show warranty&quot; for
+ details.
+ This GDB was configured as &quot;i586-pc-haiku&quot;...(no debugging symbols found)
+
+ [tcsetpgrp failed in terminal_inferior: Invalid Argument]
+ Thread 10213 caused an exception: Segment violation
+ Reading symbols from /boot/home/perl-5.8.8/libperl.so...(no debugging
+ symbols found)...done.
+ Loaded symbols for /boot/home/perl-5.8.8/libperl.so
+ Reading symbols from /boot/beos/system/lib/libnetwork.so...(no debugging
+ symbols found)...done.
+ Loaded symbols for /boot/beos/system/lib/libnetwork.so
+ Reading symbols from /boot/beos/system/lib/libroot.so...done.
+ Loaded symbols for /boot/beos/system/lib/libroot.so
+ Reading symbols from /boot/beos/system/lib/libbe.so...done.
+ Loaded symbols for /boot/beos/system/lib/libbe.so
+ Reading symbols from /boot/beos/system/lib/libstdc++.r4.so...done.
+ Loaded symbols for /boot/beos/system/lib/libstdc++.r4.so
+ Reading symbols from /boot/home/perl-5.8.8/lib/auto/Cwd/Cwd.so...done.
+ Loaded symbols for /boot/home/perl-5.8.8/lib/auto/Cwd/Cwd.so
+ Reading symbols from /boot/home/perl-5.8.8//libperl.so...done.
+ Loaded symbols for /boot/home/perl-5.8.8//libperl.so
+ [tcsetpgrp failed in terminal_inferior: Invalid Argument]
+
+ [Switching to team ./perl installperl --destdir=/boot/home/perl (10213)
+ thread perl (10213)]
+ 0x006a6689 in boot_Cwd () from /boot/home/perl-5.8.8/lib/auto/Cwd/Cwd.so
+ (gdb) thread apply all bt
+
+ Thread 1 (team ./perl installperl --destdir=/boot/home/perl (10213) thread
+ perl(10213)):
+ #0  0x006a6689 in boot_Cwd () from
+ /boot/home/perl-5.8.8/lib/auto/Cwd/Cwd.so
+ #1  0x002762a2 in Perl_pp_entersub () from
+ /boot/home/perl-5.8.8/libperl.so
+ #2  0x0026f603 in Perl_runops_standard () from
+ /boot/home/perl-5.8.8/libperl.so
+ #3  0x00220d49 in S_call_body () from /boot/home/perl-5.8.8/libperl.so
+ #4  0x00220abe in Perl_call_sv () from /boot/home/perl-5.8.8/libperl.so
+ #5  0x002242dc in S_call_list_body () from
+ /boot/home/perl-5.8.8/libperl.so
+ #6  0x00223fbc in Perl_call_list () from /boot/home/perl-5.8.8/libperl.so
+ #7  0x0024b609 in Perl_newATTRSUB () from /boot/home/perl-5.8.8/libperl.so
+ #8  0x002488cc in Perl_utilize () from /boot/home/perl-5.8.8/libperl.so
+ #9  0x002419bf in Perl_yyparse () from /boot/home/perl-5.8.8/libperl.so
+ #10 0x0021fe77 in S_parse_body () from /boot/home/perl-5.8.8/libperl.so
+ #11 0x0021efe0 in perl_parse () from /boot/home/perl-5.8.8/libperl.so
+ #12 0x002017b7 in main ()
+ (gdb)
+ }}}
+
+ I don't know what's wrong. Maybe loading dynamic modules is broken?
+ Dynamic modules were built with &quot;gcc -nostart&quot;, in a linux it's compiled
+ with &quot;gcc -shared&quot;.
+
+ BTW. Why &quot;tcsetpgrp failed in terminal_inferior: Invalid Argument&quot;?
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1538">http://dev.haiku-os.org/ticket/1538</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003041.html">[Haiku-bugs] [Haiku] #1537: Freecell 0.92 quits responding
+</A></li>
+	<LI>Next message: <A HREF="003086.html">[Haiku-bugs] [Haiku] #1538: Page fault during installing perl	from sources
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3042">[ date ]</a>
+              <a href="thread.html#3042">[ thread ]</a>
+              <a href="subject.html#3042">[ subject ]</a>
+              <a href="author.html#3042">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

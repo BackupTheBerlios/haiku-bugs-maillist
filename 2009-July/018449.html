@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4091: r31522 build breakage on parallel	jam
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-July/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234091%3A%20r31522%20build%20breakage%20on%20parallel%0A%09jam&In-Reply-To=%3C053.88abe1498fcd9fc5e286a2efc73e487e%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="018446.html">
+   <LINK REL="Next"  HREF="018455.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4091: r31522 build breakage on parallel	jam</H1>
+    <B>meianoite</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234091%3A%20r31522%20build%20breakage%20on%20parallel%0A%09jam&In-Reply-To=%3C053.88abe1498fcd9fc5e286a2efc73e487e%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4091: r31522 build breakage on parallel	jam">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Jul 12 22:07:39 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="018446.html">[Haiku-bugs] [Haiku] #4091: r31522 build breakage on parallel	jam
+</A></li>
+        <LI>Next message: <A HREF="018455.html">[Haiku-bugs] [Haiku] #4091: r31522 build breakage on parallel	jam
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18449">[ date ]</a>
+              <a href="thread.html#18449">[ thread ]</a>
+              <a href="subject.html#18449">[ subject ]</a>
+              <a href="author.html#18449">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4091: r31522 build breakage on parallel jam
+--------------------------+-------------------------------------------------
+ Reporter:  meianoite     |       Owner:  bonefish      
+     Type:  bug           |      Status:  new           
+ Priority:  normal        |   Milestone:  R1/alpha1     
+Component:  Build System  |     Version:  R1 development
+Blockedby:                |    Platform:  All           
+ Blocking:                |  
+--------------------------+-------------------------------------------------
+
+Comment(by meianoite):
+
+ Replying to [comment:9 bonefish]:
+ &gt; I tried a few runs under Linux (still with 2 cores only) and bash was
+ always built successfully.
+
+ I can only make it happen once or twice out of 10 attempts if I build bash
+ in isolation. Which again confirms that this is timing-based. But I'm yet
+ to have it succeed if I build the whole of Haiku the way I've described.
+ I've determined that producing the background disk noise isn't even
+ necessary, but I don't know if that is related to me upping things a notch
+ to j16:
+
+ {{{
+ rm -rf objects/ build_packages/ tmp/ build/*cache ; jam -aqj16 @all |&amp; tee
+ j16.log
+ }}}
+
+ The redirection is tcsh syntax.
+
+ Building with an added -dd argument indeed shows the correct dependency
+ chaining, but it fails nonetheless. And generates a huge log that
+ compresses to over 700k with bzip2 --best, 760k with 7z &quot;ultra&quot; settings.
+
+ Now, for an interesting tidbit: I'm able to trigger at least the
+ builtins.c error even using cpuset to limit the CPUs jam was allowed to
+ use to 2, which was confirmed by monitoring with htop. But for this to
+ succeed (er, fail) I have to produce the disk activity with &quot;make -j8
+ index&quot; on /usr/ports.
+
+ {{{
+ &gt; rm -rf objects/ build_packages/ tmp/ build/*cache ; sudo cpuset -c -l
+ 0-1 -- sudo -u andre jam -aqj16 @all |&amp; tee j16-2.log
+ }}}
+
+ {{{
+ &gt; egrep &quot;(failed|skipped)&quot; j16-2.log
+
+ ...failed Cc
+ /usr/home/andre/devel/Haiku/trunk/generated.gcc2/objects/haiku/x86/release/bin/bash/builtins/builtins.o
+ ...
+ ...skipped libbuiltins.a for lack of libbuiltins.a(builtins.o)...
+ ...skipped bash for lack of libbuiltins.a...
+ ...failed updating 1 target(s)...
+ ...skipped 2 target(s)...
+ }}}
+
+ Jam bug or build system bug, it's still not a desirable situation,
+ specially with Haiku build clusters in the horizon ;)
+
+ I understand that you have a limitation on making it happen on a dual-core
+ machine, and we're getting nowhere until you can put your finger straight
+ on the problem. Would you like to try debugging it straight on my machine?
+ Send a public RSA key my way and I'll create a user for you pronto.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4091#comment:10">http://dev.haiku-os.org/ticket/4091#comment:10</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="018446.html">[Haiku-bugs] [Haiku] #4091: r31522 build breakage on parallel	jam
+</A></li>
+	<LI>Next message: <A HREF="018455.html">[Haiku-bugs] [Haiku] #4091: r31522 build breakage on parallel	jam
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18449">[ date ]</a>
+              <a href="thread.html#18449">[ thread ]</a>
+              <a href="subject.html#18449">[ subject ]</a>
+              <a href="author.html#18449">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

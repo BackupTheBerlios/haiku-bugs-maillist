@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #901: Drag and drop from ShowImage hangs app + empty clipping
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23901%3A%20Drag%20and%20drop%20from%20ShowImage%20hangs%0A%20app%20%2B%20empty%20clipping&In-Reply-To=%3C052.1907a3f422e8d7b492e491591894d540%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000931.html">
+   <LINK REL="Next"  HREF="000934.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #901: Drag and drop from ShowImage hangs app + empty clipping</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23901%3A%20Drag%20and%20drop%20from%20ShowImage%20hangs%0A%20app%20%2B%20empty%20clipping&In-Reply-To=%3C052.1907a3f422e8d7b492e491591894d540%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #901: Drag and drop from ShowImage hangs app + empty clipping">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Apr  4 22:42:59 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000931.html">[Haiku-bugs] [Haiku] #251: [Keymap] cpu usage and key images	flickering
+</A></li>
+        <LI>Next message: <A HREF="000934.html">[Haiku-bugs] [Haiku] #1022: Greek (keyboard) bug for BeMail.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#932">[ date ]</a>
+              <a href="thread.html#932">[ thread ]</a>
+              <a href="subject.html#932">[ subject ]</a>
+              <a href="author.html#932">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#901: Drag and drop from ShowImage hangs app + empty clipping
+---------------------------------------+------------------------------------
+  Reporter:  darkwyrm                  |       Owner:  axeld         
+      Type:  bug                       |      Status:  new           
+  Priority:  normal                    |   Milestone:  R1            
+ Component:  - Applications/ShowImage  |     Version:  R1 development
+Resolution:                            |    Platform:  All           
+---------------------------------------+------------------------------------
+Comment (by mmlr):
+
+ Finally tracked this down. The cause was introduced in r18601 as suggested
+ above. ShowImage calls GetMouse() in a loop to find out when no mouse
+ buttons are pressed anymore:
+
+ ShowImageView.cpp:1434
+ {{{
+                 while (buttons) {
+                         // Keep reading mouse movement until
+                         // the user lets up on all mouse buttons
+                         GetMouse(&amp;point, &amp;buttons);
+                         snooze(25 * 1000);
+                                 // sleep for 25 milliseconds to minimize
+ CPU usage during loop
+                 }
+ }}}
+
+ BView::GetMouse() is called here to find the button state. The third
+ argument defaults to true which indicates that the message queue should be
+ scanned. The implementation of GetMouse() then scans the queue and calls
+ BWindow::_StealMouseMessage() (View.cpp:1416) when it finds a suitable
+ message. _StealMouseMessage is supposed to remove the message from the
+ queue, but doesn't if the preferred handler is not the only target of the
+ message (Window.cpp:3037). The message remains in the queue and each call
+ of GetMouse() will return the same values from the same message resulting
+ in an endless loop.
+
+ As GetMouse() is documented to remove the message from the queue
+ [<A HREF="http://www.acm.uiuc.edu/bug/Be%20Book/The%20Interface%20Kit/View.html#GetMouse(">http://www.acm.uiuc.edu/bug/Be%20Book/The%20Interface%20Kit/View.html#GetMouse(</A>)
+ in the R4 BeBook] and applications may rely on this behavior we must not
+ return from _StealMouseMessage() without removing the message from the
+ queue. The solution would be to just return false if there are other
+ targets and we cannot remove the message.
+
+ Axel could you take a look at that as you introduced said function?
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/901#comment:7">http://dev.haiku-os.org/ticket/901#comment:7</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000931.html">[Haiku-bugs] [Haiku] #251: [Keymap] cpu usage and key images	flickering
+</A></li>
+	<LI>Next message: <A HREF="000934.html">[Haiku-bugs] [Haiku] #1022: Greek (keyboard) bug for BeMail.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#932">[ date ]</a>
+              <a href="thread.html#932">[ thread ]</a>
+              <a href="subject.html#932">[ subject ]</a>
+              <a href="author.html#932">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

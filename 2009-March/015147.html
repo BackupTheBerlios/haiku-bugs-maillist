@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2083: EHCI bus hanging at boot.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232083%3A%20EHCI%20bus%20hanging%20at%20boot.&In-Reply-To=%3C047.87b2ee34d0b4d7fcc81b82fd59f0502e%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="015146.html">
+   <LINK REL="Next"  HREF="015148.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2083: EHCI bus hanging at boot.</H1>
+    <B>bga</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232083%3A%20EHCI%20bus%20hanging%20at%20boot.&In-Reply-To=%3C047.87b2ee34d0b4d7fcc81b82fd59f0502e%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2083: EHCI bus hanging at boot.">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Mar 16 15:33:35 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="015146.html">[Haiku-bugs] [Haiku] #1398: PANIC: vnode is not becoming unbusy!
+</A></li>
+        <LI>Next message: <A HREF="015148.html">[Haiku-bugs] [Haiku] #3151: KDL when copying data between 2 BFS	partitions.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15147">[ date ]</a>
+              <a href="thread.html#15147">[ thread ]</a>
+              <a href="subject.html#15147">[ subject ]</a>
+              <a href="author.html#15147">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2083: EHCI bus hanging at boot.
+-------------------------+--------------------------------------------------
+ Reporter:  bga          |       Owner:  mmlr          
+     Type:  bug          |      Status:  assigned      
+ Priority:  blocker      |   Milestone:  R1            
+Component:  Drivers/USB  |     Version:  R1 development
+Blockedby:               |    Platform:  All           
+ Blocking:               |  
+-------------------------+--------------------------------------------------
+
+Comment(by bga):
+
+ Just some update to this that I noticed. I have USB ports on the back of
+ my computer (4) and in its front panel (another 4). I would take they are
+ connected in two different physical USB controllers.
+
+ If I connect anything to the back ports, I have no problems (I have a
+ webcam connect6ed to those and it is recognized by Haiku, although it does
+ not work as UVC just started being implemented). But anything I connect to
+ the ports in the front panel results in the IRQ flood (if it is plugged
+ during boot, the boot process hangs, if plugged in when the system is
+ running, it locks up).
+
+ Based on this I would guess the problem could be due to IRQ sharing
+ between the problematic controller and some other hardware? If so, your
+ (mmlr's) recent changes to tryu to work things like this around didn't
+ work, unfortunately.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2083#comment:30">http://dev.haiku-os.org/ticket/2083#comment:30</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="015146.html">[Haiku-bugs] [Haiku] #1398: PANIC: vnode is not becoming unbusy!
+</A></li>
+	<LI>Next message: <A HREF="015148.html">[Haiku-bugs] [Haiku] #3151: KDL when copying data between 2 BFS	partitions.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15147">[ date ]</a>
+              <a href="thread.html#15147">[ thread ]</a>
+              <a href="subject.html#15147">[ subject ]</a>
+              <a href="author.html#15147">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

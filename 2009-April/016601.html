@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2718: KDL when iterating over files in the filesystem (DiskUsage).
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232718%3A%20KDL%20when%20iterating%20over%20files%20in%0A%20the%20filesystem%20%28DiskUsage%29.&In-Reply-To=%3C047.d46b50d409dfa0fc92365aabf7d98acc%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="016643.html">
+   <LINK REL="Next"  HREF="016602.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2718: KDL when iterating over files in the filesystem (DiskUsage).</H1>
+    <B>oco</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232718%3A%20KDL%20when%20iterating%20over%20files%20in%0A%20the%20filesystem%20%28DiskUsage%29.&In-Reply-To=%3C047.d46b50d409dfa0fc92365aabf7d98acc%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2718: KDL when iterating over files in the filesystem (DiskUsage).">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Apr 26 20:12:28 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="016643.html">[Haiku-bugs] [Haiku] #3827: Haiku User Guide refers to &quot;	/boot/beos&quot;
+</A></li>
+        <LI>Next message: <A HREF="016602.html">[Haiku-bugs] [Haiku] #3610: minor mimetype error for welcome.html and BeBook index.html
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16601">[ date ]</a>
+              <a href="thread.html#16601">[ thread ]</a>
+              <a href="subject.html#16601">[ subject ]</a>
+              <a href="author.html#16601">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2718: KDL when iterating over files in the filesystem (DiskUsage).
+---------------------------+------------------------------------------------
+ Reporter:  bga            |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  critical       |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1 development
+Blockedby:                 |    Platform:  All           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+
+Comment(by oco):
+
+ I think i have another test case that lead to the same error : i run a
+ query to search all files of type &quot;audio&quot;. I have many partitions with
+ lots of files (two haiku source tree at least).
+ It seems there is a leak somewhere while running this kind of queries,
+ even if no files are found. After a while (about one hour), i have the
+ above error (see attached back trace).
+ My machine have 4 Gb of memory (well 3 Gb). The problem exist with or
+ without a swap file. I was not able to reproduce it on an older one with
+ only 512 Mo of RAM.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2718#comment:1">http://dev.haiku-os.org/ticket/2718#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="016643.html">[Haiku-bugs] [Haiku] #3827: Haiku User Guide refers to &quot;	/boot/beos&quot;
+</A></li>
+	<LI>Next message: <A HREF="016602.html">[Haiku-bugs] [Haiku] #3610: minor mimetype error for welcome.html and BeBook index.html
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16601">[ date ]</a>
+              <a href="thread.html#16601">[ thread ]</a>
+              <a href="subject.html#16601">[ subject ]</a>
+              <a href="author.html#16601">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

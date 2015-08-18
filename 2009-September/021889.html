@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4053: USB MIDI not recognized dynamically
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234053%3A%20USB%20MIDI%20not%20recognized%20dynamically&In-Reply-To=%3C048.47d543f4a6c02e75709f444922c0014a%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="021888.html">
+   <LINK REL="Next"  HREF="021891.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4053: USB MIDI not recognized dynamically</H1>
+    <B>phoudoin</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234053%3A%20USB%20MIDI%20not%20recognized%20dynamically&In-Reply-To=%3C048.47d543f4a6c02e75709f444922c0014a%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4053: USB MIDI not recognized dynamically">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Sep 23 09:44:40 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="021888.html">[Haiku-bugs] [Haiku] #1026: Black screen when Haiku switch to graphical mode after bootscreen GeForce 6150
+</A></li>
+        <LI>Next message: <A HREF="021891.html">[Haiku-bugs] [Haiku] #1026: Black screen when Haiku switch to graphical mode after bootscreen GeForce 6150
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21889">[ date ]</a>
+              <a href="thread.html#21889">[ thread ]</a>
+              <a href="subject.html#21889">[ subject ]</a>
+              <a href="author.html#21889">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4053: USB MIDI not recognized dynamically
+---------------------------------+------------------------------------------
+ Reporter:  Pete                 |       Owner:  phoudoin     
+     Type:  bug                  |      Status:  assigned     
+ Priority:  normal               |   Milestone:  R1           
+Component:  Servers/midi_server  |     Version:  R1/pre-alpha1
+Blockedby:                       |    Platform:  All          
+ Blocking:                       |  
+---------------------------------+------------------------------------------
+
+Comment(by phoudoin):
+
+ Replying to [comment:16 Pete]:
+ &gt; [...] I've been a bit delayed by a dose of flu [or something!].
+
+ I'm right there now, too ;-)
+
+ &gt; This doesn't work, because '/dev/midi/usb/0' is not recognized as a
+ file!
+
+ Damn. I wonder why, though. Maybe a devfs entry is not a regular file, and
+ BStatable don't report them as file. Okay, will reverse the check then,
+ calling IsDirectory() instead.
+
+ &gt; This probably avoids the dual entry anyway
+ &gt; (you weren't doing the check in r33118 which is what I was looking at).
+ &gt; I haven't got to check that yet.
+
+ Oh. Hope it explains the dual entry indeed.
+
+ &gt; Once I took out the 'IsFile' check, which prevented any port being
+ found,
+ &gt; _AddDevice seems to work.  (The extra thread has prevented the lockups.)
+
+ Nice to hear it.
+
+ &gt; However, _RemoveDevice just hangs, because the destructor for
+ MidiPortProducer
+ &gt; just hangs at the wait_for_thread().
+
+ Hum, yes, and I see why: I'm stupid. See below how much.
+
+ &gt; As a result I still get to KDL when I quit midi_server.
+ &gt;
+ &gt; I now have to find out why the thread isn't quitting, unless you have an
+ immediate solution.
+
+ MidiPortProducer reader thread is blocking on read(), and I do nothing to
+ wake him. Before the wait_for_thread(), a send_signal(fReaderThread,
+ SIGINT) should do it.
+ If not, let's try the brutal kill_thread(fReaderThread) instead, but it
+ will leak SysEx buffer eventually.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4053#comment:17">http://dev.haiku-os.org/ticket/4053#comment:17</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="021888.html">[Haiku-bugs] [Haiku] #1026: Black screen when Haiku switch to graphical mode after bootscreen GeForce 6150
+</A></li>
+	<LI>Next message: <A HREF="021891.html">[Haiku-bugs] [Haiku] #1026: Black screen when Haiku switch to graphical mode after bootscreen GeForce 6150
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21889">[ date ]</a>
+              <a href="thread.html#21889">[ thread ]</a>
+              <a href="subject.html#21889">[ subject ]</a>
+              <a href="author.html#21889">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

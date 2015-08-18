@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3999: Boot hangs (with a twist) as ohci driver tries to take ownership
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233999%3A%20Boot%20hangs%20%28with%20a%20twist%29%20as%20ohci%0A%20driver%20tries%20to%20take%20ownership&In-Reply-To=%3C053.7fc7ec07b105be8937bca53eb4e4eb63%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="017872.html">
+   <LINK REL="Next"  HREF="017987.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3999: Boot hangs (with a twist) as ohci driver tries to take ownership</H1>
+    <B>meianoite</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233999%3A%20Boot%20hangs%20%28with%20a%20twist%29%20as%20ohci%0A%20driver%20tries%20to%20take%20ownership&In-Reply-To=%3C053.7fc7ec07b105be8937bca53eb4e4eb63%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3999: Boot hangs (with a twist) as ohci driver tries to take ownership">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Jun  6 08:52:12 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="017872.html">[Haiku-bugs] [Haiku] #3999: Boot hangs (with a twist) as ohci driver tries to take ownership
+</A></li>
+        <LI>Next message: <A HREF="017987.html">[Haiku-bugs] [Haiku] #3999: Boot hangs (with a twist) as ohci driver tries to take ownership
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17873">[ date ]</a>
+              <a href="thread.html#17873">[ thread ]</a>
+              <a href="subject.html#17873">[ subject ]</a>
+              <a href="author.html#17873">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3999: Boot hangs (with a twist) as ohci driver tries to take ownership
+-----------------------+----------------------------------------------------
+ Reporter:  meianoite  |       Owner:  mmlr          
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  Drivers    |     Version:  R1 development
+Blockedby:             |    Platform:  All           
+ Blocking:             |  
+-----------------------+----------------------------------------------------
+
+Comment(by meianoite):
+
+ By the way, this is what FreeBSD has to say when I plug the USB mouse:
+
+ ugen0.3: &lt;Microsoft&gt; at usbus0
+ ums0: &lt;Microsoft Wireless Optical Mouse 3000 (Model 1056), class 0/0, rev
+ 2.00/0.07, addr 3&gt; on usbus0
+ ums0: 5 buttons and [XYZ] coordinates ID=17
+
+ An educated guess is that the relevant line on the Haiku syslog (the one I
+ just attached) regarding this mouse is:
+
+ 2009-06-06 06:33:12 KERN: usb_hid: unsupported device type 0x01090c05
+
+ In this case, it's just usb_hid not getting the device type (doh), and
+ nothing related to the problem at hand. Still, it would be nice to support
+ this mouse :)
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3999#comment:4">http://dev.haiku-os.org/ticket/3999#comment:4</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="017872.html">[Haiku-bugs] [Haiku] #3999: Boot hangs (with a twist) as ohci driver tries to take ownership
+</A></li>
+	<LI>Next message: <A HREF="017987.html">[Haiku-bugs] [Haiku] #3999: Boot hangs (with a twist) as ohci driver tries to take ownership
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17873">[ date ]</a>
+              <a href="thread.html#17873">[ thread ]</a>
+              <a href="subject.html#17873">[ subject ]</a>
+              <a href="author.html#17873">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

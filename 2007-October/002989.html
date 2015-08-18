@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1434: device manager loads driver too	often
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231434%3A%20device%20manager%20loads%20driver%20too%0A%09often&In-Reply-To=%3C059.f07152625fbf186f1fcfd0ad46f72124%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002990.html">
+   <LINK REL="Next"  HREF="002992.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1434: device manager loads driver too	often</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231434%3A%20device%20manager%20loads%20driver%20too%0A%09often&In-Reply-To=%3C059.f07152625fbf186f1fcfd0ad46f72124%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1434: device manager loads driver too	often">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Oct  3 18:32:58 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002990.html">[Haiku-bugs] [Haiku] #1261: Can't load Haiku on a pc with Ati	Radeon 9200
+</A></li>
+        <LI>Next message: <A HREF="002992.html">[Haiku-bugs] [Haiku] #1434: device manager loads driver too	often
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2989">[ date ]</a>
+              <a href="thread.html#2989">[ thread ]</a>
+              <a href="subject.html#2989">[ subject ]</a>
+              <a href="author.html#2989">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1434: device manager loads driver too often
+------------------------------+---------------------------------------------
+  Reporter:  marcusoverhagen  |       Owner:  axeld         
+      Type:  bug              |      Status:  new           
+  Priority:  normal           |   Milestone:  R1            
+ Component:  System/Kernel    |     Version:  R1 development
+Resolution:                   |    Platform:  All           
+------------------------------+---------------------------------------------
+Comment (by marcusoverhagen):
+
+ This is turning into a serious problem now. As can be seen in the
+ devicemanager.txt attachment, the board has two ahci controller devices,
+ &quot;0:31:2&quot; and &quot;5:0:0&quot;.
+
+ The device manager loads the driver multiple times (1st error)
+ and since the userCookie isn't always set correct, the
+ pciDevice pointer is sometimes invalid and sometimes crashes.
+
+ The pointer 0x90926300 in this crash isn't correct.
+
+ ahci: ahci_sim_init_bus: pciDevice 0x90926300
+ ahci: AHCIController::Init 0:0:0 vendor 8086, device 277c
+ vm_soft_fault: kernel thread accessing invalid user memory!
+ vm_page_fault: vm_soft_fault returned error 'Bad address' on fault at
+ 0x31, ip 0x802c12c1, write 0, user 0, thread 0x9
+ CPU 1 halted!
+ PANIC: vm_page_fault: unhandled page fault in kernel space at 0x31, ip
+ 0x802c12c1
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1434#comment:6">http://dev.haiku-os.org/ticket/1434#comment:6</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002990.html">[Haiku-bugs] [Haiku] #1261: Can't load Haiku on a pc with Ati	Radeon 9200
+</A></li>
+	<LI>Next message: <A HREF="002992.html">[Haiku-bugs] [Haiku] #1434: device manager loads driver too	often
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2989">[ date ]</a>
+              <a href="thread.html#2989">[ thread ]</a>
+              <a href="subject.html#2989">[ subject ]</a>
+              <a href="author.html#2989">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

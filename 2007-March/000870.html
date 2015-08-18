@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1120: invalid block number
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231120%3A%20invalid%20block%20number&In-Reply-To=%3C042.f4fbf3aef20ccc730e0df6988962d8ad%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000876.html">
+   <LINK REL="Next"  HREF="000866.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1120: invalid block number</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231120%3A%20invalid%20block%20number&In-Reply-To=%3C042.f4fbf3aef20ccc730e0df6988962d8ad%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1120: invalid block number">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Mar 23 18:43:21 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000876.html">[Haiku-bugs] [Haiku] #1119: The boot screen doesn't have &quot;some&quot; kind of animation to indicate system activity or inactivity.
+</A></li>
+        <LI>Next message: <A HREF="000866.html">[Haiku-bugs] [Haiku] #1121: ShowImage should be using	B_USER_SETTINGS_DIRECTORY
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#870">[ date ]</a>
+              <a href="thread.html#870">[ thread ]</a>
+              <a href="subject.html#870">[ subject ]</a>
+              <a href="author.html#870">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1120: invalid block number
+-----------------------+----------------------------------------------------
+ Reporter:  kaliber    |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+ Platform:  x86        |  
+-----------------------+----------------------------------------------------
+ During tar xvf ... a get this error:
+
+ PANIC: get_writable_cached_block: invalid block number 768634 (max 767999)
+ Welcome to Kernel Debugging Land...
+ Running on CPU 0
+ kdebug&gt; bt
+ stack trace for thread 0x89 &quot;tar&quot;
+     kernel stack: 0x9060d000 to 0x90610000
+       user stack: 0x7efe7000 to 0x7ffe7000
+ frame            caller     &lt;image&gt;:function + offset
+ 9060f814 (+  48) 80079bd5   &lt;kernel&gt;:kernel_debugger_loop + 0x00dd
+ 9060f844 (+  32) 8007a64a   &lt;kernel&gt;:kernel_debugger + 0x009a
+ 9060f864 (+ 176) 8007a5a6   &lt;kernel&gt;:panic + 0x0036
+ 9060f914 (+  64) 8005612f
+ &lt;kernel&gt;:get_writable_cached_block__FP11block_cachexxxlb + 0x003f
+ 9060f954 (+  80) 80057677   &lt;kernel&gt;:block_cache_get_writable_etc + 0x008b
+ 9060f9a4 (+  64) 800576da   &lt;kernel&gt;:block_cache_get_writable + 0x0022
+ 9060f9e4 (+  96) 8022f73c
+ &lt;bfs&gt;:InternalSetTo__10CachedNodeP11Transactionx + 0x0128
+ 9060fa44 (+  64) 8022f607
+ &lt;bfs&gt;:SetToWritableHeader__10CachedNodeR11Transaction + 0x0067
+ 9060fa84 (+  80) 8022fd6b   &lt;bfs&gt;:SetTo__9BPlusTreeR11TransactionP5Inodel
+ + 0x0083
+ 9060fad4 (+  48) 8022fb39   &lt;bfs&gt;:__9BPlusTreeR11TransactionP5Inodel +
+ 0x0059
+ 9060fb04 (+  80) 80236cc7   &lt;bfs&gt;:CreateTree__14InodeAllocator + 0x0067
+ 9060fb54 (+ 144) 8023cbae
+ &lt;bfs&gt;:Create__5InodeR11TransactionP5InodePCcliUlPxPP5Inode + 0x0666
+ 9060fbe4 (+  80) 80246416   &lt;bfs&gt;:bfs_create_dir__FPvT0PCciPx + 0x0102
+ 9060fc34 (+ 320) 80042a4a   &lt;kernel&gt;:dir_create__FiPcib + 0x0082
+ 9060fd74 (+  64) 80047934   &lt;kernel&gt;:_user_create_dir + 0x0094
+ 9060fdb4 (+ 336) 80030393   &lt;kernel&gt;:syscall_dispatcher + 0x08a3
+ 9060ff04 (+ 160) 80080234   &lt;kernel&gt;:i386_handle_trap + 0x0238
+ iframe at 0x9060ffac (end = 0x90610000)
+  eax 0x4c           ebx 0x2c6c4c        ecx 0x218fa4     edx 0x18010340
+  esi 0x1            edi 0x1ff           ebp 0x7ffe6d7c   esp 0x9060ffdc
+  eip 0xffff0102  eflags 0x217
+  vector: 0x63, error code: 0x0
+ 9060ffa4 (+   0) ffff0102
+ 7ffe6d7c (+ 336) 0020f310   &lt;/bin/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">tar at 0x00200000</A>&gt;:unknown + 0xf310
+ 7ffe6ecc (+ 112) 00212555   &lt;/bin/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">tar at 0x00200000</A>&gt;:unknown + 0x12555
+ 7ffe6f3c (+  48) 0021ce78   &lt;/bin/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">tar at 0x00200000</A>&gt;:unknown + 0x1ce78
+ 7ffe6f6c (+  64) 00207663   &lt;/bin/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">tar at 0x00200000</A>&gt;:unknown + 0x7663
+ 7ffe6fac (+  48) 001007ae   1327:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">runtime_loader_seg0ro at 0x00100000</A> + 0x7ae
+ 7ffe6fdc (+   0) 7ffe6fec   1326:/bin/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">tar_main_stack at 0x7efe7000</A> + 0xffffec
+ kdebug&gt;
+
+
+ Also in serial output there is strange line:
+ bfs: volume reports 247970 used blocks, correct is 431905
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1120">http://dev.haiku-os.org/ticket/1120</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000876.html">[Haiku-bugs] [Haiku] #1119: The boot screen doesn't have &quot;some&quot; kind of animation to indicate system activity or inactivity.
+</A></li>
+	<LI>Next message: <A HREF="000866.html">[Haiku-bugs] [Haiku] #1121: ShowImage should be using	B_USER_SETTINGS_DIRECTORY
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#870">[ date ]</a>
+              <a href="thread.html#870">[ thread ]</a>
+              <a href="subject.html#870">[ subject ]</a>
+              <a href="author.html#870">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

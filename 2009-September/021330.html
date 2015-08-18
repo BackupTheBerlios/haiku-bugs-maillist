@@ -1,0 +1,235 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4521: Boot hangs on Core i7 with SMP	enabled.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234521%3A%20Boot%20hangs%20on%20Core%20i7%20with%20SMP%0A%09enabled.&In-Reply-To=%3C051.89bbe97adaf2ba22fdcc5b320037b2e9%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="021329.html">
+   <LINK REL="Next"  HREF="021331.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4521: Boot hangs on Core i7 with SMP	enabled.</H1>
+    <B>aphedox</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234521%3A%20Boot%20hangs%20on%20Core%20i7%20with%20SMP%0A%09enabled.&In-Reply-To=%3C051.89bbe97adaf2ba22fdcc5b320037b2e9%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4521: Boot hangs on Core i7 with SMP	enabled.">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Sep 15 07:34:08 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="021329.html">[Haiku-bugs] [Haiku] #4521: Boot hangs on Core i7 with SMP enabled.
+</A></li>
+        <LI>Next message: <A HREF="021331.html">[Haiku-bugs] [Haiku] #4521: Boot hangs on Core i7 with SMP	enabled.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21330">[ date ]</a>
+              <a href="thread.html#21330">[ thread ]</a>
+              <a href="subject.html#21330">[ subject ]</a>
+              <a href="author.html#21330">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4521: Boot hangs on Core i7 with SMP enabled.
+-----------------------+----------------------------------------------------
+ Reporter:  aphedox    |       Owner:  axeld    
+     Type:  bug        |      Status:  new      
+ Priority:  normal     |   Milestone:  R1       
+Component:  - General  |     Version:  R1/alpha1
+Blockedby:             |    Platform:  All      
+ Blocking:             |  
+-----------------------+----------------------------------------------------
+
+Comment(by aphedox):
+
+ Welcome to the Haiku shell.
+
+ ~&gt; listdev
+
+ device Mass storage controller (IDE interface) [1|1|85]
+   vendor 8086: Intel Corporation
+   device 3a26: 82801JI (ICH10 Family) 2 port SATA IDE Controller
+
+ device Serial bus controller (SMBus) [c|5|0]
+   vendor 8086: Intel Corporation
+   device 3a30: 82801JI (ICH10 Family) SMBus Controller
+
+ device Mass storage controller (IDE interface) [1|1|8a]
+   vendor 8086: Intel Corporation
+   device 3a20: 82801JI (ICH10 Family) 4 port SATA IDE Controller
+
+ device Bridge (ISA bridge) [6|1|0]
+   vendor 8086: Intel Corporation
+   device 3a16: 82801JIR (ICH10R) LPC Interface Controller
+
+ device Serial bus controller (FireWire (IEEE 1394), OHCI) [c|0|10]
+   vendor 104c: Texas Instruments
+   device 8024: TSB43AB23 IEEE-1394a-2000 Controller (PHY/Link)
+
+ device Network controller (Ethernet controller) [2|0|0]
+   vendor 1737: Linksys
+   device 1032: Gigabit Network Adapter
+
+ device Bridge (PCI bridge, Subtractive decode) [6|4|1]
+   vendor 8086: Intel Corporation
+   device 244e: 82801 PCI Bridge
+
+ device Serial bus controller (USB Controller, EHCI) [c|3|20]
+   vendor 8086: Intel Corporation
+   device 3a3a: 82801JI (ICH10 Family) USB2 EHCI Controller #1
+
+ device Serial bus controller (USB Controller, UHCI) [c|3|0]
+   vendor 8086: Intel Corporation
+   device 3a36: 82801JI (ICH10 Family) USB UHCI Controller #3
+
+ device Serial bus controller (USB Controller, UHCI) [c|3|0]
+   vendor 8086: Intel Corporation
+   device 3a35: 82801JI (ICH10 Family) USB UHCI Controller #2
+
+ device Serial bus controller (USB Controller, UHCI) [c|3|0]
+   vendor 8086: Intel Corporation
+   device 3a34: 82801JI (ICH10 Family) USB UHCI Controller #1
+
+ device Network controller (Ethernet controller) [2|0|0]
+   vendor 10ec: Realtek Semiconductor Co., Ltd.
+   device 8168: RTL8111/8168B PCI Express Gigabit Ethernet controller
+
+ device Bridge (PCI bridge, Normal decode) [6|4|0]
+   vendor 8086: Intel Corporation
+   device 3a4a: 82801JI (ICH10 Family) PCI Express Port 6
+
+ device Network controller (Ethernet controller) [2|0|0]
+   vendor 10ec: Realtek Semiconductor Co., Ltd.
+   device 8168: RTL8111/8168B PCI Express Gigabit Ethernet controller
+
+ device Bridge (PCI bridge, Normal decode) [6|4|0]
+   vendor 8086: Intel Corporation
+   device 3a48: 82801JI (ICH10 Family) PCI Express Port 5
+
+ device Bridge (PCI bridge, Normal decode) [6|4|0]
+   vendor 8086: Intel Corporation
+   device 3a42: 82801JI (ICH10 Family) PCI Express Port 2
+
+ device Bridge (PCI bridge, Normal decode) [6|4|0]
+   vendor 8086: Intel Corporation
+   device 3a40: 82801JI (ICH10 Family) PCI Express Port 1
+
+ device Multimedia controller (Audio device) [4|3|0]
+   vendor 8086: Intel Corporation
+   device 3a3e: 82801JI (ICH10 Family) HD Audio Controller
+
+ device Serial bus controller (USB Controller, EHCI) [c|3|20]
+   vendor 8086: Intel Corporation
+   device 3a3c: 82801JI (ICH10 Family) USB2 EHCI Controller #2
+
+ device Serial bus controller (USB Controller, UHCI) [c|3|0]
+   vendor 8086: Intel Corporation
+   device 3a39: 82801JI (ICH10 Family) USB UHCI Controller #6
+
+ device Serial bus controller (USB Controller, UHCI) [c|3|0]
+   vendor 8086: Intel Corporation
+   device 3a38: 82801JI (ICH10 Family) USB UHCI Controller #5
+
+ device Serial bus controller (USB Controller, UHCI) [c|3|0]
+   vendor 8086: Intel Corporation
+   device 3a37: 82801JI (ICH10 Family) USB UHCI Controller #4
+
+ device Generic system peripheral (PIC, IO(X)-APIC) [8|0|20]
+   vendor 8086: Intel Corporation
+   device 342f: 5520/5500/X58 Trusted Execution Technology Registers
+
+ device Generic system peripheral (PIC, 8259) [8|0|0]
+   vendor 8086: Intel Corporation
+   device 3423: 5520/5500/X58 I/O Hub Control Status and RAS Registers
+
+ device Generic system peripheral (PIC, 8259) [8|0|0]
+   vendor 8086: Intel Corporation
+   device 3422: 5520/5500/X58 I/O Hub GPIO and Scratch Pad Registers
+
+ device Generic system peripheral (PIC, 8259) [8|0|0]
+   vendor 8086: Intel Corporation
+   device 342e: 5520/5500/X58 I/O Hub System Management Registers
+
+ device Generic system peripheral (PIC, IO(X)-APIC) [8|0|20]
+   vendor 8086: Intel Corporation
+   device 342d: 5520/5500/X58 I/O Hub I/OxAPIC Interrupt Controller
+
+ device Generic system peripheral (PIC, 8259) [8|0|0]
+   vendor 8086: Intel Corporation
+   device 3428: 5520/5500 Routing &amp; Protocol Layer Register Port 1
+
+ device Generic system peripheral (PIC, 8259) [8|0|0]
+   vendor 8086: Intel Corporation
+   device 3427: 5520/5500 Physical and Link Layer Registers Port 1
+
+ device Generic system peripheral (PIC, 8259) [8|0|0]
+   vendor 8086: Intel Corporation
+   device 3426: 5520/5500/X58 Routing and Protocol Layer Registers Port 0
+
+ device Generic system peripheral (PIC, 8259) [8|0|0]
+   vendor 8086: Intel Corporation
+   device 3425: 5520/5500/X58 Physical and Link Layer Registers Port 0
+
+ device Bridge (PCI bridge, Normal decode) [6|4|0]
+   vendor 8086: Intel Corporation
+   device 3410: 5520/5500/X58 I/O Hub PCI Express Root Port 9
+
+ device Bridge (PCI bridge, Normal decode) [6|4|0]
+   vendor 8086: Intel Corporation
+   device 340e: 5520/5500/X58 I/O Hub PCI Express Root Port 7
+
+ device Bridge (PCI bridge, Normal decode) [6|4|0]
+   vendor 8086: Intel Corporation
+   device 340c: 5520/X58 I/O Hub PCI Express Root Port 5
+
+ device Display controller (VGA compatible controller, VGA controller)
+ [3|0|0]
+   vendor 10de: nVidia Corporation
+   device 05e1: GT200 [GeForce GTX 280]
+
+ device Bridge (PCI bridge, Normal decode) [6|4|0]
+   vendor 8086: Intel Corporation
+   device 340a: 5520/5500/X58 I/O Hub PCI Express Root Port 3
+
+ device Bridge (PCI bridge, Normal decode) [6|4|0]
+   vendor 8086: Intel Corporation
+   device 3408: 5520/5500/X58 I/O Hub PCI Express Root Port 1
+
+ device Bridge (Host bridge) [6|0|0]
+   vendor 8086: Intel Corporation
+   device 3405: X58 I/O Hub to ESI Port
+ ~&gt;
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4521#comment:1">http://dev.haiku-os.org/ticket/4521#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="021329.html">[Haiku-bugs] [Haiku] #4521: Boot hangs on Core i7 with SMP enabled.
+</A></li>
+	<LI>Next message: <A HREF="021331.html">[Haiku-bugs] [Haiku] #4521: Boot hangs on Core i7 with SMP	enabled.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21330">[ date ]</a>
+              <a href="thread.html#21330">[ thread ]</a>
+              <a href="subject.html#21330">[ subject ]</a>
+              <a href="author.html#21330">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

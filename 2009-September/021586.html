@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3541: Core 2 Duo shows as Core 2 Extreme
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233541%3A%20Core%202%20Duo%20shows%20as%20Core%202%20Extreme&In-Reply-To=%3C053.803cf06cccaad4435d7bee59cf46ebb7%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="021584.html">
+   <LINK REL="Next"  HREF="021587.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3541: Core 2 Duo shows as Core 2 Extreme</H1>
+    <B>v</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233541%3A%20Core%202%20Duo%20shows%20as%20Core%202%20Extreme&In-Reply-To=%3C053.803cf06cccaad4435d7bee59cf46ebb7%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3541: Core 2 Duo shows as Core 2 Extreme">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Sep 17 22:32:21 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="021584.html">[Haiku-bugs] [Haiku] #2780: Video out of range on GeForce 6100	(KM51G-754)
+</A></li>
+        <LI>Next message: <A HREF="021587.html">[Haiku-bugs] [Haiku] #3541: Core 2 Duo shows as Core 2 Extreme
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21586">[ date ]</a>
+              <a href="thread.html#21586">[ thread ]</a>
+              <a href="subject.html#21586">[ subject ]</a>
+              <a href="author.html#21586">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3541: Core 2 Duo shows as Core 2 Extreme
+-----------------------+----------------------------------------------------
+ Reporter:  j_freeman  |       Owner:  axeld        
+     Type:  bug        |      Status:  new          
+ Priority:  normal     |   Milestone:  R1           
+Component:  - General  |     Version:  R1/pre-alpha1
+Blockedby:             |    Platform:  All          
+ Blocking:             |  
+-----------------------+----------------------------------------------------
+
+Comment(by v):
+
+ Replying to [comment:8 bga]:
+ &gt; But, really, this is the second time a patch like this is proposed
+ I'd be interested to read the first one and the comments on it. Do you
+ remember anything more about it that would help me locate it?
+
+ &gt; I still see a problem with your new proposed solution as it seems a bit
+ hackish.
+ Agreed.
+ &gt; Of course if there is no other way to get the correct model though CPU
+ ID, then I think this is a valid compromise.
+ I don't think there is another way. The caches (would be a different hack)
+ seem to be the same size. And Intels Application Note 485, Table 2-3 even
+ has a note:
+ &gt; &quot;To differentiate between the processors with the same processor Vendor
+ ID, software should execute the Brand String functions and parse the Brand
+ String&quot;
+
+ BGA, could you tell me the string sysinfo gives you for your Core 2
+ Extreme? If I go by <A HREF="http://www.cpu-world.com/cgi-bin/CPUID.pl?CPUID=1549">http://www.cpu-world.com/cgi-bin/CPUID.pl?CPUID=1549</A>
+ (perhaps unreliable) I'd have to exclude the other possibilities before
+ concluding it's a Core 2 Extreme[[BR]]
+ or look for model numbers like X6800 :(
+
+
+ Perhaps a cleaner solution would be to use the arch.model_name completely
+ and only use the current method if that's unavailable. Would give pretty
+ inconsistent and ugly results though between AMD &amp; Intel, Intels older
+ CPUs &amp; newer, and Intels (R)'s and (TM)'s. :(
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3541#comment:9">http://dev.haiku-os.org/ticket/3541#comment:9</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="021584.html">[Haiku-bugs] [Haiku] #2780: Video out of range on GeForce 6100	(KM51G-754)
+</A></li>
+	<LI>Next message: <A HREF="021587.html">[Haiku-bugs] [Haiku] #3541: Core 2 Duo shows as Core 2 Extreme
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21586">[ date ]</a>
+              <a href="thread.html#21586">[ thread ]</a>
+              <a href="subject.html#21586">[ subject ]</a>
+              <a href="author.html#21586">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2720: AppServer deadlock
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232720%3A%20AppServer%20deadlock&In-Reply-To=%3C051.95eaa9766bd7efe836dffe16ae5b775c%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010245.html">
+   <LINK REL="Next"  HREF="010238.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2720: AppServer deadlock</H1>
+    <B>emitrax</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232720%3A%20AppServer%20deadlock&In-Reply-To=%3C051.95eaa9766bd7efe836dffe16ae5b775c%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2720: AppServer deadlock">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Sep 12 14:18:30 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010245.html">[Haiku-bugs] [Haiku] #2720: AppServer deadlock
+</A></li>
+        <LI>Next message: <A HREF="010238.html">[Haiku-bugs] [Haiku] #2477: Haiku's bootman doesn't show the same partitions as BeOS's
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10252">[ date ]</a>
+              <a href="thread.html#10252">[ thread ]</a>
+              <a href="subject.html#10252">[ subject ]</a>
+              <a href="author.html#10252">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2720: AppServer deadlock
+---------------------------------+------------------------------------------
+  Reporter:  emitrax             |       Owner:  axeld         
+      Type:  bug                 |      Status:  new           
+  Priority:  high                |   Milestone:  R1/alpha1     
+ Component:  Servers/app_server  |     Version:  R1 development
+Resolution:                      |   Blockedby:                
+  Platform:  All                 |    Blocking:                
+---------------------------------+------------------------------------------
+
+Comment(by emitrax):
+
+ Never say never.
+
+ {{{
+ kdebug&gt; bt 5661
+ stack trace for thread 5661 &quot;w&gt;InfoWindow&quot;
+     kernel stack: 0x9594c000 to 0x95950000
+       user stack: 0x78bef000 to 0x78c2f000
+ frame            caller     &lt;image&gt;:function + offset
+  0 9594fd94 (+  32) 800439ce   &lt;kernel&gt;:context_switch__FP6threadT0 +
+ 0x0026
+  1 9594fdb4 (+  64) 80043c38   &lt;kernel&gt;:scheduler_reschedule + 0x0248
+  2 9594fdf4 (+  64) 80044f30   &lt;kernel&gt;:switch_sem_etc + 0x0368
+  3 9594fe34 (+  64) 80044b9a   &lt;kernel&gt;:acquire_sem_etc + 0x0026
+  4 9594fe74 (+  80) 80041f68   &lt;kernel&gt;:_get_port_message_info_etc +
+ 0x0104
+  5 9594fec4 (+  80) 80041e55   &lt;kernel&gt;:port_buffer_size_etc + 0x0025
+  6 9594ff14 (+  48) 80042b31   &lt;kernel&gt;:_user_port_buffer_size_etc +
+ 0x008d
+  7 9594ff44 (+ 100) 800c8852   &lt;kernel&gt;:pre_syscall_debug_done + 0x0002
+ (nearest)
+ user iframe at 0x9594ffa8 (end = 0x95950000)
+  eax 0xc2           ebx 0x6e2cdc        ecx 0x78c2e2d0   edx 0xffff0104
+  esi 0xffffffff     edi 0x7fffffff      ebp 0x78c2e2fc   esp 0x9594ffdc
+  eip 0xffff0104  eflags 0x212      user esp 0x78c2e2d0
+  vector: 0x63, error code: 0x0
+  8 9594ffa8 (+   0) ffff0104
+  9 78c2e2fc (+  48) 002b363f
+ &lt;libbe.so&gt;:__cl__Q38BPrivate11BLooperList12FindPortPredRQ38BPrivate11BLooperList10LooperData
+ + 0x015b (nearest)
+ 10 78c2e32c (+ 128) 002b7126
+ &lt;libbe.so&gt;:_SendMessage__C8BMessagelllP8BMessagexx + 0x0176
+ 11 78c2e3ac (+  96) 002bd799
+ &lt;libbe.so&gt;:SendMessage__C10BMessengerP8BMessageT1xx + 0x0061
+ 12 78c2e40c (+  64) 002c5c2d
+ &lt;libbe.so&gt;:SendTo__Q27BRoster7PrivateP8BMessageT1b + 0x0061
+ 13 78c2e44c (+ 208) 003763d6
+ &lt;libbe.so&gt;:SetAppHint__9BMimeTypePC9entry_ref + 0x00fa
+ 14 78c2e51c (+ 528) 002c378e
+ &lt;libbe.so&gt;:_ResolveApp__C7BRosterPCcP9entry_refT2PcPUlPb + 0x01ea
+ 15 78c2e72c (+  64) 002c090e   &lt;libbe.so&gt;:FindApp__C7BRosterPCcP9entry_ref
+ + 0x003e
+ 16 78c2e76c (+ 656) 0054baff
+ &lt;libtracker.so&gt;:__Q28BPrivate13AttributeViewG5BRectPQ28BPrivate5Model +
+ 0x0aa7
+ 17 78c2e9fc (+ 128) 0054870b
+ &lt;libtracker.so&gt;:Show__Q28BPrivate11BInfoWindow + 0x012f
+ 18 78c2ea7c (+ 656) 00548d50
+ &lt;libtracker.so&gt;:MessageReceived__Q28BPrivate11BInfoWindowP8BMessage +
+ 0x00f8
+ 19 78c2ed0c (+  48) 002b082f
+ &lt;libbe.so&gt;:DispatchMessage__7BLooperP8BMessageP8BHandler + 0x005b
+ 20 78c2ed3c (+ 480) 003582f9
+ &lt;libbe.so&gt;:DispatchMessage__7BWindowP8BMessageP8BHandler + 0x174d
+ 21 78c2ef1c (+  96) 0035bac4   &lt;libbe.so&gt;:task_looper__7BWindow + 0x0270
+ 22 78c2ef7c (+  48) 002b1d8b   &lt;libbe.so&gt;:_task0___7BLooperPv + 0x003f
+ 23 78c2efac (+  48) 006576a8   &lt;libroot.so&gt;:_get_next_team_info + 0x005c
+ (nearest)
+ 24 78c2efdc (+   0) 78c2efec   113945:w&gt;<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">InfoWindow_5661_stack at 0x78bef000</A> +
+ 0x3ffec
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2720#comment:2">http://dev.haiku-os.org/ticket/2720#comment:2</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010245.html">[Haiku-bugs] [Haiku] #2720: AppServer deadlock
+</A></li>
+	<LI>Next message: <A HREF="010238.html">[Haiku-bugs] [Haiku] #2477: Haiku's bootman doesn't show the same partitions as BeOS's
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10252">[ date ]</a>
+              <a href="thread.html#10252">[ thread ]</a>
+              <a href="subject.html#10252">[ subject ]</a>
+              <a href="author.html#10252">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

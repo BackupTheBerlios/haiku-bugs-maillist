@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2662: FAT USB stick problem: &quot;PANIC: could not write back block 7908 (General system error)&quot;
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-December/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232662%3A%20FAT%20USB%20stick%20problem%3A%20%22PANIC%3A%0A%20could%20not%20write%20back%20block%207908%20%28General%20system%20error%29%22&In-Reply-To=%3C049.367d7fe488593835fcb693bfa80e351b%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="013070.html">
+   <LINK REL="Next"  HREF="013072.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2662: FAT USB stick problem: &quot;PANIC: could not write back block 7908 (General system error)&quot;</H1>
+    <B>oco</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232662%3A%20FAT%20USB%20stick%20problem%3A%20%22PANIC%3A%0A%20could%20not%20write%20back%20block%207908%20%28General%20system%20error%29%22&In-Reply-To=%3C049.367d7fe488593835fcb693bfa80e351b%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2662: FAT USB stick problem: &quot;PANIC: could not write back block 7908 (General system error)&quot;">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Dec  7 20:50:42 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="013070.html">[Haiku-bugs] [Haiku] #3124: ls /dev causes a page fault
+</A></li>
+        <LI>Next message: <A HREF="013072.html">[Haiku-bugs] [Haiku] #2662: FAT USB stick problem: &quot;PANIC: could not write back block 7908 (General system error)&quot;
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13071">[ date ]</a>
+              <a href="thread.html#13071">[ thread ]</a>
+              <a href="subject.html#13071">[ subject ]</a>
+              <a href="author.html#13071">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2662: FAT USB stick problem: &quot;PANIC: could not write back block 7908 (General
+system error)&quot;
+------------------------+---------------------------------------------------
+  Reporter:  luroh      |       Owner:  axeld         
+      Type:  bug        |      Status:  new           
+  Priority:  normal     |   Milestone:  R1/alpha1     
+ Component:  - General  |     Version:  R1 development
+Resolution:             |   Blockedby:                
+  Platform:  All        |    Blocking:                
+------------------------+---------------------------------------------------
+Changes (by oco):
+
+ * cc: <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">olivier.coursiere at laposte.net</A> (added)
+
+
+Comment:
+
+ I think i have a simpler test case to reproduce this problem. I use a USB
+ hard drive.
+
+  - initialize a 20 Go partition with DiskDrive (bfs with 2048 block size).
+  - mount this partition with read/write support
+  - put bonnie++ in a &quot;test&quot; directory on this new partition
+  - run bonnie++ in this directory with &quot;bonnie++ -d . -u baron&quot;
+  - once bonnie++ is launched then right click on the Desktop to browse the
+ test partition.
+
+ The menu take some time to draw and after a few second, bonnie++ show an
+ error : Can't putc() - disk full?
+ A few second later, Haiku enter KDL with PANIC: could not write back block
+ 65 (General system error)
+
+ Partial stack trace :
+ [[BR]]
+ write_cached_block
+ [[BR]]
+ block_notifier_and_writer
+ [[BR]]
+ _create_kernel_thread_kentry
+ [[BR]]
+ thread_kthread_exit
+
+ Tested with r28723
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2662#comment:8">http://dev.haiku-os.org/ticket/2662#comment:8</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="013070.html">[Haiku-bugs] [Haiku] #3124: ls /dev causes a page fault
+</A></li>
+	<LI>Next message: <A HREF="013072.html">[Haiku-bugs] [Haiku] #2662: FAT USB stick problem: &quot;PANIC: could not write back block 7908 (General system error)&quot;
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13071">[ date ]</a>
+              <a href="thread.html#13071">[ thread ]</a>
+              <a href="subject.html#13071">[ subject ]</a>
+              <a href="author.html#13071">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

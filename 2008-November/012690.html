@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3164: Bug in terminal when using curses app	over ssh
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233164%3A%20Bug%20in%20terminal%20when%20using%20curses%20app%0A%09over%20ssh&In-Reply-To=%3C049.be853f439f0d45339b57efd636ba4258%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012685.html">
+   <LINK REL="Next"  HREF="012702.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3164: Bug in terminal when using curses app	over ssh</H1>
+    <B>noisetonepause</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233164%3A%20Bug%20in%20terminal%20when%20using%20curses%20app%0A%09over%20ssh&In-Reply-To=%3C049.be853f439f0d45339b57efd636ba4258%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3164: Bug in terminal when using curses app	over ssh">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Nov 21 05:03:05 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012685.html">[Haiku-bugs] [Haiku] #3004: loud click sounds when SoundRecorder resets to 00:00:00 after playback
+</A></li>
+        <LI>Next message: <A HREF="012702.html">[Haiku-bugs] [Haiku] #3164: Bug in terminal when using curses	app over ssh
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12690">[ date ]</a>
+              <a href="thread.html#12690">[ thread ]</a>
+              <a href="subject.html#12690">[ subject ]</a>
+              <a href="author.html#12690">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3164: Bug in terminal when using curses app over ssh
+-----------------------------------+----------------------------------------
+ Reporter:  noisetonepause         |       Owner:  jackburton    
+     Type:  bug                    |      Status:  new           
+ Priority:  normal                 |   Milestone:  R1            
+Component:  Applications/Terminal  |     Version:  R1 development
+Blockedby:                         |    Platform:  All           
+ Blocking:                         |  
+-----------------------------------+----------------------------------------
+ I'm filing this as a bug in Terminal, though I think this is related to
+ termios.h.
+
+ If you look at the screenshots, you'll see the curses app silc-client
+ running over an SSH connection from my friend's FreeBSD machine. Silc-
+ client is based on irssi, so shouuld be familiar. It's basically a irc-
+ like  chat application. The line below the blue line is an input field.
+ I type some input and press enter. As can be seen from the second
+ screenshot, all the text is then moved up a line, including my text from
+ the input box (which you'd expect to be erased). The line is written to
+ the where'd you expect it to go on the first screenshot (ie., first empty
+ line).
+
+ Incoming text from the server and other chatters works fine. Cycling
+ through the 'windows' in the client redraws the text as you'd expect. The
+ only problem is when inputting text.
+
+ The screenshots are from BeOS but the exact same thing happens in Haiku.
+ An xterm running under BeOS/X11 does not have this issue, though.
+
+ I've compared the termios.h headers from Haiku, BeOS and Free+OpenBSD, and
+ BeOS defines VKILL and VEOL opposite. What I think is happening is that
+ silc-client, which is linked against BSD's libcurses, is sending what's
+ defined as VKILL on BSD to the Haiku terminal app, which is interpreting
+ it as VEOL. That seems consistent with the issue, at least.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3164">http://dev.haiku-os.org/ticket/3164</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012685.html">[Haiku-bugs] [Haiku] #3004: loud click sounds when SoundRecorder resets to 00:00:00 after playback
+</A></li>
+	<LI>Next message: <A HREF="012702.html">[Haiku-bugs] [Haiku] #3164: Bug in terminal when using curses	app over ssh
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12690">[ date ]</a>
+              <a href="thread.html#12690">[ thread ]</a>
+              <a href="subject.html#12690">[ subject ]</a>
+              <a href="author.html#12690">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

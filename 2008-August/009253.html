@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2561: bfs_shell no more sems
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232561%3A%20bfs_shell%20no%20more%20sems&In-Reply-To=%3C045.3557b3b17b603c1b60a45189587231f3%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009252.html">
+   <LINK REL="Next"  HREF="009273.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2561: bfs_shell no more sems</H1>
+    <B>mrsunshine</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232561%3A%20bfs_shell%20no%20more%20sems&In-Reply-To=%3C045.3557b3b17b603c1b60a45189587231f3%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2561: bfs_shell no more sems">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Aug  3 17:07:26 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009252.html">[Haiku-bugs] [Haiku] #2223: KDL in tty driver (rev. 25445)
+</A></li>
+        <LI>Next message: <A HREF="009273.html">[Haiku-bugs] [Haiku] #2561: bfs_shell no more sems
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9253">[ date ]</a>
+              <a href="thread.html#9253">[ thread ]</a>
+              <a href="subject.html#9253">[ subject ]</a>
+              <a href="author.html#9253">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2561: bfs_shell no more sems
+------------------------+---------------------------------------------------
+ Reporter:  mrsunshine  |       Owner:  axeld         
+     Type:  bug         |      Status:  new           
+ Priority:  normal      |   Milestone:  R1            
+Component:  - General   |     Version:  R1 development
+Blockedby:              |    Platform:  x86           
+ Blocking:              |  
+------------------------+---------------------------------------------------
+ bfs_shell when copying lots of files crashes with no more sems error
+ (tested by printf)
+
+ backtrace:
+
+ #0  0x0806d0e6 in fssh_panic ()[[BR]]
+ #1  0x0806dcd5 in fssh_mutex_init ()[[BR]]
+ #2  0x0806c7ce in fssh_file_cache_create ()[[BR]]
+ #3  0x0805c6f6 in Inode::Create ()[[BR]]
+ #4  0x0806922c in bfs_create ()[[BR]]
+ #5  0x08072b36 in FSShell::create_vnode ()[[BR]]
+ #6  0x08074fb7 in FSShell::_kern_open ()[[BR]]
+ #7  0x0807c54f in FSShell::GuestFSDomain::CreateFile ()[[BR]]
+ #8  0x0807a4ea in FSShell::copy_entry ()[[BR]]
+ #9  0x0807abe7 in FSShell::copy_dir_contents ()[[BR]]
+ #10 0x0807a973 in FSShell::copy_entry ()[[BR]]
+ #11 0x0807abe7 in FSShell::copy_dir_contents ()[[BR]]
+ #12 0x0807a973 in FSShell::copy_entry ()[[BR]]
+ #13 0x0807abe7 in FSShell::copy_dir_contents ()[[BR]]
+ #14 0x0807a973 in FSShell::copy_entry ()[[BR]]
+ #15 0x0807abe7 in FSShell::copy_dir_contents ()[[BR]]
+ #16 0x0807a973 in FSShell::copy_entry ()[[BR]]
+ #17 0x0807abe7 in FSShell::copy_dir_contents ()[[BR]]
+ #18 0x0807a973 in FSShell::copy_entry ()[[BR]]
+ #19 0x0807b4ba in FSShell::command_cp ()[[BR]]
+ #20 0x08075a5f in FSShell::Command::Do ()[[BR]]
+ #21 0x080788a5 in main ()[[BR]]
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2561">http://dev.haiku-os.org/ticket/2561</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009252.html">[Haiku-bugs] [Haiku] #2223: KDL in tty driver (rev. 25445)
+</A></li>
+	<LI>Next message: <A HREF="009273.html">[Haiku-bugs] [Haiku] #2561: bfs_shell no more sems
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9253">[ date ]</a>
+              <a href="thread.html#9253">[ thread ]</a>
+              <a href="subject.html#9253">[ subject ]</a>
+              <a href="author.html#9253">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

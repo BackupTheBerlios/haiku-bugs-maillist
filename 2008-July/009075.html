@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1739: Include a build system script to generate a proper 'develop' directory on Haiku
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-July/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231739%3A%20Include%20a%20build%20system%20script%20to%0A%20generate%20a%20proper%20%27develop%27%20directory%20on%20Haiku&In-Reply-To=%3C049.1996ecc0ea67c2ed228f2db894531b08%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009114.html">
+   <LINK REL="Next"  HREF="009076.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1739: Include a build system script to generate a proper 'develop' directory on Haiku</H1>
+    <B>andreasf</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231739%3A%20Include%20a%20build%20system%20script%20to%0A%20generate%20a%20proper%20%27develop%27%20directory%20on%20Haiku&In-Reply-To=%3C049.1996ecc0ea67c2ed228f2db894531b08%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1739: Include a build system script to generate a proper 'develop' directory on Haiku">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Jul 23 11:28:46 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009114.html">[Haiku-bugs] [Haiku] #2535: Deadlock discovered: usb explore (legacy mutex) - sh (devfs mutex)
+</A></li>
+        <LI>Next message: <A HREF="009076.html">[Haiku-bugs] [Haiku] #581: Crash while mounting a BFS partition
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9075">[ date ]</a>
+              <a href="thread.html#9075">[ thread ]</a>
+              <a href="subject.html#9075">[ subject ]</a>
+              <a href="author.html#9075">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1739: Include a build system script to generate a proper 'develop' directory on
+Haiku
+---------------------------+------------------------------------------------
+  Reporter:  nielx         |       Owner:  bonefish      
+      Type:  enhancement   |      Status:  assigned      
+  Priority:  blocker       |   Milestone:  R1/alpha1     
+ Component:  Build System  |     Version:  R1 development
+Resolution:                |   Blockedby:                
+  Platform:  x86           |    Blocking:                
+---------------------------+------------------------------------------------
+
+Comment(by andreasf):
+
+ Replying to [comment:18 scottmc]:
+ &gt; This ticket actually has a handful of tasks still to be done.  There is
+ a milestone on HaikuPorts for it:
+
+ While the HaikuPorts milestone is certainly relevant for development on
+ Haiku, Ingo indicated above that this ticket could be closed despite the
+ missing tools he listed. So what's keeping this develop-directory ticket
+ open would be only the missing develop contents, no? If we do want to
+ track other tool availability, we could do so in a separate ticket, now
+ that Trac has dependency tracking. I'll look into packaging neon and
+ Subversion 1.4.x shortly.
+
+ For the freetype headers I had a one-line patch against OptionalPackages
+ to add them, but it was useless without {{{freetype-config}}} (which would
+ need to be built first) and pkg-config files (that may need to be
+ preprocessed before copying).
+
+ {{{
+ Index: build/jam/OptionalPackages
+ ===================================================================
+ --- build/jam/OptionalPackages  (Revision 25608)
+ +++ build/jam/OptionalPackages  (Arbeitskopie)
+ @@ -92,6 +92,7 @@
+         AddHeaderDirectoryToHaikuImage libs ncurses : 3rdparty ;
+         AddHeaderDirectoryToHaikuImage libs png : 3rdparty ;
+         AddHeaderDirectoryToHaikuImage libs zlib : 3rdparty ;
+ +       AddHeaderDirectoryToHaikuImage libs freetype2 : 3rdparty ;
+
+         if $(HAIKU_GCC_VERSION[1]) &gt; 2 {
+                 # gcc 4
+ }}}
+
+ I dropped that incomplete patch for my Bluetooth patch and was short on
+ time lately. This line could already be added if still missing.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1739#comment:19">http://dev.haiku-os.org/ticket/1739#comment:19</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009114.html">[Haiku-bugs] [Haiku] #2535: Deadlock discovered: usb explore (legacy mutex) - sh (devfs mutex)
+</A></li>
+	<LI>Next message: <A HREF="009076.html">[Haiku-bugs] [Haiku] #581: Crash while mounting a BFS partition
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9075">[ date ]</a>
+              <a href="thread.html#9075">[ thread ]</a>
+              <a href="subject.html#9075">[ subject ]</a>
+              <a href="author.html#9075">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

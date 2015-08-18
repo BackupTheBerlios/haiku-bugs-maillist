@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2900: panic: double fault, always thread 4 kernel_daemon
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232900%3A%20panic%3A%20double%20fault%2C%0A%20always%20thread%204%20kernel_daemon&In-Reply-To=%3C050.19b89556dc18e0aa71a7a6f210fb4507%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011300.html">
+   <LINK REL="Next"  HREF="011378.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2900: panic: double fault, always thread 4 kernel_daemon</H1>
+    <B>stippi</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232900%3A%20panic%3A%20double%20fault%2C%0A%20always%20thread%204%20kernel_daemon&In-Reply-To=%3C050.19b89556dc18e0aa71a7a6f210fb4507%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2900: panic: double fault, always thread 4 kernel_daemon">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Oct 23 10:45:22 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011300.html">[Haiku-bugs] [Haiku] #2900: panic: double fault, always thread 4 kernel_daemon
+</A></li>
+        <LI>Next message: <A HREF="011378.html">[Haiku-bugs] [Haiku] #2900: panic: double fault, always thread 4 kernel_daemon
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11317">[ date ]</a>
+              <a href="thread.html#11317">[ thread ]</a>
+              <a href="subject.html#11317">[ subject ]</a>
+              <a href="author.html#11317">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2900: panic: double fault, always thread 4 kernel_daemon
+----------------------------+-----------------------------------------------
+  Reporter:  stippi         |       Owner:  axeld         
+      Type:  bug            |      Status:  new           
+  Priority:  blocker        |   Milestone:  R1/alpha1     
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |   Blockedby:                
+  Platform:  All            |    Blocking:                
+----------------------------+-----------------------------------------------
+
+Comment(by stippi):
+
+ I just got the crash again. Yesterday I built a completely fresh
+ installation and didn't get the crash at first, apparently it may take a
+ while until it crashes. This morning, I had one app_server crash and
+ rebooted, during the second session, I got the double fault again. So
+ unless the app_server crash corrupted something, I would say the problem
+ is not attributed to a corrupt image.
+
+ So far, I was only able to retrieve the area info. area $edi gave &quot;could
+ not find area $edi (0)&quot;, but I scrolled down to the end of the stack trace
+ and did &quot;area 0x81012f60&quot; which was the last contents of edi. That gave
+ 'kernel heap'. I will now enable the kernel debugging and follow the rest
+ of your instructions. Thanks!
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2900#comment:5">http://dev.haiku-os.org/ticket/2900#comment:5</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011300.html">[Haiku-bugs] [Haiku] #2900: panic: double fault, always thread 4 kernel_daemon
+</A></li>
+	<LI>Next message: <A HREF="011378.html">[Haiku-bugs] [Haiku] #2900: panic: double fault, always thread 4 kernel_daemon
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11317">[ date ]</a>
+              <a href="thread.html#11317">[ thread ]</a>
+              <a href="subject.html#11317">[ subject ]</a>
+              <a href="author.html#11317">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

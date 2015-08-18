@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1976: Installing Development package	failes
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231976%3A%20Installing%20Development%20package%0A%09failes&In-Reply-To=%3C053.070b8b5607e0ba06cd2b848ca9ab2e6a%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005870.html">
+   <LINK REL="Next"  HREF="005872.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1976: Installing Development package	failes</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231976%3A%20Installing%20Development%20package%0A%09failes&In-Reply-To=%3C053.070b8b5607e0ba06cd2b848ca9ab2e6a%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1976: Installing Development package	failes">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Mar 29 01:25:53 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005870.html">[Haiku-bugs] [Haiku] #1976: Installing Development package	failes
+</A></li>
+        <LI>Next message: <A HREF="005872.html">[Haiku-bugs] [Haiku] #1976: Installing Development package	failes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5871">[ date ]</a>
+              <a href="thread.html#5871">[ thread ]</a>
+              <a href="subject.html#5871">[ subject ]</a>
+              <a href="author.html#5871">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1976: Installing Development package failes
+---------------------------+------------------------------------------------
+  Reporter:  plfiorini     |       Owner:  bonefish      
+      Type:  bug           |      Status:  new           
+  Priority:  normal        |   Milestone:  R1            
+ Component:  Build System  |     Version:  R1 development
+Resolution:                |    Platform:  x86           
+---------------------------+------------------------------------------------
+Comment (by plfiorini):
+
+ That was my first build with gcc 2.95.3, so I've changed the
+ UserBuildConfig in order to get the Development package installed and ran
+ jam -q -j2 haiku-image.
+ If now I create the haiku-image the error doesn't happen, last lines of
+ the output:
+
+ AddUnzipFileToContainerUnzipFilesScript &lt;HaikuImage&gt;haiku.image-unzip-
+ files-dummy-home/config/bin-&lt;download&gt;jam-haiku-gcc2-2008-03-27.zip
+ AddUnzipFileToContainerUnzipFilesScript &lt;HaikuImage&gt;haiku.image-unzip-
+ files-dummy-develop/tools-&lt;download&gt;gcc-2.95.3-haiku-080323.zip
+ AddUnzipFileToContainerUnzipFilesScript &lt;HaikuImage&gt;haiku.image-unzip-
+ files-dummy-home-&lt;download&gt;autoconf-2.61-gcc2-2008-03-24.zip
+ AddUnzipFileToContainerUnzipFilesScript &lt;HaikuImage&gt;haiku.image-unzip-
+ files-dummy-home-&lt;download&gt;automake-1.10.1-gcc2-2008-03-24.zip
+ AddUnzipFileToContainerUnzipFilesScript &lt;HaikuImage&gt;haiku.image-unzip-
+ files-dummy-home-&lt;download&gt;bison-2.3-gcc2-2008-03-28.zip
+ AddUnzipFileToContainerUnzipFilesScript &lt;HaikuImage&gt;haiku.image-unzip-
+ files-dummy-home-&lt;download&gt;flex-2.5.35-gcc2-2008-03-28.zip
+ AddUnzipFileToContainerUnzipFilesScript &lt;HaikuImage&gt;haiku.image-unzip-
+ files-dummy-home-&lt;download&gt;libtool-1.5.26-gcc2-2008-03-24.zip
+ AddUnzipFileToContainerUnzipFilesScript &lt;HaikuImage&gt;haiku.image-unzip-
+ files-dummy-home-&lt;download&gt;texinfo-4.11-gcc2-2008-03-24.zip
+ AddUnzipFileToContainerUnzipFilesScript &lt;HaikuImage&gt;haiku.image-unzip-
+ files-dummy-home-&lt;download&gt;perl-5.10.0-gcc2-2008-03-24.zip
+ AppendToContainerCopyFilesScript &lt;HaikuImage&gt;haiku.image-copy-files-dummy-
+ beos/system/lib
+ BuildHaikuImage1 /dev/hda2
+
+ Creating image ...
+ 100+0 records in
+ 100+0 records out
+ 104857600 bytes (105 MB) copied, 7,18794 seconds, 14,6 MB/s
+ Partition::SetTo(): active: 0
+ Partition::SetTo(): active: 0
+ Partition::SetTo(): active: 0
+ Partition::SetTo(): active: 0
+ Writing boot code to &quot;/dev/hda2&quot; (partition offset: 399974400 bytes) ...
+ Populating image ...
+ Unzipping generated/download/jam-haiku-gcc2-2008-03-27.zip ...
+ Unzipping generated/download/gcc-2.95.3-haiku-080323.zip ...
+ Unzipping generated/download/autoconf-2.61-gcc2-2008-03-24.zip ...
+ Unzipping generated/download/automake-1.10.1-gcc2-2008-03-24.zip ...
+ Unzipping generated/download/bison-2.3-gcc2-2008-03-28.zip ...
+ Unzipping generated/download/flex-2.5.35-gcc2-2008-03-28.zip ...
+ Unzipping generated/download/libtool-1.5.26-gcc2-2008-03-24.zip ...
+ Unzipping generated/download/texinfo-4.11-gcc2-2008-03-24.zip ...
+ Unzipping generated/download/perl-5.10.0-gcc2-2008-03-24.zip ...
+ Deleting old MIME database ...
+ Installing MIME database ...
+ Unmounting ...
+ ...updated 246 target(s)...
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1976#comment:2">http://dev.haiku-os.org/ticket/1976#comment:2</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005870.html">[Haiku-bugs] [Haiku] #1976: Installing Development package	failes
+</A></li>
+	<LI>Next message: <A HREF="005872.html">[Haiku-bugs] [Haiku] #1976: Installing Development package	failes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5871">[ date ]</a>
+              <a href="thread.html#5871">[ thread ]</a>
+              <a href="subject.html#5871">[ subject ]</a>
+              <a href="author.html#5871">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

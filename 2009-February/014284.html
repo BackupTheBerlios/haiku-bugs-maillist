@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3415: Boot from USB Hard Drive Fails
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-February/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233415%3A%20Boot%20from%20USB%20Hard%20Drive%20Fails&In-Reply-To=%3C040.23202d3a615161fd11dd078f59d254c2%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="014280.html">
+   <LINK REL="Next"  HREF="014443.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3415: Boot from USB Hard Drive Fails</H1>
+    <B>nielx</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233415%3A%20Boot%20from%20USB%20Hard%20Drive%20Fails&In-Reply-To=%3C040.23202d3a615161fd11dd078f59d254c2%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3415: Boot from USB Hard Drive Fails">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Feb  5 22:46:08 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="014280.html">[Haiku-bugs] [Haiku] #3356: intermittant and out of order audio
+</A></li>
+        <LI>Next message: <A HREF="014443.html">[Haiku-bugs] [Haiku] #3415: Boot from USB Hard Drive Fails
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14284">[ date ]</a>
+              <a href="thread.html#14284">[ thread ]</a>
+              <a href="subject.html#14284">[ subject ]</a>
+              <a href="author.html#14284">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3415: Boot from USB Hard Drive Fails
+--------------------------------+-------------------------------------------
+ Reporter:  nielx               |       Owner:  axeld         
+     Type:  bug                 |      Status:  new           
+ Priority:  normal              |   Milestone:  R1            
+Component:  System/Boot Loader  |     Version:  R1 development
+Blockedby:                      |    Platform:  All           
+ Blocking:                      |  
+--------------------------------+-------------------------------------------
+ I've got a 500 GiB USB drive with four partitions:
+ 150 GiB Ext3
+ 150 GiB BFS (for Haiku)
+ 190 GiB empty
+ 1 GiB Swap
+
+ I have tried two different Grub configurations. In the first configuration
+ I have grub installed on my own HD. The BIOS boots from the standard HD,
+ which makes that hd0 (in grub terms), and the USB drive hd1. Haiku is on
+ hd1 (hd1,5 to be exact). I enter haiku's boot loader, but it goes straight
+ into the menu, because it cannot find the disk Haiku is on.
+
+ The second configuration is where Grub is installed and booted from the
+ USB disk. When I instruct the BIOS to boot from the IDE disk, this disk is
+ hd0, and Haiku is at hd0,5. Now the boot loader finds the disk, but it
+ stalls. I will attach an image of what it looks like. The point where it
+ stalls is the same point, 'kernel entry at 8003ef2d'. That's where it
+ stops doing anything.
+
+ (I realize these are actually two separate bugs, but let's focus on the
+ second situation and later look at the multi-hd confuses bootloader
+ thing).
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3415">http://dev.haiku-os.org/ticket/3415</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="014280.html">[Haiku-bugs] [Haiku] #3356: intermittant and out of order audio
+</A></li>
+	<LI>Next message: <A HREF="014443.html">[Haiku-bugs] [Haiku] #3415: Boot from USB Hard Drive Fails
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14284">[ date ]</a>
+              <a href="thread.html#14284">[ thread ]</a>
+              <a href="subject.html#14284">[ subject ]</a>
+              <a href="author.html#14284">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

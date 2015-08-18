@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2262: &quot;restrict&quot; keyword issue in	posix/search.h
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232262%3A%20%22restrict%22%20keyword%20issue%20in%0A%09posix/search.h&In-Reply-To=%3C042.1d247d0fc4942936a077b2378be431ed%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007622.html">
+   <LINK REL="Next"  HREF="007648.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2262: &quot;restrict&quot; keyword issue in	posix/search.h</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232262%3A%20%22restrict%22%20keyword%20issue%20in%0A%09posix/search.h&In-Reply-To=%3C042.1d247d0fc4942936a077b2378be431ed%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2262: &quot;restrict&quot; keyword issue in	posix/search.h">trac at haiku-os.org
+       </A><BR>
+    <I>Sun May 25 16:16:46 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007622.html">[Haiku-bugs] [Haiku] #2261: Member named `st_blocks' is missing from struct stat in sys/stat.h
+</A></li>
+        <LI>Next message: <A HREF="007648.html">[Haiku-bugs] [Haiku] #2262: &quot;restrict&quot; keyword issue in	posix/search.h
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7610">[ date ]</a>
+              <a href="thread.html#7610">[ thread ]</a>
+              <a href="subject.html#7610">[ subject ]</a>
+              <a href="author.html#7610">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2262: &quot;restrict&quot; keyword issue in posix/search.h
+-----------------------+----------------------------------------------------
+ Reporter:  kaliber    |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+ Platform:  All        |  
+-----------------------+----------------------------------------------------
+ Consider a axample:
+
+
+ {{{
+ #include &lt;unistd.h&gt;
+ #include &lt;search.h&gt;
+ int main() { return 0; }
+ }}}
+
+ and try to compile:
+
+
+ {{{
+ In file included from /boot/home/1.c:2:
+ /boot/develop/headers/posix/search.h:35: conflicting types for `restrict'
+ /boot/develop/headers/posix/search.h:35: previous declaration of
+ `restrict'
+ }}}
+
+ Changing restrict to __restrict fixes the problem, but I'm not sure that
+ is a good solution.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2262">http://dev.haiku-os.org/ticket/2262</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007622.html">[Haiku-bugs] [Haiku] #2261: Member named `st_blocks' is missing from struct stat in sys/stat.h
+</A></li>
+	<LI>Next message: <A HREF="007648.html">[Haiku-bugs] [Haiku] #2262: &quot;restrict&quot; keyword issue in	posix/search.h
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7610">[ date ]</a>
+              <a href="thread.html#7610">[ thread ]</a>
+              <a href="subject.html#7610">[ subject ]</a>
+              <a href="author.html#7610">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1591: Gobe Productive crashing when quitting	program.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231591%3A%20Gobe%20Productive%20crashing%20when%20quitting%0A%09program.&In-Reply-To=%3C041.af0c41ace479d918b7490c031f0e042d%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003383.html">
+   <LINK REL="Next"  HREF="003392.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1591: Gobe Productive crashing when quitting	program.</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231591%3A%20Gobe%20Productive%20crashing%20when%20quitting%0A%09program.&In-Reply-To=%3C041.af0c41ace479d918b7490c031f0e042d%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1591: Gobe Productive crashing when quitting	program.">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Oct 26 19:51:40 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003383.html">[Haiku-bugs] [Haiku] #1590: Updated Broadcom Tigon3 ethernet	driver
+</A></li>
+        <LI>Next message: <A HREF="003392.html">[Haiku-bugs] [Haiku] #1591: Gobe Productive crashing when	quitting program.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3390">[ date ]</a>
+              <a href="thread.html#3390">[ thread ]</a>
+              <a href="subject.html#3390">[ subject ]</a>
+              <a href="author.html#3390">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1591: Gobe Productive crashing when quitting program.
+--------------------------------+-------------------------------------------
+ Reporter:  kvdman              |       Owner:  axeld         
+     Type:  bug                 |      Status:  new           
+ Priority:  normal              |   Milestone:  R1            
+Component:  Servers/app_server  |     Version:  R1 development
+ Platform:  All                 |  
+--------------------------------+-------------------------------------------
+ Hi,
+
+ This is reproducible, Gobe Productive 2.0.1 will always crash when
+ exiting. I'll provide the bt here. Sorry if this turns out weird, posting
+ from within Opera/Haiku.
+
+ 0xffff0102 in ?? ()
+ (gdb) bt
+ #0  0xffff0102 in ?? ()
+ #1  0x00c2c596 in debugger () from /boot/beos/system/lib/libroot.so
+ #2  0x00c337e5 in __assert_fail () from /boot/beos/system/lib/libroot.so
+ #3  0x00c3866a in BPrivate::hoardHeap::freeBlock ()
+    from /boot/beos/system/lib/libroot.so
+ #4  0x00c39716 in BPrivate::processHeap::free ()
+    from /boot/beos/system/lib/libroot.so
+ #5  0x00c3ada0 in free () from /boot/beos/system/lib/libroot.so
+ #6  0x00c2a68c in __builtin_delete () from
+ /boot/beos/system/lib/libroot.so
+ #7  0x00832ae4 in BArchivable::~BArchivable ()
+    from /boot/beos/system/lib/libbe.so
+ #8  0x0073a826 in BBitmap::~BBitmap () from /boot/beos/system/lib/libbe.so
+ #9  0x003652da in TBitmapManager::DeleteEntry ()
+ #10 0x00364e4a in TBitmapManager::~TBitmapManager ()
+ #11 0x0035bc2c in TApp::~TApp ()
+ #12 0x00361e47 in main ()
+ (gdb)
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1591">http://dev.haiku-os.org/ticket/1591</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003383.html">[Haiku-bugs] [Haiku] #1590: Updated Broadcom Tigon3 ethernet	driver
+</A></li>
+	<LI>Next message: <A HREF="003392.html">[Haiku-bugs] [Haiku] #1591: Gobe Productive crashing when	quitting program.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3390">[ date ]</a>
+              <a href="thread.html#3390">[ thread ]</a>
+              <a href="subject.html#3390">[ subject ]</a>
+              <a href="author.html#3390">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

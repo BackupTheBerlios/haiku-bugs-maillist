@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1323: unhandled interrupts
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-July/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231323%3A%20unhandled%20interrupts&In-Reply-To=%3C048.7e1d7dc3d0ad2c3ffd2d99d432a0b90b%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001912.html">
+   <LINK REL="Next"  HREF="001919.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1323: unhandled interrupts</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231323%3A%20unhandled%20interrupts&In-Reply-To=%3C048.7e1d7dc3d0ad2c3ffd2d99d432a0b90b%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1323: unhandled interrupts">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Jul 23 20:20:08 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001912.html">[Haiku-bugs] [Haiku] #1201: Random memory trashing
+</A></li>
+        <LI>Next message: <A HREF="001919.html">[Haiku-bugs] [Haiku] #1323: unhandled interrupts
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1917">[ date ]</a>
+              <a href="thread.html#1917">[ thread ]</a>
+              <a href="subject.html#1917">[ subject ]</a>
+              <a href="author.html#1917">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1323: unhandled interrupts
+---------------------------+------------------------------------------------
+ Reporter:  jonas.kirilla  |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1            
+Component:  - General      |     Version:  R1 development
+ Platform:  All            |  
+---------------------------+------------------------------------------------
+ Pressing F12 (not crashing) and typing ints:
+ {{{
+ Welcome to Kernel Debugging Land...
+ Running on CPU 0
+ kdebug&gt; ints
+ int   0, enabled 1, handled   302944, unhandled        0
+ int   1, enabled 1, handled     1872, unhandled        0, ACTIVE
+ int   3, enabled 2, handled    16101, unhandled        0
+ int   7, enabled 1, handled      331, unhandled        0
+ int   9, enabled 2, handled        0, unhandled   214127
+ int  10, enabled 2, handled        0, unhandled        0
+ int  11, enabled 1, handled    46124, unhandled        0
+ int  12, enabled 2, handled        0, unhandled        0
+ int  14, enabled 1, handled     6291, unhandled        2
+ int  15, enabled 1, handled       40, unhandled        0
+ }}}
+
+ It doesn't seem to happen all of the time, but when it starts the numbers
+ grow seemingly fast, IMO. Only happens with int 9 on my system, AFAIK.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1323">http://dev.haiku-os.org/ticket/1323</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001912.html">[Haiku-bugs] [Haiku] #1201: Random memory trashing
+</A></li>
+	<LI>Next message: <A HREF="001919.html">[Haiku-bugs] [Haiku] #1323: unhandled interrupts
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1917">[ date ]</a>
+              <a href="thread.html#1917">[ thread ]</a>
+              <a href="subject.html#1917">[ subject ]</a>
+              <a href="author.html#1917">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

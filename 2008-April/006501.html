@@ -1,0 +1,171 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2083: EHCI bus hanging at boot.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232083%3A%20EHCI%20bus%20hanging%20at%20boot.&In-Reply-To=%3C047.be3c468fd9f48e5c92f90d864e11b091%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006496.html">
+   <LINK REL="Next"  HREF="006999.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2083: EHCI bus hanging at boot.</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232083%3A%20EHCI%20bus%20hanging%20at%20boot.&In-Reply-To=%3C047.be3c468fd9f48e5c92f90d864e11b091%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2083: EHCI bus hanging at boot.">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Apr 17 13:00:14 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006496.html">[Haiku-bugs] [Haiku] #2083: EHCI bus hanging at boot.
+</A></li>
+        <LI>Next message: <A HREF="006999.html">[Haiku-bugs] [Haiku] #2083: EHCI bus hanging at boot.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6501">[ date ]</a>
+              <a href="thread.html#6501">[ thread ]</a>
+              <a href="subject.html#6501">[ subject ]</a>
+              <a href="author.html#6501">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2083: EHCI bus hanging at boot.
+--------------------------+-------------------------------------------------
+  Reporter:  bga          |       Owner:  mmlr          
+      Type:  bug          |      Status:  assigned      
+  Priority:  blocker      |   Milestone:  R1            
+ Component:  Drivers/USB  |     Version:  R1 development
+Resolution:               |    Platform:  All           
+--------------------------+-------------------------------------------------
+Comment (by bga):
+
+ You were right. 6 was EHCI. Just to be sure I connected a USB card reader
+ to the computer and got this (this is a multi-port reader with only one MS
+ Pro attached to it):
+
+ KERN: usb_disk: device reports a lun count of 4
+ KERN: usb_disk: vendor_identification    &quot;Generic &quot;
+ KERN: usb_disk: product_identification   &quot;USB SD Reader   &quot;
+ KERN: usb_disk: product_revision_level   &quot;1.00&quot;
+ KERN: usb_disk: operation 0x00 failed at the SCSI level
+ KERN: usb_disk: vendor_identification    &quot;Generic &quot;
+ KERN: usb_disk: product_identification   &quot;USB CF Reader   &quot;
+ KERN: usb_disk: product_revision_level   &quot;1.01&quot;
+ KERN: usb_disk: operation 0x00 failed at the SCSI level
+ KERN: usb_disk: vendor_identification    &quot;Generic &quot;
+ KERN: usb_disk: product_identification   &quot;USB SM Reader   &quot;
+ KERN: usb_disk: product_revision_level   &quot;1.02&quot;
+ KERN: usb_disk: operation 0x00 failed at the SCSI level
+ KERN: usb_disk: vendor_identification    &quot;Generic &quot;
+ KERN: usb_disk: product_identification   &quot;USB MS Reader   &quot;
+ KERN: usb_disk: product_revision_level   &quot;1.03&quot;
+ KERN: usb_disk: operation 0x00 failed at the SCSI level
+ KERN: usb_disk: request_sense: key: 0x06; asc: 0x28; ascq: 0x00;
+ KERN: usb_disk: request_sense: media changed
+ KERN: usb_disk: operation 0x00 failed at the SCSI level
+ KERN: usb_ehci: qtd (0x0393d100) error: 0x00088d40
+ KERN: usb_ehci: qtd (0x0393d300) error: 0x80008d40
+ KERN: usb_ehci: qtd (0x0393d480) error: 0x000d8d40
+ KERN: usb_ehci: qtd (0x0393d680) error: 0x80008d40
+ KERN: usb_ehci: qtd (0x0393d800) error: 0x000d8d40
+ KERN: usb_disk: receiving the command status wrapper failed
+ KERN: usb_ehci: qtd (0x0393dc00) error: 0x80008d40
+ KERN: usb_disk: failed to update capacity
+
+ After this the system stop responding. I can for example type ls on the
+ terminal but it will hang just after I hit enter. I can also not start any
+ other apps and the ones that are running eventually hang too. Then I
+ remove the card reader form the USB port and get this:
+
+ KERN: usb_ehci: qtd (0x0393df80) error: 0x001f8049
+ KERN: usb_disk: sending the command block wrapper failed
+ KERN: usb_ehci: qtd (0x0393e100) error: 0x00080248
+ KERN: usb_ehci: qtd (0x0393e300) error: 0x00080248
+ KERN: usb_ehci: qtd (0x0393e500) error: 0x00080248
+ KERN: usb_ehci: qtd (0x0393e700) error: 0x001f8049
+ KERN: usb_disk: sending the command block wrapper failed
+ KERN: usb_ehci: qtd (0x0393e880) error: 0x00080248
+ KERN: usb_ehci: qtd (0x0393ea80) error: 0x00080248
+ KERN: usb_ehci: qtd (0x0393ec80) error: 0x00080248
+ KERN: usb_disk: failed to update capacity
+ KERN: usb_ehci: qtd (0x0393ee80) error: 0x001f8049
+ KERN: usb_disk: sending the command block wrapper failed
+ KERN: usb_ehci: qtd (0x0393f000) error: 0x00080248
+ KERN: usb_ehci: qtd (0x0393f200) error: 0x00080248
+ KERN: usb_ehci: qtd (0x0393f400) error: 0x00080248
+ KERN: usb_ehci: qtd (0x0393f600) error: 0x001f8049
+ KERN: usb_disk: sending the command block wrapper failed
+ KERN: usb_ehci: qtd (0x0393f780) error: 0x00080248
+ KERN: usb_ehci: qtd (0x0393f980) error: 0x00080248
+ KERN: usb_ehci: qtd (0x0393fb80) error: 0x00080248
+ KERN: usb_ehci: qtd (0x0393fd80) error: 0x001f8049
+ KERN: usb_disk: sending the command block wrapper failed
+ KERN: usb_ehci: qtd (0x0393ff00) error: 0x00080248
+ KERN: usb_ehci: qtd (0x03940100) error: 0x00080248
+ KERN: usb_ehci: qtd (0x03940300) error: 0x00080248
+ KERN: usb_disk: failed to update capacity
+ KERN: usb_ehci: qtd (0x03940500) error: 0x001f8049
+ KERN: usb_disk: sending the command block wrapper failed
+ KERN: usb_ehci: qtd (0x03940680) error: 0x00080248
+ KERN: usb_ehci: qtd (0x03940880) error: 0x00080248
+ KERN: usb_ehci: qtd (0x03940a80) error: 0x00080248
+ KERN: usb_ehci: qtd (0x03940c80) error: 0x001f8049
+ KERN: usb_disk: sending the command block wrapper failed
+ KERN: usb_ehci: qtd (0x03940e00) error: 0x00080248
+ KERN: usb_ehci: qtd (0x03941000) error: 0x00080248
+ KERN: usb_ehci: qtd (0x03941200) error: 0x00080248
+ KERN: usb_ehci: qtd (0x03941400) error: 0x001f8049
+ KERN: usb_disk: sending the command block wrapper failed
+ KERN: usb_ehci: qtd (0x03941580) error: 0x00080248
+ KERN: usb_ehci: qtd (0x03941880) error: 0x00080248
+ KERN: usb_ehci: qtd (0x03941a80) error: 0x00080248
+ KERN: usb_disk: failed to update capacity
+ KERN: usb_ehci: qtd (0x03941c80) error: 0x001f8049
+ KERN: usb_disk: sending the command block wrapper failed
+ KERN: usb_ehci: qtd (0x03941e00) error: 0x00080248
+ KERN: usb_ehci: qtd (0x03942000) error: 0x00080248
+ KERN: usb_ehci: qtd (0x03942200) error: 0x00080248
+ KERN: usb_ehci: qtd (0x03942400) error: 0x001f8049
+ KERN: usb_disk: sending the command block wrapper failed
+ KERN: usb_ehci: qtd (0x03942580) error: 0x00080248
+ KERN: usb_ehci: qtd (0x03942780) error: 0x00080248
+ KERN: usb_ehci: qtd (0x03942980) error: 0x00080248
+
+ And everything starts working again.
+
+ At least it seems EHCI is at least kinda working. :)
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2083#comment:4">http://dev.haiku-os.org/ticket/2083#comment:4</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006496.html">[Haiku-bugs] [Haiku] #2083: EHCI bus hanging at boot.
+</A></li>
+	<LI>Next message: <A HREF="006999.html">[Haiku-bugs] [Haiku] #2083: EHCI bus hanging at boot.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6501">[ date ]</a>
+              <a href="thread.html#6501">[ thread ]</a>
+              <a href="subject.html#6501">[ subject ]</a>
+              <a href="author.html#6501">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

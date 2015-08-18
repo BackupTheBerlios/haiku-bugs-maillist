@@ -1,0 +1,197 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3249: Jukebox can't run on GCC4/GCC2	hibryd build
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-December/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233249%3A%20Jukebox%20can%27t%20run%20on%20GCC4/GCC2%0A%09hibryd%20build&In-Reply-To=%3C050.69d68e5e5092b161fdd0ed4eed3a2089%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="013308.html">
+   <LINK REL="Next"  HREF="013310.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3249: Jukebox can't run on GCC4/GCC2	hibryd build</H1>
+    <B>miqlas</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233249%3A%20Jukebox%20can%27t%20run%20on%20GCC4/GCC2%0A%09hibryd%20build&In-Reply-To=%3C050.69d68e5e5092b161fdd0ed4eed3a2089%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3249: Jukebox can't run on GCC4/GCC2	hibryd build">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Dec 31 01:19:23 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="013308.html">[Haiku-bugs] [Haiku] #3249: Jukebox can't run on GCC4/GCC2	hibryd build
+</A></li>
+        <LI>Next message: <A HREF="013310.html">[Haiku-bugs] [Haiku] #3250: Paladin RC2 don't work correctly with GCC4 hybrid build
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13309">[ date ]</a>
+              <a href="thread.html#13309">[ thread ]</a>
+              <a href="subject.html#13309">[ subject ]</a>
+              <a href="author.html#13309">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3249: Jukebox can't run on GCC4/GCC2 hibryd build
+--------------------------+-------------------------------------------------
+ Reporter:  miqlas        |       Owner:  axeld         
+     Type:  bug           |      Status:  new           
+ Priority:  normal        |   Milestone:  R1            
+Component:  Applications  |     Version:  R1 development
+Blockedby:                |    Platform:  x86           
+ Blocking:                |  
+--------------------------+-------------------------------------------------
+
+Comment(by miqlas):
+
+ No, i have R5 version, i'm sure, because i use the binary from my Haiku
+ GCC2 build partition, and i always use it for audio :)
+
+ I get these error with BePDF, and with ProjectConceptor too.
+
+ Jukebox:
+ In gdb:
+ {{{
+ (gdb) bt
+ #0  0x00661450 in BBitmap::Bounds () from
+ /boot/beos/system/lib/gcc2/libbe.so
+ #1  0x0025a5d1 in PlayButton::setSkin ()
+ #2  0x00244f7b in Jukebox::initViews ()
+ #3  0x00243c90 in Jukebox::Jukebox ()
+ #4  0x0024e30f in main ()
+ (gdb)
+ }}}
+
+ BePDF:
+ Shoot: [<A HREF="http://boly.hu/~miqlas/haiku/BePDF_GCC4.jpg">http://boly.hu/~miqlas/haiku/BePDF_GCC4.jpg</A>]
+
+ In gdb:
+ {{{
+ (gdb) bt
+ #0  0xffff0104 in ?? ()
+ #1  0x007b93e6 in port_buffer_size_etc ()
+    from /boot/beos/system/lib/gcc2/libroot.so
+ #2  0x00571b92 in BLooper::ReadRawFromPort ()
+    from /boot/beos/system/lib/gcc2/libbe.so
+ #3  0x00571c1e in BLooper::ReadMessageFromPort ()
+    from /boot/beos/system/lib/gcc2/libbe.so
+ #4  0x005712bb in BLooper::MessageFromPort ()
+    from /boot/beos/system/lib/gcc2/libbe.so
+ #5  0x00571dab in BLooper::task_looper ()
+    from /boot/beos/system/lib/gcc2/libbe.so
+ #6  0x0056563d in BApplication::Run () from
+ /boot/beos/system/lib/gcc2/libbe.so
+ #7  0x002da854 in main ()
+ (gdb)
+ }}}
+
+ ProjectConceptor:
+
+ In Terminal:
+ {{{
+ resolve symbol &quot;_ZNK11BArchivable7ArchiveEP8BMessageb&quot; returned:
+ -2147478780
+ resolve symbol &quot;_ZNK5BView7ArchiveEP8BMessageb&quot; returned: -2147478780
+ resolve symbol &quot;_ZNK12BApplication7ArchiveEP8BMessageb&quot; returned:
+ -2147478780
+ resolve symbol &quot;_ZNK5BView7ArchiveEP8BMessageb&quot; returned: -2147478780
+ resolve symbol &quot;_ZNK5BView7ArchiveEP8BMessageb&quot; returned: -2147478780
+ resolve symbol &quot;_ZNK11BArchivable7ArchiveEP8BMessageb&quot; returned:
+ -2147478780
+ resolve symbol &quot;_ZNK11BArchivable7ArchiveEP8BMessageb&quot; returned:
+ -2147478780
+ resolve symbol &quot;_ZNK7BWindow7ArchiveEP8BMessageb&quot; returned: -2147478780
+ resolve symbol &quot;_ZNK11BArchivable7ArchiveEP8BMessageb&quot; returned:
+ -2147478780
+ resolve symbol &quot;_ZNK11BArchivable7ArchiveEP8BMessageb&quot; returned:
+ -2147478780
+ resolve symbol &quot;_ZTVN10__cxxabiv117__class_type_infoE&quot; returned:
+ -2147478780
+ resolve symbol &quot;_ZNK11BArchivable7ArchiveEP8BMessageb&quot; returned:
+ -2147478780
+ resolve symbol &quot;_ZNK11BArchivable7ArchiveEP8BMessageb&quot; returned:
+ -2147478780
+ resolve symbol &quot;_ZNK11BArchivable7ArchiveEP8BMessageb&quot; returned:
+ -2147478780
+ resolve symbol &quot;_ZN5BList14_ReservedList1Ev&quot; returned: -2147478780
+ }}}
+
+ In gdb:
+ {{{
+ 0x0093beda in GraphEditor::AttachedToWindow (this=0x18046260)
+     at GraphEditor.cpp:574
+ 574     GraphEditor.cpp: No such file or directory.
+         in GraphEditor.cpp
+ (gdb) bt
+ #0  0x0093beda in GraphEditor::AttachedToWindow (this=0x18046260)
+     at GraphEditor.cpp:574
+ #1  0x003fe848 in BView::_Attach () from
+ /boot/beos/system/lib/gcc2/libbe.so
+ #2  0x003fe8c3 in BView::_Attach () from
+ /boot/beos/system/lib/gcc2/libbe.so
+ #3  0x003fb78d in BView::_AddChild () from
+ /boot/beos/system/lib/gcc2/libbe.so
+ #4  0x003fb629 in BView::AddChild () from
+ /boot/beos/system/lib/gcc2/libbe.so
+ #5  0x003de82e in BTab::Select () from /boot/beos/system/lib/gcc2/libbe.so
+ #6  0x003e047c in BTabView::Select () from
+ /boot/beos/system/lib/gcc2/libbe.so
+ #7  0x0023c2d4 in MainView::Select (this=0x18019fe0, tab=0x18063ab0)
+     at MainView.cpp:53
+ #8  0x00258da5 in PWindow::AddEditor (this=0x1802c1a8,
+     name=0x943e02 &quot;GraphEditor&quot;, editor=0x18046260) at
+ Document/PWindow.cpp:465
+ #9  0x00253203 in PWindow::CreatEditorList (this=0x1802c1a8)
+     at Document/PWindow.cpp:87
+ #10 0x0025a658 in PWindow::Show (this=0x1802c1a8) at
+ Document/PWindow.cpp:875
+ #11 0x00252af1 in PWindow::PWindow (this=0x1802c1a8, rect=
+       {left = 50, top = 50, right = 973, bottom = 717},
+ document=0x1801a108)
+     at Document/PWindow.cpp:35
+ #12 0x0024bffc in PDocument::Init (this=0x1801a108)
+     at Document/PDocument.cpp:261
+ #13 0x0024a834 in PDocument::PDocument (this=0x1801a108,
+     initManager=0x180202a0) at Document/PDocument.cpp:31
+ #14 0x002511f2 in PDocumentManager::CreateDocument (this=0x180202a0)
+     at Document/PDocumentManager.cpp:123
+ ---Type &lt;return&gt; to continue, or q &lt;return&gt; to quit---
+ #15 0x002505cf in PDocumentManager::PDocumentManager (this=0x180202a0)
+     at Document/PDocumentManager.cpp:9
+ #16 0x0023c551 in ProjektConceptor::ProjektConceptor (this=0x1801a230)
+     at ProjectConceptor.cpp:144
+ #17 0x0023d2ce in main () at ProjectConceptor.cpp:298
+ (gdb)
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3249#comment:2">http://dev.haiku-os.org/ticket/3249#comment:2</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="013308.html">[Haiku-bugs] [Haiku] #3249: Jukebox can't run on GCC4/GCC2	hibryd build
+</A></li>
+	<LI>Next message: <A HREF="013310.html">[Haiku-bugs] [Haiku] #3250: Paladin RC2 don't work correctly with GCC4 hybrid build
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13309">[ date ]</a>
+              <a href="thread.html#13309">[ thread ]</a>
+              <a href="subject.html#13309">[ subject ]</a>
+              <a href="author.html#13309">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

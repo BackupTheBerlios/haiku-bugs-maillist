@@ -1,0 +1,208 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1970: VM's sAvailableMemory counter is possibly inaccurate
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231970%3A%20VM%27s%20sAvailableMemory%20counter%20is%0A%20possibly%20inaccurate&In-Reply-To=%3C053.3d1b5d384f59811f2f383a3b282db8bb%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005876.html">
+   <LINK REL="Next"  HREF="005829.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1970: VM's sAvailableMemory counter is possibly inaccurate</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231970%3A%20VM%27s%20sAvailableMemory%20counter%20is%0A%20possibly%20inaccurate&In-Reply-To=%3C053.3d1b5d384f59811f2f383a3b282db8bb%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1970: VM's sAvailableMemory counter is possibly inaccurate">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Mar 29 16:27:07 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005876.html">[Haiku-bugs] [Haiku] #1970: VM's sAvailableMemory counter is possibly inaccurate
+</A></li>
+        <LI>Next message: <A HREF="005829.html">[Haiku-bugs] [Haiku] #1971: Negative memory usage being reported in	about haiku
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5886">[ date ]</a>
+              <a href="thread.html#5886">[ thread ]</a>
+              <a href="subject.html#5886">[ subject ]</a>
+              <a href="author.html#5886">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1970: VM's sAvailableMemory counter is possibly inaccurate
+----------------------------+-----------------------------------------------
+  Reporter:  anevilyak      |       Owner:  axeld         
+      Type:  bug            |      Status:  new           
+  Priority:  normal         |   Milestone:  R1/alpha1     
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |    Platform:  All           
+----------------------------+-----------------------------------------------
+Comment (by anevilyak):
+
+ Fyi, the problem is reproducible with the following relatively simple test
+ app:
+
+ #include &lt;kernel/OS.h&gt;
+
+ #include &lt;stdio.h&gt;
+
+ int main(int argc, char **argv)
+ {
+        printf(&quot;Allocating area of 1337 bytes\n&quot;);
+        void *addr = NULL;
+        area_id id = create_area(&quot;rgtest&quot;, &amp;addr, B_ANY_ADDRESS, 1337,
+ B_NO_LOCK, B_READ_AREA);
+        if (id &gt; 0)
+                printf(&quot;Area allocated successfully, id %ld, addr: %p\n&quot;,
+ id, addr);
+        printf(&quot;Destroying area of 1337 bytes\n&quot;);
+        delete_area(id);
+
+        return 0;
+ }
+
+ running this app results in the following pattern of reserve/unreserves:
+
+ ------------
+ KERN: try to reserve 90112 bytes, 1003679744 left
+ KERN: Reserve of 90112 bytes succeeded, 1003589632 left
+ KERN: try to reserve 8192 bytes, 1003589632 left
+ KERN: Reserve of 8192 bytes succeeded, 1003581440 left
+ KERN: try to reserve 4096 bytes, 1003581440 left
+ KERN: Reserve of 4096 bytes succeeded, 1003577344 left
+ KERN: try to reserve 65536 bytes, 1003577344 left
+ KERN: Reserve of 65536 bytes succeeded, 1003511808 left
+ KERN: try to reserve 4096 bytes, 1003511808 left
+ KERN: Reserve of 4096 bytes succeeded, 1003507712 left
+ KERN: try to reserve 577536 bytes, 1003507712 left
+ KERN: Reserve of 577536 bytes succeeded, 1002930176 left
+ KERN: try to reserve 28672 bytes, 1002930176 left
+ KERN: Reserve of 28672 bytes succeeded, 1002901504 left
+ KERN: try to reserve 4096 bytes, 1002901504 left
+ KERN: Reserve of 4096 bytes succeeded, 1002897408 left
+ KERN: try to reserve 638976 bytes, 1002897408 left
+ KERN: Reserve of 638976 bytes succeeded, 1002258432 left
+ KERN: try to reserve 32768 bytes, 1002258432 left
+ KERN: Reserve of 32768 bytes succeeded, 1002225664 left
+ KERN: try to reserve 204800 bytes, 1002225664 left
+ KERN: Reserve of 204800 bytes succeeded, 1002020864 left
+ KERN: try to reserve 339968 bytes, 1002020864 left
+ KERN: Reserve of 339968 bytes succeeded, 1001680896 left
+ KERN: Unreserved 0 bytes, 1001680896 left
+ KERN: try to reserve 16384 bytes, 1001680896 left
+ KERN: Reserve of 16384 bytes succeeded, 1001664512 left
+ KERN: try to reserve 4096 bytes, 1001664512 left
+ KERN: Reserve of 4096 bytes succeeded, 1001660416 left
+ KERN: try to reserve 4096 bytes, 1001660416 left
+ KERN: Reserve of 4096 bytes succeeded, 1001656320 left
+ KERN: try to reserve 4096 bytes, 1001656320 left
+ KERN: Reserve of 4096 bytes succeeded, 1001652224 left
+ KERN: Unreserved 90112 bytes, 1001742336 left
+ KERN: Unreserved 8192 bytes, 1001750528 left
+ KERN: Unreserved 0 bytes, 1001750528 left
+ KERN: Unreserved 4096 bytes, 1001754624 left
+ KERN: Unreserved 0 bytes, 1001754624 left
+ KERN: Unreserved 65536 bytes, 1001820160 left
+ KERN: Unreserved 0 bytes, 1001820160 left
+ KERN: Unreserved 4096 bytes, 1001824256 left
+ KERN: Unreserved 0 bytes, 1001824256 left
+ KERN: Unreserved 577536 bytes, 1002401792 left
+ KERN: Unreserved 28672 bytes, 1002430464 left
+ KERN: Unreserved 0 bytes, 1002430464 left
+ KERN: Unreserved 4096 bytes, 1002434560 left
+ KERN: Unreserved 0 bytes, 1002434560 left
+ KERN: Unreserved 638976 bytes, 1003073536 left
+ KERN: Unreserved 32768 bytes, 1003106304 left
+ KERN: Unreserved 0 bytes, 1003106304 left
+ KERN: Unreserved 204800 bytes, 1003311104 left
+ KERN: Unreserved 0 bytes, 1003311104 left
+ KERN: Unreserved 339968 bytes, 1003651072 left
+ KERN: Unreserved 0 bytes, 1003651072 left
+ KERN: Unreserved 12288 bytes, 1003663360 left
+ KERN: Unreserved 0 bytes, 1003663360 left
+ KERN: try to reserve 4096 bytes, 1003663360 left
+ KERN: Reserve of 4096 bytes succeeded, 1003659264 left
+ KERN: try to reserve 90112 bytes, 1003659264 left
+ KERN: Reserve of 90112 bytes succeeded, 1003569152 left
+ KERN: try to reserve 8192 bytes, 1003569152 left
+ KERN: Reserve of 8192 bytes succeeded, 1003560960 left
+ KERN: try to reserve 4096 bytes, 1003560960 left
+ KERN: Reserve of 4096 bytes succeeded, 1003556864 left
+ KERN: try to reserve 4096 bytes, 1003556864 left
+ KERN: Reserve of 4096 bytes succeeded, 1003552768 left
+ KERN: try to reserve 65536 bytes, 1003552768 left
+ KERN: Reserve of 65536 bytes succeeded, 1003487232 left
+ KERN: try to reserve 4096 bytes, 1003487232 left
+ KERN: Reserve of 4096 bytes succeeded, 1003483136 left
+ KERN: try to reserve 4096 bytes, 1003483136 left
+ KERN: Reserve of 4096 bytes succeeded, 1003479040 left
+ KERN: try to reserve 4096 bytes, 1003479040 left
+ KERN: Reserve of 4096 bytes succeeded, 1003474944 left
+ KERN: try to reserve 4096 bytes, 1003474944 left
+ KERN: Reserve of 4096 bytes succeeded, 1003470848 left
+ KERN: try to reserve 638976 bytes, 1003470848 left
+ KERN: Reserve of 638976 bytes succeeded, 1002831872 left
+ KERN: try to reserve 32768 bytes, 1002831872 left
+ KERN: Reserve of 32768 bytes succeeded, 1002799104 left
+ KERN: try to reserve 204800 bytes, 1002799104 left
+ KERN: Reserve of 204800 bytes succeeded, 1002594304 left
+ KERN: try to reserve 204800 bytes, 1002594304 left
+ KERN: Reserve of 204800 bytes succeeded, 1002389504 left
+ KERN: Unreserved 4096 bytes, 1002393600 left
+ KERN: Unreserved 618496 bytes, 1003012096 left
+ KERN: try to reserve 4096 bytes, 1003012096 left
+ KERN: Reserve of 4096 bytes succeeded, 1003008000 left
+ KERN: Unreserved 4096 bytes, 1003012096 left
+ KERN: Unreserved 20480 bytes, 1003032576 left
+ KERN: Unreserved 90112 bytes, 1003122688 left
+ KERN: Unreserved 8192 bytes, 1003130880 left
+ KERN: Unreserved 4096 bytes, 1003134976 left
+ KERN: Unreserved 65536 bytes, 1003200512 left
+ KERN: Unreserved 4096 bytes, 1003204608 left
+ KERN: Unreserved 4096 bytes, 1003208704 left
+ KERN: Unreserved 4096 bytes, 1003212800 left
+ KERN: Unreserved 638976 bytes, 1003851776 left
+ KERN: Unreserved 32768 bytes, 1003884544 left
+ KERN: Unreserved 204800 bytes, 1004089344 left
+ KERN: Unreserved 204800 bytes, 1004294144 left
+ KERN: Unreserved 16384 bytes, 1004310528 left
+
+ Notice that this is more than we started with. There's also some other
+ weirdness in there like attempts to unreserve 0 bytes for some reason.
+
+ Hope this helps.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1970#comment:6">http://dev.haiku-os.org/ticket/1970#comment:6</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005876.html">[Haiku-bugs] [Haiku] #1970: VM's sAvailableMemory counter is possibly inaccurate
+</A></li>
+	<LI>Next message: <A HREF="005829.html">[Haiku-bugs] [Haiku] #1971: Negative memory usage being reported in	about haiku
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5886">[ date ]</a>
+              <a href="thread.html#5886">[ thread ]</a>
+              <a href="subject.html#5886">[ subject ]</a>
+              <a href="author.html#5886">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

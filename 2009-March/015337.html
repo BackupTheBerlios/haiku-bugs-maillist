@@ -1,0 +1,153 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3595: Problems with FireWare controller on HP Compaq NX7400
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233595%3A%20Problems%20with%20FireWare%20controller%0A%20on%20HP%20Compaq%20NX7400&In-Reply-To=%3C052.5eebe9501c8436612abcb00fcdbbadc6%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="015325.html">
+   <LINK REL="Next"  HREF="015395.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3595: Problems with FireWare controller on HP Compaq NX7400</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233595%3A%20Problems%20with%20FireWare%20controller%0A%20on%20HP%20Compaq%20NX7400&In-Reply-To=%3C052.5eebe9501c8436612abcb00fcdbbadc6%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3595: Problems with FireWare controller on HP Compaq NX7400">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Mar 24 21:21:11 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="015325.html">[Haiku-bugs] [Haiku] #3595: Problems with FireWare controller on HP Compaq NX7400
+</A></li>
+        <LI>Next message: <A HREF="015395.html">[Haiku-bugs] [Haiku] #3595: Problems with FireWare controller on HP Compaq NX7400
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15337">[ date ]</a>
+              <a href="thread.html#15337">[ thread ]</a>
+              <a href="subject.html#15337">[ subject ]</a>
+              <a href="author.html#15337">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3595: Problems with FireWare controller on HP Compaq NX7400
+------------------------------+---------------------------------------------
+ Reporter:  siarzhuk          |       Owner:  absabs     
+     Type:  bug               |      Status:  new        
+ Priority:  normal            |   Milestone:  Unscheduled
+Component:  Drivers/FireWire  |     Version:             
+ Keywords:                    |   Blockedby:             
+ Platform:  All               |    Blocking:             
+------------------------------+---------------------------------------------
+
+Comment(by siarzhuk):
+
+ I'm sorry, but still no good news here. :-( The same situation is
+ observed. I have step by step disabled network, video and ahci drivers -
+ freezing at boot is still observed. Cutout of syslog with firewire
+ initialization and results of KDL int command is below:
+
+
+ {{{
+ : fw_module_init
+ vendor=104c, device=803a, revision = 0
+ firewire: found 1 cards
+ firewire: latency timer 40 -&gt; 40.
+ firewire: cache size 10 -&gt; 10.
+ firewire: IRQ 10
+ firewire: hardware register address f4101000
+ firewire: mapping physical address 0xf4101000 with 2048 bytes for fw ohci
+ register
+ firewire: physical = 0xf4101000, virtual = 0x8062a000, offset = 0, phyadr
+ = 0xf4101000, mapadr = 0x8062a000, size = 4096, area = 0x00000ea7
+ firewire: mapped registers to 0x8062a000
+ firewire:OHCI version 1.10 (ROM=0)
+ firewire:No. of Isochronous channels is 4.
+ firewire: allocating 3076 bytes for fwohci config etc. buf
+ firewire: area = 3752, size = 4096, virt = 0x8062b000, phy = 0x00125000
+ firewire: allocating 4096 bytes for fw multi dma buf
+ firewire: area = 3753, size = 4096, virt = 0x8062c000, phy = 0x00126000
+ firewire: allocating 4096 bytes for fw multi dma buf
+ firewire: area = 3754, size = 4096, virt = 0x80640000, phy = 0x00127000
+ firewire: allocating 16384 bytes for fw multi dma buf
+ firewire: area = 3755, size = 16384, virt = 0x80792000, phy = 0x00128000
+ firewire: allocating 4096 bytes for fw multi dma buf
+ firewire: area = 3756, size = 4096, virt = 0x80641000, phy = 0x0012c000
+ firewire:EUI64 00:02:3f:ff:ff:ff:ff:ff
+ firewire:resetting OHCI...done (loop=0)
+ firewire:fwphy_rddata: 0x2 loop=0, retry=0
+ firewire:fwphy_rddata: 0x3 loop=0, retry=0
+ firewire:Phy 1394a available S400, 3 ports.
+ firewire:fwphy_rddata: 0x5 loop=0, retry=0
+ firewire:Enable 1394a Enhancements
+ firewire:fwphy_rddata: 0x5 loop=0, retry=0
+ firewire:fwphy_rddata: 0x2 loop=0, retry=0
+ firewire:fwphy_rddata: 0x4 loop=0, retry=0
+ Last message repeated 2 times.
+ firewire:Link S400, max_rec 2048 bytes.
+ firewire:BUS_OPT 0xa002 -&gt; 0xf800a002
+ firewire: allocating 524288 bytes for fw rx Area
+ firewire: area = 3758, size = 524288, virt = 0x80d01000, phy = 0x00263000
+ firewire: allocating 262144 bytes for fw rx Area
+ firewire: area = 3759, size = 262144, virt = 0x8079a000, phy = 0x02fc6000
+ firewire:fwohci_set_intr: 1
+ PANIC: keyboard requested halt.
+
+ Welcome to Kernel Debugging Land...
+ Thread 103 &quot;ps2 service&quot; running on CPU 0
+ kdebug&gt; int
+ int   1, enabled 1, handled        1, unhandled        0, ACTIVE
+         ps2:ps2_interrupt (0x806115c0), data 0x00000000
+ int  10, enabled 4, handled  6953053, unhandled        0
+         firewire:fwohci_intr (0x80787fd8), data 0x81d1c000
+         ehci:InterruptHandler__4EHCIPv (0x805eab0c), data 0x80faa440
+         uhci:InterruptHandler__4UHCIPv (0x80740600), data 0x80f866d8
+         uhci:InterruptHandler__4UHCIPv (0x80740600), data 0x80f8636c
+ int  11, enabled 2, handled        0, unhandled        0
+         uhci:InterruptHandler__4UHCIPv (0x80740600), data 0x80f865b4
+         uhci:InterruptHandler__4UHCIPv (0x80740600), data 0x80f86490
+ int  12, enabled 1, handled        9, unhandled        0
+         ps2:ps2_interrupt (0x806115c0), data 0x00000000
+ int  14, enabled 1, handled       49, unhandled        0
+         ide_adapter:ide_adapter_inthand (0x8060ba84), data 0x80fab070
+ int  15, enabled 1, handled        0, unhandled        0
+         ide_adapter:ide_adapter_inthand (0x8060ba84), data 0x80fab0a8
+ int 219, enabled 1, handled    17462, unhandled        0
+         kernel_x86:apic_timer_interrupt (0x800d3ce8), data 0x00000000
+ kdebug&gt; reboot
+
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3595#comment:6">http://dev.haiku-os.org/ticket/3595#comment:6</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="015325.html">[Haiku-bugs] [Haiku] #3595: Problems with FireWare controller on HP Compaq NX7400
+</A></li>
+	<LI>Next message: <A HREF="015395.html">[Haiku-bugs] [Haiku] #3595: Problems with FireWare controller on HP Compaq NX7400
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15337">[ date ]</a>
+              <a href="thread.html#15337">[ thread ]</a>
+              <a href="subject.html#15337">[ subject ]</a>
+              <a href="author.html#15337">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

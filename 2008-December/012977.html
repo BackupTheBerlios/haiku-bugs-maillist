@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3066: [app_server] crash in	BRegion::_SetSize
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-December/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233066%3A%20%5Bapp_server%5D%20crash%20in%0A%09BRegion%3A%3A_SetSize&In-Reply-To=%3C049.b9f0d7b485e5f76c7ff99b51e20393ec%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012978.html">
+   <LINK REL="Next"  HREF="012979.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3066: [app_server] crash in	BRegion::_SetSize</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233066%3A%20%5Bapp_server%5D%20crash%20in%0A%09BRegion%3A%3A_SetSize&In-Reply-To=%3C049.b9f0d7b485e5f76c7ff99b51e20393ec%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3066: [app_server] crash in	BRegion::_SetSize">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Dec  3 15:30:22 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012978.html">[Haiku-bugs] [Haiku] #3195: [Tracker] default move operation makes copying from CD-ROM a pain
+</A></li>
+        <LI>Next message: <A HREF="012979.html">[Haiku-bugs] [Haiku] #3196: Add ethernet driver for Atheros L1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12977">[ date ]</a>
+              <a href="thread.html#12977">[ thread ]</a>
+              <a href="subject.html#12977">[ subject ]</a>
+              <a href="author.html#12977">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3066: [app_server] crash in BRegion::_SetSize
+---------------------------------+------------------------------------------
+  Reporter:  diver               |       Owner:  axeld         
+      Type:  bug                 |      Status:  new           
+  Priority:  normal              |   Milestone:  R1            
+ Component:  Servers/app_server  |     Version:  R1 development
+Resolution:                      |   Blockedby:                
+  Platform:  All                 |    Blocking:                
+---------------------------------+------------------------------------------
+
+Comment(by anevilyak):
+
+ I can also relatively reliably reproduce this one while testing ticket
+ #3195. If I very rapidly click to dismiss the read-only error dialogs, I
+ hit the following backtrace every single time:
+
+ {{{
+ BRegion::_SetSize()
+ BRegion::operator= ()
+ RegionPool::GetRegion()
+ Window::SetFocus()
+ Desktop::SetFocusWindow()
+ Desktop::ActivateWindow()
+ Window::MouseDown()
+ MouseFilter::Filter()
+ EventDispatcher::_EventLoop()
+ EventDispatcher::_event_looper()
+ thread_entry()
+ }}}
+
+ I suspect there's a subtle race condition going on here, something like
+ the window being set to the focus window right as it's being destroyed, or
+ something along those lines.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3066#comment:4">http://dev.haiku-os.org/ticket/3066#comment:4</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012978.html">[Haiku-bugs] [Haiku] #3195: [Tracker] default move operation makes copying from CD-ROM a pain
+</A></li>
+	<LI>Next message: <A HREF="012979.html">[Haiku-bugs] [Haiku] #3196: Add ethernet driver for Atheros L1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12977">[ date ]</a>
+              <a href="thread.html#12977">[ thread ]</a>
+              <a href="subject.html#12977">[ subject ]</a>
+              <a href="author.html#12977">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

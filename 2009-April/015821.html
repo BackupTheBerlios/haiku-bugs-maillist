@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3710: Tracker crashes with BColumnTitle::Draw
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233710%3A%20Tracker%20crashes%20with%20BColumnTitle%3A%3ADraw&In-Reply-To=%3C047.45ec7c67a6168c00a026aea0bbd3cb8f%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="015819.html">
+   <LINK REL="Next"  HREF="015822.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3710: Tracker crashes with BColumnTitle::Draw</H1>
+    <B>PieterPanman</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233710%3A%20Tracker%20crashes%20with%20BColumnTitle%3A%3ADraw&In-Reply-To=%3C047.45ec7c67a6168c00a026aea0bbd3cb8f%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3710: Tracker crashes with BColumnTitle::Draw">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Apr  7 17:39:29 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="015819.html">[Haiku-bugs] [Haiku] #3110: [kernel] PANIC: page still has	mappings
+</A></li>
+        <LI>Next message: <A HREF="015822.html">[Haiku-bugs] [Haiku] #3711: Bug in BOutlineListView
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15821">[ date ]</a>
+              <a href="thread.html#15821">[ thread ]</a>
+              <a href="subject.html#15821">[ subject ]</a>
+              <a href="author.html#15821">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3710: Tracker crashes with BColumnTitle::Draw
+----------------------------------+-----------------------------------------
+ Reporter:  PieterPanman          |       Owner:  axeld         
+     Type:  bug                   |      Status:  new           
+ Priority:  normal                |   Milestone:  R1            
+Component:  Applications/Tracker  |     Version:  R1 development
+Blockedby:                        |    Platform:  All           
+ Blocking:                        |  
+----------------------------------+-----------------------------------------
+ Tracker crashed when I was switching workspaces, but I think I've seen
+ this before. Not sure if it is related to switching workspaces. Revision
+ 29884.
+ {{{
+ GNU gdb 6.3
+ Copyright 2004 Free Software Foundation, Inc.
+ GDB is free software, covered by the GNU General Public License, and you
+ are
+ welcome to change it and/or distribute copies of it under certain
+ conditions.
+ Type &quot;show copying&quot; to see the conditions.
+ There is absolutely no warranty for GDB.  Type &quot;show warranty&quot; for
+ details.
+ This GDB was configured as &quot;i586-pc-haiku&quot;...(no debugging symbols found)
+
+ [tcsetpgrp failed in terminal_inferior: Invalid Argument]
+ Thread 1208 caused an exception: Segment violation
+ Reading symbols from /boot/system/runtime_loader...done.
+ Loaded symbols for /boot/system/runtime_loader
+ Reading symbols from /boot/system/lib/libbe.so...done.
+ Loaded symbols for /boot/system/lib/libbe.so
+ Reading symbols from /boot/system/lib/libtracker.so...done.
+ Loaded symbols for /boot/system/lib/libtracker.so
+ Reading symbols from /boot/system/lib/libroot.so...done.
+ Loaded symbols for /boot/system/lib/libroot.so
+ Reading symbols from /boot/system/lib/libstdc++.r4.so...done.
+ Loaded symbols for /boot/system/lib/libstdc++.r4.so
+ Reading symbols from /boot/system/lib/libtranslation.so...done.
+ Loaded symbols for /boot/system/lib/libtranslation.so
+ Reading symbols from /boot/system/lib/libtextencoding.so...done.
+ Loaded symbols for /boot/system/lib/libtextencoding.so
+ Reading symbols from /boot/system/lib/libiconv.so...done.
+ Loaded symbols for /boot/system/lib/libiconv.so
+ [tcsetpgrp failed in terminal_inferior: Invalid Argument]
+ [Switching to team /boot/system/Tracker (100) thread
+ w&gt;/boot/home/projects/TestOutli (1208)]
+ 0x003d0ff2 in BString::BString () from /boot/system/lib/libbe.so
+ (gdb) bt
+ #0  0x003d0ff2 in BString::BString () from /boot/system/lib/libbe.so
+ #1  0x005d0ddc in BPrivate::BColumnTitle::Draw ()
+    from /boot/system/lib/libtracker.so
+ #2  0x005d0166 in BPrivate::BTitleView::Draw ()
+    from /boot/system/lib/libtracker.so
+ #3  0x005cfdb9 in BPrivate::BTitleView::Draw ()
+    from /boot/system/lib/libtracker.so
+ #4  0x0036d354 in BView::_Draw () from /boot/system/lib/libbe.so
+ #5  0x00371c39 in BWindow::DispatchMessage () from
+ /boot/system/lib/libbe.so
+ #6  0x00375808 in BWindow::task_looper () from /boot/system/lib/libbe.so
+ #7  0x002b8e83 in BLooper::_task0_ () from /boot/system/lib/libbe.so
+ #8  0x0067dcd8 in thread_entry () from /boot/system/lib/libroot.so
+ #9  0x7003ffec in ?? ()
+ (gdb)
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3710">http://dev.haiku-os.org/ticket/3710</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="015819.html">[Haiku-bugs] [Haiku] #3110: [kernel] PANIC: page still has	mappings
+</A></li>
+	<LI>Next message: <A HREF="015822.html">[Haiku-bugs] [Haiku] #3711: Bug in BOutlineListView
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15821">[ date ]</a>
+              <a href="thread.html#15821">[ thread ]</a>
+              <a href="subject.html#15821">[ subject ]</a>
+              <a href="author.html#15821">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

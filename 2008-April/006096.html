@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2008: KDL: when running 'svn up' on	haiku-host (r24742)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232008%3A%20KDL%3A%20when%20running%20%27svn%20up%27%20on%0A%09haiku-host%20%28r24742%29&In-Reply-To=%3C052.ceee7480353e20f45459b2434229b1ba%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006074.html">
+   <LINK REL="Next"  HREF="006099.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2008: KDL: when running 'svn up' on	haiku-host (r24742)</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232008%3A%20KDL%3A%20when%20running%20%27svn%20up%27%20on%0A%09haiku-host%20%28r24742%29&In-Reply-To=%3C052.ceee7480353e20f45459b2434229b1ba%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2008: KDL: when running 'svn up' on	haiku-host (r24742)">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Apr  3 20:04:26 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006074.html">[Haiku-bugs] [Haiku] #2008: KDL: when running 'svn up' on	haiku-host (r24742)
+</A></li>
+        <LI>Next message: <A HREF="006099.html">[Haiku-bugs] [Haiku] #2008: KDL: when running 'svn up' on	haiku-host (r24742)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6096">[ date ]</a>
+              <a href="thread.html#6096">[ thread ]</a>
+              <a href="subject.html#6096">[ subject ]</a>
+              <a href="author.html#6096">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2008: KDL: when running 'svn up' on haiku-host (r24742)
+----------------------------+-----------------------------------------------
+  Reporter:  kaoutsis       |       Owner:  axeld         
+      Type:  bug            |      Status:  closed        
+  Priority:  blocker        |   Milestone:  R1            
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:  fixed          |    Platform:  All           
+----------------------------+-----------------------------------------------
+Comment (by kaoutsis):
+
+ i tested again after r24742
+ now i get this:
+
+ {{{
+ where
+ stack trace for thread 9 &quot;block writer/notifier&quot;
+     kernel stack: 0x80188000 to 0x8018c000
+ frame            caller     &lt;image&gt;:function + offset
+ 8018ba58 (+  52) 80085d17   &lt;kernel&gt;:invoke_debugger_command + 0x00cf
+ 8018ba8c (+  64) 80086ab8   &lt;kernel&gt;:_ParseCommand__16ExpressionParserRi +
+ 0x01f8
+ 8018bacc (+  48) 800864aa
+ &lt;kernel&gt;:EvaluateCommand__16ExpressionParserPCcRi + 0x01de
+ 8018bafc (+ 228) 80087bcc   &lt;kernel&gt;:evaluate_debug_command + 0x0088
+ 8018bbe0 (+  64) 8008485a   &lt;kernel&gt;:kernel_debugger_loop__Fv + 0x017a
+ 8018bc20 (+  48) 80085505   &lt;kernel&gt;:kernel_debugger + 0x010d
+ 8018bc50 (+ 192) 800853ed   &lt;kernel&gt;:panic + 0x0029
+ 8018bd10 (+  64) 8005d9b7   &lt;kernel&gt;:vm_page_fault + 0x00ab
+ 8018bd50 (+  64) 800923e5   &lt;kernel&gt;:page_fault_exception + 0x00b1
+ 8018bd90 (+  12) 80095aed   &lt;kernel&gt;:int_bottom + 0x001d (nearest)
+ iframe at 0x8018bd9c (end = 0x8018bdf4)
+  eax 0xdeadbeef     ebx 0x9145e240      ecx 0x1          edx 0x246
+  esi 0x9145e260     edi 0x8018be40      ebp 0x8018be48   esp 0x8018bdd0
+  eip 0xdeadbeef  eflags 0x10287
+  vector: 0xe, error code: 0x0
+ 8018bd9c (+ 172) deadbeef
+ 8018be48 (+  64) 80066f7d   &lt;kernel&gt;:flush_pending_notifications__Fv +
+ 0x0069
+ 8018be88 (+ 336) 80066ff9   &lt;kernel&gt;:block_notifier_and_writer__FPv +
+ 0x0055
+ 8018bfd8 (+  32) 800386e3   &lt;kernel&gt;:_create_kernel_thread_kentry__Fv +
+ 0x001b
+ 8018bff8 (+2145861640) 80038678   &lt;kernel&gt;:thread_kthread_exit__Fv +
+ 0x0000
+ kdebug&gt;
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2008#comment:9">http://dev.haiku-os.org/ticket/2008#comment:9</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006074.html">[Haiku-bugs] [Haiku] #2008: KDL: when running 'svn up' on	haiku-host (r24742)
+</A></li>
+	<LI>Next message: <A HREF="006099.html">[Haiku-bugs] [Haiku] #2008: KDL: when running 'svn up' on	haiku-host (r24742)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6096">[ date ]</a>
+              <a href="thread.html#6096">[ thread ]</a>
+              <a href="subject.html#6096">[ subject ]</a>
+              <a href="author.html#6096">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

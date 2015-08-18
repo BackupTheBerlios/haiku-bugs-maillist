@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2615: Improved keyboard navigation with	triggers
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232615%3A%20Improved%20keyboard%20navigation%20with%0A%09triggers&In-Reply-To=%3C041.bfa285969fbe4acaf329c06c203e20ca%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009487.html">
+   <LINK REL="Next"  HREF="009534.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2615: Improved keyboard navigation with	triggers</H1>
+    <B>denisw</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232615%3A%20Improved%20keyboard%20navigation%20with%0A%09triggers&In-Reply-To=%3C041.bfa285969fbe4acaf329c06c203e20ca%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2615: Improved keyboard navigation with	triggers">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Aug 16 14:42:51 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009487.html">[Haiku-bugs] [Haiku] #2614: Indexes not being correctly	maintained.
+</A></li>
+        <LI>Next message: <A HREF="009534.html">[Haiku-bugs] [Haiku] #2615: Improved keyboard navigation with	triggers
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9526">[ date ]</a>
+              <a href="thread.html#9526">[ thread ]</a>
+              <a href="subject.html#9526">[ subject ]</a>
+              <a href="author.html#9526">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2615: Improved keyboard navigation with triggers
+-------------------------+--------------------------------------------------
+ Reporter:  denisw       |       Owner:  axeld         
+     Type:  enhancement  |      Status:  new           
+ Priority:  normal       |   Milestone:  R1            
+Component:  - General    |     Version:  R1 development
+Blockedby:               |    Platform:  All           
+ Blocking:               |  
+-------------------------+--------------------------------------------------
+ While many Haiku apps use shortcuts for several menu items, I realized
+ that there is no functionality to quickly navigate through Haiku UIs with
+ the keyboard. Many toolkits in other OS's have &quot;mnemonics&quot; for this
+ purpose, which are displayed as underlined letters in menu or button
+ labels. Pressing this letter key (in combination with a certain modifier)
+ focuses and activates the control. For instance, if you have a &quot;Cancel&quot;
+ button with an underlined &quot;C&quot;, you can press e.g. Ctrl+C to activate the
+ button.
+
+ Looking into the Be Book, BMenuItem has a SetTrigger() method which seems
+ to be just like that (except that you don't have to press a modifier,
+ which makes sense because the menu is already focused). It would be nice
+ if this feature could be useable in more controls though, such as buttons,
+ tabs, and the menus of a menu bar.
+
+ My proposal is # the addition of a SetUseTrigger(bool useTrigger) method
+ to BControl. If true is passed (the default might have to be false for
+ compatibility reasons), the first character of the control's label with a
+ leading &quot;_&quot; will be made the trigger character of that control and
+ underlined in appearance (the &quot;_&quot; itself will not be shown). The advantage
+ of this API in comparison to BMenuItem's current SetTrigger() is easier
+ translation (when support for translation is added later on): as the
+ trigger key will likely be different from language to language, it is
+ easier to have the string and the trigger in one string instead of being
+ spread in a string and a separate character.
+
+ I hope this would be a valid API addition for R1.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2615">http://dev.haiku-os.org/ticket/2615</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009487.html">[Haiku-bugs] [Haiku] #2614: Indexes not being correctly	maintained.
+</A></li>
+	<LI>Next message: <A HREF="009534.html">[Haiku-bugs] [Haiku] #2615: Improved keyboard navigation with	triggers
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9526">[ date ]</a>
+              <a href="thread.html#9526">[ thread ]</a>
+              <a href="subject.html#9526">[ subject ]</a>
+              <a href="author.html#9526">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

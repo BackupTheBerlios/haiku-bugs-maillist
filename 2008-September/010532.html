@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2769: Radeon driver is Slower than VESA ...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232769%3A%20Radeon%20driver%20is%20Slower%20than%20VESA%20...&In-Reply-To=%3C043.4ebc106a6a9c1b1e16f05b7194e17a36%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010531.html">
+   <LINK REL="Next"  HREF="010533.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2769: Radeon driver is Slower than VESA ...</H1>
+    <B>herdemir</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232769%3A%20Radeon%20driver%20is%20Slower%20than%20VESA%20...&In-Reply-To=%3C043.4ebc106a6a9c1b1e16f05b7194e17a36%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2769: Radeon driver is Slower than VESA ...">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Sep 24 22:12:44 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010531.html">[Haiku-bugs] [Haiku] #2768: While trying to view View Tickets page Internal server error ...
+</A></li>
+        <LI>Next message: <A HREF="010533.html">[Haiku-bugs] [Haiku] #2769: Radeon driver is Slower than VESA	...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10532">[ date ]</a>
+              <a href="thread.html#10532">[ thread ]</a>
+              <a href="subject.html#10532">[ subject ]</a>
+              <a href="author.html#10532">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2769: Radeon driver is Slower than VESA ...
+-------------------------------------+--------------------------------------
+ Reporter:  herdemir                 |       Owner:  euan          
+     Type:  bug                      |      Status:  new           
+ Priority:  normal                   |   Milestone:  R1            
+Component:  Drivers/Graphics/radeon  |     Version:  R1 development
+Blockedby:                           |    Platform:  All           
+ Blocking:                           |  
+-------------------------------------+--------------------------------------
+ Recently i tried to run haiku with vesa to see how it performs. And I was
+ moved how fast it was(After using with (buggy?)radeon driver most people
+ would think that way). Here are some observations:
+
+ Running haiku with Radeon Driver (on Radeon Mobility X600):
+
+ Pros:
+  * Supports native resolution.(1680x1050)
+  * Supports Video Overlay
+ Cons:
+  * Redrawing is worse than VESA driver.
+    Example: Resizing Terminal(or any) window  causes flicker while using
+ with Radeon driver, but while resizing with VESA driver it was really
+ smooth(no flicker at all).
+  * Decreases system performance.
+    Example: With Radeon driver, while playing audio or video every
+ random(between 3 - 10) seconds there is noise/glitch in sound. But after
+ testing with VESA the glitch/noise was gone.(Before testing with vesa,i
+ thought that it was related to MediaPlayer or MediaServer changes, but it
+ seems not the case). And performs a bit slower in normal usage.
+
+ So far VESA driver performs much better than radeon driver at redrawing
+ smoothly (almost with no flickering) while resizing,moving, etc.
+
+
+ So there is a bug or a missing function(s) in radeon driver that affects
+ system performance really bad. With VESA,I could able to see how much
+ better Haiku become. But it eats too much CPU time, escpecially while
+ playing videos.
+
+ Tested on:
+ || Laptop: || HP nx8220 ||
+ || CPU: || 1.86Ghz ||
+ || RAM: || 2GB ||
+ || Video: || ATI Radeon Mobility X600 ||
+ || Sound: || Soundmax AC97 (AD1981B) ||
+ || Haiku build: || r27719 ||
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2769">http://dev.haiku-os.org/ticket/2769</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010531.html">[Haiku-bugs] [Haiku] #2768: While trying to view View Tickets page Internal server error ...
+</A></li>
+	<LI>Next message: <A HREF="010533.html">[Haiku-bugs] [Haiku] #2769: Radeon driver is Slower than VESA	...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10532">[ date ]</a>
+              <a href="thread.html#10532">[ thread ]</a>
+              <a href="subject.html#10532">[ subject ]</a>
+              <a href="author.html#10532">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

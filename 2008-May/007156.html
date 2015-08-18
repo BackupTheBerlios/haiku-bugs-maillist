@@ -1,0 +1,148 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1914: PANIC: vnode 5:45465 already exists (node = 0x90c1b300, vnode-&gt;node = 0x91053d80)!
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231914%3A%20PANIC%3A%20vnode%205%3A45465%20already%20exists%0A%20%28node%20%3D%200x90c1b300%2C%20vnode-%3Enode%20%3D%200x91053d80%29%21&In-Reply-To=%3C049.1531a3212e95c7ebc330010699e6f406%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007764.html">
+   <LINK REL="Next"  HREF="007157.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1914: PANIC: vnode 5:45465 already exists (node = 0x90c1b300, vnode-&gt;node = 0x91053d80)!</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231914%3A%20PANIC%3A%20vnode%205%3A45465%20already%20exists%0A%20%28node%20%3D%200x90c1b300%2C%20vnode-%3Enode%20%3D%200x91053d80%29%21&In-Reply-To=%3C049.1531a3212e95c7ebc330010699e6f406%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1914: PANIC: vnode 5:45465 already exists (node = 0x90c1b300, vnode-&gt;node = 0x91053d80)!">trac at haiku-os.org
+       </A><BR>
+    <I>Thu May  8 00:20:33 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007764.html">[Haiku-bugs] [Haiku] #2212: r25309 removed desktop icons from	first boot
+</A></li>
+        <LI>Next message: <A HREF="007157.html">[Haiku-bugs] [Haiku] #2185: Scan the source tree and use find_directory() where appropriate (no hard-coded paths anymore)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7156">[ date ]</a>
+              <a href="thread.html#7156">[ thread ]</a>
+              <a href="subject.html#7156">[ subject ]</a>
+              <a href="author.html#7156">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1914: PANIC: vnode 5:45465 already exists (node = 0x90c1b300, vnode-&gt;node =
+0x91053d80)!
+----------------------------+-----------------------------------------------
+  Reporter:  thorn          |       Owner:  axeld         
+      Type:  bug            |      Status:  reopened      
+  Priority:  critical       |   Milestone:  R1/alpha1     
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |    Platform:  x86           
+----------------------------+-----------------------------------------------
+Comment (by korli):
+
+ Similar with a fresh built r25359
+ Installer was used to install Haiku on a smaller fresh empty disk (smaller
+ than the boot disk), it produced errors but FinishScript was tried to be
+ launched though. Bash complains it was not executable
+ Then tried 'vi' on the FinishScript.
+ {{{
+ SCSI_DSK -- synchronize_cache:
+ wait interval 1000000, scan pages 512, free 4096, target 0
+ Last message repeated 3 times.
+ SCSI_DSK -- synchronize_cache:
+ bfs: invalid node [0x93945400] read from offset 89088 (block 3382), inode
+ at 2114
+ bfs: BPlusTree::_SeekDown() could not open node 89088
+ bfs: Insert:1275: General system error
+ bfs: Update:288: General system error
+ bfs: Create:2468: General system error
+ bfs: invalid node [0x93945400] read from offset 89088 (block 3382), inode
+ at 2114
+ bfs: BPlusTree::_SeekDown() could not open node 89088
+ bfs: Insert:1275: General system error
+ bfs: Update:288: General system error
+ bfs: Create:2468: General system error
+ PANIC: vnode 3:393737 already exists (node = 0x90c6b780, vnode-&gt;node =
+ 0x90cdad80)!
+ Welcome to Kernel Debugging Land...
+ Running on CPU 0
+ kdebug&gt; bt
+ stack trace for thread 245 &quot;vim main()&quot;
+     kernel stack: 0x92988000 to 0x9298c000
+       user stack: 0x70000000 to 0x70040000
+ frame            caller     &lt;image&gt;:function + offset
+ 9298b7fc (+  52) 800485db   &lt;kernel&gt;:invoke_debugger_command + 0x00cf
+ 9298b830 (+  64) 80049384   &lt;kernel&gt;:_ParseCommand__16ExpressionParserRi +
+ 0x01f8
+ 9298b870 (+  48) 80048d76
+ &lt;kernel&gt;:EvaluateCommand__16ExpressionParserPCcRi + 0x01de
+ 9298b8a0 (+ 228) 8004a498   &lt;kernel&gt;:evaluate_debug_command + 0x0088
+ 9298b984 (+  64) 80047116   &lt;kernel&gt;:kernel_debugger_loop__Fv + 0x017a
+ 9298b9c4 (+  48) 80047dc9   &lt;kernel&gt;:kernel_debugger + 0x010d
+ 9298b9f4 (+ 192) 80047cb1   &lt;kernel&gt;:panic + 0x0029
+ 9298bab4 (+  64) 8007611a   &lt;kernel&gt;:new_vnode + 0x006a
+ 9298baf4 (+  80) 805c1338
+ &lt;bfs&gt;:New__14InodeAllocatorP9block_runUiR9block_runP12fs_vnode_opsPP5Inode
+ + 0x0170
+ 9298bb44 (+ 176) 805c7ad9
+ &lt;bfs&gt;:Create__5InodeR11TransactionP5InodePCcliUlPbPxPP5InodeP12fs_vnode_opsUl
+ + 0x0579
+ 9298bbf4 (+  96) 805d0849
+ &lt;bfs&gt;:bfs_create__FP9fs_volumeP8fs_vnodePCciiPPvPx + 0x0125
+ 9298bc54 (+ 352) 80078418   &lt;kernel&gt;:create_vnode__FP5vnodePCciib + 0x0188
+ 9298bdb4 (+ 320) 800787b6   &lt;kernel&gt;:file_create__FiPciib + 0x005a
+ 9298bef4 (+  80) 8007db54   &lt;kernel&gt;:_user_open + 0x00bc
+ 9298bf44 (+ 100) 8009f1c2   &lt;kernel&gt;:pre_syscall_debug_done + 0x0002
+ (nearest)
+ iframe at 0x9298bfa8 (end = 0x9298c000)
+  eax 0x55           ebx 0x62c584        ecx 0x7003f700   edx 0xffff0104
+  esi 0x18051537     edi 0x18047510      ebp 0x7003f72c   esp 0x9298bfdc
+  eip 0xffff0104  eflags 0x202
+  vector: 0x63, error code: 0x0
+ 9298bfa8 (+   0) ffff0104
+ 7003f72c (+1232) 00296153   &lt;_APP_&gt;:get_file_in_dir + 0x031b (nearest)
+ 7003fbfc (+  48) 00292589   &lt;_APP_&gt;:ml_open_file + 0x006d
+ 7003fc2c (+  48) 00292660   &lt;_APP_&gt;:check_need_swap + 0x0044
+ 7003fc5c (+ 448) 002700ad   &lt;_APP_&gt;:readfile + 0x0881
+ 7003fe1c (+ 112) 0022656f   &lt;_APP_&gt;:open_buffer + 0x0127
+ 7003fe8c (+ 240) 00286b3f   &lt;_APP_&gt;:main + 0x1acf
+ 7003ff7c (+  48) 00315fc5   &lt;_APP_&gt;:call_main__FPv + 0x0025
+ 7003ffac (+  48) 005a6f40   &lt;libroot.so&gt;:_get_next_team_info + 0x005c
+ (nearest)
+ 7003ffdc (+   0) 7003ffec   2135:vim main()<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">_245_stack at 0x70000000</A> + 0x3ffec
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1914#comment:9">http://dev.haiku-os.org/ticket/1914#comment:9</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007764.html">[Haiku-bugs] [Haiku] #2212: r25309 removed desktop icons from	first boot
+</A></li>
+	<LI>Next message: <A HREF="007157.html">[Haiku-bugs] [Haiku] #2185: Scan the source tree and use find_directory() where appropriate (no hard-coded paths anymore)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7156">[ date ]</a>
+              <a href="thread.html#7156">[ thread ]</a>
+              <a href="subject.html#7156">[ subject ]</a>
+              <a href="author.html#7156">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,323 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2142: Error in AppendToContainerCopyFilesScript when compiling Haiku inside itself.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232142%3A%20Error%20in%0A%20AppendToContainerCopyFilesScript%20when%20compiling%20Haiku%20inside%20itself.&In-Reply-To=%3C038.0e91b142c2759f892db1550804ce8d9e%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006733.html">
+   <LINK REL="Next"  HREF="006712.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2142: Error in AppendToContainerCopyFilesScript when compiling Haiku inside itself.</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232142%3A%20Error%20in%0A%20AppendToContainerCopyFilesScript%20when%20compiling%20Haiku%20inside%20itself.&In-Reply-To=%3C038.0e91b142c2759f892db1550804ce8d9e%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2142: Error in AppendToContainerCopyFilesScript when compiling Haiku inside itself.">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Apr 23 03:39:36 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006733.html">[Haiku-bugs] [Haiku] #2141: Weird cache behaviour.
+</A></li>
+        <LI>Next message: <A HREF="006712.html">[Haiku-bugs] [Haiku] #2142: Error in AppendToContainerCopyFilesScript when compiling Haiku inside itself.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6710">[ date ]</a>
+              <a href="thread.html#6710">[ thread ]</a>
+              <a href="subject.html#6710">[ subject ]</a>
+              <a href="author.html#6710">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2142: Error in AppendToContainerCopyFilesScript when compiling Haiku inside
+itself.
+--------------------------+-------------------------------------------------
+ Reporter:  bga           |       Owner:  bonefish      
+     Type:  bug           |      Status:  new           
+ Priority:  blocker       |   Milestone:  R1            
+Component:  Build System  |     Version:  R1 development
+ Platform:  All           |  
+--------------------------+-------------------------------------------------
+ When building Haiku inside of itself, the build process goes a lot farther
+ now but it fails in the jam rule mentioned above. Here is the entire
+ error:
+
+ AppendToContainerCopyFilesScript &lt;HaikuImage&gt;haiku.image-copy-files-dummy-
+ beos/bin
+ /bin/sh: -c: line 2: unexpected EOF while looking for matching `&quot;'
+ /bin/sh: -c: line 3: syntax error: unexpected end of file
+
+ echo \$cp
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/[\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/addattr/addattr\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/alert\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/network/arp/arp\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/base64\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/basename\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/bc/bc/bc\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/beep\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/apps/bootman/bootman\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/bzip2/bzip2\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/cal\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/cat\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/catattr\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/chgrp\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/chmod\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/chop\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/chown\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/chroot\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/cksum\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/clear\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/clockconfig\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/diffutils/src/cmp\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/comm\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/compress/compress\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/cp\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/copyattr\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/apps/cortex/AddOnHost/CortexAddOnHost\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/csplit\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/ctags/ctags\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/cut\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/date\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/bc/dc/dc\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/dd\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/desklink/desklink\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/df\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/diffutils/src/diff\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/diffutils/src/diff3\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/dircolors\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/dirname\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/draggers\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/driveinfo\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/dstcheck\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/du\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/echo\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/eject\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/env\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/error\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/expand\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/expr\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/expr\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/factor\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/false\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/fdinfo\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/ffm\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/findutils/find/find\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/finddir\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/fmt\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/fold\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/fortune\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/findutils/locate/frcode\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/network/ftp/ftp\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/network/ftpd/ftpd\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/unzip/funzip\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/fwcontrol/fwcontrol\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/gawk/gawk\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/gdb/gdb/gdb\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/grep/src/grep\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/common/bin/coreutils/src/groups\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/gzip/gzip\&quot;&quot;
+ &quot;\&quot;\${sPrefix}src/bin/gzip/gzexe\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/hd\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/head\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/hey\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/hostname\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/id\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/rcs/ident\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/ideinfo/ideinfo\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/idestatus\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/network/ifconfig/ifconfig\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/install\&quot;&quot;&quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/installsound\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/iroster\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/isvolume\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/join\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/keymap/keymap\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/kill\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/less/less\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/less/lessecho\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/less/lesskey\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/link\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/listarea\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/listattr\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/listdev/listdev\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/listimage\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/listport\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/listres\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/listsem\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/ln\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/findutils/locate/locate\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/logger\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/multiuser/login\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/logname\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/ls\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/lsindex\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/m4/src/m4\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/make/make\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/makebootable/platform/bios_ia32/makebootable\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/md5sum\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/rcs/merge\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/mimeset\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/mkdos/mkdos\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/mkdir\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/mkfifo\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/mkindex\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/modifiers\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/mount\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/network/mount_nfs/mount_nfs\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/mountvolume\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/mv\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/network/nc/nc\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/network/netstat/netstat\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/nl\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/nohup\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/od\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/open\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/multiuser/passwd\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/paste\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/patch/patch\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/pathchk\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/pc/pc\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/network/ping/ping\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/play\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/playsound/playfile\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/playsound/playsound\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/playsound/playwav\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/pr\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/prio\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/printenv\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/printf\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/ps\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/ptx\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/pwd\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/query\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/quit\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/readlink\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/release\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/renice\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/rescan\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/rcs/rlog\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/rm\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/rmattr\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/rmindex\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/rmdir\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/roster\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/network/route/route\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/safemode\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/screen_blanker/screen_blanker\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/sed/sed/sed\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/setdecor\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/settype\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/setversion\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/setvolume\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/seq\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/bash/sh\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/sha1sum\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/sharutils/src/shar\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/shred\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/shuf\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/shutdown\&quot;&quot;&quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/sleep\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/sort\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/split\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/stat\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/strace/strace\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/stty\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/su\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/sum\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/sync\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/sysinfo\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/tac\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/tail\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/tar/src/tar\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/network/tcpdump/tcpdump\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/tests/kits/net/tcptester/tcptester\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/tee\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/network/telnet/telnet\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/network/telnetd/telnetd\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/test\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/top\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/touch\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/tput\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/tr\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/network/traceroute/traceroute\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/translate\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/true\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/tsort\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/tty\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/uname\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/unchop\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/unexpand\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/unmount\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/uniq\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/unrar/unrar\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/sharutils/src/unshar\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/unzip/unzip\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/unzip/unzipsfx\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/common/bin/findutils/locate/updatedb\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/uptime\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/urlwrapper\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/usb_dev_info\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/multiuser/useradd\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/sharutils/src/uudecode\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/sharutils/src/uuencode\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/vdir\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/version\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/vim/src/vim\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/waitfor\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/wc\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/network/wget/wget\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/whoami\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/findutils/xargs/xargs\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/xres\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/coreutils/src/yes\&quot;&quot;
+ &quot;\&quot;\${sPrefix}src/bin/gzip/zdiff\&quot;&quot; &quot;\&quot;\${sPrefix}src/bin/gzip/zforce\&quot;&quot;
+ &quot;\&quot;\${sPrefix}src/bin/gzip/zgrep\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/zip/zip\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/zip/zipcloak\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/common/bin/unzip/zipgrep\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/zip/zipnote\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/bin/zip/zipsplit\&quot;&quot;
+ &quot;\&quot;\${sPrefix}src/bin/gzip/zmore\&quot;&quot; &quot;\&quot;\${sPrefix}src/bin/gzip/znew\&quot;&quot;
+ &quot;\&quot;\${sPrefix}generated/objects/haiku/x86/release/tests/system/consoled/consoled\&quot;&quot;
+ &quot;\&quot;\${tPrefix}beos/bin\&quot;&quot; &gt;&gt; generated/haiku.image-copy-files
+
+ ...failed AppendToContainerCopyFilesScript &lt;HaikuImage&gt;haiku.image-copy-
+ files-dummy-beos/bin ...
+ ...skipped haiku.image for lack of &lt;HaikuImage&gt;haiku.image-copy-files...
+ ...failed updating 1 target(s)...
+ ...skipped 1 target(s)...
+ ...updated 5874 target(s)...
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2142">http://dev.haiku-os.org/ticket/2142</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006733.html">[Haiku-bugs] [Haiku] #2141: Weird cache behaviour.
+</A></li>
+	<LI>Next message: <A HREF="006712.html">[Haiku-bugs] [Haiku] #2142: Error in AppendToContainerCopyFilesScript when compiling Haiku inside itself.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6710">[ date ]</a>
+              <a href="thread.html#6710">[ thread ]</a>
+              <a href="subject.html#6710">[ subject ]</a>
+              <a href="author.html#6710">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2789: writing to usb disks fail after 10-100Mb of writing files
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232789%3A%20writing%20to%20usb%20disks%20fail%20after%0A%2010-100Mb%20of%20writing%20files&In-Reply-To=%3C051.fb691337cb5ae0783fd75c946979cd62%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="022206.html">
+   <LINK REL="Next"  HREF="022216.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2789: writing to usb disks fail after 10-100Mb of writing files</H1>
+    <B>mmlr</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232789%3A%20writing%20to%20usb%20disks%20fail%20after%0A%2010-100Mb%20of%20writing%20files&In-Reply-To=%3C051.fb691337cb5ae0783fd75c946979cd62%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2789: writing to usb disks fail after 10-100Mb of writing files">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Sep 30 00:47:08 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="022206.html">[Haiku-bugs] [Haiku] #4357: [LiveCD] mmu_free: unmap out of range (was: R1A1 LiveCD boot error)
+</A></li>
+        <LI>Next message: <A HREF="022216.html">[Haiku-bugs] [Haiku] #2009: [Firefox] doesn't work on my home	network
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22207">[ date ]</a>
+              <a href="thread.html#22207">[ thread ]</a>
+              <a href="subject.html#22207">[ subject ]</a>
+              <a href="author.html#22207">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2789: writing to usb disks fail after 10-100Mb of writing files
+----------------------+-----------------------------------------------------
+  Reporter:  rudolfc  |       Owner:  mmlr         
+      Type:  bug      |      Status:  closed       
+  Priority:  normal   |   Milestone:  R1           
+ Component:  Drivers  |     Version:  R1/pre-alpha1
+Resolution:  fixed    |   Blockedby:               
+  Platform:  x86      |    Blocking:               
+----------------------+-----------------------------------------------------
+
+Comment(by mmlr):
+
+ Replying to [comment:16 rudolfc]:
+ &gt; Anyhow: the usb access is not a little slow, but *BIGtime* slow. It's
+ the difference between being able to work on haiku from a stick, or not to
+ be able to do that.
+
+ Yup. That's because reading and especially writing to a USB stick with
+ small buffers is orders of magnitude slower than burst reading/writing.
+ You can easily see that when you dd to a USB stick from another OS and
+ compare writing at 4K vs. writing at 4M blocks. Right now (since the
+ introduction of the IOScheduler that is) we do everything at 4096 bytes
+ per transfer. This also explains why the same USB stack and drivers will
+ actually perform reasonable on R5.
+
+ &gt; My guess would be that there is a extra problem with USB sticks apart
+ from the missing feature, since that missing feature would also miss for
+ HD access? (or am I babling here?)
+
+ It's not missing from the disk side of things. The whole SCSI and ATA/AHCI
+ stuff works directly with the IOSchduler and uses the physical buffers
+ handed to them. So there is no physical to virtual memory mapping going
+ on, resulting in neither the overhead of doing so nor in the splitting up
+ of transfers (which happen because of the page wise mapping of the
+ physical buffers). So you won't see it on normal disks.
+
+ Since the whole USB stack interface operates on virtual memory this is a
+ bit more involved. It means to add a physical memory API that can then be
+ used. On the other hand it would of course also be possible to instruct
+ the IOScheduler to use virtual memory instead, but since the IOScheduler
+ doesn't actually know beforehand which device the request will end up this
+ isn't really straight forward.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2789#comment:17">http://dev.haiku-os.org/ticket/2789#comment:17</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="022206.html">[Haiku-bugs] [Haiku] #4357: [LiveCD] mmu_free: unmap out of range (was: R1A1 LiveCD boot error)
+</A></li>
+	<LI>Next message: <A HREF="022216.html">[Haiku-bugs] [Haiku] #2009: [Firefox] doesn't work on my home	network
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22207">[ date ]</a>
+              <a href="thread.html#22207">[ thread ]</a>
+              <a href="subject.html#22207">[ subject ]</a>
+              <a href="author.html#22207">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

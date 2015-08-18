@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #834: Disconnecting USB mouse/keyboard	problem
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-January/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23834%3A%20Disconnecting%20USB%20mouse/keyboard%0A%09problem&In-Reply-To=%3C069.d99b8e426bd150924201c638032f4d41%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000104.html">
+   <LINK REL="Next"  HREF="000106.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #834: Disconnecting USB mouse/keyboard	problem</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23834%3A%20Disconnecting%20USB%20mouse/keyboard%0A%09problem&In-Reply-To=%3C069.d99b8e426bd150924201c638032f4d41%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #834: Disconnecting USB mouse/keyboard	problem">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Jan 13 00:28:22 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000104.html">[Haiku-bugs] [Haiku] #833: USB keyboard/mouse not working	properly
+</A></li>
+        <LI>Next message: <A HREF="000106.html">[Haiku-bugs] [Haiku] #965: migrate mailing lists to	lists.haiku-os.org
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#105">[ date ]</a>
+              <a href="thread.html#105">[ thread ]</a>
+              <a href="subject.html#105">[ subject ]</a>
+              <a href="author.html#105">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#834: Disconnecting USB mouse/keyboard problem
+------------------------------+---------------------------------------------
+  Reporter:  marcusoverhagen  |       Owner:  mmlr          
+      Type:  bug              |      Status:  new           
+  Priority:  normal           |   Milestone:  R1            
+ Component:  General          |     Version:  R1 development
+Resolution:                   |    Platform:  All           
+------------------------------+---------------------------------------------
+Comment (by marcusoverhagen):
+
+ Since r19738, the behaviour has changed, but the problem unfortunately
+ stays.
+ Switching to a different computer using the KVM switch makes haiku lose
+ USB input.
+
+ When switching with the KVM switch to another computer, which basically
+ should be similar to a disconnect, I get this:
+
+ usb_uhci: td (0x02b91760) error: status: 0x254507ff; token: 0x00608469;
+ usb_hid: bus status -2147442668
+
+ or, at another time, this:
+
+ usb_uhci: td (0x02b23cc0) error: status: 0x254507ff; token: 0x00688469;
+ usb_hid: bus status -2147442668
+
+
+ After switching back to haiku, both mouse and keyboard no longer work,
+ but the cursor is still blinking. no further debug output.
+
+ When simply disconnecting the KVM, i get:
+
+ usb_uhci: td (0x02b22900) error: status: 0x254507ff; token: 0x00688469;
+ si-3112 handle_interrupt
+ Last message repeated 2 times.
+ usb_hid: bus status -2147442668
+ si-3112 handle_interrupt
+ Last message repeated 955 times.
+ Pipe: cancelling transfers is not implemented!
+ si-3112 handle_interrupt
+ Last message repeated 2 times.
+ Pipe: cancelling transfers is not implemented!
+ si-3112 handle_interrupt
+ Last message repeated 3 times.
+ USB Hub Explore(): port 1 disabled
+ si-3112 handle_interrupt
+ Last message repeated 1436 times.
+ USB Hub Explore(): port 1 disabled
+ si-3112 handle_interrupt
+ (continues, port 1 disabled printed about every 1/2 second)
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku.webfactional.com/ticket/834#comment:3">http://dev.haiku.webfactional.com/ticket/834#comment:3</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku.webfactional.com">http://dev.haiku.webfactional.com</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000104.html">[Haiku-bugs] [Haiku] #833: USB keyboard/mouse not working	properly
+</A></li>
+	<LI>Next message: <A HREF="000106.html">[Haiku-bugs] [Haiku] #965: migrate mailing lists to	lists.haiku-os.org
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#105">[ date ]</a>
+              <a href="thread.html#105">[ thread ]</a>
+              <a href="subject.html#105">[ subject ]</a>
+              <a href="author.html#105">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

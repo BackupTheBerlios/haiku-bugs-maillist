@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4432: HDA causes reboot
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234432%3A%20HDA%20causes%20reboot&In-Reply-To=%3C051.80761e50671f91072882477e783d9e21%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="021403.html">
+   <LINK REL="Next"  HREF="021665.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4432: HDA causes reboot</H1>
+    <B>kliput</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234432%3A%20HDA%20causes%20reboot&In-Reply-To=%3C051.80761e50671f91072882477e783d9e21%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4432: HDA causes reboot">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Sep 16 13:02:55 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="021403.html">[Haiku-bugs] [Haiku] #4432: HDA causes reboot
+</A></li>
+        <LI>Next message: <A HREF="021665.html">[Haiku-bugs] [Haiku] #4432: HDA causes reboot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21424">[ date ]</a>
+              <a href="thread.html#21424">[ thread ]</a>
+              <a href="subject.html#21424">[ subject ]</a>
+              <a href="author.html#21424">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4432: HDA causes reboot
+-------------------------------+--------------------------------------------
+ Reporter:  lkernan            |       Owner:  axeld        
+     Type:  bug                |      Status:  new          
+ Priority:  normal             |   Milestone:  R1           
+Component:  Drivers/Audio/HDA  |     Version:  R1/pre-alpha1
+Blockedby:                     |    Platform:  All          
+ Blocking:                     |  
+-------------------------------+--------------------------------------------
+
+Comment(by kliput):
+
+ I've attached output from Linux's /proc/mtrr.
+
+ I've tried to install OSS drivers from OSS homepage, but I don't know,
+ wheter I did it correct.
+ I've just unpacked oss-beos-v4.1test.zip to suitable directories and
+ launched media_server:
+
+ - system just hangs, but not &quot;deadly&quot; - I wasn't able to move cursor and
+ first core of my CPU was working 100%, but I was able to restart system or
+ kill media_server with ALT-CTRL-DEL
+
+ - launched system in safe mode
+
+ - removed /system/add-ons/kernel/drivers/dev/audio/hmulti directory (don't
+ ask me why, I'm just using Haiku for few days and think that might be HDA
+ drivers)
+
+ - load ./media_server
+
+ - tried to launch /Haiku/home/config/bin/osstest, and it works on: HD
+ Audio play pcm1 (/dev/oss/oss_hdaudio0/pcm0) - plays sound!
+ Unfortunately MediaPlayer doesn't plays anything.
+
+ - tried to launch &quot;ossdevlinks&quot;, but it can't create symlink (/dev/dsp0 -&gt;
+ /dev/oss/oss_hdaudio0/pcm0)
+
+ - tried to launch media_addon_server (I don't notice it was launched
+ before): osstest can't play sound with pcm1 (&quot;device busy&quot;)
+
+ - second try to launch media_server with /system/add-
+ ons/kernel/drivers/dev/audio/hmulti files: first it hangs, but I've killed
+ media_server and media_addon_server, and tried to launch these second time
+ - it loads. In Media settings there is new HD Audio device (there was only
+ one before). It &quot;sounds strange&quot; - speakers sometimes turns on, sometimes
+ off, sometimes, automatically, right channel of all controls goes 100%,
+ and left goes 0%. Sometimes sound from MediaPlayer works too.
+
+ I've attached: media_server outputs with /system/add-
+ ons/kernel/drivers/dev/audio/hmulti files, and without.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4432#comment:17">http://dev.haiku-os.org/ticket/4432#comment:17</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="021403.html">[Haiku-bugs] [Haiku] #4432: HDA causes reboot
+</A></li>
+	<LI>Next message: <A HREF="021665.html">[Haiku-bugs] [Haiku] #4432: HDA causes reboot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21424">[ date ]</a>
+              <a href="thread.html#21424">[ thread ]</a>
+              <a href="subject.html#21424">[ subject ]</a>
+              <a href="author.html#21424">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

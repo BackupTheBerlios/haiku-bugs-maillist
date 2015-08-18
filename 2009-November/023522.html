@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4888: proposal for pthreads extensions for suspend/resume
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234888%3A%20proposal%20for%20pthreads%20extensions%0A%20for%20suspend/resume&In-Reply-To=%3C058.3fa2e021bbf60929130a6104cba08c1a%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="023519.html">
+   <LINK REL="Next"  HREF="023524.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4888: proposal for pthreads extensions for suspend/resume</H1>
+    <B>bonefish</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234888%3A%20proposal%20for%20pthreads%20extensions%0A%20for%20suspend/resume&In-Reply-To=%3C058.3fa2e021bbf60929130a6104cba08c1a%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4888: proposal for pthreads extensions for suspend/resume">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Nov  7 12:35:22 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="023519.html">[Haiku-bugs] [Haiku] #4888: proposal for pthreads extensions for suspend/resume
+</A></li>
+        <LI>Next message: <A HREF="023524.html">[Haiku-bugs] [Haiku] #4888: proposal for pthreads extensions for suspend/resume
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#23522">[ date ]</a>
+              <a href="thread.html#23522">[ thread ]</a>
+              <a href="subject.html#23522">[ subject ]</a>
+              <a href="author.html#23522">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4888: proposal for pthreads extensions for suspend/resume
+--------------------------------+-------------------------------------------
+  Reporter:  andrewbachmann     |       Owner:  axeld 
+      Type:  enhancement        |      Status:  closed
+  Priority:  normal             |   Milestone:  R1    
+ Component:  System/libroot.so  |     Version:        
+Resolution:  invalid            |   Blockedby:        
+  Platform:  All                |    Blocking:        
+--------------------------------+-------------------------------------------
+
+Comment(by bonefish):
+
+ Replying to [comment:6 axeld]:
+ &gt; Not sure if OS.h is the right place for that (as it's a system specific
+ extension of the pthread API),
+
+ The options are either &lt;OS.h&gt;, &lt;pthread.h&gt;, or a new header. Since
+ typedefs from both headers are needed (thread_id and pthread_id)
+ &lt;pthread.h&gt; is not really a good choice, since we would pollute the POSIX
+ namespace. A new header for just these two functions (or one ATM) seemed
+ overkill, so &lt;OS.h&gt; was what I went for.
+
+ &gt; but having a pthread object (which could even be named differently,
+ then) for each thread sounds like a viable solution.
+ &gt;
+ &gt; That won't simplify convert_to_pthread(), however. It would be possible
+ to have a syscall that returns the TLS space of any thread, but due to
+ race conditions, it might be better to have a syscall that reads only
+ specific fields inside that TLS space.
+
+ Nah, that's way to complicated. I was rather thinking of introducing a
+ hash table or tree for the thread objects.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4888#comment:7">http://dev.haiku-os.org/ticket/4888#comment:7</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="023519.html">[Haiku-bugs] [Haiku] #4888: proposal for pthreads extensions for suspend/resume
+</A></li>
+	<LI>Next message: <A HREF="023524.html">[Haiku-bugs] [Haiku] #4888: proposal for pthreads extensions for suspend/resume
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#23522">[ date ]</a>
+              <a href="thread.html#23522">[ thread ]</a>
+              <a href="subject.html#23522">[ subject ]</a>
+              <a href="author.html#23522">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

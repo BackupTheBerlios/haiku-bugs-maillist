@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3008: MacBook iSight: More than 99% interrupts of vector 9 are unhandled
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233008%3A%20MacBook%20iSight%3A%20More%20than%2099%25%0A%20interrupts%20of%20vector%209%20are%20unhandled&In-Reply-To=%3C040.6521a337743b7e57d06cbdc9f0072aaa%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011795.html">
+   <LINK REL="Next"  HREF="011797.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3008: MacBook iSight: More than 99% interrupts of vector 9 are unhandled</H1>
+    <B>aljen</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233008%3A%20MacBook%20iSight%3A%20More%20than%2099%25%0A%20interrupts%20of%20vector%209%20are%20unhandled&In-Reply-To=%3C040.6521a337743b7e57d06cbdc9f0072aaa%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3008: MacBook iSight: More than 99% interrupts of vector 9 are unhandled">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Oct 31 02:09:32 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011795.html">[Haiku-bugs] [Haiku] #2764: Scrambled video with intel i865 with r26762 and up
+</A></li>
+        <LI>Next message: <A HREF="011797.html">[Haiku-bugs] [Haiku] #3008: MacBook iSight: More than 99% interrupts of vector 9 are unhandled
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11796">[ date ]</a>
+              <a href="thread.html#11796">[ thread ]</a>
+              <a href="subject.html#11796">[ subject ]</a>
+              <a href="author.html#11796">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3008: MacBook iSight: More than 99% interrupts of vector 9 are unhandled
+-------------------------+--------------------------------------------------
+ Reporter:  aljen        |       Owner:  mmlr          
+     Type:  bug          |      Status:  new           
+ Priority:  normal       |   Milestone:  R1            
+Component:  Drivers/USB  |     Version:  R1 development
+Blockedby:               |    Platform:  All           
+ Blocking:               |  
+-------------------------+--------------------------------------------------
+ In Parallels, when Haiku(r28388) is running and i connect macbook embeded
+ webcam (Parallels 'Devices' menu -&gt; USB -&gt; Built-in iSight), system
+ freezes:[[BR]]
+
+ {{{
+ [syslog snip]
+
+ USB Hub 1: port 0: status: 0x0101; change: 0x0001
+ USB Hub 1: device at port 0: 0x00000000
+ usb_ehci_roothub: request: 1
+ usb_ehci_roothub: clear feature: 16
+ USB Hub 1: new device connected
+ usb_ehci_roothub: request: 3
+ usb_ehci_roothub: set feature: 4
+ usb_ehci: reset port 0
+ usb_ehci_roothub: request: 0
+ usb_ehci_roothub: request: 1
+ usb_ehci_roothub: clear feature: 20
+ USB Hub 1: port 0 was reset successfully
+ usb_ehci_roothub: request: 0
+ USB BusManager: setting device address to 2
+ usb_ehci: pipe change 0 for pipe 0x80f93780
+ usb_ehci: wrote descriptor chain (8 bytes, no more vectors)
+ usb_ehci: linking queue
+ queue:    t03914180 n00000001 ch30086000 ca40000000 cu00000001
+ overlay:  n03914280 a00000001 t00000000 00000000 00000000 00000000
+ 00000000 00000000
+  03914280 n03914300 a03914200 t00080e80 03914060 03915000 03916000
+ 03917000 03918000 s8
+  03914300 n00000001 a00000001 t80008d80 00000000 00000000 00000000
+ 00000000 00000000 s0
+ usb_ehci: transfer finished
+ usb_ehci: port change detected
+ More than 99% interrupts of vector 9 are unhandled
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3008">http://dev.haiku-os.org/ticket/3008</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011795.html">[Haiku-bugs] [Haiku] #2764: Scrambled video with intel i865 with r26762 and up
+</A></li>
+	<LI>Next message: <A HREF="011797.html">[Haiku-bugs] [Haiku] #3008: MacBook iSight: More than 99% interrupts of vector 9 are unhandled
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11796">[ date ]</a>
+              <a href="thread.html#11796">[ thread ]</a>
+              <a href="subject.html#11796">[ subject ]</a>
+              <a href="author.html#11796">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

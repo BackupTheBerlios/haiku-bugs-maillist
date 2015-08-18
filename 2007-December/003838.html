@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #613: [Tracker] doesn't let you to rename	system folders
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-December/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23613%3A%20%5BTracker%5D%20doesn%27t%20let%20you%20to%20rename%0A%09system%20folders&In-Reply-To=%3C049.0d22ea69f1e8b3671e86671e078d0e9f%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003837.html">
+   <LINK REL="Next"  HREF="003839.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #613: [Tracker] doesn't let you to rename	system folders</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23613%3A%20%5BTracker%5D%20doesn%27t%20let%20you%20to%20rename%0A%09system%20folders&In-Reply-To=%3C049.0d22ea69f1e8b3671e86671e078d0e9f%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #613: [Tracker] doesn't let you to rename	system folders">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Dec  5 13:19:31 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003837.html">[Haiku-bugs] [Haiku] #613: [Tracker] doesn't let you to rename	system folders
+</A></li>
+        <LI>Next message: <A HREF="003839.html">[Haiku-bugs] [Haiku] #1658: KDL: when tracker is trying to show the	/dev contents
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3838">[ date ]</a>
+              <a href="thread.html#3838">[ thread ]</a>
+              <a href="subject.html#3838">[ subject ]</a>
+              <a href="author.html#3838">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#613: [Tracker] doesn't let you to rename system folders
+---------------------------------+------------------------------------------
+  Reporter:  diver               |       Owner:  axeld 
+      Type:  bug                 |      Status:  closed
+  Priority:  normal              |   Milestone:  R1    
+ Component:  Kits/Interface Kit  |     Version:        
+Resolution:  fixed               |    Platform:  All   
+---------------------------------+------------------------------------------
+Comment (by jackburton):
+
+ BTW I should explain what happens here:
+
+ BTextWidget::StartEdit() is called, then the OverrideAlert shows up. The
+ B_WINDOW_ACTIVATED message is sent to the ContainerWindow which contains
+ the BTextWidget with &quot;activated&quot; = false. But this message is not handled,
+ since the OverrideAlert is synchronous, and the ContainerWindow is locked.
+ As soon as the user dismiss the alert, the ContainerWindow unlocks and the
+ messages are handled. But that message is already old, it should've been
+ handled before. That's why the BAlert uses UpdateIfNeeded() in a loop.
+ Testing on beos is needed to check which messages are handled.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/613#comment:8">http://dev.haiku-os.org/ticket/613#comment:8</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003837.html">[Haiku-bugs] [Haiku] #613: [Tracker] doesn't let you to rename	system folders
+</A></li>
+	<LI>Next message: <A HREF="003839.html">[Haiku-bugs] [Haiku] #1658: KDL: when tracker is trying to show the	/dev contents
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3838">[ date ]</a>
+              <a href="thread.html#3838">[ thread ]</a>
+              <a href="subject.html#3838">[ subject ]</a>
+              <a href="author.html#3838">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

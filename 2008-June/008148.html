@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2376: Build fails with new style SCSI device paths on Ubuntu
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232376%3A%20Build%20fails%20with%20new%20style%20SCSI%20device%0A%20paths%20on%20Ubuntu&In-Reply-To=%3C040.01428ce06cd6f118a66170ab7b2e3144%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008147.html">
+   <LINK REL="Next"  HREF="008308.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2376: Build fails with new style SCSI device paths on Ubuntu</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232376%3A%20Build%20fails%20with%20new%20style%20SCSI%20device%0A%20paths%20on%20Ubuntu&In-Reply-To=%3C040.01428ce06cd6f118a66170ab7b2e3144%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2376: Build fails with new style SCSI device paths on Ubuntu">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Jun 14 09:12:39 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008147.html">[Haiku-bugs] [Haiku] #1006: inconsistent behavior of Revert button in Backgrounds preflet (easy)
+</A></li>
+        <LI>Next message: <A HREF="008308.html">[Haiku-bugs] [Haiku] #2376: Build fails with new style SCSI device paths on Ubuntu
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8148">[ date ]</a>
+              <a href="thread.html#8148">[ thread ]</a>
+              <a href="subject.html#8148">[ subject ]</a>
+              <a href="author.html#8148">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2376: Build fails with new style SCSI device paths on Ubuntu
+--------------------------+-------------------------------------------------
+ Reporter:  monni         |       Owner:  bonefish      
+     Type:  bug           |      Status:  new           
+ Priority:  normal        |   Milestone:  R1            
+Component:  Build System  |     Version:  R1 development
+ Platform:  All           |  
+--------------------------+-------------------------------------------------
+ On my Ubuntu 7.04 device paths for storage devices are formatted as
+ /dev/disk/by-id/xxxx, /dev/disk/by-label/yyyy or /dev/disk/by-uuid/zzzz
+
+ Build system fails with &quot;Bad file descriptor&quot; when trying to write boot
+ code
+
+ Using old style /dev/hd* or /dev/sd* doesn't work reliably because drive
+ letters change between boots depending on number of hot-plugged drives.
+
+ I guess expected behavior would be to ask underlying operating system for
+ correct block device associated with the disk id. I don't see it very hard
+ to implement as new paths are symbolic links that can be resolved.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2376">http://dev.haiku-os.org/ticket/2376</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008147.html">[Haiku-bugs] [Haiku] #1006: inconsistent behavior of Revert button in Backgrounds preflet (easy)
+</A></li>
+	<LI>Next message: <A HREF="008308.html">[Haiku-bugs] [Haiku] #2376: Build fails with new style SCSI device paths on Ubuntu
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8148">[ date ]</a>
+              <a href="thread.html#8148">[ thread ]</a>
+              <a href="subject.html#8148">[ subject ]</a>
+              <a href="author.html#8148">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1379: Deadlock in error case of	vm.cpp:map_backing_store()
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231379%3A%20Deadlock%20in%20error%20case%20of%0A%09vm.cpp%3Amap_backing_store%28%29&In-Reply-To=%3C043.aed4911816e288b68120fe4a7d9ae100%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002201.html">
+   <LINK REL="Next"  HREF="002245.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1379: Deadlock in error case of	vm.cpp:map_backing_store()</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231379%3A%20Deadlock%20in%20error%20case%20of%0A%09vm.cpp%3Amap_backing_store%28%29&In-Reply-To=%3C043.aed4911816e288b68120fe4a7d9ae100%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1379: Deadlock in error case of	vm.cpp:map_backing_store()">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Aug 11 05:14:20 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002201.html">[Haiku-bugs] [Haiku] #1378: [Tracker] double click runtime_loader to freeze tracker
+</A></li>
+        <LI>Next message: <A HREF="002245.html">[Haiku-bugs] [Haiku] #1379: Deadlock in error case of vm.cpp:map_backing_store()
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2200">[ date ]</a>
+              <a href="thread.html#2200">[ thread ]</a>
+              <a href="subject.html#2200">[ subject ]</a>
+              <a href="author.html#2200">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1379: Deadlock in error case of vm.cpp:map_backing_store()
+---------------------------+------------------------------------------------
+ Reporter:  bonefish       |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1 development
+ Platform:  All            |  
+---------------------------+------------------------------------------------
+ Revision r21887.
+ Executing the runtime_loader causes a deadlock in the kernel. When the
+ runtime_loader tries to map its own executable, this fails in
+ map_backing_store(), which in the error case deletes the cache it created.
+ The cache is a consumer of the supplied cache, which in turn has been
+ locked by the caller. Eventually vm_cache_remove_consumer() is invoked
+ with the already locked cache, thus causing the deadlock.
+
+ {{{
+ stack trace for thread 0x9d &quot;runtime_loader&quot;
+     kernel stack: 0x93491000 to 0x93495000
+       user stack: 0x7efe7000 to 0x7ffe7000
+ frame            caller     &lt;image&gt;:function + offset
+ 934946d4 (+  32) 80032562   &lt;kernel&gt;:context_switch__FP6threadT0 + 0x0026
+ 934946f4 (+  64) 800327bf   &lt;kernel&gt;:scheduler_reschedule + 0x023b
+ 93494734 (+  96) 80033653   &lt;kernel&gt;:switch_sem_etc + 0x03a7
+ 93494794 (+  48) 80033254   &lt;kernel&gt;:acquire_sem + 0x001c
+ 934947c4 (+  48) 8002d2ad   &lt;kernel&gt;:mutex_lock + 0x002d
+ 934947f4 (+  80) 8005d820   &lt;kernel&gt;:vm_cache_remove_consumer + 0x0018
+ 93494844 (+  48) 8005d497   &lt;kernel&gt;:vm_cache_release_ref + 0x0143
+ 93494874 (+  64) 80056d18
+ &lt;kernel&gt;:map_backing_store__FP16vm_address_spaceP8vm_cachePPvxUlUliiiPP7vm_areaPCc
+ + 0x01f4
+ 934948b4 (+ 112) 80057974   &lt;kernel&gt;:_vm_map_file__FlPCcPPvUlUlUlUlT1xb +
+ 0x0104
+ 93494924 (+1136) 8005c9a1   &lt;kernel&gt;:_user_vm_map_file + 0x00cd
+ 93494d94 (+ 368) 80036c6b   &lt;kernel&gt;:syscall_dispatcher + 0x0e57
+ 93494f04 (+ 160) 80092da8   &lt;kernel&gt;:i386_handle_trap + 0x02b0
+ iframe at 0x93494fac (end = 0x93495000)
+  eax 0x86           ebx 0x116ecc        ecx 0x1          edx 0x119004
+  esi 0x0            edi 0x0             ebp 0x7ffe56fc   esp 0x93494fdc
+  eip 0xffff0102  eflags 0x246
+  vector: 0x63, error code: 0x0
+ 93494fa4 (+   0) ffff0102
+ 7ffe56fc (+6256) 00101f04   1286:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">runtime_loader_seg0ro at 0x00100000</A> + 0x1f04
+ 7ffe6f6c (+  64) 001024ee   1286:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">runtime_loader_seg0ro at 0x00100000</A> + 0x24ee
+ 7ffe6fac (+  48) 00100782   1286:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">runtime_loader_seg0ro at 0x00100000</A> + 0x782
+ 7ffe6fdc (+   0) 7ffe6fec
+ 1285:/boot/beos/system/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">runtime_loade at 0x7efe7000</A> + 0xffffec
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1379">http://dev.haiku-os.org/ticket/1379</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002201.html">[Haiku-bugs] [Haiku] #1378: [Tracker] double click runtime_loader to freeze tracker
+</A></li>
+	<LI>Next message: <A HREF="002245.html">[Haiku-bugs] [Haiku] #1379: Deadlock in error case of vm.cpp:map_backing_store()
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2200">[ date ]</a>
+              <a href="thread.html#2200">[ thread ]</a>
+              <a href="subject.html#2200">[ subject ]</a>
+              <a href="author.html#2200">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

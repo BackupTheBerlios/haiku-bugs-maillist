@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1074: Identify and fix performance bottlenecks in our app_server
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231074%3A%20Identify%20and%20fix%20performance%0A%20bottlenecks%20in%20our%20app_server&In-Reply-To=%3C049.f2bb2adb5819d99394884c2011559c3c%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000674.html">
+   <LINK REL="Next"  HREF="000683.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1074: Identify and fix performance bottlenecks in our app_server</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231074%3A%20Identify%20and%20fix%20performance%0A%20bottlenecks%20in%20our%20app_server&In-Reply-To=%3C049.f2bb2adb5819d99394884c2011559c3c%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1074: Identify and fix performance bottlenecks in our app_server">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Mar  8 01:29:57 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000674.html">[Haiku-bugs] [Haiku] #1074: Identify and fix performance bottlenecks in our app_server
+</A></li>
+        <LI>Next message: <A HREF="000683.html">[Haiku-bugs] [Haiku] #1074: Identify and fix performance bottlenecks in our app_server
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#682">[ date ]</a>
+              <a href="thread.html#682">[ thread ]</a>
+              <a href="subject.html#682">[ subject ]</a>
+              <a href="author.html#682">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1074: Identify and fix performance bottlenecks in our app_server
+---------------------------------+------------------------------------------
+  Reporter:  axeld               |       Owner:  axeld         
+      Type:  enhancement         |      Status:  new           
+  Priority:  normal              |   Milestone:  R1            
+ Component:  Servers/app_server  |     Version:  R1 development
+Resolution:                      |    Platform:  All           
+---------------------------------+------------------------------------------
+Comment (by kaoutsis):
+
+ Replying to [comment:10 axeld]:
+ &gt; You're misusing gprof :-)
+ this is a nice opportunity to clear this issue:
+ a) i follow this guide <A HREF="http://www.network-">http://www.network-</A>
+ theory.co.uk/docs/gccintro/gccintro_80.html
+ that Waldemar kindly provided. Doesn't working on r5 as described, (did i
+ miss something?) but i believe
+ on linux it would (i will test it tomorrow to be sure).
+ b) I just found this:
+ taken from our old newsletter issue 20:
+ [...]
+ Daniel Reinhold writes:
+ [...]
+ There is a GNU profiler that is included with many POSIX systems called
+ 'gprof'. It is included with BeOS R5 as well (or at least with the
+ developer tools
+ mentioned above), but frankly, it doesn't work. However, Be did provide
+ their
+ own profiler called &quot;profile&quot;.
+ [...]
+ Could you please clear the situation: Does gprof working on r5, should we
+ use
+ be's profile, or we may use Daniel's Ezprof (it is working fine), and we
+ may
+ extend to fit our needs?
+ &gt; You're supposed to run the executable, and quit it (killing it won't
+ help),
+ Yes, i already do that, ...
+ &gt; then it writes out a file called something like profile*** -
+ Yes, this file is generated...
+ &gt; and *that* file is the one you have to use gprof on.
+ How?
+ &gt; Because of these semantics, you can more or less only use profiling in
+ the app_server test environment. Or write your own profiling code (instead
+ of using the one provided by i386-mcount.o).
+ That is a very important information to go on. Thanks!
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1074#comment:11">http://dev.haiku-os.org/ticket/1074#comment:11</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000674.html">[Haiku-bugs] [Haiku] #1074: Identify and fix performance bottlenecks in our app_server
+</A></li>
+	<LI>Next message: <A HREF="000683.html">[Haiku-bugs] [Haiku] #1074: Identify and fix performance bottlenecks in our app_server
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#682">[ date ]</a>
+              <a href="thread.html#682">[ thread ]</a>
+              <a href="subject.html#682">[ subject ]</a>
+              <a href="author.html#682">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

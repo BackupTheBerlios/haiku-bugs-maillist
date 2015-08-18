@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2367: Media checker blocks in USB when	booting from USB
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232367%3A%20Media%20checker%20blocks%20in%20USB%20when%0A%09booting%20from%20USB&In-Reply-To=%3C049.abaf3c466f42a0f90d405c7f374ff20e%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008008.html">
+   <LINK REL="Next"  HREF="008015.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2367: Media checker blocks in USB when	booting from USB</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232367%3A%20Media%20checker%20blocks%20in%20USB%20when%0A%09booting%20from%20USB&In-Reply-To=%3C049.abaf3c466f42a0f90d405c7f374ff20e%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2367: Media checker blocks in USB when	booting from USB">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Jun 10 18:01:37 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008008.html">[Haiku-bugs] [Haiku] #2367: Media checker blocks in USB when	booting from USB
+</A></li>
+        <LI>Next message: <A HREF="008015.html">[Haiku-bugs] [Haiku] #2367: Media checker blocks in USB when	booting from USB
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8012">[ date ]</a>
+              <a href="thread.html#8012">[ thread ]</a>
+              <a href="subject.html#8012">[ subject ]</a>
+              <a href="author.html#8012">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2367: Media checker blocks in USB when booting from USB
+--------------------------+-------------------------------------------------
+  Reporter:  axeld        |       Owner:  mmlr          
+      Type:  bug          |      Status:  assigned      
+  Priority:  high         |   Milestone:  R1/alpha1     
+ Component:  Drivers/USB  |     Version:  R1 development
+Resolution:               |    Platform:  All           
+--------------------------+-------------------------------------------------
+Comment (by mmlr):
+
+ I just checked here with r25882 (no changes in that regard to r25898) and
+ I am not able to reproduce. I booted of the stick and ran DriveSetup and
+ also mountvolume. Both worked as expected and didn't hang. I find it a bit
+ strange that it waits for the EHCI finisher, as this thread is just
+ finishing transfers and calls the callbacks. Even if a callback would
+ queue a new transfer this would be done asynchronously so it cannot really
+ deadlock there (at least not with itself). Why do you think it waits for
+ the finisher? Can you provide some sort of debug output? I can only
+ imagine that, as mentioned above, the device does simply never act on a
+ queued transfer (although then the controller should still return the
+ transfer with a timeout at some point). What would surprise me then is if
+ other IO to that device would still work, as it should simply lock up
+ usb_disk then.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2367#comment:3">http://dev.haiku-os.org/ticket/2367#comment:3</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008008.html">[Haiku-bugs] [Haiku] #2367: Media checker blocks in USB when	booting from USB
+</A></li>
+	<LI>Next message: <A HREF="008015.html">[Haiku-bugs] [Haiku] #2367: Media checker blocks in USB when	booting from USB
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8012">[ date ]</a>
+              <a href="thread.html#8012">[ thread ]</a>
+              <a href="subject.html#8012">[ subject ]</a>
+              <a href="author.html#8012">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

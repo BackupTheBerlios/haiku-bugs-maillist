@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4103: cddb not working
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-July/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234103%3A%20cddb%20not%20working&In-Reply-To=%3C051.44a3ab37ed3d55e88058fcd20bb1144f%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="018541.html">
+   <LINK REL="Next"  HREF="018545.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4103: cddb not working</H1>
+    <B>bga</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234103%3A%20cddb%20not%20working&In-Reply-To=%3C051.44a3ab37ed3d55e88058fcd20bb1144f%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4103: cddb not working">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Jul 19 14:08:53 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="018541.html">[Haiku-bugs] [Haiku] #4103: cddb not working
+</A></li>
+        <LI>Next message: <A HREF="018545.html">[Haiku-bugs] [Haiku] #4103: cddb not working
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18544">[ date ]</a>
+              <a href="thread.html#18544">[ thread ]</a>
+              <a href="subject.html#18544">[ subject ]</a>
+              <a href="author.html#18544">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4103: cddb not working
+-------------------------------+--------------------------------------------
+ Reporter:  scottmc            |       Owner:  bga           
+     Type:  bug                |      Status:  new           
+ Priority:  normal             |   Milestone:  R1            
+Component:  File Systems/cdda  |     Version:  R1 development
+Blockedby:                     |    Platform:  All           
+ Blocking:                     |  
+-------------------------------+--------------------------------------------
+
+Comment(by bga):
+
+ Devices will be skipped in the following cases:
+
+ 1 - CD filesystem is not cdda-fs.
+ 2 - The CD:do_lookup attribute is false (this means that you manually
+ changed some track names) or it can not be read.
+ 3 - The CD:cddbid attribute can not be read.
+ 4 - The CD:toc attribute can not be read.
+
+ Based on that, do the following:
+
+ 1 - Make sure the cd is really an audio CD. Can you actually mount it and,
+ say, copy audio tracks to the desktop? Please paste the output of
+ mountvolume -l here.
+ 2 - Paste the output of catattr CD:do_lookup /[AudioCDMountPoint]
+ ([AudioCDmountPoint] should most likely be &quot;Audio CD&quot;).
+ 3 - Same as 2 but for the CD:cddbid attribute.
+ 4 - Same as 2 and 3 but for the CD:toc attribute.
+
+ Note that the most likely thing that happened is that you manually tried
+ to edit the Audio CD title or Track names before trying to use cddb_daemon
+ to identify the CD.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4103#comment:6">http://dev.haiku-os.org/ticket/4103#comment:6</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="018541.html">[Haiku-bugs] [Haiku] #4103: cddb not working
+</A></li>
+	<LI>Next message: <A HREF="018545.html">[Haiku-bugs] [Haiku] #4103: cddb not working
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18544">[ date ]</a>
+              <a href="thread.html#18544">[ thread ]</a>
+              <a href="subject.html#18544">[ subject ]</a>
+              <a href="author.html#18544">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

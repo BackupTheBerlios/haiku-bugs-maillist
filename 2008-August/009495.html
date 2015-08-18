@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2610: USB mouse dies when input_server is	restarted.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232610%3A%20USB%20mouse%20dies%20when%20input_server%20is%0A%09restarted.&In-Reply-To=%3C047.3a00327233440d9c22544b53948f493d%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009488.html">
+   <LINK REL="Next"  HREF="009521.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2610: USB mouse dies when input_server is	restarted.</H1>
+    <B>bga</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232610%3A%20USB%20mouse%20dies%20when%20input_server%20is%0A%09restarted.&In-Reply-To=%3C047.3a00327233440d9c22544b53948f493d%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2610: USB mouse dies when input_server is	restarted.">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Aug 15 20:32:34 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009488.html">[Haiku-bugs] [Haiku] #2612: 'Save as' does not work
+</A></li>
+        <LI>Next message: <A HREF="009521.html">[Haiku-bugs] [Haiku] #2607: Unable to check emails using MDR
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9495">[ date ]</a>
+              <a href="thread.html#9495">[ thread ]</a>
+              <a href="subject.html#9495">[ subject ]</a>
+              <a href="author.html#9495">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2610: USB mouse dies when input_server is restarted.
+-----------------------------------+----------------------------------------
+  Reporter:  bga                   |       Owner:  korli         
+      Type:  bug                   |      Status:  new           
+  Priority:  normal                |   Milestone:  R1            
+ Component:  Servers/input_server  |     Version:  R1 development
+Resolution:                        |   Blockedby:                
+  Platform:  All                   |    Blocking:                
+-----------------------------------+----------------------------------------
+
+Comment(by bga):
+
+ I tried it again with &quot;input_server -q&quot; and got a crash. Funny thiunk is
+ that I was sent to the userland debugger but them it filled the entire
+ screen just like if it was KDL. Anyway, here is what I got on syslog:
+
+ KERN: vm_soft_fault: va 0xe418a000 not covered by area in address space
+
+ KERN: vm_page_fault: vm_soft_fault returned error 'Bad address' on fault
+ at 0xe418a400, ip 0x3db602, write 0, user 1, thread 0x6c
+
+ KERN: vm_page_fault: thread &quot;input_server&quot; (108) in team &quot;input_server&quot;
+ (108) tried to read address 0xe418a400, ip 0x3db602 (&quot;???&quot; +0x3db602)
+
+ KERN: debug_server: Thread 108 entered the debugger: Segment violation
+
+ KERN: stack trace, current PC 0x3db602  ItemAt__C5BListl + 0x16:
+
+ KERN:   (0x7ffeea1c)  0x21bc82
+ StopMonitoringDevice__13DeviceManagerP14_BDeviceAddOn_PCc + 0xfe
+
+ KERN:   (0x7ffeeadc)  0x2163b0
+ StopMonitoringDevice__18BInputServerDevicePCc + 0x2c
+
+ KERN:   (0x7ffeeb0c)  0x5d8529  _._16MouseInputDevice + 0x31
+
+ KERN:   (0x7ffeeb3c)  0x218945  UnregisterAddOns__12AddOnManager + 0x145
+
+ KERN:   (0x7ffeebcc)  0x21768b  SaveState__12AddOnManager + 0x1f
+
+ KERN:   (0x7ffeebfc)  0x211c79  QuitRequested__11InputServer + 0x71
+
+ KERN:   (0x7ffeec2c)  0x2dba80  _QuitRequested__7BLooperP8BMessage + 0x30
+
+ KERN:   (0x7ffeecac)  0x2da052
+ DispatchMessage__7BLooperP8BMessageP8BHandler + 0x46
+
+ KERN:   (0x7ffeecdc)  0x2d13bd
+ DispatchMessage__12BApplicationP8BMessageP8BHandler + 0x401
+
+ KERN:   (0x7ffeeecc)  0x2db9d5  task_looper__7BLooper + 0x211
+
+ KERN:   (0x7ffeef0c)  0x2cfb2d  Run__12BApplication + 0x75
+
+ KERN:   (0x7ffeef4c)  0x215c0e  main + 0x6e
+
+ KERN:   (0x7ffeef7c)  0x210837  _start + 0x5b
+
+ KERN:   (0x7ffeefac)  0x1008ea  (runtime_loader_seg0ro + 0x8ea)
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2610#comment:2">http://dev.haiku-os.org/ticket/2610#comment:2</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009488.html">[Haiku-bugs] [Haiku] #2612: 'Save as' does not work
+</A></li>
+	<LI>Next message: <A HREF="009521.html">[Haiku-bugs] [Haiku] #2607: Unable to check emails using MDR
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9495">[ date ]</a>
+              <a href="thread.html#9495">[ thread ]</a>
+              <a href="subject.html#9495">[ subject ]</a>
+              <a href="author.html#9495">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

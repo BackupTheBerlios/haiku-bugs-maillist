@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2146: Vim doesn't work in safe mode
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232146%3A%20Vim%20doesn%27t%20work%20in%20safe%20mode&In-Reply-To=%3C039.25eb0d911de11dae4c1d23084e553637%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006741.html">
+   <LINK REL="Next"  HREF="006744.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2146: Vim doesn't work in safe mode</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232146%3A%20Vim%20doesn%27t%20work%20in%20safe%20mode&In-Reply-To=%3C039.25eb0d911de11dae4c1d23084e553637%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2146: Vim doesn't work in safe mode">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Apr 23 18:50:44 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006741.html">[Haiku-bugs] [Haiku] #257: [Expander] first launch
+</A></li>
+        <LI>Next message: <A HREF="006744.html">[Haiku-bugs] [Haiku] #2146: Vim doesn't work in safe mode
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6742">[ date ]</a>
+              <a href="thread.html#6742">[ thread ]</a>
+              <a href="subject.html#6742">[ subject ]</a>
+              <a href="author.html#6742">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2146: Vim doesn't work in safe mode
+---------------------------------------------+------------------------------
+ Reporter:  heto                             |       Owner:  axeld         
+     Type:  bug                              |      Status:  new           
+ Priority:  normal                           |   Milestone:  R1            
+Component:  Applications/Command Line Tools  |     Version:  R1 development
+ Platform:  All                              |  
+---------------------------------------------+------------------------------
+ Having a working text editor in safe mode would be good if, for example,
+ some config file change renders the system unbootable in normal mode. The
+ change could be reverted then even if a full backup of the original config
+ file is not available.
+
+ The current build of vim (in r25105) prints &quot;DEBUG: Couldn't initialize
+ global fonts!&quot; on the screen and exits when run in safe mode, although it
+ works correctly inside Terminal when booted to normal mode.
+
+ Possible resolutions that I can think of include:
+  * Make vim initialize the GUI only if called so that the GUI is used--
+ i.e. as gvim or with -g. (Perhaps load libbe.so dynamically, if this is
+ needed?)
+  * Build two different versions of vim: one that's intended for use in
+ normal mode, graphically or in Terminal, and one (e.g. rescue-vi) that has
+ no graphical support but can be run in safe mode.
+  * Make fake_app_server always return B_OK for font initialization. Will
+ probably lead to having to fake some other stuff too, which may break some
+ apps in unpredictable ways when run under safe mode, so looks like an ugly
+ solution to me.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2146">http://dev.haiku-os.org/ticket/2146</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006741.html">[Haiku-bugs] [Haiku] #257: [Expander] first launch
+</A></li>
+	<LI>Next message: <A HREF="006744.html">[Haiku-bugs] [Haiku] #2146: Vim doesn't work in safe mode
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6742">[ date ]</a>
+              <a href="thread.html#6742">[ thread ]</a>
+              <a href="subject.html#6742">[ subject ]</a>
+              <a href="author.html#6742">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

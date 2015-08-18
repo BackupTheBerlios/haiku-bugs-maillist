@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3181: firefox always crash on system	shutdown/restart
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233181%3A%20firefox%20always%20crash%20on%20system%0A%09shutdown/restart&In-Reply-To=%3C041.c3f8b65af581c95308bd363f74261d2a%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012831.html">
+   <LINK REL="Next"  HREF="012834.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3181: firefox always crash on system	shutdown/restart</H1>
+    <B>karmak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233181%3A%20firefox%20always%20crash%20on%20system%0A%09shutdown/restart&In-Reply-To=%3C041.c3f8b65af581c95308bd363f74261d2a%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3181: firefox always crash on system	shutdown/restart">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Nov 28 08:59:32 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012831.html">[Haiku-bugs] [Haiku] #2998: bcm440x doesn't initialize the NIC
+</A></li>
+        <LI>Next message: <A HREF="012834.html">[Haiku-bugs] [Haiku] #3182: locate crashes at the end of every call
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12833">[ date ]</a>
+              <a href="thread.html#12833">[ thread ]</a>
+              <a href="subject.html#12833">[ subject ]</a>
+              <a href="author.html#12833">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3181: firefox always crash on system shutdown/restart
+-----------------------+----------------------------------------------------
+ Reporter:  karmak     |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+Blockedby:             |    Platform:  x86           
+ Blocking:             |  
+-----------------------+----------------------------------------------------
+ Sorry if this is not the right place to post this bug ; feel free to
+ redirect me to the right place if needed.
+
+ Firefox 2.0.0.18 on Haiku r28734 on real hardware (IBM R52). This bug has
+ happened since I use Haiku (approx. r28500). Did not test under qemu. This
+ happens either on cross-compiled from linux and compiled from Haiku (since
+ approx r28700 I acheived building Haiku from itself).
+
+ '''the bug''': if I let firefox open before restarting or shuting down the
+ system, everytime it will crash when asked to quit by the system. If I
+ close it with Alt-W or Deskbar-&gt;Close, it closes properly. Backtrace :
+ {{{
+ #0  0xffff0104 in ?? ()
+ #1  0x01a00566 in debugger () from /boot/beos/system/lib/libroot.so
+ #2  0x01a09799 in __assert_fail () from /boot/beos/system/lib/libroot.so
+ #3  0x01a13b40 in BPrivate::threadHeap::malloc ()
+    from /boot/beos/system/lib/libroot.so
+ #4  0x01a14494 in malloc () from /boot/beos/system/lib/libroot.so
+ #5  0x01571412 in JS_malloc () from /boot/apps/firefox/lib/libmozjs.so
+ #6  0x015f8f53 in js_ConcatStrings () from
+ /boot/apps/firefox/lib/libmozjs.so
+ #7  0x015b2b6b in js_Interpret () from /boot/apps/firefox/lib/libmozjs.so
+ #8  0x015ade6c in js_Invoke () from /boot/apps/firefox/lib/libmozjs.so
+ #9  0x006c470b in nsXPCWrappedJSClass::CallMethod ()
+ #10 0x006c1154 in nsXPCWrappedJS::CallMethod ()
+ #11 0x016e6155 in PrepareAndDispatch ()
+    from /boot/apps/firefox/lib/libxpcom_core.so
+ #12 0x01680e31 in nsObserverService::NotifyObservers ()
+    from /boot/apps/firefox/lib/libxpcom_core.so
+ #13 0x0068e56d in nsXREDirProvider::DoShutdown ()
+ #14 0x0068ab30 in XRE_main ()
+ #15 0x006844e6 in main ()
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3181">http://dev.haiku-os.org/ticket/3181</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012831.html">[Haiku-bugs] [Haiku] #2998: bcm440x doesn't initialize the NIC
+</A></li>
+	<LI>Next message: <A HREF="012834.html">[Haiku-bugs] [Haiku] #3182: locate crashes at the end of every call
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12833">[ date ]</a>
+              <a href="thread.html#12833">[ thread ]</a>
+              <a href="subject.html#12833">[ subject ]</a>
+              <a href="author.html#12833">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,178 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2805: Tracker crashes after extracting files from an archive
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232805%3A%20Tracker%20crashes%20after%20extracting%20files%0A%20from%20an%20archive&In-Reply-To=%3C042.fe1d3103067d459829729ec31c4e7714%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010786.html">
+   <LINK REL="Next"  HREF="010787.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2805: Tracker crashes after extracting files from an archive</H1>
+    <B>scottmc</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232805%3A%20Tracker%20crashes%20after%20extracting%20files%0A%20from%20an%20archive&In-Reply-To=%3C042.fe1d3103067d459829729ec31c4e7714%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2805: Tracker crashes after extracting files from an archive">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Oct  6 20:45:42 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010786.html">[Haiku-bugs] [Haiku] #2804: booting fail on PATA disks using AHCI capable chipsets?
+</A></li>
+        <LI>Next message: <A HREF="010787.html">[Haiku-bugs] [Haiku] #2805: Tracker crashes after extracting files from an archive
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10785">[ date ]</a>
+              <a href="thread.html#10785">[ thread ]</a>
+              <a href="subject.html#10785">[ subject ]</a>
+              <a href="author.html#10785">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2805: Tracker crashes after extracting files from an archive
+-----------------------+----------------------------------------------------
+ Reporter:  scottmc    |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+Blockedby:             |    Platform:  All           
+ Blocking:             |  
+-----------------------+----------------------------------------------------
+ I've seen this happen with recent builds for a week or so now.  Could be
+ something wrong in my build setup.  Currently running r27878, with ata bus
+ driver enabled and all optional packages installed, I've only checked in
+ vmware so far.  It's also been crashing when I try to right-click and
+ delete folders.  Here's the gdb output:
+
+ {{{
+ GNU gdb 6.3
+ Copyright 2004 Free Software Foundation, Inc.
+ GDB is free software, covered by the GNU General Public License, and you
+ are
+ welcome to change it and/or distribute copies of it under certain
+ conditions.
+ Type &quot;show copying&quot; to see the conditions.
+ There is absolutely no warranty for GDB.  Type &quot;show warranty&quot; for
+ details.
+ This GDB was configured as &quot;i586-pc-haiku&quot;...(no debugging symbols found)
+
+ [tcsetpgrp failed in terminal_inferior: Invalid Argument]
+ Reading symbols from /boot/beos/system/runtime_loader...done.
+ Loaded symbols for /boot/beos/system/runtime_loader
+ Reading symbols from /boot/beos/system/lib/libbe.so...done.
+ Loaded symbols for /boot/beos/system/lib/libbe.so
+ Reading symbols from /boot/beos/system/lib/libtracker.so...done.
+ Loaded symbols for /boot/beos/system/lib/libtracker.so
+ Reading symbols from /boot/beos/system/lib/libroot.so...done.
+ Loaded symbols for /boot/beos/system/lib/libroot.so
+ Reading symbols from /boot/beos/system/lib/libstdc++.r4.so...done.
+ Loaded symbols for /boot/beos/system/lib/libstdc++.r4.so
+ Reading symbols from /boot/beos/system/lib/libtranslation.so...done.
+ Loaded symbols for /boot/beos/system/lib/libtranslation.so
+ Reading symbols from /boot/beos/system/lib/libtextencoding.so...done.
+ Loaded symbols for /boot/beos/system/lib/libtextencoding.so
+ Reading symbols from /boot/beos/system/add-
+ ons/Translators/BMPTranslator...done.
+ Loaded symbols for /boot/beos/system/add-ons/Translators/BMPTranslator
+ Reading symbols from /boot/beos/system/add-
+ ons/Translators/EXRTranslator...done.
+ Loaded symbols for /boot/beos/system/add-ons/Translators/EXRTranslator
+ Reading symbols from /boot/beos/system/lib/libilmimf.so...done.
+ Loaded symbols for /boot/beos/system/lib/libilmimf.so
+ Reading symbols from /boot/beos/system/lib/libz.so...done.
+ Loaded symbols for /boot/beos/system/lib/libz.so
+ Reading symbols from /boot/beos/system/add-
+ ons/Translators/GIFTranslator...done.
+ Loaded symbols for /boot/beos/system/add-ons/Translators/GIFTranslator
+ Reading symbols from /boot/beos/system/add-
+ ons/Translators/JPEG2000Translator...done.
+ Loaded symbols for /boot/beos/system/add-
+ ons/Translators/JPEG2000Translator
+ Reading symbols from /boot/beos/system/add-
+ ons/Translators/JPEGTranslator...done.
+ Loaded symbols for /boot/beos/system/add-ons/Translators/JPEGTranslator
+ Reading symbols from /boot/beos/system/add-
+ ons/Translators/PCXTranslator...done.
+ Loaded symbols for /boot/beos/system/add-ons/Translators/PCXTranslator
+ Reading symbols from /boot/beos/system/add-
+ ons/Translators/PNGTranslator...done.
+ Loaded symbols for /boot/beos/system/add-ons/Translators/PNGTranslator
+ Reading symbols from /boot/beos/system/add-
+ ons/Translators/PPMTranslator...done.
+ Loaded symbols for /boot/beos/system/add-ons/Translators/PPMTranslator
+ Reading symbols from /boot/beos/system/add-
+ ons/Translators/RAWTranslator...done.
+ Loaded symbols for /boot/beos/system/add-ons/Translators/RAWTranslator
+ Reading symbols from /boot/beos/system/add-ons/Translators/RTF-
+ Translator...done.
+ Loaded symbols for /boot/beos/system/add-ons/Translators/RTF-Translator
+ Reading symbols from /boot/beos/system/add-
+ ons/Translators/SGITranslator...done.
+ Loaded symbols for /boot/beos/system/add-ons/Translators/SGITranslator
+ Reading symbols from /boot/beos/system/add-
+ ons/Translators/STXTTranslator...done.
+ Loaded symbols for /boot/beos/system/add-ons/Translators/STXTTranslator
+ Reading symbols from /boot/beos/system/add-
+ ons/Translators/TGATranslator...done.
+ Loaded symbols for /boot/beos/system/add-ons/Translators/TGATranslator
+ Reading symbols from /boot/beos/system/add-
+ ons/Translators/TIFFTranslator...done.
+ Loaded symbols for /boot/beos/system/add-ons/Translators/TIFFTranslator
+ Reading symbols from /boot/beos/system/add-
+ ons/Translators/WonderBrushTranslator...done.
+ Loaded symbols for /boot/beos/system/add-
+ ons/Translators/WonderBrushTranslator
+ [tcsetpgrp failed in terminal_inferior: Invalid Argument]
+ [Switching to team /boot/beos/system/Tracker (76) thread Tracker (76)]
+ 0xffff0104 in ?? ()
+ (gdb) bt
+ #0  0xffff0104 in ?? ()
+ #1  0x006581fa in port_buffer_size_etc () from
+ /boot/beos/system/lib/libroot.so
+ #2  0x002b2302 in BLooper::ReadRawFromPort ()
+    from /boot/beos/system/lib/libbe.so
+ #3  0x002b238e in BLooper::ReadMessageFromPort ()
+    from /boot/beos/system/lib/libbe.so
+ #4  0x002b1a2b in BLooper::MessageFromPort ()
+    from /boot/beos/system/lib/libbe.so
+ #5  0x002b251b in BLooper::task_looper () from
+ /boot/beos/system/lib/libbe.so
+ #6  0x002a6685 in BApplication::Run () from /boot/beos/system/lib/libbe.so
+ #7  0x002009eb in main ()
+ (gdb)
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2805">http://dev.haiku-os.org/ticket/2805</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010786.html">[Haiku-bugs] [Haiku] #2804: booting fail on PATA disks using AHCI capable chipsets?
+</A></li>
+	<LI>Next message: <A HREF="010787.html">[Haiku-bugs] [Haiku] #2805: Tracker crashes after extracting files from an archive
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10785">[ date ]</a>
+              <a href="thread.html#10785">[ thread ]</a>
+              <a href="subject.html#10785">[ subject ]</a>
+              <a href="author.html#10785">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

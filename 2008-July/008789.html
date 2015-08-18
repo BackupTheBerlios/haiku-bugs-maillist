@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2491: Haiku Live CD reboots right away
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-July/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232491%3A%20Haiku%20Live%20CD%20reboots%20right%20away&In-Reply-To=%3C042.38879f23f8d7cb36f37dea462941c54a%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008788.html">
+   <LINK REL="Next"  HREF="008790.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2491: Haiku Live CD reboots right away</H1>
+    <B>emitrax</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232491%3A%20Haiku%20Live%20CD%20reboots%20right%20away&In-Reply-To=%3C042.38879f23f8d7cb36f37dea462941c54a%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2491: Haiku Live CD reboots right away">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Jul  8 22:15:21 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008788.html">[Haiku-bugs] [Haiku] #1635: Gl Teapot Bad Rendering On Window	Size Expand
+</A></li>
+        <LI>Next message: <A HREF="008790.html">[Haiku-bugs] [Haiku] #2492: Bouncing text in text entry box
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8789">[ date ]</a>
+              <a href="thread.html#8789">[ thread ]</a>
+              <a href="subject.html#8789">[ subject ]</a>
+              <a href="author.html#8789">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2491: Haiku Live CD reboots right away
+---------------------+------------------------------------------------------
+ Reporter:  emitrax  |       Owner:  axeld         
+     Type:  bug      |      Status:  new           
+ Priority:  high     |   Milestone:  R1            
+Component:  System   |     Version:  R1 development
+Blockedby:           |    Platform:  All           
+ Blocking:           |  
+---------------------+------------------------------------------------------
+ I created a boot cd with the following
+ {{{
+ jam -q haiku-boot-cd
+ jam -q haiku-image
+ cdrecord dev=/dev/hda -v -eject -dao -data generated/haiku-boot-cd.iso
+ generated/haiku.image
+ }}}
+ but when I boot from the cd the system reboots right away.
+
+ Here is a the output of lspci from linux
+ {{{
+ 00:00.0 Host bridge: Intel Corporation Mobile 945GM/PM/GMS, 943/940GML and
+ 945GT Express Memory Controller Hub (rev 03)
+ 00:02.0 VGA compatible controller: Intel Corporation Mobile 945GM/GMS,
+ 943/940GML Express Integrated Graphics Controller (rev 03)
+ 00:02.1 Display controller: Intel Corporation Mobile 945GM/GMS, 943/940GML
+ Express Integrated Graphics Controller (rev 03)
+ 00:1b.0 Audio device: Intel Corporation 82801G (ICH7 Family) High
+ Definition Audio Controller (rev 02)
+ 00:1c.0 PCI bridge: Intel Corporation 82801G (ICH7 Family) PCI Express
+ Port 1 (rev 02)
+ 00:1c.1 PCI bridge: Intel Corporation 82801G (ICH7 Family) PCI Express
+ Port 2 (rev 02)
+ 00:1c.2 PCI bridge: Intel Corporation 82801G (ICH7 Family) PCI Express
+ Port 3 (rev 02)
+ 00:1d.0 USB Controller: Intel Corporation 82801G (ICH7 Family) USB UHCI
+ Controller #1 (rev 02)
+ 00:1d.1 USB Controller: Intel Corporation 82801G (ICH7 Family) USB UHCI
+ Controller #2 (rev 02)
+ 00:1d.2 USB Controller: Intel Corporation 82801G (ICH7 Family) USB UHCI
+ Controller #3 (rev 02)
+ 00:1d.3 USB Controller: Intel Corporation 82801G (ICH7 Family) USB UHCI
+ Controller #4 (rev 02)
+ 00:1d.7 USB Controller: Intel Corporation 82801G (ICH7 Family) USB2 EHCI
+ Controller (rev 02)
+ 00:1e.0 PCI bridge: Intel Corporation 82801 Mobile PCI Bridge (rev e2)
+ 00:1f.0 ISA bridge: Intel Corporation 82801GBM (ICH7-M) LPC Interface
+ Bridge (rev 02)
+ 00:1f.1 IDE interface: Intel Corporation 82801G (ICH7 Family) IDE
+ Controller (rev 02)
+ 00:1f.2 SATA controller: Intel Corporation 82801GBM/GHM (ICH7 Family) SATA
+ AHCI Controller (rev 02)
+ 00:1f.3 SMBus: Intel Corporation 82801G (ICH7 Family) SMBus Controller
+ (rev 02)
+ 02:00.0 Network controller: Intel Corporation PRO/Wireless 3945ABG Network
+ Connection (rev 02)
+ 05:08.0 Ethernet controller: Intel Corporation PRO/100 VE Network
+ Connection (rev 02)
+ 05:09.0 FireWire (IEEE 1394): Ricoh Co Ltd R5C832 IEEE 1394 Controller
+ 05:09.1 SD Host controller: Ricoh Co Ltd R5C822 SD/SDIO/MMC/MS/MSPro Host
+ Adapter (rev 19)
+ 05:09.2 System peripheral: Ricoh Co Ltd Device 0843 (rev 01)
+ 05:09.3 System peripheral: Ricoh Co Ltd R5C592 Memory Stick Bus Host
+ Adapter (rev 0a)
+ 05:09.4 System peripheral: Ricoh Co Ltd xD-Picture Card Controller (rev
+ 05)
+ }}}
+
+ Any idea?
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2491">http://dev.haiku-os.org/ticket/2491</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008788.html">[Haiku-bugs] [Haiku] #1635: Gl Teapot Bad Rendering On Window	Size Expand
+</A></li>
+	<LI>Next message: <A HREF="008790.html">[Haiku-bugs] [Haiku] #2492: Bouncing text in text entry box
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8789">[ date ]</a>
+              <a href="thread.html#8789">[ thread ]</a>
+              <a href="subject.html#8789">[ subject ]</a>
+              <a href="author.html#8789">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

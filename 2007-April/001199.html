@@ -1,0 +1,170 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1167: USB stack built for BONE crashes in UHCI finish thread
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231167%3A%20USB%20stack%20built%20for%20BONE%20crashes%20in%0A%20UHCI%20finish%20thread&In-Reply-To=%3C057.9af45034e7c88643285837b4631c272a%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001113.html">
+   <LINK REL="Next"  HREF="001074.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1167: USB stack built for BONE crashes in UHCI finish thread</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231167%3A%20USB%20stack%20built%20for%20BONE%20crashes%20in%0A%20UHCI%20finish%20thread&In-Reply-To=%3C057.9af45034e7c88643285837b4631c272a%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1167: USB stack built for BONE crashes in UHCI finish thread">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Apr 29 16:52:06 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001113.html">[Haiku-bugs] [Haiku] #1167: USB stack built for BONE crashes in UHCI finish thread
+</A></li>
+        <LI>Next message: <A HREF="001074.html">[Haiku-bugs] [Haiku] #1168: driver free hook not called
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1199">[ date ]</a>
+              <a href="thread.html#1199">[ thread ]</a>
+              <a href="subject.html#1199">[ subject ]</a>
+              <a href="author.html#1199">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1167: USB stack built for BONE crashes in UHCI finish thread
+----------------------------+-----------------------------------------------
+  Reporter:  jonas.kirilla  |       Owner:  mmlr          
+      Type:  bug            |      Status:  assigned      
+  Priority:  normal         |   Milestone:  R1            
+ Component:  Drivers/USB    |     Version:  R1 development
+Resolution:                 |    Platform:  x86           
+----------------------------+-----------------------------------------------
+Comment (by oco):
+
+ I have the same problem with the EHCI driver when i drag and drop a 30 Mo
+ file on a mass storage device (same call stack as above). It occurs less
+ often when copying small files.
+
+ Here is my devices list :
+
+
+ {{{
+ device Bridge (Host bridge) [6|0|0]
+   vendor 10de: nVidia Corporation
+   device 00d1: nForce3 Host Bridge
+
+ device Bridge (ISA bridge) [6|1|0]
+   vendor 10de: nVidia Corporation
+   device 00d0: nForce3 LPC Bridge
+
+ device Serial bus controller (SMBus) [c|5|0]
+   vendor 10de: nVidia Corporation
+   device 00d4: nForce3 SMBus
+
+ device Serial bus controller (USB Controller, OHCI) [c|3|10]
+   vendor 10de: nVidia Corporation
+   device 00d7: nForce3 USB 1.1
+
+ device Serial bus controller (USB Controller, OHCI) [c|3|10]
+   vendor 10de: nVidia Corporation
+   device 00d7: nForce3 USB 1.1
+
+ device Serial bus controller (USB Controller, EHCI) [c|3|20]
+   vendor 10de: nVidia Corporation
+   device 00d8: nForce3 USB 2.0
+
+ device Multimedia controller (Multimedia audio controller) [4|1|0]
+   vendor 10de: nVidia Corporation
+   device 00da: nForce3 Audio
+
+ device Communication controller (Modem, Generic) [7|3|0]
+   vendor 10de: nVidia Corporation
+   device 00d9: nForce3 Audio
+
+ device Mass storage controller (IDE interface) [1|1|8a]
+   vendor 10de: nVidia Corporation
+   device 00d5: nForce3 IDE
+      device [0|0]
+      vendor        IC25N080     model        ATMR04-0   type Direct Access
+      device [0|0]
+      vendor        MATSHITA     model DVD-RAM UJ-820S   type CDROM
+
+ device Bridge (PCI bridge, Normal decode) [6|4|0]
+   vendor 10de: nVidia Corporation
+   device 00dd: nForce3 PCI Bridge
+
+ device Network controller (Ethernet controller) [2|0|0]
+   vendor 14e4: Broadcom Corporation
+   device 169c: NetXtreme BCM5788 Gigabit Ethernet
+
+ device Bridge (CardBus bridge) [6|7|0]
+   vendor 104c: Texas Instruments
+   device ac44: PCI4510 PC card Cardbus Controller
+
+ device Serial bus controller (FireWire (IEEE 1394), OHCI) [c|0|10]
+   vendor 104c: Texas Instruments
+   device 8029: PCI4510 IEEE-1394 Controller
+
+ device Network controller [2|80|0]
+   vendor 14e4: Broadcom Corporation
+   device 4320: BCM4306 802.11b/g Wireless LAN Controller
+
+ device Bridge (PCI bridge, Normal decode) [6|4|0]
+   vendor 10de: nVidia Corporation
+   device 00d2: nForce3 AGP Bridge
+
+ device Display controller (VGA compatible controller, VGA) [3|0|0]
+   vendor 10de: nVidia Corporation
+   device 0348: NV36 [GeForce FX Go5700]
+
+ device Bridge (Host bridge) [6|0|0]
+   vendor 1022: Advanced Micro Devices [AMD]
+   device 1100: K8 [Athlon64/Opteron] HyperTransport Technology
+ Configuration
+
+ device Bridge (Host bridge) [6|0|0]
+   vendor 1022: Advanced Micro Devices [AMD]
+   device 1101: K8 [Athlon64/Opteron] Address Map
+
+ device Bridge (Host bridge) [6|0|0]
+   vendor 1022: Advanced Micro Devices [AMD]
+   device 1102: K8 [Athlon64/Opteron] DRAM Controller
+
+ device Bridge (Host bridge) [6|0|0]
+   vendor 1022: Advanced Micro Devices [AMD]
+   device 1103: K8 [Athlon64/Opteron] Miscellaneous Control
+
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1167#comment:8">http://dev.haiku-os.org/ticket/1167#comment:8</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001113.html">[Haiku-bugs] [Haiku] #1167: USB stack built for BONE crashes in UHCI finish thread
+</A></li>
+	<LI>Next message: <A HREF="001074.html">[Haiku-bugs] [Haiku] #1168: driver free hook not called
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1199">[ date ]</a>
+              <a href="thread.html#1199">[ thread ]</a>
+              <a href="subject.html#1199">[ subject ]</a>
+              <a href="author.html#1199">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

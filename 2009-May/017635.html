@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3110: [kernel] PANIC: page still has	mappings
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233110%3A%20%5Bkernel%5D%20PANIC%3A%20page%20still%20has%0A%09mappings&In-Reply-To=%3C049.5249a0e2dae13839124d04eb5c70ee62%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="017634.html">
+   <LINK REL="Next"  HREF="017636.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3110: [kernel] PANIC: page still has	mappings</H1>
+    <B>darkwyrm</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233110%3A%20%5Bkernel%5D%20PANIC%3A%20page%20still%20has%0A%09mappings&In-Reply-To=%3C049.5249a0e2dae13839124d04eb5c70ee62%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3110: [kernel] PANIC: page still has	mappings">trac at haiku-os.org
+       </A><BR>
+    <I>Fri May 29 03:08:09 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="017634.html">[Haiku-bugs] [Haiku] #2845: [kernel] vm_page_fault: block	notifier/writer
+</A></li>
+        <LI>Next message: <A HREF="017636.html">[Haiku-bugs] [Haiku] #3975: &quot;GNU LGPL v3&quot; is missing from	system/data/licenses
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17635">[ date ]</a>
+              <a href="thread.html#17635">[ thread ]</a>
+              <a href="subject.html#17635">[ subject ]</a>
+              <a href="author.html#17635">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3110: [kernel] PANIC: page still has mappings
+---------------------------+------------------------------------------------
+ Reporter:  diver          |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  high           |   Milestone:  R1/alpha1     
+Component:  System/Kernel  |     Version:  R1 development
+Blockedby:                 |    Platform:  All           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+
+Comment(by darkwyrm):
+
+ Absolutely. Tested with r30907:
+
+ 1) Download and install Paladin RC6 --
+ <A HREF="http://www.bebits.com/bob/22146/Paladin1.0rc6.pkg.zip">http://www.bebits.com/bob/22146/Paladin1.0rc6.pkg.zip</A>
+ 2) Create /boot/home/projects folder
+ 3) Open a Terminal and go to ~/projects.
+ 4) $ unzip testproject.zip; cd BePhotoMagic
+ 5) $ /boot/apps/Paladin/Paladin BePhotoMagic.pld
+ 6) Hit Alt-M to run a build.
+
+ Sometimes it will KDL on the first build attempt after it has progressed
+ most of the way through the build. Sometimes Paladin craps out on an
+ error. In such cases, restarting the build causes it to KDL almost
+ immediately after the restart.
+
+ The test rig is a P4 Xeon 3Ghz with Hyperthreading and 1GB RAM in the
+ event SMP is a factor.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3110#comment:20">http://dev.haiku-os.org/ticket/3110#comment:20</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="017634.html">[Haiku-bugs] [Haiku] #2845: [kernel] vm_page_fault: block	notifier/writer
+</A></li>
+	<LI>Next message: <A HREF="017636.html">[Haiku-bugs] [Haiku] #3975: &quot;GNU LGPL v3&quot; is missing from	system/data/licenses
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17635">[ date ]</a>
+              <a href="thread.html#17635">[ thread ]</a>
+              <a href="subject.html#17635">[ subject ]</a>
+              <a href="author.html#17635">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

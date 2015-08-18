@@ -1,0 +1,159 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4388: Python's test_signal.py fails [Errno -2147454933] Operation not supported
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234388%3A%20Python%27s%20test_signal.py%20fails%20%5BErrno%0A%20-2147454933%5D%20Operation%20not%20supported&In-Reply-To=%3C042.20206042136c5c1883f16e04c1972dc7%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="020482.html">
+   <LINK REL="Next"  HREF="020484.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4388: Python's test_signal.py fails [Errno -2147454933] Operation not supported</H1>
+    <B>scottmc</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234388%3A%20Python%27s%20test_signal.py%20fails%20%5BErrno%0A%20-2147454933%5D%20Operation%20not%20supported&In-Reply-To=%3C042.20206042136c5c1883f16e04c1972dc7%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4388: Python's test_signal.py fails [Errno -2147454933] Operation not supported">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Aug 31 13:04:58 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="020482.html">[Haiku-bugs] [Haiku] #3354: f.seekable() fails in python	test_fileio.py
+</A></li>
+        <LI>Next message: <A HREF="020484.html">[Haiku-bugs] [Haiku] #3676: [AHCI] InterruptErrorHandler messages written in syslog if the optical drive is empty
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20483">[ date ]</a>
+              <a href="thread.html#20483">[ thread ]</a>
+              <a href="subject.html#20483">[ subject ]</a>
+              <a href="author.html#20483">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4388: Python's test_signal.py fails [Errno -2147454933] Operation not supported
+-----------------------+----------------------------------------------------
+ Reporter:  scottmc    |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+Blockedby:             |    Platform:  All           
+ Blocking:             |  
+-----------------------+----------------------------------------------------
+ /boot/common/lib/python2.6/test&gt; python test_signal.py
+ test_getsignal (__main__.BasicSignalTests) ... ok
+ test_out_of_range_signal_number_raises_error (__main__.BasicSignalTests)
+ ... ok
+ test_setting_signal_handler_to_none_raises_error
+ (__main__.BasicSignalTests) ... ok
+ test_main (__main__.InterProcessSignalTests) ... test runner's pid is
+ 27228
+ handlerA invoked from signal 1 at:
+   File &quot;/boot/common/lib/python2.6/subprocess.py&quot;, line 1123, in wait
+     pid, sts = os.waitpid(self.pid, 0)
+
+ handlerB invoked from signal 18 at:
+   File &quot;/boot/common/lib/python2.6/subprocess.py&quot;, line 1123, in wait
+     pid, sts = os.waitpid(self.pid, 0)
+
+ HandlerBCalled exception caught
+ KeyboardInterrupt (the alarm() went off)
+ ok
+ test_wakeup_fd_during (__main__.WakeupSignalTests) ... ok
+ test_wakeup_fd_early (__main__.WakeupSignalTests) ... ok
+ test_siginterrupt_off (__main__.SiginterruptTest) ... ok
+ test_siginterrupt_on (__main__.SiginterruptTest) ... ok
+ test_without_siginterrupt (__main__.SiginterruptTest) ... ok
+ test_itimer_exc (__main__.ItimerTest) ... ok
+ test_itimer_prof (__main__.ItimerTest) ... ERROR
+ ERROR
+ test_itimer_real (__main__.ItimerTest) ...
+ call pause()...
+ ('SIGALRM handler invoked', (14, &lt;frame object at 0x181dbb9c&gt;))
+ ok
+ test_itimer_virtual (__main__.ItimerTest) ... ERROR
+ ERROR
+
+ ======================================================================
+ ERROR: test_itimer_prof (__main__.ItimerTest)
+ ----------------------------------------------------------------------
+ Traceback (most recent call last):
+   File &quot;test_signal.py&quot;, line 375, in test_itimer_prof
+     signal.setitimer(self.itimer, 0.2, 0.2)
+ ItimerError: [Errno -2147454933] Operation not supported
+
+ ======================================================================
+ ERROR: test_itimer_prof (__main__.ItimerTest)
+ ----------------------------------------------------------------------
+ Traceback (most recent call last):
+   File &quot;test_signal.py&quot;, line 308, in tearDown
+     signal.setitimer(self.itimer, 0)
+ ItimerError: [Errno -2147454933] Operation not supported
+
+ ======================================================================
+ ERROR: test_itimer_virtual (__main__.ItimerTest)
+ ----------------------------------------------------------------------
+ Traceback (most recent call last):
+   File &quot;test_signal.py&quot;, line 361, in test_itimer_virtual
+     signal.setitimer(self.itimer, 0.3, 0.2)
+ ItimerError: [Errno -2147454933] Operation not supported
+
+ ======================================================================
+ ERROR: test_itimer_virtual (__main__.ItimerTest)
+ ----------------------------------------------------------------------
+ Traceback (most recent call last):
+   File &quot;test_signal.py&quot;, line 308, in tearDown
+     signal.setitimer(self.itimer, 0)
+ ItimerError: [Errno -2147454933] Operation not supported
+
+ ----------------------------------------------------------------------
+ Ran 13 tests in 5.440s
+
+ FAILED (errors=4)
+ Traceback (most recent call last):
+   File &quot;test_signal.py&quot;, line 392, in &lt;module&gt;
+     test_main()
+   File &quot;test_signal.py&quot;, line 388, in test_main
+     WakeupSignalTests, SiginterruptTest, ItimerTest)
+   File &quot;/boot/common/lib/python2.6/test/test_support.py&quot;, line 722, in
+ run_unittest
+     _run_suite(suite)
+   File &quot;/boot/common/lib/python2.6/test/test_support.py&quot;, line 705, in
+ _run_suite
+     raise TestFailed(err)
+ test.test_support.TestFailed: errors occurred; run in verbose mode for
+ details
+ /boot/common/lib/python2.6/test&gt;
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4388">http://dev.haiku-os.org/ticket/4388</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="020482.html">[Haiku-bugs] [Haiku] #3354: f.seekable() fails in python	test_fileio.py
+</A></li>
+	<LI>Next message: <A HREF="020484.html">[Haiku-bugs] [Haiku] #3676: [AHCI] InterruptErrorHandler messages written in syslog if the optical drive is empty
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20483">[ date ]</a>
+              <a href="thread.html#20483">[ thread ]</a>
+              <a href="subject.html#20483">[ subject ]</a>
+              <a href="author.html#20483">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

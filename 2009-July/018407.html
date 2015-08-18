@@ -1,0 +1,308 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4091: r31522 build breakage on parallel jam
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-July/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234091%3A%20r31522%20build%20breakage%20on%20parallel%20jam&In-Reply-To=%3C044.f0866d323ab08238a53c61e3b5884504%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="018405.html">
+   <LINK REL="Next"  HREF="018414.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4091: r31522 build breakage on parallel jam</H1>
+    <B>meianoite</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234091%3A%20r31522%20build%20breakage%20on%20parallel%20jam&In-Reply-To=%3C044.f0866d323ab08238a53c61e3b5884504%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4091: r31522 build breakage on parallel jam">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Jul 11 19:29:59 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="018405.html">[Haiku-bugs] [Haiku] #2935: Print preview colors
+</A></li>
+        <LI>Next message: <A HREF="018414.html">[Haiku-bugs] [Haiku] #4091: r31522 build breakage on parallel	jam
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18407">[ date ]</a>
+              <a href="thread.html#18407">[ thread ]</a>
+              <a href="subject.html#18407">[ subject ]</a>
+              <a href="author.html#18407">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4091: r31522 build breakage on parallel jam
+--------------------------+-------------------------------------------------
+ Reporter:  meianoite     |       Owner:  bonefish      
+     Type:  bug           |      Status:  new           
+ Priority:  normal        |   Milestone:  R1/alpha1     
+Component:  Build System  |     Version:  R1 development
+Blockedby:                |    Platform:  All           
+ Blocking:                |  
+--------------------------+-------------------------------------------------
+ Didn't paste stuff between triple brackets because Trac would generate an
+ enormous single line on the GCC output. Sorry for the accidental
+ wikiformatting, like underlined DEFINE words.
+
+ Generated dir was clean except for the build, downloads and cross-tools
+ dirs.
+
+ @all target is verbatim Ingo's suggestion on the mailing list for a target
+ that doesn't produce an image.
+
+ ----
+
+ jam -aqj8 @all
+
+ ----
+
+ In file included from
+ /usr/home/andre/devel/Haiku/trunk/src/bin/bash/print_cmd.c:41:[[BR]]
+ /usr/home/andre/devel/Haiku/trunk/src/bin/bash/include/y.tab.h:1: parse.h:
+ No such file or directory[[BR]]
+ /usr/home/andre/devel/Haiku/trunk/src/bin/bash/print_cmd.c: In function
+ `make_command_string_internal':[[BR]]
+ /usr/home/andre/devel/Haiku/trunk/src/bin/bash/print_cmd.c:234: `AND_AND'
+ undeclared (first use in this function)[[BR]]
+ /usr/home/andre/devel/Haiku/trunk/src/bin/bash/print_cmd.c:234: (Each
+ undeclared identifier is reported only once[[BR]]
+ /usr/home/andre/devel/Haiku/trunk/src/bin/bash/print_cmd.c:234: for each
+ function it appears in.)[[BR]]
+ /usr/home/andre/devel/Haiku/trunk/src/bin/bash/print_cmd.c:240: `OR_OR'
+ undeclared (first use in this function)[[BR]][[BR]]
+
+ /usr/home/andre/devel/Haiku/trunk/generated.gcc2/cross-tools/bin/i586-pc-
+ haiku-gcc -O -Wno-trigraphs -Wpointer-arith -Wcast-align -Wno-multichar
+ -pipe -nostdinc -DHAVE_CONFIG_H -DPROGRAM='&quot;bash&quot;' -DSHELL
+ -DCONF_MACHTYPE='&quot;i586-pc-haiku&quot;' -DCONF_HOSTTYPE='&quot;i586&quot;'
+ -DCONF_VENDOR='&quot;pc&quot;' -DCONF_OSTYPE='&quot;beos&quot;' -c
+ &quot;/usr/home/andre/devel/Haiku/trunk/src/bin/bash/print_cmd.c&quot; -D__HAIKU__
+ -DHAIKU_DISTRO_COMPATIBILITY_DEFAULT -D__INTEL__ -DARCH_x86
+ -DBOOT_ARCHIVE_IMAGE_OFFSET=300 -D_BEOS_R5_COMPATIBLE_
+ -DHAIKU_TARGET_PLATFORM_HAIKU
+ -I/usr/home/andre/devel/Haiku/trunk/build/user_config_headers
+ -I/usr/home/andre/devel/Haiku/trunk/build/config_headers
+ -I/usr/home/andre/devel/Haiku/trunk/src/bin/bash
+ -I/usr/home/andre/devel/Haiku/trunk/generated.gcc2/objects/common/bin/bash
+ -I/usr/home/andre/devel/Haiku/trunk/generated.gcc2/objects/freebsd/x86/common/bin/bash
+ -I/usr/home/andre/devel/Haiku/trunk/generated.gcc2/objects/haiku/x86/common/bin/bash
+ -I- -I/usr/home/andre/devel/Haiku/trunk/src/bin/bash/include
+ -I/usr/home/andre/devel/Haiku/trunk/src/bin/bash/lib
+ -I/usr/home/andre/devel/Haiku/trunk/src/bin/bash
+ -I/usr/home/andre/devel/Haiku/trunk/headers/cpp
+ -I/usr/home/andre/devel/Haiku/trunk/headers/build/gcc-2.95.3
+ -I/usr/home/andre/devel/Haiku/trunk/headers
+ -I/usr/home/andre/devel/Haiku/trunk/headers/posix
+ -I/usr/home/andre/devel/Haiku/trunk/headers/gnu
+ -I/usr/home/andre/devel/Haiku/trunk/headers/glibc
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/add-ons
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/add-ons/file_system
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/add-ons/graphics
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/add-ons/input_server
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/add-ons/registrar
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/add-ons/screen_saver
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/add-ons/tracker
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/app
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/device
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/drivers
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/game
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/interface
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/kernel
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/media
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/mail
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/midi
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/midi2
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/net
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/opengl
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/storage
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/support
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/translation
+ -I/usr/home/andre/devel/Haiku/trunk/headers/private/. -o
+ &quot;/usr/home/andre/devel/Haiku/trunk/generated.gcc2/objects/haiku/x86/release/bin/bash/print_cmd.o&quot;
+ ;[[BR]][[BR]]
+
+ ...failed Cc
+ /usr/home/andre/devel/Haiku/trunk/generated.gcc2/objects/haiku/x86/release/bin/bash/print_cmd.o
+ ...
+
+ ----
+
+ MkBuiltinsExt1
+ /usr/home/andre/devel/Haiku/trunk/generated.gcc2/objects/haiku/x86/common/bin/bash/builtins/builtext.h
+ /usr/home/andre/devel/Haiku/trunk/generated.gcc2/objects/haiku/x86/common/bin/bash/builtins/builtins.c[[BR]]
+ Cc
+ /usr/home/andre/devel/Haiku/trunk/generated.gcc2/objects/haiku/x86/release/bin/bash/builtins/builtins.o[[BR]]
+ i586-pc-haiku-gcc:
+ /usr/home/andre/devel/Haiku/trunk/generated.gcc2/objects/haiku/x86/common/bin/bash/builtins/builtins.c:
+ No such file or directory[[BR]]
+ i586-pc-haiku-gcc: No input files[[BR]][[BR]]
+
+ /usr/home/andre/devel/Haiku/trunk/generated.gcc2/cross-tools/bin/i586-pc-
+ haiku-gcc -O -Wno-trigraphs -Wpointer-arith -Wcast-align -Wno-multichar
+ -pipe -nostdinc -DHAVE_CONFIG_H -DSHELL -c
+ &quot;/usr/home/andre/devel/Haiku/trunk/generated.gcc2/objects/haiku/x86/common/bin/bash/builtins/builtins.c&quot;
+ -D__HAIKU__ -DHAIKU_DISTRO_COMPATIBILITY_DEFAULT -D__INTEL__ -DARCH_x86
+ -DBOOT_ARCHIVE_IMAGE_OFFSET=300 -D_BEOS_R5_COMPATIBLE_
+ -DHAIKU_TARGET_PLATFORM_HAIKU
+ -I/usr/home/andre/devel/Haiku/trunk/build/user_config_headers
+ -I/usr/home/andre/devel/Haiku/trunk/build/config_headers
+ -I/usr/home/andre/devel/Haiku/trunk/src/bin/bash/builtins
+ -I/usr/home/andre/devel/Haiku/trunk/generated.gcc2/objects/common/bin/bash/builtins
+ -I/usr/home/andre/devel/Haiku/trunk/generated.gcc2/objects/freebsd/x86/common/bin/bash/builtins
+ -I/usr/home/andre/devel/Haiku/trunk/generated.gcc2/objects/haiku/x86/common/bin/bash/builtins
+ -I- -I/usr/home/andre/devel/Haiku/trunk/src/bin/bash/builtins/..
+ -I/usr/home/andre/devel/Haiku/trunk/src/bin/bash/builtins/../include
+ -I/usr/home/andre/devel/Haiku/trunk/src/bin/bash/builtins/../lib
+ -I/usr/home/andre/devel/Haiku/trunk/headers/cpp
+ -I/usr/home/andre/devel/Haiku/trunk/headers/build/gcc-2.95.3
+ -I/usr/home/andre/devel/Haiku/trunk/headers
+ -I/usr/home/andre/devel/Haiku/trunk/headers/posix
+ -I/usr/home/andre/devel/Haiku/trunk/headers/gnu
+ -I/usr/home/andre/devel/Haiku/trunk/headers/glibc
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/add-ons
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/add-ons/file_system
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/add-ons/graphics
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/add-ons/input_server
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/add-ons/registrar
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/add-ons/screen_saver
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/add-ons/tracker
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/app
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/device
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/drivers
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/game
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/interface
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/kernel
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/media
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/mail
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/midi
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/midi2
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/net
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/opengl
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/storage
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/support
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/translation
+ -I/usr/home/andre/devel/Haiku/trunk/headers/private/. -o
+ &quot;/usr/home/andre/devel/Haiku/trunk/generated.gcc2/objects/haiku/x86/release/bin/bash/builtins/builtins.o&quot;
+ ;[[BR]][[BR]]
+
+ ...failed Cc
+ /usr/home/andre/devel/Haiku/trunk/generated.gcc2/objects/haiku/x86/release/bin/bash/builtins/builtins.o
+ ...
+
+ ----
+
+ Cc
+ /usr/home/andre/devel/Haiku/trunk/generated.gcc2/objects/haiku/x86/release/bin/bash/builtins/exit.o[[BR]]
+ MkBuiltinsComp1
+ /usr/home/andre/devel/Haiku/trunk/generated.gcc2/objects/haiku/x86/common/bin/bash/builtins/help.c[[BR]]
+ MkBuiltinsComp1
+ /usr/home/andre/devel/Haiku/trunk/generated.gcc2/objects/haiku/x86/common/bin/bash/builtins/history.c[[BR]]
+ /usr/home/andre/devel/Haiku/trunk/src/bin/bash/builtins/exit.def: In
+ function `exit_or_logout':[[BR]]
+ /usr/home/andre/devel/Haiku/trunk/src/bin/bash/builtins/exit.def:99:
+ `jobs_builtin' undeclared (first use in this function)[[BR]]
+ /usr/home/andre/devel/Haiku/trunk/src/bin/bash/builtins/exit.def:99: (Each
+ undeclared identifier is reported only once[[BR]]
+ /usr/home/andre/devel/Haiku/trunk/src/bin/bash/builtins/exit.def:99: for
+ each function it appears in.)[[BR]]
+ Cc
+ /usr/home/andre/devel/Haiku/trunk/generated.gcc2/objects/haiku/x86/release/bin/bash/builtins/hash.o[[BR]]
+ Cc
+ /usr/home/andre/devel/Haiku/trunk/generated.gcc2/objects/haiku/x86/release/bin/bash/builtins/help.o[[BR]]
+ Cc
+ /usr/home/andre/devel/Haiku/trunk/generated.gcc2/objects/haiku/x86/release/bin/bash/builtins/history.o[[BR]][[BR]]
+
+ /usr/home/andre/devel/Haiku/trunk/generated.gcc2/cross-tools/bin/i586-pc-
+ haiku-gcc -O -Wno-trigraphs -Wpointer-arith -Wcast-align -Wno-multichar
+ -pipe -nostdinc -DHAVE_CONFIG_H -DSHELL -c
+ &quot;/usr/home/andre/devel/Haiku/trunk/generated.gcc2/objects/haiku/x86/common/bin/bash/builtins/exit.c&quot;
+ -D__HAIKU__ -DHAIKU_DISTRO_COMPATIBILITY_DEFAULT -D__INTEL__ -DARCH_x86
+ -DBOOT_ARCHIVE_IMAGE_OFFSET=300 -D_BEOS_R5_COMPATIBLE_
+ -DHAIKU_TARGET_PLATFORM_HAIKU
+ -I/usr/home/andre/devel/Haiku/trunk/build/user_config_headers
+ -I/usr/home/andre/devel/Haiku/trunk/build/config_headers
+ -I/usr/home/andre/devel/Haiku/trunk/src/bin/bash/builtins
+ -I/usr/home/andre/devel/Haiku/trunk/generated.gcc2/objects/common/bin/bash/builtins
+ -I/usr/home/andre/devel/Haiku/trunk/generated.gcc2/objects/freebsd/x86/common/bin/bash/builtins
+ -I/usr/home/andre/devel/Haiku/trunk/generated.gcc2/objects/haiku/x86/common/bin/bash/builtins
+ -I- -I/usr/home/andre/devel/Haiku/trunk/src/bin/bash/builtins/..
+ -I/usr/home/andre/devel/Haiku/trunk/src/bin/bash/builtins/../include
+ -I/usr/home/andre/devel/Haiku/trunk/src/bin/bash/builtins/../lib
+ -I/usr/home/andre/devel/Haiku/trunk/headers/cpp
+ -I/usr/home/andre/devel/Haiku/trunk/headers/build/gcc-2.95.3
+ -I/usr/home/andre/devel/Haiku/trunk/headers
+ -I/usr/home/andre/devel/Haiku/trunk/headers/posix
+ -I/usr/home/andre/devel/Haiku/trunk/headers/gnu
+ -I/usr/home/andre/devel/Haiku/trunk/headers/glibc
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/add-ons
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/add-ons/file_system
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/add-ons/graphics
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/add-ons/input_server
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/add-ons/registrar
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/add-ons/screen_saver
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/add-ons/tracker
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/app
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/device
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/drivers
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/game
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/interface
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/kernel
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/media
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/mail
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/midi
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/midi2
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/net
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/opengl
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/storage
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/support
+ -I/usr/home/andre/devel/Haiku/trunk/headers/os/translation
+ -I/usr/home/andre/devel/Haiku/trunk/headers/private/. -o
+ &quot;/usr/home/andre/devel/Haiku/trunk/generated.gcc2/objects/haiku/x86/release/bin/bash/builtins/exit.o&quot;
+ ;
+ [[BR]][[BR]]
+
+ ...failed Cc
+ /usr/home/andre/devel/Haiku/trunk/generated.gcc2/objects/haiku/x86/release/bin/bash/builtins/exit.o
+ ...
+
+ ----
+
+ ...failed updating 3 target(s)...[[BR]]
+ ...skipped 2 target(s)...[[BR]]
+ ...updated 9442 target(s)...[[BR]]
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4091">http://dev.haiku-os.org/ticket/4091</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="018405.html">[Haiku-bugs] [Haiku] #2935: Print preview colors
+</A></li>
+	<LI>Next message: <A HREF="018414.html">[Haiku-bugs] [Haiku] #4091: r31522 build breakage on parallel	jam
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18407">[ date ]</a>
+              <a href="thread.html#18407">[ thread ]</a>
+              <a href="subject.html#18407">[ subject ]</a>
+              <a href="author.html#18407">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

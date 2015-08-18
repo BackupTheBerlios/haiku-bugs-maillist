@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3986: problem with ls command (symlink	traversal bug?)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233986%3A%20problem%20with%20ls%20command%20%28symlink%0A%09traversal%20bug%3F%29&In-Reply-To=%3C046.a6e8b822c4ad273d1c8bb258cf9fafbf%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="017725.html">
+   <LINK REL="Next"  HREF="017727.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3986: problem with ls command (symlink	traversal bug?)</H1>
+    <B>augiedoggie</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233986%3A%20problem%20with%20ls%20command%20%28symlink%0A%09traversal%20bug%3F%29&In-Reply-To=%3C046.a6e8b822c4ad273d1c8bb258cf9fafbf%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3986: problem with ls command (symlink	traversal bug?)">trac at haiku-os.org
+       </A><BR>
+    <I>Sun May 31 23:27:51 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="017725.html">[Haiku-bugs] [Haiku] #3734: BFS formatted USB memory stick not	found
+</A></li>
+        <LI>Next message: <A HREF="017727.html">[Haiku-bugs] [Haiku] #3959: Wrong HDD size shown
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17726">[ date ]</a>
+              <a href="thread.html#17726">[ thread ]</a>
+              <a href="subject.html#17726">[ subject ]</a>
+              <a href="author.html#17726">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3986: problem with ls command (symlink traversal bug?)
+-------------------------+--------------------------------------------------
+ Reporter:  augiedoggie  |       Owner:  axeld         
+     Type:  bug          |      Status:  new           
+ Priority:  normal       |   Milestone:  R1            
+Component:  - General    |     Version:  R1 development
+Blockedby:               |    Platform:  All           
+ Blocking:               |  
+-------------------------+--------------------------------------------------
+ I've noticed that the 'ls' command is printing errors when listing certain
+ directories, but the problem doesn't occur if you 'cd' to the directory
+ and then list the files. (The problem also goes away if you 'unalias ls'
+ or run /bin/ls)
+
+ For example:
+
+ {{{
+ ~&gt; ls /boot/develop/tools/gnupro
+ ls: cannot access /boot/develop/tools/gnupro/COPYING: Not a directory
+ ls: cannot access /boot/develop/tools/gnupro/COPYING.LIB: Not a directory
+ ls: cannot access /boot/develop/tools/gnupro/bin: Not a directory
+ ls: cannot access /boot/develop/tools/gnupro/i586-pc-haiku: Not a
+ directory
+ ls: cannot access /boot/develop/tools/gnupro/include: Not a directory
+ ls: cannot access /boot/develop/tools/gnupro/info: Not a directory
+ ls: cannot access /boot/develop/tools/gnupro/lib: Not a directory
+ ls: cannot access /boot/develop/tools/gnupro/man: Not a directory
+ COPYING COPYING.LIB bin i586-pc-haiku include info lib man
+ ~&gt;
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3986">http://dev.haiku-os.org/ticket/3986</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="017725.html">[Haiku-bugs] [Haiku] #3734: BFS formatted USB memory stick not	found
+</A></li>
+	<LI>Next message: <A HREF="017727.html">[Haiku-bugs] [Haiku] #3959: Wrong HDD size shown
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17726">[ date ]</a>
+              <a href="thread.html#17726">[ thread ]</a>
+              <a href="subject.html#17726">[ subject ]</a>
+              <a href="author.html#17726">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

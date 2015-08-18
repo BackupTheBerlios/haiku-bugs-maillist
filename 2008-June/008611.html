@@ -1,0 +1,173 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2346: Some of headers are not self	containing
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232346%3A%20Some%20of%20headers%20are%20not%20self%0A%09containing&In-Reply-To=%3C051.2145c8c4c73814f2aae7e2c403d68da6%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007886.html">
+   <LINK REL="Next"  HREF="007887.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2346: Some of headers are not self	containing</H1>
+    <B>scottmc</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232346%3A%20Some%20of%20headers%20are%20not%20self%0A%09containing&In-Reply-To=%3C051.2145c8c4c73814f2aae7e2c403d68da6%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2346: Some of headers are not self	containing">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Jun 27 19:07:21 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007886.html">[Haiku-bugs] [Haiku] #2346: Some of headers are not self containing
+</A></li>
+        <LI>Next message: <A HREF="007887.html">[Haiku-bugs] [Haiku] #947: Konatu Tohaba isn't recognized as	monospaced font
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8611">[ date ]</a>
+              <a href="thread.html#8611">[ thread ]</a>
+              <a href="subject.html#8611">[ subject ]</a>
+              <a href="author.html#8611">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2346: Some of headers are not self containing
+------------------------+---------------------------------------------------
+  Reporter:  kaliber    |       Owner:  axeld         
+      Type:  bug        |      Status:  new           
+  Priority:  normal     |   Milestone:  R1            
+ Component:  - General  |     Version:  R1 development
+Resolution:             |   Blockedby:                
+  Platform:  All        |    Blocking:                
+------------------------+---------------------------------------------------
+
+Comment(by scottmc):
+
+ Figured I'd run the test and post the results here.
+
+ {{{
+ test2346.sh &gt; test2346.txt
+ In file included from /boot/home/test.c:1:
+ /boot/develop/headers/posix/arch/m68k/arch_setjmp.h:10: warning: #warning
+ M68K: fix jmpbuf size
+ In file included from /boot/home/test.c:1:
+ /boot/develop/headers/posix/netinet/ip_icmp.h:71: field `idi_ip' has
+ incomplete type
+ In file included from /boot/home/test.c:1:
+ /boot/develop/headers/posix/netinet/ip_var.h:51: field `ih_src' has
+ incomplete type
+ /boot/develop/headers/posix/netinet/ip_var.h:52: field `ih_dst' has
+ incomplete type
+ /boot/develop/headers/posix/netinet/ip_var.h:64: field `ipopt_dst' has
+ incomplete type
+ /boot/develop/headers/posix/netinet/ip_var.h:77: `IP_MAX_MEMBERSHIPS'
+ undeclared here (not in a function)
+ /boot/develop/headers/posix/netinet/ip_var.h:104: field `ipq_src' has
+ incomplete type
+ /boot/develop/headers/posix/netinet/ip_var.h:104: field `ipq_dst' has
+ incomplete type
+ In file included from /boot/home/test.c:1:
+ /boot/develop/headers/posix/regex.h:358: parse error before `size_t'
+ /boot/develop/headers/posix/regex.h:358: warning: no semicolon at end of
+ struct or union
+ /boot/develop/headers/posix/regex.h:365: parse error before `:'
+ /boot/develop/headers/posix/regex.h:374: parse error before `:'
+ /boot/develop/headers/posix/regex.h:378: parse error before `:'
+ /boot/develop/headers/posix/regex.h:382: parse error before `:'
+ /boot/develop/headers/posix/regex.h:386: parse error before `:'
+ /boot/develop/headers/posix/regex.h:389: parse error before `:'
+ /boot/develop/headers/posix/regex.h:392: parse error before `:'
+ /boot/develop/headers/posix/regex.h:456: parse error before `size_t'
+ /boot/develop/headers/posix/regex.h:544: parse error before `size_t'
+ /boot/develop/headers/posix/regex.h:548: parse error before `regerror'
+ /boot/develop/headers/posix/regex.h:549: parse error before `size_t'
+ /boot/develop/headers/posix/regex.h:549: warning: data definition has no
+ type or storage class
+ In file included from /boot/home/test.c:1:
+ /boot/develop/headers/posix/resolv.h:160: field `nsaddr_list' has
+ incomplete type
+ /boot/develop/headers/posix/resolv.h:170: field `addr' has incomplete type
+ /boot/develop/headers/posix/resolv.h:194: field `sin' has incomplete type
+ In file included from /boot/home/test.c:1:
+ /boot/develop/headers/posix/stdio_post.h:14: #error &quot;This file must be
+ included from stdio.h!&quot;
+ In file included from /boot/home/test.c:1:
+ /boot/develop/headers/posix/stdio_pre.h:8: #error &quot;This file must be
+ included from stdio.h!&quot;
+ }}}
+
+ I then inserted an #include &lt;sys/types.h&gt; right before the #include &lt;$f&gt;
+ and then reran the test and here's what I got:
+
+ {{{
+ ~&gt; test2346.sh &gt; test2346.txt
+ In file included from /boot/home/test.c:2:
+ /boot/develop/headers/posix/arch/m68k/arch_setjmp.h:10: warning: #warning
+ M68K: fix jmpbuf size
+ In file included from /boot/home/test.c:2:
+ /boot/develop/headers/posix/netinet/ip_icmp.h:71: field `idi_ip' has
+ incomplete type
+ In file included from /boot/home/test.c:2:
+ /boot/develop/headers/posix/netinet/ip_var.h:51: field `ih_src' has
+ incomplete type
+ /boot/develop/headers/posix/netinet/ip_var.h:52: field `ih_dst' has
+ incomplete type
+ /boot/develop/headers/posix/netinet/ip_var.h:64: field `ipopt_dst' has
+ incomplete type
+ /boot/develop/headers/posix/netinet/ip_var.h:77: `IP_MAX_MEMBERSHIPS'
+ undeclared here (not in a function)
+ /boot/develop/headers/posix/netinet/ip_var.h:104: field `ipq_src' has
+ incomplete type
+ /boot/develop/headers/posix/netinet/ip_var.h:104: field `ipq_dst' has
+ incomplete type
+ In file included from /boot/home/test.c:2:
+ /boot/develop/headers/posix/resolv.h:160: field `nsaddr_list' has
+ incomplete type
+ /boot/develop/headers/posix/resolv.h:170: field `addr' has incomplete type
+ /boot/develop/headers/posix/resolv.h:194: field `sin' has incomplete type
+ In file included from /boot/home/test.c:2:
+ /boot/develop/headers/posix/stdio_post.h:14: #error &quot;This file must be
+ included from stdio.h!&quot;
+ In file included from /boot/home/test.c:2:
+ /boot/develop/headers/posix/stdio_pre.h:8: #error &quot;This file must be
+ included from stdio.h!&quot;
+ ~&gt;
+ }}}
+
+ So it would seem that m68k/arch_setjmp.h, netinet/ip_icmp.h,
+ netinet/ip_var.h, resolv.h may need fixes, or they also have a required
+ include missing.  In the regex.h file it states that &lt;sys/types.h&gt; is
+ required first.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2346#comment:1">http://dev.haiku-os.org/ticket/2346#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007886.html">[Haiku-bugs] [Haiku] #2346: Some of headers are not self containing
+</A></li>
+	<LI>Next message: <A HREF="007887.html">[Haiku-bugs] [Haiku] #947: Konatu Tohaba isn't recognized as	monospaced font
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8611">[ date ]</a>
+              <a href="thread.html#8611">[ thread ]</a>
+              <a href="subject.html#8611">[ subject ]</a>
+              <a href="author.html#8611">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

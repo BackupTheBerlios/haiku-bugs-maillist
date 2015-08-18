@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2690: PANIC: ASSERT FAILED (headers/private/kernel/util/DoublyLinkedList.h:464): fFirst != __null &amp;&amp; fLast != _ ... )
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232690%3A%20PANIC%3A%20ASSERT%20FAILED%0A%20%28headers/private/kernel/util/DoublyLinkedList.h%3A464%29%3A%20fFirst%20%21%3D%20__null%20%26%26%0A%20fLast%20%21%3D%20_%20...%20%29&In-Reply-To=%3C042.f9e9fe38319e132630f31081515768fa%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010011.html">
+   <LINK REL="Next"  HREF="010015.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2690: PANIC: ASSERT FAILED (headers/private/kernel/util/DoublyLinkedList.h:464): fFirst != __null &amp;&amp; fLast != _ ... )</H1>
+    <B>emitrax</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232690%3A%20PANIC%3A%20ASSERT%20FAILED%0A%20%28headers/private/kernel/util/DoublyLinkedList.h%3A464%29%3A%20fFirst%20%21%3D%20__null%20%26%26%0A%20fLast%20%21%3D%20_%20...%20%29&In-Reply-To=%3C042.f9e9fe38319e132630f31081515768fa%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2690: PANIC: ASSERT FAILED (headers/private/kernel/util/DoublyLinkedList.h:464): fFirst != __null &amp;&amp; fLast != _ ... )">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Aug 31 10:04:27 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010011.html">[Haiku-bugs] [Haiku] #2689: ftp does not release &quot;tcp send&quot; lock on	exit (ctrl^C)
+</A></li>
+        <LI>Next message: <A HREF="010015.html">[Haiku-bugs] [Haiku] #2691: TemplateNotFound: Template &quot;macros.rss&quot;	not found
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10012">[ date ]</a>
+              <a href="thread.html#10012">[ thread ]</a>
+              <a href="subject.html#10012">[ subject ]</a>
+              <a href="author.html#10012">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2690: PANIC: ASSERT FAILED (headers/private/kernel/util/DoublyLinkedList.h:464):
+fFirst != __null &amp;&amp; fLast != _ ... )
+---------------------------+------------------------------------------------
+ Reporter:  emitrax        |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  high           |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1 development
+Blockedby:                 |    Platform:  All           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+ Happene on shutdown after doing heavy I/O.
+ {{{
+ list: 0x90bf1d38, element: 0x807b92c0
+ PANIC: ASSERT FAILED (headers/private/kernel/util/DoublyLinkedList.h:464):
+ fFirst != __null &amp;&amp; fLast != __null &amp;&amp; (fFirst != fLast ||
+ Welcome to Kernel Debugging Land...
+ Thread 6949 &quot;shutdown worker&quot; running on CPU 0
+ kdebug&gt; bt
+ stack trace for thread 6949 &quot;shutdown worker&quot;
+     kernel stack: 0x91ed1000 to 0x91ed5000
+       user stack: 0x70145000 to 0x70185000
+ frame            caller     &lt;image&gt;:function + offset
+  0 91ed4a34 (+  48) 800566a1   &lt;kernel&gt;:invoke_debugger_command + 0x00f5
+  1 91ed4a64 (+  64) 80056491
+ &lt;kernel&gt;:invoke_pipe_segment__FP21debugger_command_pipelPc + 0x0079
+  2 91ed4aa4 (+  64) 80056819   &lt;kernel&gt;:invoke_debugger_command_pipe +
+ 0x009d
+  3 91ed4ae4 (+  48) 80057d54
+ &lt;kernel&gt;:_ParseCommandPipe__16ExpressionParserRi + 0x0234
+  4 91ed4b14 (+  64) 8005718e
+ &lt;kernel&gt;:EvaluateCommand__16ExpressionParserPCcRi + 0x02ba
+  5 91ed4b54 (+ 224) 8005917c   &lt;kernel&gt;:evaluate_debug_command + 0x0088
+  6 91ed4c34 (+  64) 80054aa2   &lt;kernel&gt;:kernel_debugger_loop__Fv + 0x01ae
+  7 91ed4c74 (+  48) 80055675   &lt;kernel&gt;:kernel_debugger + 0x0121
+  8 91ed4ca4 (+ 192) 80055549   &lt;kernel&gt;:panic + 0x0029
+  9 91ed4d64 (+  96) 8002bbf3
+ &lt;kernel&gt;:write_cached_block__FP11block_cacheP12cached_blockb + 0x0133
+ 10 91ed4dc4 (+  64) 8002e306   &lt;kernel&gt;:block_cache_sync + 0x006a
+ 11 91ed4e04 (+  48) 80598dd3   &lt;bfs&gt;:_FlushLog__7JournalbT1 + 0x00e3
+ 12 91ed4e34 (+  48) 80598e1f   &lt;bfs&gt;:FlushLogAndBlocks__7Journal + 0x002b
+ 13 91ed4e64 (+  48) 8059cd8d   &lt;bfs&gt;:Sync__6Volume + 0x0025
+ 14 91ed4e94 (+  48) 8059df36   &lt;bfs&gt;:bfs_sync__FP9fs_volume + 0x0022
+ 15 91ed4ec4 (+  64) 80092ff4   &lt;kernel&gt;:fs_sync__Fl + 0x0144
+ 16 91ed4f04 (+  48) 80093519   &lt;kernel&gt;:_kern_sync + 0x0019
+ 17 91ed4f34 (+  16) 800946cb   &lt;kernel&gt;:_user_sync + 0x000b
+ 18 91ed4f44 (+ 100) 800be6f2   &lt;kernel&gt;:pre_syscall_debug_done + 0x0002
+ (nearest)
+ user iframe at 0x91ed4fa8 (end = 0x91ed5000)
+  eax 0x57           ebx 0x5b6d40        ecx 0x70184ef0   edx 0xffff0104
+  esi 0x1802bfb0     edi 0x1802bdb8      ebp 0x70184f0c   esp 0x91ed4fdc
+  eip 0xffff0104  eflags 0x212      user esp 0x70184ef0
+  vector: 0x63, error code: 0x0
+ 19 91ed4fa8 (+   0) ffff0104
+ 20 70184f0c (+  64) 0024bdbf
+ &lt;_APP_&gt;:_WorkerDoShutdown__15ShutdownProcess + 0x01e7
+ 21 70184f4c (+  48) 0024bb2c   &lt;_APP_&gt;:_Worker__15ShutdownProcess + 0x0020
+ 22 70184f7c (+  48) 0024bb03   &lt;_APP_&gt;:_WorkerEntry__15ShutdownProcessPv +
+ 0x001f
+ 23 70184fac (+  48) 0052ebd8   &lt;libroot.so&gt;:_get_next_team_info + 0x005c
+ (nearest)
+ 24 70184fdc (+   0) 70184fec   258174:shutdown
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">worker_6949_stack at 0x70145000</A> + 0x3ffec
+ kdebug&gt; reboot
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2690">http://dev.haiku-os.org/ticket/2690</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010011.html">[Haiku-bugs] [Haiku] #2689: ftp does not release &quot;tcp send&quot; lock on	exit (ctrl^C)
+</A></li>
+	<LI>Next message: <A HREF="010015.html">[Haiku-bugs] [Haiku] #2691: TemplateNotFound: Template &quot;macros.rss&quot;	not found
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10012">[ date ]</a>
+              <a href="thread.html#10012">[ thread ]</a>
+              <a href="subject.html#10012">[ subject ]</a>
+              <a href="author.html#10012">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

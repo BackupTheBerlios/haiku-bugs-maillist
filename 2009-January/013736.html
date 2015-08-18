@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3308: Possible math related issues
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-January/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233308%3A%20Possible%20math%20related%20issues&In-Reply-To=%3C042.c678ed2b992fdb50f53485f9b7f8d349%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="013734.html">
+   <LINK REL="Next"  HREF="013737.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3308: Possible math related issues</H1>
+    <B>scottmc</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233308%3A%20Possible%20math%20related%20issues&In-Reply-To=%3C042.c678ed2b992fdb50f53485f9b7f8d349%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3308: Possible math related issues">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Jan 18 09:05:14 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="013734.html">[Haiku-bugs] [Haiku] #2662: FAT USB stick problem: &quot;PANIC: could not write back block 7908 (General system error)&quot;
+</A></li>
+        <LI>Next message: <A HREF="013737.html">[Haiku-bugs] [Haiku] #3308: Possible math related issues
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13736">[ date ]</a>
+              <a href="thread.html#13736">[ thread ]</a>
+              <a href="subject.html#13736">[ subject ]</a>
+              <a href="author.html#13736">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3308: Possible math related issues
+-------------------------------+--------------------------------------------
+ Reporter:  scottmc            |       Owner:  axeld         
+     Type:  bug                |      Status:  new           
+ Priority:  normal             |   Milestone:  R1            
+Component:  System/libroot.so  |     Version:  R1 development
+Blockedby:                     |    Platform:  All           
+ Blocking:                     |  
+-------------------------------+--------------------------------------------
+ The python regression test suite is failing test_cmath:
+ {{{
+ test test_cmath failed -- Traceback (most recent call last):
+   File &quot;/boot/common/lib/python2.7/test/test_cmath.py&quot;, line 366, in
+ test_specific_values
+     self.fail(error_message)
+ AssertionError: acos0032: acos(complex(-0.99999999999999978, 0.0))
+ Expected: complex(3.141592638688631, -0.0)
+ Received: complex(3.1415926325163688, -0.0)
+ Received value insufficiently close to expected value.
+ }}}
+ test_decimal:
+ {{{
+ test test_decimal failed -- Traceback (most recent call last):
+   File &quot;/boot/common/lib/python2.7/test/test_decimal.py&quot;, line 1386, in
+ test_from_float
+     self.assertEqual(x, float(MyDecimal.from_float(x))) # roundtrip
+ AssertionError: 14.037217101164238 != 14.037217101164231
+ }}}
+ test_float:
+ {{{
+ test test_float failed -- Traceback (most recent call last):
+   File &quot;/boot/common/lib/python2.7/test/test_float.py&quot;, line 253, in
+ test_repr
+     self.assertEqual(v, eval(repr(v)))
+ AssertionError: 7.9999999872500254e+153 != 7.9999999745000492e+153
+ }}}
+ test_json:
+ {{{
+ test_json
+ test test_json failed -- Traceback (most recent call last):
+   File &quot;/boot/common/lib/python2.7/json/tests/test_float.py&quot;, line 9, in
+ test_floats
+     self.assertEquals(float(json.dumps(num)), num)
+ AssertionError: 5.1878483364637832e+49 != 5.1878483143195925e+49
+ }}}
+ test_matshall:
+ {{{
+ test test_marshal failed -- Traceback (most recent call last):
+   File &quot;/boot/common/lib/python2.7/test/test_marshal.py&quot;, line 95, in
+ test_floats
+     self.assertEqual(f, got)
+ AssertionError: -7.9456894939000011e-241 != inf
+ }}}
+ test_math:
+ {{{
+ test_math
+ test test_math failed -- Traceback (most recent call last):
+   File &quot;/boot/common/lib/python2.7/test/test_math.py&quot;, line 879, in
+ test_testfile
+     self.fail(message)
+ AssertionError: Unexpected ValueError in test acos0231:acos(inf)
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3308">http://dev.haiku-os.org/ticket/3308</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="013734.html">[Haiku-bugs] [Haiku] #2662: FAT USB stick problem: &quot;PANIC: could not write back block 7908 (General system error)&quot;
+</A></li>
+	<LI>Next message: <A HREF="013737.html">[Haiku-bugs] [Haiku] #3308: Possible math related issues
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13736">[ date ]</a>
+              <a href="thread.html#13736">[ thread ]</a>
+              <a href="subject.html#13736">[ subject ]</a>
+              <a href="author.html#13736">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

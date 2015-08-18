@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1723: Booting stops somehere in the	bootscript
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-January/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231723%3A%20Booting%20stops%20somehere%20in%20the%0A%09bootscript&In-Reply-To=%3C050.5c0a20af84a3f157e8c182d9ea7e51fc%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="004476.html">
+   <LINK REL="Next"  HREF="004518.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1723: Booting stops somehere in the	bootscript</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231723%3A%20Booting%20stops%20somehere%20in%20the%0A%09bootscript&In-Reply-To=%3C050.5c0a20af84a3f157e8c182d9ea7e51fc%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1723: Booting stops somehere in the	bootscript">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Jan 28 17:48:45 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="004476.html">[Haiku-bugs] [Haiku] #1723: Booting stops somehere in the	bootscript
+</A></li>
+        <LI>Next message: <A HREF="004518.html">[Haiku-bugs] [Haiku] #1723: Booting stops somehere in the	bootscript
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4516">[ date ]</a>
+              <a href="thread.html#4516">[ thread ]</a>
+              <a href="subject.html#4516">[ subject ]</a>
+              <a href="author.html#4516">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1723: Booting stops somehere in the bootscript
+------------------------+---------------------------------------------------
+  Reporter:  ekdahl     |       Owner:  axeld         
+      Type:  bug        |      Status:  new           
+  Priority:  normal     |   Milestone:  R1            
+ Component:  - General  |     Version:  R1 development
+Resolution:             |    Platform:  All           
+------------------------+---------------------------------------------------
+Comment (by hunnia):
+
+ This may be related to the above ticket.
+ I have an amd64 computer with sata drives and usb mouse.
+ Installed on sda the newest snapshot.
+ If I boot I get the screen, mouse pointer but no tracker.
+ In the save mode I do get into the haiku shell, in which lot of commands
+ work, but more complicated commands give:
+ &quot;Cannot initialize global fonts.&quot;
+ If I disable USB in the BIOS the problem still exist.
+ When I am in the empty screen with the mouse pointer, Ctrl-Alt-Enter does
+ NOT open the Team Monitor.
+ F12 enters kernel debug.
+ Executing teams display (Here I write only the last word of each line) :
+ syslo, waitfor, sh, regis, debug, net_s and app_s.
+ a back trace indicate that I am in an idle tread. Vector 0x21 error code
+ 0x0
+
+ I do have a single core AMD64.
+ For testing I use a PS2 Mouse.
+ Downloading the newest haiku (28 Jan), I found for my pleasure that the
+ bootup printout, uses &quot;more&quot; and can be controlled from the keyboard.
+ All drivers and drives seem to be detected correctly.
+ The following few lines look interesting (Before we go to graphics mode.
+ &gt;AGP: found 2 AGP devices
+ load driver() ....graphics/nvidia
+ vesa : init_hardware()
+        init_driver()
+        publish_devices
+        find_device
+
+ loaded driver  ....graphics/vesa
+ via: init_hardware() failed: General system error
+ vesa: vesa_init() completed successfully
+ vesa: acc: vesa.accelerant
+
+ Could the General system error cause the problem?
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1723#comment:8">http://dev.haiku-os.org/ticket/1723#comment:8</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="004476.html">[Haiku-bugs] [Haiku] #1723: Booting stops somehere in the	bootscript
+</A></li>
+	<LI>Next message: <A HREF="004518.html">[Haiku-bugs] [Haiku] #1723: Booting stops somehere in the	bootscript
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4516">[ date ]</a>
+              <a href="thread.html#4516">[ thread ]</a>
+              <a href="subject.html#4516">[ subject ]</a>
+              <a href="author.html#4516">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

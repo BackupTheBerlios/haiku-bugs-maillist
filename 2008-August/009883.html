@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2668: Haiku's partition map representation	looks weird.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232668%3A%20Haiku%27s%20partition%20map%20representation%0A%09looks%20weird.&In-Reply-To=%3C038.d5592efdd4b9e2c386305b18cef737a1%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009882.html">
+   <LINK REL="Next"  HREF="009891.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2668: Haiku's partition map representation	looks weird.</H1>
+    <B>bga</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232668%3A%20Haiku%27s%20partition%20map%20representation%0A%09looks%20weird.&In-Reply-To=%3C038.d5592efdd4b9e2c386305b18cef737a1%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2668: Haiku's partition map representation	looks weird.">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Aug 26 12:55:45 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009882.html">[Haiku-bugs] [Haiku] #1527: Selecting an area on the desktop leaves ghostlines
+</A></li>
+        <LI>Next message: <A HREF="009891.html">[Haiku-bugs] [Haiku] #2668: Haiku's partition map	representation looks weird.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9883">[ date ]</a>
+              <a href="thread.html#9883">[ thread ]</a>
+              <a href="subject.html#9883">[ subject ]</a>
+              <a href="author.html#9883">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2668: Haiku's partition map representation looks weird.
+---------------------------+------------------------------------------------
+ Reporter:  bga            |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1 development
+Blockedby:                 |    Platform:  All           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+ This is more obvious when looking at DriveSetup but I think the problem is
+ in our disk manager. For example, I have this 500 Gb disk it has one
+ single primary partition created (465.8 Gb of usable size). But due to
+ what is probably some kind of block alignment, there is a bit of free
+ space before the partition (around 5 kb) and this is reported as a
+ different partition in Haiku. So I have:
+
+ /dev/disk/ata/1/slave/raw
+   /dev/disk/ata/1/slave/0
+     /dev/disk/ata/1/slave/0_0
+
+ The 0_0 one is the 5 Kb partition. Although it is there, it is not
+ reported by any other OS (not Linux nor Windows) that I have in the same
+ machine.
+
+ With DriveSetup it even looks a  bit weirder as it markes the partition
+ exactly like it would mark a extended/logical partition so the /0
+ partition (the real 465.8 Gb one) looks like it is a logical partition and
+ it is not.
+
+ Is this intended; This can get things confusing I guess. What if when
+ DriveSetup can create partitions people try to remove that 0_0 partition?
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2668">http://dev.haiku-os.org/ticket/2668</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009882.html">[Haiku-bugs] [Haiku] #1527: Selecting an area on the desktop leaves ghostlines
+</A></li>
+	<LI>Next message: <A HREF="009891.html">[Haiku-bugs] [Haiku] #2668: Haiku's partition map	representation looks weird.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9883">[ date ]</a>
+              <a href="thread.html#9883">[ thread ]</a>
+              <a href="subject.html#9883">[ subject ]</a>
+              <a href="author.html#9883">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

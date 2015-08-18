@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3194: [Terminal] crash on close/quit
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-December/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233194%3A%20%5BTerminal%5D%20crash%20on%20close/quit&In-Reply-To=%3C041.59a3d6942ebb218be440f12674e73c3e%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="013036.html">
+   <LINK REL="Next"  HREF="012953.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3194: [Terminal] crash on close/quit</H1>
+    <B>karmak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233194%3A%20%5BTerminal%5D%20crash%20on%20close/quit&In-Reply-To=%3C041.59a3d6942ebb218be440f12674e73c3e%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3194: [Terminal] crash on close/quit">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Dec  3 12:32:55 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="013036.html">[Haiku-bugs] [Haiku] #3193: nVidia Realtek ALC1200 Audio driver
+</A></li>
+        <LI>Next message: <A HREF="012953.html">[Haiku-bugs] [Haiku] #3194: [Terminal] crash on close/quit
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12952">[ date ]</a>
+              <a href="thread.html#12952">[ thread ]</a>
+              <a href="subject.html#12952">[ subject ]</a>
+              <a href="author.html#12952">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3194: [Terminal] crash on close/quit
+-----------------------------------+----------------------------------------
+ Reporter:  karmak                 |       Owner:  jackburton    
+     Type:  bug                    |      Status:  new           
+ Priority:  normal                 |   Milestone:  R1            
+Component:  Applications/Terminal  |     Version:  R1 development
+Blockedby:                         |    Platform:  x86           
+ Blocking:                         |  
+-----------------------------------+----------------------------------------
+ After having done many operation in a Terminal (notably, a tar -xzvf /boot
+ which produced huge output and slowed down the system, and a scp which
+ failed with a `no buffer space available` error), I closed it with
+ Control-D (it was my last Terminal open), and got this crash :
+
+ {{{
+ #0  0xffff0104 in ?? ()
+ #1  0x006cae8e in debugger () from /boot/beos/system/lib/libroot.so
+ #2  0x006d4551 in __assert_fail () from /boot/beos/system/lib/libroot.so
+ #3  0x006dd456 in BPrivate::hoardHeap::freeBlock ()
+    from /boot/beos/system/lib/libroot.so
+ #4  0x006de4e9 in BPrivate::processHeap::free ()
+    from /boot/beos/system/lib/libroot.so
+ #5  0x006dfc2b in free () from /boot/beos/system/lib/libroot.so
+ #6  0x0021882f in BasicTerminalBuffer::_FreeLines ()
+ #7  0x00216cf5 in BasicTerminalBuffer::~BasicTerminalBuffer ()
+ #8  0x002213f5 in TerminalBuffer::~TerminalBuffer ()
+ #9  0x00224a20 in TermView::~TermView ()
+ #10 0x002309e7 in CustomTermView::~CustomTermView ()
+ #11 0x003924db in BView::~BView () from /boot/beos/system/lib/libbe.so
+ #12 0x00230a5b in TermViewContainerView::~TermViewContainerView ()
+ #13 0x003924db in BView::~BView () from /boot/beos/system/lib/libbe.so
+ #14 0x00367fc8 in BScrollView::~BScrollView ()
+    from /boot/beos/system/lib/libbe.so
+ #15 0x00223a18 in TermScrollView::~TermScrollView ()
+ #16 0x0037c890 in BTab::~BTab () from /boot/beos/system/lib/libbe.so
+ #17 0x0037d4e8 in BTabView::~BTabView () from
+ /boot/beos/system/lib/libbe.so
+ #18 0x0021f128 in SmartTabView::~SmartTabView ()
+ #19 0x00230b2f in TermWindow::TabView::~TabView ()
+ #20 0x003924db in BView::~BView () from /boot/beos/system/lib/libbe.so
+ #21 0x0039e456 in BWindow::~BWindow () from /boot/beos/system/lib/libbe.so
+ #22 0x0022c452 in TermWindow::~TermWindow ()
+ #23 0x002f5065 in BLooper::Quit () from /boot/beos/system/lib/libbe.so
+ #24 0x0039eba9 in BWindow::Quit () from /boot/beos/system/lib/libbe.so
+ #25 0x002f667c in BLooper::_QuitRequested ()
+    from /boot/beos/system/lib/libbe.so
+ #26 0x002f4bf4 in BLooper::DispatchMessage ()
+    from /boot/beos/system/lib/libbe.so
+ #27 0x003a153a in BWindow::DispatchMessage ()
+    from /boot/beos/system/lib/libbe.so
+ #28 0x003a4e7f in BWindow::task_looper () from
+ /boot/beos/system/lib/libbe.so
+ #29 0x002f60ff in BLooper::_task0_ () from /boot/beos/system/lib/libbe.so
+ #30 0x006cf640 in thread_entry () from /boot/beos/system/lib/libroot.so
+ #31 0x700c1fec in ?? ()
+ }}}
+
+ I entered `cont`, and got the following (probably harmless, but in case
+ not I put it here) :
+ {{{
+ #0  0xffff0104 in ?? ()
+ #1  0x006cf7db in wait_for_thread () from /boot/beos/system/lib/libroot.so
+ #2  0x002f50aa in BLooper::Quit () from /boot/beos/system/lib/libbe.so
+ #3  0x0039eba9 in BWindow::Quit () from /boot/beos/system/lib/libbe.so
+ #4  0x002ecf20 in BApplication::_WindowQuitLoop ()
+    from /boot/beos/system/lib/libbe.so
+ #5  0x002ecf8f in BApplication::_QuitAllWindows ()
+    from /boot/beos/system/lib/libbe.so
+ #6  0x002ea425 in BApplication::QuitRequested ()
+    from /boot/beos/system/lib/libbe.so
+ #7  0x002f65ac in BLooper::_QuitRequested ()
+    from /boot/beos/system/lib/libbe.so
+ #8  0x002f4bf4 in BLooper::DispatchMessage ()
+    from /boot/beos/system/lib/libbe.so
+ #9  0x002ebad5 in BApplication::DispatchMessage ()
+    from /boot/beos/system/lib/libbe.so
+ #10 0x002f6505 in BLooper::task_looper () from
+ /boot/beos/system/lib/libbe.so
+ #11 0x002ea2de in BApplication::Run () from /boot/beos/system/lib/libbe.so
+ #12 0x0021bf8f in main ()
+ }}}
+
+ My knowledge is currently limited, i'm (re-)learning how to inspect
+ backtraces, variables and other debug things ; I've not done these things
+ for years (since I programmed DeeperPeople for BeOS in 2001, to be exact).
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3194">http://dev.haiku-os.org/ticket/3194</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="013036.html">[Haiku-bugs] [Haiku] #3193: nVidia Realtek ALC1200 Audio driver
+</A></li>
+	<LI>Next message: <A HREF="012953.html">[Haiku-bugs] [Haiku] #3194: [Terminal] crash on close/quit
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12952">[ date ]</a>
+              <a href="thread.html#12952">[ thread ]</a>
+              <a href="subject.html#12952">[ subject ]</a>
+              <a href="author.html#12952">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

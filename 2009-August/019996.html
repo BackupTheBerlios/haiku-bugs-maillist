@@ -1,0 +1,189 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4323: [SoundPlay] crash in BListView::DrawItem
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234323%3A%20%5BSoundPlay%5D%20crash%20in%20BListView%3A%3ADrawItem&In-Reply-To=%3C040.09c9599933302365b8ae65bbaa6d15ce%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="020000.html">
+   <LINK REL="Next"  HREF="019997.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4323: [SoundPlay] crash in BListView::DrawItem</H1>
+    <B>diver</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234323%3A%20%5BSoundPlay%5D%20crash%20in%20BListView%3A%3ADrawItem&In-Reply-To=%3C040.09c9599933302365b8ae65bbaa6d15ce%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4323: [SoundPlay] crash in BListView::DrawItem">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Aug 23 20:48:56 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="020000.html">[Haiku-bugs] [Haiku] #4322: [Tracker] crash in BList::ItemAt ()
+</A></li>
+        <LI>Next message: <A HREF="019997.html">[Haiku-bugs] [Haiku] #4324: [BePDF] crash in BListView::IndexOf ()
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19996">[ date ]</a>
+              <a href="thread.html#19996">[ thread ]</a>
+              <a href="subject.html#19996">[ subject ]</a>
+              <a href="author.html#19996">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4323: [SoundPlay] crash in BListView::DrawItem
+--------------------------------+-------------------------------------------
+ Reporter:  diver               |       Owner:  axeld         
+     Type:  bug                 |      Status:  new           
+ Priority:  normal              |   Milestone:  R1            
+Component:  Kits/Interface Kit  |     Version:  R1 development
+Blockedby:                      |    Platform:  All           
+ Blocking:                      |  
+--------------------------------+-------------------------------------------
+ Start SoundPlay and go to Preferences-&gt; Decoders[[BR]]
+ Move &quot;AMP mpeg decoder&quot; to the top -&gt; About... -&gt; Ok[[BR]]
+
+ {{{
+ Thread 1034 caused an exception: Segment violation
+ Reading symbols from /boot/system/runtime_loader...done.
+ Loaded symbols for /boot/system/runtime_loader
+ Reading symbols from /boot/system/lib/libbe.so...done.
+ Loaded symbols for /boot/system/lib/libbe.so
+ Reading symbols from /data/apps/SoundPlay/lib/liblayout.so...done.
+ Loaded symbols for /data/apps/SoundPlay/lib/liblayout.so
+ Reading symbols from /boot/system/lib/libmedia.so...done.
+ Loaded symbols for /boot/system/lib/libmedia.so
+ Reading symbols from /boot/system/lib/libgame.so...done.
+ Loaded symbols for /boot/system/lib/libgame.so
+ Reading symbols from /boot/system/lib/libtracker.so...done.
+ Loaded symbols for /boot/system/lib/libtracker.so
+ Reading symbols from /boot/system/lib/libtranslation.so...done.
+ Loaded symbols for /boot/system/lib/libtranslation.so
+ Reading symbols from /boot/system/lib/libbnetapi.so...done.
+ Loaded symbols for /boot/system/lib/libbnetapi.so
+ Reading symbols from /boot/system/lib/libroot.so...done.
+ Loaded symbols for /boot/system/lib/libroot.so
+ Reading symbols from /boot/system/lib/libstdc++.r4.so...done.
+ Loaded symbols for /boot/system/lib/libstdc++.r4.so
+ Reading symbols from /boot/system/lib/libtextencoding.so...done.
+ Loaded symbols for /boot/system/lib/libtextencoding.so
+ Reading symbols from /boot/system/lib/libnetwork.so...done.
+ Loaded symbols for /boot/system/lib/libnetwork.so
+ Reading symbols from /data/apps/SoundPlay/Plugins/AudioIn...done.
+ Loaded symbols for /data/apps/SoundPlay/Plugins/AudioIn
+ Reading symbols from /data/apps/SoundPlay/Plugins/CPlusAdapter...done.
+ Loaded symbols for /data/apps/SoundPlay/Plugins/CPlusAdapter
+ Reading symbols from /data/apps/SoundPlay/Plugins/VST Plugins
+ Adapter...done.
+ Loaded symbols for /data/apps/SoundPlay/Plugins/VST Plugins Adapter
+ Reading symbols from /boot/system/lib/libmidi2.so...done.
+ Loaded symbols for /boot/system/lib/libmidi2.so
+ Reading symbols from /data/apps/SoundPlay/lib/CPlus...done.
+ Loaded symbols for /data/apps/SoundPlay/lib/CPlus
+ Reading symbols from /data/apps/SoundPlay/Plugins/Deskbar...done.
+ Loaded symbols for /data/apps/SoundPlay/Plugins/Deskbar
+ Reading symbols from /data/apps/SoundPlay/Plugins/DeskbarFFT...done.
+ Loaded symbols for /data/apps/SoundPlay/Plugins/DeskbarFFT
+ Reading symbols from /data/apps/SoundPlay/Plugins/DeskbarVU...done.
+ Loaded symbols for /data/apps/SoundPlay/Plugins/DeskbarVU
+ Reading symbols from /data/apps/SoundPlay/Plugins/EQ...done.
+ Loaded symbols for /data/apps/SoundPlay/Plugins/EQ
+ Reading symbols from /data/apps/SoundPlay/Plugins/FreeVerb...done.
+ Loaded symbols for /data/apps/SoundPlay/Plugins/FreeVerb
+ Reading symbols from /data/apps/SoundPlay/Plugins/HTTP-UI...done.
+ Loaded symbols for /data/apps/SoundPlay/Plugins/HTTP-UI
+ Reading symbols from /data/apps/SoundPlay/Plugins/LiveEncoder...done.
+ Loaded symbols for /data/apps/SoundPlay/Plugins/LiveEncoder
+ Reading symbols from /data/apps/SoundPlay/Plugins/LoudnessPlugin...done.
+ Loaded symbols for /data/apps/SoundPlay/Plugins/LoudnessPlugin
+ Reading symbols from /data/apps/SoundPlay/Plugins/MP3Clean...done.
+ Loaded symbols for /data/apps/SoundPlay/Plugins/MP3Clean
+ Reading symbols from /data/apps/SoundPlay/Plugins/MidiRenderer...done.
+ Loaded symbols for /data/apps/SoundPlay/Plugins/MidiRenderer
+ Reading symbols from /data/apps/SoundPlay/Plugins/MixerUI...done.
+ Loaded symbols for /data/apps/SoundPlay/Plugins/MixerUI
+ Reading symbols from /data/apps/SoundPlay/Plugins/ModPlugin...done.
+ Loaded symbols for /data/apps/SoundPlay/Plugins/ModPlugin
+ Reading symbols from /data/apps/SoundPlay/Plugins/NoVoicePlugin...done.
+ Loaded symbols for /data/apps/SoundPlay/Plugins/NoVoicePlugin
+ Reading symbols from /data/apps/SoundPlay/Plugins/Noise...done.
+ Loaded symbols for /data/apps/SoundPlay/Plugins/Noise
+ Reading symbols from /data/apps/SoundPlay/Plugins/OggVorbis...done.
+ Loaded symbols for /data/apps/SoundPlay/Plugins/OggVorbis
+ Reading symbols from /data/apps/SoundPlay/lib/libogg.so...done.
+ Loaded symbols for /data/apps/SoundPlay/lib/libogg.so
+ Reading symbols from /data/apps/SoundPlay/lib/libvorbisfile.so...done.
+ Loaded symbols for /data/apps/SoundPlay/lib/libvorbisfile.so
+ Reading symbols from /data/apps/SoundPlay/lib/libvorbis.so...done.
+ Loaded symbols for /data/apps/SoundPlay/lib/libvorbis.so
+ Reading symbols from /data/apps/SoundPlay/Plugins/PitchChange...done.
+ Loaded symbols for /data/apps/SoundPlay/Plugins/PitchChange
+ Reading symbols from
+ /data/apps/SoundPlay/Plugins/SimpleScopePlugin...done.
+ Loaded symbols for /data/apps/SoundPlay/Plugins/SimpleScopePlugin
+ Reading symbols from /data/apps/SoundPlay/Plugins/SpectrumAnalyzer...done.
+ Loaded symbols for /data/apps/SoundPlay/Plugins/SpectrumAnalyzer
+ [tcsetpgrp failed in terminal_inferior: Invalid Argument]
+ [Switching to team /data/apps/SoundPlay/SoundPlay (1018) thread
+ w&gt;SoundPlay preferences (1034)]
+ 0x003e4624 in BListView::DrawItem () from /boot/system/lib/libbe.so
+ (gdb) bt
+ #0  0x003e4624 in BListView::DrawItem () from /boot/system/lib/libbe.so
+ #1  0x003e0e24 in BListView::Draw () from /boot/system/lib/libbe.so
+ #2  0x0025cb92 in aaezzzzzzzzzzzzzzzzzzzzzzzzzz ()
+ #3  0x0044b6f0 in BView::_Draw () from /boot/system/lib/libbe.so
+ #4  0x004504e5 in BWindow::DispatchMessage () from
+ /boot/system/lib/libbe.so
+ #5  0x00451835 in BWindow::UpdateIfNeeded () from
+ /boot/system/lib/libbe.so
+ #6  0x004390c0 in BTextView::_RequestDrawLines ()
+    from /boot/system/lib/libbe.so
+ #7  0x0043759c in BTextView::_Refresh () from /boot/system/lib/libbe.so
+ #8  0x0043288b in BTextView::SetText () from /boot/system/lib/libbe.so
+ #9  0x004327ad in BTextView::SetText () from /boot/system/lib/libbe.so
+ #10 0x002598ac in aagzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz ()
+ #11 0x0039038b in BLooper::DispatchMessage () from
+ /boot/system/lib/libbe.so
+ #12 0x00450749 in BWindow::DispatchMessage () from
+ /boot/system/lib/libbe.so
+ #13 0x004544ac in BWindow::task_looper () from /boot/system/lib/libbe.so
+ #14 0x003918e7 in BLooper::_task0_ () from /boot/system/lib/libbe.so
+ #15 0x008be124 in thread_entry () from /boot/system/lib/libroot.so
+ #16 0x701c5fec in ?? ()
+ (gdb)
+ }}}
+ [[BR]]
+ Tested with r32638 in VirtualBox 3.0.4
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4323">http://dev.haiku-os.org/ticket/4323</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="020000.html">[Haiku-bugs] [Haiku] #4322: [Tracker] crash in BList::ItemAt ()
+</A></li>
+	<LI>Next message: <A HREF="019997.html">[Haiku-bugs] [Haiku] #4324: [BePDF] crash in BListView::IndexOf ()
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19996">[ date ]</a>
+              <a href="thread.html#19996">[ thread ]</a>
+              <a href="subject.html#19996">[ subject ]</a>
+              <a href="author.html#19996">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

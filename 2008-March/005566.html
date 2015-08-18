@@ -1,0 +1,144 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1926: PANIC: page fault, but interrupts were disabled. Touching address 0x00000025 from eip 0x8006106c
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231926%3A%20PANIC%3A%20page%20fault%2C%0A%20but%20interrupts%20were%20disabled.%20Touching%20address%200x00000025%20from%20eip%0A%200x8006106c&In-Reply-To=%3C040.edac3e61ab29cf2ddc247d6fba566fc1%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005894.html">
+   <LINK REL="Next"  HREF="005575.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1926: PANIC: page fault, but interrupts were disabled. Touching address 0x00000025 from eip 0x8006106c</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231926%3A%20PANIC%3A%20page%20fault%2C%0A%20but%20interrupts%20were%20disabled.%20Touching%20address%200x00000025%20from%20eip%0A%200x8006106c&In-Reply-To=%3C040.edac3e61ab29cf2ddc247d6fba566fc1%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1926: PANIC: page fault, but interrupts were disabled. Touching address 0x00000025 from eip 0x8006106c">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Mar 16 20:10:26 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005894.html">[Haiku-bugs] [Haiku] #1925: Reboot during startup on Toshiba Satellite 2615DVD/6.0
+</A></li>
+        <LI>Next message: <A HREF="005575.html">[Haiku-bugs] [Haiku] #1926: PANIC: page fault, but interrupts were disabled. Touching address 0x00000025 from eip 0x8006106c
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5566">[ date ]</a>
+              <a href="thread.html#5566">[ thread ]</a>
+              <a href="subject.html#5566">[ subject ]</a>
+              <a href="author.html#5566">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1926: PANIC: page fault, but interrupts were disabled. Touching address
+0x00000025 from eip 0x8006106c
+---------------------------+------------------------------------------------
+ Reporter:  thorn          |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1 development
+ Platform:  x86            |  
+---------------------------+------------------------------------------------
+ tested on r24348. random bug. i catch it twice today.
+
+ wait interval 96850, scan pages 7814, free 202, target 3894
+ wait interval 87109, scan pages 7892, free 160, target 3936
+ check through
+ wait interval 77136, scan pages 7973, free 117, target 3979
+ PANIC: page fault, but interrupts were disabled. Touching address
+ 0x00000025 from eip 0x8006106c
+
+ Welcome to Kernel Debugging Land...
+ Running on CPU 0
+ kdebug&gt; bt full
+ could not find thread 0
+ frame            caller     &lt;image&gt;:function + offset
+ 92333398 (+  52) 80082db3   &lt;kernel&gt;:invoke_debugger_command + 0x00cf
+ 923333cc (+  64) 80083b54   &lt;kernel&gt;:_ParseCommand__16ExpressionParserRi +
+ 0x01f8
+ 9233340c (+  48) 80083546
+ &lt;kernel&gt;:EvaluateCommand__16ExpressionParserPCcRi + 0x01de
+ 9233343c (+ 228) 80084c68   &lt;kernel&gt;:evaluate_debug_command + 0x0088
+ 92333520 (+  64) 80081986   &lt;kernel&gt;:kernel_debugger_loop__Fv + 0x017a
+ 92333560 (+  48) 800825d1   &lt;kernel&gt;:kernel_debugger + 0x010d
+ 92333590 (+ 192) 800824b9   &lt;kernel&gt;:panic + 0x0029
+ 92333650 (+  48) 8008f220   &lt;kernel&gt;:page_fault_exception + 0x0060
+ 92333680 (+  12) 800924dd   &lt;kernel&gt;:int_bottom + 0x001d (nearest)
+ iframe at 0x9233368c (end = 0x923336e4)
+  eax 0x1            ebx 0x1             ecx 0x800d1df4   edx 0xf0
+  esi 0x92333768     edi 0x800d1db4      ebp 0x92333704   esp 0x923336c0
+  eip 0x8006106c  eflags 0x10002
+  vector: 0xe, error code: 0x0
+ 9233368c (+ 120) 8006106c   &lt;kernel&gt;:find_page_candidate__FR7vm_pageb +
+ 0x0094
+ 92333704 (+ 144) 8006136e   &lt;kernel&gt;:steal_pages__FPP7vm_pageUlb + 0x0052
+ 92333794 (+  96) 80061f61   &lt;kernel&gt;:vm_page_allocate_page + 0x0139
+ 923337f4 (+ 128) 80058096   &lt;kernel&gt;:vm_create_anonymous_area + 0x02d6
+ 92333874 (+  80) 8005d7a7   &lt;kernel&gt;:create_area + 0x003b
+ 923338c4 (+  64) 8008a048
+ &lt;kernel&gt;:area_allocate_pages__FP12object_cachePPvUl + 0x004c
+ 92333904 (+  48) 8008b608   &lt;kernel&gt;:CreateSlab__17HashedObjectCacheUl +
+ 0x0040
+ 92333934 (+  48) 8008b1d9
+ &lt;kernel&gt;:object_cache_reserve_internal__FP12object_cacheUlUl + 0x0049
+ 92333964 (+  64) 8008ac36   &lt;kernel&gt;:object_cache_alloc + 0x0076
+ 923339a4 (+  32) 80062e8b   &lt;kernel&gt;:Allocate__11block_cache + 0x0017
+ 923339c4 (+  64) 80065e9b   &lt;kernel&gt;:block_cache_get_etc + 0x0087
+ 92333a04 (+ 128) 802ddab7   &lt;bfs&gt;:GetNext__17AttributeIteratorPcPUlPUlPx +
+ 0x0063
+ 92333a84 (+ 368) 802dc26f   &lt;bfs&gt;:Free__5InodeR11Transaction + 0x007f
+ 92333bf4 (+  80) 802e4a0c   &lt;bfs&gt;:bfs_remove_vnode__FPvT0b + 0x00bc
+ 92333c44 (+  48) 8004587a   &lt;kernel&gt;:free_vnode__FP5vnodeb + 0x00e6
+ 92333c74 (+  48) 800459bb   &lt;kernel&gt;:dec_vnode_ref_count__FP5vnodeb +
+ 0x0103
+ 92333ca4 (+  48) 80048856   &lt;kernel&gt;:put_vnode + 0x0052
+ 92333cd4 (+  48) 802ceba9   &lt;bfs&gt;:Put__5Vnode + 0x0031
+ 92333d04 (+ 128) 802dce23   &lt;bfs&gt;:Remove__5InodeR11TransactionPCcPxb +
+ 0x047f
+ 92333d84 (+  80) 802e5ed1   &lt;bfs&gt;:bfs_unlink__FPvT0PCc + 0x00d9
+ 92333dd4 (+ 304) 8004b871   &lt;kernel&gt;:common_unlink__FiPcb + 0x0071
+ 92333f04 (+  64) 8005053f   &lt;kernel&gt;:_user_unlink + 0x0093
+ 92333f44 (+ 100) 80092652   &lt;kernel&gt;:pre_syscall_debug_done + 0x0002
+ (nearest)
+ iframe at 0x92333fa8 (end = 0x92334000)
+  eax 0x55           ebx 0x458bc8        ecx 0x7ffe69c4   edx 0xffff0104
+  esi 0x18044ed8     edi 0x1a2681e8      ebp 0x7ffe69f0   esp 0x92333fdc
+  eip 0xffff0104  eflags 0x213
+  vector: 0x63, error code: 0x0
+ 92333fa8 (+   0) ffff0104
+ [*** READ/WRITE FAULT ***]
+ kdebug&gt;
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1926">http://dev.haiku-os.org/ticket/1926</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005894.html">[Haiku-bugs] [Haiku] #1925: Reboot during startup on Toshiba Satellite 2615DVD/6.0
+</A></li>
+	<LI>Next message: <A HREF="005575.html">[Haiku-bugs] [Haiku] #1926: PANIC: page fault, but interrupts were disabled. Touching address 0x00000025 from eip 0x8006106c
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5566">[ date ]</a>
+              <a href="thread.html#5566">[ thread ]</a>
+              <a href="subject.html#5566">[ subject ]</a>
+              <a href="author.html#5566">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

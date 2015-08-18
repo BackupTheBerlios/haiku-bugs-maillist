@@ -1,0 +1,311 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3347: PANIC: IORequest::_CopyData(): invalid range: (1837760000, 16320)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-February/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233347%3A%20PANIC%3A%20IORequest%3A%3A_CopyData%28%29%3A%0A%20invalid%20range%3A%20%281837760000%2C%2016320%29&In-Reply-To=%3C050.539c4b225ecb5d34f360e2e435fffd45%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="014770.html">
+   <LINK REL="Next"  HREF="014772.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3347: PANIC: IORequest::_CopyData(): invalid range: (1837760000, 16320)</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233347%3A%20PANIC%3A%20IORequest%3A%3A_CopyData%28%29%3A%0A%20invalid%20range%3A%20%281837760000%2C%2016320%29&In-Reply-To=%3C050.539c4b225ecb5d34f360e2e435fffd45%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3347: PANIC: IORequest::_CopyData(): invalid range: (1837760000, 16320)">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Feb 28 22:36:52 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="014770.html">[Haiku-bugs] [Haiku] #3498: When creating IMAP folders, also configure them by default such that their attribute view is suitable for viewing email
+</A></li>
+        <LI>Next message: <A HREF="014772.html">[Haiku-bugs] [Haiku] #3347: PANIC: IORequest::_CopyData(): invalid range: (1837760000, 16320)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14771">[ date ]</a>
+              <a href="thread.html#14771">[ thread ]</a>
+              <a href="subject.html#14771">[ subject ]</a>
+              <a href="author.html#14771">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3347: PANIC: IORequest::_CopyData(): invalid range: (1837760000, 16320)
+---------------------------+------------------------------------------------
+ Reporter:  idefix         |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1 development
+Blockedby:                 |    Platform:  All           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+
+Comment(by anevilyak):
+
+ I just encountered this one as well while downloading email and trying to
+ open audio files with media player simultaneously...info as follows:
+
+ {{{
+ stack trace for thread 38 &quot;scsi scheduler&quot;
+     kernel stack: 0x80970000 to 0x80974000
+ frame               caller     &lt;image&gt;:function + offset
+  0 80973a98 (+  48) 8005bd8d   &lt;kernel_x86&gt;:invoke_debugger_command +
+ 0x00f5
+  1 80973ac8 (+  64) 8005bb7d   &lt;kernel_x86&gt;
+ invoke_pipe_segment(debugger_command_pipe*: 0x80122c60, int32: 0, 0x0
+ &quot;&lt;NULL&gt;&quot;) + 0x0079
+  2 80973b08 (+  64) 8005bf04   &lt;kernel_x86&gt;:invoke_debugger_command_pipe +
+ 0x009c
+  3 80973b48 (+  48) 8005d48c   &lt;kernel_x86&gt;
+ ExpressionParser&lt;0x80973bfc&gt;::_ParseCommandPipe(0x80973bf8) + 0x0234
+  4 80973b78 (+  64) 8005c8c6   &lt;kernel_x86&gt;
+ ExpressionParser&lt;0x80973bfc&gt;::EvaluateCommand(0x80115ca0 &quot;bt&quot;, 0x80973bf8)
+ + 0x02ba
+  5 80973bb8 (+ 224) 8005e8b4   &lt;kernel_x86&gt;:evaluate_debug_command +
+ 0x0088
+  6 80973c98 (+  64) 80059c8a   &lt;kernel_x86&gt; kernel_debugger_loop() +
+ 0x01ae
+  7 80973cd8 (+  32) 8005ab0d   &lt;kernel_x86&gt;:kernel_debugger + 0x004d
+  8 80973cf8 (+ 192) 8005aab5   &lt;kernel_x86&gt;:panic + 0x0029
+  9 80973db8 (+  64) 80074af7   &lt;kernel_x86&gt;
+ IORequest&lt;0xb49ed3fc&gt;::_CopyData(0x80701093, int64: 48054072832, uint32:
+ 0x3f6d (16237), false) + 0x006b
+ 10 80973df8 (+  64) 80074a85   &lt;kernel_x86&gt;
+ IORequest&lt;0xb49ed3fc&gt;::CopyData(0x80701093, int64: 48054072832, uint32:
+ 0x3f6d (16237)) + 0x0029
+ 11 80973e38 (+ 112) 800732aa   &lt;kernel_x86&gt;
+ IOOperation&lt;0x811c91e0&gt;::Finish(0x1, 0x80973ef8, 0x246, 0x811c91e0) +
+ 0x0242
+ 12 80973ea8 (+  64) 8006cb55   &lt;kernel_x86&gt;
+ IOScheduler&lt;0x811b4660&gt;::_Finisher(0x4000, 0x80973fb8, 0x8006e270,
+ 0x811a27a8, IORequest: 0x811c91e0) + 0x0151
+ 13 80973ee8 (+ 208) 8006e279   &lt;kernel_x86&gt;
+ IOScheduler&lt;0x811b4660&gt;::_Scheduler(0x819fe000, 0x8005145d, 0x80113694,
+ 0x0, 0x0, 0x80973ff8, 0x800514d7, 0x811b4660, 0x0, 0x0, int32: 0, 0x0,
+ 0x0, int32: -2147150732, int32: 12, int16: -29421) + 0x07c1
+ 14 80973fb8 (+  32) 8006e4fa   &lt;kernel_x86&gt;
+ IOScheduler&lt;0x811b4660&gt;::_SchedulerThread(NULL) + 0x0012
+ 15 80973fd8 (+  32) 800514d7   &lt;kernel_x86&gt; _create_kernel_thread_kentry()
+ + 0x001b
+ 16 80973ff8 (+2137571336) 80051474   &lt;kernel_x86&gt; thread_kthread_exit() +
+ 0x0000
+
+ kdebug&gt; io_operation 0x811b4660
+ io_operation at 0x811b4660
+   parent:           0x811b1e88
+   status:           No error
+   dma buffer:       0x00000027
+   offset:           -9143952488757220088 (original: 0)
+   length:           0        (original: 0)
+   transferred:      3435973836
+   block size:       2166048352
+   saved vec index:  1157
+   saved vec length: 32784
+   r/w:              read
+   phase:            read begin
+   partial begin:    no
+   partial end:      no
+   bounce buffer:    no
+
+
+ Parent IOP:
+ io_operation at 0x811b1e88
+   parent:           0x80100fb3
+   status:           No error
+   dma buffer:       0x00010000
+   offset:           2199023386112 (original: 33554432)
+   length:           512      (original: 1024)
+   transferred:      32
+   block size:       16384
+   saved vec index:  53248
+   saved vec length: 33212
+   r/w:              read
+   phase:            unknown
+   partial begin:    yes
+   partial end:      yes
+   bounce buffer:    yes
+
+
+ io_request at 0xb49ed3fc
+   owner:             0x81f4b454
+   parent:            0xcea84bf0
+   status:            No Error (1)
+   mutex:             0xb49ed418
+   IOBuffer:          0xa91612a0
+   offset:            48054072979
+   length:            62317
+   transfer size:     62317
+   relative offset:   0
+   pending children:  4
+   flags:             0x0
+   team:              4791
+   thread:            4799
+   r/w:               read
+   partial transfer:  no
+   finished cvar:     0xb49ed470
+   iteration:
+     vec index:       1
+     vec offset:      0
+     remaining bytes: 0
+   callbacks:
+     finished 0x00000000, cookie 0x00000000
+     iteration 0x00000000, cookie 0x00000000
+   children:
+     0x811c91e0
+     0x811cf960
+     0x811c92d0
+     0x811cfaa0
+
+ Child I/O requests:
+
+ io_request at 0x811c91e0
+   owner:             0x0000000b
+   parent:            0xb49ed3fc
+   status:            No error
+   mutex:             0x811c91fc
+   IOBuffer:          0x00004000
+   offset:            69737384001389
+   length:            512
+   transfer size:     3435973836
+   relative offset:   16777474
+   pending children:  0
+   flags:             0x0
+   team:              0
+   thread:            0
+   r/w:               write
+   partial transfer:  yes
+   finished cvar:     0x811c9254
+   iteration:
+     vec index:       4096
+     vec offset:      512
+     remaining bytes: 3435973836
+   callbacks:
+     finished 0x811ca960, cookie 0x811d0000
+     iteration 0x81bd6240, cookie 0xed5e0a00
+   children:
+
+ io_request at 0x811cf960
+   owner:             0x0000000b
+   parent:            0xb49ed3fc
+   status:            No Error (1)
+   mutex:             0x811cf97c
+   IOBuffer:          0x00004000
+   offset:            16384
+   length:            512
+   transfer size:     3435973836
+   relative offset:   16777218
+   pending children:  0
+   flags:             0x0
+   team:              0
+   thread:            0
+   r/w:               write
+   partial transfer:  yes
+   finished cvar:     0x811cf9d4
+   iteration:
+     vec index:       2048
+     vec offset:      512
+     remaining bytes: 3435973836
+   callbacks:
+     finished 0x811cd050, cookie 0x811cc230
+     iteration 0x81d4f480, cookie 0x8c7ce200
+   children:
+
+ io_request at 0x811c92d0
+   owner:             0x0000000b
+   parent:            0xb49ed3fc
+   status:            No Error (1)
+   mutex:             0x811c92ec
+   IOBuffer:          0x00004000
+   offset:            16384
+   length:            512
+   transfer size:     3435973836
+   relative offset:   16777218
+   pending children:  0
+   flags:             0x0
+   team:              0
+   thread:            0
+   r/w:               write
+   partial transfer:  yes
+   finished cvar:     0x811c9344
+   iteration:
+     vec index:       2048
+     vec offset:      512
+     remaining bytes: 3435973836
+   callbacks:
+     finished 0x811cbb40, cookie 0x811d4460
+     iteration 0x81bd9900, cookie 0x2f479200
+   children:
+
+ io_request at 0x811cfaa0
+   owner:             0x0000000b
+   parent:            0xb49ed3fc
+   status:            No Error (1)
+   mutex:             0x811cfabc
+   IOBuffer:          0x00003400
+   offset:            13312
+   length:            512
+   transfer size:     3435973836
+   relative offset:   16777218
+   pending children:  0
+   flags:             0x0
+   team:              0
+   thread:            0
+   r/w:               write
+   partial transfer:  yes
+   finished cvar:     0x811cfb14
+   iteration:
+     vec index:       2048
+     vec offset:      512
+     remaining bytes: 3435973836
+   callbacks:
+     finished 0x811d4460, cookie 0x811c0b90
+     iteration 0x81d53d80, cookie 0x2f478200
+   children:
+
+
+ IOBuffer at 0xa91612a0
+   origin:     user
+   kind:       virtual
+   length:     62317
+   capacity:   1
+   vecs:       1
+     [0] 0x180a6fd8, 62317
+
+
+ }}}
+
+ Hope this helps.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3347#comment:1">http://dev.haiku-os.org/ticket/3347#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="014770.html">[Haiku-bugs] [Haiku] #3498: When creating IMAP folders, also configure them by default such that their attribute view is suitable for viewing email
+</A></li>
+	<LI>Next message: <A HREF="014772.html">[Haiku-bugs] [Haiku] #3347: PANIC: IORequest::_CopyData(): invalid range: (1837760000, 16320)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14771">[ date ]</a>
+              <a href="thread.html#14771">[ thread ]</a>
+              <a href="subject.html#14771">[ subject ]</a>
+              <a href="author.html#14771">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

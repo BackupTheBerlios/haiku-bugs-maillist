@@ -1,0 +1,158 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3409: vm_page_fault: unhandled page fault in kernel space at 0x23, ip 0x8002c525 (in &quot;block notifier/writer&quot;)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-February/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233409%3A%20vm_page_fault%3A%20unhandled%20page%20fault%20in%0A%20kernel%20space%20at%200x23%2C%20ip%200x8002c525%20%28in%20%22block%20notifier/writer%22%29&In-Reply-To=%3C046.e2aec81bce2774d9f1f11001d6cf2f5d%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="014257.html">
+   <LINK REL="Next"  HREF="014290.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3409: vm_page_fault: unhandled page fault in kernel space at 0x23, ip 0x8002c525 (in &quot;block notifier/writer&quot;)</H1>
+    <B>umccullough</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233409%3A%20vm_page_fault%3A%20unhandled%20page%20fault%20in%0A%20kernel%20space%20at%200x23%2C%20ip%200x8002c525%20%28in%20%22block%20notifier/writer%22%29&In-Reply-To=%3C046.e2aec81bce2774d9f1f11001d6cf2f5d%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3409: vm_page_fault: unhandled page fault in kernel space at 0x23, ip 0x8002c525 (in &quot;block notifier/writer&quot;)">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Feb  5 08:18:33 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="014257.html">[Haiku-bugs] [Haiku] #1677: Strange behaviour with images and	games...
+</A></li>
+        <LI>Next message: <A HREF="014290.html">[Haiku-bugs] [Haiku] #3409: vm_page_fault: unhandled page fault in kernel space at 0x23, ip 0x8002c525 (in &quot;block notifier/writer&quot;)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14258">[ date ]</a>
+              <a href="thread.html#14258">[ thread ]</a>
+              <a href="subject.html#14258">[ subject ]</a>
+              <a href="author.html#14258">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3409: vm_page_fault: unhandled page fault in kernel space at 0x23, ip 0x8002c525
+(in &quot;block notifier/writer&quot;)
+---------------------------+------------------------------------------------
+ Reporter:  umccullough    |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1 development
+Blockedby:                 |    Platform:  All           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+ Came home to my Haiku machine sitting in KDL. Hooked up serial cable and
+ gathered the following:
+
+ {{{
+ kdebug&gt; info
+ kernel build: Feb  1 2009 22:13:22
+ SVN revision: 29126
+
+ cpu count: 2, active times:
+   [1] 79810235595
+   [2] 80233573755
+ pages:          76871 (521888 max)
+ sems:           2316 (131072 max)
+ ports:          165 (4096 max)
+ threads:        148 (4096 max)
+ teams:          20 (2048 max)
+ kdebug&gt; message
+ vm_page_fault: unhandled page fault in kernel space at 0x23, ip 0x8002c525
+
+ kdebug&gt; bt
+ stack trace for thread 12 &quot;block notifier/writer&quot;
+     kernel stack: 0x8018a000 to 0x8018e000
+ frame               caller     &lt;image&gt;:function + offset
+  0 8018d834 (+  48) 8005bd85   &lt;kernel_x86&gt;:invoke_debugger_command +
+ 0x00f5
+  1 8018d864 (+  64) 8005bb75   &lt;kernel_x86&gt;
+ invoke_pipe_segment(debugger_command_pipe*: 0x80122a60, int32: 0, 0x0
+ &quot;&lt;NULL&gt;&quot;) + 0x0079
+  2 8018d8a4 (+  64) 8005befc   &lt;kernel_x86&gt;:invoke_debugger_command_pipe +
+ 0x009c
+  3 8018d8e4 (+  48) 8005d484   &lt;kernel_x86&gt;
+ ExpressionParser&lt;0x8018d998&gt;::_ParseCommandPipe(0x8018d994) + 0x0234
+  4 8018d914 (+  64) 8005c8be   &lt;kernel_x86&gt;
+ ExpressionParser&lt;0x8018d998&gt;::EvaluateCommand(0x80113ca0 &quot;bt&quot;, 0x8018d994)
+ + 0x02ba
+  5 8018d954 (+ 224) 8005e8ac   &lt;kernel_x86&gt;:evaluate_debug_command +
+ 0x0088
+  6 8018da34 (+  64) 80059c82   &lt;kernel_x86&gt; kernel_debugger_loop() +
+ 0x01ae
+  7 8018da74 (+  32) 8005ab05   &lt;kernel_x86&gt;:kernel_debugger + 0x004d
+  8 8018da94 (+ 192) 8005aaad   &lt;kernel_x86&gt;:panic + 0x0029
+  9 8018db54 (+  80) 800babf5   &lt;kernel_x86&gt;:vm_page_fault + 0x0139
+ 10 8018dba4 (+  64) 800cab7d   &lt;kernel_x86&gt;:page_fault_exception + 0x00d9
+ 11 8018dbe4 (+  12) 800ce266   &lt;kernel_x86&gt;:int_bottom + 0x0036
+ kernel iframe at 0x8018dbf0 (end = 0x8018dc40)
+  eax 0x0            ebx 0x813fe6e8      ecx 0x812a39a8   edx 0x1f
+  esi 0x812a3988     edi 0x812a3988      ebp 0x8018dc68   esp 0x8018dc24
+  eip 0x8002c525  eflags 0x210203
+  vector: 0xe, error code: 0x2
+ 12 8018dbf0 (+ 120) 8002c525   &lt;kernel_x86&gt;
+ notify_transaction_listeners(block_cache*: 0x81205e88, cache_transaction*:
+ 0x813fe6c8, int32: 4) + 0x00f9
+ 13 8018dc68 (+  64) 8002eeef   &lt;kernel_x86&gt;:cache_end_transaction + 0x009b
+ 14 8018dca8 (+ 224) 8081a1b5   &lt;bfs&gt;
+ Journal&lt;0x81205f78&gt;::_WriteTransactionToLog(0x812a39a8, 0x8018ddf8,
+ 0x8081a1ee, 0x8082899c, int8: -88, 0x8018de40, 0x246) + 0x090d
+ 15 8018dd88 (+  48) 8081a275   &lt;bfs&gt; Journal&lt;0x81205f78&gt;::_FlushLog(false)
+ + 0x0095
+ 16 8018ddb8 (+  48) 8081989f   &lt;bfs&gt;
+ Journal&lt;0x00000736&gt;::_TransactionIdle(int32: 8, int32: -2128584840,
+ 0x8002c422) + 0x002b
+ 17 8018dde8 (+  96) 8002c121   &lt;kernel_x86&gt;
+ flush_pending_notifications(block_cache*: 0x81205e88) + 0x01a1
+ 18 8018de48 (+  64) 8002c211   &lt;kernel_x86&gt; flush_pending_notifications()
+ + 0x006d
+ 19 8018de88 (+ 336) 8002e509   &lt;kernel_x86&gt;
+ block_notifier_and_writer(NULL) + 0x0055
+ 20 8018dfd8 (+  32) 800514eb   &lt;kernel_x86&gt; _create_kernel_thread_kentry()
+ + 0x001b
+ 21 8018dff8 (+2145853448) 80051488   &lt;kernel_x86&gt; thread_kthread_exit() +
+ 0x0000
+ kdebug&gt;
+ }}}
+
+ Still sitting in KDL for a bit if there's any additional info I can
+ provide.
+
+ Configuration is gcc2 Haiku r29126 on core 2 duo with 2gb RAM using 500gb
+ SATA disk and &quot;ata&quot; bus_manager.
+
+ Had two different distributed computing clients running: dnetc and sb17,
+ with Firefox open and idling as well.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3409">http://dev.haiku-os.org/ticket/3409</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="014257.html">[Haiku-bugs] [Haiku] #1677: Strange behaviour with images and	games...
+</A></li>
+	<LI>Next message: <A HREF="014290.html">[Haiku-bugs] [Haiku] #3409: vm_page_fault: unhandled page fault in kernel space at 0x23, ip 0x8002c525 (in &quot;block notifier/writer&quot;)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14258">[ date ]</a>
+              <a href="thread.html#14258">[ thread ]</a>
+              <a href="subject.html#14258">[ subject ]</a>
+              <a href="author.html#14258">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

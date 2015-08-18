@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2514: Enlarged Terminal wraps input line overwriting beginning
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232514%3A%20Enlarged%20Terminal%20wraps%20input%20line%0A%20overwriting%20beginning&In-Reply-To=%3C050.d684b70d2255c682e02bd2203b014181%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012757.html">
+   <LINK REL="Next"  HREF="012759.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2514: Enlarged Terminal wraps input line overwriting beginning</H1>
+    <B>Adek336</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232514%3A%20Enlarged%20Terminal%20wraps%20input%20line%0A%20overwriting%20beginning&In-Reply-To=%3C050.d684b70d2255c682e02bd2203b014181%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2514: Enlarged Terminal wraps input line overwriting beginning">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Nov 26 00:35:38 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012757.html">[Haiku-bugs] [Haiku] #2919: on screen debug: entering + leaving the KDL prevents dividing log messages into pages
+</A></li>
+        <LI>Next message: <A HREF="012759.html">[Haiku-bugs] [Haiku] #2919: on screen debug: entering + leaving the KDL prevents dividing log messages into pages
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12758">[ date ]</a>
+              <a href="thread.html#12758">[ thread ]</a>
+              <a href="subject.html#12758">[ subject ]</a>
+              <a href="author.html#12758">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2514: Enlarged Terminal wraps input line overwriting beginning
+------------------------+---------------------------------------------------
+  Reporter:  stippi     |       Owner:  axeld         
+      Type:  bug        |      Status:  new           
+  Priority:  normal     |   Milestone:  R1            
+ Component:  - General  |     Version:  R1 development
+Resolution:             |   Blockedby:                
+  Platform:  All        |    Blocking:                
+------------------------+---------------------------------------------------
+
+Comment(by Adek336):
+
+ src/bin/bash/lib/readline/terminal.c: function _rl_get_screen_size() is
+ called (probably from a SIGWINCH handler) upon terminal resize when no
+ command is being executed. Upon terminal resizing, neither when a command
+ is being executed nor after returning from it, does _rl_get_screen_size()
+ get called; and thus the dimensions aren't updated.
+
+ The first take at the problem is to update screen size after returning
+ from a command, there's probably a better way though.
+ {{{
+ Index: src/bin/bash/eval.c
+ ===================================================================
+ --- src/bin/bash/eval.c (revision 28658)
+ +++ src/bin/bash/eval.c (working copy)
+ @@ -140,7 +140,8 @@
+
+               executing = 1;
+               stdin_redir = 0;
+               execute_command (current_command);
+ +             rl_resize_terminal();
+
+             exec_done:
+               if (current_command)
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2514#comment:4">http://dev.haiku-os.org/ticket/2514#comment:4</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012757.html">[Haiku-bugs] [Haiku] #2919: on screen debug: entering + leaving the KDL prevents dividing log messages into pages
+</A></li>
+	<LI>Next message: <A HREF="012759.html">[Haiku-bugs] [Haiku] #2919: on screen debug: entering + leaving the KDL prevents dividing log messages into pages
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12758">[ date ]</a>
+              <a href="thread.html#12758">[ thread ]</a>
+              <a href="subject.html#12758">[ subject ]</a>
+              <a href="author.html#12758">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

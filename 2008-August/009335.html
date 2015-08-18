@@ -1,0 +1,204 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2576: [Tar] PANIC: could not read block 5656: bytesRead: -1, error: Interrupted system call
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232576%3A%20%5BTar%5D%20PANIC%3A%20could%20not%20read%20block%205656%3A%0A%20bytesRead%3A%20-1%2C%20error%3A%20Interrupted%20system%20call&In-Reply-To=%3C042.acae1cdcea1e50d72abd197692e17338%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009329.html">
+   <LINK REL="Next"  HREF="009336.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2576: [Tar] PANIC: could not read block 5656: bytesRead: -1, error: Interrupted system call</H1>
+    <B>scottmc</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232576%3A%20%5BTar%5D%20PANIC%3A%20could%20not%20read%20block%205656%3A%0A%20bytesRead%3A%20-1%2C%20error%3A%20Interrupted%20system%20call&In-Reply-To=%3C042.acae1cdcea1e50d72abd197692e17338%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2576: [Tar] PANIC: could not read block 5656: bytesRead: -1, error: Interrupted system call">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Aug  6 08:28:25 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009329.html">[Haiku-bugs] [Haiku] #757: [app_server] deadlock on workspace	switching
+</A></li>
+        <LI>Next message: <A HREF="009336.html">[Haiku-bugs] [Haiku] #2576: [Tar] PANIC: could not read block 5656: bytesRead: -1, error: Interrupted system call
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9335">[ date ]</a>
+              <a href="thread.html#9335">[ thread ]</a>
+              <a href="subject.html#9335">[ subject ]</a>
+              <a href="author.html#9335">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2576: [Tar] PANIC: could not read block 5656: bytesRead: -1, error: Interrupted
+system call
+-----------------------+----------------------------------------------------
+ Reporter:  scottmc    |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+Blockedby:             |    Platform:  All           
+ Blocking:             |  
+-----------------------+----------------------------------------------------
+ On a fresh vmware development image, r26837, I downloaded a tarball of a
+ port I was going to try, and when I tried to use expander to open it got
+ dropped into KDL.
+
+ PANIC: could not read block 5656: bytesRead: -1, error: Interrupted system
+ call
+
+
+
+ Welcome to Kernel Debugging Land...
+
+ Thread 193 &quot;tar&quot; running on CPU 0
+
+ {{{
+ PANIC: could not read block 5656: bytesRead: -1, error: Interrupted system
+ call
+
+
+
+ Welcome to Kernel Debugging Land...
+
+ Thread 193 &quot;tar&quot; running on CPU 0
+
+ kdebug&gt; bt
+
+ stack trace for thread 193 &quot;tar&quot;
+
+     kernel stack: 0x929a0000 to 0x929a4000
+
+       user stack: 0x7efef000 to 0x7ffef000
+
+ frame            caller     &lt;image&gt;:function + offset
+
+  0 929a35f4 (+  48) 800544ed   &lt;kernel&gt;:invoke_debugger_command + 0x00ed
+
+  1 929a3624 (+  64) 800542e5
+ &lt;kernel&gt;:invoke_pipe_segment__FP21debugger_command_pipelPc + 0x0079
+
+  2 929a3664 (+  64) 8005462d   &lt;kernel&gt;:invoke_debugger_command_pipe +
+ 0x009d
+
+  3 929a36a4 (+  48) 80055508
+ &lt;kernel&gt;:_ParseCommandPipe__16ExpressionParserRi + 0x0234
+
+  4 929a36d4 (+  48) 80054ebe
+ &lt;kernel&gt;:EvaluateCommand__16ExpressionParserPCcRi + 0x01de
+
+  5 929a3704 (+ 224) 800568d4   &lt;kernel&gt;:evaluate_debug_command + 0x0088
+
+  6 929a37e4 (+  64) 80052962   &lt;kernel&gt;:kernel_debugger_loop__Fv + 0x01ae
+
+  7 929a3824 (+  48) 800534fb   &lt;kernel&gt;:kernel_debugger + 0x0117
+
+  8 929a3854 (+ 192) 800533d9   &lt;kernel&gt;:panic + 0x0029
+
+  9 929a3914 (+  96) 80029c40
+ &lt;kernel&gt;:get_cached_block__FP11block_cachexPbb + 0x015c
+
+ 10 929a3974 (+  80) 8002ca42   &lt;kernel&gt;:block_cache_get_etc + 0x004e
+
+ 11 929a39c4 (+  48) 8002caf4   &lt;kernel&gt;:block_cache_get + 0x0020
+
+ 12 929a39f4 (+  96) 80586d39
+ &lt;bfs&gt;:InternalSetTo__10CachedNodeP11Transactionx + 0x014d
+
+ 13 929a3a54 (+  48) 805867c9   &lt;bfs&gt;:SetTo__10CachedNodexb + 0x00d1
+
+ 14 929a3a84 (+  64) 80587ff3
+ &lt;bfs&gt;:_FindFreeDuplicateFragment__9BPlusTreeR11TransactionPC14bplustree_nodeR10CachedNodePxPP14bplustree_nodePUl
+ + 0x008b
+
+ 15 929a3ac4 (+ 176) 80588548
+ &lt;bfs&gt;:_InsertDuplicate__9BPlusTreeR11TransactionR10CachedNodePC14bplustree_nodeUsx
+ + 0x0494
+
+ 16 929a3b74 (+ 480) 80589400
+ &lt;bfs&gt;:Insert__9BPlusTreeR11TransactionPCUcUsx + 0x0460
+
+ 17 929a3d54 (+  80) 8058df05
+ &lt;bfs&gt;:Update__5IndexR11TransactionPCclPCUcUsT4UsP5Inode + 0x0245
+
+ 18 929a3da4 (+  96) 8058e245
+ &lt;bfs&gt;:UpdateSize__5IndexR11TransactionP5Inode + 0x00a1
+
+ 19 929a3e04 (+  96) 8059e9bd
+ &lt;bfs&gt;:bfs_free_cookie__FP9fs_volumeP8fs_vnodePv + 0x020d
+
+ 20 929a3e64 (+  48) 80089d44   &lt;kernel&gt;:file_free_fd__FP15file_descriptor
+ + 0x0028
+
+ 21 929a3e94 (+  48) 80079a4c   &lt;kernel&gt;:put_fd + 0x0038
+
+ 22 929a3ec4 (+  64) 80079b36   &lt;kernel&gt;:close_fd_index + 0x0032
+
+ 23 929a3f04 (+  32) 8007a631   &lt;kernel&gt;:common_close__Fib + 0x0031
+
+ 24 929a3f24 (+  32) 8007af08   &lt;kernel&gt;:_user_close + 0x0018
+
+ 25 929a3f44 (+ 100) 800b6d42   &lt;kernel&gt;:pre_syscall_debug_done + 0x0002
+ (nearest)
+
+ user iframe at 0x929a3fa8 (end = 0x929a4000)
+
+  eax 0x85           ebx 0x2f0b18        ecx 0x7ffeee10   edx 0xffff0104
+
+  esi 0xf62          edi 0x1802e400      ebp 0x7ffeee3c   esp 0x929a3fdc
+
+  eip 0xffff0104  eflags 0x207      user esp 0x7ffeee10
+
+  vector: 0x63, error code: 0x0
+
+ 26 929a3fa8 (+   0) ffff0104
+
+ 27 7ffeee3c (+  80) 00211f20   &lt;_APP_&gt;:extr_init + 0x0f58 (nearest)
+
+ 28 7ffeee8c (+  48) 00212c16   &lt;_APP_&gt;:extract_archive + 0x0176
+
+ 29 7ffeeebc (+ 144) 0021851d   &lt;_APP_&gt;:read_and + 0x01a1
+
+ 30 7ffeef4c (+  48) 002238c8   &lt;_APP_&gt;:main + 0x0178
+
+ 31 7ffeef7c (+  48) 00208df7   &lt;_APP_&gt;:_start + 0x005b
+
+ 32 7ffeefac (+  48) 001008ea   4421:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">runtime_loader_seg0ro at 0x00100000</A> +
+ 0x8ea
+
+ 33 7ffeefdc (+   0) 7ffeefec   4420:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">tar_main_stack at 0x7efef000</A> + 0xffffec
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2576">http://dev.haiku-os.org/ticket/2576</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009329.html">[Haiku-bugs] [Haiku] #757: [app_server] deadlock on workspace	switching
+</A></li>
+	<LI>Next message: <A HREF="009336.html">[Haiku-bugs] [Haiku] #2576: [Tar] PANIC: could not read block 5656: bytesRead: -1, error: Interrupted system call
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9335">[ date ]</a>
+              <a href="thread.html#9335">[ thread ]</a>
+              <a href="subject.html#9335">[ subject ]</a>
+              <a href="author.html#9335">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

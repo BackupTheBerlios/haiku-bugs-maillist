@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2046: jam on haiku-host occasionally fails with the message: vfork: Out of memory
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232046%3A%20jam%20on%20haiku-host%20occasionally%0A%20fails%20with%20the%20message%3A%20vfork%3A%20Out%20of%20memory&In-Reply-To=%3C052.260cf3308cb8b796082cdf344f1e47d1%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006273.html">
+   <LINK REL="Next"  HREF="006295.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2046: jam on haiku-host occasionally fails with the message: vfork: Out of memory</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232046%3A%20jam%20on%20haiku-host%20occasionally%0A%20fails%20with%20the%20message%3A%20vfork%3A%20Out%20of%20memory&In-Reply-To=%3C052.260cf3308cb8b796082cdf344f1e47d1%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2046: jam on haiku-host occasionally fails with the message: vfork: Out of memory">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Apr  8 15:32:44 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006273.html">[Haiku-bugs] [Haiku] #2046: jam on haiku-host occasionally fails with the message: vfork: Out of memory
+</A></li>
+        <LI>Next message: <A HREF="006295.html">[Haiku-bugs] [Haiku] #2046: jam on haiku-host occasionally fails with the message: vfork: Out of memory
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6317">[ date ]</a>
+              <a href="thread.html#6317">[ thread ]</a>
+              <a href="subject.html#6317">[ subject ]</a>
+              <a href="author.html#6317">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2046: jam on haiku-host occasionally fails with the message: vfork: Out of memory
+------------------------+---------------------------------------------------
+  Reporter:  kaoutsis   |       Owner:  axeld         
+      Type:  bug        |      Status:  new           
+  Priority:  normal     |   Milestone:  R1            
+ Component:  - General  |     Version:  R1 development
+Resolution:             |    Platform:  All           
+------------------------+---------------------------------------------------
+Comment (by kaoutsis):
+
+ Replying to [comment:3 bonefish]:
+ &gt; I just checked under Linux. There jam eats almost 200 MB, pretty much
+ all of it should be heap, I suppose. When fork()ing twice that amount will
+ need to be committed, which means (since we don't have swap file support)
+ you actually need to have that much available RAM. That would still leave
+ more than 100 MB of memory in your case, which should be more than enough
+ for Haiku, but I suppose we do still leak memory somewhere or the
+ computation of available memory is still broken.
+
+ Some observations that might help, running haiku r24864
+ using the ProcessController and jam -q haiku-image:
+ besides the 230MB jam takes up for itself (just before it quits due to
+ vfork),
+ kernel from 43MB that allocates when the desktop stuff are loaded, after
+ doing a jam and just before jam quits, it
+ allocates progressively another 100MB, a total of ~150MB.
+ So, when i looked the total value of reserved memory, nearly before jam
+ quits with the vfork: Out of memory,
+ ProcessController says aprox. 450 MB total allocation.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2046#comment:6">http://dev.haiku-os.org/ticket/2046#comment:6</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006273.html">[Haiku-bugs] [Haiku] #2046: jam on haiku-host occasionally fails with the message: vfork: Out of memory
+</A></li>
+	<LI>Next message: <A HREF="006295.html">[Haiku-bugs] [Haiku] #2046: jam on haiku-host occasionally fails with the message: vfork: Out of memory
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6317">[ date ]</a>
+              <a href="thread.html#6317">[ thread ]</a>
+              <a href="subject.html#6317">[ subject ]</a>
+              <a href="author.html#6317">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

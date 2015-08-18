@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4343: Debugger's console output frequently deadlocks Terminal
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234343%3A%20Debugger%27s%20console%20output%0A%20frequently%20deadlocks%20Terminal&In-Reply-To=%3C053.30de0d957aeaa2bb43a9851a004adfce%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="020184.html">
+   <LINK REL="Next"  HREF="020208.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4343: Debugger's console output frequently deadlocks Terminal</H1>
+    <B>bonefish</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234343%3A%20Debugger%27s%20console%20output%0A%20frequently%20deadlocks%20Terminal&In-Reply-To=%3C053.30de0d957aeaa2bb43a9851a004adfce%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4343: Debugger's console output frequently deadlocks Terminal">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Aug 26 17:20:43 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="020184.html">[Haiku-bugs] [Haiku] #4343: Debugger's console output frequently deadlocks Terminal
+</A></li>
+        <LI>Next message: <A HREF="020208.html">[Haiku-bugs] [Haiku] #4343: Debugger's console output frequently deadlocks Terminal
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20206">[ date ]</a>
+              <a href="thread.html#20206">[ thread ]</a>
+              <a href="subject.html#20206">[ subject ]</a>
+              <a href="author.html#20206">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4343: Debugger's console output frequently deadlocks Terminal
+-----------------------------------+----------------------------------------
+ Reporter:  anevilyak              |       Owner:  jackburton    
+     Type:  bug                    |      Status:  new           
+ Priority:  normal                 |   Milestone:  R1            
+Component:  Applications/Terminal  |     Version:  R1 development
+Blockedby:                         |    Platform:  All           
+ Blocking:                         |  
+-----------------------------------+----------------------------------------
+
+Comment(by bonefish):
+
+ Replying to [comment:5 anevilyak]:
+ &gt; So, need any further information to analyze the problem, or is that
+ enough to work with for now?
+
+ The basic problem is understood -- both PtyReader and EscParse wait
+ because they think the same buffer is full respectively empty -- I just
+ fail to see the bug in the code. For anyone interested, the two methods in
+ question are TermParse::PtyReader() and _ReadParserBuffer() in
+ src/apps/terminal/TermParse.cpp.
+
+ &gt; One step I forgot though: after the debugger's output spontaneously
+ stops (it's obvious it's not actually done since the Debugger doesn't jump
+ into the state where it shows source and is ready to hit the Run button on
+ the initial thread), the cursor still blinks, ergo the window thread isn't
+ yet deadlocked. Typing a letter in the Terminal however does not echo back
+ and results in the deadlock situation seen above. Sorry I'd forgotten to
+ mention that earlier, though I doubt it makes much difference.
+
+ That's exactly what I guessed anyway. The main problem is PtyReader and
+ EscParse both blocking. The blocking of the window thread is just
+ collateral damage.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4343#comment:6">http://dev.haiku-os.org/ticket/4343#comment:6</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="020184.html">[Haiku-bugs] [Haiku] #4343: Debugger's console output frequently deadlocks Terminal
+</A></li>
+	<LI>Next message: <A HREF="020208.html">[Haiku-bugs] [Haiku] #4343: Debugger's console output frequently deadlocks Terminal
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20206">[ date ]</a>
+              <a href="thread.html#20206">[ thread ]</a>
+              <a href="subject.html#20206">[ subject ]</a>
+              <a href="author.html#20206">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

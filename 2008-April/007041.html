@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1988: PANIC: ASSERT FAILED (src/system/kernel/fs/vfs.cpp:747): oldRefCount &gt; 0
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231988%3A%20PANIC%3A%20ASSERT%20FAILED%0A%20%28src/system/kernel/fs/vfs.cpp%3A747%29%3A%20oldRefCount%20%3E%200&In-Reply-To=%3C049.deb738b9f092275ea2c384047c6c2e5a%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007040.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1988: PANIC: ASSERT FAILED (src/system/kernel/fs/vfs.cpp:747): oldRefCount &gt; 0</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231988%3A%20PANIC%3A%20ASSERT%20FAILED%0A%20%28src/system/kernel/fs/vfs.cpp%3A747%29%3A%20oldRefCount%20%3E%200&In-Reply-To=%3C049.deb738b9f092275ea2c384047c6c2e5a%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1988: PANIC: ASSERT FAILED (src/system/kernel/fs/vfs.cpp:747): oldRefCount &gt; 0">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Apr 30 23:32:28 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007040.html">[Haiku-bugs] [Haiku] #1959: nVidia Corporation NV11 [GeForce2 Go]: drawing problems after new splash screen
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7041">[ date ]</a>
+              <a href="thread.html#7041">[ thread ]</a>
+              <a href="subject.html#7041">[ subject ]</a>
+              <a href="author.html#7041">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1988: PANIC: ASSERT FAILED (src/system/kernel/fs/vfs.cpp:747): oldRefCount &gt; 0
+----------------------------+-----------------------------------------------
+  Reporter:  thorn          |       Owner:  axeld         
+      Type:  bug            |      Status:  new           
+  Priority:  normal         |   Milestone:  R1            
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |    Platform:  x86           
+----------------------------+-----------------------------------------------
+Comment (by scottmc):
+
+ I just had this happen as well, on r25137.  I was installing from one
+ volume to another, both volumes are 4GB and had plenty of room on them.
+ sc shows:
+ stack trace for thread 540 &quot;copy_engine&quot;
+     kernel stack: 0x92b7c000 to 0x92b80000
+       user stack: 0x70000000 to 0x70040000
+ frame             caller     &lt;image&gt;:function + offset
+ 92b7f9bc (+ 52) 8008a8ff  &lt;kernel&gt;:invoke_debugger_command + 0x00cf
+
+ This was on real hardware.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1988#comment:2">http://dev.haiku-os.org/ticket/1988#comment:2</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007040.html">[Haiku-bugs] [Haiku] #1959: nVidia Corporation NV11 [GeForce2 Go]: drawing problems after new splash screen
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7041">[ date ]</a>
+              <a href="thread.html#7041">[ thread ]</a>
+              <a href="subject.html#7041">[ subject ]</a>
+              <a href="author.html#7041">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

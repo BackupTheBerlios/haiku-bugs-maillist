@@ -1,0 +1,1388 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4316: app_server resource cleanup issues
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234316%3A%20app_server%20resource%20cleanup%20issues&In-Reply-To=%3C053.34454fbf68934bece09e2a57581badbd%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="020053.html">
+   <LINK REL="Next"  HREF="020118.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4316: app_server resource cleanup issues</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234316%3A%20app_server%20resource%20cleanup%20issues&In-Reply-To=%3C053.34454fbf68934bece09e2a57581badbd%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4316: app_server resource cleanup issues">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Aug 25 04:42:17 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="020053.html">[Haiku-bugs] [Haiku] #4316: app_server resource cleanup issues
+</A></li>
+        <LI>Next message: <A HREF="020118.html">[Haiku-bugs] [Haiku] #4316: app_server resource cleanup issues
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20114">[ date ]</a>
+              <a href="thread.html#20114">[ thread ]</a>
+              <a href="subject.html#20114">[ subject ]</a>
+              <a href="author.html#20114">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4316: app_server resource cleanup issues
+--------------------------------+-------------------------------------------
+ Reporter:  anevilyak           |       Owner:  axeld         
+     Type:  bug                 |      Status:  new           
+ Priority:  normal              |   Milestone:  R1            
+Component:  Servers/app_server  |     Version:  R1 development
+Blockedby:                      |    Platform:  All           
+ Blocking:                      |  
+--------------------------------+-------------------------------------------
+
+Comment(by anevilyak):
+
+ Managed to reproduce it again. Some observations:
+ 1) the Debugger window was still around (and Deskbar still thought the
+ Debugger team was still present even though it wasn't). The window however
+ was even still movable, despite no longer redrawing correctly.
+
+ 2) The test in question involves asking Tracker to launch a set of about
+ 12 MP3s and 3 jpegs quite often (as indicated by the instructions in the
+ ticket I was investigating that instigated this problem). This time, the
+ Media Player also spontaneously died, and all of its windows stayed in the
+ app_server too.
+
+ Went into the kernel debugger to examine state afterwards, see as follows:
+
+ {{{
+ 8393: DEBUGGER: we are doomed
+ debug_server: Thread 8393 entered the debugger: Debugger call: `we are
+ doomed'
+ stack trace, current PC 0xffff0114  :
+   (0x53ae29c)  0x5db83e  _ZN19_shared_buffer_list9AddBufferElP7BBuffer +
+ 0x60
+   (0x53ae2cc)  0x5b3cb5
+ _ZN12BBufferGroup9AddBufferERK17buffer_clone_infoPP7BBuffer + 0xc5
+   (0x53ae2fc)  0x5b3fcc  _ZN12BBufferGroupC1Emlmm + 0x104
+   (0x53ae35c)  0x240296
+ _ZN13AudioProducer16_AllocateBuffersEP12media_format + 0xc0
+   (0x53ae39c)  0x240c79
+ _ZN13AudioProducer7ConnectElRK12media_sourceRK17media_destinationRK12media_formatPc
+ + 0x2ed
+   (0x53ae43c)  0x5b49d8  _ZN15BBufferProducer13HandleMessageElPKvm + 0x2aa
+   (0x53aee6c)  0x5c0a10  _ZN10BMediaNode14WaitForMessageExmPv + 0x10a
+   (0x53b2eac)  0x5bbb86  _ZN17BMediaEventLooper11ControlLoopEv + 0x1f6
+   (0x53b2f9c)  0x5bb59f  _ZN17BMediaEventLooper19_ControlThreadStartEPv +
+ 0x27
+   (0x53b2fbc)  0x9d608d  thread_entry + 0x1a
+ debug_server: Killing team 6203 (/boot/system/apps/MediaPlayer)
+ debug_server: TeamDebugHandler::Init(): Failed to get info for team 6203:
+ Operation on invalid team
+ debug_server: KillTeam(): Error getting info for team 6203: Operation on
+ invalid team
+ debug_server: Killing team 6203 ()
+ bfs: bfs_create_index:2040: File or Directory already exists
+ Last message repeated 3 times.
+ vm_page_fault: vm_soft_fault returned error 'Bad address' on fault at 0x0,
+ ip 0x230e3e, write 0, user 1, thread 0x2220
+ vm_page_fault: thread &quot;MediaPlayer&quot; (8736) in team &quot;MediaPlayer&quot; (8736)
+ tried to read address 0x0, ip 0x230e3e (&quot;MediaPlayer_seg0ro&quot; +0x30e3e)
+ PANIC: Keyboard Requested Halt.
+ Welcome to Kernel Debugging Land...
+ Thread 2 &quot;idle thread 2&quot; running on CPU 0
+ kdebug&gt; teams
+ team           id  parent      name
+ 0x811b0990     62  0x811b0198  app_server
+ 0x811b0198      1  0x00000000  kernel_team
+ 0x8127a7f8   6047  0x811b0e58  Terminal
+ 0x8127a660     95  0x811b0198  Deskbar
+ 0x811b0330    128  0x8127a990  media_addon_server
+ 0x8127a990     97  0x811b0198  media_server
+ 0x8127ab28     98  0x811b0198  midi_server
+ 0x8127acc0   6051  0x8127a7f8  sh
+ 0x811b0e58    192  0x811b0198  Vision
+ 0x8127ae58    100  0x811b0198  print_server
+ 0x812c1198    102  0x811b0198  cddb_daemon
+ 0x812c1990   6092  0x8127a7f8  Terminal
+ 0x8127a000     78  0x811b07f8  sshd
+ 0x812c1cc0    763  0x811b0198  infopopper_server
+ 0x811b0b28     81  0x811b0198  syslog_daemon
+ 0x812c17f8   6096  0x812c1990  sh
+ 0x811b04c8     53  0x811b0198  registrar
+ 0x8127a4c8     85  0x811b0990  input_server
+ 0x811b0660     60  0x811b0198  debug_server
+ 0x811b07f8     61  0x811b0198  net_server
+
+ kdebug&gt; threads 62
+ thread         id  state     wait for   object  cpu pri  stack      team
+ name
+ 0x9d637000  11904  waiting   sem      26563658    -  15  0x9fe2c000   62
+ w:8736:Playlist
+ 0x9d5ae800  11625  waiting   sem      26558922    -  15  0x9f9e8000   62
+ w:8736:10 Amongst the Ruins.mp3
+ 0x9d58f800  11563  waiting   sem      26558186    -  15  0x9f8f0000   62
+ w:8736:Playlist
+ 0x9d570800  11501  waiting   sem      26557252    -  15  0x9f7f8000   62
+ w:8736:05 Fallen Icons.mp3
+ 0x901da800  11408  waiting   sem      26556270    -  15  0x9f684000   62
+ w:8736:01 Innocente.mp3
+ 0x90373000  11377  waiting   sem      26555716    -  15  0x9f608000   62
+ w:8736:08 Inner Sanctum.mp3
+ 0x9025a000  11315  waiting   sem      26554858    -  15  0x9f510000   62
+ w:8736:Playlist
+ 0x9d4a3800  11222  waiting   sem      26553985    -  15  0x9f39c000   62
+ w:8736:08 Inner Sanctum.mp3
+ 0x902d5000  11191  waiting   sem      26553457    -  15  0x9f320000   62
+ w:8736:04 Underwater.mp3
+ 0x9d450000  11005  waiting   sem      26548660    -  15  0x9f090000   62
+ w:8736:Playlist
+ 0x9039b800  10850  waiting   sem      26544327    -  15  0x9ee84000   62
+ w:8736:04 Underwater.mp3
+ 0x901f4000  10013  waiting   sem      26521299    -  15  0x9e800000   62
+ w:8736:Playlist
+ 0x902f7800   9982  waiting   sem      26516890    -  15  0x9e79c000   62
+ w:8736:01 Innocente.mp3
+ 0x901bb800   9951  waiting   sem      26521290    -  15  0x9e738000   62
+ w:8736:Playlist
+ 0x90249800   9920  waiting   sem      26516002    -  15  0x9e6d4000   62
+ w:8736:Playlist
+ 0x902d4800   9827  waiting   sem      26527061    -  15  0x9e5cc000   62
+ w:8736:Playlist
+ 0x9d431000   9176  waiting   sem      26528359    -  15  0x9d2b0000   62
+ w:8736:03 Daylight.mp3
+ 0x9d49d000   9083  waiting   sem      26487839    -  15  0x9d1ac000   62
+ w:8736:Playlist
+ 0x9d4f0000   9052  waiting   sem      26527843    -  15  0x9d140000   62
+ w:8736:02 Nature's Kingdom.mp3
+ 0x9d454000   8680  waiting   sem      26512846    -  15  0x999a6000   62
+ w:8664:offscreen
+ 0x90050000     62  waiting   sem           686    -  10  0x8022f000   62
+ picasso
+ 0x9d5f9800  11781  waiting   sem      26561711    -  15  0x9fc40000   62
+ w:8736:08 Inner Sanctum.mp3
+ 0x9d5da800  11719  waiting   sem      26560763    -  15  0x9fb48000   62
+ w:8736:Playlist
+ 0x9d580800  11533  waiting   sem      26557731    -  15  0x9f878000   62
+ w:8736:Playlist
+ 0x9d561800  11471  waiting   sem      26556924    -  15  0x9f780000   62
+ w:8736:06 Aria.mp3
+ 0x9d44e000  11285  waiting   sem      26554655    -  15  0x9f498000   62
+ w:8736:Playlist
+ 0x90358800  11068  waiting   sem      26550350    -  15  0x9f164000   62
+ w:8736:10 Amongst the Ruins.mp3
+ 0x9020d000  10665  waiting   sem      26540193    -  15  0x9ec20000   62
+ w:8736:07 Myth.mp3
+ 0x9d44c800  10603  waiting   sem      26537869    -  15  0x9eb50000   62
+ w:8736:11 Silence [Album Versio
+ 0x90201800  10045  waiting   sem      26526741    -  15  0x9e864000   62
+ w:8736:Playlist
+ 0x9024f800   9859  waiting   sem      26518576    -  15  0x9ddb0000   62
+ w:8736:Playlist
+ 0x901e8800   9611  waiting   sem      26533674    -  15  0x9e540000   62
+ w:8736:07 Myth.mp3
+ 0x90210000   9208  waiting   sem      26528967    -  15  0x9d240000   62
+ w:8736:Playlist
+ 0x9d46a800   9115  waiting   sem      26527678    -  15  0x9d1e0000   62
+ w:8736:01 Innocente.mp3
+ 0x901bb000   8681  waiting   sem      26512863    -  15  0x999c4000   62
+ w:8664:offscreen
+ 0x9d657000  11968  waiting   sem      26565071    -  15  0x9ff2c000   62
+ w:8736:10 Amongst the Ruins.mp3
+ 0x9d647800  11937  waiting   sem      26564185    -  15  0x9feb0000   62
+ w:8736:04 Underwater.mp3
+ 0x9d628800  11875  waiting   sem      26563020    -  15  0x9fdb8000   62
+ w:8736:Playlist
+ 0x9d609800  11813  waiting   sem      26562275    -  15  0x9fcc0000   62
+ w:8736:02 Nature's Kingdom.mp3
+ 0x9d5cb800  11689  waiting   sem      26560163    -  15  0x9fad0000   62
+ w:8736:Playlist
+ 0x9d5a0000  11596  waiting   sem      26558593    -  15  0x9f974000   62
+ w:8736:11 Silence [Album Versio
+ 0x9d571800  11503  waiting   sem      26557418    -  15  0x9f800000   62
+ w:8736:Playlist
+ 0x901ef800  11410  waiting   sem      26556196    -  15  0x9f68c000   62
+ w:8736:Playlist
+ 0x902c7800  11379  waiting   sem      26555956    -  15  0x9f610000   62
+ w:8736:Playlist
+ 0x902b8000  11255  waiting   sem      26554097    -  15  0x9f420000   62
+ w:8736:Playlist
+ 0x90233000  11193  waiting   sem      26553638    -  15  0x9f328000   62
+ w:8736:Playlist
+ 0x9d529800  10759  waiting   sem      26542409    -  15  0x9ed58000   62
+ w:8736:Playlist
+ 0x90200000   9891  waiting   sem      26528601    -  15  0x9e5e8000   62
+ w:8736:Playlist
+ 0x90266000   9798  waiting   sem      26536362    -  15  0x9e668000   62
+ w:8736:Playlist
+ 0x90230800   9767  waiting   sem      26535993    -  15  0x9e648000   62
+ w:8736:01 Innocente.mp3
+ 0x9d409000   9147  waiting   sem      26528190    -  15  0x9d278000   62
+ w:8736:Playlist
+ 0x90202000   8992  waiting   sem      26526758    -  15  0x9d04c000   62
+ w:8736:07 Myth.mp3
+ 0x902ba000   8961  waiting   sem      26525957    -  15  0x9cb80000   62
+ w:8736:Playlist
+ 0x90357800   8930  waiting   sem      26523473    -  15  0x9cb10000   62
+ w:8736:05 Fallen Icons.mp3
+ 0x9d494800   8837  waiting   sem      26516468    -  15  0x9cf34000   62
+ w:8736:10 Amongst the Ruins.mp3
+ 0x9d4ee800   8806  waiting   sem      26474798    -  15  0x9cbc8000   62
+ w:8736:Playlist
+ 0x9d638800  11907  waiting   sem      26563697    -  15  0x9fe38000   62
+ w:8736:01 Innocente.mp3
+ 0x9d619800  11845  waiting   sem      26562758    -  15  0x9fd40000   62
+ w:8736:Playlist
+ 0x9d5eb000  11752  waiting   sem      26561344    -  15  0x9fbcc000   62
+ w:8736:04 Underwater.mp3
+ 0x8199f800  11659  waiting   sem      26559407    -  15  0x9f224000   62
+ w:8736:Playlist
+ 0x9d591000  11566  waiting   sem      26558220    -  15  0x9f8fc000   62
+ w:8736:07 Myth.mp3
+ 0x9d562800  11473  waiting   sem      26557065    -  15  0x9f788000   62
+ w:8736:Playlist
+ 0x9d55b000  11442  waiting   sem      26556657    -  15  0x9f70c000   62
+ w:8736:Playlist
+ 0x90361000  11349  waiting   sem      26555550    -  15  0x9f598000   62
+ w:8736:03 Daylight.mp3
+ 0x9037d800  11318  waiting   sem      26555142    -  15  0x9f51c000   62
+ w:8736:08 Inner Sanctum.mp3
+ 0x90102000  11225  waiting   sem      26554012    -  15  0x9f3a8000   62
+ w:8736:Playlist
+ 0x9d495800  11163  waiting   sem      26553116    -  15  0x9f2b0000   62
+ w:8736:07 Myth.mp3
+ 0x9d448000  11132  waiting   sem      26552492    -  15  0x9f23c000   62
+ w:8736:Playlist
+ 0x9d428800  10946  waiting   sem      26546884    -  15  0x9efc4000   62
+ w:8736:03 Daylight.mp3
+ 0x9034d000  10884  waiting   sem      26545075    -  15  0x9eef4000   62
+ w:8736:Playlist
+ 0x9d457000  10822  waiting   sem      26543651    -  15  0x9ee24000   62
+ w:8736:Playlist
+ 0x901de000  10791  waiting   sem      26543055    -  15  0x9edc0000   62
+ w:8736:03 Daylight.mp3
+ 0x9d537800  10698  waiting   sem      26541377    -  15  0x9ec8c000   62
+ w:8736:08 Inner Sanctum.mp3
+ 0x901f8800  10636  waiting   sem      26538972    -  15  0x9ebbc000   62
+ w:8736:Playlist
+ 0x9d499000  10233  waiting   sem      26537231    -  15  0x9e8e8000   62
+ w:8736:07 Myth.mp3
+ 0x90298800   9582  waiting   sem      26533535    -  15  0x9e510000   62
+ w:8736:09 A Poem for Byzantium.
+ 0x901fc000   9458  waiting   sem      26531870    -  15  0x9df24000   62
+ w:8736:Playlist
+ 0x9d4db000   9334  waiting   sem      26530700    -  15  0x9dd24000   62
+ w:8736:09 A Poem for Byzantium.
+ 0x90281000   8683  waiting   sem      26512885    -  15  0x9b54a000   62
+ w:8664:offscreen
+ 0x900f4800    127  waiting   sem          1569    -  15  0x91183000   62
+ a:102:x-vnd.Haiku-cddb_daemon
+ 0x9d658000  11970  waiting   sem      26565117    -  15  0x9ff34000   62
+ w:8736:Playlist
+ 0x9d60a800  11815  waiting   sem      26562314    -  15  0x9fcc8000   62
+ w:8736:Playlist
+ 0x9d5fb000  11784  waiting   sem      26561826    -  15  0x9fc4c000   62
+ w:8736:Playlist
+ 0x9d5dc800  11722  waiting   sem      26560789    -  15  0x9fb54000   62
+ w:8736:04 Underwater.mp3
+ 0x9d5b0800  11629  waiting   sem      26558830    -  15  0x9f9f8000   62
+ w:8736:Playlist
+ 0x90228800  11288  waiting   sem      26554763    -  15  0x9f4a4000   62
+ w:8736:07 Myth.mp3
+ 0x9d437800  10978  waiting   sem      26547838    -  15  0x9f02c000   62
+ w:8736:Playlist
+ 0x902a8000  10544  waiting   sem      26531583    -  15  0x9dd5b000   62
+ w:8736:06 Aria.mp3
+ 0x90377000  10141  waiting   sem      26515823    -  15  0x9e928000   62
+ w:8736:Playlist
+ 0x9025b800  10048  waiting   sem      26475499    -  15  0x9e874000   62
+ w:8736:03 Daylight.mp3
+ 0x9027b800  10017  waiting   sem      26521666    -  15  0x9e810000   62
+ w:8736:11 Silence [Album Versio
+ 0x90158800   9862  waiting   sem      26517783    -  15  0x9ddf4000   62
+ w:8736:08 Inner Sanctum.mp3
+ 0x901c0000   9180  waiting   sem      26527317    -  15  0x9d2c0000   62
+ w:8736:Playlist
+ 0x9021e800   9056  waiting   sem      26521457    -  15  0x9d148000   62
+ w:8736:Playlist
+ 0x90281800   8932  waiting   sem      26503803    -  15  0x9cb18000   62
+ w:8736:Playlist
+ 0x9d447000   8684  waiting   sem      26512902    -  15  0x9b5b0000   62
+ w:8664:offscreen
+ 0x902ec800   6049  waiting   sem      26457840    -  15  0x911f9000   62
+ a:6047:x-vnd.Haiku-Terminal
+ 0x9d649000  11940  waiting   sem      26564291    -  15  0x9febc000   62
+ w:8736:Playlist
+ 0x9d62a000  11878  waiting   sem      26563282    -  15  0x9fdc4000   62
+ w:8736:06 Aria.mp3
+ 0x9d5cd000  11692  waiting   sem      26560116    -  15  0x9fadc000   62
+ w:8736:08 Inner Sanctum.mp3
+ 0x9d5a1800  11599  waiting   sem      26558618    -  15  0x9f980000   62
+ w:8736:Playlist
+ 0x9d592000  11568  waiting   sem      26558269    -  15  0x9f904000   62
+ w:8736:Playlist
+ 0x9d582800  11537  waiting   sem      26557786    -  15  0x9f888000   62
+ w:8736:11 Silence [Album Versio
+ 0x9d573000  11506  waiting   sem      26557469    -  15  0x9f80c000   62
+ w:8736:08 Inner Sanctum.mp3
+ 0x901f0000  11413  waiting   sem      26556298    -  15  0x9f698000   62
+ w:8736:03 Daylight.mp3
+ 0x90315000  11351  waiting   sem      26555632    -  15  0x9f5a0000   62
+ w:8736:Playlist
+ 0x901fb000  11258  waiting   sem      26554288    -  15  0x9f42c000   62
+ w:8736:06 Aria.mp3
+ 0x9d473800  11165  waiting   sem      26553314    -  15  0x9f2b8000   62
+ w:8736:Playlist
+ 0x9035f800  11103  waiting   sem      26551709    -  15  0x9f1d8000   62
+ w:8736:Playlist
+ 0x90381800  10917  waiting   sem      26546003    -  15  0x9ef60000   62
+ w:8736:Playlist
+ 0x9d4c9000  10731  waiting   sem      26541876    -  15  0x9ecf8000   62
+ w:8736:Playlist
+ 0x90341000   9801  waiting   sem      26536547    -  15  0x9dfd4000   62
+ w:8736:02 Nature's Kingdom.mp3
+ 0x9d4ff800   9522  waiting   sem      26532640    -  15  0x9dfb0000   62
+ w:8736:11 Silence [Album Versio
+ 0x90295800   9274  waiting   sem      26529685    -  15  0x9d370000   62
+ w:8736:Playlist
+ 0x901f7000   8964  waiting   sem      26517789    -  15  0x9cf14000   62
+ w:8736:09 A Poem for Byzantium.
+ 0x90263000   6050  waiting   sem      26457855    -  15  0x9120d000   62
+ w:6047:Terminal 1
+ 0x900ef000    129  waiting   sem          1587    -  15  0x911b1000   62
+ w:95:Twitcher
+ 0x9d63a000  11910  waiting   sem      26563755    -  15  0x9fe44000   62
+ w:8736:Playlist
+ 0x9d61b000  11848  waiting   sem      26562784    -  15  0x9fd4c000   62
+ w:8736:08 Inner Sanctum.mp3
+ 0x9d5ec800  11755  waiting   sem      26561396    -  15  0x9fbd8000   62
+ w:8736:Playlist
+ 0x9d5be000  11662  waiting   sem      26559450    -  15  0x9fa64000   62
+ w:8736:01 Innocente.mp3
+ 0x9d48d800  11383  waiting   sem      26556002    -  15  0x9f620000   62
+ w:8736:06 Aria.mp3
+ 0x90248800  11321  waiting   sem      26554909    -  15  0x9f528000   62
+ w:8736:Playlist
+ 0x9d470800  11228  waiting   sem      26554062    -  15  0x9f3b4000   62
+ w:8736:10 Amongst the Ruins.mp3
+ 0x90372000  11197  waiting   sem      26553674    -  15  0x9f338000   62
+ w:8736:01 Innocente.mp3
+ 0x9d472000  11135  waiting   sem      26552118    -  15  0x9f248000   62
+ w:8736:03 Daylight.mp3
+ 0x9d424000  11011  waiting   sem      26548704    -  15  0x9f0a0000   62
+ w:8736:04 Underwater.mp3
+ 0x9d4d4800  10825  waiting   sem      26543702    -  15  0x9ee30000   62
+ w:8736:08 Inner Sanctum.mp3
+ 0x9d521000  10701  waiting   sem      26541461    -  15  0x9ec98000   62
+ w:8736:Playlist
+ 0x9034d800   9988  waiting   sem      26517953    -  15  0x9e7b4000   62
+ w:8736:Playlist
+ 0x9d4e3800   9771  waiting   sem      26536089    -  15  0x9e658000   62
+ w:8736:Playlist
+ 0x90135000   9461  waiting   sem      26531764    -  15  0x9df3c000   62
+ w:8736:05 Fallen Icons.mp3
+ 0x9031e800   8903  waiting   sem      26507354    -  15  0x9cfc4000   62
+ w:8736:01 Innocente.mp3
+ 0x9d4eb000   8810  waiting   sem      26474950    -  15  0x9cbd4000   62
+ w:8736:08 Inner Sanctum.mp3
+ 0x9d446000   8686  waiting   sem      26512922    -  15  0x9b5c4000   62
+ w:8664:offscreen
+ 0x900ec800    130  waiting   sem          1600    -  15  0x911b5000   62
+ w:95:offscreen
+ 0x9d659800  11973  waiting   sem      26565140    -  15  0x9ff40000   62
+ w:8736:02 Nature's Kingdom.mp3
+ 0x9d62b000  11880  waiting   sem      26563321    -  15  0x9fdcc000   62
+ w:8736:Playlist
+ 0x9d60c000  11818  waiting   sem      26562359    -  15  0x9fcd4000   62
+ w:8736:11 Silence [Album Versio
+ 0x9d5fc800  11787  waiting   sem      26561934    -  15  0x9fc58000   62
+ w:8736:11 Silence [Album Versio
+ 0x9d5dd800  11725  waiting   sem      26560829    -  15  0x9fb60000   62
+ w:8736:Playlist
+ 0x9d5b2000  11632  waiting   sem      26558796    -  15  0x9fa04000   62
+ w:8736:06 Aria.mp3
+ 0x9d583800  11539  waiting   sem      26557630    -  15  0x9f890000   62
+ w:8736:Playlist
+ 0x9d564800  11477  waiting   sem      26557094    -  15  0x9f798000   62
+ w:8736:03 Daylight.mp3
+ 0x9d55d000  11446  waiting   sem      26556732    -  15  0x9f71c000   62
+ w:8736:04 Underwater.mp3
+ 0x902f7000  11291  waiting   sem      26554880    -  15  0x9f4b0000   62
+ w:8736:Playlist
+ 0x90226000  11260  waiting   sem      26554464    -  15  0x9f434000   62
+ w:8736:Playlist
+ 0x9d439000  10981  waiting   sem      26547881    -  15  0x9f038000   62
+ w:8736:09 A Poem for Byzantium.
+ 0x9d49c800  10516  waiting   sem      26531345    -  15  0x9e954000   62
+ w:8736:Playlist
+ 0x90268000  10175  waiting   sem      26522900    -  15  0x9e88c000   62
+ w:8736:10 Amongst the Ruins.mp3
+ 0x90368800   9896  waiting   sem      26525598    -  15  0x9e608000   62
+ w:8736:03 Daylight.mp3
+ 0x90317000   9803  waiting   sem      26536680    -  15  0x9e680000   62
+ w:8736:Playlist
+ 0x9d4d2000   9338  waiting   sem      26530743    -  15  0x9d2f8000   62
+ w:8736:Playlist
+ 0x9d520800   9307  waiting   sem      26530428    -  15  0x9d3ac000   62
+ w:8736:02 Nature's Kingdom.mp3
+ 0x90290800   8997  waiting   sem      26518792    -  15  0x9d060000   62
+ w:8736:Playlist
+ 0x90285000   8966  waiting   sem      26526347    -  15  0x9cf64000   62
+ w:8736:Playlist
+ 0x902e3800   8687  waiting   sem      26512939    -  15  0x9b5c8000   62
+ w:8664:offscreen
+ 0x90077000     69  waiting   sem           691    -  10  0x80760000   62
+ Font Manager
+ 0x9d64a800  11943  waiting   sem      26564305    -  15  0x9fec8000   62
+ w:8736:06 Aria.mp3
+ 0x9d5a3000  11602  waiting   sem      26548267    -  15  0x9f98c000   62
+ w:8736:11 Silence [Album Versio
+ 0x9d594000  11571  waiting   sem      26558291    -  15  0x9f910000   62
+ w:8736:03 Daylight.mp3
+ 0x9d574800  11509  waiting   sem      26557428    -  15  0x9f818000   62
+ w:8736:Playlist
+ 0x901ea800  11416  waiting   sem      26556380    -  15  0x9f6a4000   62
+ w:8736:Playlist
+ 0x902f8000  11354  waiting   sem      26555649    -  15  0x9f5ac000   62
+ w:8736:01 Innocente.mp3
+ 0x9d45d800  11168  waiting   sem      26553359    -  15  0x9f2c4000   62
+ w:8736:05 Fallen Icons.mp3
+ 0x901f6000  11044  waiting   sem      26549541    -  15  0x9f114000   62
+ w:8736:Playlist
+ 0x90364800  10889  waiting   sem      26545220    -  15  0x9ef00000   62
+ w:8736:05 Fallen Icons.mp3
+ 0x901e7000  10858  waiting   sem      26544281    -  15  0x9ee9c000   62
+ w:8736:Playlist
+ 0x90222000  10672  waiting   sem      26540377    -  15  0x9ec34000   62
+ w:8736:Playlist
+ 0x90398000  10641  waiting   sem      26539648    -  15  0x9ebd0000   62
+ w:8736:02 Nature's Kingdom.mp3
+ 0x901e9000   9928  waiting   sem      26516831    -  15  0x9e6f4000   62
+ w:8736:05 Fallen Icons.mp3
+ 0x90389800   9463  waiting   sem      26531786    -  15  0x9d3ec000   62
+ w:8736:Playlist
+ 0x90150000   9246  waiting   sem      26529345    -  15  0x9d2f4000   62
+ w:8736:05 Fallen Icons.mp3
+ 0x9d52d800   8874  waiting   sem      26524075    -  15  0x9cb0c000   62
+ w:8736:04 Underwater.mp3
+ 0x9d482800   8843  waiting   sem      26517739    -  15  0x9cf4c000   62
+ w:8736:Playlist
+ 0x90257800   8812  waiting   sem      26515834    -  15  0x9cb84000   62
+ w:8736:Playlist
+ 0x902db800   8781  waiting   sem      26562577    -  15  0x9cb50000   62
+ a:8736:x-vnd.Haiku-MediaPlayer
+ 0x900de000    194  waiting   sem          2419    -  15  0x9117f000   62
+ a:192:x-vnd.Ink-Vision
+ 0x9d61c800  11851  waiting   sem      26562837    -  15  0x9fd58000   62
+ w:8736:Playlist
+ 0x9d5ee000  11758  waiting   sem      26561433    -  15  0x9fbe4000   62
+ w:8736:03 Daylight.mp3
+ 0x9d5bf800  11665  waiting   sem      26559491    -  15  0x9fa70000   62
+ w:8736:Playlist
+ 0x9d565800  11479  waiting   sem      26557075    -  15  0x9f7a0000   62
+ w:8736:Playlist
+ 0x901ff000  11231  waiting   sem      26553748    -  15  0x9f3c0000   62
+ w:8736:Playlist
+ 0x9d466000  11138  waiting   sem      26552611    -  15  0x9f254000   62
+ w:8736:Playlist
+ 0x9d4fa800  11107  waiting   sem      26551752    -  15  0x9f1e8000   62
+ w:8736:02 Nature's Kingdom.mp3
+ 0x9036c000  11076  waiting   sem      26550689    -  15  0x9f184000   62
+ w:8736:Playlist
+ 0x9d486000  11014  waiting   sem      26548851    -  15  0x9f0ac000   62
+ w:8736:Playlist
+ 0x9038f800  10766  waiting   sem      26542453    -  15  0x9ed6c000   62
+ w:8736:01 Innocente.mp3
+ 0x9d4d8800  10611  waiting   sem      26538705    -  15  0x9eb68000   62
+ w:8736:Playlist
+ 0x9d51e800  10580  waiting   sem      26537539    -  15  0x9eb04000   62
+ w:8736:Playlist
+ 0x9d532800  10363  waiting   sem      26540491    -  15  0x9e978000   62
+ w:8736:Playlist
+ 0x9022a800  10208  waiting   sem      26517067    -  15  0x9e8f8000   62
+ w:8736:Playlist
+ 0x9d65b000  11976  waiting   sem      26564619    -  15  0x9ff4c000   62
+ w:8736:Playlist
+ 0x9d63c000  11914  waiting   sem      26563797    -  15  0x9fe54000   62
+ w:8736:02 Nature's Kingdom.mp3
+ 0x9d62c800  11883  waiting   sem      26563347    -  15  0x9fdd8000   62
+ w:8736:07 Myth.mp3
+ 0x9d60d800  11821  waiting   sem      26562424    -  15  0x9fce0000   62
+ w:8736:Playlist
+ 0x9d5b3800  11635  waiting   sem      26559086    -  15  0x9fa10000   62
+ w:8736:Playlist
+ 0x9d5a4000  11604  waiting   sem      26558737    -  15  0x9f994000   62
+ w:8736:Playlist
+ 0x9d585000  11542  waiting   sem      26557927    -  15  0x9f89c000   62
+ w:8736:01 Innocente.mp3
+ 0x9d55e800  11449  waiting   sem      26556722    -  15  0x9f728000   62
+ w:8736:Playlist
+ 0x90379800  11387  waiting   sem      26555888    -  15  0x9f630000   62
+ w:8736:Playlist
+ 0x9d520000  11325  waiting   sem      26555353    -  15  0x9f538000   62
+ w:8736:09 A Poem for Byzantium.
+ 0x90302000  11294  waiting   sem      26553762    -  15  0x9f4bc000   62
+ w:8736:03 Daylight.mp3
+ 0x902de800  11201  waiting   sem      26553692    -  15  0x9f348000   62
+ w:8736:Playlist
+ 0x9d464800  11170  waiting   sem      26553397    -  15  0x9f2cc000   62
+ w:8736:Playlist
+ 0x9d439800  10953  waiting   sem      26547180    -  15  0x9efd8000   62
+ w:8736:Playlist
+ 0x9d42a000  10922  waiting   sem      26546046    -  15  0x9ef74000   62
+ w:8736:07 Myth.mp3
+ 0x9d452800  10798  waiting   sem      26543278    -  15  0x9edd4000   62
+ w:8736:Playlist
+ 0x9037f000  10736  waiting   sem      26541920    -  15  0x9ed0c000   62
+ w:8736:05 Fallen Icons.mp3
+ 0x902c4800  10550  waiting   sem      26534156    -  15  0x9e8d8000   62
+ w:8736:Playlist
+ 0x90270000  10457  waiting   sem      26521960    -  15  0x9e940000   62
+ w:8736:05 Fallen Icons.mp3
+ 0x9038c000   9806  waiting   sem      26536705    -  15  0x9e68c000   62
+ w:8736:09 A Poem for Byzantium.
+ 0x9d4e4000   9062  waiting   sem      26519618    -  15  0x9d160000   62
+ w:8736:04 Underwater.mp3
+ 0x9d528800   9031  waiting   sem      26524898    -  15  0x9d0ec000   62
+ w:8736:Playlist
+ 0x901f5000   9000  waiting   sem      26526897    -  15  0x9d06c000   62
+ w:8736:01 Innocente.mp3
+ 0x90356000   8969  waiting   sem      26524647    -  15  0x9cb00000   62
+ w:8736:06 Aria.mp3
+ 0x9021c000   8907  waiting   sem      26475091    -  15  0x9cb3c000   62
+ w:8736:Playlist
+ 0x9021d000   8876  waiting   sem      26522139    -  15  0x9cf80000   62
+ w:8736:Playlist
+ 0x90381000   8783  waiting   sem      26519041    -  15  0x9cb30000   62
+ w:8736:01 Innocente.mp3
+ 0x9012c000    196  waiting   sem          2447    -  15  0x91270000   62
+ w:192:#faltercon - Vision
+ 0x900f7000    134  waiting   sem          1680    -  15  0x911c1000   62
+ a:128:x-vnd.Be.addon-host
+ 0x9d64c000  11946  waiting   sem      26564415    -  15  0x9fed4000   62
+ w:8736:Playlist
+ 0x9d5fe800  11791  waiting   sem      26561988    -  15  0x9fc68000   62
+ w:8736:Playlist
+ 0x9d5df800  11729  waiting   sem      26560879    -  15  0x9fb70000   62
+ w:8736:10 Amongst the Ruins.mp3
+ 0x9d5d0000  11698  waiting   sem      26560345    -  15  0x9faf4000   62
+ w:8736:03 Daylight.mp3
+ 0x9d576800  11512  waiting   sem      26557517    -  15  0x9f824000   62
+ w:8736:06 Aria.mp3
+ 0x9d54b000  11419  waiting   sem      26556253    -  15  0x9f6b0000   62
+ w:8736:09 A Poem for Byzantium.
+ 0x90309800  11357  waiting   sem      26555598    -  15  0x9f5b8000   62
+ w:8736:Playlist
+ 0x90102800  11047  waiting   sem      26549582    -  15  0x9f120000   62
+ w:8736:03 Daylight.mp3
+ 0x9d43c000  10985  waiting   sem      26548056    -  15  0x9f048000   62
+ w:8736:Playlist
+ 0x90305000  10861  waiting   sem      26544373    -  15  0x9eea8000   62
+ w:8736:09 A Poem for Byzantium.
+ 0x902a5800  10706  waiting   sem      26541491    -  15  0x9ecac000   62
+ w:8736:10 Amongst the Ruins.mp3
+ 0x9d4da000  10675  waiting   sem      26540342    -  15  0x9ec40000   62
+ w:8736:04 Underwater.mp3
+ 0x9d4f7800  10303  waiting   sem      26528896    -  15  0x9e8ac000   62
+ w:8736:04 Underwater.mp3
+ 0x9025c000   9962  waiting   sem      26528802    -  15  0x9e75c000   62
+ w:8736:02 Nature's Kingdom.mp3
+ 0x90266800   9869  waiting   sem      26534225    -  15  0x9dfc8000   62
+ w:8736:Playlist
+ 0x903a6800   9466  waiting   sem      26531960    -  15  0x9df18000   62
+ w:8736:11 Silence [Album Versio
+ 0x9011f000   9404  waiting   sem      26522794    -  15  0x9d354000   62
+ w:8736:07 Myth.mp3
+ 0x90330800   9280  waiting   sem      26529745    -  15  0x9d394000   62
+ w:8736:11 Silence [Album Versio
+ 0x90206000   9249  waiting   sem      26480089    -  15  0x9d338000   62
+ w:8736:Playlist
+ 0x9d4e5000   8815  waiting   sem      26522740    -  15  0x9cbe4000   62
+ w:8736:09 A Poem for Byzantium.
+ 0x9d61e000  11854  waiting   sem      26562884    -  15  0x9fd64000   62
+ w:8736:06 Aria.mp3
+ 0x9d5ef800  11761  waiting   sem      26561464    -  15  0x9fbf0000   62
+ w:8736:Playlist
+ 0x9d595800  11575  waiting   sem      26558058    -  15  0x9f920000   62
+ w:8736:Playlist
+ 0x9d586000  11544  waiting   sem      26557879    -  15  0x9f8a4000   62
+ w:8736:Playlist
+ 0x9d418000  11327  waiting   sem      26554997    -  15  0x9f540000   62
+ w:8736:Playlist
+ 0x902be800  11265  waiting   sem      26554534    -  15  0x9f448000   62
+ w:8736:02 Nature's Kingdom.mp3
+ 0x901be000  11234  waiting   sem      26554143    -  15  0x9f3cc000   62
+ w:8736:07 Myth.mp3
+ 0x90219800  11017  waiting   sem      26548881    -  15  0x9f0b8000   62
+ w:8736:04 Underwater.mp3
+ 0x902f4000   9994  waiting   sem      26518390    -  15  0x9e7cc000   62
+ w:8736:02 Nature's Kingdom.mp3
+ 0x902ab000   9808  waiting   sem      26536757    -  15  0x9d28c000   62
+ w:8736:Playlist
+ 0x9d52f000   9002  waiting   sem      26524940    -  15  0x9d074000   62
+ w:8736:Playlist
+ 0x9023f000   5654  waiting   sem      26414616    -  15  0x9114b000   62
+ w:85:Team Monitor
+ 0x9d65c800  11979  waiting   sem      26565196    -  15  0x9ff58000   62
+ w:8736:09 A Poem for Byzantium.
+ 0x9d63d800  11917  waiting   sem      26563891    -  15  0x9fe60000   62
+ w:8736:Playlist
+ 0x9d60f000  11824  waiting   sem      26562452    -  15  0x9fcec000   62
+ w:8736:08 Inner Sanctum.mp3
+ 0x9d5e0800  11731  waiting   sem      26560917    -  15  0x9fb78000   62
+ w:8736:Playlist
+ 0x9d5d1000  11700  waiting   sem      26560363    -  15  0x9fafc000   62
+ w:8736:Playlist
+ 0x9d5c1800  11669  waiting   sem      26559531    -  15  0x9fa80000   62
+ w:8736:02 Nature's Kingdom.mp3
+ 0x9d5b5000  11638  waiting   sem      26559057    -  15  0x9fa1c000   62
+ w:8736:07 Myth.mp3
+ 0x9d567800  11483  waiting   sem      26557191    -  15  0x9f7b0000   62
+ w:8736:04 Underwater.mp3
+ 0x9d560000  11452  waiting   sem      26556810    -  15  0x9f734000   62
+ w:8736:02 Nature's Kingdom.mp3
+ 0x9d4b7800  11390  waiting   sem      26556056    -  15  0x9f63c000   62
+ w:8736:09 A Poem for Byzantium.
+ 0x9039c800  11297  waiting   sem      26554681    -  15  0x9f4c8000   62
+ w:8736:Playlist
+ 0x9d462000  11204  waiting   sem      26553771    -  15  0x9f354000   62
+ w:8736:10 Amongst the Ruins.mp3
+ 0x90243000  10894  waiting   sem      26545414    -  15  0x9ef14000   62
+ w:8736:Playlist
+ 0x902a1800  10801  waiting   sem      26543219    -  15  0x9ede0000   62
+ w:8736:10 Amongst the Ruins.mp3
+ 0x9d44a000  10615  waiting   sem      26538777    -  15  0x9eb78000   62
+ w:8736:09 A Poem for Byzantium.
+ 0x900d6000  10274  waiting   sem      26529018    -  15  0x9e98c000   62
+ w:8736:Playlist
+ 0x9d4ca000   9499  waiting   sem      26532344    -  15  0x9df70000   62
+ w:8736:Playlist
+ 0x9d4c5000   9344  waiting   sem      26531154    -  15  0x9d294000   62
+ w:8736:03 Daylight.mp3
+ 0x90293800   9313  waiting   sem      26530538    -  15  0x9d3a8000   62
+ w:8736:Playlist
+ 0x90371000   9282  waiting   sem      26529977    -  15  0x9d39c000   62
+ w:8736:Playlist
+ 0x9034c800   9189  waiting   sem      26528655    -  15  0x9d1f0000   62
+ w:8736:04 Underwater.mp3
+ 0x9d535000   8910  waiting   sem      26525035    -  15  0x9cb44000   62
+ w:8736:03 Daylight.mp3
+ 0x900e0800    106  waiting   sem          1140    -  90  0x91153000   62
+ event loop
+ 0x9d64d800  11949  waiting   sem      26564450    -  15  0x9fee0000   62
+ w:8736:05 Fallen Icons.mp3
+ 0x9d62e800  11887  waiting   sem      26563417    -  15  0x9fde8000   62
+ w:8736:Playlist
+ 0x9d61f000  11856  waiting   sem      26562921    -  15  0x9fd6c000   62
+ w:8736:Playlist
+ 0x9d600800  11794  waiting   sem      26562018    -  15  0x9fc74000   62
+ w:8736:09 A Poem for Byzantium.
+ 0x9d5a6000  11608  waiting   sem      26558752    -  15  0x9f9a4000   62
+ w:8736:10 Amongst the Ruins.mp3
+ 0x9d577800  11515  waiting   sem      26557604    -  15  0x9f830000   62
+ w:8736:Playlist
+ 0x90251800  11267  waiting   sem      26554546    -  15  0x9f450000   62
+ w:8736:Playlist
+ 0x902cc800  11019  waiting   sem      26548919    -  15  0x9f0c0000   62
+ w:8736:Playlist
+ 0x900b1800  10585  waiting   sem      26537602    -  15  0x9eb10000   62
+ w:8736:08 Inner Sanctum.mp3
+ 0x9d4b1000   9686  waiting   sem      26534767    -  15  0x9e5b0000   62
+ w:8736:Playlist
+ 0x9d426800   9562  waiting   sem      26533151    -  15  0x9dff4000   62
+ w:8736:10 Amongst the Ruins.mp3
+ 0x9d47b800   9035  waiting   sem      26527507    -  15  0x9d0fc000   62
+ w:8736:09 A Poem for Byzantium.
+ 0x9011a000   8880  waiting   sem      26523956    -  15  0x9cb08000   62
+ w:8736:02 Nature's Kingdom.mp3
+ 0x9d4d6800   8818  waiting   sem      26482735    -  15  0x9cbf0000   62
+ w:8736:Playlist
+ 0x9004d000    107  waiting   sem          1139    -  95  0x91157000   62
+ cursor loop
+ 0x9d610000  11826  waiting   sem      26562488    -  15  0x9fcf4000   62
+ w:8736:Playlist
+ 0x9d5f1000  11764  waiting   sem      26561500    -  15  0x9fbfc000   62
+ w:8736:05 Fallen Icons.mp3
+ 0x9d5c2800  11671  waiting   sem      26559563    -  15  0x9fa88000   62
+ w:8736:Playlist
+ 0x9d5b6000  11640  waiting   sem      26559160    -  15  0x9fa24000   62
+ w:8736:Playlist
+ 0x9d597800  11578  waiting   sem      26558403    -  15  0x9f92c000   62
+ w:8736:08 Inner Sanctum.mp3
+ 0x9d588000  11547  waiting   sem      26557939    -  15  0x9f8b0000   62
+ w:8736:02 Nature's Kingdom.mp3
+ 0x9d568800  11485  waiting   sem      26557184    -  15  0x9f7b8000   62
+ w:8736:Playlist
+ 0x9d550000  11423  waiting   sem      26556471    -  15  0x9f6c0000   62
+ w:8736:Playlist
+ 0x9d413800  11361  waiting   sem      26555726    -  15  0x9f5c8000   62
+ w:8736:05 Fallen Icons.mp3
+ 0x9d4ad800  11330  waiting   sem      26555334    -  15  0x9f54c000   62
+ w:8736:10 Amongst the Ruins.mp3
+ 0x902f0800  11237  waiting   sem      26554188    -  15  0x9f3d8000   62
+ w:8736:Playlist
+ 0x9031d800  11206  waiting   sem      26553793    -  15  0x9f35c000   62
+ w:8736:Playlist
+ 0x9d416800  11175  waiting   sem      26553415    -  15  0x9f2e0000   62
+ w:8736:08 Inner Sanctum.mp3
+ 0x9d4f4800  11144  waiting   sem      26552929    -  15  0x9f264000   62
+ w:8736:09 A Poem for Byzantium.
+ 0x9036f800  11082  waiting   sem      26550766    -  15  0x9f194000   62
+ w:8736:02 Nature's Kingdom.mp3
+ 0x90233800  10834  waiting   sem      26543685    -  15  0x9ee4c000   62
+ w:8736:Playlist
+ 0x90380000  10648  waiting   sem      26539870    -  15  0x9ebe4000   62
+ w:8736:Playlist
+ 0x9036b000  10431  waiting   sem      26521330    -  15  0x9e95c000   62
+ w:8736:Playlist
+ 0x90320000   9904  waiting   sem      26515025    -  15  0x9e6a4000   62
+ w:8736:Playlist
+ 0x9d4fe800   9656  waiting   sem      26534262    -  15  0x9dd4f000   62
+ w:8736:08 Inner Sanctum.mp3
+ 0x9d512000   8912  waiting   sem      26502280    -  15  0x9cb34000   62
+ w:8736:Playlist
+ 0x9014d800   8788  waiting   sem      26519711    -  15  0x9cb8c000   62
+ w:8736:Playlist
+ 0x9d63f000  11920  waiting   sem      26563924    -  15  0x9fe6c000   62
+ w:8736:03 Daylight.mp3
+ 0x9d5e2000  11734  waiting   sem      26560943    -  15  0x9fb84000   62
+ w:8736:09 A Poem for Byzantium.
+ 0x9d5d2800  11703  waiting   sem      26560455    -  15  0x9fb08000   62
+ w:8736:07 Myth.mp3
+ 0x9d551800  11455  waiting   sem      26556876    -  15  0x9f740000   62
+ w:8736:Playlist
+ 0x90237000  11300  waiting   sem      26555039    -  15  0x9f4d4000   62
+ w:8736:01 Innocente.mp3
+ 0x90390800  10556  waiting   sem      26534366    -  15  0x9e958000   62
+ w:8736:05 Fallen Icons.mp3
+ 0x902e0800   9874  waiting   sem      26531164    -  15  0x9dfdc000   62
+ w:8736:10 Amongst the Ruins.mp3
+ 0x90365800   9254  waiting   sem      26529348    -  15  0x9d324000   62
+ w:8736:08 Inner Sanctum.mp3
+ 0x901bc800   9192  waiting   sem      26528023    -  15  0x9d220000   62
+ w:8736:Playlist
+ 0x9d4d3800   8975  waiting   sem      26526534    -  15  0x9cf58000   62
+ w:8736:Playlist
+ 0x9d64f000  11952  waiting   sem      26564497    -  15  0x9feec000   62
+ w:8736:Playlist
+ 0x9d620800  11859  waiting   sem      26562951    -  15  0x9fd78000   62
+ w:8736:10 Amongst the Ruins.mp3
+ 0x9d601800  11797  waiting   sem      26561897    -  15  0x9fc80000   62
+ w:8736:Playlist
+ 0x9d5f2000  11766  waiting   sem      26561533    -  15  0x9fc04000   62
+ w:8736:Playlist
+ 0x9d5a7800  11611  waiting   sem      26558783    -  15  0x9f9b0000   62
+ w:8736:Playlist
+ 0x9d579800  11518  waiting   sem      26557650    -  15  0x9f83c000   62
+ w:8736:10 Amongst the Ruins.mp3
+ 0x901b3000  11363  waiting   sem      26555776    -  15  0x9f5d0000   62
+ w:8736:Playlist
+ 0x9d416000  11177  waiting   sem      26553451    -  15  0x9f2e8000   62
+ w:8736:Playlist
+ 0x9d421000  10960  waiting   sem      26547237    -  15  0x9eff4000   62
+ w:8736:09 A Poem for Byzantium.
+ 0x9d413000  10929  waiting   sem      26546449    -  15  0x9ef88000   62
+ w:8736:Playlist
+ 0x9d41b800  10898  waiting   sem      26545432    -  15  0x9ef24000   62
+ w:8736:06 Aria.mp3
+ 0x9d4f3800  10774  waiting   sem      26542753    -  15  0x9ed84000   62
+ w:8736:Playlist
+ 0x9021c800   9999  waiting   sem      26519221    -  15  0x9e7e0000   62
+ w:8736:Playlist
+ 0x90201000   9844  waiting   sem      26523398    -  15  0x9d2a8000   62
+ w:8736:06 Aria.mp3
+ 0x9016b000   9503  waiting   sem      26532410    -  15  0x9d2dc000   62
+ w:8736:06 Aria.mp3
+ 0x9031d000   9224  waiting   sem      26529026    -  15  0x9d314000   62
+ w:8736:06 Aria.mp3
+ 0x9d4d1800   9069  waiting   sem      26480796    -  15  0x9d17c000   62
+ w:8736:Playlist
+ 0x9d486800   9038  waiting   sem      26527428    -  15  0x9d108000   62
+ w:8736:Playlist
+ 0x9030c000   8821  waiting   sem      26521775    -  15  0x9cbfc000   62
+ w:8736:11 Silence [Album Versio
+ 0x9d455800   8666  receive                        -  15  0x91243000   62
+ a:8664:x-vnd.Haiku-Debugger
+ 0x9d640000  11922  waiting   sem      26562420    -  15  0x9fe74000   62
+ w:8736:Playlist
+ 0x9d630800  11891  waiting   sem      26563472    -  15  0x9fdf8000   62
+ w:8736:09 A Poem for Byzantium.
+ 0x9d611800  11829  waiting   sem      26562502    -  15  0x9fd00000   62
+ w:8736:01 Innocente.mp3
+ 0x9d5e3000  11736  waiting   sem      26560991    -  15  0x9fb8c000   62
+ w:8736:Playlist
+ 0x9d5c4000  11674  waiting   sem      26559588    -  15  0x9fa94000   62
+ w:8736:09 A Poem for Byzantium.
+ 0x9d5b7800  11643  waiting   sem      26559152    -  15  0x9fa30000   62
+ w:8736:04 Underwater.mp3
+ 0x9d598800  11581  waiting   sem      26558418    -  15  0x9f938000   62
+ w:8736:Playlist
+ 0x9d56a000  11488  waiting   sem      26557141    -  15  0x9f7c4000   62
+ w:8736:01 Innocente.mp3
+ 0x9d54e000  11426  waiting   sem      26556515    -  15  0x9f6cc000   62
+ w:8736:10 Amongst the Ruins.mp3
+ 0x9d4e2000  11395  waiting   sem      26556109    -  15  0x9f650000   62
+ w:8736:11 Silence [Album Versio
+ 0x90158000  11333  waiting   sem      26555426    -  15  0x9f558000   62
+ w:8736:Playlist
+ 0x902cc000  11271  waiting   sem      26554608    -  15  0x9f460000   62
+ w:8736:01 Innocente.mp3
+ 0x9d4a0800  11240  waiting   sem      26554219    -  15  0x9f3e4000   62
+ w:8736:06 Aria.mp3
+ 0x9028f800  11209  waiting   sem      26553828    -  15  0x9f368000   62
+ w:8736:04 Underwater.mp3
+ 0x9d4f4000  11147  waiting   sem      26552849    -  15  0x9f270000   62
+ w:8736:Playlist
+ 0x9d4a1000  10992  waiting   sem      26548112    -  15  0x9f05c000   62
+ w:8736:11 Silence [Album Versio
+ 0x90306000  10837  waiting   sem      26543877    -  15  0x9ee58000   62
+ w:8736:02 Nature's Kingdom.mp3
+ 0x901fd000  10744  waiting   sem      26542168    -  15  0x9ed24000   62
+ w:8736:Playlist
+ 0x901eb000   9969  waiting   sem      26530548    -  15  0x9e770000   62
+ w:8736:Playlist
+ 0x9025e800   9597  waiting   sem      26533873    -  15  0x9e50c000   62
+ w:8736:Playlist
+ 0x9d469800   9380  waiting   sem      26531564    -  15  0x9d2b8000   62
+ w:8736:04 Underwater.mp3
+ 0x9d508000   9318  waiting   sem      26530618    -  15  0x9d3c0000   62
+ w:8736:01 Innocente.mp3
+ 0x90243800   9287  waiting   sem      26530031    -  15  0x9d3b0000   62
+ w:8736:10 Amongst the Ruins.mp3
+ 0x9d536800   8915  waiting   sem      26525136    -  15  0x9cba4000   62
+ w:8736:04 Underwater.mp3
+ 0x90377800   8884  waiting   sem      26524357    -  15  0x9cb20000   62
+ w:8736:Playlist
+ 0x90322800   8791  waiting   sem      26514682    -  15  0x9cb98000   62
+ w:8736:MediaPlayer Settings
+ 0x9020f000   6094  waiting   sem      26461988    -  15  0x999c0000   62
+ a:6092:x-vnd.Haiku-Terminal
+ 0x901bc000   1010  waiting   sem        305131    -  15  0x91670000   62
+ a:60:x-vnd.Haiku-debug_server
+ 0x9009e800     80  waiting   sem           709    -  10  0x910f6000   62
+ screen manager
+ 0x9d65f800  11985  waiting   sem      26564682    -  15  0x9ff70000   62
+ w:8736:07 Myth.mp3
+ 0x9d5d4000  11706  waiting   sem      26560605    -  15  0x9fb14000   62
+ w:8736:Playlist
+ 0x9d589800  11551  waiting   sem      26557995    -  15  0x9f8c0000   62
+ w:8736:Playlist
+ 0x9d553000  11458  waiting   sem      26556849    -  15  0x9f74c000   62
+ w:8736:08 Inner Sanctum.mp3
+ 0x9036e000  11303  waiting   sem      26555075    -  15  0x9f4e0000   62
+ w:8736:Playlist
+ 0x900cb000  11117  waiting   sem      26551837    -  15  0x9f208000   62
+ w:8736:Playlist
+ 0x902ce800  11055  waiting   sem      26549914    -  15  0x9f138000   62
+ w:8736:Playlist
+ 0x9039a000  10714  waiting   sem      26541701    -  15  0x9ecc4000   62
+ w:8736:Playlist
+ 0x902f1800  10683  waiting   sem      26519498    -  15  0x9ec58000   62
+ w:8736:Playlist
+ 0x9026c800   9753  waiting   sem      26535488    -  15  0x9df54000   62
+ w:8736:03 Daylight.mp3
+ 0x90217000   9691  waiting   sem      26534804    -  15  0x9e5b8000   62
+ w:8736:04 Underwater.mp3
+ 0x90208000   9412  waiting   sem      26521102    -  15  0x9ddb8000   62
+ w:8736:Playlist
+ 0x9d4b2000   9350  waiting   sem      26531273    -  15  0x9dd47000   62
+ w:8736:Playlist
+ 0x90313000   9257  waiting   sem      26528539    -  15  0x9d348000   62
+ w:8736:Playlist
+ 0x90245000   9133  waiting   sem      26527781    -  15  0x9d258000   62
+ w:8736:Playlist
+ 0x9d4dc000   8947  waiting   sem      26525615    -  15  0x9cb1c000   62
+ w:8736:11 Silence [Album Versio
+ 0x9d4c4000   8823  waiting   sem      26521928    -  15  0x9cf04000   62
+ w:8736:Playlist
+ 0x9034a800   6095  waiting   sem      26462003    -  15  0x9b510000   62
+ w:6092:Terminal 2
+ 0x9d650800  11955  waiting   sem      26564563    -  15  0x9fef8000   62
+ w:8736:05 Fallen Icons.mp3
+ 0x9d631800  11893  waiting   sem      26563525    -  15  0x9fe00000   62
+ w:8736:Playlist
+ 0x9d622000  11862  waiting   sem      26562819    -  15  0x9fd84000   62
+ w:8736:Playlist
+ 0x9d5f3800  11769  waiting   sem      26561558    -  15  0x9fc10000   62
+ w:8736:07 Myth.mp3
+ 0x9d5b8800  11645  waiting   sem      26559188    -  15  0x9fa38000   62
+ w:8736:Playlist
+ 0x9d5a9000  11614  waiting   sem      26558843    -  15  0x9f9bc000   62
+ w:8736:05 Fallen Icons.mp3
+ 0x9d57a800  11521  waiting   sem      26557717    -  15  0x9f848000   62
+ w:8736:Playlist
+ 0x9d56b000  11490  waiting   sem      26557281    -  15  0x9f7cc000   62
+ w:8736:Playlist
+ 0x901c5000  11397  waiting   sem      26556083    -  15  0x9f658000   62
+ w:8736:Playlist
+ 0x9d4cc000  11273  waiting   sem      26554431    -  15  0x9f468000   62
+ w:8736:Playlist
+ 0x9011c000  11025  waiting   sem      26549096    -  15  0x9f0d8000   62
+ w:8736:02 Nature's Kingdom.mp3
+ 0x9036a800  10870  waiting   sem      26544888    -  15  0x9eec4000   62
+ w:8736:Playlist
+ 0x9d514800  10591  waiting   sem      26537664    -  15  0x9eb20000   62
+ w:8736:Playlist
+ 0x9d53b800  10374  waiting   sem      26540670    -  15  0x9e898000   62
+ w:8736:08 Inner Sanctum.mp3
+ 0x9d41a000  10095  waiting   sem      26536993    -  15  0x9e8cc000   62
+ w:8736:06 Aria.mp3
+ 0x90374000  10033  waiting   sem      26523987    -  15  0x9e848000   62
+ w:8736:Playlist
+ 0x90211000   9940  waiting   sem      26518267    -  15  0x9e714000   62
+ w:8736:Playlist
+ 0x90227000   9847  waiting   sem      26521045    -  15  0x9d248000   62
+ w:8736:Playlist
+ 0x90334000   9630  waiting   sem      26534143    -  15  0x9e574000   62
+ w:8736:Playlist
+ 0x9d45e800   9382  waiting   sem      26531643    -  15  0x9d334000   62
+ w:8736:Playlist
+ 0x90215000   9289  waiting   sem      26530151    -  15  0x9d3b8000   62
+ w:8736:Playlist
+ 0x9d4cd000   8979  waiting   sem      26526548    -  15  0x9cf78000   62
+ w:8736:10 Amongst the Ruins.mp3
+ 0x9d506800   8917  waiting   sem      26524911    -  15  0x9cf8c000   62
+ w:8736:Playlist
+ 0x9d50c800   8793  waiting   sem      26521605    -  15  0x9cb14000   62
+ w:8736:05 Fallen Icons.mp3
+ 0x9d603800  11801  waiting   sem      26562169    -  15  0x9fc90000   62
+ w:8736:06 Aria.mp3
+ 0x9d5e4800  11739  waiting   sem      26560816    -  15  0x9fb98000   62
+ w:8736:01 Innocente.mp3
+ 0x9d5c5800  11677  waiting   sem      26559968    -  15  0x9faa0000   62
+ w:8736:Playlist
+ 0x9d59a800  11584  waiting   sem      26558363    -  15  0x9f944000   62
+ w:8736:06 Aria.mp3
+ 0x9d554000  11460  waiting   sem      26556819    -  15  0x9f754000   62
+ w:8736:Playlist
+ 0x901b6800  11429  waiting   sem      26556475    -  15  0x9f6d8000   62
+ w:8736:Playlist
+ 0x9d43a000  11367  waiting   sem      26555806    -  15  0x9f5e0000   62
+ w:8736:07 Myth.mp3
+ 0x9029e800  11336  waiting   sem      26555461    -  15  0x9f564000   62
+ w:8736:11 Silence [Album Versio
+ 0x90335800  11243  waiting   sem      26554287    -  15  0x9f3f0000   62
+ w:8736:Playlist
+ 0x902f5800  11181  waiting   sem      26553492    -  15  0x9f2f8000   62
+ w:8736:11 Silence [Album Versio
+ 0x9d533800  11150  waiting   sem      26553146    -  15  0x9f27c000   62
+ w:8736:07 Myth.mp3
+ 0x90115000  10933  waiting   sem      26546475    -  15  0x9ef98000   62
+ w:8736:11 Silence [Album Versio
+ 0x901b9000  10778  waiting   sem      26542810    -  15  0x9ed94000   62
+ w:8736:03 Daylight.mp3
+ 0x9029e000  10654  waiting   sem      26539908    -  15  0x9ebfc000   62
+ w:8736:01 Innocente.mp3
+ 0x90256000  10065  waiting   sem      26536945    -  15  0x9e8b0000   62
+ w:8736:Playlist
+ 0x90319000   9724  waiting   sem      26535434    -  15  0x9dde0000   62
+ w:8736:Playlist
+ 0x90333800   8949  waiting   sem      26525683    -  15  0x9d018000   62
+ w:8736:Playlist
+ 0x90167800    765  waiting   sem        116352    -  15  0x912c7000   62
+ a:763:x-vnd.beclan.InfoPopper
+ 0x9d661000  11988  waiting   sem      26565400    -  15  0x9ff7c000   62
+ w:8736:Playlist
+ 0x9d642000  11926  waiting   sem      26563817    -  15  0x9fe84000   62
+ w:8736:04 Underwater.mp3
+ 0x9d613800  11833  waiting   sem      26562578    -  15  0x9fd10000   62
+ w:8736:Playlist
+ 0x9d5d5800  11709  waiting   sem      26560622    -  15  0x9fb20000   62
+ w:8736:11 Silence [Album Versio
+ 0x9d58b000  11554  waiting   sem      26557970    -  15  0x9f8cc000   62
+ w:8736:05 Fallen Icons.mp3
+ 0x9d490800  11306  waiting   sem      26555001    -  15  0x9f4ec000   62
+ w:8736:04 Underwater.mp3
+ 0x9038a800  11213  waiting   sem      26553852    -  15  0x9f378000   62
+ w:8736:Playlist
+ 0x902af800  10996  waiting   sem      26548318    -  15  0x9f06c000   62
+ w:8736:Playlist
+ 0x9039f800  10748  waiting   sem      26542198    -  15  0x9ed34000   62
+ w:8736:06 Aria.mp3
+ 0x902fa000  10624  waiting   sem      26539739    -  15  0x9eb94000   62
+ w:8736:Playlist
+ 0x9030a000   9911  waiting   sem      26514445    -  15  0x9e6b8000   62
+ w:8736:07 Myth.mp3
+ 0x902ff000   9415  waiting   sem      26531702    -  15  0x9ddc4000   62
+ w:8736:08 Inner Sanctum.mp3
+ 0x9d4fc800   9322  waiting   sem      26530683    -  15  0x9d3d8000   62
+ w:8736:Playlist
+ 0x90227800   9074  waiting   sem      26485605    -  15  0x9d188000   62
+ w:8736:05 Fallen Icons.mp3
+ 0x9d4ca800   8981  waiting   sem      26526638    -  15  0x9cff0000   62
+ w:8736:Playlist
+ 0x90165000    766  waiting   sem        116365    -  15  0x912cf000   62
+ w:763:InfoPopper
+ 0x9d633000  11896  waiting   sem      26563545    -  15  0x9fe0c000   62
+ w:8736:10 Amongst the Ruins.mp3
+ 0x9d623800  11865  waiting   sem      26563024    -  15  0x9fd90000   62
+ w:8736:08 Inner Sanctum.mp3
+ 0x9d604800  11803  waiting   sem      26562050    -  15  0x9fc98000   62
+ w:8736:Playlist
+ 0x9d5aa800  11617  waiting   sem      26558893    -  15  0x9f9c8000   62
+ w:8736:Playlist
+ 0x9d57c000  11524  waiting   sem      26557704    -  15  0x9f854000   62
+ w:8736:07 Myth.mp3
+ 0x9d4c5800  11369  waiting   sem      26555853    -  15  0x9f5e8000   62
+ w:8736:Playlist
+ 0x9d442800  11183  waiting   sem      26553537    -  15  0x9f300000   62
+ w:8736:Playlist
+ 0x902c9000  11059  waiting   sem      26549932    -  15  0x9f148000   62
+ w:8736:08 Inner Sanctum.mp3
+ 0x9d537000  10966  waiting   sem      26547451    -  15  0x9f004000   62
+ w:8736:Playlist
+ 0x9d50d800  10687  waiting   sem      26541135    -  15  0x9ec68000   62
+ w:8736:09 A Poem for Byzantium.
+ 0x901f1000   9757  waiting   sem      26535799    -  15  0x9e620000   62
+ w:8736:Playlist
+ 0x9d505800   9044  waiting   sem      26527422    -  15  0x9d120000   62
+ w:8736:03 Daylight.mp3
+ 0x9d523000   9013  waiting   sem      26527123    -  15  0x9d0a0000   62
+ w:8736:08 Inner Sanctum.mp3
+ 0x90313800   8920  waiting   sem      26524893    -  15  0x9cfac000   62
+ w:8736:06 Aria.mp3
+ 0x9d509800   8796  waiting   sem      25698730    -  15  0x9cba8000   62
+ w:8736:Playlist
+ 0x9d468000   8672  waiting   sem      26512693    -  15  0x9129c000   62
+ w:8664:/boot/system/Tracker (86
+ 0x900dc800    116  waiting   sem          1399    -  15  0x9114f000   62
+ a:98:x-vnd.Haiku-midi_server
+ 0x9d652800  11959  waiting   sem      26564659    -  15  0x9ff08000   62
+ w:8736:Playlist
+ 0x9d643000  11928  waiting   sem      26564075    -  15  0x9fe8c000   62
+ w:8736:Playlist
+ 0x9d5f5800  11773  waiting   sem      26561652    -  15  0x9fc20000   62
+ w:8736:Playlist
+ 0x9d5c7000  11680  waiting   sem      26560080    -  15  0x9faac000   62
+ w:8736:02 Nature's Kingdom.mp3
+ 0x9d5ba800  11649  waiting   sem      26559242    -  15  0x9fa48000   62
+ w:8736:08 Inner Sanctum.mp3
+ 0x9d59b800  11587  waiting   sem      26558215    -  15  0x9f950000   62
+ w:8736:Playlist
+ 0x9d58c000  11556  waiting   sem      26558123    -  15  0x9f8d4000   62
+ w:8736:Playlist
+ 0x9d56d000  11494  waiting   sem      26557292    -  15  0x9f7dc000   62
+ w:8736:02 Nature's Kingdom.mp3
+ 0x901b6000  11432  waiting   sem      26556545    -  15  0x9f6e4000   62
+ w:8736:11 Silence [Album Versio
+ 0x9d45f800  11339  waiting   sem      26555336    -  15  0x9f570000   62
+ w:8736:Playlist
+ 0x9d424800  11277  waiting   sem      26554647    -  15  0x9f478000   62
+ w:8736:02 Nature's Kingdom.mp3
+ 0x9d500800  11153  waiting   sem      26553193    -  15  0x9f288000   62
+ w:8736:Playlist
+ 0x9d479000  11122  waiting   sem      26544316    -  15  0x9f21c000   62
+ w:8736:03 Daylight.mp3
+ 0x9d527800  11091  waiting   sem      26551014    -  15  0x9f1b0000   62
+ w:8736:Playlist
+ 0x90386000  10812  waiting   sem      26543469    -  15  0x9ee04000   62
+ w:8736:Playlist
+ 0x9d51a000  10595  waiting   sem      26537703    -  15  0x9eb30000   62
+ w:8736:10 Amongst the Ruins.mp3
+ 0x9d533000  10564  waiting   sem      26535856    -  15  0x9e9c8000   62
+ w:8736:Playlist
+ 0x9029b800  10037  waiting   sem      26524734    -  15  0x9e858000   62
+ w:8736:04 Underwater.mp3
+ 0x90240800  10006  waiting   sem      26519692    -  15  0x9e7ec000   62
+ w:8736:03 Daylight.mp3
+ 0x90220800   9851  waiting   sem      26518721    -  15  0x9d36c000   62
+ w:8736:11 Silence [Album Versio
+ 0x901bf000   8952  waiting   sem      26525916    -  15  0x9d024000   62
+ w:8736:07 Myth.mp3
+ 0x90287800   8859  waiting   sem      26523785    -  15  0x9cbec000   62
+ w:8736:03 Daylight.mp3
+ 0x9012b000   8673  waiting   sem      26512700    -  15  0x912a0000   62
+ w:8664:offscreen
+ 0x900ae800     86  waiting   sem           889    -  15  0x9110f000   62
+ d:0:baron
+ 0x9d662800  11991  waiting   sem      26562232    -  15  0x9ff88000   62
+ w:8736:11 Silence [Album Versio
+ 0x9d634000  11898  waiting   sem      26563584    -  15  0x9fe14000   62
+ w:8736:Playlist
+ 0x9d615000  11836  waiting   sem      26562608    -  15  0x9fd1c000   62
+ w:8736:03 Daylight.mp3
+ 0x9d5e6800  11743  waiting   sem      26561237    -  15  0x9fba8000   62
+ w:8736:Playlist
+ 0x9d556000  11464  waiting   sem      26556949    -  15  0x9f764000   62
+ w:8736:07 Myth.mp3
+ 0x901d9800  11402  waiting   sem      26556185    -  15  0x9f66c000   62
+ w:8736:10 Amongst the Ruins.mp3
+ 0x9d4d5800  11309  waiting   sem      26555135    -  15  0x9f4f8000   62
+ w:8736:Playlist
+ 0x9d488800  11247  waiting   sem      26554318    -  15  0x9f400000   62
+ w:8736:07 Myth.mp3
+ 0x902cf000  11216  waiting   sem      26553911    -  15  0x9f384000   62
+ w:8736:09 A Poem for Byzantium.
+ 0x9d40f000  10906  waiting   sem      26545629    -  15  0x9ef3c000   62
+ w:8736:Playlist
+ 0x90207800  10875  waiting   sem      26544949    -  15  0x9eed8000   62
+ w:8736:05 Fallen Icons.mp3
+ 0x901f9800  10720  waiting   sem      26541742    -  15  0x9ecdc000   62
+ w:8736:11 Silence [Album Versio
+ 0x9036d000   9976  waiting   sem      26527690    -  15  0x9e784000   62
+ w:8736:09 A Poem for Byzantium.
+ 0x901fa000   9945  waiting   sem      26519226    -  15  0x9e728000   62
+ w:8736:01 Innocente.mp3
+ 0x90273800   9883  waiting   sem      26522433    -  15  0x9e568000   62
+ w:8736:Playlist
+ 0x9d49e000   9511  waiting   sem      26532575    -  15  0x9df88000   62
+ w:8736:Playlist
+ 0x90283800   9418  waiting   sem      26519949    -  15  0x9ddd0000   62
+ w:8736:Playlist
+ 0x9d453800   9387  waiting   sem      26520846    -  15  0x9d374000   62
+ w:8736:06 Aria.mp3
+ 0x90151800   9201  waiting   sem      26528103    -  15  0x9d200000   62
+ w:8736:07 Myth.mp3
+ 0x90329000   9046  waiting   sem      26525277    -  15  0x9d128000   62
+ w:8736:Playlist
+ 0x9d4c3800   8984  waiting   sem      26526442    -  15  0x9d004000   62
+ w:8736:11 Silence [Album Versio
+ 0x90327800   8922  waiting   sem      26525332    -  15  0x9cb74000   62
+ w:8736:Playlist
+ 0x9d460000   8674  waiting   sem      26512718    -  15  0x912a4000   62
+ w:8664:offscreen
+ 0x900f1000    118  waiting   sem          1415    -  15  0x9116f000   62
+ a:100:x-vnd.Be-PSRV
+ 0x900af000     87  waiting   sem           947    -  15  0x91113000   62
+ a:81:x-vnd.Haiku-SystemLogger
+ 0x9d606000  11806  waiting   sem      26562085    -  15  0x9fca4000   62
+ w:8736:01 Innocente.mp3
+ 0x9d5d7800  11713  waiting   sem      26560519    -  15  0x9fb30000   62
+ w:8736:Playlist
+ 0x9d5ac000  11620  waiting   sem      26558917    -  15  0x9f9d4000   62
+ w:8736:03 Daylight.mp3
+ 0x9d57d800  11527  waiting   sem      26557744    -  15  0x9f860000   62
+ w:8736:Playlist
+ 0x903a6000  11372  waiting   sem      26555721    -  15  0x9f5f4000   62
+ w:8736:04 Underwater.mp3
+ 0x9d433800  11279  waiting   sem      26554711    -  15  0x9f480000   62
+ w:8736:Playlist
+ 0x9027a800  11186  waiting   sem      26553592    -  15  0x9f30c000   62
+ w:8736:06 Aria.mp3
+ 0x90284000   9574  waiting   sem      26533402    -  15  0x9dfc4000   62
+ w:8736:Playlist
+ 0x90393800   9264  waiting   sem      26529518    -  15  0x9d360000   62
+ w:8736:09 A Poem for Byzantium.
+ 0x90308000   8954  waiting   sem      26525941    -  15  0x9d02c000   62
+ w:8736:Playlist
+ 0x9d4b0000   8830  waiting   sem      26474529    -  15  0x9cb24000   62
+ w:8736:07 Myth.mp3
+ 0x9d433000   8675  waiting   sem      26512735    -  15  0x912b7000   62
+ w:8664:offscreen
+ 0x90108800    150  waiting   sem          1720    -  15  0x9121c000   62
+ w:95:Deskbar
+ 0x900d1800    119  waiting   sem          1460    -  15  0x91167000   62
+ a:97:x-vnd.Be.media-server
+ 0x9d644800  11931  waiting   sem      26564126    -  15  0x9fe98000   62
+ w:8736:04 Underwater.mp3
+ 0x9d625800  11869  waiting   sem      26563150    -  15  0x9fda0000   62
+ w:8736:Playlist
+ 0x9d616000  11838  waiting   sem      26562644    -  15  0x9fd24000   62
+ w:8736:Playlist
+ 0x9d5f7000  11776  waiting   sem      26561640    -  15  0x9fc2c000   62
+ w:8736:10 Amongst the Ruins.mp3
+ 0x9d5c8800  11683  waiting   sem      26560320    -  15  0x9fab8000   62
+ w:8736:Playlist
+ 0x9d5bc000  11652  waiting   sem      26559309    -  15  0x9fa54000   62
+ w:8736:Playlist
+ 0x9d59d000  11590  waiting   sem      26558514    -  15  0x9f95c000   62
+ w:8736:09 A Poem for Byzantium.
+ 0x9d58d800  11559  waiting   sem      26558163    -  15  0x9f8e0000   62
+ w:8736:04 Underwater.mp3
+ 0x9d56e800  11497  waiting   sem      26557388    -  15  0x9f7e8000   62
+ w:8736:Playlist
+ 0x901b4000  11435  waiting   sem      26556595    -  15  0x9f6f0000   62
+ w:8736:Playlist
+ 0x901db000  11404  waiting   sem      26556105    -  15  0x9f674000   62
+ w:8736:Playlist
+ 0x90208800  11249  waiting   sem      26554361    -  15  0x9f408000   62
+ w:8736:Playlist
+ 0x902be000  11218  waiting   sem      26553922    -  15  0x9f38c000   62
+ w:8736:Playlist
+ 0x9d4fd800  11156  waiting   sem      26553229    -  15  0x9f294000   62
+ w:8736:05 Fallen Icons.mp3
+ 0x90256800  11032  waiting   sem      26531280    -  15  0x9f0ec000   62
+ w:8736:Playlist
+ 0x901fe800  10846  waiting   sem      26544144    -  15  0x9ee74000   62
+ w:8736:Playlist
+ 0x9039a800  10660  waiting   sem      26540122    -  15  0x9ec0c000   62
+ w:8736:Playlist
+ 0x902f2000  10629  waiting   sem      26539271    -  15  0x9eba8000   62
+ w:8736:11 Silence [Album Versio
+ 0x901c8800   9978  waiting   sem      26475026    -  15  0x9e78c000   62
+ w:8736:Playlist
+ 0x901c6800   9823  waiting   sem      26528807    -  15  0x9e698000   62
+ w:8736:02 Nature's Kingdom.mp3
+ 0x902cb800   9792  waiting   sem      26536200    -  15  0x9d32c000   62
+ w:8736:01 Innocente.mp3
+ 0x9d444800   9761  waiting   sem      26535907    -  15  0x9e630000   62
+ w:8736:05 Fallen Icons.mp3
+ 0x9d53a000   8893  waiting   sem      26516813    -  15  0x9cfa0000   62
+ w:8736:02 Nature's Kingdom.mp3
+ 0x9d456800   8862  waiting   sem      26523818    -  15  0x9cf44000   62
+ w:8736:Playlist
+ 0x9d45f000   8676  waiting   sem      26512755    -  15  0x912bb000   62
+ w:8664:offscreen
+ 0x9d654800  11963  waiting   sem      26564961    -  15  0x9ff18000   62
+ w:8736:03 Daylight.mp3
+ 0x9d635800  11901  waiting   sem      26563618    -  15  0x9fe20000   62
+ w:8736:07 Myth.mp3
+ 0x9d5e8000  11746  waiting   sem      26561263    -  15  0x9fbb4000   62
+ w:8736:02 Nature's Kingdom.mp3
+ 0x9d5ad000  11622  waiting   sem      26558819    -  15  0x9f9dc000   62
+ w:8736:Playlist
+ 0x9d557800  11467  waiting   sem      26556994    -  15  0x9f770000   62
+ w:8736:Playlist
+ 0x9d478000  11374  waiting   sem      26555881    -  15  0x9f5fc000   62
+ w:8736:Playlist
+ 0x9d52b000  11343  waiting   sem      26555235    -  15  0x9f580000   62
+ w:8736:02 Nature's Kingdom.mp3
+ 0x9028a800  11188  waiting   sem      26553559    -  15  0x9f314000   62
+ w:8736:Playlist
+ 0x9d51c000  11095  waiting   sem      26551290    -  15  0x9f1c0000   62
+ w:8736:08 Inner Sanctum.mp3
+ 0x90150800  11002  waiting   sem      26548367    -  15  0x9f084000   62
+ w:8736:01 Innocente.mp3
+ 0x9d4af000  10971  waiting   sem      26547487    -  15  0x9f018000   62
+ w:8736:11 Silence [Album Versio
+ 0x9d464000  10816  waiting   sem      26518098    -  15  0x9ee14000   62
+ w:8736:06 Aria.mp3
+ 0x90387800   9235  waiting   sem      26525121    -  15  0x9d30c000   62
+ w:8736:Playlist
+ 0x9016c000   8987  waiting   sem      26526692    -  15  0x9d038000   62
+ w:8736:Playlist
+ 0x9034b000   8925  waiting   sem      26525502    -  15  0x9cfd8000   62
+ w:8736:10 Amongst the Ruins.mp3
+ 0x900af800     90  waiting   sem           971    -  15  0x91117000   62
+ a:85:x-vnd.Be-input_server
+ 0x9d607800  11809  waiting   sem      26562240    -  15  0x9fcb0000   62
+ w:8736:Playlist
+ 0x9d5f8000  11778  waiting   sem      26561695    -  15  0x9fc34000   62
+ w:8736:Playlist
+ 0x9d5d9800  11716  waiting   sem      26560727    -  15  0x9fb3c000   62
+ w:8736:06 Aria.mp3
+ 0x9d57f000  11530  waiting   sem      26557773    -  15  0x9f86c000   62
+ w:8736:09 A Poem for Byzantium.
+ 0x902ee800  11313  waiting   sem      26554826    -  15  0x9f508000   62
+ w:8736:06 Aria.mp3
+ 0x90370800  11282  waiting   sem      26554752    -  15  0x9f48c000   62
+ w:8736:05 Fallen Icons.mp3
+ 0x9d4f2800  11158  waiting   sem      26553198    -  15  0x9f29c000   62
+ w:8736:Playlist
+ 0x902d5800  11065  waiting   sem      26550321    -  15  0x9f160000   62
+ w:8736:Playlist
+ 0x9d42f000  10941  waiting   sem      26546848    -  15  0x9efb0000   62
+ w:8736:Playlist
+ 0x90262000  10910  waiting   sem      26545667    -  15  0x9ef4c000   62
+ w:8736:10 Amongst the Ruins.mp3
+ 0x9d47e000  10786  waiting   sem      26542991    -  15  0x9edac000   62
+ w:8736:Playlist
+ 0x9d4e7000  10600  waiting   sem      26537856    -  15  0x9eb44000   62
+ w:8736:Playlist
+ 0x90283000  10569  waiting   sem      26536413    -  15  0x9e9dc000   62
+ w:8736:07 Myth.mp3
+ 0x9035a800   9887  waiting   sem      26520910    -  15  0x9e5ac000   62
+ w:8736:04 Underwater.mp3
+ 0x9d43f800   9391  waiting   sem      26522287    -  15  0x9dd73000   62
+ w:8736:Playlist
+ 0x9d52a000   8895  waiting   sem      26524604    -  15  0x9cb48000   62
+ w:8736:Playlist
+ 0x9d45b000   8678  waiting   sem      26512812    -  15  0x912d7000   62
+ w:8664:offscreen
+ 0x900f0800    122  waiting   sem          1494    -  15  0x9115b000   62
+ a:95:x-vnd.Be-TSKB
+ 0x9d655800  11965  waiting   sem      26565038    -  15  0x9ff20000   62
+ w:8736:Playlist
+ 0x9d646000  11934  waiting   sem      26564183    -  15  0x9fea4000   62
+ w:8736:Playlist
+ 0x9d627000  11872  waiting   sem      26563180    -  15  0x9fdac000   62
+ w:8736:09 A Poem for Byzantium.
+ 0x9d618000  11841  waiting   sem      26562564    -  15  0x9fd30000   62
+ w:8736:05 Fallen Icons.mp3
+ 0x9d5e9000  11748  waiting   sem      26561303    -  15  0x9fbbc000   62
+ w:8736:Playlist
+ 0x9d5ca000  11686  waiting   sem      26560005    -  15  0x9fac4000   62
+ w:8736:01 Innocente.mp3
+ 0x9d5bc800  11655  waiting   sem      26559338    -  15  0x9fa58000   62
+ w:8736:05 Fallen Icons.mp3
+ 0x9d59e800  11593  waiting   sem      26558564    -  15  0x9f968000   62
+ w:8736:Playlist
+ 0x9d559000  11438  waiting   sem      26556642    -  15  0x9f6fc000   62
+ w:8736:05 Fallen Icons.mp3
+ 0x9d411800  11345  waiting   sem      26555563    -  15  0x9f588000   62
+ w:8736:Playlist
+ 0x90214000  11035  waiting   sem      26549304    -  15  0x9f0f8000   62
+ w:8736:01 Innocente.mp3
+ 0x9023b000  10694  waiting   sem      26541172    -  15  0x9ec78000   62
+ w:8736:Playlist
+ 0x90229000   9764  waiting   sem      26535970    -  15  0x9e63c000   62
+ w:8736:Playlist
+ 0x9028d800   9547  waiting   sem      26533056    -  15  0x9dfe0000   62
+ w:8736:Playlist
+ 0x902f6000   9454  waiting   sem      26526520    -  15  0x9d320000   62
+ w:8736:10 Amongst the Ruins.mp3
+ 0x9d412800   9144  waiting   sem      26528189    -  15  0x9d268000   62
+ w:8736:02 Nature's Kingdom.mp3
+ 0x9035f000   8958  waiting   sem      26525979    -  15  0x9cff4000   62
+ w:8736:08 Inner Sanctum.mp3
+ 0x902b0800   8927  waiting   sem      26524127    -  15  0x9cfe0000   62
+ w:8736:Playlist
+ 0x9d49b800   8834  waiting   sem      26523224    -  15  0x9cf28000   62
+ w:8736:Playlist
+ 0x9d4f8000   8803  waiting   sem      26522615    -  15  0x9cbc0000   62
+ w:8736:06 Aria.mp3
+ 0x9031c000   8679  waiting   sem      26512829    -  15  0x999a2000   62
+ w:8664:offscreen
+ kdebug&gt;
+ }}}
+
+ The semaphores they're waiting on all look similar to the following:
+ {{{
+ kdebug&gt; sem 26512829
+ SEM: 0x8fad0588
+ id:      26512829 (0x1948dbd)
+ name:    'offscreen'
+ owner:   -1
+ count:   -1
+ queue:   8679
+ last acquired by: 8679
+ }}}
+
+ Not sure what other information would be useful at this point, but it's
+ not too difficult to reproduce this, so let me know please. As I said I
+ did launch Tracker in the debugger (with debugging builds of both Tracker
+ and libtracker.so present in the system).
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4316#comment:4">http://dev.haiku-os.org/ticket/4316#comment:4</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="020053.html">[Haiku-bugs] [Haiku] #4316: app_server resource cleanup issues
+</A></li>
+	<LI>Next message: <A HREF="020118.html">[Haiku-bugs] [Haiku] #4316: app_server resource cleanup issues
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20114">[ date ]</a>
+              <a href="thread.html#20114">[ thread ]</a>
+              <a href="subject.html#20114">[ subject ]</a>
+              <a href="author.html#20114">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

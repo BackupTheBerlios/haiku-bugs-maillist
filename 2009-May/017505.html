@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3954: mkfs reports wrong volume as initialised
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233954%3A%20mkfs%20reports%20wrong%20volume%20as%20initialised&In-Reply-To=%3C041.e6505b06a9b7b0e9e4bc82430911cb7e%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="017502.html">
+   <LINK REL="Next"  HREF="017528.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3954: mkfs reports wrong volume as initialised</H1>
+    <B>idefix</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233954%3A%20mkfs%20reports%20wrong%20volume%20as%20initialised&In-Reply-To=%3C041.e6505b06a9b7b0e9e4bc82430911cb7e%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3954: mkfs reports wrong volume as initialised">trac at haiku-os.org
+       </A><BR>
+    <I>Sun May 24 18:51:03 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="017502.html">[Haiku-bugs] [Haiku] #3803: Random characters displayed in	Terminal
+</A></li>
+        <LI>Next message: <A HREF="017528.html">[Haiku-bugs] [Haiku] #3954: mkfs reports wrong volume as	initialised
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17505">[ date ]</a>
+              <a href="thread.html#17505">[ thread ]</a>
+              <a href="subject.html#17505">[ subject ]</a>
+              <a href="author.html#17505">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3954: mkfs reports wrong volume as initialised
+---------------------------------------------+------------------------------
+ Reporter:  idefix                           |       Owner:  axeld         
+     Type:  bug                              |      Status:  new           
+ Priority:  normal                           |   Milestone:  R1            
+Component:  Applications/Command Line Tools  |     Version:  R1 development
+Blockedby:                                   |    Platform:  All           
+ Blocking:                                   |  
+---------------------------------------------+------------------------------
+ Used mkfs (on r30832) to initialise ata/1/master/1, but it reported
+ ata/1/master/2 to be successfully initialised (giving me a heart attack ;)
+ ):
+ {{{
+ ~&gt; mountvolume -l
+ Volume         File System              Size Mounted At (Device)
+ ---------------------------------------------------------------------
+ Haiku Alpha    Be File System           4.0G /boot  (ata/0/slave/0)
+ Partition 1 (Haiku Alpha) Be File System           7.1G   (ata/1/master/0)
+ Partition 2 (Build) Be File System           7.2G   (ata/1/master/1)
+ Partition 3 (BeOS) Be File System           7.2G   (ata/1/master/2)
+ test           Be File System           7.2G   (ata/1/master/3)
+
+ ~&gt; mkfs -t bfs -o noindex -v /dev/disk/ata/1/master/1 test2
+ Preparing for modifications...
+
+ Parameters Validation...
+
+
+ About to initialize /dev/disk/ata/1/master/1 with Be File System
+ Are you sure you want to do this now?
+
+ ALL YOUR DATA in /dev/disk/ata/1/master/1 will be lost forever.
+ Continue (yes|[no])? yes
+ DiskDeviceJobQueue::Execute(): executing job: Q28BPrivate15UninitializeJob
+ DiskDeviceJobQueue::Execute(): executing job: Q28BPrivate13InitializeJob
+ Volume Partition 3 (BeOS) has been initialized successfully!
+
+ ~&gt; mountvolume -l
+ Volume         File System              Size Mounted At (Device)
+ ---------------------------------------------------------------------
+ Haiku Alpha    Be File System           4.0G /boot  (ata/0/slave/0)
+ Partition 1 (Haiku Alpha) Be File System           7.1G   (ata/1/master/0)
+ test2          Be File System           7.2G   (ata/1/master/1)
+ Partition 3 (BeOS) Be File System           7.2G   (ata/1/master/2)
+ test           Be File System           7.2G   (ata/1/master/3)
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3954">http://dev.haiku-os.org/ticket/3954</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="017502.html">[Haiku-bugs] [Haiku] #3803: Random characters displayed in	Terminal
+</A></li>
+	<LI>Next message: <A HREF="017528.html">[Haiku-bugs] [Haiku] #3954: mkfs reports wrong volume as	initialised
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17505">[ date ]</a>
+              <a href="thread.html#17505">[ thread ]</a>
+              <a href="subject.html#17505">[ subject ]</a>
+              <a href="author.html#17505">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

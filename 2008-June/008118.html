@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1808: [Screen] will not close if BMenu is	activated
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231808%3A%20%5BScreen%5D%20will%20not%20close%20if%20BMenu%20is%0A%09activated&In-Reply-To=%3C049.6ab0542a3d454a5c498832aabc2b9bf1%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008117.html">
+   <LINK REL="Next"  HREF="008119.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1808: [Screen] will not close if BMenu is	activated</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231808%3A%20%5BScreen%5D%20will%20not%20close%20if%20BMenu%20is%0A%09activated&In-Reply-To=%3C049.6ab0542a3d454a5c498832aabc2b9bf1%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1808: [Screen] will not close if BMenu is	activated">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Jun 13 11:24:00 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008117.html">[Haiku-bugs] [Haiku] #1808: [Screen] will not close if BMenu is	activated
+</A></li>
+        <LI>Next message: <A HREF="008119.html">[Haiku-bugs] [Haiku] #1098: CD/DVD burning application
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8118">[ date ]</a>
+              <a href="thread.html#8118">[ thread ]</a>
+              <a href="subject.html#8118">[ subject ]</a>
+              <a href="author.html#8118">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1808: [Screen] will not close if BMenu is activated
+---------------------------------+------------------------------------------
+  Reporter:  diver               |       Owner:  jackburton    
+      Type:  bug                 |      Status:  assigned      
+  Priority:  normal              |   Milestone:  R1/alpha1     
+ Component:  Kits/Interface Kit  |     Version:  R1 development
+Resolution:                      |    Platform:  All           
+---------------------------------+------------------------------------------
+Comment (by stippi):
+
+ Replying to [comment:12 aldeck]:
+ &gt; Replying to [comment:10 anevilyak]:
+ &gt; &gt; If I remember correctly, the big problem with trying to do this is
+ that some
+ &gt; &gt; of BMenu's API expects the menu to synchronously return which item was
+ selected
+ &gt; &gt; (i.e. BPopupMenu-&gt;Go()) which makes it much more difficult to use the
+ (by
+ &gt; &gt; definition) asynchronous Mouse* and KeyDown hooks, though this would
+ be a much
+ &gt; &gt; better solution.
+ &gt;
+ &gt; Ok, that's what i thought too. See BMenu::Track() also. So basically we
+ could
+ &gt; implement them just by looping/snoozing waiting for the return result to
+ be
+ &gt; ready? What do you think?
+
+ Actually no, that's not possible, since the thread that mostly calls the
+ functions is the window thread itself. Hence you cannot block it, because
+ then no mouse hooks are called. BWindow has some weird menu related
+ functions and member variables which must have to do with dealing with
+ this problem. I think they are used in our code, but maybe not yet fully
+ to what they were used in BeOS.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1808#comment:13">http://dev.haiku-os.org/ticket/1808#comment:13</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008117.html">[Haiku-bugs] [Haiku] #1808: [Screen] will not close if BMenu is	activated
+</A></li>
+	<LI>Next message: <A HREF="008119.html">[Haiku-bugs] [Haiku] #1098: CD/DVD burning application
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8118">[ date ]</a>
+              <a href="thread.html#8118">[ thread ]</a>
+              <a href="subject.html#8118">[ subject ]</a>
+              <a href="author.html#8118">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

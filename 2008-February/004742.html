@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1755: APR 0.9.x configure hangs
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-February/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231755%3A%20APR%200.9.x%20configure%20hangs&In-Reply-To=%3C052.5073bd2d6a60992bb75b7c45f1b73e7f%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="004736.html">
+   <LINK REL="Next"  HREF="004921.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1755: APR 0.9.x configure hangs</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231755%3A%20APR%200.9.x%20configure%20hangs&In-Reply-To=%3C052.5073bd2d6a60992bb75b7c45f1b73e7f%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1755: APR 0.9.x configure hangs">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Feb  7 19:22:37 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="004736.html">[Haiku-bugs] [Haiku] #1755: APR 0.9.x configure hangs
+</A></li>
+        <LI>Next message: <A HREF="004921.html">[Haiku-bugs] [Haiku] #1755: APR 0.9.x configure hangs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4742">[ date ]</a>
+              <a href="thread.html#4742">[ thread ]</a>
+              <a href="subject.html#4742">[ subject ]</a>
+              <a href="author.html#4742">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1755: APR 0.9.x configure hangs
+------------------------+---------------------------------------------------
+  Reporter:  andreasf   |       Owner:  axeld         
+      Type:  bug        |      Status:  new           
+  Priority:  normal     |   Milestone:  R1            
+ Component:  - General  |     Version:  R1 development
+Resolution:             |    Platform:  x86           
+------------------------+---------------------------------------------------
+Comment (by bonefish):
+
+ Replying to [comment:5 andreasf]:
+ &gt; Replying to [comment:3 bonefish]:
+ &gt; &gt; If you can reproduce the problem, you could check in the kernel
+ debugger, where the responsible thread hangs (&quot;sc&quot;)
+ &gt;
+ &gt; I do have five teams, each single-threaded, waiting for different
+ semaphores (0x9...).
+ &gt;
+ &gt; `sh` 9375 appears to be the configure script, and interpreting `sc`, it
+ is waiting for a child process (kernel:{{{wait_for_child}}}).
+ &gt; `sed` 9376 appears to be reading from a pipe (kernel:{{{pipefs_read}}}).
+ &gt; `sh` 9380 appears to be writing to a pipe (kernel:{{{pipefs_write}}}).
+ &gt; `sh` 9381 appears to be waiting for a child process
+ (kernel:{{{wait_for_child}}}).
+ &gt; `sort` 9382 appears to be reading from a pipe
+ (kernel:{{{pipefs_read}}}).
+ &gt;
+ &gt; ''Obviously I've shortened the symbol names and picked a meaningful one
+ from the top of the list - if you need the full backtrace, is there a
+ better way than a digicam?''
+
+ If you don't have a serial port and a second compute to record the serial
+ output, then taking a picture is the only way.
+
+ &gt; Sounds like a reader-writer-lock problem to me.
+
+ Doesn't look too bad. At least there are both pipe readers and writers.
+ The question is why they don't make progress. Using the &quot;team&quot; command for
+ each of the teams, you can also get (a part) of their command line
+ arguments.
+
+ &gt; I don't know how to interpret the `sem` output; however `sem` for the
+ `sed` semaphore (0x94c7de9c) printed {{{[*** READ/WRITE FAULT ***]}}} as
+ the last line and above as name two triangles and as id 0 and as owner 1
+ (count and queue both large negative numbers; all others had a hexadecimal
+ next and negative next_id instead, no name and a negative id).
+
+ If the &quot;sem/cv&quot; number listed by the &quot;threads&quot; command is greater than
+ 0x80000000, then it isn't a semaphore but a condition variable (not
+ unlikely, since the pipefs implementation does indeed use condition
+ variables). You get information about it via the &quot;cvar&quot; command -- not
+ much, since condition variables are quite simple.
+
+ &gt; &gt; and -- if you've kernel tracing enabled (for syscalls at least, even
+ better also for signals and teams) -- also print the last &quot;traced&quot; entries
+ of this thread.
+ &gt;
+ &gt; `traced` was not recognized as command in the kernel debugger. If I need
+ to enable this to help debug this further, please tell me how.
+
+ I recently wrote an article about the kernel debugger, including a section
+ &quot;Kernel Tracing&quot; with a subsection &quot;Enabling It&quot;:
+
+ <A HREF="http://www.haiku-os.org/documents/dev/welcome_to_kernel_debugging_land">http://www.haiku-os.org/documents/dev/welcome_to_kernel_debugging_land</A>
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1755#comment:6">http://dev.haiku-os.org/ticket/1755#comment:6</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="004736.html">[Haiku-bugs] [Haiku] #1755: APR 0.9.x configure hangs
+</A></li>
+	<LI>Next message: <A HREF="004921.html">[Haiku-bugs] [Haiku] #1755: APR 0.9.x configure hangs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4742">[ date ]</a>
+              <a href="thread.html#4742">[ thread ]</a>
+              <a href="subject.html#4742">[ subject ]</a>
+              <a href="author.html#4742">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

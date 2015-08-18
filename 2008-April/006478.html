@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2084: ipro100 driver makes the system crawl
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232084%3A%20ipro100%20driver%20makes%20the%20system%20crawl&In-Reply-To=%3C039.04d41858773994e72c1cb40a4d912fc5%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006476.html">
+   <LINK REL="Next"  HREF="006479.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2084: ipro100 driver makes the system crawl</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232084%3A%20ipro100%20driver%20makes%20the%20system%20crawl&In-Reply-To=%3C039.04d41858773994e72c1cb40a4d912fc5%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2084: ipro100 driver makes the system crawl">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Apr 16 12:14:28 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006476.html">[Haiku-bugs] [Haiku] #1131: more missing bin commands
+</A></li>
+        <LI>Next message: <A HREF="006479.html">[Haiku-bugs] [Haiku] #2085: Add licenses to Haiku
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6478">[ date ]</a>
+              <a href="thread.html#6478">[ thread ]</a>
+              <a href="subject.html#6478">[ subject ]</a>
+              <a href="author.html#6478">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2084: ipro100 driver makes the system crawl
+-----------------------------+----------------------------------------------
+ Reporter:  heto             |       Owner:  axeld         
+     Type:  bug              |      Status:  new           
+ Priority:  normal           |   Milestone:  R1            
+Component:  Drivers/Network  |     Version:  R1 development
+ Platform:  x86              |  
+-----------------------------+----------------------------------------------
+ Haiku r24959 runs unusably slow on real hardware on my IBM ThinkPad A30
+ notebook: running ls in the home directory or opening the leaf menu may
+ take over ten seconds to complete, the default Haiku background image
+ takes over four minutes to load, and the desktop won't show even after
+ running the system for 40 minutes. Top shows that &quot;fxp intr handler&quot; of
+ kernel_team takes most of the cpu time, about 45%, although I suspect the
+ real number is much higher.
+
+ Safe mode works fine. After removing /boot/beos/system/add-
+ ons/kernel/drivers/dev/net/ipro100 and moving /boot/beos/system/add-
+ ons/kernel/drivers/bin/ipro100 to home directory normal mode works well,
+ too, although the integrated Ethernet isn't recognized then, of course.
+ This leads me to suspect the bug is in either the ipro100 driver or the
+ FreeBSD network driver compatibility layer.
+
+ Revision 24921 seems to run a little bit faster, and the desktop icons
+ show up after about 10 minutes of uptime, but it's still unusable.
+
+ I've attached a serial log. A poor-quality video of the slowdown is also
+ available at <A HREF="http://koti.mbnet.fi/hetonnet/misc/Haiku_crawling.3gp">http://koti.mbnet.fi/hetonnet/misc/Haiku_crawling.3gp</A> . I've
+ commented ProcessController out in Bootscript in that video to avoid any
+ extra slowdown.
+
+ Harware details:
+ Intel Pentium III-M 1 GHz
+ ATI Radeon Mobility M6 LY
+ 256 MB RAM
+ Intel 82830 and 82801CAM chipset (ICH3) with integrated Ethernet
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2084">http://dev.haiku-os.org/ticket/2084</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006476.html">[Haiku-bugs] [Haiku] #1131: more missing bin commands
+</A></li>
+	<LI>Next message: <A HREF="006479.html">[Haiku-bugs] [Haiku] #2085: Add licenses to Haiku
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6478">[ date ]</a>
+              <a href="thread.html#6478">[ thread ]</a>
+              <a href="subject.html#6478">[ subject ]</a>
+              <a href="author.html#6478">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

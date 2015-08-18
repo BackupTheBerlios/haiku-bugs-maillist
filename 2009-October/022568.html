@@ -1,0 +1,271 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4053: USB MIDI not recognized dynamically
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234053%3A%20USB%20MIDI%20not%20recognized%20dynamically&In-Reply-To=%3C048.680d19995b1c7bf4a5ebc0781721cb81%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="022565.html">
+   <LINK REL="Next"  HREF="022570.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4053: USB MIDI not recognized dynamically</H1>
+    <B>Pete</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234053%3A%20USB%20MIDI%20not%20recognized%20dynamically&In-Reply-To=%3C048.680d19995b1c7bf4a5ebc0781721cb81%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4053: USB MIDI not recognized dynamically">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Oct  8 22:51:03 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="022565.html">[Haiku-bugs] [Haiku] #3185: Device Manager Application
+</A></li>
+        <LI>Next message: <A HREF="022570.html">[Haiku-bugs] [Haiku] #4751: network with 8169 driver
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22568">[ date ]</a>
+              <a href="thread.html#22568">[ thread ]</a>
+              <a href="subject.html#22568">[ subject ]</a>
+              <a href="author.html#22568">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4053: USB MIDI not recognized dynamically
+---------------------------------+------------------------------------------
+ Reporter:  Pete                 |       Owner:  phoudoin     
+     Type:  bug                  |      Status:  assigned     
+ Priority:  normal               |   Milestone:  R1           
+Component:  Servers/midi_server  |     Version:  R1/pre-alpha1
+Blockedby:                       |    Platform:  All          
+ Blocking:                       |  
+---------------------------------+------------------------------------------
+
+Comment(by Pete):
+
+ Some more details:
+
+ I'm not sure I made it clear that, if the device is not opened by any user
+ (e.g. midi_server), there is no problem.  Plugging in the USB MIDI creates
+ /dev/midi/usb/0, unplugging removes it again.  It's only if there is a
+ connection when the cable is unplugged that things go wrong.
+
+ Specifically, if there are no opens, the call of usb_midi_removed() (by
+ the usb manager I guess) calls remove_device_info() and remove_device()
+ before publish_devices() gets invoked, and all is fine.
+
+ However, if there is a connection, with a waiting read(), this sequence
+ will cause a page fault in devfs_read() -- see attached trace.  So if
+ there are open connections both the above calls are now deferred:
+ remove_device_info() seems to be safe in usb_midi_close(), but it seems
+ that remove_device() can't safely be called before usb_midi_free().  In
+ any case, remove_device_info() then happens after publish_devices(),
+ causing the successive device stepping mentioned previously.
+
+ In addition, if debug printouts are enabled, there is invariably a page
+ fault in legacy_drivers::UninitDevice().
+
+ I've taken the serial output with debug output enabled -- first plugging
+ and unplugging (twice) with no open call, and then with a simple 'cat
+ /dev/midi/usb/0 &gt;/dev/null' -- and edited it down to just the printout,
+ with interspersed comments in '[...]', in hopes it will show more clearly
+ what's happening:
+
+
+ {{{
+ [First, plug in USB MIDI and unplug again without opening a MIDI port]
+ usb_midi: init_hardware() Oct  7 2009 15:57:16
+ usb_midi: init_driver() Oct  7 2009 15:57:16
+ usb_midi: init_driver() OK
+ usb_midi: publish_devices()
+ usb_midi: uninit_driver()
+ usb_midi: uninit complete
+ loaded driver /boot/system/add-ons/kernel/drivers/dev/midi/usb_midi
+ usb hub 2: port 0: device removed
+ usb hub 2: port 0: new device connected
+ usb_midi: init_hardware() Oct  7 2009 15:57:16
+ usb_midi: init_driver() Oct  7 2009 15:57:16
+ usb_midi: usb_midi_added(0x00000008, 0x80fe5808)
+ usb_midi: vendor ID 0x0763, product ID 0x0150
+ usb_midi: interface 0, alt : 0: class 1, subclass 1, protocol 0
+ usb_midi: interface 1, alt : 0: class 1, subclass 3, protocol 0
+ usb_midi: Allocated 1 write buffers
+ usb_midi: Created device 0x87194168
+ usb_midi: my_dev = 0x87194168 endpoint count = 2
+ usb_midi:  input endpoint = 0x80ed3ab0
+ usb_midi:  output endpoint = 0x80ed3ab8
+ usb_midi: queueing bulk xfer ep 0
+ usb_midi: added midi/usb/0
+ usb_midi: init_driver() OK
+ usb_midi: publish_devices()
+ usb_midi: find_device(midi/usb/0)
+ [no more messages until:]
+ [USB MIDI unplugged here...]
+ usb hub 2: port 0: device removed
+ usb hub 2: port 0 disabled
+ usb_midi: usb_midi_removed(midi/usb/0)
+ usb_midi: removing info &amp; device: midi/usb/0
+ usb_midi: remove_device 0x87194168
+ usb_midi: publish_devices()
+ usb_midi: uninit_driver()
+ usb_midi: uninit complete
+ [Plug cable in again (without opening...]
+ usb hub 2: port 0: device removed
+ usb hub 2: port 0: new device connected
+ usb_midi: init_hardware() Oct  7 2009 15:57:16
+ usb_midi: init_driver() Oct  7 2009 15:57:16
+ usb_midi: usb_midi_added(0x0000000f, 0x80fe57f0)
+ usb_midi: vendor ID 0x0763, product ID 0x0150
+ usb_midi: interface 0, alt : 0: class 1, subclass 1, protocol 0
+ usb_midi: interface 1, alt : 0: class 1, subclass 3, protocol 0
+ usb_midi: Allocated 1 write buffers
+ usb_midi: Created device 0x871941e0
+ usb_midi: my_dev = 0x871941e0 endpoint count = 2
+ usb_midi:  input endpoint = 0x80ed3a60
+ usb_midi:  output endpoint = 0x80ed3a68
+ usb_midi: queueing bulk xfer ep 0
+ usb_midi: added midi/usb/0
+ usb_midi: init_driver() OK
+ usb_midi: publish_devices()
+ usb_midi: find_device(midi/usb/0)
+ usb hub 2: port 0: device removed
+ usb hub 2: port 0 disabled
+ usb_midi: usb_midi_removed(midi/usb/0)
+ usb_midi: removing info &amp; device: midi/usb/0
+ usb_midi: remove_device 0x871941e0
+ usb_midi: publish_devices()
+ usb_midi: uninit_driver()
+ usb_midi: uninit complete
+ [---------------------------------------------]
+
+ [This time, open a connection after plugging in]
+ usb hub 2: port 0: device removed
+ usb hub 2: port 0: new device connected
+ usb_midi: init_hardware() Oct  7 2009 15:57:16
+ usb_midi: init_driver() Oct  7 2009 15:57:16
+ usb_midi: usb_midi_added(0x00000016, 0x80fe57e4)
+ usb_midi: vendor ID 0x0763, product ID 0x0150
+ usb_midi: interface 0, alt : 0: class 1, subclass 1, protocol 0
+ usb_midi: interface 1, alt : 0: class 1, subclass 3, protocol 0
+ usb_midi: Allocated 1 write buffers
+ usb_midi: Created device 0x871940f0
+ usb_midi: my_dev = 0x871940f0 endpoint count = 2
+ usb_midi:  input endpoint = 0x80ed39f0
+ usb_midi:  output endpoint = 0x80ed39f8
+ usb_midi: queueing bulk xfer ep 0
+ usb_midi: added midi/usb/0
+ usb_midi: init_driver() OK
+ usb_midi: publish_devices()
+ usb_midi: find_device(midi/usb/0)
+ [ Do 'cat /dev/midi/usb/0 &gt;/dev/null']
+ usb_midi: open(midi/usb/0)
+ usb_midi: device midi/usb/0 open (1)
+ usb_midi: MIDI read (4096 byte buffer at 0 cookie 0x80f30828)
+ usb_midi: waiting on acquire_sem_etc
+ usb_midi: acquire_sem_etc timed out
+ [...last two repeat while waiting...]
+ usb_midi: waiting on acquire_sem_etc
+ [USB MIDI unplugged here...]
+ usb hub 2: port 0: device removed
+ usb hub 2: port 0 disabled
+ usb_midi: usb_midi_removed(midi/usb/0)
+ usb_midi: bus status -2147483636
+ usb_midi: midi/usb/0 still open
+ usb_midi: publish_devices()
+ usb_midi: acquire_sem_etc aborted
+ usb_midi: Device no longer active
+ usb_midi: close(midi/usb/0)
+ usb_midi: close -- removing device info midi/usb/0
+ usb_midi: close complete
+ usb_midi: free(midi/usb/0)
+ usb_midi: free -- removing midi/usb/0
+ usb_midi: remove_device 0x871940f0
+ usb_midi: uninit_driver()
+ usb_midi: uninit complete
+ [... and because of the 'usb_midi:' dprintfs above...:]
+ vm_soft_fault: va 0xdeadb000 not covered by area in address space
+ vm_page_fault: vm_soft_fault returned error 'Bad address' on fault at
+ 0xdeadbf0f
+ , ip 0x8007a7ff, write 1, user 0, thread 0x142
+ PANIC: vm_page_fault: unhandled page fault in kernel space at 0xdeadbf0f,
+ ip 0x8
+ 007a7ff
+
+ Welcome to Kernel Debugging Land...
+ Thread 322 &quot;cat&quot; running on CPU 0
+ kdebug&gt; sc
+ stack trace for thread 322 &quot;cat&quot;
+ [......]
+  8 83fe3c70 (+ 192) 800610a1   &lt;kernel_x86&gt;:panic + 0x0029
+  9 83fe3d30 (+  80) 800c5255   &lt;kernel_x86&gt;:vm_page_fault + 0x0139
+ 10 83fe3d80 (+  64) 800d537d   &lt;kernel_x86&gt;:page_fault_exception + 0x00d9
+ 11 83fe3dc0 (+  12) 800d8a76   &lt;kernel_x86&gt;:int_bottom + 0x0036
+ kernel iframe at 0x83fe3dcc (end = 0x83fe3e1c)
+  eax 0xdeadbeef     ebx 0x87363e70      ecx 0x1          edx 0x246
+  esi 0x80f30710     edi 0x82d4b000      ebp 0x83fe3e34   esp 0x83fe3e00
+  eip 0x8007a7ff  eflags 0x10282
+  vector: 0xe, error code: 0x2
+ 12 83fe3dcc (+ 104) 8007a7ff   &lt;kernel_x86&gt;
+ LegacyDevice&lt;0x87363e70&gt;::UninitDevice(0x0, 0x870af078, 0x2bb22b) + 0x0047
+ 13 83fe3e34 (+  48) 8007339c   &lt;kernel_x86&gt; devfs_free_cookie(fs_volume*:
+ 0x80edf398, fs_vnode*: 0x87154330, 0x80f30710) + 0x0048
+ 14 83fe3e64 (+  48) 800a1e3a   &lt;kernel_x86&gt; file_free_fd(file_descriptor*:
+ 0x870af078) + 0x002e
+ 15 83fe3e94 (+  48) 8008ff14   &lt;kernel_x86&gt;:put_fd + 0x0038
+ 16 83fe3ec4 (+  64) 8008fffe   &lt;kernel_x86&gt;:close_fd_index + 0x0032
+ 17 83fe3f04 (+  32) 80090d0d   &lt;kernel_x86&gt; common_close(int32: 3, false)
+ + 0x0031
+ 18 83fe3f24 (+  32) 800915e4   &lt;kernel_x86&gt;:_user_close + 0x0018
+ 19 83fe3f44 (+ 100) 800d8ca2   &lt;kernel_x86&gt;:handle_syscall + 0x00af
+ user iframe at 0x83fe3fa8 (end = 0x83fe4000)
+  eax 0x8a           ebx 0x2b8bb4        ecx 0x7ffeeeb0   edx 0xffff0104
+  esi 0x7ffef5b5     edi 0x204177        ebp 0x7ffeeedc   esp 0x83fe3fdc
+  eip 0xffff0104  eflags 0x207      user esp 0x7ffeeeb0
+  vector: 0x63, error code: 0x0
+ 20 83fe3fa8 (+   0) ffff0104   &lt;commpage&gt;:commpage_syscall + 0x0004
+ 21 7ffeeedc (+ 160) 0020220f   &lt;_APP_&gt;:main + 0x0453
+ 22 7ffeef7c (+  48) 002015eb   &lt;_APP_&gt;:_start + 0x005b
+ 23 7ffeefac (+  48) 0010090a
+ &lt;/boot/system/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">runtime_loader at 0x00100000</A>&gt;:unknown+ 0x090a
+ 24 7ffeefdc (+   0) 7ffeefec   6159:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">cat_main_stack at 0x7efef000</A> + 0xffffec
+ kdebug&gt;
+
+ }}}
+
+ My suspicion is strongly that the way devfs currently handles things isn't
+ adequate for this situation.  I don't think my knowledge of that area is
+ going to be sufficient to track things down, so I'd be really happy to
+ cooperate with someone with more detailed expertise.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4053#comment:38">http://dev.haiku-os.org/ticket/4053#comment:38</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="022565.html">[Haiku-bugs] [Haiku] #3185: Device Manager Application
+</A></li>
+	<LI>Next message: <A HREF="022570.html">[Haiku-bugs] [Haiku] #4751: network with 8169 driver
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22568">[ date ]</a>
+              <a href="thread.html#22568">[ thread ]</a>
+              <a href="subject.html#22568">[ subject ]</a>
+              <a href="author.html#22568">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

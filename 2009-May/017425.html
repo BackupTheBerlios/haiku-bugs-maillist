@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3110: [kernel] PANIC: page still has	mappings
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233110%3A%20%5Bkernel%5D%20PANIC%3A%20page%20still%20has%0A%09mappings&In-Reply-To=%3C049.31a4a1dba5f97a8d25abb5aad7af2263%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="017424.html">
+   <LINK REL="Next"  HREF="017426.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3110: [kernel] PANIC: page still has	mappings</H1>
+    <B>mmlr</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233110%3A%20%5Bkernel%5D%20PANIC%3A%20page%20still%20has%0A%09mappings&In-Reply-To=%3C049.31a4a1dba5f97a8d25abb5aad7af2263%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3110: [kernel] PANIC: page still has	mappings">trac at haiku-os.org
+       </A><BR>
+    <I>Mon May 18 08:49:18 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="017424.html">[Haiku-bugs] [Haiku] #3938: SegFault at unmount of USB-Stick
+</A></li>
+        <LI>Next message: <A HREF="017426.html">[Haiku-bugs] [Haiku] #3939: IBM z60m backlight not enabled
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17425">[ date ]</a>
+              <a href="thread.html#17425">[ thread ]</a>
+              <a href="subject.html#17425">[ subject ]</a>
+              <a href="author.html#17425">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3110: [kernel] PANIC: page still has mappings
+---------------------------+------------------------------------------------
+ Reporter:  diver          |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  high           |   Milestone:  R1/alpha1     
+Component:  System/Kernel  |     Version:  R1 development
+Blockedby:                 |    Platform:  All           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+
+Comment(by mmlr):
+
+ I can reproduce this with kqemu. I've re-ported the current qemu version
+ (0.10.4, using native APIs) and the corresponding kqemu. QEMU and kqemu
+ work fine as long as they are running, but as soon as I close QEMU this
+ panic happens. This package is hacked up a bit (QEMU requiring a more
+ current GCC I compiled everything of QEMU with GCC4 but then used GCC2 for
+ the native stuff, since QEMU is pure C however this does work). It's of
+ course also possible that my kqemu driver is bogus, but I don't exactly
+ understand how a driver would provoke this panic. The driver does use
+ create/delete_area, lock/unlock_memory and get_memory_map. Could a
+ lock_memory without a matching unlock_memory trigger this? You can get the
+ package at <A HREF="http://haiku.mlotz.ch/qemu-0.10.4-haiku.zip">http://haiku.mlotz.ch/qemu-0.10.4-haiku.zip</A> for testing. You
+ can view the driver source at <A HREF="http://haiku.mlotz.ch/kqemu-haiku.c">http://haiku.mlotz.ch/kqemu-haiku.c</A> . It is
+ based on the previous BeOS version and doesn't make use of any Haiku
+ specifics except for user_memcpy(). Just tell me if you want me to test
+ anything in that regard.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3110#comment:14">http://dev.haiku-os.org/ticket/3110#comment:14</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="017424.html">[Haiku-bugs] [Haiku] #3938: SegFault at unmount of USB-Stick
+</A></li>
+	<LI>Next message: <A HREF="017426.html">[Haiku-bugs] [Haiku] #3939: IBM z60m backlight not enabled
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17425">[ date ]</a>
+              <a href="thread.html#17425">[ thread ]</a>
+              <a href="subject.html#17425">[ subject ]</a>
+              <a href="author.html#17425">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

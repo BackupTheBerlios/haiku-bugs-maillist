@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1074: Identify and fix performance bottlenecks in our app_server
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231074%3A%20Identify%20and%20fix%20performance%0A%20bottlenecks%20in%20our%20app_server&In-Reply-To=%3C049.2f930e0d70686ea3fc062f88be61ffe7%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000682.html">
+   <LINK REL="Next"  HREF="000698.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1074: Identify and fix performance bottlenecks in our app_server</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231074%3A%20Identify%20and%20fix%20performance%0A%20bottlenecks%20in%20our%20app_server&In-Reply-To=%3C049.2f930e0d70686ea3fc062f88be61ffe7%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1074: Identify and fix performance bottlenecks in our app_server">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Mar  8 02:57:37 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000682.html">[Haiku-bugs] [Haiku] #1074: Identify and fix performance bottlenecks in our app_server
+</A></li>
+        <LI>Next message: <A HREF="000698.html">[Haiku-bugs] [Haiku] #1074: Identify and fix performance bottlenecks in our app_server
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#683">[ date ]</a>
+              <a href="thread.html#683">[ thread ]</a>
+              <a href="subject.html#683">[ subject ]</a>
+              <a href="author.html#683">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1074: Identify and fix performance bottlenecks in our app_server
+---------------------------------+------------------------------------------
+  Reporter:  axeld               |       Owner:  axeld         
+      Type:  enhancement         |      Status:  new           
+  Priority:  normal              |   Milestone:  R1            
+ Component:  Servers/app_server  |     Version:  R1 development
+Resolution:                      |    Platform:  All           
+---------------------------------+------------------------------------------
+Comment (by bonefish):
+
+ Replying to [comment:9 kaoutsis]:
+ &gt; Replying to [comment:5 bonefish]:
+ &gt; Very elegant. Now something to finish that work for linking:
+ &gt; in my r5 &amp; gcc 2.95.3-beos-060710 need to link with
+ /boot/develop/lib/x86/i386-mcount.o
+ &gt; to resolve the profiling symbols.
+
+ Just use the LinkAgainst rule to add it:
+
+ {{{
+   LinkAgainst app_server : /boot/develop/lib/x86/i386-mcount.o ;
+ }}}
+
+ Note, that the dependency is old, so the first time you might need to
+ remove the generated executable or otherwise trigger re-linking.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1074#comment:12">http://dev.haiku-os.org/ticket/1074#comment:12</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000682.html">[Haiku-bugs] [Haiku] #1074: Identify and fix performance bottlenecks in our app_server
+</A></li>
+	<LI>Next message: <A HREF="000698.html">[Haiku-bugs] [Haiku] #1074: Identify and fix performance bottlenecks in our app_server
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#683">[ date ]</a>
+              <a href="thread.html#683">[ thread ]</a>
+              <a href="subject.html#683">[ subject ]</a>
+              <a href="author.html#683">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

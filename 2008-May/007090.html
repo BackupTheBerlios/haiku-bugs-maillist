@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2194: KDL while using WGET with rt18139
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232194%3A%20KDL%20while%20using%20WGET%20with%20rt18139&In-Reply-To=%3C042.c5ca4744261df836361890420bc438c7%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007089.html">
+   <LINK REL="Next"  HREF="007108.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2194: KDL while using WGET with rt18139</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232194%3A%20KDL%20while%20using%20WGET%20with%20rt18139&In-Reply-To=%3C042.c5ca4744261df836361890420bc438c7%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2194: KDL while using WGET with rt18139">trac at haiku-os.org
+       </A><BR>
+    <I>Fri May  2 20:08:57 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007089.html">[Haiku-bugs] [Haiku] #2193: Gzip needs 1.2.4b patch applied
+</A></li>
+        <LI>Next message: <A HREF="007108.html">[Haiku-bugs] [Haiku] #2194: KDL while using WGET with rt18139
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7090">[ date ]</a>
+              <a href="thread.html#7090">[ thread ]</a>
+              <a href="subject.html#7090">[ subject ]</a>
+              <a href="author.html#7090">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2194: KDL while using WGET with rt18139
+--------------------------------+-------------------------------------------
+ Reporter:  scottmc             |       Owner:  axeld         
+     Type:  bug                 |      Status:  new           
+ Priority:  normal              |   Milestone:  R1            
+Component:  Network &amp; Internet  |     Version:  R1 development
+ Platform:  All                 |  
+--------------------------------+-------------------------------------------
+ typing by hand so only putting in the first part here.  If you need more
+ let me know.
+
+ PANIC: vm_page fault: unhandle page fault in kernel space at 0x4f951caf,
+ ip 0x80098c98
+
+ Welcome to Kernel Debugging Land...
+ Running on CPU 0
+ kdebug&gt; sc
+ stack trace for thread 64 &quot;/dev/net/rtl18139/0 reader&quot;
+     kernel stack: 0x8052c000 to 0x80530000
+ frame              caller    &lt;image&gt;:function + offset
+ 8052fa20 (+ 52) 8008b63f     &lt;kernel&gt;:invoke_debugger_command + 0x00cf
+ 8052fa54 (+ 64) 8008c3e8     &lt;kernel&gt;:_ParseCommand__16ExpressionParserRi
+ + 0x01f9
+
+ To reproduce, boot a fresh dev image of r25283 on real hardware with a
+ Realtek RTL-8139/8139C/8139C+ network controller.  Attempt to use WGET to
+ grab a file, KDL unsues about 70% of the way through.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2194">http://dev.haiku-os.org/ticket/2194</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007089.html">[Haiku-bugs] [Haiku] #2193: Gzip needs 1.2.4b patch applied
+</A></li>
+	<LI>Next message: <A HREF="007108.html">[Haiku-bugs] [Haiku] #2194: KDL while using WGET with rt18139
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7090">[ date ]</a>
+              <a href="thread.html#7090">[ thread ]</a>
+              <a href="subject.html#7090">[ subject ]</a>
+              <a href="author.html#7090">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,184 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4918: USB causing slow boot
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234918%3A%20USB%20causing%20slow%20boot&In-Reply-To=%3C048.b1075ed3a3292e871cc73d89488676bc%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="023535.html">
+   <LINK REL="Next"  HREF="023537.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4918: USB causing slow boot</H1>
+    <B>umccullough</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234918%3A%20USB%20causing%20slow%20boot&In-Reply-To=%3C048.b1075ed3a3292e871cc73d89488676bc%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4918: USB causing slow boot">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Nov  7 22:33:24 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="023535.html">[Haiku-bugs] [Haiku] #4918: USB causing slow boot
+</A></li>
+        <LI>Next message: <A HREF="023537.html">[Haiku-bugs] [Haiku] #4919: PANIC - got an in use page from the	free pages list
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#23536">[ date ]</a>
+              <a href="thread.html#23536">[ thread ]</a>
+              <a href="subject.html#23536">[ subject ]</a>
+              <a href="author.html#23536">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4918: USB causing slow boot
+-------------------------+--------------------------------------------------
+ Reporter:  myob         |       Owner:  mmlr     
+     Type:  bug          |      Status:  new      
+ Priority:  normal       |   Milestone:  R1       
+Component:  Drivers/USB  |     Version:  R1/alpha1
+Blockedby:               |    Platform:  All      
+ Blocking:               |  
+-------------------------+--------------------------------------------------
+
+Old description:
+
+&gt;<i> I've an nVidia MPC73 chipset, and having seriously slow boot problems. It
+</I>&gt;<i> was apparent before alpha1, currently using r33886 gcc2.
+</I>&gt;<i>
+</I>&gt;<i> I've tracked it down via the on-screen boot log to be down to the
+</I>&gt;<i> usb/usb_disk drivers. the offending section of syslog is below:
+</I>&gt;<i>
+</I>&gt;<i> KERN: ahci: ahci_supports_device
+</I>&gt;<i> KERN: usb uhci: no devices found
+</I>&gt;<i> KERN: usb ohci -1: iospace offset: 0xe6106000
+</I>&gt;<i> KERN: usb ohci -1: smm is in control of the host controller
+</I>&gt;<i> KERN: usb ohci -1: ownership change successful
+</I>&gt;<i> KERN: usb ohci -1: successfully started the controller
+</I>&gt;<i> KERN: usb ehci: no devices found
+</I>&gt;<i> KERN: usb hub 2: port 1: new device connected
+</I>&gt;<i> KERN: usb error control pipe 6: timeout waiting for queued request to
+</I>&gt;<i> complete
+</I>&gt;<i> Last message repeated 2 times
+</I>&gt;<i> KERN: usb error ohci 0: error while setting device address
+</I>&gt;<i> KERN: usb hub 2: port 9: new device connected
+</I>&gt;<i> KERN: usb_disk: device reports a lun count of 3
+</I>&gt;<i> KERN: usb_disk: vendor_identification    &quot;Generic &quot;
+</I>&gt;<i> KERN: usb_disk: product_identification   &quot;Flash HS-CF&quot;
+</I>&gt;<i> KERN: usb_disk: product_revision_level   &quot;4.55&quot;
+</I>&gt;<i> KERN: usb error ohci 0: td error: 0x00000004
+</I>&gt;<i> KERN: usb_disk: acquire_sem failed while waiting for data transfer
+</I>&gt;<i> KERN: usb_disk: receiving the command status wrapper failed
+</I>&gt;<i> KERN: usb_disk: command status wrapper is not valid
+</I>&gt;<i> KERN: usb error ohci 0: td error: 0x00000004
+</I>&gt;<i> KERN: usb_disk: sending the command block wrapper failed
+</I>&gt;<i> KERN: usb_disk: acquire_sem failed while waiting for data transfer
+</I>&gt;<i> KERN: usb error ohci 0: td error: 0x00000004
+</I>&gt;<i> KERN: usb_disk: acquire_sem failed while waiting for data transfer
+</I>&gt;<i> KERN: usb_disk: command status wrapper is not valid
+</I>&gt;<i> KERN: usb error ohci 0: td error: 0x00000004
+</I>&gt;<i> KERN: usb_disk: sending the command block wrapper failed
+</I>&gt;<i> KERN: usb_disk: getting inquiry data failed
+</I>&gt;<i> KERN: usb_disk: acquire_sem failed while waiting for data transfer
+</I>&gt;<i> KERN: usb_disk: command status wrapper is not valid
+</I>&gt;<i> KERN: usb error ohci 0: td error: 0x00000004
+</I>&gt;<i> KERN: usb_disk: sending the command block wrapper failed
+</I>&gt;<i> KERN: usb_disk: failed to initialize logical units
+</I>&gt;<i> KERN: get_boot_partitions(): boot volume message:
+</I>&gt;<i>
+</I>
+&gt;<i>
+</I>
+&gt;<i> I've got a multi-type card reader on the front that I think this is
+</I>&gt;<i> referring to - it usually presents as four devices though.
+</I>
+New description:
+
+ I've an nVidia MPC73 chipset, and having seriously slow boot problems. It
+ was apparent before alpha1, currently using r33886 gcc2.
+
+ I've tracked it down via the on-screen boot log to be down to the
+ usb/usb_disk drivers. the offending section of syslog is below:
+
+ {{{
+ KERN: ahci: ahci_supports_device
+ KERN: usb uhci: no devices found
+ KERN: usb ohci -1: iospace offset: 0xe6106000
+ KERN: usb ohci -1: smm is in control of the host controller
+ KERN: usb ohci -1: ownership change successful
+ KERN: usb ohci -1: successfully started the controller
+ KERN: usb ehci: no devices found
+ KERN: usb hub 2: port 1: new device connected
+ KERN: usb error control pipe 6: timeout waiting for queued request to
+ complete
+ Last message repeated 2 times
+ KERN: usb error ohci 0: error while setting device address
+ KERN: usb hub 2: port 9: new device connected
+ KERN: usb_disk: device reports a lun count of 3
+ KERN: usb_disk: vendor_identification    &quot;Generic &quot;
+ KERN: usb_disk: product_identification   &quot;Flash HS-CF&quot;
+ KERN: usb_disk: product_revision_level   &quot;4.55&quot;
+ KERN: usb error ohci 0: td error: 0x00000004
+ KERN: usb_disk: acquire_sem failed while waiting for data transfer
+ KERN: usb_disk: receiving the command status wrapper failed
+ KERN: usb_disk: command status wrapper is not valid
+ KERN: usb error ohci 0: td error: 0x00000004
+ KERN: usb_disk: sending the command block wrapper failed
+ KERN: usb_disk: acquire_sem failed while waiting for data transfer
+ KERN: usb error ohci 0: td error: 0x00000004
+ KERN: usb_disk: acquire_sem failed while waiting for data transfer
+ KERN: usb_disk: command status wrapper is not valid
+ KERN: usb error ohci 0: td error: 0x00000004
+ KERN: usb_disk: sending the command block wrapper failed
+ KERN: usb_disk: getting inquiry data failed
+ KERN: usb_disk: acquire_sem failed while waiting for data transfer
+ KERN: usb_disk: command status wrapper is not valid
+ KERN: usb error ohci 0: td error: 0x00000004
+ KERN: usb_disk: sending the command block wrapper failed
+ KERN: usb_disk: failed to initialize logical units
+ KERN: get_boot_partitions(): boot volume message:
+ }}}
+
+
+
+ I've got a multi-type card reader on the front that I think this is
+ referring to - it usually presents as four devices though.
+
+--
+
+Comment(by umccullough):
+
+ fixed syslog formatting in ticket description
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4918#comment:2">http://dev.haiku-os.org/ticket/4918#comment:2</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="023535.html">[Haiku-bugs] [Haiku] #4918: USB causing slow boot
+</A></li>
+	<LI>Next message: <A HREF="023537.html">[Haiku-bugs] [Haiku] #4919: PANIC - got an in use page from the	free pages list
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#23536">[ date ]</a>
+              <a href="thread.html#23536">[ thread ]</a>
+              <a href="subject.html#23536">[ subject ]</a>
+              <a href="author.html#23536">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

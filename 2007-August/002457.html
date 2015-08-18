@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1431: Mail codebase needs a cleanup to fix	several issues
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231431%3A%20Mail%20codebase%20needs%20a%20cleanup%20to%20fix%0A%09several%20issues&In-Reply-To=%3C041.dcc9be20280c3792355a6e71d7d5c528%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002479.html">
+   <LINK REL="Next"  HREF="002458.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1431: Mail codebase needs a cleanup to fix	several issues</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231431%3A%20Mail%20codebase%20needs%20a%20cleanup%20to%20fix%0A%09several%20issues&In-Reply-To=%3C041.dcc9be20280c3792355a6e71d7d5c528%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1431: Mail codebase needs a cleanup to fix	several issues">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Aug 28 12:26:39 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002479.html">[Haiku-bugs] [Haiku] #1430: BTextView has invalidation problems when words are moved from the end of a line to a new line while typing
+</A></li>
+        <LI>Next message: <A HREF="002458.html">[Haiku-bugs] [Haiku] #1431: Mail codebase needs a cleanup to fix several issues
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2457">[ date ]</a>
+              <a href="thread.html#2457">[ thread ]</a>
+              <a href="subject.html#2457">[ subject ]</a>
+              <a href="author.html#2457">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1431: Mail codebase needs a cleanup to fix several issues
+---------------------------------+------------------------------------------
+ Reporter:  stippi               |       Owner:  stippi        
+     Type:  bug                  |      Status:  new           
+ Priority:  normal               |   Milestone:  R1            
+Component:  - Applications/Mail  |     Version:  R1 development
+ Platform:  All                  |  
+---------------------------------+------------------------------------------
+ * Mail is not font sensitive and overwrites the user configured system
+ fontsize for some (but not all) controls
+ * the code is quite messy and ignores proper object oriented programming
+ concepts
+ * the print settings message is used from deleted print jobs instead of
+ being copied
+ * the code is riddled with race conditions when it comes to changing
+ settings:
+  - program settings are implemented via global variables, in different
+ status of having been cleaned up
+  - program settings are applied at &quot;random&quot; with locking problems and race
+ conditions
+  - some program settings are available to change in the preference GUI,
+ but have no effect, since the respective code is not in use anymore (for
+ example disabling the text under the icon buttons)
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1431">http://dev.haiku-os.org/ticket/1431</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002479.html">[Haiku-bugs] [Haiku] #1430: BTextView has invalidation problems when words are moved from the end of a line to a new line while typing
+</A></li>
+	<LI>Next message: <A HREF="002458.html">[Haiku-bugs] [Haiku] #1431: Mail codebase needs a cleanup to fix several issues
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2457">[ date ]</a>
+              <a href="thread.html#2457">[ thread ]</a>
+              <a href="subject.html#2457">[ subject ]</a>
+              <a href="author.html#2457">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

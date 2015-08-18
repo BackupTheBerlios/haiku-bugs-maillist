@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2804: booting fail on PATA disks using AHCI capable chipsets?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232804%3A%20booting%20fail%20on%20PATA%20disks%20using%20AHCI%0A%20capable%20chipsets%3F&In-Reply-To=%3C042.2aa8b3f9f5ca1536f750f463a06f125f%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010782.html">
+   <LINK REL="Next"  HREF="010784.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2804: booting fail on PATA disks using AHCI capable chipsets?</H1>
+    <B>rudolfc</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232804%3A%20booting%20fail%20on%20PATA%20disks%20using%20AHCI%0A%20capable%20chipsets%3F&In-Reply-To=%3C042.2aa8b3f9f5ca1536f750f463a06f125f%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2804: booting fail on PATA disks using AHCI capable chipsets?">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Oct  6 20:37:10 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010782.html">[Haiku-bugs] [Haiku] #2786: ACPI vm_page_fault
+</A></li>
+        <LI>Next message: <A HREF="010784.html">[Haiku-bugs] [Haiku] #2804: booting fail on PATA disks using AHCI capable chipsets?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10783">[ date ]</a>
+              <a href="thread.html#10783">[ thread ]</a>
+              <a href="subject.html#10783">[ subject ]</a>
+              <a href="author.html#10783">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2804: booting fail on PATA disks using AHCI capable chipsets?
+-----------------------+----------------------------------------------------
+ Reporter:  rudolfc    |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+Blockedby:             |    Platform:  All           
+ Blocking:             |  
+-----------------------+----------------------------------------------------
+ On my ASUS P5E3 sits a Marvell 88SE6111 PATA/SATA controller with one
+ ultra DMA 100/133 connector, and one external SATA3.0 Gb/s port (sata on
+ the go).
+
+ DMA fails on this chipset using the IDE busmanager, and reading and
+ writing from/to disk both fail using 32bit PIO access (IDE and ATA
+ busmanager). Both reading and writing succeed in 16bit PIO access.
+
+ I've been reading the net a bit, and from the looks of it this chip is a
+ AHCI mimicking chipset. It would be able to run in AHCI mode even for the
+ PATA bus, but it can also run in 'legacy' mode.
+
+ I get the feeling that the chip has to be 'told' to use legacy mode by
+ accessing certain registers in a certain way/order.
+ Looks like it's done here:
+ <A HREF="http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=blob_plain;f=drivers/ata/pata_marvell.c">http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=blob_plain;f=drivers/ata/pata_marvell.c</A>
+
+ in routine:
+ marvell_pre_reset();
+
+ So I guess something like this has to be done somewhere in a driver, or we
+ should run this controller in AHCI mode for the PATA port. I expect
+ (guess) that 32bit PIO I/O and DMA would work with the marvell_pre_reset()
+ trick.???
+
+ Since Revision: R27884 the use of this adapter works in 16-bit PIO mode as
+ the driver generic/ide_adapter has been modified to always use 16bit
+ transfers for reading and writing in PIO mode.
+
+ This is a workaround until the ata (and ide) busmanagers can automatically
+ fall-back from 32bit PIO mode to 16bit PIO mode on 32bit trouble (for the
+ writing instance: no int after writing, but a timeout occurs).
+
+ (Note: I forced 16-bit writing in R27884, 16-bit reading was  already
+ forced ever since the driver was imported in svn over 4 years ago! I did
+ test 32bit reading tough and it indeed failed.)
+
+ I tested different harddisks, all failed.
+
+ Hopefully I am making sense..
+
+ Greetings!
+
+ Rudolf.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2804">http://dev.haiku-os.org/ticket/2804</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010782.html">[Haiku-bugs] [Haiku] #2786: ACPI vm_page_fault
+</A></li>
+	<LI>Next message: <A HREF="010784.html">[Haiku-bugs] [Haiku] #2804: booting fail on PATA disks using AHCI capable chipsets?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10783">[ date ]</a>
+              <a href="thread.html#10783">[ thread ]</a>
+              <a href="subject.html#10783">[ subject ]</a>
+              <a href="author.html#10783">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

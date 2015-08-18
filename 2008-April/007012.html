@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2083: EHCI bus hanging at boot.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232083%3A%20EHCI%20bus%20hanging%20at%20boot.&In-Reply-To=%3C047.3801578d69da15c3a2ea7cad41ca482d%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007010.html">
+   <LINK REL="Next"  HREF="006476.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2083: EHCI bus hanging at boot.</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232083%3A%20EHCI%20bus%20hanging%20at%20boot.&In-Reply-To=%3C047.3801578d69da15c3a2ea7cad41ca482d%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2083: EHCI bus hanging at boot.">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Apr 30 13:41:59 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007010.html">[Haiku-bugs] [Haiku] #2083: EHCI bus hanging at boot.
+</A></li>
+        <LI>Next message: <A HREF="006476.html">[Haiku-bugs] [Haiku] #1131: more missing bin commands
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7012">[ date ]</a>
+              <a href="thread.html#7012">[ thread ]</a>
+              <a href="subject.html#7012">[ subject ]</a>
+              <a href="author.html#7012">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2083: EHCI bus hanging at boot.
+--------------------------+-------------------------------------------------
+  Reporter:  bga          |       Owner:  mmlr          
+      Type:  bug          |      Status:  assigned      
+  Priority:  blocker      |   Milestone:  R1            
+ Component:  Drivers/USB  |     Version:  R1 development
+Resolution:               |    Platform:  All           
+--------------------------+-------------------------------------------------
+Comment (by mmlr):
+
+ Well that tracing and TRACE_USB has nothing to do with eachother ;-).
+ TRACE_USB is enough to define all the TRACE() statements to dprintf which
+ will/should cause the debug output to appear. You could globally enable
+ TRACE_USB by adding that define at the top of &quot;src/add-
+ ons/kernel/bus_managers/usb/usb_p.h&quot;. This will enable debug output for
+ all of the USB stack and the host controller drivers. Possibly it's not
+ EHCI, but another UHCI controller that fails in that case.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2083#comment:12">http://dev.haiku-os.org/ticket/2083#comment:12</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007010.html">[Haiku-bugs] [Haiku] #2083: EHCI bus hanging at boot.
+</A></li>
+	<LI>Next message: <A HREF="006476.html">[Haiku-bugs] [Haiku] #1131: more missing bin commands
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7012">[ date ]</a>
+              <a href="thread.html#7012">[ thread ]</a>
+              <a href="subject.html#7012">[ subject ]</a>
+              <a href="author.html#7012">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

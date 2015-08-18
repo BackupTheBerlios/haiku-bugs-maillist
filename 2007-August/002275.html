@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1396: Terminal parses the shell arguments	incorrectly
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231396%3A%20Terminal%20parses%20the%20shell%20arguments%0A%09incorrectly&In-Reply-To=%3C040.84677578b1036d5aeb4a018ecf701ed5%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002272.html">
+   <LINK REL="Next"  HREF="002276.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1396: Terminal parses the shell arguments	incorrectly</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231396%3A%20Terminal%20parses%20the%20shell%20arguments%0A%09incorrectly&In-Reply-To=%3C040.84677578b1036d5aeb4a018ecf701ed5%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1396: Terminal parses the shell arguments	incorrectly">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Aug 13 21:26:40 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002272.html">[Haiku-bugs] [Haiku] #1293: External LCD on a second DVI
+</A></li>
+        <LI>Next message: <A HREF="002276.html">[Haiku-bugs] [Haiku] #1396: Terminal parses the shell arguments	incorrectly
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2275">[ date ]</a>
+              <a href="thread.html#2275">[ thread ]</a>
+              <a href="subject.html#2275">[ subject ]</a>
+              <a href="author.html#2275">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1396: Terminal parses the shell arguments incorrectly
+-------------------------------------+--------------------------------------
+ Reporter:  axeld                    |       Owner:  jackburton    
+     Type:  bug                      |      Status:  new           
+ Priority:  normal                   |   Milestone:  R1            
+Component:  - Applications/Terminal  |     Version:  R1 development
+ Platform:  All                      |  
+-------------------------------------+--------------------------------------
+ When passing arguments to the Terminal, it parses them incorrectly before
+ passing them over to the shell. For example, this is what prevents the
+ debug_server from starting a gdb session when the debugged application has
+ spaces in its path.
+
+ It should just copy the existing argument vector into the one it passes to
+ the shell (minus its own arguments). For compatibility with BeOS, Haiku's
+ libroot.so already memorizes the original arguments in __libc_argc and
+ __libc_argv.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1396">http://dev.haiku-os.org/ticket/1396</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002272.html">[Haiku-bugs] [Haiku] #1293: External LCD on a second DVI
+</A></li>
+	<LI>Next message: <A HREF="002276.html">[Haiku-bugs] [Haiku] #1396: Terminal parses the shell arguments	incorrectly
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2275">[ date ]</a>
+              <a href="thread.html#2275">[ thread ]</a>
+              <a href="subject.html#2275">[ subject ]</a>
+              <a href="author.html#2275">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

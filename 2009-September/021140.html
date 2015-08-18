@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4443: Deleting image file does not free	up space
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234443%3A%20Deleting%20image%20file%20does%20not%20free%0A%09up%20space&In-Reply-To=%3C057.9bf2dd9234887839b9531786103ba52c%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="020939.html">
+   <LINK REL="Next"  HREF="021141.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4443: Deleting image file does not free	up space</H1>
+    <B>psycho_killer</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234443%3A%20Deleting%20image%20file%20does%20not%20free%0A%09up%20space&In-Reply-To=%3C057.9bf2dd9234887839b9531786103ba52c%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4443: Deleting image file does not free	up space">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Sep 12 05:13:29 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="020939.html">[Haiku-bugs] [Haiku] #4443: Deleting image file does not free	up space
+</A></li>
+        <LI>Next message: <A HREF="021141.html">[Haiku-bugs] [Haiku] #4443: Deleting image file does not free	up space
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21140">[ date ]</a>
+              <a href="thread.html#21140">[ thread ]</a>
+              <a href="subject.html#21140">[ subject ]</a>
+              <a href="author.html#21140">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4443: Deleting image file does not free up space
+------------------------------+---------------------------------------------
+ Reporter:  psycho_killer     |       Owner:  axeld         
+     Type:  bug               |      Status:  new           
+ Priority:  normal            |   Milestone:  R1            
+Component:  File Systems/BFS  |     Version:  R1 development
+Blockedby:                    |    Platform:  All           
+ Blocking:                    |  
+------------------------------+---------------------------------------------
+
+Comment(by psycho_killer):
+
+ Thanks for your confidence in me, scottmc. Ok, jokes aside, thank you for
+ replying. I suspect from your answer that you couldn't reproduce, or what?
+
+ I have uploaded two small image files (one bfs and one iso) that behaves
+ like described, not freeing up the space. Should be easier for you all to
+ test with small files. Just have the 'Get info' box open for your volume
+ to note the space before/after deletion.
+
+ Space is not freed up whether I delete + empty trash, use shift + Del or
+ use 'rm' in terminal. I booted into BeOS and deleted all the content of
+ the Haiku partition, even did a 'rm -Rf *' in the /haiku root to delete
+ the hidden stuff. Had to reformat to free up the space.
+
+ Ok, so I did some more testing.
+
+ * Without exception, every time I mount an image file (both bfs and iso)
+ through the gui by double clicking it, I lose that space permanently, also
+ after rebooting. Obviously, this is unfortunate if we're talking about 700
+ MB iso files.
+
+ * Mounting with the terminal can result in either the space being freed or
+ not. In most typical user situations the result is that the space is not
+ released, even after reboot. In fact, the only way I've found to reliably
+ mount an image file and have the space freed up afterwards is as follows:
+ First mount/unmount the file through Tracker, then delete it (and lose the
+ space in the process). Then mount the same file, with the exact same
+ filename, through Terminal using the '-t &lt;file system&gt;' option. (Not
+ specifying file system will result in an error, bug report will follow
+ later.) Now you can unmount the volume (use Terminal) and delete the file,
+ and the space should be regained. It almost seems to be a &quot;bug&quot; that
+ allows this loophole to happen and have the space freed up--it's only the
+ fringe case that behaves correctly.
+
+ * It is possible to swap the image file that you use in the second step of
+ the procedure described just above with a different one --as long as it is
+ named exactly the same-- and not loose space occupied by the second file
+ when mounting in terminal. Useful workaround for mounting that big iso.
+
+ To sum up, something seems to be up with the mounting of image files, not
+ my trash can handling :-)
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4443#comment:2">http://dev.haiku-os.org/ticket/4443#comment:2</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="020939.html">[Haiku-bugs] [Haiku] #4443: Deleting image file does not free	up space
+</A></li>
+	<LI>Next message: <A HREF="021141.html">[Haiku-bugs] [Haiku] #4443: Deleting image file does not free	up space
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21140">[ date ]</a>
+              <a href="thread.html#21140">[ thread ]</a>
+              <a href="subject.html#21140">[ subject ]</a>
+              <a href="author.html#21140">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

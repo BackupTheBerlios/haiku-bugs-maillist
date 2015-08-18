@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2598: sshd occasionally segfaults on connect (possibly when forking)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232598%3A%20sshd%20occasionally%20segfaults%20on%0A%20connect%20%28possibly%20when%20forking%29&In-Reply-To=%3C053.c93eb6de8296adc195ad5ef047f19d36%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010854.html">
+   <LINK REL="Next"  HREF="010856.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2598: sshd occasionally segfaults on connect (possibly when forking)</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232598%3A%20sshd%20occasionally%20segfaults%20on%0A%20connect%20%28possibly%20when%20forking%29&In-Reply-To=%3C053.c93eb6de8296adc195ad5ef047f19d36%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2598: sshd occasionally segfaults on connect (possibly when forking)">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Oct  9 05:30:37 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010854.html">[Haiku-bugs] [Haiku] #2598: sshd occasionally segfaults on connect (possibly when forking)
+</A></li>
+        <LI>Next message: <A HREF="010856.html">[Haiku-bugs] [Haiku] #2598: sshd occasionally segfaults on connect (possibly when forking)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10855">[ date ]</a>
+              <a href="thread.html#10855">[ thread ]</a>
+              <a href="subject.html#10855">[ subject ]</a>
+              <a href="author.html#10855">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2598: sshd occasionally segfaults on connect (possibly when forking)
+----------------------------+-----------------------------------------------
+  Reporter:  anevilyak      |       Owner:  bonefish      
+      Type:  bug            |      Status:  assigned      
+  Priority:  normal         |   Milestone:  R1            
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |   Blockedby:                
+  Platform:  All            |    Blocking:                
+----------------------------+-----------------------------------------------
+
+Comment(by anevilyak):
+
+ Kernel stack trace:
+
+ {{{
+ stack trace for thread 85484 &quot;sshd&quot;
+     kernel stack: 0x801b5000 to 0x801b9000
+       user stack: 0x7efef000 to 0x7ffef000
+ frame            caller     &lt;image&gt;:function + offset
+  0 801b87ac (+  48) 80045ef1   &lt;kernel_x86&gt;:context_switch__FP6threadT0 +
+ 0x0039
+  1 801b87dc (+  64) 80046170   &lt;kernel_x86&gt;:scheduler_reschedule + 0x0248
+  2 801b881c (+  64) 80047504   &lt;kernel_x86&gt;:switch_sem_etc + 0x036c
+  3 801b885c (+  64) 8004716a   &lt;kernel_x86&gt;:acquire_sem_etc + 0x0026
+  4 801b889c (+  80) 800446d6   &lt;kernel_x86&gt;:read_port_etc + 0x0152
+  5 801b88ec (+1424) 80061f4a
+ &lt;kernel_x86&gt;:thread_hit_debug_event_internal__F22debug_debugger_messagePCvlbRb
+ + 0x02fa
+  6 801b8e7c (+  64) 800621bf
+ &lt;kernel_x86&gt;:thread_hit_debug_event__F22debug_debugger_messagePCvlb +
+ 0x002f
+  7 801b8ebc (+  80) 800623ab   &lt;kernel_x86&gt;:user_debug_exception_occurred
+ + 0x005b
+  8 801b8f0c (+  80) 800bb374   &lt;kernel_x86&gt;:vm_page_fault + 0x0314
+  9 801b8f5c (+  64) 800cab15   &lt;kernel_x86&gt;:page_fault_exception + 0x00d9
+ 10 801b8f9c (+  12) 800ce1cf   &lt;kernel_x86&gt;:int_bottom_user + 0x005a
+ user iframe at 0x801b8fa8 (end = 0x801b9000)
+  eax 0xb2ee0        ebx 0x48d4fc        ecx 0x180015a0   edx 0x180015a0
+  esi 0x0            edi 0x1802f928      ebp 0x7ffeec9c   esp 0x801b8fdc
+  eip 0x40f159    eflags 0x210297   user esp 0x7ffeec64
+  vector: 0xe, error code: 0x4
+ 11 801b8fa8 (+   0) 0040f159
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libroot.so at 0x003dc000</A>&gt;:unknown + 0x33159
+ 12 7ffeec9c (+  80) 0040fbaa
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libroot.so at 0x003dc000</A>&gt;:unknown + 0x33baa
+ 13 7ffeecec (+  48) 004112e1
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libroot.so at 0x003dc000</A>&gt;:unknown + 0x352e1
+ 14 7ffeed1c (+  48) 0023b2ca
+ &lt;/boot/home/config/bin/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">sshd at 0x00200000</A>&gt;:unknown + 0x3b2ca
+ 15 7ffeed4c (+ 208) 0020e457
+ &lt;/boot/home/config/bin/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">sshd at 0x00200000</A>&gt;:unknown + 0xe457
+ 16 7ffeee1c (+ 352) 0020fc63
+ &lt;/boot/home/config/bin/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">sshd at 0x00200000</A>&gt;:unknown + 0xfc63
+ 17 7ffeef7c (+  48) 0020ca1f
+ &lt;/boot/home/config/bin/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">sshd at 0x00200000</A>&gt;:unknown + 0xca1f
+ 18 7ffeefac (+  48) 001008ea
+ &lt;/boot/beos/system/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">runtime_loader at 0x00100000</A>&gt;:unknown + 0x08ea
+ 19 7ffeefdc (+   0) 7ffeefec   2599177:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">sshd_main_stack at 0x7efef000</A> +
+ 0xffffec
+ }}}
+
+ traced 0 30 -1 filter team 85484 turns up nothing in this case, oddly
+ enough, so I'm not sure where to start disassembling at.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2598#comment:26">http://dev.haiku-os.org/ticket/2598#comment:26</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010854.html">[Haiku-bugs] [Haiku] #2598: sshd occasionally segfaults on connect (possibly when forking)
+</A></li>
+	<LI>Next message: <A HREF="010856.html">[Haiku-bugs] [Haiku] #2598: sshd occasionally segfaults on connect (possibly when forking)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10855">[ date ]</a>
+              <a href="thread.html#10855">[ thread ]</a>
+              <a href="subject.html#10855">[ subject ]</a>
+              <a href="author.html#10855">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

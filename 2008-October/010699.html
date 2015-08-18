@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2721: error starting &quot;/bin/sh&quot;
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232721%3A%20error%20starting%20%22/bin/sh%22&In-Reply-To=%3C049.d16ee5a05d56d4a499f897ee5fd91429%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011833.html">
+   <LINK REL="Next"  HREF="010700.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2721: error starting &quot;/bin/sh&quot;</H1>
+    <B>diver</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232721%3A%20error%20starting%20%22/bin/sh%22&In-Reply-To=%3C049.d16ee5a05d56d4a499f897ee5fd91429%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2721: error starting &quot;/bin/sh&quot;">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Oct  2 08:00:45 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011833.html">[Haiku-bugs] [Haiku] #2791: 1920 x 1200 resolution not useable with nVidia and Westinghouse monitor
+</A></li>
+        <LI>Next message: <A HREF="010700.html">[Haiku-bugs] [Haiku] #2721: error starting &quot;/bin/sh&quot;
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10699">[ date ]</a>
+              <a href="thread.html#10699">[ thread ]</a>
+              <a href="subject.html#10699">[ subject ]</a>
+              <a href="author.html#10699">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2721: error starting &quot;/bin/sh&quot;
+----------------------------+-----------------------------------------------
+  Reporter:  diver          |       Owner:  axeld         
+      Type:  bug            |      Status:  new           
+  Priority:  normal         |   Milestone:  R1            
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |   Blockedby:                
+  Platform:  All            |    Blocking:                
+----------------------------+-----------------------------------------------
+
+Comment(by diver):
+
+ I commented out #define ENABLE_SWAP_SUPPORT in current revision, but now
+ it won't build.
+ {{{
+ C++ generated/objects/haiku/x86/release/system/kernel/vm/vm.o
+ src/system/kernel/vm/vm.cpp: In function `void
+ vm_get_info(system_memory_info *)':
+ src/system/kernel/vm/vm.cpp:4858: implicit declaration of function `int
+ swap_get_info(...)'
+
+ /home/diver/haiku/trunk/generated/cross-tools/bin/i586-pc-haiku-gcc -c
+ &quot;src/system/kernel/vm/vm.cpp&quot; -O -Wall -Wno-trigraphs -Wno-multichar
+ -nostdinc -Wno-multichar -D_ZETA_USING_DEPRECATED_API_=1
+ -D_ZETA_TS_FIND_DIR_=1 -finline -fno-builtin -fno-exceptions -Wno-
+ multichar -DBOCHS_DEBUG_HACK=0 -fno-pic -D_KERNEL_MODE -D__HAIKU__
+ -DHAIKU_DISTRO_COMPATIBILITY_DEFAULT -D__INTEL__ -DARCH_x86
+ -D_BEOS_R5_COMPATIBLE_ -DHAIKU_TARGET_PLATFORM_HAIKU
+ -Ibuild/user_config_headers -Ibuild/config_headers -Isrc/system/kernel/vm
+ -Igenerated/objects/common/system/kernel/vm
+ -Igenerated/objects/linux/x86/common/system/kernel/vm
+ -Igenerated/objects/haiku/x86/common/system/kernel/vm
+ -Isrc/system/kernel/vm/../device_manager -I- -Iheaders/private/shared
+ -Iheaders/private/. -Iheaders/private/kernel -Iheaders/private/libroot
+ -Iheaders/private/kernel/boot/platform/bios_ia32
+ -Iheaders/private/kernel/arch/x86 -Iheaders/private/.
+ -Iheaders/private/system -Iheaders/private/system/arch/x86
+ -Iheaders/build/gcc-2.95.3 -Iheaders -Iheaders/posix -Iheaders/gnu
+ -Iheaders/glibc -Iheaders/os -Iheaders/os/add-ons -Iheaders/os/add-
+ ons/file_system -Iheaders/os/add-ons/graphics -Iheaders/os/add-
+ ons/input_server -Iheaders/os/add-ons/registrar -Iheaders/os/add-
+ ons/screen_saver -Iheaders/os/add-ons/tracker -Iheaders/os/app
+ -Iheaders/os/device -Iheaders/os/drivers -Iheaders/os/game
+ -Iheaders/os/interface -Iheaders/os/kernel -Iheaders/os/media
+ -Iheaders/os/mail -Iheaders/os/midi -Iheaders/os/midi2 -Iheaders/os/net
+ -Iheaders/os/opengl -Iheaders/os/storage -Iheaders/os/support
+ -Iheaders/os/translation -Iheaders/private/. -Iheaders/cpp -o
+ &quot;generated/objects/haiku/x86/release/system/kernel/vm/vm.o&quot; ;
+
+ ...failed C++ generated/objects/haiku/x86/release/system/kernel/vm/vm.o
+ ...
+ ...removing generated/objects/haiku/x86/release/system/kernel/vm/vm.o
+
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2721#comment:5">http://dev.haiku-os.org/ticket/2721#comment:5</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011833.html">[Haiku-bugs] [Haiku] #2791: 1920 x 1200 resolution not useable with nVidia and Westinghouse monitor
+</A></li>
+	<LI>Next message: <A HREF="010700.html">[Haiku-bugs] [Haiku] #2721: error starting &quot;/bin/sh&quot;
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10699">[ date ]</a>
+              <a href="thread.html#10699">[ thread ]</a>
+              <a href="subject.html#10699">[ subject ]</a>
+              <a href="author.html#10699">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3120: 3com Combo nic doesn't work
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-December/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233120%3A%203com%20Combo%20nic%20doesn%27t%20work&In-Reply-To=%3C054.4944991ad3b245b6c626039c40b38a10%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="013055.html">
+   <LINK REL="Next"  HREF="013057.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3120: 3com Combo nic doesn't work</H1>
+    <B>Adek336</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233120%3A%203com%20Combo%20nic%20doesn%27t%20work&In-Reply-To=%3C054.4944991ad3b245b6c626039c40b38a10%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3120: 3com Combo nic doesn't work">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Dec  6 21:50:21 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="013055.html">[Haiku-bugs] [Haiku] #3113: Fatal Exception &quot;NMI Interrupt&quot; on	kernel boot
+</A></li>
+        <LI>Next message: <A HREF="013057.html">[Haiku-bugs] [Haiku] #2998: bcm440x doesn't initialize the NIC
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13056">[ date ]</a>
+              <a href="thread.html#13056">[ thread ]</a>
+              <a href="subject.html#13056">[ subject ]</a>
+              <a href="author.html#13056">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3120: 3com Combo nic doesn't work
+------------------------------+---------------------------------------------
+  Reporter:  apprentice       |       Owner:  axeld         
+      Type:  bug              |      Status:  new           
+  Priority:  normal           |   Milestone:  R1            
+ Component:  Drivers/Network  |     Version:  R1 development
+Resolution:                   |   Blockedby:                
+  Platform:  x86              |    Blocking:                
+------------------------------+---------------------------------------------
+
+Comment(by Adek336):
+
+ Could you also try the fix proposed <A HREF="http://unix.derkeiler.com/Mailing-">http://unix.derkeiler.com/Mailing-</A>
+ Lists/FreeBSD/current/2004-04/1049.html
+
+ {{{
+        if (did == TC_DEVICEID_TORNADO_10_100BT_920B ||
+            did == TC_DEVICEID_TORNADO_10_100BT_920B_WNM)
+                 sc-&gt;xl_flags |= XL_FLAG_PHYOK;
+
+         switch (did) {
+ +       case TC_DEVICEID_BOOMERANG_10BT_COMBO: /* added by rodrigc */
+         case TC_DEVICEID_BOOMERANG_10_100BT: /* 3c905-TX */
+         case TC_DEVICEID_HURRICANE_575A:
+         case TC_DEVICEID_HURRICANE_575B:
+         case TC_DEVICEID_HURRICANE_575C:
+                   sc-&gt;xl_flags |= XL_FLAG_NO_MMIO;
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3120#comment:10">http://dev.haiku-os.org/ticket/3120#comment:10</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="013055.html">[Haiku-bugs] [Haiku] #3113: Fatal Exception &quot;NMI Interrupt&quot; on	kernel boot
+</A></li>
+	<LI>Next message: <A HREF="013057.html">[Haiku-bugs] [Haiku] #2998: bcm440x doesn't initialize the NIC
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13056">[ date ]</a>
+              <a href="thread.html#13056">[ thread ]</a>
+              <a href="subject.html#13056">[ subject ]</a>
+              <a href="author.html#13056">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

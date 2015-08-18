@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2643: Black screen when DVI connected (non-native resolution)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232643%3A%20Black%20screen%20when%20DVI%20connected%0A%20%28non-native%20resolution%29&In-Reply-To=%3C052.6bd01b00506aee219d1b29c74aca7906%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="017999.html">
+   <LINK REL="Next"  HREF="017933.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2643: Black screen when DVI connected (non-native resolution)</H1>
+    <B>rudolfc</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232643%3A%20Black%20screen%20when%20DVI%20connected%0A%20%28non-native%20resolution%29&In-Reply-To=%3C052.6bd01b00506aee219d1b29c74aca7906%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2643: Black screen when DVI connected (non-native resolution)">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Jun  8 19:53:07 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="017999.html">[Haiku-bugs] [Haiku] #4013: Haiku booting breaks with &quot;Machine-Check Exception&quot;
+</A></li>
+        <LI>Next message: <A HREF="017933.html">[Haiku-bugs] [Haiku] #3689: No splash screen at boot with nVidia GeForce MX440
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17932">[ date ]</a>
+              <a href="thread.html#17932">[ thread ]</a>
+              <a href="subject.html#17932">[ subject ]</a>
+              <a href="author.html#17932">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2643: Black screen when DVI connected (non-native resolution)
+-------------------------------------+--------------------------------------
+ Reporter:  andreasf                 |       Owner:  rudolfc       
+     Type:  bug                      |      Status:  new           
+ Priority:  normal                   |   Milestone:  R1            
+Component:  Drivers/Graphics/nVidia  |     Version:  R1 development
+Blockedby:                           |    Platform:  x86           
+ Blocking:  1845                     |  
+-------------------------------------+--------------------------------------
+
+Comment(by rudolfc):
+
+ Hi again,
+
+ Thanks for your experiments!
+ I've located two issues we have currently.
+ --
+ One is described in ticket #3850 (don't set non existing VESA modes).
+ While I am yet unsure if the modes are non-existing, or if we are dealing
+ with a nVidia BIOS problem, it's clear that using 8 or 16 bit modes seems
+ always OK, while 32bit mode splashscreens don't display on a number of
+ cards. On some cards because of this failure the desktop won't come up
+ either, since the card's state is messed up and the driver can't correct
+ that currently (in most cases).
+
+ --
+ The second problem is that of the 'force widescreen' setting. If you have
+ a non-widescreen monitor, you should set that option to off. otherwise
+ especially DVI connected screens are fed with incorrect setup modelines
+ unless driver in their native resolution.
+
+ I'm working on this bug by setting up EDID/DDC to get actual specs from
+ the connected screens to better autodetect where the picture needs to go
+ and if we have ws or not.
+
+ --
+ With these two bugs known to you, can you retest and see if we hit the
+ 'jackpot'?
+
+ Thanks!
+
+ Rudolf.
+
+ BTW: The driver supports dualhead and TVout (TVout only for cards with
+ brooktree or conexant tv encoder). On BeOS you can issue these modes with
+ the app dualhead setup (bebits). Unfortunately this app doesn't work on
+ Haiku.
+ I think that BeOS is being phased out these days, so I should probably
+ rewrite the interface to work with the haiku prefs app (which in theory
+ can handle these things too, and that works on ATI cards).
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2643#comment:30">http://dev.haiku-os.org/ticket/2643#comment:30</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="017999.html">[Haiku-bugs] [Haiku] #4013: Haiku booting breaks with &quot;Machine-Check Exception&quot;
+</A></li>
+	<LI>Next message: <A HREF="017933.html">[Haiku-bugs] [Haiku] #3689: No splash screen at boot with nVidia GeForce MX440
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17932">[ date ]</a>
+              <a href="thread.html#17932">[ thread ]</a>
+              <a href="subject.html#17932">[ subject ]</a>
+              <a href="author.html#17932">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

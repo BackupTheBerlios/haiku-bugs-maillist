@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4164: assertion fails in malloc (rev	31961)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-July/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234164%3A%20assertion%20fails%20in%20malloc%20%28rev%0A%0931961%29&In-Reply-To=%3C048.55df70b4606ceba7d1bdde12bf89c920%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="018914.html">
+   <LINK REL="Next"  HREF="018915.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4164: assertion fails in malloc (rev	31961)</H1>
+    <B>Blub</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234164%3A%20assertion%20fails%20in%20malloc%20%28rev%0A%0931961%29&In-Reply-To=%3C048.55df70b4606ceba7d1bdde12bf89c920%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4164: assertion fails in malloc (rev	31961)">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Jul 31 23:23:37 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="018914.html">[Haiku-bugs] [Haiku] #4164: assertion fails in malloc (rev 31961)
+</A></li>
+        <LI>Next message: <A HREF="018915.html">[Haiku-bugs] [Haiku] #4165: Support-aiding Haiku runtime data request application and web integration
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18922">[ date ]</a>
+              <a href="thread.html#18922">[ thread ]</a>
+              <a href="subject.html#18922">[ subject ]</a>
+              <a href="author.html#18922">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4164: assertion fails in malloc (rev 31961)
+-------------------------------+--------------------------------------------
+ Reporter:  Blub               |       Owner:  axeld         
+     Type:  bug                |      Status:  new           
+ Priority:  normal             |   Milestone:  R1            
+Component:  System/libroot.so  |     Version:  R1 development
+Blockedby:                     |    Platform:  All           
+ Blocking:                     |  
+-------------------------------+--------------------------------------------
+
+Comment(by Blub):
+
+ seems like it was a double-free corruption, but I cannot really confirm
+ that since I couldn't find the place where it actually happened.
+
+ I have a testcase where I was able to successfully double-free some data
+ without any errors or assertion faults coming up, so I guess the errors
+ occur some time too late.
+
+ After changing the data-layout of the program it didn't crash anymore
+ (actually it is now optimized better since it doesn't fragment the memory
+ as much)
+
+ I guess I'm just too used to glibc's huge and frightening &quot;double free
+ corruption&quot; error message.
+
+ However, when I double-freed on purpose in my testcase (sometimes it did
+ actually cause a crash) then it has always been a different assertion.
+ (and it's always been the same different assertions)
+
+ Maybe if I have time to read through the malloc code I can add a check for
+ double-free corruptions (if until then it's not already made).
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4164#comment:1">http://dev.haiku-os.org/ticket/4164#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="018914.html">[Haiku-bugs] [Haiku] #4164: assertion fails in malloc (rev 31961)
+</A></li>
+	<LI>Next message: <A HREF="018915.html">[Haiku-bugs] [Haiku] #4165: Support-aiding Haiku runtime data request application and web integration
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18922">[ date ]</a>
+              <a href="thread.html#18922">[ thread ]</a>
+              <a href="subject.html#18922">[ subject ]</a>
+              <a href="author.html#18922">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

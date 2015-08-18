@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1827: Write a USB -&gt; BIOS handover kernel debugger enter/exit add-on
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231827%3A%20Write%20a%20USB%20-%3E%20BIOS%20handover%20kernel%0A%20debugger%20enter/exit%20add-on&In-Reply-To=%3C050.adee40b4379fb645b6f36d2e31bcd7e9%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008045.html">
+   <LINK REL="Next"  HREF="008049.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1827: Write a USB -&gt; BIOS handover kernel debugger enter/exit add-on</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231827%3A%20Write%20a%20USB%20-%3E%20BIOS%20handover%20kernel%0A%20debugger%20enter/exit%20add-on&In-Reply-To=%3C050.adee40b4379fb645b6f36d2e31bcd7e9%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1827: Write a USB -&gt; BIOS handover kernel debugger enter/exit add-on">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Jun 11 11:46:35 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008045.html">[Haiku-bugs] [Haiku] #1171: Add support for VIA/S3 Unichrome	PRO IGP
+</A></li>
+        <LI>Next message: <A HREF="008049.html">[Haiku-bugs] [Haiku] #1827: Write a USB -&gt; BIOS handover kernel debugger enter/exit add-on
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8048">[ date ]</a>
+              <a href="thread.html#8048">[ thread ]</a>
+              <a href="subject.html#8048">[ subject ]</a>
+              <a href="author.html#8048">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1827: Write a USB -&gt; BIOS handover kernel debugger enter/exit add-on
+----------------------------+-----------------------------------------------
+  Reporter:  stippi         |       Owner:  mmlr          
+      Type:  enhancement    |      Status:  closed        
+  Priority:  high           |   Milestone:  R1/alpha1     
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:  invalid        |    Platform:  All           
+----------------------------+-----------------------------------------------
+Changes (by mmlr):
+
+  * status:  new =&gt; closed
+  * resolution:  =&gt; invalid
+
+Comment:
+
+ I'm sorry to report that it is highly unlikely that I will be able to
+ implement this. I did a few attempts and thought through a few possible
+ ways to go about this, but the problems are many fold and not really
+ solvable.
+
+ First of all, while EHCI provides theoretical means (by the spec) to hand
+ over the controller back to BIOS/firmware, there is no such provision in
+ UHCI where the keyboards will usually be attached to. Also even the EHCI
+ possibility seems not really supported anywhere and all the code in other
+ OSes I checked do not handle this case at all or the corresponding code is
+ simply disabled. It seems to me that there is no actual BIOS/firmware
+ implementation that would reinitialize the legacy support by other means
+ than rebooting. I have tried to simply reenable the legacy support bits
+ for UHCI, but that cannot realistically work, as the BIOS couldn't really
+ do anything as the schedules, controller setup and even device state is
+ completely different from what the BIOS initializes it to when booting.
+
+ Then there is the more general problem of how to handle enter/leave
+ conditions. Even if it was possible to hand over the controller back to
+ the BIOS it would require the BIOS to reset the controller, do a
+ redetection of the devices and then reenable legacy emulation through the
+ PS/2 ports. That's a pretty big thing to handle which is unlikely to be
+ present in most BIOSes and judging from how badly implemented legacy
+ support itself in general is, I wouldn't put any hopes in such a process
+ even if it existed.
+
+ Leaving KDL again after such a thing would also be pretty straight
+ impossible. The controller would suddenly be in a completely different
+ state than what the driver expects. It would require detecting this and
+ doing clean resets. Again from judging how badly legacy handoff is
+ generally implemented this would probably turn out to be very fragile if
+ possible at all.
+
+ The more probable thing to happen would be if we wrote a KDL USB stack
+ with modified controller drivers that work purely in polling mode. This is
+ a huge task however, as you would essentially have to write a complete USB
+ stack, host controller drivers and a hid driver inside the kernel debugger
+ (not even thinking about the dependency on PCI and how to enumerate and
+ reset the controllers). You would even need to partially support the
+ unused EHCI as you have to kick it off so the companion host controllers
+ get the lowspeed devices at all.
+
+ I don't really see myself doing this as the required effort would be huge
+ for a relatively small gain. The better alternative in those cases would
+ be to simply disable USB completely by removing the host controller
+ drivers and then just use legacy emulation all the time, including KDL. So
+ I will close this enhancement now as it is a bit unrealistic having
+ thought it through. Have to close this as invalid however as there is no
+ &quot;wontfix&quot;.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1827#comment:1">http://dev.haiku-os.org/ticket/1827#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008045.html">[Haiku-bugs] [Haiku] #1171: Add support for VIA/S3 Unichrome	PRO IGP
+</A></li>
+	<LI>Next message: <A HREF="008049.html">[Haiku-bugs] [Haiku] #1827: Write a USB -&gt; BIOS handover kernel debugger enter/exit add-on
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8048">[ date ]</a>
+              <a href="thread.html#8048">[ thread ]</a>
+              <a href="subject.html#8048">[ subject ]</a>
+              <a href="author.html#8048">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

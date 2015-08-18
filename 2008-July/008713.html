@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2478: makebootable makes everything	unbootable
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-July/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232478%3A%20makebootable%20makes%20everything%0A%09unbootable&In-Reply-To=%3C051.89b5b29af3551d531e8a7eb440b77cd6%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008712.html">
+   <LINK REL="Next"  HREF="008714.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2478: makebootable makes everything	unbootable</H1>
+    <B>emitrax</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232478%3A%20makebootable%20makes%20everything%0A%09unbootable&In-Reply-To=%3C051.89b5b29af3551d531e8a7eb440b77cd6%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2478: makebootable makes everything	unbootable">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Jul  2 21:18:21 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008712.html">[Haiku-bugs] [Haiku] #2478: makebootable makes everything unbootable
+</A></li>
+        <LI>Next message: <A HREF="008714.html">[Haiku-bugs] [Haiku] #2443: kernel missing strupr
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8713">[ date ]</a>
+              <a href="thread.html#8713">[ thread ]</a>
+              <a href="subject.html#8713">[ subject ]</a>
+              <a href="author.html#8713">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2478: makebootable makes everything unbootable
+---------------------------+------------------------------------------------
+  Reporter:  emitrax       |       Owner:  bonefish      
+      Type:  bug           |      Status:  new           
+  Priority:  normal        |   Milestone:  R1            
+ Component:  Build System  |     Version:  R1 development
+Resolution:                |   Blockedby:                
+  Platform:  All           |    Blocking:                
+---------------------------+------------------------------------------------
+
+Comment(by emitrax):
+
+ BTW: This is my the first disk where I have installed the bootloader,
+ along with my linux root partition.
+ {{{
+  Disk /dev/hda: 20.0 GB, 20020396032 bytes
+  255 heads, 63 sectors/track, 2434 cylinders
+  Units = cylinders of 16065 * 512 = 8225280 bytes
+  Disk identifier: 0xc6dfc6df
+     Device Boot      Start         End      Blocks   Id  System
+  /dev/hda1   *           1          63      506047   82  Linux swap /
+ Solaris
+  /dev/hda2              64        2434    19045057+  83  Linux
+ }}}
+
+ And this is my second disk where I keep a few partition.
+ For the record, there used to be two bfs partition, one for BeOS Max
+ Edition (which I used
+ to install haiku) and one for haiku, and they both used to boot fines.
+
+ {{{
+  Disk /dev/hdb: 81.9 GB, 81964302336 bytes
+  255 heads, 63 sectors/track, 9964 cylinders
+  Units = cylinders of 16065 * 512 = 8225280 bytes
+  Disk identifier: 0x8f800000
+     Device Boot      Start         End      Blocks   Id  System
+  /dev/hdb1               1        3647    29294496   83  Linux
+  /dev/hdb2            3648        8511    39070080    5  Extended
+  /dev/hdb3            8512        9964    11671222+  83  Linux
+  /dev/hdb5            3648        6079    19535008+  83  Linux
+  /dev/hdb6            6080        8511    19535008+  83  Linux
+ }}}
+
+ The partition I'm now trying to install haiku on is hdb3.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2478#comment:1">http://dev.haiku-os.org/ticket/2478#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008712.html">[Haiku-bugs] [Haiku] #2478: makebootable makes everything unbootable
+</A></li>
+	<LI>Next message: <A HREF="008714.html">[Haiku-bugs] [Haiku] #2443: kernel missing strupr
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8713">[ date ]</a>
+              <a href="thread.html#8713">[ thread ]</a>
+              <a href="subject.html#8713">[ subject ]</a>
+              <a href="author.html#8713">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

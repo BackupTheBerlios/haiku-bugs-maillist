@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1674: Change leaf menu settings Deskbar	Crashes
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-December/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231674%3A%20Change%20leaf%20menu%20settings%20Deskbar%0A%09Crashes&In-Reply-To=%3C049.7bb503f4a00dbccd5059a032341fec9a%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="004038.html">
+   <LINK REL="Next"  HREF="004044.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1674: Change leaf menu settings Deskbar	Crashes</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231674%3A%20Change%20leaf%20menu%20settings%20Deskbar%0A%09Crashes&In-Reply-To=%3C049.7bb503f4a00dbccd5059a032341fec9a%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1674: Change leaf menu settings Deskbar	Crashes">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Dec 30 03:02:19 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="004038.html">[Haiku-bugs] [Haiku] #1674: Change leaf menu settings Deskbar	Crashes
+</A></li>
+        <LI>Next message: <A HREF="004044.html">[Haiku-bugs] [Haiku] #1674: Change leaf menu settings Deskbar	Crashes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4043">[ date ]</a>
+              <a href="thread.html#4043">[ thread ]</a>
+              <a href="subject.html#4043">[ subject ]</a>
+              <a href="author.html#4043">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1674: Change leaf menu settings Deskbar Crashes
+-------------------------------------+--------------------------------------
+  Reporter:  cebif                   |       Owner:  axeld         
+      Type:  bug                     |      Status:  new           
+  Priority:  normal                  |   Milestone:  R1            
+ Component:  - Applications/Deskbar  |     Version:  R1 development
+Resolution:                          |    Platform:  All           
+-------------------------------------+--------------------------------------
+Comment (by cl21):
+
+ When the TFavoritesConfigWindow is destroyed, all its child views are
+ detached one by one. When the internal _BTextInput_ control of a BTextView
+ is detached, and the BTextView still has the focus, then MakeFocus(false)
+ is called on the BTextView to make sure that it won't need its
+ _BTextInput_ control anymore. MakeFocus calls _Deactivate on the
+ BTextView, which in turn uses GetMouse to set the cursor back to
+ B_CURSOR_SYSTEM_DEFAULT in case it is still over the BTextView. GetMouse
+ is called with the last argument being true (default), which means that it
+ causes pending update events to be processed. With some of the children of
+ the window already being detached and having no owner, processing these
+ events causes trouble.
+
+ The attached patch sets the last argument of GetMouse to false, i.e. gets
+ the position without processing pending updates. Just the current mouse
+ position is used to decide whether the cursor is still on the BTextView
+ and needs to be reset to its normal shape.
+
+ Regarding BTextView, I am not sure using _Deactivate in MakeFocus is a
+ good idea because this means that the cursor changes back to normal while
+ being over the BTextView even if the BTextView just loses the focus
+ without being truly &quot;deactivated&quot;.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1674#comment:3">http://dev.haiku-os.org/ticket/1674#comment:3</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="004038.html">[Haiku-bugs] [Haiku] #1674: Change leaf menu settings Deskbar	Crashes
+</A></li>
+	<LI>Next message: <A HREF="004044.html">[Haiku-bugs] [Haiku] #1674: Change leaf menu settings Deskbar	Crashes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4043">[ date ]</a>
+              <a href="thread.html#4043">[ thread ]</a>
+              <a href="subject.html#4043">[ subject ]</a>
+              <a href="author.html#4043">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

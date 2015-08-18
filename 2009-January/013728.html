@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3307: USB doesn't work during boot on 845GE
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-January/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233307%3A%20USB%20doesn%27t%20work%20during%20boot%20on%20845GE&In-Reply-To=%3C040.b0097188b0b35a3558bea8b2b7944d7a%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="013730.html">
+   <LINK REL="Next"  HREF="013735.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3307: USB doesn't work during boot on 845GE</H1>
+    <B>monni</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233307%3A%20USB%20doesn%27t%20work%20during%20boot%20on%20845GE&In-Reply-To=%3C040.b0097188b0b35a3558bea8b2b7944d7a%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3307: USB doesn't work during boot on 845GE">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Jan 17 23:11:27 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="013730.html">[Haiku-bugs] [Haiku] #3306: Some resource files are not	correctly handled
+</A></li>
+        <LI>Next message: <A HREF="013735.html">[Haiku-bugs] [Haiku] #1072: Write an HDA audio driver and add-on
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13728">[ date ]</a>
+              <a href="thread.html#13728">[ thread ]</a>
+              <a href="subject.html#13728">[ subject ]</a>
+              <a href="author.html#13728">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3307: USB doesn't work during boot on 845GE
+-------------------------+--------------------------------------------------
+ Reporter:  monni        |       Owner:  mmlr          
+     Type:  bug          |      Status:  new           
+ Priority:  normal       |   Milestone:  R1            
+Component:  Drivers/USB  |     Version:  R1 development
+Blockedby:               |    Platform:  All           
+ Blocking:               |  
+-------------------------+--------------------------------------------------
+ {{{
+ KERN: USB Hub 1: new device on a port that is already in use
+ KERN: USB ControlPipe: timeout waiting for queued request to complete
+ KERN: Last message repeated 2 times.
+ KERN: USB BusManager: error while setting device address
+ }}}
+
+ Controller:
+
+ {{{
+ device Serial bus controller (USB Controller, UHCI) [c|3|0]
+   vendor 8086: Intel Corporation
+   device 24c7: 82801DB/DBL/DBM (ICH4/ICH4-L/ICH4-M) USB UHCI Controller #3
+
+ device Serial bus controller (USB Controller, UHCI) [c|3|0]
+   vendor 8086: Intel Corporation
+   device 24c4: 82801DB/DBL/DBM (ICH4/ICH4-L/ICH4-M) USB UHCI Controller #2
+
+ device Serial bus controller (USB Controller, UHCI) [c|3|0]
+   vendor 8086: Intel Corporation
+   device 24c2: 82801DB/DBL/DBM (ICH4/ICH4-L/ICH4-M) USB UHCI Controller #1
+
+ }}}
+
+ It used to work around summer 2008 ;)
+
+ r28925, ePox 4GEA, 768 MB ram, Intel Pentium 4 Willamette 1.6 GHz
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3307">http://dev.haiku-os.org/ticket/3307</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="013730.html">[Haiku-bugs] [Haiku] #3306: Some resource files are not	correctly handled
+</A></li>
+	<LI>Next message: <A HREF="013735.html">[Haiku-bugs] [Haiku] #1072: Write an HDA audio driver and add-on
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13728">[ date ]</a>
+              <a href="thread.html#13728">[ thread ]</a>
+              <a href="subject.html#13728">[ subject ]</a>
+              <a href="author.html#13728">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

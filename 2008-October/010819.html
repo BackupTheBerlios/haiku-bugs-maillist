@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2809: Screen saver window can be in front of the password window
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232809%3A%20Screen%20saver%20window%20can%20be%20in%20front%20of%0A%20the%20password%20window&In-Reply-To=%3C040.cda04a283d0e008c5d9ce5c645c249c2%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010816.html">
+   <LINK REL="Next"  HREF="010820.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2809: Screen saver window can be in front of the password window</H1>
+    <B>axeld</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232809%3A%20Screen%20saver%20window%20can%20be%20in%20front%20of%0A%20the%20password%20window&In-Reply-To=%3C040.cda04a283d0e008c5d9ce5c645c249c2%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2809: Screen saver window can be in front of the password window">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Oct  8 10:28:29 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010816.html">[Haiku-bugs] [Haiku] #339: playsound audio playback is	stuttering
+</A></li>
+        <LI>Next message: <A HREF="010820.html">[Haiku-bugs] [Haiku] #2809: Screen saver window can be in front of the password window
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10819">[ date ]</a>
+              <a href="thread.html#10819">[ thread ]</a>
+              <a href="subject.html#10819">[ subject ]</a>
+              <a href="author.html#10819">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2809: Screen saver window can be in front of the password window
+----------------------------+-----------------------------------------------
+ Reporter:  axeld           |       Owner:  axeld         
+     Type:  bug             |      Status:  new           
+ Priority:  high            |   Milestone:  R1            
+Component:  User Interface  |     Version:  R1 development
+Blockedby:                  |    Platform:  All           
+ Blocking:                  |  
+----------------------------+-----------------------------------------------
+ Since the password window and the screen saver windows both have the
+ kWindowScreenFeel at the moment, you can move the screen saver window in
+ front of the password window just by clicking on it.
+
+ Currently, modal windows (even modal all windows) always appear behind a
+ kWindowScreenFeel (like in BeOS). However, logically, an modal app or a
+ modal all window should be able to be in front of a kWindowScreenFeel
+ window, even though this would be different from BeOS.
+
+ I would suggest to allow modal windows to appear above others always, no
+ matter what feel. Additionally, I would add a modal feel that is even
+ above B_MODAL_ALL_WINDOW_FEEL, ie. a kPasswordModalAllWindowFeel that
+ would make it possible to make the Team Monitor inaccessible.
+
+ Opinions welcome.
+
+ BTW the only method to regain control if the above happens is to use F12
+ to drop into the kernel debugger, and then let the screen_blanker app
+ crash using the &quot;drop&quot; command.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2809">http://dev.haiku-os.org/ticket/2809</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010816.html">[Haiku-bugs] [Haiku] #339: playsound audio playback is	stuttering
+</A></li>
+	<LI>Next message: <A HREF="010820.html">[Haiku-bugs] [Haiku] #2809: Screen saver window can be in front of the password window
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10819">[ date ]</a>
+              <a href="thread.html#10819">[ thread ]</a>
+              <a href="subject.html#10819">[ subject ]</a>
+              <a href="author.html#10819">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

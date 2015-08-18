@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3875: &quot;copyattr -d -r&quot; results in attempts to write to read-only source partition.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233875%3A%20%22copyattr%20-d%20-r%22%20results%20in%20attempts%20to%0A%20write%20to%20read-only%20source%20partition.&In-Reply-To=%3C038.c11eb449a698b1ce17726bcabf25e2b1%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="016960.html">
+   <LINK REL="Next"  HREF="017155.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3875: &quot;copyattr -d -r&quot; results in attempts to write to read-only source partition.</H1>
+    <B>bga</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233875%3A%20%22copyattr%20-d%20-r%22%20results%20in%20attempts%20to%0A%20write%20to%20read-only%20source%20partition.&In-Reply-To=%3C038.c11eb449a698b1ce17726bcabf25e2b1%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3875: &quot;copyattr -d -r&quot; results in attempts to write to read-only source partition.">trac at haiku-os.org
+       </A><BR>
+    <I>Wed May  6 00:59:40 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="016960.html">[Haiku-bugs] [Haiku] #1530: Nvidia GeForce FX 6600 doesn't work
+</A></li>
+        <LI>Next message: <A HREF="017155.html">[Haiku-bugs] [Haiku] #3875: &quot;copyattr -d -r&quot; results in attempts to write to read-only source partition.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16967">[ date ]</a>
+              <a href="thread.html#16967">[ thread ]</a>
+              <a href="subject.html#16967">[ subject ]</a>
+              <a href="author.html#16967">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3875: &quot;copyattr -d -r&quot; results in attempts to write to read-only source
+partition.
+------------------------------+---------------------------------------------
+ Reporter:  bga               |       Owner:  axeld         
+     Type:  bug               |      Status:  new           
+ Priority:  normal            |   Milestone:  R1            
+Component:  File Systems/BFS  |     Version:  R1 development
+Blockedby:                    |    Platform:  All           
+ Blocking:                    |  
+------------------------------+---------------------------------------------
+ I did a clean Haiku install in one partition and started moving the data
+ from the old partition to the new one. For this, I mounted the old
+ partition read-only and used copyattr -d -r to copy specific directories.
+ From time to time, I would get messaged like the following in my syslog:
+
+ {{{
+ 2009-05-05 19:38:59 KERN: bfs: bfs_open:1183: Read-only file system
+ 2009-05-05 19:39:01 KERN: Last message repeated 729 times.
+ }}}
+
+ Looking at BFS's kernel_interface.cpp file, I see this:
+
+ {{{
+         // opening a directory read-only is allowed, although you can't
+ read
+         // any data from it.
+         if (inode-&gt;IsDirectory() &amp;&amp; (openMode &amp; O_RWMASK) != 0) {
+                 openMode = openMode &amp; ~O_RWMASK;
+                 // TODO: for compatibility reasons, we don't return an
+ error here...
+                 // e.g. &quot;copyattr&quot; tries to do that
+                 //return B_IS_A_DIRECTORY;
+         }
+
+         status_t status =
+ inode-&gt;CheckPermissions(open_mode_to_access(openMode)
+                 | (openMode &amp; O_TRUNC ? W_OK : 0));
+         if (status &lt; B_OK)
+                 RETURN_ERROR(status);
+ }}}
+
+ Some questions about this:
+
+ 1 - Why does copyattr need that? Can't we simply fix it?
+ 2 - Although if the volume is read/write this will allow copyattr to do
+ whatever it does, when it is read-only it will bail out on the following
+ error (which results in the messages I mentioned in the syslog). Does this
+ mean that the copy operation does not really work when the source is a
+ read-only volume?
+ 4 - If it does work even with the error being returned, why is it a
+ problem to return the error in the pointed commented out above?
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3875">http://dev.haiku-os.org/ticket/3875</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="016960.html">[Haiku-bugs] [Haiku] #1530: Nvidia GeForce FX 6600 doesn't work
+</A></li>
+	<LI>Next message: <A HREF="017155.html">[Haiku-bugs] [Haiku] #3875: &quot;copyattr -d -r&quot; results in attempts to write to read-only source partition.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16967">[ date ]</a>
+              <a href="thread.html#16967">[ thread ]</a>
+              <a href="subject.html#16967">[ subject ]</a>
+              <a href="author.html#16967">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1384: jam is not respect fully Jamfile	changes.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231384%3A%20jam%20is%20not%20respect%20fully%20Jamfile%0A%09changes.&In-Reply-To=%3C043.68de783ea87f89485cc9f93898ae20cf%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002215.html">
+   <LINK REL="Next"  HREF="002217.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1384: jam is not respect fully Jamfile	changes.</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231384%3A%20jam%20is%20not%20respect%20fully%20Jamfile%0A%09changes.&In-Reply-To=%3C043.68de783ea87f89485cc9f93898ae20cf%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1384: jam is not respect fully Jamfile	changes.">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Aug 12 01:58:05 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002215.html">[Haiku-bugs] [Haiku] #195: [app_server] crash in	WindowLayer::Frontmost()
+</A></li>
+        <LI>Next message: <A HREF="002217.html">[Haiku-bugs] [Haiku] #1384: jam is not respect fully Jamfile	changes.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2216">[ date ]</a>
+              <a href="thread.html#2216">[ thread ]</a>
+              <a href="subject.html#2216">[ subject ]</a>
+              <a href="author.html#2216">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1384: jam is not  respect fully Jamfile changes.
+--------------------------+-------------------------------------------------
+ Reporter:  kaoutsis      |       Owner:  bonefish      
+     Type:  bug           |      Status:  new           
+ Priority:  normal        |   Milestone:  R1            
+Component:  Build System  |     Version:  R1 development
+ Platform:  All           |  
+--------------------------+-------------------------------------------------
+ As an example i will use the src/system/libroot/posix/locale/Jamfile,
+ the original form is:
+ {{{
+ SubDir HAIKU_TOP src system libroot posix locale ;
+
+ MergeObject posix_locale.o :
+         #ctype.c
+         localeconv.c
+         setlocale.c
+ ;
+ }}}
+
+ Now comment the localeconv.c so the Jamfile will became:
+ {{{
+ SubDir HAIKU_TOP src system libroot posix locale ;
+
+ MergeObject posix_locale.o :
+         #ctype.c
+         #localeconv.c
+         setlocale.c
+ ;
+ }}}
+
+ Run jam -q to the src/system/libroot/posix/locale
+ You expect to get a new posix_locale.o without the localeconv.c
+ What you get is :
+ {{{
+ $ jam -q
+ ...found 31 target(s)...
+ $
+ }}}
+
+ the target is not rebuild, you have to remove it manually to build it with
+ the
+ new change.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1384">http://dev.haiku-os.org/ticket/1384</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002215.html">[Haiku-bugs] [Haiku] #195: [app_server] crash in	WindowLayer::Frontmost()
+</A></li>
+	<LI>Next message: <A HREF="002217.html">[Haiku-bugs] [Haiku] #1384: jam is not respect fully Jamfile	changes.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2216">[ date ]</a>
+              <a href="thread.html#2216">[ thread ]</a>
+              <a href="subject.html#2216">[ subject ]</a>
+              <a href="author.html#2216">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

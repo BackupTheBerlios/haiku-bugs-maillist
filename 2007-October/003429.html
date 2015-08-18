@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1444: SATA testing on real hardware -	fails to boot
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231444%3A%20SATA%20testing%20on%20real%20hardware%20-%0A%09fails%20to%20boot&In-Reply-To=%3C051.9cb88d120039c1f638eda7ac5f3311e9%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003428.html">
+   <LINK REL="Next"  HREF="003430.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1444: SATA testing on real hardware -	fails to boot</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231444%3A%20SATA%20testing%20on%20real%20hardware%20-%0A%09fails%20to%20boot&In-Reply-To=%3C051.9cb88d120039c1f638eda7ac5f3311e9%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1444: SATA testing on real hardware -	fails to boot">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Oct 30 12:31:43 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003428.html">[Haiku-bugs] [Haiku] #880: [app_server] icon disappers if selected and then desktop right clicked
+</A></li>
+        <LI>Next message: <A HREF="003430.html">[Haiku-bugs] [Haiku] #1444: SATA testing on real hardware -	fails to boot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3429">[ date ]</a>
+              <a href="thread.html#3429">[ thread ]</a>
+              <a href="subject.html#3429">[ subject ]</a>
+              <a href="author.html#3429">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1444: SATA testing on real hardware - fails to boot
+---------------------------+------------------------------------------------
+  Reporter:  scottmc       |       Owner:  axeld         
+      Type:  bug           |      Status:  new           
+  Priority:  normal        |   Milestone:  R1            
+ Component:  Drivers/Disk  |     Version:  R1 development
+Resolution:                |    Platform:  x86           
+---------------------------+------------------------------------------------
+Comment (by ahwayakchih):
+
+ Hi, Stefano helped me modify debug output so i made it wait for ENTER each
+ time debug starts from top of screen (so kinda paging-like feature).
+ Thanks to that i made photo session of whole debug output :). Can i attach
+ it here? I made photos in grayscale, cropped and resized, and packed with
+ 7z, but it weights over 3MB anyway.
+
+ Things i noticed:
+ - disk modules (SATA, generic_id, etc... there are 4 of them IIRC) are
+ loaded and tried 12 times. I have 12 partitions, so it looks like they are
+ loaded for each partition. Isn't it strange? I thought module handles
+ whole disk, and partitions are handled by file systems?
+ - every time module is tried it returns &quot;support: 0&quot;. Until last time,
+ when generic_ide outputs &quot;support: 0.3&quot;.
+ - after that debug outputs: &quot;INIT: main: done... begin idle loop on cpu 0&quot;
+ and nothing happens. It just stays like that until i get bored and reboot
+ ;).
+
+ Like i wrote above, i have 12 partitions. Haiku is on second partition
+ (known as /dev/sda2 on Ubuntu linux).
+
+ Please let me know if i can attach set of photos here.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1444#comment:9">http://dev.haiku-os.org/ticket/1444#comment:9</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003428.html">[Haiku-bugs] [Haiku] #880: [app_server] icon disappers if selected and then desktop right clicked
+</A></li>
+	<LI>Next message: <A HREF="003430.html">[Haiku-bugs] [Haiku] #1444: SATA testing on real hardware -	fails to boot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3429">[ date ]</a>
+              <a href="thread.html#3429">[ thread ]</a>
+              <a href="subject.html#3429">[ subject ]</a>
+              <a href="author.html#3429">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

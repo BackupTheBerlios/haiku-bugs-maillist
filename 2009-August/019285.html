@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2775: [Tracker]: when clicking on a symbolic link diskusage isn't shown
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232775%3A%20%5BTracker%5D%3A%20when%20clicking%20on%20a%0A%20symbolic%20link%20diskusage%20isn%27t%20shown&In-Reply-To=%3C051.caf43383f28d29b9fc55a8dc67d9c66a%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="019281.html">
+   <LINK REL="Next"  HREF="019286.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2775: [Tracker]: when clicking on a symbolic link diskusage isn't shown</H1>
+    <B>stpere</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232775%3A%20%5BTracker%5D%3A%20when%20clicking%20on%20a%0A%20symbolic%20link%20diskusage%20isn%27t%20shown&In-Reply-To=%3C051.caf43383f28d29b9fc55a8dc67d9c66a%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2775: [Tracker]: when clicking on a symbolic link diskusage isn't shown">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Aug 10 20:24:49 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="019281.html">[Haiku-bugs] [Haiku] #4074: eMachines 19&quot; WS LCD monitor native resolution not avail. using AGP Geforce 2/3
+</A></li>
+        <LI>Next message: <A HREF="019286.html">[Haiku-bugs] [Haiku] #4074: eMachines 19&quot; WS LCD monitor native resolution not avail. using AGP Geforce 2/3
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19285">[ date ]</a>
+              <a href="thread.html#19285">[ thread ]</a>
+              <a href="subject.html#19285">[ subject ]</a>
+              <a href="author.html#19285">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2775: [Tracker]: when clicking on a symbolic link diskusage isn't shown
+----------------------------------+-----------------------------------------
+ Reporter:  emitrax               |       Owner:  axeld         
+     Type:  bug                   |      Status:  new           
+ Priority:  normal                |   Milestone:  R1            
+Component:  Applications/Tracker  |     Version:  R1 development
+Blockedby:                        |    Platform:  All           
+ Blocking:                        |  
+----------------------------------+-----------------------------------------
+
+Comment(by stpere):
+
+ Hmm, I could add the &quot;application/x-vnd.Be-symlink&quot; in the recognized
+ types for DiskUsage (that would fix this issue), but it would also propose
+ the DiskUsage add-on when you right click on any symlink, even if it
+ points to a regular file rather than a folder.  It still works, it will do
+ the DiskUsage, for the parent folder; but it's cluttering the Add-On
+ submenu..
+
+ Does it makes sense?  Well, in other word, there is a one liner that fixes
+ this, but isn't really optimal.
+
+ On the other hand, I think the cleanest solution would be to traverse the
+ symlink and get the mime type of the target to select the usable add-ons..
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2775#comment:1">http://dev.haiku-os.org/ticket/2775#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="019281.html">[Haiku-bugs] [Haiku] #4074: eMachines 19&quot; WS LCD monitor native resolution not avail. using AGP Geforce 2/3
+</A></li>
+	<LI>Next message: <A HREF="019286.html">[Haiku-bugs] [Haiku] #4074: eMachines 19&quot; WS LCD monitor native resolution not avail. using AGP Geforce 2/3
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19285">[ date ]</a>
+              <a href="thread.html#19285">[ thread ]</a>
+              <a href="subject.html#19285">[ subject ]</a>
+              <a href="author.html#19285">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

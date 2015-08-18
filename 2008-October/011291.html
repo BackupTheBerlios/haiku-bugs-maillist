@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2904: libsdl joystick issues
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232904%3A%20libsdl%20joystick%20issues&In-Reply-To=%3C042.ce0e4746129404f4dcce7b747bf1fa6c%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011297.html">
+   <LINK REL="Next"  HREF="011307.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2904: libsdl joystick issues</H1>
+    <B>scottmc</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232904%3A%20libsdl%20joystick%20issues&In-Reply-To=%3C042.ce0e4746129404f4dcce7b747bf1fa6c%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2904: libsdl joystick issues">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Oct 22 19:42:58 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011297.html">[Haiku-bugs] [Haiku] #2903: BScreen GetBitmap Returns a black	bitmap
+</A></li>
+        <LI>Next message: <A HREF="011307.html">[Haiku-bugs] [Haiku] #2904: libsdl joystick issues
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11291">[ date ]</a>
+              <a href="thread.html#11291">[ thread ]</a>
+              <a href="subject.html#11291">[ subject ]</a>
+              <a href="author.html#11291">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2904: libsdl joystick issues
+-----------------------+----------------------------------------------------
+ Reporter:  scottmc    |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+Blockedby:             |    Platform:  All           
+ Blocking:             |  
+-----------------------+----------------------------------------------------
+ While trying to build 1.2 branch svn version of libsdl (on r28118), I run
+ into issues with the recent Joystick.h changes.
+
+
+ {{{
+ /bin/sh ./libtool --mode=compile gcc -g -O2  -I./include -D_GNU_SOURCE=1
+ -c ./src/video/bwindow/SDL_syswm.cc  -o build/SDL_syswm.lo
+  gcc -g -O2 -I./include -D_GNU_SOURCE=1 -c
+ ./src/video/bwindow/SDL_syswm.cc  -DPIC -o build/.libs/SDL_syswm.o
+  gcc -g -O2 -I./include -D_GNU_SOURCE=1 -c
+ ./src/video/bwindow/SDL_syswm.cc -o build/SDL_syswm.o &gt;/dev/null 2&gt;&amp;1
+ /bin/sh ./libtool --mode=compile gcc -g -O2  -I./include -D_GNU_SOURCE=1
+ -c ./src/video/bwindow/SDL_sysyuv.cc  -o build/SDL_sysyuv.lo
+  gcc -g -O2 -I./include -D_GNU_SOURCE=1 -c
+ ./src/video/bwindow/SDL_sysyuv.cc  -DPIC -o build/.libs/SDL_sysyuv.o
+  gcc -g -O2 -I./include -D_GNU_SOURCE=1 -c
+ ./src/video/bwindow/SDL_sysyuv.cc -o build/SDL_sysyuv.o &gt;/dev/null 2&gt;&amp;1
+ /bin/sh ./libtool --mode=compile gcc -g -O2  -I./include -D_GNU_SOURCE=1
+ -c ./src/joystick/beos/SDL_bejoystick.cc  -o build/SDL_bejoystick.lo
+  gcc -g -O2 -I./include -D_GNU_SOURCE=1 -c
+ ./src/joystick/beos/SDL_bejoystick.cc  -DPIC -o
+ build/.libs/SDL_bejoystick.o
+ In file included from
+ /boot/home/develop/sdl/src/joystick/beos/SDL_bejoystick.cc:29:
+ /boot/develop/headers/be/device/Joystick.h:34: field `name_axis' has
+ incomplete type
+ /boot/develop/headers/be/device/Joystick.h:35: field `name_hat' has
+ incomplete type
+ /boot/develop/headers/be/device/Joystick.h:36: field `name_button' has
+ incomplete type
+ /boot/home/develop/sdl/src/joystick/beos/SDL_bejoystick.cc: In function
+ `int SDL_SYS_JoystickInit()':
+ /boot/home/develop/sdl/src/joystick/beos/SDL_bejoystick.cc:72: call of
+ overloaded `Open(char[32])' is ambiguous
+ /boot/develop/headers/be/device/Joystick.h:46: candidates are: status_t
+ BJoystick::Open(const char *)
+ /boot/develop/headers/be/device/Joystick.h:47:                 status_t
+ BJoystick::Open(const char *, bool = true)
+ /boot/home/develop/sdl/src/joystick/beos/SDL_bejoystick.cc: In function
+ `int SDL_SYS_JoystickOpen(SDL_Joystick *)':
+ /boot/home/develop/sdl/src/joystick/beos/SDL_bejoystick.cc:113: call of
+ overloaded `Open(char *&amp;)' is ambiguous
+ /boot/develop/headers/be/device/Joystick.h:46: candidates are: status_t
+ BJoystick::Open(const char *)
+ /boot/develop/headers/be/device/Joystick.h:47:                 status_t
+ BJoystick::Open(const char *, bool = true)
+ make: *** [build/SDL_bejoystick.lo] Error 1
+ ~/develop/sdl&gt;
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2904">http://dev.haiku-os.org/ticket/2904</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011297.html">[Haiku-bugs] [Haiku] #2903: BScreen GetBitmap Returns a black	bitmap
+</A></li>
+	<LI>Next message: <A HREF="011307.html">[Haiku-bugs] [Haiku] #2904: libsdl joystick issues
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11291">[ date ]</a>
+              <a href="thread.html#11291">[ thread ]</a>
+              <a href="subject.html#11291">[ subject ]</a>
+              <a href="author.html#11291">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

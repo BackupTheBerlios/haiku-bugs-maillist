@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2843: Mesa software renderer doesn't support double buffering
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-December/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232843%3A%20Mesa%20software%20renderer%20doesn%27t%0A%20support%20double%20buffering&In-Reply-To=%3C049.36f94906df01c5fc9ab00e702acf7d66%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="013027.html">
+   <LINK REL="Next"  HREF="013032.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2843: Mesa software renderer doesn't support double buffering</H1>
+    <B>phoudoin</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232843%3A%20Mesa%20software%20renderer%20doesn%27t%0A%20support%20double%20buffering&In-Reply-To=%3C049.36f94906df01c5fc9ab00e702acf7d66%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2843: Mesa software renderer doesn't support double buffering">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Dec  5 17:30:43 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="013027.html">[Haiku-bugs] [Haiku] #2841: ACPI parser error
+</A></li>
+        <LI>Next message: <A HREF="013032.html">[Haiku-bugs] [Haiku] #2843: Mesa software renderer doesn't support double buffering
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13031">[ date ]</a>
+              <a href="thread.html#13031">[ thread ]</a>
+              <a href="subject.html#13031">[ subject ]</a>
+              <a href="author.html#13031">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2843: Mesa software renderer doesn't support double buffering
+------------------------------+---------------------------------------------
+  Reporter:  korli            |       Owner:  korli         
+      Type:  bug              |      Status:  new           
+  Priority:  normal           |   Milestone:  R1            
+ Component:  Kits/OpenGL Kit  |     Version:  R1 development
+Resolution:                   |   Blockedby:                
+  Platform:  All              |    Blocking:                
+------------------------------+---------------------------------------------
+
+Comment(by phoudoin):
+
+ He '''does''' double buffering in OpenGL lingua, aka primitives currently
+ emitted are not immediatly visible, but only at buffers swap they (all)
+ will.
+
+ What it does '''NOT''' is GUI double buffering.
+
+ If a region of the BGLView is invalidated:
+
+  * when BDirectWindow mode is enabled, nothing is redrawn until next
+ ''SwapBuffers()'', leaving us with a view's background colored hole
+ (black, but used to be transparent, even worse!). As the next swap is not
+ necessarely around the corner, in particular when the OpenGL ''scene'' is
+ not animated, this bug can be well visible.
+
+  * otherwise, the '''current''' content of the offscreen bitmap is used to
+ refresh the region.
+
+ Unfortunatly, in both case the offscreen bitmap content is not the frame
+ currently displayed but, if any primitive have been emitted already since
+ last swap - glClear() being the most obvious one, the work-in-
+ progress/next frame...
+ Hence visible artefacts.
+
+ For full double buffering, we'll needs '''two''' offscreen BBitmaps, one
+ being the read-only visible frame, the second being the read-write
+ (drawing) frame.
+ Which leads to a triple buffers design:
+ # drawing buffer, where all directives are drawn
+ # display buffer, which is the last buffer being paint to screen and used
+ to repaint as needed
+ # screen frame buffer, eventually containing part (clipping) converted
+ (color-spaces) copy of the display buffer.
+
+ Buffers 1 and 2 are the ones that should be swapped now.
+
+ One performance advantage here is that blitting the display buffer can be
+ done asynchronously while the next frame is prepared, which we can't do
+ currently with an unique offscreen bitmap...
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2843#comment:1">http://dev.haiku-os.org/ticket/2843#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="013027.html">[Haiku-bugs] [Haiku] #2841: ACPI parser error
+</A></li>
+	<LI>Next message: <A HREF="013032.html">[Haiku-bugs] [Haiku] #2843: Mesa software renderer doesn't support double buffering
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13031">[ date ]</a>
+              <a href="thread.html#13031">[ thread ]</a>
+              <a href="subject.html#13031">[ subject ]</a>
+              <a href="author.html#13031">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

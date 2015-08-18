@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1768: Binutils 2.17 objdump Broken
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-February/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231768%3A%20Binutils%202.17%20objdump%20Broken&In-Reply-To=%3C043.8358ec31d4354aed633517bedbdfb836%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="004735.html">
+   <LINK REL="Next"  HREF="004738.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1768: Binutils 2.17 objdump Broken</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231768%3A%20Binutils%202.17%20objdump%20Broken&In-Reply-To=%3C043.8358ec31d4354aed633517bedbdfb836%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1768: Binutils 2.17 objdump Broken">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Feb  7 17:22:43 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="004735.html">[Haiku-bugs] [Haiku] #1767: UHCI legacy support
+</A></li>
+        <LI>Next message: <A HREF="004738.html">[Haiku-bugs] [Haiku] #1769: Binutils 2.17 objdump Broken
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4737">[ date ]</a>
+              <a href="thread.html#4737">[ thread ]</a>
+              <a href="subject.html#4737">[ subject ]</a>
+              <a href="author.html#4737">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1768: Binutils 2.17 objdump Broken
+--------------------------+-------------------------------------------------
+ Reporter:  bonefish      |       Owner:  bonefish      
+     Type:  bug           |      Status:  new           
+ Priority:  normal        |   Milestone:  R1            
+Component:  Build System  |     Version:  R1 development
+ Platform:  All           |  
+--------------------------+-------------------------------------------------
+ Binutils 2.17 objdump (070218 gcc package from BeBits) crashes when
+ disassembling (gcc 2.95.3 generated) objects with debug info (objdump -D
+ --demangle ...). Can be reproduced under both Haiku and BeOS.
+
+ I tracked down one problem to a dereferenced NULL pointer in
+ opcodes/i386-dis.c:print_insn() (first putop() call). Apparently the bug
+ has already been fixed in CVS version 1.132 (2007/08/02 00:40:02) of the
+ file.
+
+ I get a different stack trace for another test file (libperl.so compiled
+ with &quot;-g&quot;) though, so it seems not to be the only problem.
+
+ Update to newer binutils recommended.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1768">http://dev.haiku-os.org/ticket/1768</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="004735.html">[Haiku-bugs] [Haiku] #1767: UHCI legacy support
+</A></li>
+	<LI>Next message: <A HREF="004738.html">[Haiku-bugs] [Haiku] #1769: Binutils 2.17 objdump Broken
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4737">[ date ]</a>
+              <a href="thread.html#4737">[ thread ]</a>
+              <a href="subject.html#4737">[ subject ]</a>
+              <a href="author.html#4737">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

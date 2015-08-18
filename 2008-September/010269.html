@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1050: implement a WiFi stack
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231050%3A%20implement%20a%20WiFi%20stack&In-Reply-To=%3C054.b1e4f680b231dc613f09963f1f6a885d%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010290.html">
+   <LINK REL="Next"  HREF="010271.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1050: implement a WiFi stack</H1>
+    <B>tqh</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231050%3A%20implement%20a%20WiFi%20stack&In-Reply-To=%3C054.b1e4f680b231dc613f09963f1f6a885d%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1050: implement a WiFi stack">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Sep 13 13:59:50 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010290.html">[Haiku-bugs] [Haiku] #2727: [bfs]: PANIC when deleting a soft link to a long filename (was: PANIC: get_writable_cached_block: invalid block number 53535436759393 (max 1048319)
+</A></li>
+        <LI>Next message: <A HREF="010271.html">[Haiku-bugs] [Haiku] #1050: implement a WiFi stack
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10269">[ date ]</a>
+              <a href="thread.html#10269">[ thread ]</a>
+              <a href="subject.html#10269">[ subject ]</a>
+              <a href="author.html#10269">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1050: implement a WiFi stack
+------------------------------------------+---------------------------------
+  Reporter:  wkornewald                   |       Owner:                
+      Type:  enhancement                  |      Status:  new           
+  Priority:  normal                       |   Milestone:  Unscheduled   
+ Component:  Network &amp; Internet/Wireless  |     Version:  R1 development
+Resolution:                               |   Blockedby:                
+  Platform:  All                          |    Blocking:                
+------------------------------------------+---------------------------------
+
+Comment(by tqh):
+
+ I need a mapping atomic_cmpset_int( dest, exp, src ) to our
+ atomic_test_and_set
+ It should be easy to figure out for someone who has kept his x86 asm
+ knowledge up to date from
+ <A HREF="http://fxr.watson.org/fxr/source/i386/include/atomic.h?im=bigexcerpts#L145">http://fxr.watson.org/fxr/source/i386/include/atomic.h?im=bigexcerpts#L145</A>
+ and
+ <A HREF="http://haiku.it.su.se:8180/source/xref/src/system/libroot/os/arch/x86/atomic.S">http://haiku.it.su.se:8180/source/xref/src/system/libroot/os/arch/x86/atomic.S</A>
+
+ My guess
+ #define atomic_cmpset_int( dest, exp, src )
+         atomic_test_and_set(dest, src, expr)
+
+ It should probably be added to
+ src/libs/compat/freebsd_network/compat/machine/atomic.h after that. Any
+ help?
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1050#comment:7">http://dev.haiku-os.org/ticket/1050#comment:7</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010290.html">[Haiku-bugs] [Haiku] #2727: [bfs]: PANIC when deleting a soft link to a long filename (was: PANIC: get_writable_cached_block: invalid block number 53535436759393 (max 1048319)
+</A></li>
+	<LI>Next message: <A HREF="010271.html">[Haiku-bugs] [Haiku] #1050: implement a WiFi stack
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10269">[ date ]</a>
+              <a href="thread.html#10269">[ thread ]</a>
+              <a href="subject.html#10269">[ subject ]</a>
+              <a href="author.html#10269">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

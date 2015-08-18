@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2265: KDL harddisk problem
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232265%3A%20KDL%20harddisk%20problem&In-Reply-To=%3C045.6428bb0e03c52f8433d644cb009e38d8%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007641.html">
+   <LINK REL="Next"  HREF="007644.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2265: KDL harddisk problem</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232265%3A%20KDL%20harddisk%20problem&In-Reply-To=%3C045.6428bb0e03c52f8433d644cb009e38d8%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2265: KDL harddisk problem">trac at haiku-os.org
+       </A><BR>
+    <I>Mon May 26 23:56:49 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007641.html">[Haiku-bugs] [Haiku] #1950: Garbled screen contents with true colour mode on nvidia gf2mx
+</A></li>
+        <LI>Next message: <A HREF="007644.html">[Haiku-bugs] [Haiku] #2265: KDL harddisk problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7642">[ date ]</a>
+              <a href="thread.html#7642">[ thread ]</a>
+              <a href="subject.html#7642">[ subject ]</a>
+              <a href="author.html#7642">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2265: KDL harddisk problem
+--------------------------+-------------------------------------------------
+ Reporter:  mrsunshine    |       Owner:  marcusoverhagen
+     Type:  bug           |      Status:  new            
+ Priority:  normal        |   Milestone:  R1             
+Component:  Drivers/Disk  |     Version:  R1 development 
+ Platform:  x86           |  
+--------------------------+-------------------------------------------------
+ When booting straight out i get the kdl stated in the screenshots
+ attached, im unable to get serial logs due to stupid laptop has no old
+ school ports =)
+
+ HDSize: 80GB
+
+ lspci -nn:
+ 00:00.0 Host bridge [0600]: ATI Technologies Inc RS480 Host Bridge
+ [1002:5950] (rev 10)
+ 00:01.0 PCI bridge [0604]: ATI Technologies Inc RS480 PCI Bridge
+ [1002:5a3f]
+ 00:04.0 PCI bridge [0604]: ATI Technologies Inc RS480 PCI Bridge
+ [1002:5a36]
+ 00:05.0 PCI bridge [0604]: ATI Technologies Inc RS480 PCI Bridge
+ [1002:5a37]
+ 00:06.0 PCI bridge [0604]: ATI Technologies Inc RS480 PCI Bridge
+ [1002:5a38]
+ 00:07.0 PCI bridge [0604]: ATI Technologies Inc RS480 PCI Bridge
+ [1002:5a39]
+ 00:12.0 IDE interface [0101]: ATI Technologies Inc 4379 Serial ATA
+ Controller [1002:4379] (rev 80)
+ 00:13.0 USB Controller [0c03]: ATI Technologies Inc IXP SB400 USB Host
+ Controller [1002:4374] (rev 80)
+ 00:13.1 USB Controller [0c03]: ATI Technologies Inc IXP SB400 USB Host
+ Controller [1002:4375] (rev 80)
+ 00:13.2 USB Controller [0c03]: ATI Technologies Inc IXP SB400 USB2 Host
+ Controller [1002:4373] (rev 80)
+ 00:14.0 SMBus [0c05]: ATI Technologies Inc IXP SB400 SMBus Controller
+ [1002:4372] (rev 83)
+ 00:14.1 IDE interface [0101]: ATI Technologies Inc Standard Dual Channel
+ PCI IDE Controller [1002:4376] (rev 80)
+ 00:14.2 Audio device [0403]: ATI Technologies Inc SB450 HDA Audio
+ [1002:437b] (rev 01)
+ 00:14.3 ISA bridge [0601]: ATI Technologies Inc IXP SB400 PCI-ISA Bridge
+ [1002:4377] (rev 80)
+ 00:14.4 PCI bridge [0604]: ATI Technologies Inc IXP SB400 PCI-PCI Bridge
+ [1002:4371] (rev 80)
+ 00:18.0 Host bridge [0600]: Advanced Micro Devices [AMD] K8
+ [Athlon64/Opteron] HyperTransport Technology Configuration [1022:1100]
+ 00:18.1 Host bridge [0600]: Advanced Micro Devices [AMD] K8
+ [Athlon64/Opteron] Address Map [1022:1101]
+ 00:18.2 Host bridge [0600]: Advanced Micro Devices [AMD] K8
+ [Athlon64/Opteron] DRAM Controller [1022:1102]
+ 00:18.3 Host bridge [0600]: Advanced Micro Devices [AMD] K8
+ [Athlon64/Opteron] Miscellaneous Control [1022:1103]
+ 01:05.0 VGA compatible controller [0300]: ATI Technologies Inc RS485
+ [Radeon Xpress 1100 IGP] [1002:5975]
+ 02:00.0 Ethernet controller [0200]: Atheros Communications, Inc. AR5006EG
+ 802.11 b/g Wireless PCI Express Adapter [168c:001c] (rev 01)
+ 08:01.0 CardBus bridge [0607]: ENE Technology Inc CB-712/4 Cardbus
+ Controller [1524:1412] (rev 10)
+ 08:01.1 FLASH memory [0501]: ENE Technology Inc ENE PCI Memory Stick Card
+ Reader Controller [1524:0530] (rev 01)
+ 08:01.2 SD Host controller [0805]: ENE Technology Inc ENE PCI Secure
+ Digital Card Reader Controller [1524:0550] (rev 01)
+ 08:01.3 FLASH memory [0501]: ENE Technology Inc FLASH memory: ENE
+ Technology Inc: [1524:0520] (rev 01)
+ 08:01.4 FLASH memory [0501]: ENE Technology Inc SD/MMC Card Reader
+ Controller [1524:0551] (rev 01)
+ 08:02.0 Ethernet controller [0200]: Realtek Semiconductor Co., Ltd.
+ RTL-8139/8139C/8139C+ [10ec:8139] (rev 10)
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2265">http://dev.haiku-os.org/ticket/2265</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007641.html">[Haiku-bugs] [Haiku] #1950: Garbled screen contents with true colour mode on nvidia gf2mx
+</A></li>
+	<LI>Next message: <A HREF="007644.html">[Haiku-bugs] [Haiku] #2265: KDL harddisk problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7642">[ date ]</a>
+              <a href="thread.html#7642">[ thread ]</a>
+              <a href="subject.html#7642">[ subject ]</a>
+              <a href="author.html#7642">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3423: Automate creation of cross-ssl dir
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-February/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233423%3A%20Automate%20creation%20of%20cross-ssl%20dir&In-Reply-To=%3C050.52b792a203bb48773ddff035f25a6c4a%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="014630.html">
+   <LINK REL="Next"  HREF="014332.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3423: Automate creation of cross-ssl dir</H1>
+    <B>bonefish</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233423%3A%20Automate%20creation%20of%20cross-ssl%20dir&In-Reply-To=%3C050.52b792a203bb48773ddff035f25a6c4a%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3423: Automate creation of cross-ssl dir">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Feb 24 16:26:52 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="014630.html">[Haiku-bugs] [Haiku] #3423: Automate creation of cross-ssl dir
+</A></li>
+        <LI>Next message: <A HREF="014332.html">[Haiku-bugs] [Haiku] #3424: Configure : conditionally output HAIKU_ADD_ALTERNATIVE_GCC_LIBS = 1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14639">[ date ]</a>
+              <a href="thread.html#14639">[ thread ]</a>
+              <a href="subject.html#14639">[ subject ]</a>
+              <a href="author.html#14639">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3423: Automate creation of cross-ssl dir
+--------------------------+-------------------------------------------------
+ Reporter:  mmadia        |       Owner:  bonefish      
+     Type:  enhancement   |      Status:  new           
+ Priority:  normal        |   Milestone:  R1            
+Component:  Build System  |     Version:  R1 development
+Blockedby:                |    Platform:  All           
+ Blocking:                |  
+--------------------------+-------------------------------------------------
+
+Comment(by bonefish):
+
+ - Probably unintentionally you've inserted a second
+ {{{AddOptionalHaikuImagePackages}}} rule, which will override the first
+ one.
+  - {{{UnzipArchiveToContainer}}} does unzip the given archive to an
+ installation container (HaikuImage, NetBootArchive, BootFloppy,...), not
+ to a directory. The unzipping happens in the build_haiku_image script,
+ which is too late for your purpose. Unless I'm much mistaken there is no
+ rule to unzip a file yet. The closest rule is UnarchiveObjects in
+ FileRules, which extracts object files from a static library. An unzip
+ rule could work similarly.
+  - Rather than adding every optional build dependency, I would create a
+ new file similar to OptionalPackages (say OptionalBuildPackages) which
+ would execute the download and unzip rules for each enabled package and
+ set some global variables that can be used in the Jamfiles. Like
+ HAIKU_OPTIONAL_{LIBSSL,LIBCRYPTO,SSL_HEADERS} for OpenSSL.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3423#comment:4">http://dev.haiku-os.org/ticket/3423#comment:4</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="014630.html">[Haiku-bugs] [Haiku] #3423: Automate creation of cross-ssl dir
+</A></li>
+	<LI>Next message: <A HREF="014332.html">[Haiku-bugs] [Haiku] #3424: Configure : conditionally output HAIKU_ADD_ALTERNATIVE_GCC_LIBS = 1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14639">[ date ]</a>
+              <a href="thread.html#14639">[ thread ]</a>
+              <a href="subject.html#14639">[ subject ]</a>
+              <a href="author.html#14639">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

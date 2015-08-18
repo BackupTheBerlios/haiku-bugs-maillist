@@ -1,0 +1,150 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4332: The MediaPlayer can&#8217;t load saved playlist from Playlist window with Open File
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%3D%3Futf-8%3Fq%3F%3D5BHaiku%3D5D_%3D234332%3D3A_The_MediaPlayer_can%3F%3D%0A%20%3D%3Futf-8%3Fq%3F%3DE2%3D80%3D99t_load_saved_playlist_from_Playlist_window_with_Open_F%3F%3D%0A%20%3D%3Futf-8%3Fq%3File%3F%3D&In-Reply-To=%3C042.592e692cd11515d35f46d38ca219ac3f%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="020020.html">
+   <LINK REL="Next"  HREF="020135.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4332: The MediaPlayer can&#8217;t load saved playlist from Playlist window with Open File</H1>
+    <B>modeenf</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%3D%3Futf-8%3Fq%3F%3D5BHaiku%3D5D_%3D234332%3D3A_The_MediaPlayer_can%3F%3D%0A%20%3D%3Futf-8%3Fq%3F%3DE2%3D80%3D99t_load_saved_playlist_from_Playlist_window_with_Open_F%3F%3D%0A%20%3D%3Futf-8%3Fq%3File%3F%3D&In-Reply-To=%3C042.592e692cd11515d35f46d38ca219ac3f%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4332: The MediaPlayer can&#8217;t load saved playlist from Playlist window with Open File">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Aug 24 09:01:49 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="020020.html">[Haiku-bugs] [Haiku] #3649: Patch with more mime types
+</A></li>
+        <LI>Next message: <A HREF="020135.html">[Haiku-bugs] [Haiku] #4332: The MediaPlayer can&#8217;t load saved playlist from Playlist window with Open File
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20023">[ date ]</a>
+              <a href="thread.html#20023">[ thread ]</a>
+              <a href="subject.html#20023">[ subject ]</a>
+              <a href="author.html#20023">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4332: The MediaPlayer can&#8217;t load saved playlist from Playlist window with Open
+File
+--------------------------------------+-------------------------------------
+ Reporter:  modeenf                   |       Owner:  marcusoverhagen
+     Type:  bug                       |      Status:  new            
+ Priority:  normal                    |   Milestone:  R1/alpha1      
+Component:  Applications/MediaPlayer  |     Version:  R1 development 
+Blockedby:                            |    Platform:  All            
+ Blocking:                            |  
+--------------------------------------+-------------------------------------
+ The MediaPlayer can&#8217;t load saved playlist from Playlist window with Open
+ File.
+
+ To reproduce:
+ - Add mp3&#8217;s to MediaPlayer
+ - Go to Playlist and save playlist.
+ - Close MediaPlayer
+ - Start MediaPlayer
+ - Open Playlist
+ - Open File and select your playlist.
+
+ The Playlist file works. If you instead select the most resent file used
+ it will fill the playlist and start playing.
+
+ This is how the code looks like.
+ PlayListWindow.cpp
+ {{{
+ 143                     case B_REFS_RECEIVED:
+ 144                     case B_SIMPLE_DATA: {
+ 145                             // only accept this message when it comes
+ from the
+ 146                             // player window, _not_ when it is dropped
+ in this window
+ 147                             // outside of the playlist!
+ 148                             int32 appendIndex;
+ 149                             if (message-&gt;FindInt32(&quot;append_index&quot;,
+ &amp;appendIndex) == B_OK) {
+ 150                                     fListView-&gt;RefsReceived(message,
+ appendIndex);
+ 151                             }
+ 152                             break;
+ 153                     }
+ 154
+ 155                     case M_PLAYLIST_OPEN: {
+ 156                             BMessenger target(this);
+ 157                             BMessage result(B_REFS_RECEIVED);
+ 158                             BMessage appMessage(M_SHOW_OPEN_PANEL);
+ 159                             appMessage.AddMessenger(&quot;target&quot;, target);
+ 160                             appMessage.AddMessage(&quot;message&quot;, &amp;result);
+ 161                             appMessage.AddString(&quot;title&quot;, &quot;Open
+ Playlist&quot;);
+ 162                             appMessage.AddString(&quot;label&quot;, &quot;Open&quot;);
+ 163                             be_app-&gt;PostMessage(&amp;appMessage);
+ 164                             break;
+ 165                     }
+ }}}
+
+ The code that works look like this and are from MainWin.cpp.
+
+ {{{
+ 848     void
+ 849     MainWin::_RefsReceived(BMessage* msg)
+ 850     {
+ 851             // the playlist ist replaced by dropped files
+ 852             // or the dropped files are appended to the end
+ 853             // of the existing playlist if &lt;shift&gt; is pressed
+ 854             BAutolock _(fPlaylist);
+ 855             int32 appendIndex = modifiers() &amp; B_SHIFT_KEY ?
+ 856                     fPlaylist-&gt;CountItems() : -1;
+ 857             msg-&gt;AddInt32(&quot;append_index&quot;, appendIndex);
+ 858
+ 859             // forward the message to the playlist window,
+ 860             // so that undo/redo is used for modifying the playlist
+ 861             fPlaylistWindow-&gt;PostMessage(msg);
+ 862     }
+ }}}
+ As you can see, the code that works, add things to the BMessage and send
+ it to PlayListWindow.cpp.
+
+ So how does this get fixed? ether we need to change so that
+ PlayListWindow.cpp send's it Open file message to MainWin.cpp or change
+ &quot;case B_REFS_RECEIVED:&quot; part in PlayListWindow.cpp to also take our own
+ (PlayListWindow.cpp) BMessage. I don't know how I should do with the
+ append_index.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4332">http://dev.haiku-os.org/ticket/4332</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="020020.html">[Haiku-bugs] [Haiku] #3649: Patch with more mime types
+</A></li>
+	<LI>Next message: <A HREF="020135.html">[Haiku-bugs] [Haiku] #4332: The MediaPlayer can&#8217;t load saved playlist from Playlist window with Open File
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20023">[ date ]</a>
+              <a href="thread.html#20023">[ thread ]</a>
+              <a href="subject.html#20023">[ subject ]</a>
+              <a href="author.html#20023">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

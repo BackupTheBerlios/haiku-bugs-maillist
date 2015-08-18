@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3768: create_image -i 943718400 (or other large sizes) results in freeze
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233768%3A%20create_image%20-i%20943718400%20%28or%20other%0A%20large%20sizes%29%20results%20in%20freeze&In-Reply-To=%3C044.ba3fa1fde44ea5210825844be296a49b%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="016191.html">
+   <LINK REL="Next"  HREF="016168.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3768: create_image -i 943718400 (or other large sizes) results in freeze</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233768%3A%20create_image%20-i%20943718400%20%28or%20other%0A%20large%20sizes%29%20results%20in%20freeze&In-Reply-To=%3C044.ba3fa1fde44ea5210825844be296a49b%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3768: create_image -i 943718400 (or other large sizes) results in freeze">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Apr 15 05:22:23 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="016191.html">[Haiku-bugs] [Haiku] #3767: [PATCH] enhancements to DiskUsage
+</A></li>
+        <LI>Next message: <A HREF="016168.html">[Haiku-bugs] [Haiku] #3768: create_image -i 943718400 (or other large sizes) results in freeze
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16167">[ date ]</a>
+              <a href="thread.html#16167">[ thread ]</a>
+              <a href="subject.html#16167">[ subject ]</a>
+              <a href="author.html#16167">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3768: create_image -i 943718400 (or other large sizes) results in freeze
+---------------------------+------------------------------------------------
+ Reporter:  anevilyak      |       Owner:  bonefish      
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1 development
+Blockedby:                 |    Platform:  All           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+ The above command run from within Haiku (or correspondingly asking the
+ build sys to create a similarly sized image) results in the desktop
+ freezing. Right before this happens, one can observe CPU usage shooting
+ through the roof in ProcessController. Entering KDL consistently shows the
+ page_daemon with backtraces like the following:
+
+ {{{
+ Welcome to Kernel Debugging Land...
+ Thread 7 &quot;page daemon&quot; running on CPU 0
+ kdebug&gt; bt
+ stack trace for thread 7 &quot;page daemon&quot;
+     kernel stack: 0x80188000 to 0x8018c000
+ frame               caller     &lt;image&gt;:function + offset
+  0 8018bab4 (+  48) 80063745   &lt;kernel_x86&gt;:invoke_debugger_command +
+ 0x00f5
+  1 8018bae4 (+  64) 80063535   &lt;kernel_x86&gt;
+ invoke_pipe_segment(debugger_command_pipe*: 0x801319c0, int32: 0, 0x0
+ &quot;&lt;NULL&gt;&quot;) + 0x0079
+  2 8018bb24 (+  64) 800638bc   &lt;kernel_x86&gt;:invoke_debugger_command_pipe +
+ 0x009c
+  3 8018bb64 (+  48) 80064e6c   &lt;kernel_x86&gt;
+ ExpressionParser&lt;0x8018bc18&gt;::_ParseCommandPipe(0x8018bc14) + 0x0234
+  4 8018bb94 (+  64) 800642a6   &lt;kernel_x86&gt;
+ ExpressionParser&lt;0x8018bc18&gt;::EvaluateCommand(0x80122d60 &quot;bt&quot;, 0x8018bc14)
+ + 0x02ba
+  5 8018bbd4 (+ 224) 80066294   &lt;kernel_x86&gt;:evaluate_debug_command +
+ 0x0088
+  6 8018bcb4 (+  64) 80061636   &lt;kernel_x86&gt; kernel_debugger_loop() +
+ 0x01ae
+  7 8018bcf4 (+  32) 800624c5   &lt;kernel_x86&gt;:kernel_debugger + 0x004d
+  8 8018bd14 (+ 192) 8006246d   &lt;kernel_x86&gt;:panic + 0x0029
+  9 8018bdd4 (+  48) 916706cd   &lt;/boot/system/add-
+ ons/kernel/bus_managers/ps2&gt;:ps2_interrupt + 0x00d1
+ 10 8018be04 (+  48) 8003f3cf   &lt;kernel_x86&gt;:int_io_interrupt_handler +
+ 0x006f
+ 11 8018be34 (+  48) 800d74b4   &lt;kernel_x86&gt;:hardware_interrupt + 0x0070
+ 12 8018be64 (+  12) 800dab56   &lt;kernel_x86&gt;:int_bottom + 0x0036
+ kernel iframe at 0x8018be70 (end = 0x8018bec0)
+  eax 0x0            ebx 0x8018bf84      ecx 0x1          edx 0x246
+  esi 0x8256a6b0     edi 0x8018bf84      ebp 0x8018bee8   esp 0x8018bea4
+  eip 0x800ca27c  eflags 0x246
+  vector: 0x21, error code: 0x0
+ 13 8018be70 (+ 120) 800ca27c
+ &lt;kernel_x86&gt;:vm_cache_acquire_locked_page_cache + 0x0048
+ 14 8018bee8 (+  48) 800cc619   &lt;kernel_x86&gt;
+ PageCacheLocker&lt;0x8018bf84&gt;::Lock(vm_page*: 0x8256a6b0, true) + 0x0031
+ 15 8018bf18 (+  48) 800cc571   &lt;kernel_x86&gt;:__15PageCacheLockerP7vm_pageb
+ + 0x0025
+ 16 8018bf48 (+  64) 800cc6bd   &lt;kernel_x86&gt; clear_page_activation(int32:
+ 101726) + 0x0029
+ 17 8018bf88 (+  80) 800cc9a8   &lt;kernel_x86&gt; page_daemon(NULL) + 0x00c8
+ 18 8018bfd8 (+  32) 800574e3   &lt;kernel_x86&gt; _create_kernel_thread_kentry()
+ + 0x001b
+ 19 8018bff8 (+2145861640) 80057480   &lt;kernel_x86&gt; thread_kthread_exit() +
+ 0x0000
+ kdebug&gt;
+ }}}
+
+ This is 100% reproducible on my system with 1GB of RAM and r30165.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3768">http://dev.haiku-os.org/ticket/3768</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="016191.html">[Haiku-bugs] [Haiku] #3767: [PATCH] enhancements to DiskUsage
+</A></li>
+	<LI>Next message: <A HREF="016168.html">[Haiku-bugs] [Haiku] #3768: create_image -i 943718400 (or other large sizes) results in freeze
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16167">[ date ]</a>
+              <a href="thread.html#16167">[ thread ]</a>
+              <a href="subject.html#16167">[ subject ]</a>
+              <a href="author.html#16167">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

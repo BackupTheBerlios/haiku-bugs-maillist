@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3772: Freeze on Haiku tree compilation	(reproduceable)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233772%3A%20Freeze%20on%20Haiku%20tree%20compilation%0A%09%28reproduceable%29&In-Reply-To=%3C060.6ebbf42ddd4e2d56e30c4902028359aa%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="021174.html">
+   <LINK REL="Next"  HREF="021018.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3772: Freeze on Haiku tree compilation	(reproduceable)</H1>
+    <B>michael.weirauch</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233772%3A%20Freeze%20on%20Haiku%20tree%20compilation%0A%09%28reproduceable%29&In-Reply-To=%3C060.6ebbf42ddd4e2d56e30c4902028359aa%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3772: Freeze on Haiku tree compilation	(reproduceable)">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Sep  9 22:17:11 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="021174.html">[Haiku-bugs] [Haiku] #4462: Accessing a 0-length file on NTFS volume freezes the accessing application
+</A></li>
+        <LI>Next message: <A HREF="021018.html">[Haiku-bugs] [Haiku] #4357: Alpha-CD boot error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21016">[ date ]</a>
+              <a href="thread.html#21016">[ thread ]</a>
+              <a href="subject.html#21016">[ subject ]</a>
+              <a href="author.html#21016">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3772: Freeze on Haiku tree compilation (reproduceable)
+------------------------------+---------------------------------------------
+ Reporter:  michael.weirauch  |       Owner:  axeld         
+     Type:  bug               |      Status:  new           
+ Priority:  normal            |   Milestone:  R1            
+Component:  System            |     Version:  R1 development
+Blockedby:                    |    Platform:  x86           
+ Blocking:                    |  
+------------------------------+---------------------------------------------
+
+Comment(by michael.weirauch):
+
+ r32893-r33027-trunk;gcc4;ata;acpi
+
+ 3067MB seems to be the last possible RAM-limit-setting on which the system
+ is not freezable with the dd-tests.
+
+ ||'''memory-limit'''||'''freeze'''||
+ ||-||yes||
+ ||3070||yes||
+ ||3068||yes||
+ ||3067||'''''no'''''||
+ ||3066||'''''no'''''||
+ ||3064||'''''no'''''||
+ ||3056;3040;2944||'''''no'''''||
+
+ In the meantime it turned out chaotic (trac-user) has the same ThinkPad
+ T500 series, just another processor and other hard drive.
+
+ He also reported occassional system freezes and could reproduce the dd-
+ test-freeze.
+
+ So I built him a r32932 hybrid kernel limited to 2944MB RAM for testing on
+ his r1a1 installation and he could not get the system to freeze with the
+ dd-tests. Just the occassional *UI*-freezes. (But these are another
+ story...)
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3772#comment:26">http://dev.haiku-os.org/ticket/3772#comment:26</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="021174.html">[Haiku-bugs] [Haiku] #4462: Accessing a 0-length file on NTFS volume freezes the accessing application
+</A></li>
+	<LI>Next message: <A HREF="021018.html">[Haiku-bugs] [Haiku] #4357: Alpha-CD boot error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21016">[ date ]</a>
+              <a href="thread.html#21016">[ thread ]</a>
+              <a href="subject.html#21016">[ subject ]</a>
+              <a href="author.html#21016">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4685: [patch] Don't register mouse click when Wacom pen slightly touches tablet
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234685%3A%20%5Bpatch%5D%20Don%27t%20register%20mouse%20click%0A%20when%20Wacom%20pen%20slightly%20touches%20tablet&In-Reply-To=%3C050.0758348e86387a0cd234490ef31c4e75%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="022452.html">
+   <LINK REL="Next"  HREF="022409.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4685: [patch] Don't register mouse click when Wacom pen slightly touches tablet</H1>
+    <B>idefix</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234685%3A%20%5Bpatch%5D%20Don%27t%20register%20mouse%20click%0A%20when%20Wacom%20pen%20slightly%20touches%20tablet&In-Reply-To=%3C050.0758348e86387a0cd234490ef31c4e75%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4685: [patch] Don't register mouse click when Wacom pen slightly touches tablet">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Oct  5 19:58:07 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="022452.html">[Haiku-bugs] [Haiku] #4729: haiku-files.org is snappy, but haiku-files.org/raw, /vmware, /cd are not
+</A></li>
+        <LI>Next message: <A HREF="022409.html">[Haiku-bugs] [Haiku] #4730: ShowImage doesn't stop at first/last	image
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22405">[ date ]</a>
+              <a href="thread.html#22405">[ thread ]</a>
+              <a href="subject.html#22405">[ subject ]</a>
+              <a href="author.html#22405">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4685: [patch] Don't register mouse click when Wacom pen slightly touches tablet
+-------------------------------+--------------------------------------------
+ Reporter:  idefix             |       Owner:  mmlr     
+     Type:  enhancement        |      Status:  new      
+ Priority:  normal             |   Milestone:  R1       
+Component:  Drivers/Mouse/USB  |     Version:  R1/alpha1
+Blockedby:                     |    Platform:  All      
+ Blocking:                     |  
+-------------------------------+--------------------------------------------
+
+Comment(by idefix):
+
+ Replying to [comment:3 stippi]:
+ &gt; Hm, maybe line 288 should be
+ &gt;
+ &gt;   firstButton = (data[1] &amp; 0x01) != 0;
+ This causes `firstButton` to be `true` at a pressure of approximately
+ `0.12`. But this also causes WonderBrush to ignore the pressure-levels
+ below that. Maybe WonderBrush should only act on the pressure-level and
+ not on the button-data when one of the parameters is configured for
+ pressure-sensitivity and the user is using a Wacom pen? That way you can
+ use the full pressure-range when drawing and still have a trigger-point
+ for `firstButton` when using any other application.
+ &gt; If that doesn't work, you can cut off the pressure, but do it like this:
+ &gt;
+ &gt;   pressure = max_c(0.0, (pressure - 0.1)) / 0.9;
+ &gt;
+ &gt; which will make it range from 0.0 to 1.0 again.
+ This works, but as you said, it will cut a range of the pressure which the
+ driver shouldn't do at default. Maybe one day this can be implemented in a
+ preference panel.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4685#comment:4">http://dev.haiku-os.org/ticket/4685#comment:4</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="022452.html">[Haiku-bugs] [Haiku] #4729: haiku-files.org is snappy, but haiku-files.org/raw, /vmware, /cd are not
+</A></li>
+	<LI>Next message: <A HREF="022409.html">[Haiku-bugs] [Haiku] #4730: ShowImage doesn't stop at first/last	image
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22405">[ date ]</a>
+              <a href="thread.html#22405">[ thread ]</a>
+              <a href="subject.html#22405">[ subject ]</a>
+              <a href="author.html#22405">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

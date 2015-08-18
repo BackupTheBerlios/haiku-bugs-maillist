@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1924: Incomplete support of 1002:564f: M26 [Radeon Mobility X700 XL (PCIE)]
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231924%3A%20Incomplete%20support%20of%201002%3A564f%3A%0A%20M26%20%5BRadeon%20Mobility%20X700%20XL%20%28PCIE%29%5D&In-Reply-To=%3C052.3584c248eeabd95516042ce87bbcfda9%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005562.html">
+   <LINK REL="Next"  HREF="005573.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1924: Incomplete support of 1002:564f: M26 [Radeon Mobility X700 XL (PCIE)]</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231924%3A%20Incomplete%20support%20of%201002%3A564f%3A%0A%20M26%20%5BRadeon%20Mobility%20X700%20XL%20%28PCIE%29%5D&In-Reply-To=%3C052.3584c248eeabd95516042ce87bbcfda9%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1924: Incomplete support of 1002:564f: M26 [Radeon Mobility X700 XL (PCIE)]">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Mar 16 22:02:24 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005562.html">[Haiku-bugs] [Haiku] #1924: Incomplete support of 1002:564f: M26 [Radeon Mobility X700 XL (PCIE)]
+</A></li>
+        <LI>Next message: <A HREF="005573.html">[Haiku-bugs] [Haiku] #1924: Incomplete support of 1002:564f: M26 [Radeon Mobility X700 XL (PCIE)]
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5571">[ date ]</a>
+              <a href="thread.html#5571">[ thread ]</a>
+              <a href="subject.html#5571">[ subject ]</a>
+              <a href="author.html#5571">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1924: Incomplete support of 1002:564f: M26 [Radeon Mobility X700 XL (PCIE)]
+--------------------------------------+-------------------------------------
+  Reporter:  siarzhuk                 |       Owner:  euan          
+      Type:  bug                      |      Status:  assigned      
+  Priority:  normal                   |   Milestone:  R1            
+ Component:  Drivers/Graphics/radeon  |     Version:  R1 development
+Resolution:                           |    Platform:  All           
+--------------------------------------+-------------------------------------
+Changes (by euan):
+
+  * status:  new =&gt; assigned
+
+Comment:
+
+ Looks like the syslog is missing the radeon driver's debug.  We should be
+ able to see the memory init, bios readouts, edid, etc.  Did you change the
+ debug levels?
+
+ Regardless it seems similar to the issue I get with Dual DVI when the
+ resolution on the second screen is changed to a non-native resolution.
+ Because there is only one scaler, when the resolution is &gt; native the
+ image wraps over the vieable area (like the screenshot). When &lt; the
+ vertical / horizontal native screen resolution garbage is displayed
+ because the framebuffer isn't cleared before hand (sort of an &quot;uncentered&quot;
+ centered timings rather than using the scaler to stretch).
+
+ Looks like perhaps the connector table is wrong in the bios, and is worked
+ around in other OS's.  Or that our connector mapping can't handle it.
+
+ At least your backlight comes on.  Most M26 owners are greeted with
+ darkness :)
+
+ Will look into it when merging the Xx000 support.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1924#comment:1">http://dev.haiku-os.org/ticket/1924#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005562.html">[Haiku-bugs] [Haiku] #1924: Incomplete support of 1002:564f: M26 [Radeon Mobility X700 XL (PCIE)]
+</A></li>
+	<LI>Next message: <A HREF="005573.html">[Haiku-bugs] [Haiku] #1924: Incomplete support of 1002:564f: M26 [Radeon Mobility X700 XL (PCIE)]
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5571">[ date ]</a>
+              <a href="thread.html#5571">[ thread ]</a>
+              <a href="subject.html#5571">[ subject ]</a>
+              <a href="author.html#5571">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

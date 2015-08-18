@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2481: USB mouse and keyboard sometimes	stop working
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232481%3A%20USB%20mouse%20and%20keyboard%20sometimes%0A%09stop%20working&In-Reply-To=%3C050.d803101d8a87109ea64bcf9d3685fdac%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="017275.html">
+   <LINK REL="Next"  HREF="017273.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2481: USB mouse and keyboard sometimes	stop working</H1>
+    <B>mmlr</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232481%3A%20USB%20mouse%20and%20keyboard%20sometimes%0A%09stop%20working&In-Reply-To=%3C050.d803101d8a87109ea64bcf9d3685fdac%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2481: USB mouse and keyboard sometimes	stop working">trac at haiku-os.org
+       </A><BR>
+    <I>Mon May 11 16:19:21 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="017275.html">[Haiku-bugs] [Haiku] #3924: Automount of USB stick crashes	system to KDL
+</A></li>
+        <LI>Next message: <A HREF="017273.html">[Haiku-bugs] [Haiku] #2481: USB mouse and keyboard sometimes	stop working
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17272">[ date ]</a>
+              <a href="thread.html#17272">[ thread ]</a>
+              <a href="subject.html#17272">[ subject ]</a>
+              <a href="author.html#17272">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2481: USB mouse and keyboard sometimes stop working
+--------------------------+-------------------------------------------------
+  Reporter:  stippi       |       Owner:  mmlr          
+      Type:  bug          |      Status:  reopened      
+  Priority:  normal       |   Milestone:  R1            
+ Component:  Drivers/USB  |     Version:  R1 development
+Resolution:               |   Blockedby:                
+  Platform:  All          |    Blocking:                
+--------------------------+-------------------------------------------------
+
+Comment(by mmlr):
+
+ I think I've found the cause of this. It's probably not a wrongly set
+ descriptor field at all, but a descriptor leak. This leak only happens on
+ control transfers apparently and this explains why you all saw it and I
+ couldn't. Control transfers are usually only used in initial device setup
+ and for some rare later configuration.
+
+ But in the case of hubs (and the KVM is a hub) it is used to poll the port
+ status. This means that when there are hubs involved it would leak about 3
+ descriptors per second. In the end, if the controller lived long enough,
+ it would have exhausted the physical memory pool, but it seems that way
+ before that the controller stops with a process error. Probably because
+ the queue gets too long after some time (the descriptors are inactive but
+ still part of the queue that the controller has to parse through on every
+ iteration). It's possible that when the linked descriptor list becomes too
+ long that the controller simply doesn't have enough time to skim through
+ all of them and then throws a process error.
+
+ Going to fix the leak in any case (not sure where it happens yet) and then
+ check if the other host controller drivers contain the same error.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2481#comment:21">http://dev.haiku-os.org/ticket/2481#comment:21</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="017275.html">[Haiku-bugs] [Haiku] #3924: Automount of USB stick crashes	system to KDL
+</A></li>
+	<LI>Next message: <A HREF="017273.html">[Haiku-bugs] [Haiku] #2481: USB mouse and keyboard sometimes	stop working
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17272">[ date ]</a>
+              <a href="thread.html#17272">[ thread ]</a>
+              <a href="subject.html#17272">[ subject ]</a>
+              <a href="author.html#17272">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

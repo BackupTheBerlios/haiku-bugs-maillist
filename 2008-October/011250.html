@@ -1,0 +1,417 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2898: Booting from USB fails. (was: AddOnMonitor crashs haiku after boot)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232898%3A%20Booting%20from%20USB%20fails.%20%28was%3A%0A%20AddOnMonitor%20crashs%20haiku%20after%20boot%29&In-Reply-To=%3C055.fdf65cc101adc306fe6978a874d8bddd%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011249.html">
+   <LINK REL="Next"  HREF="011257.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2898: Booting from USB fails. (was: AddOnMonitor crashs haiku after boot)</H1>
+    <B>axeld</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232898%3A%20Booting%20from%20USB%20fails.%20%28was%3A%0A%20AddOnMonitor%20crashs%20haiku%20after%20boot%29&In-Reply-To=%3C055.fdf65cc101adc306fe6978a874d8bddd%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2898: Booting from USB fails. (was: AddOnMonitor crashs haiku after boot)">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Oct 22 09:38:21 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011249.html">[Haiku-bugs] [Haiku] #2898: AddOnMonitor crashs haiku after boot
+</A></li>
+        <LI>Next message: <A HREF="011257.html">[Haiku-bugs] [Haiku] #156: syslog is corrupted
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11250">[ date ]</a>
+              <a href="thread.html#11250">[ thread ]</a>
+              <a href="subject.html#11250">[ subject ]</a>
+              <a href="author.html#11250">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2898: Booting from USB fails.
+--------------------------+-------------------------------------------------
+  Reporter:  richienyhus  |       Owner:  mmlr          
+      Type:  bug          |      Status:  new           
+  Priority:  normal       |   Milestone:  R1            
+ Component:  Drivers/USB  |     Version:  R1 development
+Resolution:               |   Blockedby:                
+  Platform:  x86          |    Blocking:                
+--------------------------+-------------------------------------------------
+Changes (by axeld):
+
+  * owner:  axeld =&gt; mmlr
+  * component:  Add-Ons =&gt; Drivers/USB
+
+
+Old description:
+
+&gt;<i> This is from r27770, but I still get it in r28270
+</I>&gt;<i>
+</I>&gt;<i> Welcome to Kernel Debugging Land...
+</I>&gt;<i> Thread 99 &quot;AddOnMonitor&quot; running on CPU 0
+</I>&gt;<i> kdebug&gt; bt
+</I>&gt;<i> stack trace for thread 99 &quot;AddOnMonitor&quot;
+</I>&gt;<i>     kernel stack: 0x922cd000 to 0x922d1000
+</I>&gt;<i>       user stack: 0x700c3000 to 0x70103000
+</I>&gt;<i> frame            caller     &lt;image&gt;:function + offset
+</I>&gt;<i>  0 922cff34 (+  48) 800580a5   &lt;kernel_x86&gt;:invoke_debugger_command +
+</I>&gt;<i> 0x00f5
+</I>&gt;<i>  1 922cff64 (+  64) 80057e95
+</I>&gt;<i> &lt;kernel_x86&gt;:invoke_pipe_segment__FP21debugger_co
+</I>&gt;<i> mmand_pipelPc + 0x0079
+</I>&gt;<i>  2 922cffa4 (+  64) 8005821d   &lt;kernel_x86&gt;:invoke_debugger_command_pipe
+</I>&gt;<i> + 0x009
+</I>&gt;<i> d
+</I>&gt;<i>  3 922cffe4 (+  48) 80059758
+</I>&gt;<i> &lt;kernel_x86&gt;:_ParseCommandPipe__16ExpressionParse
+</I>&gt;<i> rRi + 0x0234
+</I>&gt;<i>  4 922d0014 (+  64) 80058b92
+</I>&gt;<i> &lt;kernel_x86&gt;:EvaluateCommand__16ExpressionParserP
+</I>&gt;<i> CcRi + 0x02ba
+</I>&gt;<i>  5 922d0054 (+ 224) 8005ab80   &lt;kernel_x86&gt;:evaluate_debug_command +
+</I>&gt;<i> 0x0088
+</I>&gt;<i>  6 922d0134 (+  64) 800564a6   &lt;kernel_x86&gt;:kernel_debugger_loop__Fv +
+</I>&gt;<i> 0x01ae
+</I>&gt;<i>  7 922d0174 (+  48) 80057079   &lt;kernel_x86&gt;:kernel_debugger + 0x0121
+</I>&gt;<i>  8 922d01a4 (+ 192) 80056f4d   &lt;kernel_x86&gt;:panic + 0x0029
+</I>&gt;<i>  9 922d0264 (+  96) 8002bf1c
+</I>&gt;<i> &lt;kernel_x86&gt;:get_cached_block__FP11block_cachexPb
+</I>&gt;<i> b + 0x015c
+</I>&gt;<i> 10 922d02c4 (+  80) 8002ee86   &lt;kernel_x86&gt;:block_cache_get_etc + 0x004e
+</I>&gt;<i> 11 922d0314 (+  64) 807a784d   &lt;bfs&gt;:SetTo__11CachedBlockx + 0x0065
+</I>&gt;<i> 12 922d0354 (+  96) 807a30bf
+</I>&gt;<i> &lt;bfs&gt;:bfs_get_vnode__FP9fs_volumexP8fs_vnodePiPUl
+</I>&gt;<i> b + 0x0117
+</I>&gt;<i> 13 922d03b4 (+  80) 8008c4f8   &lt;kernel_x86&gt;:get_vnode__FlxPP5vnodebi +
+</I>&gt;<i> 0x0168
+</I>&gt;<i> 14 922d0404 (+  80) 80090063   &lt;kernel_x86&gt;:get_vnode + 0x003f
+</I>&gt;<i> 15 922d0454 (+  64) 807a3bff
+</I>&gt;<i> &lt;bfs&gt;:bfs_lookup__FP9fs_volumeP8fs_vnodePCcPx + 0
+</I>&gt;<i> x017f
+</I>&gt;<i> 16 922d0494 (+  80) 8008db58
+</I>&gt;<i> &lt;kernel_x86&gt;:lookup_dir_entry__FP5vnodePCcPP5vnod
+</I>&gt;<i> e + 0x0264
+</I>&gt;<i> 17 922d04e4 (+  80) 8008dd6b
+</I>&gt;<i> &lt;kernel_x86&gt;:vnode_path_to_vnode__FP5vnodePcbiP10
+</I>&gt;<i> io_contextPP5vnodePx + 0x0173
+</I>&gt;<i> 18 922d0534 (+  96) 8008df57
+</I>&gt;<i> &lt;kernel_x86&gt;:vnode_path_to_vnode__FP5vnodePcbiP10
+</I>&gt;<i> io_contextPP5vnodePx + 0x035f
+</I>&gt;<i> 19 922d0594 (+  48) 8008e05d
+</I>&gt;<i> &lt;kernel_x86&gt;:vnode_path_to_vnode__FP5vnodePcbiT2P
+</I>&gt;<i> P5vnodePx + 0x0049
+</I>&gt;<i> 20 922d05c4 (+  64) 8008e15c
+</I>&gt;<i> &lt;kernel_x86&gt;:path_to_vnode__FPcbPP5vnodePxT1 + 0x
+</I>&gt;<i> 00f8
+</I>&gt;<i> 21 922d0604 (+  64) 8008e1a3
+</I>&gt;<i> &lt;kernel_x86&gt;:path_to_dir_vnode__FPcPP5vnodeT0b +
+</I>&gt;<i> 0x003b
+</I>&gt;<i> 22 922d0644 (+  48) 8008e1ec
+</I>&gt;<i> &lt;kernel_x86&gt;:fd_and_path_to_dir_vnode__FiPcPP5vno
+</I>&gt;<i> deT1b + 0x0040
+</I>&gt;<i> 23 922d0674 (+ 320) 80092bb5   &lt;kernel_x86&gt;:file_create__FiPciib + 0x0031
+</I>&gt;<i> 24 922d07b4 (+  80) 800970c0   &lt;kernel_x86&gt;:_kern_open + 0x0098
+</I>&gt;<i> 25 922d0804 (+  48) 800d11f1   &lt;kernel_x86&gt;:open + 0x0029
+</I>&gt;<i> 26 922d0834 (+ 208) 922eb569   &lt;/boot/beos/system/add-
+</I>&gt;<i> ons/kernel/drivers/dev/inp
+</I>&gt;<i> ut/usb_hid&gt;:MakeHIDDevice__9HIDDeviceUlPC22usb_configuration_infoUl +
+</I>&gt;<i> 0x0155
+</I>&gt;<i> 27 922d0904 (+  64) 922eacfa   &lt;/boot/beos/system/add-
+</I>&gt;<i> ons/kernel/drivers/dev/inp
+</I>&gt;<i> ut/usb_hid&gt;:usb_hid_device_added + 0x0142
+</I>&gt;<i> 28 922d0944 (+  80) 8090446b
+</I>&gt;<i> &lt;usb&gt;:ReportDevice__6DeviceP22usb_support_descrip
+</I>&gt;<i> torUlPC16usb_notify_hooksPP17usb_driver_cookiebT5 + 0x02af
+</I>&gt;<i> 29 922d0994 (+  64) 80807f18
+</I>&gt;<i> &lt;ohci&gt;:ReportDevice__3HubP22usb_support_descripto
+</I>&gt;<i> rUlPC16usb_notify_hooksPP17usb_driver_cookiebT5 + 0x0094
+</I>&gt;<i> 30 922d09d4 (+  64) 8090319d
+</I>&gt;<i> &lt;usb&gt;:InstallNotify__5StackPCcPC16usb_notify_hook
+</I>&gt;<i> s + 0x00b5
+</I>&gt;<i> 31 922d0a14 (+  48) 809017e8
+</I>&gt;<i> &lt;usb&gt;:install_notify__FPCcPC16usb_notify_hooks +
+</I>&gt;<i> 0x002c
+</I>&gt;<i> 32 922d0a44 (+  48) 922eb165   &lt;/boot/beos/system/add-
+</I>&gt;<i> ons/kernel/drivers/dev/inp
+</I>&gt;<i> ut/usb_hid&gt;:init_driver + 0x00bd
+</I>&gt;<i> 33 922d0a74 (+  48) 8006ab39
+</I>&gt;<i> &lt;kernel_x86&gt;:load_driver__FP13legacy_driver + 0x0
+</I>&gt;<i> 139
+</I>&gt;<i> 34 922d0aa4 (+ 128) 8006b0ad   &lt;kernel_x86&gt;:add_driver__FPCcl + 0x022d
+</I>&gt;<i> 35 922d0b24 (+  32) 8006cf20   &lt;kernel_x86&gt;:legacy_driver_add + 0x0014
+</I>&gt;<i> 36 922d0b44 (+  48) 8006c5fc
+</I>&gt;<i> &lt;kernel_x86&gt;:try_drivers__FRt16DoublyLinkedList2Z
+</I>&gt;<i> 12driver_entryZt31DoublyLinkedListStandardGetLink1Z12driver_entry +
+</I>&gt;<i> 0x00a4
+</I>&gt;<i> 37 922d0b74 (+ 192) 8006ca4b   &lt;kernel_x86&gt;:probe_for_drivers__FPCc +
+</I>&gt;<i> 0x03ff
+</I>&gt;<i> 38 922d0c34 (+ 144) 8006d1ba   &lt;kernel_x86&gt;:legacy_driver_probe + 0x0172
+</I>&gt;<i> 39 922d0cc4 (+  96) 80064455
+</I>&gt;<i> &lt;kernel_x86&gt;:scan_for_drivers__FP11devfs_vnode +
+</I>&gt;<i> 0x0085
+</I>&gt;<i> 40 922d0d24 (+  64) 80065499
+</I>&gt;<i> &lt;kernel_x86&gt;:devfs_lookup__FP9fs_volumeP8fs_vnode
+</I>&gt;<i> PCcPx + 0x0061
+</I>&gt;<i> 41 922d0d64 (+  80) 8008db58
+</I>&gt;<i> &lt;kernel_x86&gt;:lookup_dir_entry__FP5vnodePCcPP5vnod
+</I>&gt;<i> e + 0x0264
+</I>&gt;<i> 42 922d0db4 (+  80) 8008dd6b
+</I>&gt;<i> &lt;kernel_x86&gt;:vnode_path_to_vnode__FP5vnodePcbiP10
+</I>&gt;<i> io_contextPP5vnodePx + 0x0173
+</I>&gt;<i> 43 922d0e04 (+  48) 8008e05d
+</I>&gt;<i> &lt;kernel_x86&gt;:vnode_path_to_vnode__FP5vnodePcbiT2P
+</I>&gt;<i> P5vnodePx + 0x0049
+</I>&gt;<i> 44 922d0e34 (+  64) 8008e15c
+</I>&gt;<i> &lt;kernel_x86&gt;:path_to_vnode__FPcbPP5vnodePxT1 + 0x
+</I>&gt;<i> 00f8
+</I>&gt;<i> 45 922d0e74 (+  64) 8008e99c
+</I>&gt;<i> &lt;kernel_x86&gt;:fd_and_path_to_vnode__FiPcbPP5vnodeP
+</I>&gt;<i> xT2 + 0x0064
+</I>&gt;<i> 46 922d0eb4 (+  80) 80092d24   &lt;kernel_x86&gt;:file_open__FiPcib + 0x0044
+</I>&gt;<i> 47 922d0f04 (+  64) 8009846d   &lt;kernel_x86&gt;:_user_open + 0x00a1
+</I>&gt;<i> 48 922d0f44 (+ 100) 800c8002   &lt;kernel_x86&gt;:handle_syscall + 0x00af
+</I>&gt;<i> user iframe at 0x922d0fa8 (end = 0x922d1000)
+</I>&gt;<i>  eax 0x60           ebx 0x460064        ecx 0x70102a40   edx 0xffff0104
+</I>&gt;<i>  esi 0x70102b28     edi 0x0             ebp 0x70102a6c   esp 0x922d0fdc
+</I>&gt;<i>  eip 0xffff0104  eflags 0x206      user esp 0x70102a40
+</I>&gt;<i>  vector: 0x63, error code: 0x0
+</I>&gt;<i> 49 922d0fa8 (+   0) ffff0104   &lt;commpage&gt;:commpage_syscall + 0x0004
+</I>&gt;<i> 50 70102a6c (+  48) 0039b94e   &lt;libbe.so&gt;:SetTo__10BDirectoryPCc + 0x002a
+</I>&gt;<i> 51 70102a9c (+  48) 0039b595   &lt;libbe.so&gt;:__10BDirectoryPCc + 0x0055
+</I>&gt;<i> 52 70102acc (+ 224) 005d66c3
+</I>&gt;<i> &lt;keyboard&gt;:_RecursiveScan__19KeyboardInputDeviceP
+</I>&gt;<i> Cc + 0x0037
+</I>&gt;<i> 53 70102bac (+  48) 005d5533
+</I>&gt;<i> &lt;keyboard&gt;:InitCheck__19KeyboardInputDevice + 0x0
+</I>&gt;<i> 037
+</I>&gt;<i> 54 70102bdc (+ 112) 00217926
+</I>&gt;<i> &lt;_APP_&gt;:RegisterAddOn__12AddOnManagerR6BEntry + 0
+</I>&gt;<i> x011e
+</I>&gt;<i> 55 70102c4c (+ 128) 0021ae69
+</I>&gt;<i> &lt;_APP_&gt;:AddOnEnabled__Q212AddOnManager25InputServ
+</I>&gt;<i> erMonitorHandlerPCQ38BPrivate7Storage17add_on_entry_info + 0x0069
+</I>&gt;<i> 56 70102ccc (+ 528) 00221348
+</I>&gt;<i> &lt;_APP_&gt;:HandlePulse__Q38BPrivate7Storage19AddOnMo
+</I>&gt;<i> nitorHandler + 0x0520
+</I>&gt;<i> 57 70102edc (+  48) 0021f26c
+</I>&gt;<i> &lt;_APP_&gt;:MessageReceived__Q38BPrivate7Storage19Add
+</I>&gt;<i> OnMonitorHandlerP8BMessage + 0x002c
+</I>&gt;<i> 58 70102f0c (+  48) 002db11f
+</I>&gt;<i> &lt;libbe.so&gt;:DispatchMessage__7BLooperP8BMessageP8B
+</I>&gt;<i> Handler + 0x005b
+</I>&gt;<i> 59 70102f3c (+  64) 002dca8d   &lt;libbe.so&gt;:task_looper__7BLooper + 0x0211
+</I>&gt;<i> 60 70102f7c (+  48) 002dc67b   &lt;libbe.so&gt;:_task0___7BLooperPv + 0x003f
+</I>&gt;<i> 61 70102fac (+  48) 004d77cc   &lt;libroot.so&gt;:_get_next_team_info + 0x005c
+</I>&gt;<i> (neares
+</I>&gt;<i> t)
+</I>&gt;<i> 62 70102fdc (+   0) 70102fec   3974:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">AddOnMonitor_99_stack at 0x700c3000</A> +
+</I>&gt;<i> 0x3ffec
+</I>&gt;<i> kdebug&gt;
+</I>
+New description:
+
+ This is from r27770, but I still get it in r28270
+ {{{
+ Welcome to Kernel Debugging Land...
+ Thread 99 &quot;AddOnMonitor&quot; running on CPU 0
+ kdebug&gt; bt
+ stack trace for thread 99 &quot;AddOnMonitor&quot;
+     kernel stack: 0x922cd000 to 0x922d1000
+       user stack: 0x700c3000 to 0x70103000
+ frame            caller     &lt;image&gt;:function + offset
+  0 922cff34 (+  48) 800580a5   &lt;kernel_x86&gt;:invoke_debugger_command +
+ 0x00f5
+  1 922cff64 (+  64) 80057e95
+ &lt;kernel_x86&gt;:invoke_pipe_segment__FP21debugger_co
+ mmand_pipelPc + 0x0079
+  2 922cffa4 (+  64) 8005821d   &lt;kernel_x86&gt;:invoke_debugger_command_pipe +
+ 0x009
+ d
+  3 922cffe4 (+  48) 80059758
+ &lt;kernel_x86&gt;:_ParseCommandPipe__16ExpressionParse
+ rRi + 0x0234
+  4 922d0014 (+  64) 80058b92
+ &lt;kernel_x86&gt;:EvaluateCommand__16ExpressionParserP
+ CcRi + 0x02ba
+  5 922d0054 (+ 224) 8005ab80   &lt;kernel_x86&gt;:evaluate_debug_command +
+ 0x0088
+  6 922d0134 (+  64) 800564a6   &lt;kernel_x86&gt;:kernel_debugger_loop__Fv +
+ 0x01ae
+  7 922d0174 (+  48) 80057079   &lt;kernel_x86&gt;:kernel_debugger + 0x0121
+  8 922d01a4 (+ 192) 80056f4d   &lt;kernel_x86&gt;:panic + 0x0029
+  9 922d0264 (+  96) 8002bf1c
+ &lt;kernel_x86&gt;:get_cached_block__FP11block_cachexPb
+ b + 0x015c
+ 10 922d02c4 (+  80) 8002ee86   &lt;kernel_x86&gt;:block_cache_get_etc + 0x004e
+ 11 922d0314 (+  64) 807a784d   &lt;bfs&gt;:SetTo__11CachedBlockx + 0x0065
+ 12 922d0354 (+  96) 807a30bf
+ &lt;bfs&gt;:bfs_get_vnode__FP9fs_volumexP8fs_vnodePiPUl
+ b + 0x0117
+ 13 922d03b4 (+  80) 8008c4f8   &lt;kernel_x86&gt;:get_vnode__FlxPP5vnodebi +
+ 0x0168
+ 14 922d0404 (+  80) 80090063   &lt;kernel_x86&gt;:get_vnode + 0x003f
+ 15 922d0454 (+  64) 807a3bff
+ &lt;bfs&gt;:bfs_lookup__FP9fs_volumeP8fs_vnodePCcPx + 0
+ x017f
+ 16 922d0494 (+  80) 8008db58
+ &lt;kernel_x86&gt;:lookup_dir_entry__FP5vnodePCcPP5vnod
+ e + 0x0264
+ 17 922d04e4 (+  80) 8008dd6b
+ &lt;kernel_x86&gt;:vnode_path_to_vnode__FP5vnodePcbiP10
+ io_contextPP5vnodePx + 0x0173
+ 18 922d0534 (+  96) 8008df57
+ &lt;kernel_x86&gt;:vnode_path_to_vnode__FP5vnodePcbiP10
+ io_contextPP5vnodePx + 0x035f
+ 19 922d0594 (+  48) 8008e05d
+ &lt;kernel_x86&gt;:vnode_path_to_vnode__FP5vnodePcbiT2P
+ P5vnodePx + 0x0049
+ 20 922d05c4 (+  64) 8008e15c
+ &lt;kernel_x86&gt;:path_to_vnode__FPcbPP5vnodePxT1 + 0x
+ 00f8
+ 21 922d0604 (+  64) 8008e1a3
+ &lt;kernel_x86&gt;:path_to_dir_vnode__FPcPP5vnodeT0b +
+ 0x003b
+ 22 922d0644 (+  48) 8008e1ec
+ &lt;kernel_x86&gt;:fd_and_path_to_dir_vnode__FiPcPP5vno
+ deT1b + 0x0040
+ 23 922d0674 (+ 320) 80092bb5   &lt;kernel_x86&gt;:file_create__FiPciib + 0x0031
+ 24 922d07b4 (+  80) 800970c0   &lt;kernel_x86&gt;:_kern_open + 0x0098
+ 25 922d0804 (+  48) 800d11f1   &lt;kernel_x86&gt;:open + 0x0029
+ 26 922d0834 (+ 208) 922eb569   &lt;/boot/beos/system/add-
+ ons/kernel/drivers/dev/inp
+ ut/usb_hid&gt;:MakeHIDDevice__9HIDDeviceUlPC22usb_configuration_infoUl +
+ 0x0155
+ 27 922d0904 (+  64) 922eacfa   &lt;/boot/beos/system/add-
+ ons/kernel/drivers/dev/inp
+ ut/usb_hid&gt;:usb_hid_device_added + 0x0142
+ 28 922d0944 (+  80) 8090446b
+ &lt;usb&gt;:ReportDevice__6DeviceP22usb_support_descrip
+ torUlPC16usb_notify_hooksPP17usb_driver_cookiebT5 + 0x02af
+ 29 922d0994 (+  64) 80807f18
+ &lt;ohci&gt;:ReportDevice__3HubP22usb_support_descripto
+ rUlPC16usb_notify_hooksPP17usb_driver_cookiebT5 + 0x0094
+ 30 922d09d4 (+  64) 8090319d
+ &lt;usb&gt;:InstallNotify__5StackPCcPC16usb_notify_hook
+ s + 0x00b5
+ 31 922d0a14 (+  48) 809017e8
+ &lt;usb&gt;:install_notify__FPCcPC16usb_notify_hooks +
+ 0x002c
+ 32 922d0a44 (+  48) 922eb165   &lt;/boot/beos/system/add-
+ ons/kernel/drivers/dev/inp
+ ut/usb_hid&gt;:init_driver + 0x00bd
+ 33 922d0a74 (+  48) 8006ab39   &lt;kernel_x86&gt;:load_driver__FP13legacy_driver
+ + 0x0
+ 139
+ 34 922d0aa4 (+ 128) 8006b0ad   &lt;kernel_x86&gt;:add_driver__FPCcl + 0x022d
+ 35 922d0b24 (+  32) 8006cf20   &lt;kernel_x86&gt;:legacy_driver_add + 0x0014
+ 36 922d0b44 (+  48) 8006c5fc
+ &lt;kernel_x86&gt;:try_drivers__FRt16DoublyLinkedList2Z
+ 12driver_entryZt31DoublyLinkedListStandardGetLink1Z12driver_entry + 0x00a4
+ 37 922d0b74 (+ 192) 8006ca4b   &lt;kernel_x86&gt;:probe_for_drivers__FPCc +
+ 0x03ff
+ 38 922d0c34 (+ 144) 8006d1ba   &lt;kernel_x86&gt;:legacy_driver_probe + 0x0172
+ 39 922d0cc4 (+  96) 80064455
+ &lt;kernel_x86&gt;:scan_for_drivers__FP11devfs_vnode +
+ 0x0085
+ 40 922d0d24 (+  64) 80065499
+ &lt;kernel_x86&gt;:devfs_lookup__FP9fs_volumeP8fs_vnode
+ PCcPx + 0x0061
+ 41 922d0d64 (+  80) 8008db58
+ &lt;kernel_x86&gt;:lookup_dir_entry__FP5vnodePCcPP5vnod
+ e + 0x0264
+ 42 922d0db4 (+  80) 8008dd6b
+ &lt;kernel_x86&gt;:vnode_path_to_vnode__FP5vnodePcbiP10
+ io_contextPP5vnodePx + 0x0173
+ 43 922d0e04 (+  48) 8008e05d
+ &lt;kernel_x86&gt;:vnode_path_to_vnode__FP5vnodePcbiT2P
+ P5vnodePx + 0x0049
+ 44 922d0e34 (+  64) 8008e15c
+ &lt;kernel_x86&gt;:path_to_vnode__FPcbPP5vnodePxT1 + 0x
+ 00f8
+ 45 922d0e74 (+  64) 8008e99c
+ &lt;kernel_x86&gt;:fd_and_path_to_vnode__FiPcbPP5vnodeP
+ xT2 + 0x0064
+ 46 922d0eb4 (+  80) 80092d24   &lt;kernel_x86&gt;:file_open__FiPcib + 0x0044
+ 47 922d0f04 (+  64) 8009846d   &lt;kernel_x86&gt;:_user_open + 0x00a1
+ 48 922d0f44 (+ 100) 800c8002   &lt;kernel_x86&gt;:handle_syscall + 0x00af
+ user iframe at 0x922d0fa8 (end = 0x922d1000)
+  eax 0x60           ebx 0x460064        ecx 0x70102a40   edx 0xffff0104
+  esi 0x70102b28     edi 0x0             ebp 0x70102a6c   esp 0x922d0fdc
+  eip 0xffff0104  eflags 0x206      user esp 0x70102a40
+  vector: 0x63, error code: 0x0
+ 49 922d0fa8 (+   0) ffff0104   &lt;commpage&gt;:commpage_syscall + 0x0004
+ 50 70102a6c (+  48) 0039b94e   &lt;libbe.so&gt;:SetTo__10BDirectoryPCc + 0x002a
+ 51 70102a9c (+  48) 0039b595   &lt;libbe.so&gt;:__10BDirectoryPCc + 0x0055
+ 52 70102acc (+ 224) 005d66c3
+ &lt;keyboard&gt;:_RecursiveScan__19KeyboardInputDeviceP
+ Cc + 0x0037
+ 53 70102bac (+  48) 005d5533   &lt;keyboard&gt;:InitCheck__19KeyboardInputDevice
+ + 0x0
+ 037
+ 54 70102bdc (+ 112) 00217926
+ &lt;_APP_&gt;:RegisterAddOn__12AddOnManagerR6BEntry + 0
+ x011e
+ 55 70102c4c (+ 128) 0021ae69
+ &lt;_APP_&gt;:AddOnEnabled__Q212AddOnManager25InputServ
+ erMonitorHandlerPCQ38BPrivate7Storage17add_on_entry_info + 0x0069
+ 56 70102ccc (+ 528) 00221348
+ &lt;_APP_&gt;:HandlePulse__Q38BPrivate7Storage19AddOnMo
+ nitorHandler + 0x0520
+ 57 70102edc (+  48) 0021f26c
+ &lt;_APP_&gt;:MessageReceived__Q38BPrivate7Storage19Add
+ OnMonitorHandlerP8BMessage + 0x002c
+ 58 70102f0c (+  48) 002db11f
+ &lt;libbe.so&gt;:DispatchMessage__7BLooperP8BMessageP8B
+ Handler + 0x005b
+ 59 70102f3c (+  64) 002dca8d   &lt;libbe.so&gt;:task_looper__7BLooper + 0x0211
+ 60 70102f7c (+  48) 002dc67b   &lt;libbe.so&gt;:_task0___7BLooperPv + 0x003f
+ 61 70102fac (+  48) 004d77cc   &lt;libroot.so&gt;:_get_next_team_info + 0x005c
+ (neares
+ t)
+ 62 70102fdc (+   0) 70102fec   3974:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">AddOnMonitor_99_stack at 0x700c3000</A> +
+ 0x3ffec
+ kdebug&gt;
+ }}}
+
+--
+
+Comment:
+
+ You're obviously booting from USB, and usb_disk returns several errors
+ until it finally finds the way into KDL.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2898#comment:2">http://dev.haiku-os.org/ticket/2898#comment:2</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011249.html">[Haiku-bugs] [Haiku] #2898: AddOnMonitor crashs haiku after boot
+</A></li>
+	<LI>Next message: <A HREF="011257.html">[Haiku-bugs] [Haiku] #156: syslog is corrupted
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11250">[ date ]</a>
+              <a href="thread.html#11250">[ thread ]</a>
+              <a href="subject.html#11250">[ subject ]</a>
+              <a href="author.html#11250">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

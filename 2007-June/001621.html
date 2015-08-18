@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1266: Unrecognised Partition Table errors
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231266%3A%20Unrecognised%20Partition%20Table%20errors&In-Reply-To=%3C048.f46364569eff2fad14fe879e5f43fa37%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001617.html">
+   <LINK REL="Next"  HREF="001625.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1266: Unrecognised Partition Table errors</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231266%3A%20Unrecognised%20Partition%20Table%20errors&In-Reply-To=%3C048.f46364569eff2fad14fe879e5f43fa37%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1266: Unrecognised Partition Table errors">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Jun  8 04:04:43 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001617.html">[Haiku-bugs] [Haiku] #1266: Unrecognised Partition Table errors
+</A></li>
+        <LI>Next message: <A HREF="001625.html">[Haiku-bugs] [Haiku] #1266: Unrecognised Partition Table errors
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1621">[ date ]</a>
+              <a href="thread.html#1621">[ thread ]</a>
+              <a href="subject.html#1621">[ subject ]</a>
+              <a href="author.html#1621">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1266: Unrecognised Partition Table errors
+---------------------------+------------------------------------------------
+  Reporter:  euan          |       Owner:  axeld         
+      Type:  bug           |      Status:  new           
+  Priority:  normal        |   Milestone:  R1            
+ Component:  File Systems  |     Version:  R1 development
+Resolution:                |    Platform:  All           
+---------------------------+------------------------------------------------
+Comment (by bonefish):
+
+ The partitions are found OK. We don't have any ext2/ext3 file system
+ support ATM; so it's little surprising that you can't mount it. I don't
+ have particular insight regarding the state of the auto-recognition of our
+ DOS FS add-on, but it seems to be implemented at least.
+
+ Anyway, please check whether there are partitions entries published in
+ &quot;/dev/disk/atapi/1/slave/&quot;. If that is the case, please try to mount the
+ FAT partition manually. If it is not the case, please enable debug output
+ in src/system/kernel/disk_device_manager/jobs/KScanPartitionJob.cpp
+ (&quot;#define DBG(x) x&quot; instead of the definition there).
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1266#comment:3">http://dev.haiku-os.org/ticket/1266#comment:3</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001617.html">[Haiku-bugs] [Haiku] #1266: Unrecognised Partition Table errors
+</A></li>
+	<LI>Next message: <A HREF="001625.html">[Haiku-bugs] [Haiku] #1266: Unrecognised Partition Table errors
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1621">[ date ]</a>
+              <a href="thread.html#1621">[ thread ]</a>
+              <a href="subject.html#1621">[ subject ]</a>
+              <a href="author.html#1621">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

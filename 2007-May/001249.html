@@ -1,0 +1,144 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1199: Haiku-created files with cyrillic names are not visible from R5 and vice versa.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231199%3A%20Haiku-created%20files%20with%20cyrillic%20names%0A%20are%20not%20visible%20from%20R5%20and%20vice%20versa.&In-Reply-To=%3C043.51a53335ccf6c30927f9fb1dc5f4a7e9%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001248.html">
+   <LINK REL="Next"  HREF="001403.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1199: Haiku-created files with cyrillic names are not visible from R5 and vice versa.</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231199%3A%20Haiku-created%20files%20with%20cyrillic%20names%0A%20are%20not%20visible%20from%20R5%20and%20vice%20versa.&In-Reply-To=%3C043.51a53335ccf6c30927f9fb1dc5f4a7e9%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1199: Haiku-created files with cyrillic names are not visible from R5 and vice versa.">trac at haiku-os.org
+       </A><BR>
+    <I>Tue May  1 23:48:30 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001248.html">[Haiku-bugs] [Haiku] #155: keyboard doesn't always work
+</A></li>
+        <LI>Next message: <A HREF="001403.html">[Haiku-bugs] [Haiku] #1199: Haiku-created files with cyrillic names are not visible from R5 and vice versa.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1249">[ date ]</a>
+              <a href="thread.html#1249">[ thread ]</a>
+              <a href="subject.html#1249">[ subject ]</a>
+              <a href="author.html#1249">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1199: Haiku-created files with cyrillic names are not visible from R5 and vice
+versa.
+------------------------------+---------------------------------------------
+ Reporter:  siarzhuk          |       Owner:  bga           
+     Type:  bug               |      Status:  new           
+ Priority:  low               |   Milestone:  R1            
+Component:  File Systems/BFS  |     Version:  R1 development
+ Platform:  All               |  
+------------------------------+---------------------------------------------
+ NOTE:Before reproducing this bug, please change your font settings to use
+ DejaVu fonts family. Default Vera family of fonts has no symbols in
+ cyrillic section and results of this test will be not visible. Looks like
+ reboot is also required after fonts reconfiguration.
+
+ To show this problem I wrote a simple shell script (attached as
+ CyrDirTest.sh). It create the directory with predefined name, containing
+ cyrillic symbols. This script also create a file with cyrillic name inside
+ of this directory. This script accept the command line parameter that will
+ be used to add prefix to directory name.
+
+ Stage I)
+ 0) Boot BeOS R5. Haiku partition should be mounted at /Haiku.
+ 1) make directory /Haiku/home/1
+ 2) copy CyrDirTest.sh to this directory.
+ 3) Open the Terminal and cd to /Haiku/home/1
+ 4) Call CyrDirTest.sh with parameter R5
+
+ The screenshot &quot;1.Created under R5.png&quot; show the results. The last window
+ pointed by green arrows is StyledEdit with created file. Note also the
+ Terminal window with information reported by &quot;ls&quot;.
+
+
+ Stage II)
+ 0) Reboot to Haiku.
+ 1) Open the ~/1 in Tracker. You should see the cyrillic-named directory
+ created from R5.
+ 2) Open this directory. Note that file is not visible in Tracker.
+ 3) Open Terminal, cd to ~/1 and call &quot;ls -lR&quot;. The &quot;ls&quot; command repport
+ that it &quot;cannot access&quot;, &quot;no such file or directory&quot; about the file inside
+ of this directory.
+
+ The screenshot &quot;2.R5 created, opened under Haiku.png&quot; illustrate this
+ situation. Follow the red arrows to see the problems. Note the way
+ Terminal show non-latin filenames. I think it is not related to our bug -
+ just not finished implementation of utf8 support in Terminal.
+
+
+ Stage III)
+ 0) Assure that you are still in Haiku ~/1 directory.
+ 1) Call CyrDirTest.sh with parameter H1.
+ 2) The cyrillic-named directory with prefix &quot;H1&quot; will be created. The file
+ with cyrillic name is also created and accessible. Note that we have used
+ the same script as from BeOS R5.
+
+ The screenshot &quot;3.Created under Haiku.png&quot; illustrate this stage. Follow
+ green arrows for directory created under R5 and blue arrows for directory
+ created under Haiku. And note the difference between those directories in
+ &quot;ls&quot; command output in Terminal (follow the red arrow)
+
+
+ Stage IV)
+ 0) Reboot back to BeOS R5. Haiku should be mount as /Haiku
+ 1) Open both &quot;R5&quot;-prefixed directory and &quot;H1&quot;-prefixed one from the
+ Tracker. The file created from R5 in Stage I of our tests are now
+ accessible, but file created from Haiku at Stage III is not visible.
+
+ The screenshot &quot;4.Haiku-created,opened under R5.png&quot; represent us the
+ results of this test. Follow green arrows for directory and file created
+ from BeOS, and follow blue arrows for ones created from Haiku. Note the
+ Terminal window with output of &quot;ls&quot; command - now the Haiku created files
+ are &quot;not found&quot; (follow red arrow).
+
+ I suspect some incompatibilities in non-latin names handling in Haiku BFS
+ implementation. It looks like neither Tracker nor Terminal problem.
+
+ PS. BTW, if you try to call CyrDirTest.sh with parameter &quot;R5&quot; at Stage III
+ (under Haiku) - script report that &quot;directory already exists&quot;. And it is
+ really exists - it was created under R5 at State I of our tests.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1199">http://dev.haiku-os.org/ticket/1199</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001248.html">[Haiku-bugs] [Haiku] #155: keyboard doesn't always work
+</A></li>
+	<LI>Next message: <A HREF="001403.html">[Haiku-bugs] [Haiku] #1199: Haiku-created files with cyrillic names are not visible from R5 and vice versa.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1249">[ date ]</a>
+              <a href="thread.html#1249">[ thread ]</a>
+              <a href="subject.html#1249">[ subject ]</a>
+              <a href="author.html#1249">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

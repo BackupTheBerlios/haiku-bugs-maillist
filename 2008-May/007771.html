@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2284: Page Fault on boot (25717)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232284%3A%20Page%20Fault%20on%20boot%20%2825717%29&In-Reply-To=%3C057.1bf5331fb2cbf9483a6bc3e111d3c24d%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007766.html">
+   <LINK REL="Next"  HREF="007773.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2284: Page Fault on boot (25717)</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232284%3A%20Page%20Fault%20on%20boot%20%2825717%29&In-Reply-To=%3C057.1bf5331fb2cbf9483a6bc3e111d3c24d%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2284: Page Fault on boot (25717)">trac at haiku-os.org
+       </A><BR>
+    <I>Fri May 30 18:49:50 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007766.html">[Haiku-bugs] [Haiku] #2284: Page Fault on boot (25717)
+</A></li>
+        <LI>Next message: <A HREF="007773.html">[Haiku-bugs] [Haiku] #2284: Page Fault on boot (25717)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7771">[ date ]</a>
+              <a href="thread.html#7771">[ thread ]</a>
+              <a href="subject.html#7771">[ subject ]</a>
+              <a href="author.html#7771">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2284: Page Fault on boot (25717)
+----------------------------+-----------------------------------------------
+  Reporter:  dustin howett  |       Owner:  axeld         
+      Type:  bug            |      Status:  new           
+  Priority:  blocker        |   Milestone:  R1/alpha1     
+ Component:  - General      |     Version:  R1 development
+Resolution:                 |    Platform:  x64           
+----------------------------+-----------------------------------------------
+Comment (by dustin howett):
+
+ {{{
+ Legacy SATA: controller found! vendor 0x10de, device 0x0266
+ Legacy SATA: controller_probe
+ PCI-IDE: Controller in native mode: cmd 0x30c0, ctrl 0x30b6, irq 5
+ PCI-IDE: init channel...
+ PCI-IDE: channel index 0
+ PCI-IDE: bus master base 0x3090
+ PCI-IDE: init channel done
+ vm_soft_fault: kernel thread accessing invalud user memory!
+ vm_page_fault: vm_soft_fault returned error 'Bad address' on fault at 0x0,
+ ip 0x0, write 0, user 0, thread 0xb
+ }}}
+
+ I find it odd that legacy_sata is being used... ahci used to work properly
+ for me.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2284#comment:3">http://dev.haiku-os.org/ticket/2284#comment:3</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007766.html">[Haiku-bugs] [Haiku] #2284: Page Fault on boot (25717)
+</A></li>
+	<LI>Next message: <A HREF="007773.html">[Haiku-bugs] [Haiku] #2284: Page Fault on boot (25717)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7771">[ date ]</a>
+              <a href="thread.html#7771">[ thread ]</a>
+              <a href="subject.html#7771">[ subject ]</a>
+              <a href="author.html#7771">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

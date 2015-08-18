@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4158: Unable to boot with r31957
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-July/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234158%3A%20Unable%20to%20boot%20with%20r31957&In-Reply-To=%3C044.0bb859e982bf12f48944d6afde4e6bd0%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="018822.html">
+   <LINK REL="Next"  HREF="018826.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4158: Unable to boot with r31957</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234158%3A%20Unable%20to%20boot%20with%20r31957&In-Reply-To=%3C044.0bb859e982bf12f48944d6afde4e6bd0%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4158: Unable to boot with r31957">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Jul 30 03:09:21 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="018822.html">[Haiku-bugs] [Haiku] #3185: Device Manager Application
+</A></li>
+        <LI>Next message: <A HREF="018826.html">[Haiku-bugs] [Haiku] #4158: Unable to boot with r31957
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18823">[ date ]</a>
+              <a href="thread.html#18823">[ thread ]</a>
+              <a href="subject.html#18823">[ subject ]</a>
+              <a href="author.html#18823">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4158: Unable to boot with r31957
+---------------------------+------------------------------------------------
+ Reporter:  anevilyak      |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1 development
+Blockedby:                 |    Platform:  All           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+ With a current version I get a panic very early in the boot process such
+ that I can't even invoke the kernel debugger. I see this on serial:
+
+ {{{
+ Welcome to kernel debugger output!
+ Haiku revision: 31957
+ CPU 0: type 0 family 15 extended_family 0 model 11 extended_model 2
+ stepping 1, string 'AuthenticAMD'
+ CPU 0: vendor 'AMD' model name 'AMD Athlon(tm) 64 X2 Dual Core Processor
+ 3800+'
+ CPU 0: features: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca
+ cmov pat pse36 clfsh mmx fxsr sse sse2 htt sse3 syscall nx mmxext ffxsr
+ long 3dnowext 3dnow
+ heap_add_area: area -1 added to small heap 0x81191000 - usable range
+ 0x8119e000 - 0x81991000
+ heap_add_area: area -1 added to medium heap 0x81991000 - usable range
+ 0x81992000 - 0x81e5d000
+ heap_add_area: area -1 added to large heap 0x81e5dccc - usable range
+ 0x81e5f000 - 0x82191000
+ slab: init base 0x82191000 + 0x4000
+ PANIC: page fault, but interrupts were disabled. Touching address
+ 0x0000000c from eip 0x80074d41
+
+ Welcome to Kernel Debugging Land...
+ Thread 0 &quot;&quot; running on CPU 0
+ }}}
+
+ Offhand the only revision I see today that could be a potential culprit is
+ r31941, binary searching now to verify if that is indeed the culprit or
+ not.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4158">http://dev.haiku-os.org/ticket/4158</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="018822.html">[Haiku-bugs] [Haiku] #3185: Device Manager Application
+</A></li>
+	<LI>Next message: <A HREF="018826.html">[Haiku-bugs] [Haiku] #4158: Unable to boot with r31957
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18823">[ date ]</a>
+              <a href="thread.html#18823">[ thread ]</a>
+              <a href="subject.html#18823">[ subject ]</a>
+              <a href="author.html#18823">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

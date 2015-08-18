@@ -1,0 +1,214 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3110: [kernel] PANIC: page still has	mappings
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233110%3A%20%5Bkernel%5D%20PANIC%3A%20page%20still%20has%0A%09mappings&In-Reply-To=%3C049.1b23774f77366d71fa679cf270523b08%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="015756.html">
+   <LINK REL="Next"  HREF="015759.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3110: [kernel] PANIC: page still has	mappings</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233110%3A%20%5Bkernel%5D%20PANIC%3A%20page%20still%20has%0A%09mappings&In-Reply-To=%3C049.1b23774f77366d71fa679cf270523b08%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3110: [kernel] PANIC: page still has	mappings">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Apr  7 00:37:13 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="015756.html">[Haiku-bugs] [Haiku] #3458: BTextView's Caret drawing
+</A></li>
+        <LI>Next message: <A HREF="015759.html">[Haiku-bugs] [Haiku] #3110: [kernel] PANIC: page still has	mappings
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15758">[ date ]</a>
+              <a href="thread.html#15758">[ thread ]</a>
+              <a href="subject.html#15758">[ subject ]</a>
+              <a href="author.html#15758">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3110: [kernel] PANIC: page still has mappings
+---------------------------+------------------------------------------------
+ Reporter:  diver          |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1 development
+Blockedby:                 |    Platform:  All           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+
+Comment(by anevilyak):
+
+ Just ran into this one while compiling here....specifically:
+
+ {{{
+ PANIC: remove page 0x8236b0c8 from cache 0x812f1a2c: page still has
+ mappings!
+
+ Welcome to Kernel Debugging Land...
+ Thread 10652 &quot;cc1plus&quot; running on CPU 0
+ kdebug&gt; bt
+ stack trace for thread 10652 &quot;cc1plus&quot;
+     kernel stack: 0xa13f6000 to 0xa13fa000
+       user stack: 0x7efee000 to 0x7ffee000
+ frame               caller     &lt;image&gt;:function + offset
+  0 a13f9914 (+  48) 8005f1b9   &lt;kernel_x86&gt;:invoke_debugger_command +
+ 0x00f5
+  1 a13f9944 (+  64) 8005efa9   &lt;kernel_x86&gt;
+ invoke_pipe_segment(debugger_command_pipe*: 0x80127060, int32: 0, 0x0
+ &quot;&lt;NULL&gt;&quot;) + 0x0079
+  2 a13f9984 (+  64) 8005f330   &lt;kernel_x86&gt;:invoke_debugger_command_pipe +
+ 0x009c
+  3 a13f99c4 (+  48) 800608e0   &lt;kernel_x86&gt;
+ ExpressionParser&lt;0xa13f9a78&gt;::_ParseCommandPipe(0xa13f9a74) + 0x0234
+  4 a13f99f4 (+  64) 8005fd1a   &lt;kernel_x86&gt;
+ ExpressionParser&lt;0xa13f9a78&gt;::EvaluateCommand(0x80117aa0 &quot;bt&quot;, 0xa13f9a74)
+ + 0x02ba
+  5 a13f9a34 (+ 224) 80061d08   &lt;kernel_x86&gt;:evaluate_debug_command +
+ 0x0088
+  6 a13f9b14 (+  64) 8005d0aa   &lt;kernel_x86&gt; kernel_debugger_loop() +
+ 0x01ae
+  7 a13f9b54 (+  32) 8005df39   &lt;kernel_x86&gt;:kernel_debugger + 0x004d
+  8 a13f9b74 (+ 192) 8005dee1   &lt;kernel_x86&gt;:panic + 0x0029
+  9 a13f9c34 (+  96) 800c283f   &lt;kernel_x86&gt;
+ VMCache&lt;0x812f1a2c&gt;::Delete(0x812f1a2c, 0x812f6780, 0x282) + 0x0077
+ 10 a13f9c94 (+  64) 800c2d00   &lt;kernel_x86&gt;
+ VMCache&lt;0x812f1a2c&gt;::Unlock(0x812f0000, 0x812ff0cc, 0x0) + 0x0124
+ 11 a13f9cd4 (+  48) 800c2e07   &lt;kernel_x86&gt;
+ VMCache&lt;0x812f1a2c&gt;::ReleaseRef(0x812f6788, 0xa13f9d54, 0x246, 0x812ff0a0)
+ + 0x002b
+ 12 a13f9d04 (+  48) 800bbb62   &lt;kernel_x86&gt; delete_area(vm_address_space*:
+ 0x812f6780, vm_area*: 0x812ff0a0) + 0x00aa
+ 13 a13f9d34 (+  48) 800be22d   &lt;kernel_x86&gt;:vm_delete_areas + 0x0079
+ 14 a13f9d64 (+  48) 800c23a7   &lt;kernel_x86&gt;:vm_delete_address_space +
+ 0x0033
+ 15 a13f9d94 (+ 112) 80051e56   &lt;kernel_x86&gt;:team_delete_team + 0x0276
+ 16 a13f9e04 (+ 192) 800558f7   &lt;kernel_x86&gt;:thread_exit + 0x03af
+ 17 a13f9ec4 (+  64) 8004a94d   &lt;kernel_x86&gt;:handle_signals + 0x03d5
+ 18 a13f9f04 (+  64) 80055d74   &lt;kernel_x86&gt;:thread_at_kernel_exit + 0x0090
+ 19 a13f9f44 (+ 100) 800d281b   &lt;kernel_x86&gt;:kernel_exit_handle_signals +
+ 0x0006
+ user iframe at 0xa13f9fa8 (end = 0xa13fa000)
+  eax 0x0            ebx 0x532ad4        ecx 0x7ffedde0   edx 0x246
+  esi 0x0            edi 0x415007        ebp 0x7ffede0c   esp 0xa13f9fdc
+  eip 0xffff0104  eflags 0x207      user esp 0x7ffedde0
+  vector: 0x63, error code: 0x0
+ 20 a13f9fa8 (+   0) ffff0104   &lt;commpage&gt;:commpage_syscall + 0x0004
+ 7ffede0c -- read fault
+ kdebug&gt; vm
+ no completions
+ kdebug&gt; cache
+   cache       cache_info  cache_tree  caches
+ kdebug&gt; cache 0x812f1a2c
+ CACHE 0x812f1a2c:
+   ref_count:    0
+   source:       0x00000000
+   type:         RAM
+   virtual_base: 0x0
+   virtual_end:  0x1720000
+   temporary:    1
+   scan_skip:    0
+   lock:         0x812f1a7c
+   lock.holder:  10652
+   areas:
+   consumers:
+   pages:
+         5880 in cache
+ kdebug&gt; cache_tree 0x812f1a2c
+ 0x812f1a2c &lt;--
+ kdebug&gt; cache_info 0x812f1a2c
+ name: &#204;&#204;&#204;&#204;8/8/
+ lock: 0x812f1a54
+ object_size: 0
+ cache_color_cycle: 5880
+ used_count: 3435973632
+ empty_count: 2148653760
+ pressure: 3422552064
+ slab_size: 24248320
+ usage: 0
+ maximum: 0
+ flags: 0x0
+ cookie: 0xdeadbeef
+ kdebug&gt; thread 10652
+ THREAD: 0x84199000
+ id:                 10652 (0x299c)
+ name:               &quot;cc1plus&quot;
+ all_next:           0x841c6800
+ team_next:          0x8418f800
+ q_next:             0x841ba800
+ priority:           20 (next 20, I/O: -1)
+ state:              running
+ next_state:         ready
+ cpu:                0x801374c0 (0)
+ sig_pending:        0x100000 (blocked: 0x0)
+ in_kernel:          1
+ fault_handler:      0x8005f1d4
+ args:               0x812f6ca8 0x00000000
+ entry:              0x80050430
+ team:               0x8119e198, &quot;kernel_team&quot;
+   exit.sem:         623256
+   exit.status:      0x0 (No error)
+   exit.reason:      0x1
+   exit.signal:      0x0
+   exit.waiters:
+ kernel_stack_area:  307181
+ kernel_stack_base:  0xa13f6000
+ user_stack_area:    -1
+ user_stack_base:    0x7efee000
+ user_local_storage: 0x7ffee000
+ kernel_errno:       0x0 (No error)
+ kernel_time:        125913
+ user_time:          5972668
+ flags:              0x1
+ architecture dependant section:
+         esp: 0xa13f9df8
+         ss: 0x00000010
+         fpu_state at 0x841993e0
+ kdebug&gt; mutex 0x812f1a7c
+ mutex 0x812f1a7c:
+   name:            vm_cache
+   flags:           0x0
+   holder:          10652
+   waiting threads:
+ kdebug&gt;
+ }}}
+
+ Leaving this box in KDL for now in case there's any other useful
+ information I can pull out of this.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3110#comment:9">http://dev.haiku-os.org/ticket/3110#comment:9</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="015756.html">[Haiku-bugs] [Haiku] #3458: BTextView's Caret drawing
+</A></li>
+	<LI>Next message: <A HREF="015759.html">[Haiku-bugs] [Haiku] #3110: [kernel] PANIC: page still has	mappings
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15758">[ date ]</a>
+              <a href="thread.html#15758">[ thread ]</a>
+              <a href="subject.html#15758">[ subject ]</a>
+              <a href="author.html#15758">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

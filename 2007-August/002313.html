@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1398: PANIC: vnode is not becoming unbusy!
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231398%3A%20PANIC%3A%20vnode%20is%20not%20becoming%20unbusy%21&In-Reply-To=%3C049.719d88aa850da15608fe6851e1f4cb8a%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002306.html">
+   <LINK REL="Next"  HREF="002308.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1398: PANIC: vnode is not becoming unbusy!</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231398%3A%20PANIC%3A%20vnode%20is%20not%20becoming%20unbusy%21&In-Reply-To=%3C049.719d88aa850da15608fe6851e1f4cb8a%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1398: PANIC: vnode is not becoming unbusy!">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Aug 15 20:30:42 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002306.html">[Haiku-bugs] [Haiku] #1398: PANIC: vnode is not becoming unbusy!
+</A></li>
+        <LI>Next message: <A HREF="002308.html">[Haiku-bugs] [Haiku] #1338: System lockup at random intervals after reaching desktop
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2313">[ date ]</a>
+              <a href="thread.html#2313">[ thread ]</a>
+              <a href="subject.html#2313">[ subject ]</a>
+              <a href="author.html#2313">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1398: PANIC: vnode is not becoming unbusy!
+-------------------------------+--------------------------------------------
+  Reporter:  korli             |       Owner:  axeld         
+      Type:  bug               |      Status:  new           
+  Priority:  normal            |   Milestone:  R1            
+ Component:  File Systems/BFS  |     Version:  R1 development
+Resolution:                    |    Platform:  All           
+-------------------------------+--------------------------------------------
+Comment (by korli):
+
+ Not exactly the same with GCC2:
+
+ PANIC: vnode 4:198344 is not becoming unbusy!
+
+ Welcome to Kernel Debugging Land...
+ Running on CPU 0
+ kdebug&gt; bt
+ stack trace for thread 0x54 &quot;TrackerTaskLoop&quot;
+     kernel stack: 0x81023000 to 0x81027000
+       user stack: 0x70000000 to 0x70040000
+ frame            caller     &lt;image&gt;:function + offset
+ 81026b60 (+  52) 80089988   &lt;kernel&gt;:invoke_command + 0x0074
+ 81026b94 (+  48) 80089aa6   &lt;kernel&gt;:kernel_debugger_loop + 0x00de
+ 81026bc4 (+  32) 8008a532   &lt;kernel&gt;:kernel_debugger + 0x00b2
+ 81026be4 (+ 192) 8008a475   &lt;kernel&gt;:panic + 0x0029
+ 81026ca4 (+  48) 800457d1   &lt;kernel&gt;:get_vnode__FlxPP5vnodei + 0x0069
+ 81026cd4 (+  64) 80049d40   &lt;kernel&gt;:fix_dirent__FP5vnodeP6dirent + 0x00b0
+ 81026d14 (+  48) 80049e11   &lt;kernel&gt;:dir_read__FP5vnodePvP6direntUlPUl +
+ 0x0069
+ 81026d44 (+  64) 80049c86
+ &lt;kernel&gt;:dir_read__FP15file_descriptorP6direntUlPUl + 0x0026
+ 81026d84 (+  48) 80044a99   &lt;kernel&gt;:_user_read_dir + 0x0065
+ 81026db4 (+ 336) 80036968   &lt;kernel&gt;:syscall_dispatcher + 0x0b64
+ 81026f04 (+ 160) 80092cc0   &lt;kernel&gt;:i386_handle_trap + 0x02b0
+ iframe at 0x81026fac (end = 0x81027000)
+  eax 0x67           ebx 0x4bec78        ecx 0x7003fe58   edx 0x4d0880
+  esi 0x7003fc80     edi 0x7003fe58      ebp 0x7003fc4c   esp 0x81026fdc
+  eip 0xffff0102  eflags 0x246
+  vector: 0x63, error code: 0x0
+ 81026fa4 (+   0) ffff0102
+ 7003fc4c (+ 336) 003e3b32
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libbe.so at 0x0024b000</A>&gt;:unknown + 0x198b32
+ 7003fd9c (+ 272) 005eabed
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libtracker.so at 0x004d5000</A>&gt;:unknown + 0x115bed
+ 7003feac (+ 112) 005eaf61
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libtracker.so at 0x004d5000</A>&gt;:unknown + 0x115f61
+ 7003ff1c (+  48) 005eb212
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libtracker.so at 0x004d5000</A>&gt;:unknown + 0x116212
+ 7003ff4c (+  48) 00635f73
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libtracker.so at 0x004d5000</A>&gt;:unknown + 0x160f73
+ 7003ff7c (+  48) 00635db8
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libtracker.so at 0x004d5000</A>&gt;:unknown + 0x160db8
+ 7003ffac (+  48) 006dd7cc
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libroot.so at 0x006bd000</A>&gt;:unknown + 0x207cc
+ 7003ffdc (+   0) 7003ffec   898:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">TrackerTaskLoop_54_stack at 0x70000000</A> +
+ 0x3ffec
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1398#comment:4">http://dev.haiku-os.org/ticket/1398#comment:4</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002306.html">[Haiku-bugs] [Haiku] #1398: PANIC: vnode is not becoming unbusy!
+</A></li>
+	<LI>Next message: <A HREF="002308.html">[Haiku-bugs] [Haiku] #1338: System lockup at random intervals after reaching desktop
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2313">[ date ]</a>
+              <a href="thread.html#2313">[ thread ]</a>
+              <a href="subject.html#2313">[ subject ]</a>
+              <a href="author.html#2313">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

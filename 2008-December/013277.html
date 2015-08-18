@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3117: svn co while emptying trash makes trash in checked out data
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-December/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233117%3A%20svn%20co%20while%20emptying%20trash%20makes%0A%20trash%20in%20checked%20out%20data&In-Reply-To=%3C051.a3601bee6b82b32d8e35fffa7ad002ee%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="013296.html">
+   <LINK REL="Next"  HREF="013278.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3117: svn co while emptying trash makes trash in checked out data</H1>
+    <B>Adek336</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233117%3A%20svn%20co%20while%20emptying%20trash%20makes%0A%20trash%20in%20checked%20out%20data&In-Reply-To=%3C051.a3601bee6b82b32d8e35fffa7ad002ee%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3117: svn co while emptying trash makes trash in checked out data">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Dec 28 17:59:36 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="013296.html">[Haiku-bugs] [Haiku] #3241: Lights Off crashes on startup
+</A></li>
+        <LI>Next message: <A HREF="013278.html">[Haiku-bugs] [Haiku] #3117: svn co while emptying trash makes trash in checked out data
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13277">[ date ]</a>
+              <a href="thread.html#13277">[ thread ]</a>
+              <a href="subject.html#13277">[ subject ]</a>
+              <a href="author.html#13277">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3117: svn co while emptying trash makes trash in checked out data
+-----------------------------+----------------------------------------------
+ Reporter:  Adek336          |       Owner:  axeld         
+     Type:  bug              |      Status:  new           
+ Priority:  normal           |   Milestone:  R1            
+Component:  Drivers/Network  |     Version:  R1 development
+Blockedby:                   |    Platform:  All           
+ Blocking:                   |  
+-----------------------------+----------------------------------------------
+
+Comment(by Adek336):
+
+ So the data that were written to the disk don't get corrupt. Only the new
+ data that are only now being written to disk get corrupt.
+
+ On a BFS partition, when you have say 30 files, each file 20 MiB, do a
+ copy of them, wait a few seconds after Tracker has finished copying and
+ press F12 and type &quot;reb&lt;cr&gt;&quot;. After reboot, you can see the just copied
+ files, although, they are corrupt. I suppose that BFS has got journaling
+ and the newly copied files after a crash should be either present and not
+ corrupt, or not exist at all.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3117#comment:1">http://dev.haiku-os.org/ticket/3117#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="013296.html">[Haiku-bugs] [Haiku] #3241: Lights Off crashes on startup
+</A></li>
+	<LI>Next message: <A HREF="013278.html">[Haiku-bugs] [Haiku] #3117: svn co while emptying trash makes trash in checked out data
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13277">[ date ]</a>
+              <a href="thread.html#13277">[ thread ]</a>
+              <a href="subject.html#13277">[ subject ]</a>
+              <a href="author.html#13277">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

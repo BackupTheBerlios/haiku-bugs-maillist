@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2598: sshd occasionally segfaults on connect (possibly when forking)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232598%3A%20sshd%20occasionally%20segfaults%20on%0A%20connect%20%28possibly%20when%20forking%29&In-Reply-To=%3C053.17f8958e88afd581f82fa72cca26080b%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010858.html">
+   <LINK REL="Next"  HREF="010861.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2598: sshd occasionally segfaults on connect (possibly when forking)</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232598%3A%20sshd%20occasionally%20segfaults%20on%0A%20connect%20%28possibly%20when%20forking%29&In-Reply-To=%3C053.17f8958e88afd581f82fa72cca26080b%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2598: sshd occasionally segfaults on connect (possibly when forking)">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Oct  9 06:51:49 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010858.html">[Haiku-bugs] [Haiku] #2397: Build system writes over actual filesystem contents while trying to add boot sector to partition
+</A></li>
+        <LI>Next message: <A HREF="010861.html">[Haiku-bugs] [Haiku] #1050: implement a WiFi stack
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10859">[ date ]</a>
+              <a href="thread.html#10859">[ thread ]</a>
+              <a href="subject.html#10859">[ subject ]</a>
+              <a href="author.html#10859">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2598: sshd occasionally segfaults on connect (possibly when forking)
+----------------------------+-----------------------------------------------
+  Reporter:  anevilyak      |       Owner:  bonefish      
+      Type:  bug            |      Status:  assigned      
+  Priority:  normal         |   Milestone:  R1            
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |   Blockedby:                
+  Platform:  All            |    Blocking:                
+----------------------------+-----------------------------------------------
+
+Comment(by anevilyak):
+
+ Got it with a new connection this time, same stack trace as shown in the
+ previous case involving hoard though. This time I actually have tracing
+ info though, as follows:
+
+ {{{
+ traced 0 30 -1 filter team 287
+ 3774754. [   287] 2703350606: syscall post: _kern_select() -&gt; 0x8000000a
+ 3774755. [   287] 2703350607: signal handle:  0x10
+ 3774756. [   287] 2703350607: signal exec handler: signal: 5, handler:
+ 0x0020ccf8
+ 3774757. [   287] 2703350630: syscall pre:
+ _kern_wait_for_child(0xffffffff, 0x1, 0x7ffeea2c, 0x7ffeea30)
+ 3774758. [   287] 2703350636: syscall post: _kern_wait_for_child() -&gt;
+ 0x120
+ 3774759. [   287] 2703350637: syscall pre:
+ _kern_wait_for_child(0xffffffff, 0x1, 0x7ffeea2c, 0x7ffeea30)
+ 3774760. [   287] 2703350637: syscall post: _kern_wait_for_child() -&gt;
+ 0x80007002
+ 3774761. [   287] 2703350645: syscall pre:  _kern_sigaction(0x5, 0x0,
+ 0x7ffeea14)
+ 3774762. [   287] 2703350646: syscall post: _kern_sigaction() -&gt; 0x0
+ 3774763. [   287] 2703350647: syscall pre:  _kern_restore_signal_frame()
+ 3774764. [   287] 2703350649: syscall post: _kern_select() -&gt; 0x8000000a
+ 3774973. [   287] 2703423602: signal send: target: 23132, signal: 12
+ (CONT), flags: 0x20000
+ printed 12 entries within range 1 to 3958033 (3958033 of 3958033 total,
+ 26863044 ever)
+ }}}
+
+ Assuming I understood the address you want disassembly from correctly out
+ of that, disassembly output as follows:
+
+ {{{
+ kdebug&gt; in_context 287 dis 0x0020ccf8
+ 0x0020ccf8:               55    push %ebp
+ 0x0020ccf9:             89e5    mov %esp, %ebp
+ 0x0020ccfb:           83ec1c    sub $0x1c, %esp
+ 0x0020ccfe:               57    push %edi
+ 0x0020ccff:               56    push %esi
+ 0x0020cd00:               53    push %ebx
+ 0x0020cd01:       e800000000    call 0x20cd06
+ 0x0020cd06:               5b    pop %ebx
+ 0x0020cd07:     81c3c6370500    add $0x537c6, %ebx
+ 0x0020cd0d:       e832f7ffff    call 0x20c444
+ kdebug&gt;
+ }}}
+
+ last address on the stack in this case was 0x7ffeec9c, dw dump:
+
+ {{{
+ kdebug&gt; in_context 287 dw 0x7ffeec9c 32
+ [0x7ffeec9c]  &#236;&#236;..&#170;<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">. at .d+...</A>&#236;..   7ffeecec 0040fbaa 18002b64 7ffeece4
+ [0x7ffeecac]  &#232;&#236;..........3..   7ffeece8 00000000 18000000 80060633
+ [0x7ffeecbc]  =@
+                 [0x7ffeeccc]  .....&#212;H.....s...   00000001 0048d4fc
+ 00000001 00000073
+ [0x7ffeecdc]  ............(...   ffff0104 ffffffff 18031910 1802f928
+ [0x7ffeecec]  .&#237;..&#225;.A.........   7ffeed1c 004112e1 18000000 18031918
+ [0x7ffeecfc]  &#204;&#204;&#204;&#204;=.A.&#204;.&amp;.....   cccccccc 0041123d 002604cc 18031918
+ [0x7ffeed0c]  ................   00000000 00000000 ffffffff ffffffff
+ }}}
+
+ Leaving box in kernel debugger for the time being in case further
+ information is helpful. Note that at this point I can pretty much
+ reproduce the crash 100% of the time by simply ssh'ing into the box via
+ putty from my windows laptop and running jam -aq on the haiku tree. Either
+ late in the build process, or by logging out and back in after the build
+ completes, it will crash every time.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2598#comment:29">http://dev.haiku-os.org/ticket/2598#comment:29</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010858.html">[Haiku-bugs] [Haiku] #2397: Build system writes over actual filesystem contents while trying to add boot sector to partition
+</A></li>
+	<LI>Next message: <A HREF="010861.html">[Haiku-bugs] [Haiku] #1050: implement a WiFi stack
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10859">[ date ]</a>
+              <a href="thread.html#10859">[ thread ]</a>
+              <a href="subject.html#10859">[ subject ]</a>
+              <a href="author.html#10859">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

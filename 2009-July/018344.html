@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4079: Freezing 1or2 shapes with 1or2 paths	fails
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-July/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234079%3A%20Freezing%201or2%20shapes%20with%201or2%20paths%0A%09fails&In-Reply-To=%3C044.18ebd1e9dc28122f6887110d1ec67fb7%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="018340.html">
+   <LINK REL="Next"  HREF="018345.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4079: Freezing 1or2 shapes with 1or2 paths	fails</H1>
+    <B>humdinger</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234079%3A%20Freezing%201or2%20shapes%20with%201or2%20paths%0A%09fails&In-Reply-To=%3C044.18ebd1e9dc28122f6887110d1ec67fb7%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4079: Freezing 1or2 shapes with 1or2 paths	fails">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Jul  8 17:24:47 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="018340.html">[Haiku-bugs] [Haiku] #3947: Optional Package: p7zip - archive seems to contain wrong permissions
+</A></li>
+        <LI>Next message: <A HREF="018345.html">[Haiku-bugs] [Haiku] #4079: Freezing 1or2 shapes with 1or2	paths fails
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18344">[ date ]</a>
+              <a href="thread.html#18344">[ thread ]</a>
+              <a href="subject.html#18344">[ subject ]</a>
+              <a href="author.html#18344">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4079: Freezing 1or2 shapes with 1or2 paths fails
+---------------------------------------+------------------------------------
+ Reporter:  humdinger                  |       Owner:  stippi        
+     Type:  bug                        |      Status:  new           
+ Priority:  normal                     |   Milestone:  R1            
+Component:  Applications/Icon-O-Matic  |     Version:  R1 development
+Blockedby:                             |    Platform:  All           
+ Blocking:                             |  
+---------------------------------------+------------------------------------
+ This is r31444.
+
+ Here are two scenarios where freezing a shape fails.
+
+ First scenario: 2 Shapes sharing 1 path:
+
+ 1. Create a shape with a path and a style.
+ 2. Select the path and add a couple of points.
+ 3. Create a second shape and use the same path.
+ 2. Move/resize/rotate the 2nd shape a bit.
+ 3. Select &quot;Shape | Freeze Transformation&quot;.
+
+ Now, the path should snap to the selected shape's new
+ position/size/orientation. It doesn't. Instead the shape snaps to the
+ original path's position.[[BR]]
+ If there's an issue, because the path is shared with another shape, the
+ command to &quot;Freeze Transformation&quot; should be disabled.
+
+
+ Second scenario: 1 Shape from 2 paths:
+
+ 1. Create a shape with a path and a style.
+ 2. Select the path and add a couple of points.
+ 2. Create another path.
+ 2. Select this second path and add a couple of points.
+ 2. Move/resize/rotate the shape a bit.
+ 3. Select &quot;Shape | Freeze Transformation&quot;.
+
+ Now, the paths should snap to the shape's new position/size/orientation.
+ Instead only the second path snaps to the new location, the shape snaps to
+ the original first path's position.[[BR]]
+ So for example, if you created the second path inside the first path,
+ creating a hole in the shape, the hole stays put, while the rest of the
+ shape snaps back to the original first path's location.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4079">http://dev.haiku-os.org/ticket/4079</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="018340.html">[Haiku-bugs] [Haiku] #3947: Optional Package: p7zip - archive seems to contain wrong permissions
+</A></li>
+	<LI>Next message: <A HREF="018345.html">[Haiku-bugs] [Haiku] #4079: Freezing 1or2 shapes with 1or2	paths fails
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18344">[ date ]</a>
+              <a href="thread.html#18344">[ thread ]</a>
+              <a href="subject.html#18344">[ subject ]</a>
+              <a href="author.html#18344">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

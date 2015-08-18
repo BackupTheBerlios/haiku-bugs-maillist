@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1150: usb stack freezes Dell Latitude D810
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231150%3A%20usb%20stack%20freezes%20Dell%20Latitude%20D810&In-Reply-To=%3C050.d37e1e6acfc313de37aa70d32bc4c6a5%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012822.html">
+   <LINK REL="Next"  HREF="012577.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1150: usb stack freezes Dell Latitude D810</H1>
+    <B>Adek336</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231150%3A%20usb%20stack%20freezes%20Dell%20Latitude%20D810&In-Reply-To=%3C050.d37e1e6acfc313de37aa70d32bc4c6a5%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1150: usb stack freezes Dell Latitude D810">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Nov 16 13:12:59 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012822.html">[Haiku-bugs] [Haiku] #3150: OpenBFS directory corruption.
+</A></li>
+        <LI>Next message: <A HREF="012577.html">[Haiku-bugs] [Haiku] #2524: dlopen cannot find system libraries
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12576">[ date ]</a>
+              <a href="thread.html#12576">[ thread ]</a>
+              <a href="subject.html#12576">[ subject ]</a>
+              <a href="author.html#12576">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1150: usb stack freezes Dell Latitude D810
+--------------------------+-------------------------------------------------
+  Reporter:  bryanv       |       Owner:  mmlr          
+      Type:  bug          |      Status:  assigned      
+  Priority:  normal       |   Milestone:  R1            
+ Component:  Drivers/USB  |     Version:  R1 development
+Resolution:               |   Blockedby:                
+  Platform:  x86          |    Blocking:                
+--------------------------+-------------------------------------------------
+
+Comment(by Adek336):
+
+ So this problem seems to occur to two rather different hardware settings.
+ I think it is possible, that this bug happens to much more users, but they
+ just ignore the problem and restart the computer after a freeze during
+ boot.
+
+ I suggest adding the following to trunk
+ {{{
+ src/system/kernel/int.c:
+ 221   -               dprintf(&quot;More than 99%% interrupts of vector %d are
+ unhandled\n&quot;,
+ 221   +               panic(&quot;More than 99%% interrupts of vector %d are
+ unhandled\n&quot;,
+ }}}
+ so we could verify if it happens only for a handful, or for a vast group
+ of users.
+
+ Also, it would give us more debugging options than now, when it freezes
+ hard.
+
+ And I suspect that when the &quot;More than&quot; message appears, the system crawls
+ and pretty much doesn't work anyway, so panicing it shouldn't harm anyone.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1150#comment:13">http://dev.haiku-os.org/ticket/1150#comment:13</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012822.html">[Haiku-bugs] [Haiku] #3150: OpenBFS directory corruption.
+</A></li>
+	<LI>Next message: <A HREF="012577.html">[Haiku-bugs] [Haiku] #2524: dlopen cannot find system libraries
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12576">[ date ]</a>
+              <a href="thread.html#12576">[ thread ]</a>
+              <a href="subject.html#12576">[ subject ]</a>
+              <a href="author.html#12576">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

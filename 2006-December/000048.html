@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #960: Divide by zero error on atapi drives in	diskprobe
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2006-December/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23960%3A%20Divide%20by%20zero%20error%20on%20atapi%20drives%20in%0A%09diskprobe&In-Reply-To=%3C042.4922abb3191fd6458682f48daf881090%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000050.html">
+   <LINK REL="Next"  HREF="000051.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #960: Divide by zero error on atapi drives in	diskprobe</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23960%3A%20Divide%20by%20zero%20error%20on%20atapi%20drives%20in%0A%09diskprobe&In-Reply-To=%3C042.4922abb3191fd6458682f48daf881090%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #960: Divide by zero error on atapi drives in	diskprobe">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Dec 12 22:27:24 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000050.html">[Haiku-bugs] [Haiku] #959: Trac: view new tickets + crash
+</A></li>
+        <LI>Next message: <A HREF="000051.html">[Haiku-bugs] [Haiku] #961: app_server allows resizing of window frame when it's not supposed to
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#48">[ date ]</a>
+              <a href="thread.html#48">[ thread ]</a>
+              <a href="subject.html#48">[ subject ]</a>
+              <a href="author.html#48">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#960: Divide by zero error on atapi drives in diskprobe
+------------------------------------+---------------------------------------
+ Reporter:  genki0                  |       Owner:  axeld         
+     Type:  bug                     |      Status:  new           
+ Priority:  normal                  |   Milestone:  Haiku R1      
+Component:  Applications/DiskProbe  |     Version:  R1 development
+ Platform:  x86                     |  
+------------------------------------+---------------------------------------
+ Hello,
+
+ Starting diskprobe and selecting and probing my (empty) atapi drive
+ will crash like this:
+
+ Thread 487 caused an exception: Divide error
+ &lt;cut&gt;
+
+ [Switching to team /boot/beos/apps/DiskProbe (487) thread DiskProbe (487)]
+ 0x006bb9bf in __divdi3 () from /boot/beos/system/lib/libroot.so
+ (gdb) bt
+ #0  0x006bb9bf in __divdi3 () from /boot/beos/system/lib/libroot.so
+ #1  0x00228f7d in HeaderView::UpdateFileSizeView ()
+ #2  0x00227cbf in HeaderView::HeaderView ()
+ #3  0x0022a546 in ProbeView::ProbeView ()
+ #4  0x00220d1d in FileWindow::FileWindow ()
+ #5  0x0021753d in DiskProbe::Probe ()
+ #6  0x002177c3 in DiskProbe::RefsReceived ()
+ #7  0x002f0785 in BApplication::DispatchMessage ()
+    from /boot/beos/system/lib/libbe.so
+ #8  0x002faff5 in BLooper::task_looper () from
+ /boot/beos/system/lib/libbe.so
+ #9  0x002eef27 in BApplication::Run () from /boot/beos/system/lib/libbe.so
+ #10 0x002183b7 in main ()
+ (gdb)
+
+-- 
+Ticket URL: &lt;<A HREF="http://haiku-os.org/trac/ticket/960">http://haiku-os.org/trac/ticket/960</A>&gt;
+Haiku &lt;<A HREF="http://haiku-os.org/trac">http://haiku-os.org/trac</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000050.html">[Haiku-bugs] [Haiku] #959: Trac: view new tickets + crash
+</A></li>
+	<LI>Next message: <A HREF="000051.html">[Haiku-bugs] [Haiku] #961: app_server allows resizing of window frame when it's not supposed to
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#48">[ date ]</a>
+              <a href="thread.html#48">[ thread ]</a>
+              <a href="subject.html#48">[ subject ]</a>
+              <a href="author.html#48">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

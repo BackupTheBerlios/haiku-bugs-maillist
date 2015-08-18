@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2008: KDL: when running 'svn up' on	haiku-host (r24742)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232008%3A%20KDL%3A%20when%20running%20%27svn%20up%27%20on%0A%09haiku-host%20%28r24742%29&In-Reply-To=%3C043.8ef540664991df388e398784de0e023c%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006023.html">
+   <LINK REL="Next"  HREF="006027.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2008: KDL: when running 'svn up' on	haiku-host (r24742)</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232008%3A%20KDL%3A%20when%20running%20%27svn%20up%27%20on%0A%09haiku-host%20%28r24742%29&In-Reply-To=%3C043.8ef540664991df388e398784de0e023c%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2008: KDL: when running 'svn up' on	haiku-host (r24742)">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Apr  2 15:43:24 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006023.html">[Haiku-bugs] [Haiku] #1970: VM's sAvailableMemory counter is possibly inaccurate
+</A></li>
+        <LI>Next message: <A HREF="006027.html">[Haiku-bugs] [Haiku] #2008: KDL: when running 'svn up' on	haiku-host (r24742)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6026">[ date ]</a>
+              <a href="thread.html#6026">[ thread ]</a>
+              <a href="subject.html#6026">[ subject ]</a>
+              <a href="author.html#6026">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2008: KDL: when running 'svn up' on haiku-host (r24742)
+-----------------------+----------------------------------------------------
+ Reporter:  kaoutsis   |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+ Platform:  All        |  
+-----------------------+----------------------------------------------------
+ {{{
+ vm_soft_fault: va 0xdeadbeef not covered by area in address space
+ vm_page_fault: vm_soft_fault returned error 'Bad address' on fault at
+ 0xdeadbeef, ip 0xdeadbeef, write 0, user 0, thread 0x9
+ CPU 1 halted!
+ PANIC: vm_page_fault: unhandled page fault in kernel space at 0xdeadbeef,
+ ip 0xdeadbeef
+
+ Welcome to Kernel Debugging Land...
+ Running on CPU 0
+ kdebug&gt; where
+ stack trace for thread 9 &quot;block writer&quot;
+     kernel stack: 0x80183000 to 0x80187000
+ frame            caller     &lt;image&gt;:function + offset
+ 80186aa8 (+  52) 8008523b   &lt;kernel&gt;:invoke_debugger_command + 0x00cf
+ 80186adc (+  64) 80085fdc   &lt;kernel&gt;:_ParseCommand__16ExpressionParserRi +
+ 0x01f8
+ 80186b1c (+  48) 800859ce
+ &lt;kernel&gt;:EvaluateCommand__16ExpressionParserPCcRi + 0x01de
+ 80186b4c (+ 228) 800870f0   &lt;kernel&gt;:evaluate_debug_command + 0x0088
+ 80186c30 (+  64) 80083d7e   &lt;kernel&gt;:kernel_debugger_loop__Fv + 0x017a
+ 80186c70 (+  48) 80084a29   &lt;kernel&gt;:kernel_debugger + 0x010d
+ 80186ca0 (+ 192) 80084911   &lt;kernel&gt;:panic + 0x0029
+ 80186d60 (+  64) 8005d8cb   &lt;kernel&gt;:vm_page_fault + 0x00ab
+ 80186da0 (+  64) 80091909   &lt;kernel&gt;:page_fault_exception + 0x00b1
+ 80186de0 (+  12) 8009501d   &lt;kernel&gt;:int_bottom + 0x001d (nearest)
+ iframe at 0x80186dec (end = 0x80186e44)
+  eax 0xdeadbeef     ebx 0x0             ecx 0x1          edx 0x91101980
+  esi 0x91101980     edi 0x910d5c20      ebp 0x80186e78   esp 0x80186e20
+  eip 0xdeadbeef  eflags 0x10283
+  vector: 0xe, error code: 0x0
+ 80186dec (+ 140) deadbeef
+ 80186e78 (+ 352) 800667c8   &lt;kernel&gt;:block_writer__FPv + 0x0138
+ 80186fd8 (+  32) 80038663   &lt;kernel&gt;:_create_kernel_thread_kentry__Fv +
+ 0x001b
+ 80186ff8 (+2145882120) 800385f8   &lt;kernel&gt;:thread_kthread_exit__Fv +
+ 0x0000
+ kdebug&gt;
+ }}}
+
+
+
+
+ * get the subversion pkg
+ * run 'svn up'
+ * after a few seconds the kdl will come up
+ i reproduce the kdl every time,
+ if i skip the 'svn up' and do a 'jam -q haiku-image'
+ on haiku-host after a few minutes i get the same kdl
+
+ this happen only after this revision.
+ Two, three days ago, i had no problem with svn up
+ and the 'jam -q haiku-image' never showed kdl
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2008">http://dev.haiku-os.org/ticket/2008</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006023.html">[Haiku-bugs] [Haiku] #1970: VM's sAvailableMemory counter is possibly inaccurate
+</A></li>
+	<LI>Next message: <A HREF="006027.html">[Haiku-bugs] [Haiku] #2008: KDL: when running 'svn up' on	haiku-host (r24742)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6026">[ date ]</a>
+              <a href="thread.html#6026">[ thread ]</a>
+              <a href="subject.html#6026">[ subject ]</a>
+              <a href="author.html#6026">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

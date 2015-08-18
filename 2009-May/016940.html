@@ -1,0 +1,152 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3861: iso9660 has issues with various discs burned on a mac
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233861%3A%20iso9660%20has%20issues%20with%20various%0A%20discs%20burned%20on%20a%20mac&In-Reply-To=%3C053.8578dd1205495127c48cb782b68f2f2d%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="016939.html">
+   <LINK REL="Next"  HREF="016961.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3861: iso9660 has issues with various discs burned on a mac</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233861%3A%20iso9660%20has%20issues%20with%20various%0A%20discs%20burned%20on%20a%20mac&In-Reply-To=%3C053.8578dd1205495127c48cb782b68f2f2d%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3861: iso9660 has issues with various discs burned on a mac">trac at haiku-os.org
+       </A><BR>
+    <I>Tue May  5 04:52:58 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="016939.html">[Haiku-bugs] [Haiku] #3861: iso9660 has issues with various discs burned on a mac
+</A></li>
+        <LI>Next message: <A HREF="016961.html">[Haiku-bugs] [Haiku] #3861: iso9660 has issues with various discs burned on a mac
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16940">[ date ]</a>
+              <a href="thread.html#16940">[ thread ]</a>
+              <a href="subject.html#16940">[ subject ]</a>
+              <a href="author.html#16940">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3861: iso9660 has issues with various discs burned on a mac
+-----------------------------------+----------------------------------------
+ Reporter:  anevilyak              |       Owner:  axeld         
+     Type:  bug                    |      Status:  new           
+ Priority:  normal                 |   Milestone:  R1            
+Component:  File Systems/ISO 9660  |     Version:  R1 development
+Blockedby:                         |    Platform:  All           
+ Blocking:                         |  
+-----------------------------------+----------------------------------------
+
+Comment(by anevilyak):
+
+ Backtrace from above mentioned panic:
+ {{{
+ PANIC: vm_page_fault: unhandled page fault in kernel space at 0x92700000,
+ ip 0x807a3fea
+
+ Welcome to Kernel Debugging Land...
+ Thread 210 &quot;add poses&quot; running on CPU 0
+ kdebug&gt; bt
+ stack trace for thread 210 &quot;add poses&quot;
+     kernel stack: 0x91ba8000 to 0x91bac000
+       user stack: 0x781c7000 to 0x78207000
+ frame               caller     &lt;image&gt;:function + offset
+  0 91bab910 (+  48) 8006584d   &lt;kernel_x86&gt;:invoke_debugger_command +
+ 0x00f5
+  1 91bab940 (+  64) 8006563d   &lt;kernel_x86&gt;
+ invoke_pipe_segment(debugger_command_pipe*: 0x80136b20, int32: 0, 0x0
+ &quot;&lt;NULL&gt;&quot;) + 0x0079
+  2 91bab980 (+  64) 800659c4   &lt;kernel_x86&gt;:invoke_debugger_command_pipe +
+ 0x009c
+  3 91bab9c0 (+  48) 80066f74   &lt;kernel_x86&gt;
+ ExpressionParser&lt;0x91baba74&gt;::_ParseCommandPipe(0x91baba70) + 0x0234
+  4 91bab9f0 (+  64) 800663ae   &lt;kernel_x86&gt;
+ ExpressionParser&lt;0x91baba74&gt;::EvaluateCommand(0x80126e00 &quot;bt&quot;, 0x91baba70)
+ + 0x02ba
+  5 91baba30 (+ 224) 8006839c   &lt;kernel_x86&gt;:evaluate_debug_command +
+ 0x0088
+  6 91babb10 (+  64) 800636c6   &lt;kernel_x86&gt; kernel_debugger_loop() +
+ 0x01ae
+  7 91babb50 (+  32) 800645cd   &lt;kernel_x86&gt;:kernel_debugger + 0x004d
+  8 91babb70 (+ 192) 80064575   &lt;kernel_x86&gt;:panic + 0x0029
+  9 91babc30 (+  80) 800ca16d   &lt;kernel_x86&gt;:vm_page_fault + 0x0139
+ 10 91babc80 (+  64) 800dab8d   &lt;kernel_x86&gt;:page_fault_exception + 0x00d9
+ 11 91babcc0 (+  12) 800de2b6   &lt;kernel_x86&gt;:int_bottom + 0x0036
+ kernel iframe at 0x91babccc (end = 0x91babd1c)
+  eax 0x800          ebx 0x807a7418      ecx 0x926ff800   edx 0x8145d668
+  esi 0x800          edi 0x0             ebp 0x91babe44   esp 0x91babd00
+  eip 0x807a3fea  eflags 0x10286
+  vector: 0xe, error code: 0x0
+ 12 91babccc (+ 376) 807a3fea   &lt;/boot/system/add-
+ ons/kernel/file_systems/iso9660&gt; ISOReadDirEnt(iso9660_volume*:
+ 0x909aa800, dircookie*: 0x8145d668, dirent*: 0x180759c5, uint32: 0x2473
+ (9331)) + 0x00ea
+ 13 91babe44 (+  48) 807a5bc0   &lt;/boot/system/add-
+ ons/kernel/file_systems/iso9660&gt; fs_read_dir(fs_volume*: 0x8131d988,
+ fs_vnode*: 0x813223fc, 0x8145d668, dirent*: 0x180759c5, uint32: 0x2473
+ (9331), 0x91babf40) + 0x0030
+ 14 91babe74 (+  80) 800a7683   &lt;kernel_x86&gt; dir_read(io_context*:
+ 0x8126c908, vnode*: 0x813223fc, 0x8145d668, dirent*: 0x180759c5, uint32:
+ 0x2473 (9331), 0x91babf40) + 0x004b
+ 15 91babec4 (+  64) 800a7417   &lt;kernel_x86&gt; dir_read(io_context*:
+ 0x8126c908, file_descriptor*: 0x8145d6b8, dirent*: 0x180759c5, uint32:
+ 0x2473 (9331), 0x91babf40) + 0x002b
+ 16 91babf04 (+  64) 8009644d   &lt;kernel_x86&gt;:_user_read_dir + 0x0069
+ 17 91babf44 (+ 100) 800de4f1   &lt;kernel_x86&gt;:handle_syscall + 0x00be
+ user iframe at 0x91babfa8 (end = 0x91bac000)
+  eax 0x86           ebx 0x456c04        ecx 0x78206a10   edx 0xffff0104
+  esi 0x180759c5     edi 0x1809df08      ebp 0x78206a3c   esp 0x91babfdc
+  eip 0xffff0104  eflags 0x246      user esp 0x78206a10
+  vector: 0x63, error code: 0x0
+ 18 91babfa8 (+   0) ffff0104   &lt;commpage&gt;:commpage_syscall + 0x0004
+ 19 78206a3c (+  48) 0052c318   &lt;libtracker.so&gt;
+ BPrivate::CachedEntryIterator&lt;0x1809ded8&gt;::GetNextDirents(dirent*:
+ 0x78206b68, uint32: 0x400 (1024), int32: 1) + 0x0078
+ 20 78206a6c (+1344) 00597fe5   &lt;libtracker.so&gt;
+ BPrivate::BPoseView&lt;0x18102b68&gt;::AddPosesTask(NULL) + 0x0379
+ 21 78206fac (+  48) 00682d58   &lt;libroot.so&gt;:_get_next_team_info (nearest)
+ + 0x005c
+ 22 78206fdc (+   0) 78206fec   6354:add <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">poses_210_stack at 0x781c7000</A> +
+ 0x3ffec
+ kdebug&gt;
+ }}}
+
+ Note that while this one is in Tracker's add poses thread, the exact same
+ panic happens with ls -la via Terminal.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3861#comment:7">http://dev.haiku-os.org/ticket/3861#comment:7</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="016939.html">[Haiku-bugs] [Haiku] #3861: iso9660 has issues with various discs burned on a mac
+</A></li>
+	<LI>Next message: <A HREF="016961.html">[Haiku-bugs] [Haiku] #3861: iso9660 has issues with various discs burned on a mac
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16940">[ date ]</a>
+              <a href="thread.html#16940">[ thread ]</a>
+              <a href="subject.html#16940">[ subject ]</a>
+              <a href="author.html#16940">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2902: USB File corruption with SMP	enabled.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232902%3A%20USB%20File%20corruption%20with%20SMP%0A%09enabled.&In-Reply-To=%3C054.6fc307c5a6ff4b11e7216b7d5515648a%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011718.html">
+   <LINK REL="Next"  HREF="011288.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2902: USB File corruption with SMP	enabled.</H1>
+    <B>netster403</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232902%3A%20USB%20File%20corruption%20with%20SMP%0A%09enabled.&In-Reply-To=%3C054.6fc307c5a6ff4b11e7216b7d5515648a%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2902: USB File corruption with SMP	enabled.">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Oct 29 15:05:58 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011718.html">[Haiku-bugs] [Haiku] #2902: USB File corruption with SMP	enabled.
+</A></li>
+        <LI>Next message: <A HREF="011288.html">[Haiku-bugs] [Haiku] #2732: syslog loses messages
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11720">[ date ]</a>
+              <a href="thread.html#11720">[ thread ]</a>
+              <a href="subject.html#11720">[ subject ]</a>
+              <a href="author.html#11720">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2902: USB File corruption with SMP enabled.
+--------------------------+-------------------------------------------------
+  Reporter:  netster403   |       Owner:  mmlr          
+      Type:  bug          |      Status:  new           
+  Priority:  critical     |   Milestone:  R1            
+ Component:  Drivers/USB  |     Version:  R1 development
+Resolution:               |   Blockedby:                
+  Platform:  x86          |    Blocking:                
+--------------------------+-------------------------------------------------
+
+Comment(by netster403):
+
+ I have this system available for testing if needed (it's my work's
+ property so testing abilities may become limited in the future)
+
+ Here are my testing steps above retyped to clarify (trac seems to cut some
+ line breaks)
+
+ --- Booting test, where I first noticed the issue ---
+
+ * Booting from USB stick (SMP enabled) fails with errors in
+ 10-23-2008-105028.log
+
+ * Booting from USB stick (SMP disabled) works as expected.
+ 10-23-2008-105223.log
+
+
+ --- Further tests find exact problem location ---
+
+ * I have a zip file on a flash disk, freshly formatted fat 16.
+
+ * MD5 sum is correct for file on flash drive.
+
+ * File from USB to sata haiku drive the MD5 changes. (smp enabled).
+ 10-24-2008-112945.log
+
+ * File from USB to sata haiku drive the MD5 is correct. (smp disabled).
+
+ Thanks!
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2902#comment:9">http://dev.haiku-os.org/ticket/2902#comment:9</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011718.html">[Haiku-bugs] [Haiku] #2902: USB File corruption with SMP	enabled.
+</A></li>
+	<LI>Next message: <A HREF="011288.html">[Haiku-bugs] [Haiku] #2732: syslog loses messages
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11720">[ date ]</a>
+              <a href="thread.html#11720">[ thread ]</a>
+              <a href="subject.html#11720">[ subject ]</a>
+              <a href="author.html#11720">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

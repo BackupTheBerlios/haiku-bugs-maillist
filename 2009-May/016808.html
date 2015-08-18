@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2481: USB mouse and keyboard sometimes	stop working
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232481%3A%20USB%20mouse%20and%20keyboard%20sometimes%0A%09stop%20working&In-Reply-To=%3C050.4ffa2f12769907ac54d0b49d7bea95b0%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="016805.html">
+   <LINK REL="Next"  HREF="016809.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2481: USB mouse and keyboard sometimes	stop working</H1>
+    <B>mmlr</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232481%3A%20USB%20mouse%20and%20keyboard%20sometimes%0A%09stop%20working&In-Reply-To=%3C050.4ffa2f12769907ac54d0b49d7bea95b0%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2481: USB mouse and keyboard sometimes	stop working">trac at haiku-os.org
+       </A><BR>
+    <I>Sat May  2 15:18:45 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="016805.html">[Haiku-bugs] [Haiku] #2641: [nvidia] Video problems
+</A></li>
+        <LI>Next message: <A HREF="016809.html">[Haiku-bugs] [Haiku] #2481: USB mouse and keyboard sometimes	stop working
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16808">[ date ]</a>
+              <a href="thread.html#16808">[ thread ]</a>
+              <a href="subject.html#16808">[ subject ]</a>
+              <a href="author.html#16808">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2481: USB mouse and keyboard sometimes stop working
+--------------------------+-------------------------------------------------
+  Reporter:  stippi       |       Owner:  mmlr          
+      Type:  bug          |      Status:  reopened      
+  Priority:  normal       |   Milestone:  R1            
+ Component:  Drivers/USB  |     Version:  R1 development
+Resolution:               |   Blockedby:                
+  Platform:  All          |    Blocking:                
+--------------------------+-------------------------------------------------
+
+Comment(by mmlr):
+
+ Iteresting. Sadly &quot;Host Controller Halted&quot; is not a very informative error
+ code on it's own. The specs list it to be set when in single stepping mode
+ after fetching a descriptor (which we're not using), when the run/stop bit
+ goes to 0 (which we never do) or when an internal error occurs (only
+ candidate). They also list a few explicit conditions that cause it to get
+ set namely PCI master/target aborts (unlikely, I've never seen that
+ anywhere at least), suspend mode (which we aren't using), again run/stop
+ which we are only setting to run on initialization, or the two actual
+ error cases invalid max length or invalid PID. In case it is a host error
+ the &quot;Host System Error&quot; bit would be set as well, and in case it's a
+ protocol error the &quot;Process Error&quot; bit should be set (likely the device
+ not properly shutting down the connection). Any of you that can reproduce
+ this please change the TRACE_MODULE() to TRACE_MODULE_ERROR() in lines
+ 1716 and 1721 in src/add-ons/kernel/busses/usb/uhci.cpp to verfiy that. In
+ case it's a protocol error it's possible that we can just reenable the
+ schedule, but we'll likely need some cleanup to happen and I'd like to
+ cross reference other implementations before doing any change.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2481#comment:10">http://dev.haiku-os.org/ticket/2481#comment:10</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="016805.html">[Haiku-bugs] [Haiku] #2641: [nvidia] Video problems
+</A></li>
+	<LI>Next message: <A HREF="016809.html">[Haiku-bugs] [Haiku] #2481: USB mouse and keyboard sometimes	stop working
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16808">[ date ]</a>
+              <a href="thread.html#16808">[ thread ]</a>
+              <a href="subject.html#16808">[ subject ]</a>
+              <a href="author.html#16808">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

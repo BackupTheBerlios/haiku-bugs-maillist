@@ -1,0 +1,209 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1655: vm_page_fault on boot (probably because intel_extreme driver)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231655%3A%20vm_page_fault%20on%20boot%20%28probably%0A%20because%20intel_extreme%20driver%29&In-Reply-To=%3C055.e9c621d5802c603e941a97ec364f93ad%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003778.html">
+   <LINK REL="Next"  HREF="003780.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1655: vm_page_fault on boot (probably because intel_extreme driver)</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231655%3A%20vm_page_fault%20on%20boot%20%28probably%0A%20because%20intel_extreme%20driver%29&In-Reply-To=%3C055.e9c621d5802c603e941a97ec364f93ad%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1655: vm_page_fault on boot (probably because intel_extreme driver)">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Nov 30 06:41:47 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003778.html">[Haiku-bugs] [Haiku] #1655: vm_page_fault on boot (probably because intel_extreme driver)
+</A></li>
+        <LI>Next message: <A HREF="003780.html">[Haiku-bugs] [Haiku] #735: [Tracker] open with window content	is shifted
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3779">[ date ]</a>
+              <a href="thread.html#3779">[ thread ]</a>
+              <a href="subject.html#3779">[ subject ]</a>
+              <a href="author.html#3779">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1655: vm_page_fault on boot (probably because intel_extreme driver)
+---------------------------------------------+------------------------------
+  Reporter:  mzunigag_mx                     |       Owner:  axeld         
+      Type:  bug                             |      Status:  new           
+  Priority:  normal                          |   Milestone:  R1            
+ Component:  Drivers/Graphics/intel_extreme  |     Version:  R1 development
+Resolution:                                  |    Platform:  x86           
+---------------------------------------------+------------------------------
+Comment (by leavengood):
+
+ It maybe unrelated, but in r23024 I get a KDL on boot in VMware with this
+ backtrace:
+
+ {{{
+ vm_soft_fault: va 0x0 not covered by area in address space
+
+ vm_page_fault: vm_soft_fault returned error 'Bad address' on fault at 0x0,
+ ip 0x8039f423, write 0, user 0, thread 0x2a
+
+ PANIC: vm_page_fault: unhandled page fault in kernel space at 0x0, ip
+ 0x8039f423
+
+
+
+ Welcome to Kernel Debugging Land...
+
+ Running on CPU 0
+
+ kdebug&gt; bt
+
+ stack trace for thread 0x2a &quot;net_server&quot;
+
+     kernel stack: 0x801ed000 to 0x801f1000
+
+       user stack: 0x7efe7000 to 0x7ffe7000
+
+ frame            caller     &lt;image&gt;:function + offset
+
+ 801f06c8 (+  52) 80072f14   &lt;kernel&gt;:invoke_command + 0x0075
+
+ 801f06fc (+  48) 80073169   &lt;kernel&gt;:kernel_debugger + 0x0212
+
+ 801f072c (+ 176) 80073200   &lt;kernel&gt;:panic + 0x002d
+
+ 801f07dc (+  64) 800548bb   &lt;kernel&gt;:vm_page_fault + 0x00a9
+
+ 801f081c (+ 144) 8007b804   &lt;kernel&gt;:i386_handle_trap + 0x0261
+
+ iframe at 0x801f08b4 (end = 0x801f0908)
+
+  eax 0x0            ebx 0x803a8d4c      ecx 0x908bec78   edx 0x908cce00
+
+  esi 0x908cce00     edi 0x801f0a00      ebp 0x801f09b4   esp 0x801f08e4
+
+  eip 0x8039f423  eflags 0x10286
+
+  vector: 0xe, error code: 0x0
+
+ 801f08ac (+ 264) 8039f423   &lt;/boot/beos/system/add-
+ ons/kernel/drivers/dev/net/3com&gt;:device_add_child + 0x0053
+
+ 801f09b4 (+  48) 8039fc76   &lt;/boot/beos/system/add-
+ ons/kernel/drivers/dev/net/3com&gt;:init_root_device + 0x0072
+
+ 801f09e4 (+  48) 8039fe8a   &lt;/boot/beos/system/add-
+ ons/kernel/drivers/dev/net/3com&gt;:_fbsd_init_hardware + 0x0047
+
+ 801f0a14 (+  32) 8039dc99   &lt;/boot/beos/system/add-
+ ons/kernel/drivers/dev/net/3com&gt;:init_hardware + 0x0020
+
+ 801f0a34 (+ 128) 8003b281   &lt;kernel&gt;:_Z10add_driverPKcl + 0x022d
+
+ 801f0ab4 (+  16) 8003b42f   &lt;kernel&gt;:devfs_add_driver + 0x0013
+
+ 801f0ac4 (+  64) 80060f88   &lt;kernel&gt;:_Z11try_driversR4listb + 0x0086
+
+ 801f0b04 (+ 272) 8006233b   &lt;kernel&gt;:probe_for_device_type + 0x03a1
+
+ 801f0c14 (+  64) 80039e43   &lt;kernel&gt;:_Z16scan_for_driversP11devfs_vnode +
+ 0x005f
+
+ 801f0c54 (+  48) 8003bb82   &lt;kernel&gt;:_Z12devfs_lookupPvS_PKcPxPi + 0x005c
+
+ 801f0c84 (+ 112) 80045ce0
+ &lt;kernel&gt;:_Z19vnode_path_to_vnodeP5vnodePcbiPS0_PxPi + 0x011e
+
+ 801f0cf4 (+  48) 80046020   &lt;kernel&gt;:_Z13path_to_vnodePcbPP5vnodePxb +
+ 0x00de
+
+ 801f0d24 (+  48) 800475d8
+ &lt;kernel&gt;:_Z20fd_and_path_to_vnodeiPcbPP5vnodePxb + 0x006e
+
+ 801f0d54 (+  64) 80049040   &lt;kernel&gt;:_Z9file_openiPcib + 0x0036
+
+ 801f0d94 (+  48) 800494d7   &lt;kernel&gt;:_user_open + 0x008d
+
+ 801f0dc4 (+ 352) 8002fced   &lt;kernel&gt;:syscall_dispatcher + 0x0a43
+
+ 801f0f24 (+ 128) 8007b8b8   &lt;kernel&gt;:i386_handle_trap + 0x0315
+
+ iframe at 0x801f0fac (end = 0x801f1000)
+
+  eax 0x46           ebx 0x5afce0        ecx 0x15         edx 0x2
+
+  esi 0x0            edi 0x7ffe6d80      ebp 0x7ffe6928   esp 0x801f0fdc
+
+  eip 0xffff0102  eflags 0x246
+
+  vector: 0x63, error code: 0x0
+
+ 801f0fa4 (+   0) ffff0102
+
+ 7ffe6928 (+  64) 004cef8e
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libnetwork.so at 0x004c5000</A>&gt;:unknown + 0x9f8e
+
+ 7ffe6968 (+ 272) 0020a853
+ &lt;/boot/beos/system/servers/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">net_server at 0x00200000</A>&gt;:unknown + 0xa853
+
+ 7ffe6a78 (+  80) 0020aa9e
+ &lt;/boot/beos/system/servers/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">net_server at 0x00200000</A>&gt;:unknown + 0xaa9e
+
+ 7ffe6ac8 (+ 544) 002cf838
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libbe.so at 0x0021f000</A>&gt;:unknown + 0xb0838
+
+ 7ffe6ce8 (+  64) 002d9b20
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libbe.so at 0x0021f000</A>&gt;:unknown + 0xbab20
+
+ 7ffe6d28 (+  48) 002cfb5e
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libbe.so at 0x0021f000</A>&gt;:unknown + 0xb0b5e
+
+ 7ffe6d58 (+ 544) 0020ad2a
+ &lt;/boot/beos/system/servers/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">net_server at 0x00200000</A>&gt;:unknown + 0xad2a
+
+ 7ffe6f78 (+  52) 002086dd
+ &lt;/boot/beos/system/servers/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">net_server at 0x00200000</A>&gt;:unknown + 0x86dd
+
+ 7ffe6fac (+  48) 00100104   360:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">runtime_loader_seg0ro at 0x00100000</A> + 0x104
+
+ 7ffe6fdc (+   0) 7ffe6fec   359:/boot/beos/system/servers/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">net_s at 0x7efe7000</A>
+ + 0xffffec
+ }}}
+
+ This happens at every boot.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1655#comment:2">http://dev.haiku-os.org/ticket/1655#comment:2</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003778.html">[Haiku-bugs] [Haiku] #1655: vm_page_fault on boot (probably because intel_extreme driver)
+</A></li>
+	<LI>Next message: <A HREF="003780.html">[Haiku-bugs] [Haiku] #735: [Tracker] open with window content	is shifted
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3779">[ date ]</a>
+              <a href="thread.html#3779">[ thread ]</a>
+              <a href="subject.html#3779">[ subject ]</a>
+              <a href="author.html#3779">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

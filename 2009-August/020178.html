@@ -1,0 +1,243 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4343: Debugger's console output frequently deadlocks Terminal
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234343%3A%20Debugger%27s%20console%20output%0A%20frequently%20deadlocks%20Terminal&In-Reply-To=%3C053.bf5cb6ccba0e204c22314debe3f8b51a%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="020163.html">
+   <LINK REL="Next"  HREF="020182.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4343: Debugger's console output frequently deadlocks Terminal</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234343%3A%20Debugger%27s%20console%20output%0A%20frequently%20deadlocks%20Terminal&In-Reply-To=%3C053.bf5cb6ccba0e204c22314debe3f8b51a%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4343: Debugger's console output frequently deadlocks Terminal">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Aug 26 00:59:06 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="020163.html">[Haiku-bugs] [Haiku] #4343: Debugger's console output frequently deadlocks Terminal
+</A></li>
+        <LI>Next message: <A HREF="020182.html">[Haiku-bugs] [Haiku] #4343: Debugger's console output frequently deadlocks Terminal
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20178">[ date ]</a>
+              <a href="thread.html#20178">[ thread ]</a>
+              <a href="subject.html#20178">[ subject ]</a>
+              <a href="author.html#20178">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4343: Debugger's console output frequently deadlocks Terminal
+-----------------------------------+----------------------------------------
+ Reporter:  anevilyak              |       Owner:  jackburton    
+     Type:  bug                    |      Status:  new           
+ Priority:  normal                 |   Milestone:  R1            
+Component:  Applications/Terminal  |     Version:  R1 development
+Blockedby:                         |    Platform:  All           
+ Blocking:                         |  
+-----------------------------------+----------------------------------------
+
+Comment(by anevilyak):
+
+ As requested:
+
+ {{{
+ PANIC: Keyboard Requested Halt.
+ Welcome to Kernel Debugging Land...
+ Thread 2 &quot;idle thread 2&quot; running on CPU 0
+ kdebug&gt; teams
+ team           id  parent      name
+ 0x811b0990     62  0x811b0198  app_server
+ 0x811b0198      1  0x00000000  kernel_team
+ 0x8146e4c8    250  0x8146e330  sh
+ 0x81272330     95  0x811b0198  Deskbar
+ 0x81272660     97  0x811b0198  media_server
+ 0x812727f8     98  0x811b0198  midi_server
+ 0x81272b28    100  0x811b0198  print_server
+ 0x81272cc0    132  0x81272660  media_addon_server
+ 0x81272e58    102  0x811b0198  cddb_daemon
+ 0x81272000    543  0x8146e4c8  Debugger
+ 0x8146e000    546  0x81272000  Tracker
+ 0x811b0b28     81  0x811b0198  syslog_daemon
+ 0x811b04c8     53  0x811b0198  registrar
+ 0x812724c8    209  0x811b0198  Vision
+ 0x81272198     85  0x811b0990  input_server
+ 0x8146e660    461  0x8146e4c8  infopopper_server
+ 0x8146e330    246  0x812724c8  Terminal
+ 0x811b0660     60  0x811b0198  debug_server
+ 0x811b07f8     61  0x811b0198  net_server
+ kdebug&gt; threads 246
+ thread         id  state     wait for   object  cpu pri  stack      team
+ name
+ 0x90117000    251  waiting   sem          4068    -  10  0x913b2000  246
+ PtyReader
+ 0x900ab800    252  waiting   sem          4067    -  15  0x913b6000  246
+ EscParse
+ 0x9012f000    253  waiting   cvar   0x913bdbe0    -  15  0x913ba000  246
+ w&gt;Terminal 1
+ 0x90116800    246  waiting   sem          3971    -  10  0x913a2000  246
+ Terminal
+ kdebug&gt; sem 4068
+ SEM: 0x8f995ba0
+ id:      4068 (0xfe4)
+ name:    'pty_locker_sem'
+ owner:   246
+ count:   -1
+ queue:   251
+ last acquired by: 251
+ kdebug&gt; sem 4067
+ SEM: 0x8f995b78
+ id:      4067 (0xfe3)
+ name:    'pty_reader_sem'
+ owner:   246
+ count:   -1
+ queue:   252
+ last acquired by: 252
+ kdebug&gt; cvar 0x913bdbe0
+ condition variable 0x913bdbe0
+   object:  0x913bddbc (tty request)
+   threads: 253
+ kdebug&gt; bt 251
+ stack trace for thread 251 &quot;PtyReader&quot;
+     kernel stack: 0x913b2000 to 0x913b6000
+       user stack: 0x70000000 to 0x70040000
+ frame               caller     &lt;image&gt;:function + offset
+  0 913b5e84 (+  64) 8005ff17   &lt;kernel_x86&gt; affine_reschedule() + 0x039c
+  1 913b5ec4 (+  80) 8004ef43   &lt;kernel_x86&gt;:switch_sem_etc + 0x054a
+  2 913b5f14 (+  48) 8004f0a4   &lt;kernel_x86&gt;:_user_acquire_sem + 0x0019
+  3 913b5f44 (+ 100) 800cbaf1   &lt;kernel_x86&gt;:handle_syscall + 0x00be
+ user iframe at 0x913b5fa8 (end = 0x913b6000)
+  eax 0xb            ebx 0x7f2808        ecx 0x7003f740   edx 0xffff0114
+  esi 0x18056e50     edi 0x800           ebp 0x7003f75c   esp 0x913b5fdc
+  eip 0xffff0114  eflags 0x212      user esp 0x7003f740
+  vector: 0x63, error code: 0x0
+  4 913b5fa8 (+   0) ffff0114   &lt;commpage&gt;:commpage_syscall + 0x0004
+  5 7003f75c (+2112) 00221132   &lt;_APP_&gt; TermParse&lt;0x18056e50&gt;::PtyReader()
+ + 0x005c
+  6 7003ff9c (+  32) 002212b3   &lt;_APP_&gt;
+ TermParse&lt;0x18056e50&gt;::_ptyreader_thread(void*: NULL) + 0x001b
+  7 7003ffbc (+  32) 0075808d   &lt;libroot.so&gt;:_thread_do_exit_notification
+ (nearest) + 0x007a
+  8 7003ffdc (+   0) 7003ffec   3632:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">PtyReader_251_stack at 0x70000000</A> +
+ 0x3ffec
+ kdebug&gt; bt 252
+ stack trace for thread 252 &quot;EscParse&quot;
+     kernel stack: 0x913b6000 to 0x913ba000
+       user stack: 0x70041000 to 0x70081000
+ frame               caller     &lt;image&gt;:function + offset
+  0 913b9e84 (+  64) 8005ff17   &lt;kernel_x86&gt; affine_reschedule() + 0x039c
+  1 913b9ec4 (+  80) 8004ef43   &lt;kernel_x86&gt;:switch_sem_etc + 0x054a
+  2 913b9f14 (+  48) 8004f0a4   &lt;kernel_x86&gt;:_user_acquire_sem + 0x0019
+  3 913b9f44 (+ 100) 800cbaf1   &lt;kernel_x86&gt;:handle_syscall + 0x00be
+ user iframe at 0x913b9fa8 (end = 0x913ba000)
+  eax 0xb            ebx 0x7f2808        ecx 0x70080c90   edx 0xffff0114
+  esi 0x18056e50     edi 0x0             ebp 0x70080cac   esp 0x913b9fdc
+  eip 0xffff0114  eflags 0x212      user esp 0x70080c90
+  vector: 0x63, error code: 0x0
+  4 913b9fa8 (+   0) ffff0114   &lt;commpage&gt;:commpage_syscall + 0x0004
+  5 70080cac (+  48) 00220ecd   &lt;_APP_&gt;
+ TermParse&lt;0x18056e50&gt;::_ReadParserBuffer() + 0x004d
+  6 70080cdc (+ 704) 0022183c   &lt;_APP_&gt; TermParse&lt;0x18056e50&gt;::EscParse() +
+ 0x00a2
+  7 70080f9c (+  32) 00222859   &lt;_APP_&gt;
+ TermParse&lt;0x18056e50&gt;::_escparse_thread(void*: NULL) + 0x001b
+  8 70080fbc (+  32) 0075808d   &lt;libroot.so&gt;:_thread_do_exit_notification
+ (nearest) + 0x007a
+  9 70080fdc (+   0) 70080fec   3634:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">EscParse_252_stack at 0x70041000</A> +
+ 0x3ffec
+ kdebug&gt; bt 253
+ stack trace for thread 253 &quot;w&gt;Terminal 1&quot;
+     kernel stack: 0x913ba000 to 0x913be000
+       user stack: 0x70082000 to 0x700c2000
+ frame               caller     &lt;image&gt;:function + offset
+  0 913bdaf4 (+  64) 8005ff17   &lt;kernel_x86&gt; affine_reschedule() + 0x039c
+  1 913bdb34 (+  32) 80059693
+ &lt;kernel_x86&gt;:thread_block_with_timeout_locked + 0x011f
+  2 913bdb54 (+  64) 8003cb44   &lt;kernel_x86&gt;
+ ConditionVariableEntry&lt;0x913bdbcc&gt;::Wait(uint32: 0x9 (9), int64:
+ 9223372036854775807) + 0x00d2
+  3 913bdb94 (+ 112) 8079c61b   &lt;/boot/system/add-
+ ons/kernel/drivers/dev/tty&gt; RequestOwner&lt;0x913bddbc&gt;::Wait(true, int64:
+ 9223372036854775807) + 0x00d5
+  4 913bdc04 (+  64) 8079da70   &lt;/boot/system/add-
+ ons/kernel/drivers/dev/tty&gt; WriterLocker&lt;0x913bddac&gt;::AcquireWriter(false,
+ uint32: 0x0 (0)) + 0x012e
+  5 913bdc44 (+ 480) 8079e02e   &lt;/boot/system/add-
+ ons/kernel/drivers/dev/tty&gt; tty_write_to_tty_master(tty_cookie*:
+ 0x81469e20, void const*: 0x18155892, unsigned long*: 0x913bdf30) + 0x0189
+  6 913bde24 (+  32) 8079f31a   &lt;/boot/system/add-
+ ons/kernel/drivers/dev/tty&gt; master_write(void*: 0x81469e20, int64:
+ 40347773, void const*: 0x18155892, unsigned long*: 0x913bdf30) + 0x0021
+  7 913bde44 (+  80) 80079585   &lt;kernel_x86&gt; devfs_write(fs_volume*:
+ 0x811b59b0, fs_vnode*: 0x8146b6e8, void*: 0x811feaa0, int64: 40347773,
+ void const*: 0x18155892, unsigned long*: 0x913bdf30) + 0x00af
+  8 913bde94 (+  64) 8009903b   &lt;kernel_x86&gt; file_write(file_descriptor*:
+ 0x81454e10, int64: 40347773, void const*: 0x18155892, unsigned long*:
+ 0x913bdf30) + 0x0053
+  9 913bded4 (+  80) 80091767   &lt;kernel_x86&gt; common_user_io(int32:
+ 404052114, int64: 4294967296, void*: 0x9012f000, uint32: 0x913bdfa8, true)
+ + 0x0109
+ 10 913bdf24 (+  32) 80091803   &lt;kernel_x86&gt;:_user_write + 0x001c
+ 11 913bdf44 (+ 100) 800cbaf1   &lt;kernel_x86&gt;:handle_syscall + 0x00be
+ user iframe at 0x913bdfa8 (end = 0x913be000)
+  eax 0x85           ebx 0x7f2808        ecx 0x700c1b90   edx 0xffff0114
+  esi 0x18155892     edi 0x18155892      ebp 0x700c1bbc   esp 0x913bdfdc
+  eip 0xffff0114  eflags 0x212      user esp 0x700c1b90
+  vector: 0x63, error code: 0x0
+ 12 913bdfa8 (+   0) ffff0114   &lt;commpage&gt;:commpage_syscall + 0x0004
+ 13 700c1bbc (+  32) 0021de89   &lt;_APP_&gt; Shell&lt;0x18021820&gt;::Write(void
+ const*: 0x18155892, uint32: 0x1 (1)) + 0x0031
+ 14 700c1bdc (+ 144) 00225a84   &lt;_APP_&gt; TermView&lt;0x18029de8&gt;::KeyDown(char
+ const*: 0x18155892 &quot;a&quot;, int32: 1) + 0x046c
+ 15 700c1c6c (+ 720) 0039b745   &lt;libbe.so&gt;
+ BWindow&lt;0x1802a040&gt;::DispatchMessage(BMessage*: 0x1800fd70, BHandler*:
+ 0x18029de8) + 0x0d39
+ 16 700c1f3c (+  96) 00397f3f   &lt;libbe.so&gt;
+ BWindow&lt;0x1802a040&gt;::task_looper() + 0x0277
+ 17 700c1f9c (+  32) 002e80b4   &lt;libbe.so&gt;
+ BLooper&lt;0x1802a040&gt;::_task0_(void*: NULL) + 0x0030
+ 18 700c1fbc (+  32) 0075808d   &lt;libroot.so&gt;:_thread_do_exit_notification
+ (nearest) + 0x007a
+ 19 700c1fdc (+   0) 700c1fec   3649:w&gt;Terminal <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">1_253_stack at 0x70082000</A> +
+ 0x3ffec
+ kdebug&gt;
+ }}}
+
+ Let me know what else you need please.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4343#comment:3">http://dev.haiku-os.org/ticket/4343#comment:3</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="020163.html">[Haiku-bugs] [Haiku] #4343: Debugger's console output frequently deadlocks Terminal
+</A></li>
+	<LI>Next message: <A HREF="020182.html">[Haiku-bugs] [Haiku] #4343: Debugger's console output frequently deadlocks Terminal
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20178">[ date ]</a>
+              <a href="thread.html#20178">[ thread ]</a>
+              <a href="subject.html#20178">[ subject ]</a>
+              <a href="author.html#20178">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

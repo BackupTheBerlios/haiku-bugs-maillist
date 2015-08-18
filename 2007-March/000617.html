@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1075: Wrong/Incomplete Data Read from Disk
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231075%3A%20Wrong/Incomplete%20Data%20Read%20from%20Disk&In-Reply-To=%3C043.2fd78fc5daf071a35069a4e33b3f0661%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000616.html">
+   <LINK REL="Next"  HREF="000643.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1075: Wrong/Incomplete Data Read from Disk</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231075%3A%20Wrong/Incomplete%20Data%20Read%20from%20Disk&In-Reply-To=%3C043.2fd78fc5daf071a35069a4e33b3f0661%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1075: Wrong/Incomplete Data Read from Disk">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Mar  3 10:00:08 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000616.html">[Haiku-bugs] [Haiku] #1045: USB isochronous streams
+</A></li>
+        <LI>Next message: <A HREF="000643.html">[Haiku-bugs] [Haiku] #1075: Wrong/Incomplete Data Read from Disk
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#617">[ date ]</a>
+              <a href="thread.html#617">[ thread ]</a>
+              <a href="subject.html#617">[ subject ]</a>
+              <a href="author.html#617">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1075: Wrong/Incomplete Data Read from Disk
+--------------------------+-------------------------------------------------
+ Reporter:  bonefish      |       Owner:  axeld         
+     Type:  bug           |      Status:  new           
+ Priority:  normal        |   Milestone:  R1            
+Component:  Drivers/Disk  |     Version:  R1 development
+ Platform:  All           |  
+--------------------------+-------------------------------------------------
+ VMWare, 1 CPU, 256 MB RAM, 100 MB Haiku image (r20309) as IDE 0:0, 100 MB
+ ReiserFS image as IDE 0:1, CD ROM IDE 1:0,...
+
+ When trying to mount the ReiserFS volume (through UserlandFS)
+ readv_pos()/read_pos() retrieve incorrect data from the device for one of
+ the blocks. I've traced the read requests to scsi_dsk:das_read() where
+ they look OK. I dumped the read block in block_io:block_io_read() (io.c)
+ showing the beginning reflect the actual data stored on disk, but the
+ remainder is zero'd out. Of the two attempts to read the block in question
+ the second one returned more of the correct data. An md5sum over the
+ device returned the correct checksum, though.
+
+ Attached is the part of the serial debug output showing the dumped block.
+ The second attachment shows a dump of the block how it should look like.
+
+ For testing ReiserFS via UserlandFS add the following to you
+ UserBuildConfig:
+
+ {{{
+ # UserlandFS kernel add-on, server, and BeOS FS interface lib
+ AddFilesToHaikuImage beos system add-ons kernel file_systems : userlandfs
+ ;
+ AddFilesToHaikuImage beos system servers : UserlandFSServer ;
+ AddFilesToHaikuImage beos system lib : libuserlandfs_beos_kernel.so ;
+
+ # settings file
+ local ufsSettings = &lt;userlandfs!settings&gt;userlandfs ;
+ SEARCH on $(ufsSettings)
+         = [ FDirName $(HAIKU_TOP) src add-ons kernel file_systems
+ userlandfs ] ;
+ AddFilesToHaikuImage home config settings kernel drivers : $(ufsSettings)
+ ;
+
+ # ReiserFS
+ AddFilesToHaikuImage home config add-ons userlandfs : &lt;userland&gt;reiserfs ;
+ }}}
+
+ When Haiku has booted start the UserlandFSServer in one Terminal:
+
+ {{{
+ /system/servers/UserlandFSServer
+ }}}
+
+ and mount the volume in another one:
+
+ {{{
+ mkdir /mnt
+ mount -t userlandfs -p reiserfs /dev/disk/ata/0/slave/raw /mnt
+ }}}
+
+ I've uploaded my ReiserFS test image to:
+
+ <A HREF="http://cs.tu-berlin.de/~bonefish/private/haiku_reiserfs_test_image.bz2">http://cs.tu-berlin.de/~bonefish/private/haiku_reiserfs_test_image.bz2</A>
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1075">http://dev.haiku-os.org/ticket/1075</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000616.html">[Haiku-bugs] [Haiku] #1045: USB isochronous streams
+</A></li>
+	<LI>Next message: <A HREF="000643.html">[Haiku-bugs] [Haiku] #1075: Wrong/Incomplete Data Read from Disk
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#617">[ date ]</a>
+              <a href="thread.html#617">[ thread ]</a>
+              <a href="subject.html#617">[ subject ]</a>
+              <a href="author.html#617">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

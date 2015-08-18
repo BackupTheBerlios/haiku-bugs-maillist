@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4900: MediaPlayer crash with LLTS-Interview	mp3
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234900%3A%20MediaPlayer%20crash%20with%20LLTS-Interview%0A%09mp3&In-Reply-To=%3C044.029e31755ba8e9bd15f5df93c4c32a78%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="023480.html">
+   <LINK REL="Next"  HREF="023470.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4900: MediaPlayer crash with LLTS-Interview	mp3</H1>
+    <B>humdinger</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234900%3A%20MediaPlayer%20crash%20with%20LLTS-Interview%0A%09mp3&In-Reply-To=%3C044.029e31755ba8e9bd15f5df93c4c32a78%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4900: MediaPlayer crash with LLTS-Interview	mp3">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Nov  5 10:18:22 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="023480.html">[Haiku-bugs] [Haiku] #4899: Misreported Processor Model
+</A></li>
+        <LI>Next message: <A HREF="023470.html">[Haiku-bugs] [Haiku] #4901: Block notifier/writer KDL'es while checkin out Webkit source code on a USB stick BFS formatted
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#23468">[ date ]</a>
+              <a href="thread.html#23468">[ thread ]</a>
+              <a href="subject.html#23468">[ subject ]</a>
+              <a href="author.html#23468">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4900: MediaPlayer crash with LLTS-Interview mp3
+--------------------------------------+-------------------------------------
+ Reporter:  humdinger                 |       Owner:  marcusoverhagen
+     Type:  bug                       |      Status:  new            
+ Priority:  normal                    |   Milestone:  R1             
+Component:  Applications/MediaPlayer  |     Version:  R1/Development 
+Blockedby:                            |    Platform:  All            
+ Blocking:                            |  
+--------------------------------------+-------------------------------------
+ This is r33755.
+
+ Playing the
+ [<A HREF="http://feedproxy.google.com/~r/TheLinuxLinkTechShowMp3Feed/~3/lLk06bqbhsw/tllts_326-11-04-09.mp3">http://feedproxy.google.com/~r/TheLinuxLinkTechShowMp3Feed/~3/lLk06bqbhsw/tllts_326-11-04-09.mp3</A>
+ The Linux Link Tech Show MP3 interview with Ryan and Joe] (29mb) results
+ in a crash after a few seconds. The alternative
+ [<A HREF="http://feedproxy.google.com/~r/TheLinuxLinkTechShowOgg-">http://feedproxy.google.com/~r/TheLinuxLinkTechShowOgg-</A>
+ vorbisFeed/~3/ewXB73qjHgo/tllts_326-11-04-09.ogg OGG] (73mb) works BTW.
+ Backtrace:
+
+ {{{
+ [Switching to team /boot/system/apps/MediaPlayer (11311) thread
+ MediaPlayer Audio Ou control (11324)]
+ 0x009ab56b in getbits () from /boot/system/add-
+ ons/media/plugins/mp3_decoder
+ (gdb) bt
+ #0  0x009ab56b in getbits ()
+    from /boot/system/add-ons/media/plugins/mp3_decoder
+ #1  0x009abeca in I_step_two ()
+    from /boot/system/add-ons/media/plugins/mp3_decoder
+ #2  0x009ac44e in do_layer1 ()
+    from /boot/system/add-ons/media/plugins/mp3_decoder
+ #3  0x009abccc in decodeMP3 ()
+    from /boot/system/add-ons/media/plugins/mp3_decoder
+ #4  0x009aad3a in mp3Decoder::DecodeNextChunk ()
+    from /boot/system/add-ons/media/plugins/mp3_decoder
+ #5  0x009aaea5 in mp3Decoder::Decode ()
+    from /boot/system/add-ons/media/plugins/mp3_decoder
+ #6  0x005353e5 in BMediaTrack::ReadFrames () from
+ /boot/system/lib/libmedia.so
+ #7  0x005354a8 in BMediaTrack::ReadFrames () from
+ /boot/system/lib/libmedia.so
+ #8  0x00258ebd in MediaTrackAudioSupplier::_ReadBuffer ()
+ #9  0x0025964e in MediaTrackAudioSupplier::_ReadUncachedFrames ()
+ #10 0x0025994f in MediaTrackAudioSupplier::Read ()
+ #11 0x0023f8bb in AudioFormatConverter::Read ()
+ #12 0x0023e9cc in AudioAdapter::Read ()
+ #13 0x002448d0 in AudioVolumeConverter::Read ()
+ #14 0x00243d3a in AudioResampler::Read ()
+ #15 0x0025b2d7 in ProxyAudioSupplier::GetFrames ()
+ #16 0x00241638 in AudioProducer::_FillNextBuffer ()
+ #17 0x00241f9c in AudioProducer::HandleEvent ()
+ ---Type &lt;return&gt; to continue, or q &lt;return&gt; to quit---
+ #18 0x00526d11 in BMediaEventLooper::DispatchEvent ()
+    from /boot/system/lib/libmedia.so
+ #19 0x005273a1 in BMediaEventLooper::ControlLoop ()
+    from /boot/system/lib/libmedia.so
+ #20 0x00526c7f in BMediaEventLooper::_ControlThreadStart ()
+    from /boot/system/lib/libmedia.so
+ #21 0x008bf7bd in thread_entry () from /boot/system/lib/libroot.so
+ #22 0x70206fec in ?? ()
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4900">http://dev.haiku-os.org/ticket/4900</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="023480.html">[Haiku-bugs] [Haiku] #4899: Misreported Processor Model
+</A></li>
+	<LI>Next message: <A HREF="023470.html">[Haiku-bugs] [Haiku] #4901: Block notifier/writer KDL'es while checkin out Webkit source code on a USB stick BFS formatted
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#23468">[ date ]</a>
+              <a href="thread.html#23468">[ thread ]</a>
+              <a href="subject.html#23468">[ subject ]</a>
+              <a href="author.html#23468">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

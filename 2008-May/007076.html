@@ -1,0 +1,2840 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2188: Screen prefs. window shows wrong	options
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232188%3A%20Screen%20prefs.%20window%20shows%20wrong%0A%09options&In-Reply-To=%3C053.162e84f0f4d8cc979d380bf4820575dc%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007075.html">
+   <LINK REL="Next"  HREF="007077.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2188: Screen prefs. window shows wrong	options</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232188%3A%20Screen%20prefs.%20window%20shows%20wrong%0A%09options&In-Reply-To=%3C053.162e84f0f4d8cc979d380bf4820575dc%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2188: Screen prefs. window shows wrong	options">trac at haiku-os.org
+       </A><BR>
+    <I>Thu May  1 23:25:07 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007075.html">[Haiku-bugs] [Haiku] #2188: Screen prefs. window shows wrong	options
+</A></li>
+        <LI>Next message: <A HREF="007077.html">[Haiku-bugs] [Haiku] #2188: Screen prefs. window shows wrong	options
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7076">[ date ]</a>
+              <a href="thread.html#7076">[ thread ]</a>
+              <a href="subject.html#7076">[ subject ]</a>
+              <a href="author.html#7076">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2188: Screen prefs. window shows wrong options
+----------------------------------------+-----------------------------------
+  Reporter:  meanwhile                  |       Owner:  axeld         
+      Type:  bug                        |      Status:  new           
+  Priority:  normal                     |   Milestone:  R1            
+ Component:  Drivers/Graphics/NeoMagic  |     Version:  R1 development
+Resolution:                             |    Platform:  All           
+----------------------------------------+-----------------------------------
+Comment (by meanwhile):
+
+ Here we go:
+ KERN: APM version 1.2 available, flags 3.
+ KERN: smp_acpi_probe: entry base 0x9fc00, limit 0xa0000
+ KERN: smp_acpi_probe: entry base 0xf0000, limit 0x100000
+ KERN: smp_acpi_probe: found ACPI RSDP signature at 0x000f6d00
+ KERN: smp: using ACPI to detect MP configuration
+ KERN: smp: found rsdp at 0x000f6d00 oem id: PTLTD
+ KERN: smp: rsdp points to rsdt at 0x13ffac85
+ KERN: smp: searching 2 entries for APIC information
+ KERN: smp: skipping uninteresting header 'FACP'
+ KERN: smp: skipping uninteresting header 'BOOT'
+ KERN: smp_mp_probe: entry base 0x9fc00, limit 0xa0000
+ KERN: smp_mp_probe: entry base 0xf0000, limit 0x100000
+ KERN: VESA version = 2.0
+ KERN: oem string: MagicMedia 256AV  48K
+ KERN: EDID1: 4f
+ KERN: EDID2: ebx 0
+ KERN: Welcome to the Haiku boot loader!
+ KERN: number of drives: 1
+ KERN: add_partitions_for(0x00105190, mountFS = no)
+ KERN: add_partitions_for(fd = 0, mountFS = no)
+ KERN: 0x001052e4 Partition::Partition
+ KERN: 0x001052e4 Partition::Scan()
+ KERN: check for partitioning_system: Amiga Partition Map
+ KERN: check for partitioning_system: EFI GUID Partition Map
+ KERN: check for partitioning_system: Intel Partition Map
+ KERN: intel: pm_identify_partition(1, 1069796: 0, 10056130560, 512)
+ KERN: Partition::SetTo(): active: 80
+ KERN: Partition::SetTo(): active: 0
+ Last message repeated 9 times
+ KERN:   priority: 810
+ KERN: check for partitioning_system: Intel Extended Partition
+ KERN: check for partitioning_system: Apple Partition Map
+ KERN: intel: pm_scan_partition(1, 1069796: 0, 10056130560, 512)
+ KERN: 0x00105438 Partition::Partition
+ KERN: 0x001052e4 Partition::AddChild 0x00105438
+ KERN: 0x00105438 Partition::SetParent 0x001052e4
+ KERN: new child partition!
+ KERN: 0x001054ec Partition::Partition
+ KERN: 0x001052e4 Partition::AddChild 0x001054ec
+ KERN: 0x001054ec Partition::SetParent 0x001052e4
+ KERN: new child partition!
+ KERN: 0x001055a0 Partition::Partition
+ KERN: 0x001052e4 Partition::AddChild 0x001055a0
+ KERN: 0x001055a0 Partition::SetParent 0x001052e4
+ KERN: new child partition!
+ KERN: 0x001052e4 Partition::Scan: *** scan child 0x00105438 (start =
+ 32256, size = 98671104, parent = 0x001052e4)!
+ KERN: 0x00105438 Partition::Scan()
+ KERN: check for partitioning_system: Amiga Partition Map
+ KERN: check for partitioning_system: EFI GUID Partition Map
+ KERN: check for partitioning_system: Intel Partition Map
+ KERN: intel: pm_identify_partition(2, 1070136: 32256, 98671104, 512)
+ KERN: Partition::SetTo(): active: c3
+ KERN: intel: _ParsePrimary(): partition 0: bad location, ignoring
+ KERN: Partition::SetTo(): active: ad
+ KERN: intel: _ParsePrimary(): partition 1: bad location, ignoring
+ KERN: Partition::SetTo(): active: 69
+ KERN: intel: _ParsePrimary(): partition 2: bad location, ignoring
+ KERN: Partition::SetTo(): active: 79
+ KERN: intel: _ParsePrimary(): partition 3: bad location, ignoring
+ KERN:   priority: 100
+ KERN: check for partitioning_system: Intel Extended Partition
+ KERN: intel: ep_identify_partition(2, 32256, 98671104, 512)
+ KERN: check for partitioning_system: Apple Partition Map
+ KERN: 0x001052e4 Partition::Scan: *** scan child 0x001054ec (start =
+ 98703360, size = 254983680, parent = 0x001052e4)!
+ KERN: 0x001054ec Partition::Scan()
+ KERN: check for partitioning_system: Amiga Partition Map
+ KERN: check for partitioning_system: EFI GUID Partition Map
+ KERN: check for partitioning_system: Intel Partition Map
+ KERN: intel: pm_identify_partition(2, 1070316: 98703360, 254983680, 512)
+ KERN: Partition::SetTo(): active: c3
+ KERN: intel: _ParsePrimary(): partition 0: bad location, ignoring
+ KERN: Partition::SetTo(): active: ad
+ KERN: intel: _ParsePrimary(): partition 1: bad location, ignoring
+ KERN: Partition::SetTo(): active: 69
+ KERN: intel: _ParsePrimary(): partition 2: bad location, ignoring
+ KERN: Partition::SetTo(): active: 79
+ KERN: intel: _ParsePrimary(): partition 3: bad location, ignoring
+ KERN:   priority: 100
+ KERN: check for partitioning_system: Intel Extended Partition
+ KERN: intel: ep_identify_partition(2, 98703360, 254983680, 512)
+ KERN: check for partitioning_system: Apple Partition Map
+ KERN: 0x001052e4 Partition::Scan: *** scan child 0x001055a0 (start =
+ 353687040, size = 9697605120, parent = 0x001052e4)!
+ KERN: 0x001055a0 Partition::Scan()
+ KERN: check for partitioning_system: Amiga Partition Map
+ KERN: check for partitioning_system: EFI GUID Partition Map
+ KERN: check for partitioning_system: Intel Partition Map
+ KERN:   priority: 949
+ KERN: initialize_commpage_syscall(): sysenter/sysexit supported
+ KERN: allocate_commpage_entry(3, 5) -&gt; 0xffff0100
+ KERN: allocate_commpage_entry(2, 12) -&gt; 0xffff0108
+ KERN: apm_init()
+ KERN:   code32: 0xf000, 0x4108, length 0xffff
+ KERN:   code16: 0xf000, length 0xffff
+ KERN:   data: 0x40, length 0xffff
+ KERN: heap_attach: attached to 0x90800000 - usable range 0x90803000 -
+ 0x90a00000
+ KERN: [35mahci:[0m ahci_get_supported_paths
+ KERN:   found root!!
+ KERN:   add module bus_managers/isa/root/device_v1 to list
+ KERN: PCI: pci_module_init
+ KERN: PCI: mechanism 1 controller found
+ KERN: PCI: [dom 0, bus  0] bus   0, device  0, function  0: vendor 8086,
+ device 7190, revision 03
+ KERN: PCI:   class_base 06, class_function 00, class_api 00
+ KERN: PCI:   vendor 8086: Intel Corporation
+ KERN: PCI:   device 7190: 440BX/ZX/DX - 82443BX/ZX/DX Host bridge
+ KERN: PCI:   info: Bridge (Host bridge)
+ KERN: PCI:   line_size 00, latency 40, header_type 00, BIST 00
+ KERN: PCI:   ROM base host 00000000, pci 00000000, size 00000000
+ KERN: PCI:   cardbus_CIS 00000000, subsystem_id 0000, subsystem_vendor_id
+ 0000
+ KERN: PCI:   interrupt_line 00, interrupt_pin 00, min_grant 00,
+ max_latency 00
+ KERN: PCI:   base reg 0: host f8000000, pci f8000000, size 04000000, flags
+ 08
+ KERN: PCI:   base reg 1: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 2: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 3: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 4: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 5: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   Capabilities: AGP
+ KERN: PCI: [dom 0, bus  0] bus   0, device  1, function  0: vendor 8086,
+ device 7191, revision 03
+ KERN: PCI:   class_base 06, class_function 04, class_api 00
+ KERN: PCI:   vendor 8086: Intel Corporation
+ KERN: PCI:   device 7191: 440BX/ZX/DX - 82443BX/ZX/DX AGP bridge
+ KERN: PCI:   info: Bridge (PCI bridge, Normal decode)
+ KERN: PCI:   line_size 00, latency 40, header_type 01, BIST 00
+ KERN: PCI:   subsystem_id 0000, subsystem_vendor_id 0000
+ KERN: PCI:   primary_bus 00, secondary_bus 01, subordinate_bus 01,
+ secondary_latency 40
+ KERN: PCI:   io_base_upper_16  0000, io_base  f0
+ KERN: PCI:   io_limit_upper_16 0000, io_limit 00
+ KERN: PCI:   memory_base f420, memory_limit f470
+ KERN: PCI:   prefetchable_memory_base_upper32  00000000,
+ prefetchable_memory_base  f500
+ KERN: PCI:   prefetchable_memory_limit_upper32 00000000,
+ prefetchable_memory_limit f5f0
+ KERN: PCI:   bridge_control 8c, secondary_status a2a0
+ KERN: PCI:   interrupt_line 00, interrupt_pin 00
+ KERN: PCI:   ROM base host 00000000, pci 00000000, size ??
+ KERN: PCI:   base reg 0: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 1: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   Capabilities: (not supported)
+ KERN: PCI: [dom 0, bus  1] bus   1, device  0, function  0: vendor 10c8,
+ device 0005, revision 20
+ KERN: PCI:   class_base 03, class_function 00, class_api 00
+ KERN: PCI:   vendor 10c8: Neomagic Corporation
+ KERN: PCI:   device 0005: ThinkPad 570
+ KERN: PCI:   info: Display controller (VGA compatible controller, VGA)
+ KERN: PCI:   line_size 00, latency 80, header_type 00, BIST 00
+ KERN: PCI:   ROM base host 00000000, pci 00000000, size 00000000
+ KERN: PCI:   cardbus_CIS 00000000, subsystem_id 00dd, subsystem_vendor_id
+ 1014
+ KERN: PCI:   interrupt_line 0b, interrupt_pin 01, min_grant 10,
+ max_latency ff
+ KERN: PCI:   base reg 0: host f5000000, pci f5000000, size 01000000, flags
+ 08
+ KERN: PCI:   base reg 1: host f4400000, pci f4400000, size 00400000, flags
+ 00
+ KERN: PCI:   base reg 2: host f4200000, pci f4200000, size 00100000, flags
+ 00
+ KERN: PCI:   base reg 3: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 4: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 5: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   Capabilities: PM
+ KERN: PCI: [dom 0, bus  0] bus   0, device  2, function  0: vendor 104c,
+ device ac1b, revision 03
+ KERN: PCI:   class_base 06, class_function 07, class_api 00
+ KERN: PCI:   vendor 104c: Texas Instruments
+ KERN: PCI:   device ac1b: PCI1450
+ KERN: PCI:   info: Bridge (CardBus bridge)
+ KERN: PCI:   line_size 08, latency 40, header_type 82, BIST 00
+ KERN: PCI:   subsystem_id 0130, subsystem_vendor_id 1014
+ KERN: PCI:   primary_bus 00, secondary_bus 07, subordinate_bus 08,
+ secondary_latency b0
+ KERN: PCI:   bridge_controKERN: l c0, secondary_status 0200
+ KERN: PCI:   memory_base_upper32  00000000, memory_base  00000000
+ KERN: PCI:   memory_limit_upper32 00000000, memory_limit 00000000
+ KERN: PCI:   io_base_upper32  00000000, io_base  00000000
+ KERN: PCI:   io_limit_upper32 00000000, io_limit 00000000
+ KERN: PCI:   Capabilities: PM
+ KERN: PCI: [dom 0, bus  0] bus   0, device  2, function  1: vendor 104c,
+ device ac1b, revision 03
+ KERN: PCI:   class_base 06, class_function 07, class_api 00
+ KERN: PCI:   vendor 104c: Texas Instruments
+ KERN: PCI:   device ac1b: PCI1450
+ KERN: PCI:   info: Bridge (CardBus bridge)
+ KERN: PCI:   line_size 08, latency 40, header_type 82, BIST 00
+ KERN: PCI:   subsystem_id 0130, subsystem_vendor_id 1014
+ KERN: PCI:   primary_bus 00, secondary_bus 09, subordinate_bus 0a,
+ secondary_latency b0
+ KERN: PCI:   bridge_control c0, secondary_status 0200
+ KERN: PCI:   memory_base_upper32  00000000, memory_base  00000000
+ KERN: PCI:   memory_limit_upper32 00000000, memory_limit 00000000
+ KERN: PCI:   io_base_upper32  00000000, io_base  00000000
+ KERN: PCI:   io_limit_upper32 00000000, io_limit 00000000
+ KERN: PCI:   Capabilities: PM
+ KERN: PCI: [dom 0, bus  0] bus   0, device  5, function  0: vendor 1013,
+ device 6003, revision 01
+ KERN: PCI:   class_base 04, class_function 01, class_api 00
+ KERN: PCI:   vendor 1013: Cirrus Logic
+ KERN: PCI:   device 6003: CS 4614/22/24/30 [CrystalClear SoundFusion Audio
+ Accelerator]
+ KERN: PCI:   info: Multimedia controller (Multimedia audio controller)
+ KERN: PCI:   line_size 00, latency 40, header_type 00, BIST 00
+ KERN: PCI:   ROM base host 00000000, pci 00000000, size 00000000
+ KERN: PCI:   cardbus_CIS 00000000, subsystem_id 0132, subsystem_vendor_id
+ 1014
+ KERN: PCI:   interrupt_line 0b, interrupt_pin 01, min_grant 04,
+ max_latency 18
+ KERN: PCI:   base reg 0: host f4100000, pci f4100000, size 00001000, flags
+ 00
+ KERN: PCI:   base reg 1: host f4000000, pci f4000000, size 00100000, flags
+ 00
+ KERN: PCI:   base reg 2: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 3: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 4: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 5: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   Capabilities: PM
+ KERN: PCI: [dom 0, bus  0] bus   0, device  6, function  0: vendor 8086,
+ device 7110, revision 02
+ KERN: PCI:   class_base 06, class_function 80, class_api 00
+ KERN: PCI:   vendor 8086: Intel Corporation
+ KERN: PCI:   device 7110: 82371AB/EB/MB PIIX4 ISA
+ KERN: PCI:   info: Bridge
+ KERN: PCI:   line_size 00, latency 00, header_type 80, BIST 00
+ KERN: PCI:   ROM base host 00000000, pci 00000000, size 00000000
+ KERN: PCI:   cardbus_CIS 00000000, subsystem_id 0000, subsystem_vendor_id
+ 0000
+ KERN: PCI:   interrupt_line 00, interrupt_pin 00, min_grant 00,
+ max_latency 00
+ KERN: PCI:   base reg 0: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 1: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 2: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 3: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 4: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 5: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   Capabilities: (not supported)
+ KERN: PCI: [dom 0, bus  0] bus   0, device  6, function  1: vendor 8086,
+ device 7111, revision 01
+ KERN: PCI:   class_base 01, class_function 01, class_api 80
+ KERN: PCI:   vendor 8086: Intel Corporation
+ KERN: PCI:   device 7111: 82371AB/EB/MB PIIX4 IDE
+ KERN: PCI:   info: Mass storage controller (IDE interface)
+ KERN: PCI:   line_size 00, latency 40, header_type 00, BIST 00
+ KERN: PCI:   ROM base host 00000000, pci 00000000, size 00000000
+ KERN: PCI:   cardbus_CIS 00000000, subsystem_id 0000, subsystem_vendor_id
+ 0000
+ KERN: PCI:   interrupt_line 00, interrupt_pin 00, min_grant 00,
+ max_latency 00
+ KERN: PCI:   base reg 0: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 1: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 2: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 3: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 4: host 00001800, pci 00001800, size 00000010, flags
+ 01
+ KERN: PCI:   base reg 5: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   Capabilities: (not supported)
+ KERN: PCI: [dom 0, bus  0] bus   0, device  6, function  2: vendor 8086,
+ device 7112, revision 01
+ KERN: PCI:   class_base 0c, class_function 03, class_api 00
+ KERN: PCI:   vendor 8086: Intel Corporation
+ KERN: PCI:   device 7112: 82371AB/EB/MB PIIX4 USB
+ KERN: PCI:   info: Serial bus controller (USB Controller, UHCI)
+ KERN: PCI:   line_size 00, latency 40, header_type 00, BIST 00
+ KERN: PCI:   ROM base host 00000000, pci 00000000, size 00000000
+ KERN: PCI:   cardbus_CIS 00000000, subsystem_id 0000, subsystem_vendor_id
+ 0000
+ KERN: PCI:   interrupt_line 0b, interrupt_pin 04, min_grant 00,
+ max_latency 00
+ KERN: PCI:   base reg 0: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 1: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 2: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 3: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 4: host 00001820, pci 00001820, size 00000020, flags
+ 01
+ KERN: PCI:   base reg 5: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   Capabilities: (not supported)
+ KERN: PCI: [dom 0, bus  0] bus   0, device  6, function  3: vendor 8086,
+ device 7113, revision 02
+ KERN: PCI:   class_base 06, class_function 80, class_api 00
+ KERN: PCI:   vendor 8086: Intel Corporation
+ KERN: PCI:   device 7113: 82371AB/EB/MB PIIX4 ACPI
+ KERN: PCI:   info: Bridge
+ KERN: PCI:   line_size 00, latency 00, header_type 00, BIST 00
+ KERN: PCI:   ROM base host 00000000, pci 00000000, size 00000000
+ KERN: PCI:   cardbus_CIS 00000000, subsystem_id 0000, subsystem_vendor_id
+ 0000
+ KERN: PCI:   interrupt_line 00, interrupt_pin 00, min_grant 00,
+ max_latency 00
+ KERN: PCI:   base reg 0: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 1: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 2: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 3: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 4: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 5: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   Capabilities: (not supported)
+ KERN: PCI: [dom 0, bus  0] bus   0, device  7, function  0: vendor 11c1,
+ device 0448, revision 01
+ KERN: PCI:   class_base 07, class_function 80, class_api 00
+ KERN: PCI:   vendor 11c1: Agere Systems
+ KERN: PCI:   device 0448: Lucent Win Modem
+ KERN: PCI:   info: Communication controller
+ KERN: PCI:   line_size 00, latency 00, header_type 00, BIST 00
+ KERN: PCI:   ROM base host 00000000, pci 00000000, size 00000000
+ KERN: PCI:   cardbus_CIS 00000040, subsystem_id 0131, subsystem_vendor_id
+ 1014
+ KERN: PCI:   interrupt_line 0b, interrupt_pin 01, min_grant fc,
+ max_latency 0e
+ KERN: PCI:   base reg 0: host f4101000, pci f4101000, size 00000100, flags
+ 00
+ KERN: PCI:   base reg 1: host 00001810, pci 00001810, size 00000010, flags
+ 09
+ KERN: PCI:   base reg 2: host 00002000, pci 00002000, size 00000100, flags
+ 01
+ KERN: PCI:   base reg 3: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 4: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 5: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   Capabilities: PM
+ KERN:   found root!!
+ KERN:   add module bus_managers/pci/root/device_v1 to list
+ KERN: has connection? no
+ KERN: module: bus_managers/isa/root/device_v1, support: 1
+ KERN: module: bus_managers/pci/root/device_v1, support: 1
+ KERN: register rest: bus_managers/isa/root/device_v1
+ KERN: free bus_managers/isa/root/device_v1
+ KERN: register rest: bus_managers/pci/root/device_v1
+ KERN: free bus_managers/pci/root/device_v1
+ KERN: get_boot_partitions(): boot volume message:
+ KERN: field: &quot;booted from image&quot;, type: BOOL (0x424f4f4c):
+ KERN:   [ 0] false
+ KERN: field: &quot;partition offset&quot;, type: LLNG (0x4c4c4e47):
+ KERN:   [ 0] 7057322496 (0x1a4a63200)
+ KERN: field: &quot;boot method&quot;, type: LONG (0x4c4f4e47):
+ KERN:   [ 0] 0 (0x0)
+ KERN: field: &quot;boot drive number&quot;, type: LLNG (0x4c4c4e47):
+ KERN:   [ 0] 128 (0x80)
+ KERN: field: &quot;disk identifier&quot;, type: RAWT (0x52415754):
+ KERN:   [ 0] data: &quot;0x805e89bc&quot;, 80 bytes
+ KERN: get_boot_partitions(): boot method type: 0
+ KERN: partitioning system: partitioning_systems/intel/extended/v1
+ KERN:
+ KDiskDeviceManager::_AddDiskSystem(partitioning_systems/intel/extended/v1)
+ KERN: KDiskSystem::Load(): partitioning_systems/intel/extended/v1 -&gt; 1
+ KERN: intel: ep_std_ops(0x1)
+ KERN: KDiskSystem::Unload(): partitioning_systems/intel/extended/v1 -&gt; 0
+ KERN: intel: ep_std_ops(0x2)
+ KERN: KKERN: DiskDeviceManager::_AddDiskSystem() done: No error
+ KERN: partitioning system: partitioning_systems/intel/map/v1
+ KERN:
+ KDiskDeviceManager::_AddDiskSystem(partitioning_systems/intel/map/v1)
+ KERN: KDiskSystem::Load(): partitioning_systems/intel/map/v1 -&gt; 1
+ KERN: intel: pm_std_ops(0x1)
+ KERN: KDiskSystem::Unload(): partitioning_systems/intel/map/v1 -&gt; 0
+ KERN: intel: pm_std_ops(0x2)
+ KERN: KDiskDeviceManager::_AddDiskSystem() done: No error
+ KERN: file system: file_systems/bfs/v1
+ KERN: KDiskDeviceManager::_AddDiskSystem(file_systems/bfs/v1)
+ KERN: KDiskSystem::Load(): file_systems/bfs/v1 -&gt; 1
+ KERN: KDiskSystem::Unload(): file_systems/bfs/v1 -&gt; 0
+ KERN: KDiskDeviceManager::_AddDiskSystem() done: No error
+ KERN: file system: file_systems/devfs/v1
+ KERN: KDiskDeviceManager::_AddDiskSystem(file_systems/devfs/v1)
+ KERN: KDiskSystem::Load(): file_systems/devfs/v1 -&gt; 1
+ KERN: KDiskSystem::Unload(): file_systems/devfs/v1 -&gt; 0
+ KERN: KDiskDeviceManager::_AddDiskSystem() done: No error
+ KERN: file system: file_systems/rootfs/v1
+ KERN: KDiskDeviceManager::_AddDiskSystem(file_systems/rootfs/v1)
+ KERN: KDiskSystem::Load(): file_systems/rootfs/v1 -&gt; 1
+ KERN: KDiskSystem::Unload(): file_systems/rootfs/v1 -&gt; 0
+ KERN: KDiskDeviceManager::_AddDiskSystem() done: No error
+ KERN: number of disk systems: 5
+ KERN: KDiskDeviceManager::_Scan(/dev/disk)
+ KERN: [35mahci:[0m ahci_get_supported_paths
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/scsi/ahci/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/ide/legacy_sata/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/ide/silicon_image_3112/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/ide!!
+ KERN:   add module busses/ide/generic_ide_pci/device_v1 to list
+ KERN: has connection? yes
+ KERN: [35mahci:[0m ahci_supports_device
+ KERN: module: busses/scsi/ahci/device_v1, support: 0
+ KERN: module: busses/ide/legacy_sata/device_v1, support: 0
+ KERN: module: busses/ide/silicon_image_3112/device_v1, support: 0
+ KERN: module: busses/ide/generic_ide_pci/device_v1, support: 0
+ KERN: free busses/scsi/ahci/device_v1
+ KERN: free busses/ide/legacy_sata/device_v1
+ KERN: free busses/ide/silicon_image_3112/device_v1
+ KERN: free busses/ide/generic_ide_pci/device_v1
+ KERN: [35mahci:[0m ahci_get_supported_paths
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/scsi/ahci/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/ide/legacy_sata/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/ide/silicon_image_3112/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/ide!!
+ KERN:   add module busses/ide/generic_ide_pci/device_v1 to list
+ KERN: has connection? yes
+ KERN: [35mahci:[0m ahci_supports_device
+ KERN: module: busses/scsi/ahci/device_v1, support: 0
+ KERN: module: busses/ide/legacy_sata/device_v1, support: 0
+ KERN: module: busses/ide/silicon_image_3112/device_v1, support: 0
+ KERN: module: busses/ide/generic_ide_pci/device_v1, support: 0
+ KERN: free busses/scsi/ahci/device_v1
+ KERN: free busses/ide/legacy_sata/device_v1
+ KERN: free busses/ide/silicon_image_3112/device_v1
+ KERN: free busses/ide/generic_ide_pci/device_v1
+ KERN: [35mahci:[0m ahci_get_supported_paths
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/scsi/ahci/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/ide/legacy_sata/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/ide/silicon_image_3112/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/ide!!
+ KERN:   add module busses/ide/generic_ide_pci/device_v1 to list
+ KERN: has connection? yes
+ KERN: [35mahci:[0m ahci_supports_device
+ KERN: module: busses/scsi/ahci/device_v1, support: 0
+ KERN: module: busses/ide/legacy_sata/device_v1, support: 0
+ KERN: module: busses/ide/silicon_image_3112/device_v1, support: 0
+ KERN: module: busses/ide/generic_ide_pci/device_v1, support: 0
+ KERN: free busses/scsi/ahci/device_v1
+ KERN: free busses/ide/legacy_sata/device_v1
+ KERN: free busses/ide/silicon_image_3112/device_v1
+ KERN: free busses/ide/generic_ide_pci/device_v1
+ KERN: [35mahci:[0m ahci_get_supported_paths
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/scsi/ahci/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/ide/legacy_sata/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/ide/silicon_image_3112/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/ide!!
+ KERN:   add module busses/ide/generic_ide_pci/device_v1 to list
+ KERN: has connection? yes
+ KERN: [35mahci:[0m ahci_supports_device
+ KERN: module: busses/scsi/ahci/device_v1, support: 0
+ KERN: module: busses/ide/legacy_sata/device_v1, support: 0
+ KERN: module: busses/ide/silicon_image_3112/device_v1, support: 0
+ KERN: module: busses/ide/generic_ide_pci/device_v1, support: 0.3
+ KERN: PCI-IDE: Controller in legacy mode: cmd 0x1f0, ctrl 0x3f6, irq 14
+ KERN: PCI-IDE: init channel...
+ KERN: PCI-IDE: bus   0, device  6, function  1: vendor 8086, device 7111
+ KERN: PCI-IDE: channel index 0
+ KERN: PCI-IDE: bus master base 0x1800
+ KERN: PCI-IDE: init channel done
+ KERN: IDE: scan_device_worker: bus 0x90ad2100, device-number 0
+ KERN: IDE: create_device: bus 0x90ad2100, device-number 0
+ KERN: IDE: setup_device_links: bus 0x90ad2100, device 0x90ad0400
+ KERN: IDE: scan_device_int: device 0x90ad0400, atapi 0
+ KERN: IDE: scan_device_int: waiting 100ms...
+ KERN: IDE: scan_device_int: got a fast response
+ KERN: IDE: scan_device_int: device found
+ KERN: IDE: scan_device_worker: bus 0x90ad2100, device-number 1
+ KERN: IDE: create_device: bus 0x90ad2100, device-number 1
+ KERN: IDE: setup_device_links: bus 0x90ad2100, device 0x90ad0800
+ KERN: IDE: scan_device_int: device 0x90ad0800, atapi 0
+ KERN: IDE: scan_device_int: send_command failed
+ KERN: IDE: scan_device_int: device 0x90ad0800, atapi 1
+ KERN: IDE: scan_device_int: waiting 100ms...
+ KERN: IDE: scan_device_int: got a fast response
+ KERN: IDE: scan_device_int: device found
+ KERN: IDE: destroy_device: device 0x90ad0800
+ KERN: IDE: cleanup_device_links: device 0x90ad0800
+ KERN: IDE: scan_device_worker: bus 0x90ad2100, device-number 0
+ KERN: IDE: destroy_device: device 0x90ad0400
+ KERN: IDE: cleanup_device_links: device 0x90ad0400
+ KERN: IDE: create_device: bus 0x90ad2100, device-number 0
+ KERN: IDE: setup_device_links: bus 0x90ad2100, device 0x90ad0400
+ KERN: IDE: scan_device_int: device 0x90ad0400, atapi 0
+ KERN: IDE: scan_device_int: waiting 100ms...
+ KERN: IDE: scan_device_int: got a fast response
+ KERN: IDE: scan_device_int: device found
+ KERN: IDE: scan_device_worker: bus 0x90ad2100, device-number 1
+ KERN: IDE: create_device: bus 0x90ad2100, device-number 1
+ KERN: IDE: setup_device_links: bus 0x90ad2100, device 0x90ad0800
+ KERN: IDE: scan_device_int: device 0x90ad0800, atapi 0
+ KERN: IDE: scan_device_int: send_command failed
+ KERN: IDE: scan_device_int: device 0x90ad0800, atapi 1
+ KERN: IDE: scan_device_int: waiting 100ms...
+ KERN: IDE: scan_device_int: got a fast response
+ KERN: IDE: scan_device_int: device found
+ KERN: IDE: destroy_device: device 0x90ad0800
+ KERN: IDE: cleanup_device_links: device 0x90ad0800
+ KERN:   found scsi!!
+ KERN:   add module drivers/disk/scsi/scsi_dsk/device_v1 to list
+ KERN: [35mahci:[0m ahci_get_supported_paths
+ KERN:   found scsi!!
+ KERN:   add module drivers/disk/scsi/scsi_cd/device_v1 to list
+ KERN: has connection? yes
+ KERN: module: drivers/disk/scsi/scsi_dsk/device_v1, support: 0.6
+ KERN: module: drivers/disk/scsi/scsi_cd/device_v1, support: 0
+ KERN: tried best module: drivers/disk/scsi/scsi_dsk/device_v1: No error
+ KERN: free drivers/disk/scsi/scsi_cd/device_v1
+ KERN: PCI-IDE: Controller in legacy mode: cmd 0x170, ctrl 0x376, irq 15
+ KERN: PCI-IDE: init channel...
+ KERN: PCI-IDE: bus   0, device  6, function  1: vendor 8086, device 7111
+ KERN: PCI-IDE: channel index 1
+ KERN: PCI-IDE: bus master base 0x1808
+ KERN: PCI-IDE: init channel done
+ KERN: IDE: scan_device_worker: bus 0x90ad2300, device-number 0
+ KERN: IDE: create_device: bus 0x90ad2300, device-number 0
+ KERN: IDE: setup_device_links: bus 0x90ad2300, device 0x90ad0800
+ KERN: IDE: scan_device_int: device 0x90ad0800, atapi 0
+ KERN: IDE: scan_device_int: waiting 100ms...
+ KERN: IDE: scan_device_int: got a fast response
+ KERN: IDE: scan_device_int: error bit set - no device or wrong type
+ (status: 0x51)
+ KERN: IDE: scan_device_int: device 0x90ad0800, atapi 1
+ KERN: IDE: scan_device_int: waiting 100ms...
+ KERN: IDE: scan_device_int: got a fast response
+ KERN: IDE: scan_device_int: device found
+ KERN: IDE: scan_device_worker: bus 0x90ad2300, device-number 1
+ KERN: IDE: create_device: bus 0x90ad2300, device-number 1
+ KERN: IDE: setup_device_links: bus 0x90ad2300, device 0x90ad0c00
+ KERN: IDE: scan_device_int: device 0x90ad0c00, atapi 0
+ KERN: IDE: scan_device_int: send_command failed
+ KERN: IDE: scan_device_int: device 0x90ad0c00, atapi 1
+ KERN: IDE: scan_device_int: waiting 100ms...
+ KERN: IDE: scan_device_int: no fast response to inquiry
+ KERN: IDE: scan_device_int: status 0x01
+ KERN: IDE: scan_device_int: bKERN: usy bit not set after 100ms - probably
+ noone there
+ KERN: IDE: scan_device_int: aborting because busy bit not set
+ KERN: IDE: destroy_device: device 0x90ad0c00
+ KERN: IDE: cleanup_device_links: device 0x90ad0c00
+ KERN: IDE: scan_device_worker: bus 0x90ad2300, device-number 0
+ KERN: IDE: destroy_device: device 0x90ad0800
+ KERN: IDE: cleanup_device_links: device 0x90ad0800
+ KERN: IDE: create_device: bus 0x90ad2300, device-number 0
+ KERN: IDE: setup_device_links: bus 0x90ad2300, device 0x90ad0800
+ KERN: IDE: scan_device_int: device 0x90ad0800, atapi 0
+ KERN: IDE: scan_device_int: waiting 100ms...
+ KERN: IDE: scan_device_int: got a fast response
+ KERN: IDE: scan_device_int: error bit set - no device or wrong type
+ (status: 0x51)
+ KERN: IDE: scan_device_int: device 0x90ad0800, atapi 1
+ KERN: IDE: scan_device_int: waiting 100ms...
+ KERN: IDE: scan_device_int: got a fast response
+ KERN: IDE: scan_device_int: device found
+ KERN: IDE: scan_device_worker: bus 0x90ad2300, device-number 1
+ KERN: IDE: create_device: bus 0x90ad2300, device-number 1
+ KERN: IDE: setup_device_links: bus 0x90ad2300, device 0x90ad0c00
+ KERN: IDE: scan_device_int: device 0x90ad0c00, atapi 0
+ KERN: IDE: scan_device_int: send_command failed
+ KERN: IDE: scan_device_int: device 0x90ad0c00, atapi 1
+ KERN: IDE: scan_device_int: waiting 100ms...
+ KERN: IDE: scan_device_int: no fast response to inquiry
+ KERN: IDE: scan_device_int: status 0x01
+ KERN: IDE: scan_device_int: busy bit not set after 100ms - probably noone
+ there
+ KERN: IDE: scan_device_int: aborting because busy bit not set
+ KERN: IDE: destroy_device: device 0x90ad0c00
+ KERN: IDE: cleanup_device_links: device 0x90ad0c00
+ KERN:   found scsi!!
+ KERN:   add module drivers/disk/scsi/scsi_dsk/device_v1 to list
+ KERN: [35mahci:[0m ahci_get_supported_paths
+ KERN:   found scsi!!
+ KERN:   add module drivers/disk/scsi/scsi_cd/device_v1 to list
+ KERN: has connection? yes
+ KERN: module: drivers/disk/scsi/scsi_dsk/device_v1, support: 0
+ KERN: module: drivers/disk/scsi/scsi_cd/device_v1, support: 0.6
+ KERN: tried best module: drivers/disk/scsi/scsi_cd/device_v1: No error
+ KERN: free drivers/disk/scsi/scsi_dsk/device_v1
+ KERN: tried best module: busses/ide/generic_ide_pci/device_v1: No error
+ KERN: free busses/scsi/ahci/device_v1
+ KERN: free busses/ide/legacy_sata/device_v1
+ KERN: free busses/ide/silicon_image_3112/device_v1
+ KERN: [35mahci:[0m ahci_get_supported_paths
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/scsi/ahci/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/ide/legacy_sata/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/ide/silicon_image_3112/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/ide!!
+ KERN:   add module busses/ide/generic_ide_pci/device_v1 to list
+ KERN: has connection? yes
+ KERN: [35mahci:[0m ahci_supports_device
+ KERN: module: busses/scsi/ahci/device_v1, support: 0
+ KERN: module: busses/ide/legacy_sata/device_v1, support: 0
+ KERN: module: busses/ide/silicon_image_3112/device_v1, support: 0
+ KERN: module: busses/ide/generic_ide_pci/device_v1, support: 0
+ KERN: free busses/scsi/ahci/device_v1
+ KERN: free busses/ide/legacy_sata/device_v1
+ KERN: free busses/ide/silicon_image_3112/device_v1
+ KERN: free busses/ide/generic_ide_pci/device_v1
+ KERN: [35mahci:[0m ahci_get_supported_paths
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/scsi/ahci/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/ide/legacy_sata/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/ide/silicon_image_3112/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/ide!!
+ KERN:   add module busses/ide/generic_ide_pci/device_v1 to list
+ KERN: has connection? yes
+ KERN: [35mahci:[0m ahci_supports_device
+ KERN: module: busses/scsi/ahci/device_v1, support: 0
+ KERN: module: busses/ide/legacy_sata/device_v1, support: 0
+ KERN: module: busses/ide/silicon_image_3112/device_v1, support: 0
+ KERN: module: busses/ide/generic_ide_pci/device_v1, support: 0
+ KERN: free busses/scsi/ahci/device_v1
+ KERN: free busses/ide/legacy_sata/device_v1
+ KERN: free busses/ide/silicon_image_3112/device_v1
+ KERN: free busses/ide/generic_ide_pci/device_v1
+ KERN: [35mahci:[0m ahci_get_supported_paths
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/scsi/ahci/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/ide/legacy_sata/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/ide/silicon_image_3112/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/ide!!
+ KERN:   add module busses/ide/generic_ide_pci/device_v1 to list
+ KERN: has connection? yes
+ KERN: [35mahci:[0m ahci_supports_device
+ KERN: module: busses/scsi/ahci/device_v1, support: 0
+ KERN: module: busses/ide/legacy_sata/device_v1, support: 0
+ KERN: module: busses/ide/silicon_image_3112/device_v1, support: 0
+ KERN: module: busses/ide/generic_ide_pci/device_v1, support: 0
+ KERN: free busses/scsi/ahci/device_v1
+ KERN: free busses/ide/legacy_sata/device_v1
+ KERN: free busses/ide/silicon_image_3112/device_v1
+ KERN: free busses/ide/generic_ide_pci/device_v1
+ KERN: [35mahci:[0m ahci_get_supported_paths
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/scsi/ahci/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/ide/legacy_sata/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/ide/silicon_image_3112/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/ide!!
+ KERN:   add module busses/ide/generic_ide_pci/device_v1 to list
+ KERN: has connection? yes
+ KERN: [35mahci:[0m ahci_supports_device
+ KERN: module: busses/scsi/ahci/device_v1, support: 0
+ KERN: module: busses/ide/legacy_sata/device_v1, support: 0
+ KERN: module: busses/ide/silicon_image_3112/device_v1, support: 0
+ KERN: module: busses/ide/generic_ide_pci/device_v1, support: 0
+ KERN: free busses/scsi/ahci/device_v1
+ KERN: free busses/ide/legacy_sata/device_v1
+ KERN: free busses/ide/silicon_image_3112/device_v1
+ KERN: free busses/ide/generic_ide_pci/device_v1
+ KERN: [35mahci:[0m ahci_get_supported_paths
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/scsi/ahci/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/ide/legacy_sata/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/ide/silicon_image_3112/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/ide!!
+ KERN:   add module busses/ide/generic_ide_pci/device_v1 to list
+ KERN: has connection? yes
+ KERN: [35mahci:[0m ahci_supports_device
+ KERN: module: busses/scsi/ahci/device_v1, support: 0
+ KERN: module: busses/ide/legacy_sata/device_v1, support: 0
+ KERN: module: busses/ide/silicon_image_3112/device_v1, support: 0
+ KERN: module: busses/ide/generic_ide_pci/device_v1, support: 0
+ KERN: free busses/scsi/ahci/device_v1
+ KERN: free busses/ide/legacy_sata/device_v1
+ KERN: free busses/ide/silicon_image_3112/device_v1
+ KERN: free busses/ide/generic_ide_pci/device_v1
+ KERN: [35mahci:[0m ahci_get_supported_paths
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/scsi/ahci/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/ide/legacy_sata/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/ide/silicon_image_3112/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/ide!!
+ KERN:   add module busses/ide/generic_ide_pci/device_v1 to list
+ KERN: has connection? yes
+ KERN: [35mahci:[0m ahci_supports_device
+ KERN: module: busses/scsi/ahci/device_v1, support: 0
+ KERN: module: busses/ide/legacy_sata/device_v1, support: 0
+ KERN: module: busses/ide/silicon_image_3112/device_v1, support: 0
+ KERN: module: busses/ide/generic_ide_pci/device_v1, support: 0
+ KERN: free busses/scsi/ahci/device_v1
+ KERN: free busses/ide/legacy_sata/device_v1
+ KERN: free busses/ide/silicon_image_3112/device_v1
+ KERN: free busses/ide/generic_ide_pci/device_v1
+ KERN: [35mahci:[0m ahci_get_supported_paths
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/scsi/ahci/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/ide/legacy_sata/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/ide/silicon_image_3112/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/ide!!
+ KERN:   add module busses/ide/generic_ide_pci/device_v1 to list
+ KERN: has connection? yes
+ KERN: [35mahci:[0m ahci_supports_device
+ KERN: module: busses/scsi/ahci/device_v1, support: 0
+ KERN: module: busses/ide/legacy_sata/device_v1, support: 0
+ KERN: module: busses/ide/silicon_image_3112/device_v1, support: 0
+ KERN: module: busses/ide/generic_ide_pci/device_v1, support: 0
+ KERN: free busses/scsi/ahci/device_v1
+ KERN: free busses/ide/legacy_sata/device_v1
+ KERN: free busses/ide/silicon_image_3112/device_v1
+ KERN: free busses/ide/generic_ide_pci/device_v1
+ KERN: [35mahci:[0m ahci_get_supported_paths
+ KERN:   foundKERN:  isa!!
+ KERN:   found drivers/dev/disk/ide!!
+ KERN:   add module busses/ide/ide_isa/device_v1 to list
+ KERN: has connection? yes
+ KERN: module: busses/ide/ide_isa/device_v1, support: 0.6
+ KERN: ISA-IDE: can't acquire resources 0x1f0 and 0x3f6
+ KERN: ISA-IDE: can't acquire resources 0x170 and 0x376
+ KERN: tried best module: busses/ide/ide_isa/device_v1: No error
+ KERN: [35mahci:[0m ahci_get_supported_paths
+ KERN:   found isa!!
+ KERN:   found drivers/dev/disk/ide!!
+ KERN:   add module busses/ide/ide_isa/device_v1 to list
+ KERN: has connection? yes
+ KERN: module: busses/ide/ide_isa/device_v1, support: 0.6
+ KERN: ISA-IDE: can't acquire resources 0x1f0 and 0x3f6
+ KERN: ISA-IDE: can't acquire resources 0x170 and 0x376
+ KERN: tried best module: busses/ide/ide_isa/device_v1: No error
+ KERN: KDiskDeviceManager::_Scan(/dev/disk/ata)
+ KERN: [35mahci:[0m ahci_get_supported_paths
+ KERN:   found isa!!
+ KERN: has connection? yes
+ KERN: KDiskDeviceManager::_Scan(/dev/disk/ata/0)
+ KERN: [35mahci:[0m ahci_get_supported_paths
+ KERN:   found isa!!
+ KERN: has connection? yes
+ KERN: KDiskDeviceManager::_Scan(/dev/disk/ata/0/master)
+ KERN: [35mahci:[0m ahci_get_supported_paths
+ KERN:   found isa!!
+ KERN: has connection? yes
+ KERN: KDiskDeviceManager::_Scan(/dev/disk/ata/0/master/raw)
+ KERN:   found device: /dev/disk/ata/0/master/raw
+ KERN: KDiskDeviceManager::_Scan(/dev/disk/atapi)
+ KERN: [35mahci:[0m ahci_get_supported_paths
+ KERN:   found isa!!
+ KERN: has connection? yes
+ KERN: KDiskDeviceManager::_Scan(/dev/disk/atapi/1)
+ KERN: [35mahci:[0m ahci_get_supported_paths
+ KERN:   found isa!!
+ KERN: has connection? yes
+ KERN: KDiskDeviceManager::_Scan(/dev/disk/atapi/1/master)
+ KERN: [35mahci:[0m ahci_get_supported_paths
+ KERN:   found isa!!
+ KERN: has connection? yes
+ KERN: KDiskDeviceManager::_Scan(/dev/disk/atapi/1/master/raw)
+ KERN:   found device: /dev/disk/atapi/1/master/raw
+ KERN: KDiskDeviceManager::_ScanPartition(/dev/disk/ata/0/master/raw)
+ KERN: KDiskSystem::Load(): partitioning_systems/intel/extended/v1 -&gt; 1
+ KERN: intel: ep_std_ops(0x1)
+ KERN:   trying: partitioning_systems/intel/extended/v1
+ KERN:   returned: -1000/1000
+ KERN: KDiskSystem::Unload(): partitioning_systems/intel/extended/v1 -&gt; 0
+ KERN: intel: ep_std_ops(0x2)
+ KERN: KDiskSystem::Load(): partitioning_systems/intel/map/v1 -&gt; 1
+ KERN: intel: pm_std_ops(0x1)
+ KERN:   trying: partitioning_systems/intel/map/v1
+ KERN: intel: pm_identify_partition(0, 0: 0, 10056130560, 512)
+ KERN: Partition::SetTo(): active: 80
+ KERN: Partition::SetTo(): active: 0
+ KERN: Last message repeated 9 times.
+ KERN:   returned: 810/1000
+ KERN: KDiskSystem::Load(): file_systems/bfs/v1 -&gt; 1
+ KERN:   trying: file_systems/bfs/v1
+ KERN:   returned: -2147483648/1000
+ KERN: KDiskSystem::Unload(): file_systems/bfs/v1 -&gt; 0
+ KERN: KDiskSystem::Load(): file_systems/devfs/v1 -&gt; 1
+ KERN:   trying: file_systems/devfs/v1
+ KERN:   returned: -1000/1000
+ KERN: KDiskSystem::Unload(): file_systems/devfs/v1 -&gt; 0
+ KERN: KDiskSystem::Load(): file_systems/rootfs/v1 -&gt; 1
+ KERN:   trying: file_systems/rootfs/v1
+ KERN:   returned: -1000/1000
+ KERN: KDiskSystem::Unload(): file_systems/rootfs/v1 -&gt; 0
+ KERN:   scanning with: partitioning_systems/intel/map/v1
+ KERN: intel: pm_scan_partition(0, 0: 0, 10056130560, 512)
+ KERN: KDiskSystem::Load(): partitioning_systems/intel/map/v1 -&gt; 2
+ KERN: KDiskDeviceManager::_ScanPartition(/dev/disk/ata/0/master/0)
+ KERN: KDiskSystem::Load(): partitioning_systems/intel/extended/v1 -&gt; 1
+ KERN: intel: ep_std_ops(0x1)
+ KERN:   trying: partitioning_systems/intel/extended/v1
+ KERN: intel: ep_identify_partition(0, 32256, 98671104, 512)
+ KERN:   returned: -1000/1000
+ KERN: KDiskSystem::Unload(): partitioning_systems/intel/extended/v1 -&gt; 0
+ KERN: intel: ep_std_ops(0x2)
+ KERN: KDiskSystem::Load(): partitioning_systems/intel/map/v1 -&gt; 3
+ KERN:   trying: partitioning_systems/intel/map/v1
+ KERN: intel: pm_identify_partition(0, 2: 32256, 98671104, 512)
+ KERN: Partition::SetTo(): active: c3
+ KERN: intel: _ParsePrimary(): partition 0: bad location, ignoring
+ KERN: Partition::SetTo(): active: ad
+ KERN: intel: _ParsePrimary(): partition 1: bad location, ignoring
+ KERN: Partition::SetTo(): active: 69
+ KERN: intel: _ParsePrimary(): partition 2: bad location, ignoring
+ KERN: Partition::SetTo(): active: 79
+ KERN: intel: _ParsePrimary(): partition 3: bad location, ignoring
+ KERN:   returned: 100/1000
+ KERN: KDiskSystem::Load(): file_systems/bfs/v1 -&gt; 1
+ KERN:   trying: file_systems/bfs/v1
+ KERN:   returned: 800/1000
+ KERN: KDiskSystem::Unload(): partitioning_systems/intel/map/v1 -&gt; 2
+ KERN: KDiskSystem::Load(): file_systems/devfs/v1 -&gt; 1
+ KERN:   trying: file_systems/devfs/v1
+ KERN:   returned: -1000/1000
+ KERN: KDiskSystem::Unload(): file_systems/devfs/v1 -&gt; 0
+ KERN: KDiskSystem::Load(): file_systems/rootfs/v1 -&gt; 1
+ KERN:   trying: file_systems/rootfs/v1
+ KERN:   returned: -1000/1000
+ KERN: KDiskSystem::Unload(): file_systems/rootfs/v1 -&gt; 0
+ KERN:   scanning with: file_systems/bfs/v1
+ KERN: KDiskSystem::Load(): file_systems/bfs/v1 -&gt; 2
+ KERN: KDiskSystem::Unload(): file_systems/bfs/v1 -&gt; 1
+ KERN: KDiskDeviceManager::_ScanPartition(/dev/disk/ata/0/master/1)
+ KERN: KDiskSystem::Load(): partitioning_systems/intel/extended/v1 -&gt; 1
+ KERN: intel: ep_std_ops(0x1)
+ KERN:   trying: partitioning_systems/intel/extended/v1
+ KERN: intel: ep_identify_partition(0, 98703360, 254983680, 512)
+ KERN:   returned: -1000/1000
+ KERN: KDiskSystem::Unload(): partitioning_systems/intel/extended/v1 -&gt; 0
+ KERN: intel: ep_std_ops(0x2)
+ KERN: KDiskSystem::Load(): partitioning_systems/intel/map/v1 -&gt; 3
+ KERN:   trying: partitioning_systems/intel/map/v1
+ KERN: intel: pm_identify_partition(0, 3: 98703360, 254983680, 512)
+ KERN: Partition::SetTo(): active: c3
+ KERN: intel: _ParsePrimary(): partition 0: bad location, ignoring
+ KERN: Partition::SetTo(): active: ad
+ KERN: intel: _ParsePrimary(): partition 1: bad location, ignoring
+ KERN: Partition::SetTo(): active: 69
+ KERN: intel: _ParsePrimary(): partition 2: bad location, ignoring
+ KERN: Partition::SetTo(): active: 79
+ KERN: intel: _ParsePrimary(): partition 3: bad location, ignoring
+ KERN:   returned: 100/1000
+ KERN: KDiskSystem::Load(): file_systems/bfs/v1 -&gt; 2
+ KERN:   trying: file_systems/bfs/v1
+ KERN:   returned: 800/1000
+ KERN: KDiskSystem::Unload(): partitioning_systems/intel/map/v1 -&gt; 2
+ KERN: KDiskSystem::Load(): file_systems/devfs/v1 -&gt; 1
+ KERN:   trying: file_systems/devfs/v1
+ KERN:   returned: -1000/1000
+ KERN: KDiskSystem::Unload(): file_systems/devfs/v1 -&gt; 0
+ KERN: KDiskSystem::Load(): file_systems/rootfs/v1 -&gt; 1
+ KERN:   trying: file_systems/rootfs/v1
+ KERN:   returned: -1000/1000
+ KERN: KDiskSystem::Unload(): file_systems/rootfs/v1 -&gt; 0
+ KERN:   scanning with: file_systems/bfs/v1
+ KERN: KDiskSystem::Load(): file_systems/bfs/v1 -&gt; 3
+ KERN: KDiskSystem::Unload(): file_systems/bfs/v1 -&gt; 2
+ KERN: KDiskDeviceManager::_ScanPartition(/dev/disk/ata/0/master/2)
+ KERN: KDiskSystem::Load(): partitioning_systems/intel/extended/v1 -&gt; 1
+ KERN: intel: ep_std_ops(0x1)
+ KERN:   trying: partitioning_systems/intel/extended/v1
+ KERN: intel: ep_identify_partition(0, 353687040, 9697605120, 512)
+ KERN:   returned: 949/1000
+ KERN: KDiskSystem::Load(): partitioning_systems/intel/map/v1 -&gt; 3
+ KERN:   trying: partitioning_systems/intel/map/v1
+ KERN: intel: pm_identify_partition(0, 4: 353687040, 9697605120, 512)
+ KERN:   returned: -1000/1000
+ KERN: KDiskSystem::Unload(): partitioning_systems/intel/map/v1 -&gt; 2
+ KERN: KDiskSystem::Load(): file_systems/bfs/v1 -&gt; 3
+ KERN:   trying: file_systems/bfs/v1
+ KERN:   returned: -2147483648/1000
+ KERN: KDiskSystem::Unload(): file_systems/bfs/v1 -&gt; 2
+ KERN: KDiskSystem::Load(): file_systems/devfs/v1 -&gt; 1
+ KERN:   trying: file_systems/devfs/v1
+ KERN:   returned: -1000/1000
+ KERN: KDiskSystem::Unload(): file_systems/devfs/v1 -&gt; 0
+ KERN: KDiskSystem::Load(): file_systems/rootfs/v1 -&gt; 1
+ KERN:   trying: file_systems/rootfs/v1
+ KERN:   returned: -1000/1000
+ KERN: KDiskSystem::Unload(): file_systems/rootfs/v1 -&gt; 0
+ KERN:   scanning with: partitioning_systems/intel/extended/v1
+ KERN: intel: ep_scan_partition(0, 353687040, 9697605120, 512)
+ KERN: KDiskSystem::Load(): partitioning_systems/intel/extended/v1 -&gt; 2
+ KERN: KDiskDeviceManager::_ScanPartition(/dev/disk/ata/0/master/2_0)
+ KERN: KDiskSystem::Load(): partitioning_systems/intel/extended/v1 -&gt; 3
+ KERN:   trying: partitioning_systems/intel/extended/v1
+ KERN: intel: ep_identify_partition(0, 353719296, 2697859584, 512)
+ KERN:   returned: -1000/1000
+ KERN: KDiskSystem::Unload(): partitioning_systems/intel/extended/v1 -&gt; 2
+ KERN: KDiskSystem::Load(): partitioning_systems/intel/map/v1 -&gt; 3
+ KERN:   trying: partitioning_systems/intel/map/v1
+ KERN: intel: pm_identify_partition(0, 5: 353719296, 2697859584, 512)
+ KERN: Partition::SetTo(): active: c3
+ KERN: intel: _ParsePrimary(): partition 0: bad location, ignoring
+ KERN: Partition::SetTo(): active: ad
+ KERN: intel: _ParsePrimary(): partition 1: bad location, ignoring
+ KERN: Partition::SetTo(): active: 69
+ KERN: intel: _ParsePrimary(): partition 2: bad location, ignoring
+ KERN: Partition::SetTo(): active: 79
+ KERN: intel: _ParsePrimary(): partition 3: bad location, ignoring
+ KERN:   returned: 100/1000
+ KERN: KDiskSystem::Load(): file_systems/bfs/v1 -&gt; 3
+ KERN:   trying: file_systems/bfs/v1
+ KERN:   returned: 800/1000
+ KERN: KDiskSystem::Unload(): partitioning_systems/intel/map/v1 -&gt; 2
+ KERN: KDiskSystem::Load(): file_systems/devfs/v1 -&gt; 1
+ KERN:   trying: file_systems/devfs/v1
+ KERN:   returned: KERN: -1000/1000
+ KERN: KDiskSystem::Unload(): file_systems/devfs/v1 -&gt; 0
+ KERN: KDiskSystem::Load(): file_systems/rootfs/v1 -&gt; 1
+ KERN:   trying: file_systems/rootfs/v1
+ KERN:   returned: -1000/1000
+ KERN: KDiskSystem::Unload(): file_systems/rootfs/v1 -&gt; 0
+ KERN:   scanning with: file_systems/bfs/v1
+ KERN: KDiskSystem::Load(): file_systems/bfs/v1 -&gt; 4
+ KERN: KDiskSystem::Unload(): file_systems/bfs/v1 -&gt; 3
+ KERN: KDiskDeviceManager::_ScanPartition(/dev/disk/ata/0/master/2_1)
+ KERN: KDiskSystem::Load(): partitioning_systems/intel/extended/v1 -&gt; 3
+ KERN:   trying: partitioning_systems/intel/extended/v1
+ KERN: intel: ep_identify_partition(0, 3051611136, 1003451904, 512)
+ KERN:   returned: -1000/1000
+ KERN: KDiskSystem::Unload(): partitioning_systems/intel/extended/v1 -&gt; 2
+ KERN: KDiskSystem::Load(): partitioning_systems/intel/map/v1 -&gt; 3
+ KERN:   trying: partitioning_systems/intel/map/v1
+ KERN: intel: pm_identify_partition(0, 6: 3051611136, 1003451904, 512)
+ KERN: Partition::SetTo(): active: c3
+ KERN: intel: _ParsePrimary(): partition 0: bad location, ignoring
+ KERN: Partition::SetTo(): active: ad
+ KERN: intel: _ParsePrimary(): partition 1: bad location, ignoring
+ KERN: Partition::SetTo(): active: 69
+ KERN: intel: _ParsePrimary(): partition 2: bad location, ignoring
+ KERN: Partition::SetTo(): active: 79
+ KERN: intel: _ParsePrimary(): partition 3: bad location, ignoring
+ KERN:   returned: 100/1000
+ KERN: KDiskSystem::Load(): file_systems/bfs/v1 -&gt; 4
+ KERN:   trying: file_systems/bfs/v1
+ KERN:   returned: 800/1000
+ KERN: KDiskSystem::Unload(): partitioning_systems/intel/map/v1 -&gt; 2
+ KERN: KDiskSystem::Load(): file_systems/devfs/v1 -&gt; 1
+ KERN:   trying: file_systems/devfs/v1
+ KERN:   returned: -1000/1000
+ KERN: KDiskSystem::Unload(): file_systems/devfs/v1 -&gt; 0
+ KERN: KDiskSystem::Load(): file_systems/rootfs/v1 -&gt; 1
+ KERN:   trying: file_systems/rootfs/v1
+ KERN:   returned: -1000/1000
+ KERN: KDiskSystem::Unload(): file_systems/rootfs/v1 -&gt; 0
+ KERN:   scanning with: file_systems/bfs/v1
+ KERN: KDiskSystem::Load(): file_systems/bfs/v1 -&gt; 5
+ KERN: KDiskSystem::Unload(): file_systems/bfs/v1 -&gt; 4
+ KERN: KDiskDeviceManager::_ScanPartition(/dev/disk/ata/0/master/2_2)
+ KERN: KDiskSystem::Load(): partitioning_systems/intel/extended/v1 -&gt; 3
+ KERN:   trying: partitioning_systems/intel/extended/v1
+ KERN: intel: ep_identify_partition(0, 4055095296, 3002194944, 512)
+ KERN:   returned: -1000/1000
+ KERN: KDiskSystem::Unload(): partitioning_systems/intel/extended/v1 -&gt; 2
+ KERN: KDiskSystem::Load(): partitioning_systems/intel/map/v1 -&gt; 3
+ KERN:   trying: partitioning_systems/intel/map/v1
+ KERN: intel: pm_identify_partition(0, 7: 4055095296, 3002194944, 512)
+ KERN: Partition::SetTo(): active: 58
+ KERN: intel: _ParsePrimary(): partition 0: bad location, ignoring
+ KERN: Partition::SetTo(): active: 66
+ KERN: intel: _ParsePrimary(): partition 1: bad location, ignoring
+ KERN: Partition::SetTo(): active: 6f
+ KERN: intel: _ParsePrimary(): partition 2: bad location, ignoring
+ KERN: Partition::SetTo(): active: 79
+ KERN: intel: _ParsePrimary(): partition 3: bad location, ignoring
+ KERN:   returned: 100/1000
+ KERN: KDiskSystem::Load(): file_systems/bfs/v1 -&gt; 5
+ KERN:   trying: file_systems/bfs/v1
+ KERN:   returned: 800/1000
+ KERN: KDiskSystem::Unload(): partitioning_systems/intel/map/v1 -&gt; 2
+ KERN: KDiskSystem::Load(): file_systems/devfs/v1 -&gt; 1
+ KERN:   trying: file_systems/devfs/v1
+ KERN:   returned: -1000/1000
+ KERN: KDiskSystem::Unload(): file_systems/devfs/v1 -&gt; 0
+ KERN: KDiskSystem::Load(): file_systems/rootfs/v1 -&gt; 1
+ KERN:   trying: file_systems/rootfs/v1
+ KERN:   returned: -1000/1000
+ KERN: KDiskSystem::Unload(): file_systems/rootfs/v1 -&gt; 0
+ KERN:   scanning with: file_systems/bfs/v1
+ KERN: KDiskSystem::Load(): file_systems/bfs/v1 -&gt; 6
+ KERN: KDiskSystem::Unload(): file_systems/bfs/v1 -&gt; 5
+ KERN: KDiskDeviceManager::_ScanPartition(/dev/disk/ata/0/master/2_3)
+ KERN: KDiskSystem::Load(): partitioning_systems/intel/extended/v1 -&gt; 3
+ KERN:   trying: partitioning_systems/intel/extended/v1
+ KERN: intel: ep_identify_partition(0, 7057322496, 2993969664, 512)
+ KERN:   returned: -1000/1000
+ KERN: KDiskSystem::Unload(): partitioning_systems/intel/extended/v1 -&gt; 2
+ KERN: KDiskSystem::Load(): partitioning_systems/intel/map/v1 -&gt; 3
+ KERN:   trying: partitioning_systems/intel/map/v1
+ KERN: intel: pm_identify_partition(0, 8: 7057322496, 2993969664, 512)
+ KERN: Partition::SetTo(): active: c3
+ KERN: intel: _ParsePrimary(): partition 0: bad location, ignoring
+ KERN: Partition::SetTo(): active: ad
+ KERN: intel: _ParsePrimary(): partition 1: bad location, ignoring
+ KERN: Partition::SetTo(): active: 69
+ KERN: intel: _ParsePrimary(): partition 2: bad location, ignoring
+ KERN: Partition::SetTo(): active: 79
+ KERN: intel: _ParsePrimary(): partition 3: bad location, ignoring
+ KERN:   returned: 100/1000
+ KERN: KDiskSystem::Load(): file_systems/bfs/v1 -&gt; 6
+ KERN:   trying: file_systems/bfs/v1
+ KERN:   returned: 800/1000
+ KERN: KDiskSystem::Unload(): partitioning_systems/intel/map/v1 -&gt; 2
+ KERN: KDiskSystem::Load(): file_systems/devfs/v1 -&gt; 1
+ KERN:   trying: file_systems/devfs/v1
+ KERN:   returned: -1000/1000
+ KERN: KDiskSystem::Unload(): file_systems/devfs/v1 -&gt; 0
+ KERN: KDiskSystem::Load(): file_systems/rootfs/v1 -&gt; 1
+ KERN:   trying: file_systems/rootfs/v1
+ KERN:   returned: -1000/1000
+ KERN: KDiskSystem::Unload(): file_systems/rootfs/v1 -&gt; 0
+ KERN:   scanning with: file_systems/bfs/v1
+ KERN: KDiskSystem::Load(): file_systems/bfs/v1 -&gt; 7
+ KERN: KDiskSystem::Unload(): file_systems/bfs/v1 -&gt; 6
+ KERN: KDiskSystem::Unload(): partitioning_systems/intel/extended/v1 -&gt; 1
+ KERN: KDiskSystem::Unload(): partitioning_systems/intel/map/v1 -&gt; 1
+ KERN: device 0: /dev/disk/ata/0/master/raw
+ KERN:   media status:      No error
+ KERN:   device flags:      2
+ KERN:   offset:            0
+ KERN:   size:              10056130560 (9590.273 MB)
+ KERN:   content size:      10056130560
+ KERN:   block size:        512
+ KERN:   child count:       3
+ KERN:   index:             -1
+ KERN:   status:            0
+ KERN:   flags:             5
+ KERN:   volume:            -1
+ KERN:   disk system:       partitioning_systems/intel/map/v1
+ KERN:   name:              &lt;NULL&gt;
+ KERN:   content name:      &lt;NULL&gt;
+ KERN:   type:              &lt;NULL&gt;
+ KERN:   content type:      Intel Partition Map
+ KERN:   params:            &lt;NULL&gt;
+ KERN:   content params:    &lt;NULL&gt;
+ KERN:   partition 2: /dev/disk/ata/0/master/0
+ KERN:     offset:            32256
+ KERN:     size:              98671104 (94.1 MB)
+ KERN:     content size:      98670592
+ KERN:     block size:        1024
+ KERN:     child count:       0
+ KERN:     index:             0
+ KERN:     status:            0
+ KERN:     flags:             2
+ KERN:     volume:            -1
+ KERN:     disk system:       file_systems/bfs/v1
+ KERN:     name:              &lt;NULL&gt;
+ KERN:     content name:      -boot
+ KERN:     type:              BFS Filesystem
+ KERN:     content type:      Be File System
+ KERN:     params:            type = 235 ; active = 1
+ KERN:     content params:    &lt;NULL&gt;
+ KERN:   partition 3: /dev/disk/ata/0/master/1
+ KERN:     offset:            98703360
+ KERN:     size:              254983680 (243.171 MB)
+ KERN:     content size:      254983168
+ KERN:     block size:        1024
+ KERN:     child count:       0
+ KERN:     index:             1
+ KERN:     status:            0
+ KERN:     flags:             2
+ KERN:     volume:            -1
+ KERN:     disk system:       file_systems/bfs/v1
+ KERN:     name:              &lt;NULL&gt;
+ KERN:     content name:      untitled
+ KERN:     type:              BFS Filesystem
+ KERN:     content type:      Be File System
+ KERN:     params:            type = 235 ; active = 0
+ KERN:     content params:    &lt;NULL&gt;
+ KERN:   partition 4: /dev/disk/ata/0/master/2
+ KERN:     offset:            353687040
+ KERN:     size:              9697605120 (9248.356 MB)
+ KERN:     content size:      9697605120
+ KERN:     block size:        512
+ KERN:     child count:       4
+ KERN:     index:             2
+ KERN:     status:            0
+ KERN:     flags:             4
+ KERN:     volume:            -1
+ KERN:     disk system:       partitioning_systems/intel/extended/v1
+ KERN:     name:              &lt;NULL&gt;
+ KERN:     content name:      &lt;NULL&gt;
+ KERN:     type:              Intel Extended Partition
+ KERN:     content type:      Intel Extended Partition
+ KERN:     params:            type = 5 ; active = 0
+ KERN:     content params:    &lt;NULL&gt;
+ KERN:     partition 5: /dev/disk/ata/0/master/2_0
+ KERN:       offset:            353719296
+ KERN:       size:              2697859584 (2572.879 MB)
+ KERN:       content size:      2697859072
+ KERN:       block size:        1024
+ KERN:       child count:       0
+ KERN:       index:             0
+ KERN:       status:            0
+ KERN:       flags:             2
+ KERN:       volume:            -1
+ KERN:       disk system:       file_systems/bfs/v1
+ KERN:       name:              &lt;NULL&gt;
+ KERN:       content name:      BeOS5Max
+ KERN:       type:              BFS Filesystem
+ KERN:       content type:      Be File System
+ KERN:       params:            type = 235 ; active = 0
+ KERN:       content params:    &lt;NULL&gt;
+ KERN:     partition 6: /dev/disk/ata/0/master/2_1
+ KERN:       offset:            3051611136
+ KERN:       size:              1003451904 (956.966 MB)
+ KERN:       content size:      1003451392
+ KERN:       block size:        1024
+ KERN:       child count:       0
+ KERN:       index:             1
+ KERN:       status:            0
+ KERN:       flags:             2
+ KERN:       volume:            -1
+ KERN:       KERN: disk system:       file_systems/bfs/v1
+ KERN:       name:              &lt;NULL&gt;
+ KERN:       content name:      -home
+ KERN:       type:              BFS Filesystem
+ KERN:       content type:      Be File System
+ KERN:       params:            type = 235 ; active = 0
+ KERN:       content params:    &lt;NULL&gt;
+ KERN:     partition 7: /dev/disk/ata/0/master/2_2
+ KERN:       offset:            4055095296
+ KERN:       size:              3002194944 (2863.116 MB)
+ KERN:       content size:      3002194944
+ KERN:       block size:        1024
+ KERN:       child count:       0
+ KERN:       index:             2
+ KERN:       status:            0
+ KERN:       flags:             2
+ KERN:       volume:            -1
+ KERN:       disk system:       file_systems/bfs/v1
+ KERN:       name:              &lt;NULL&gt;
+ KERN:       content name:      BeOS Dano
+ KERN:       type:              BFS Filesystem
+ KERN:       content type:      Be File System
+ KERN:       params:            type = 235 ; active = 0
+ KERN:       content params:    &lt;NULL&gt;
+ KERN:     partition 8: /dev/disk/ata/0/master/2_3
+ KERN:       offset:            7057322496
+ KERN:       size:              2993969664 (2855.271 MB)
+ KERN:       content size:      2993969152
+ KERN:       block size:        1024
+ KERN:       child count:       0
+ KERN:       index:             3
+ KERN:       status:            0
+ KERN:       flags:             2
+ KERN:       volume:            -1
+ KERN:       disk system:       file_systems/bfs/v1
+ KERN:       name:              &lt;NULL&gt;
+ KERN:       content name:      Haiku
+ KERN:       type:              BFS Filesystem
+ KERN:       content type:      Be File System
+ KERN:       params:            type = 235 ; active = 0
+ KERN:       content params:    &lt;NULL&gt;
+ KERN: device 1: /dev/disk/atapi/1/master/raw
+ KERN:   media status:      No media present
+ KERN:   device flags:      5
+ KERN: bfs: mounted &quot;Haiku&quot; (root node at 65536, device =
+ /dev/disk/ata/0/master/2_3)
+ KERN: module: Search for file_cache/launch_speedup/v1 failed.
+ KERN: partitioning system: partitioning_systems/session/v1
+ KERN: KDiskDeviceManager::_AddDiskSystem(partitioning_systems/session/v1)
+ KERN: KDiskSystem::Load(): partitioning_systems/session/v1 -&gt; 1
+ KERN: KDiskSystem::Unload(): partitioning_systems/session/v1 -&gt; 0
+ KERN: KDiskDeviceManager::_AddDiskSystem() done: No error
+ KERN: file system: file_systems/fat/v1
+ KERN: KDiskDeviceManager::_AddDiskSystem(file_systems/fat/v1)
+ KERN: KDiskSystem::Load(): file_systems/fat/v1 -&gt; 1
+ KERN: KDiskSystem::Unload(): file_systems/fat/v1 -&gt; 0
+ KERN: KDiskDeviceManager::_AddDiskSystem() done: No error
+ KERN: file system: file_systems/iso9660/v1
+ KERN: KDiskDeviceManager::_AddDiskSystem(file_systems/iso9660/v1)
+ KERN: KDiskSystem::Load(): file_systems/iso9660/v1 -&gt; 1
+ KERN: KDiskSystem::Unload(): file_systems/iso9660/v1 -&gt; 0
+ KERN: KDiskDeviceManager::_AddDiskSystem() done: No error
+ KERN: KDiskDeviceManager::_Scan(/dev/disk)
+ KERN: con_init: trying module console/frame_buffer/v1
+ KERN: loaded driver /boot/beos/system/add-ons/kernel/drivers/dev/console
+ KERN: loaded driver /boot/beos/system/add-ons/kernel/drivers/dev/dprintf
+ KERN: loaded driver /boot/beos/system/add-ons/kernel/drivers/dev/keyboard
+ KERN: loaded driver /boot/beos/system/add-ons/kernel/drivers/dev/null
+ KERN: loaded driver /boot/beos/system/add-ons/kernel/drivers/dev/random
+ KERN: loaded driver /boot/beos/system/add-ons/kernel/drivers/dev/tty
+ KERN: loaded driver /boot/beos/system/add-ons/kernel/drivers/dev/zero
+ KERN: KDiskDeviceManager::_Scan(/dev/disk/ata)
+ KERN: KDiskDeviceManager::_Scan(/dev/disk/ata/0)
+ KERN: KDiskDeviceManager::_Scan(/dev/disk/ata/0/master)
+ KERN: KDiskDeviceManager::_Scan(/dev/disk/ata/0/master/0)
+ KERN: KDiskDeviceManager::_Scan(/dev/disk/ata/0/master/1)
+ KERN: KDiskDeviceManager::_Scan(/dev/disk/ata/0/master/2)
+ KERN: KDiskDeviceManager::_Scan(/dev/disk/ata/0/master/2_0)
+ KERN: KDiskDeviceManager::_Scan(/dev/disk/ata/0/master/2_1)
+ KERN: KDiskDeviceManager::_Scan(/dev/disk/ata/0/master/2_2)
+ KERN: KDiskDeviceManager::_Scan(/dev/disk/ata/0/master/2_3)
+ KERN: KDiskDeviceManager::_Scan(/dev/disk/ata/0/master/raw)
+ KERN: KDiskDeviceManager::_Scan(/dev/disk/atapi)
+ KERN: KDiskDeviceManager::_Scan(/dev/disk/atapi/1)
+ KERN: KDiskDeviceManager::_Scan(/dev/disk/atapi/1/master)
+ KERN: KDiskDeviceManager::_Scan(/dev/disk/atapi/1/master/raw)
+ KERN: KDiskDeviceManager::_Scan(/dev/disk/scsi)
+ KERN: loaded module /boot/beos/system/add-
+ ons/kernel/drivers/dev/disk/scsi/scsi_cd
+ KERN: loaded module /boot/beos/system/add-
+ ons/kernel/drivers/dev/disk/scsi/scsi_dsk
+ KERN: KDiskDeviceManager::_Scan(/dev/disk/usb)
+ KERN: usb_uhci: successfully started the controller
+ KERN: module: Search for busses/usb/ohci failed.
+ KERN: usb_ehci: no devices found
+ KERN: loaded driver /boot/beos/system/add-
+ ons/kernel/drivers/dev/disk/usb/usb_disk
+ KERN: KDiskDeviceManager::_Scan(/dev/disk/virtual)
+ KERN: nbd:&gt;init_hardware()
+ KERN: nbd:&gt;init_driver()
+ KERN: allocate_commpage_entry(4, 34) -&gt; 0xffff0118
+ KERN: set_memory_write_back base 0 length 13ff0000
+ KERN: find_nearest 13ff0000 0
+ KERN: find_nearest 3ff0000 1
+ KERN: find_nearest 1ff0000 2
+ KERN: find_nearest ff0000 3
+ KERN: find_nearest 7f0000 4
+ KERN: find_nearest c010000 1
+ KERN: solutions: 0x10000000 0xfffffffffc000000
+ KERN: allocate MTRR slot 0, base = 0, length = 10000000, type=0x6
+ KERN: allocate MTRR slot 1, base = 10000000, length = 4000000, type=0x6
+ KERN: kernel debugger extension &quot;debugger/hangman/v1&quot;: loaded
+ KERN: kernel debugger extension &quot;debugger/invalidate_on_exit/v1&quot;: loaded
+ KERN: allocate MTRR slot 2, base = f5000000, length = 400000, type=0x1
+ KERN: REG: Failed to open shadow passwd DB file &quot;/etc/shadow&quot;: No such
+ file or directory
+ KERN: bfs: bfs_open_dir:1461: Invalid Argument
+ KERN: register_domain(1, internet)
+ KERN: unregister_domain(0x90bb5800, 1, internet)
+ KERN: register_domain(9, unix)
+ KERN: unregister_domain(0x90bb5bc0, 9, unix)
+ KERN: register_domain(1, internet)
+ KERN: get_device_interface: ask &quot;network/devices/ethernet/v1&quot; for loop
+ KERN: get_device_interface: ask &quot;network/devices/loopback/v1&quot; for loop
+ KERN: 3com: init_hardware(0x80415958)
+ KERN: 3com: no hardware found.
+ KERN: etherpci: init_driver init_driver: etherpci not found
+ KERN: ipro100: init_hardware(0x80412f04)
+ KERN: ipro100: no hardware found.
+ KERN: ipro1000: init_hardware(0x804317c4)
+ KERN: ipro1000: no hardware found.
+ KERN: marvell_yukon: init_hardware(0x80418c3c)
+ KERN: marvell_yukon: no hardware found.
+ KERN: nforce: init_hardware(0x80415cd8)
+ KERN: nforce: no hardware found.
+ KERN: rtl8139: init_hardware(0x80411ee0)
+ KERN: rtl8139: no hardware found.
+ KERN: syskonnect: init_hardware(0x80418258)
+ KERN: syskonnect: no hardware found.
+ KERN: via_rhine: init_hardware(0x80412238)
+ KERN: via_rhine: no hardware found.
+ KERN: intel_extreme: init_hardware()
+ KERN: loaded driver /boot/beos/system/add-
+ ons/kernel/drivers/dev/graphics/neomagic
+ KERN: Radeon - init_hardware: Version: 5.1.6.0
+ KERN: Radeon - Radeon_CardDetect: no supported devices found
+ KERN: savage: init_hardware - no supported devices
+ KERN: vesa: init_hardware()
+ KERN: vesa: init_driver()
+ KERN: vesa: publish_devices()
+ KERN: vesa: find_device()
+ KERN: loaded driver /boot/beos/system/add-
+ ons/kernel/drivers/dev/graphics/vesa
+ KERN: allocate MTRR slot 3, base = f5000000, length = 1000000, type=0x1
+ KERN: ps2_hid: init_hardware
+ KERN: ps2_hid: init_driver
+ KERN: ps2_hid: publish_devices
+ KERN: ps2_hid: uninit_driver
+ KERN: loaded driver /boot/beos/system/add-
+ ons/kernel/drivers/dev/input/ps2_hid
+ KERN: loaded driver /boot/beos/system/add-
+ ons/kernel/drivers/dev/input/usb_hid
+ KERN: loaded driver /boot/beos/system/add-
+ ons/kernel/drivers/dev/input/wacom
+ KERN: emuxki: init_hardware()
+ KERN: ps2: devfs_publish_device input/mouse/ps2/0, status = 0x00000000
+ KERN: ps2: probe_mouse Standard PS/2 mouse found
+ KERN: bfs: bfs_open_dir:1461: Invalid Argument
+ KERN: ps2: devfs_publish_device input/keyboard/at/0, status = 0x00000000
+ KERN: ps2: keyboard found
+ KERN: cx23882: init_hardware()
+ KERN: auich: init_hardware()
+ KERN: auvia: init_hardware()
+ KERN: loaded driver /boot/beos/system/add-
+ ons/kernel/drivers/dev/audio/hmulti/emuxki
+ KERN: firewire: fw_module_init
+ KERN: firewire: found 0 cards
+ KERN: firewire: fw_module_uninit
+ KERN: loaded driver /boot/beos/system/add-
+ ons/kernel/drivers/dev/bus/usb_raw
+ KERN: bfs: bfs_create_index:1941: File or Directory already exists
+ KERN: Last message repeated 2 times.
+ KERN: SCSI_DSK -- synchronize_cache:
+ Last message repeated 11 times
+ KERN: bfs: KERN: mounted &quot;BeOS Dano&quot; (root node at 65536, device =
+ /dev/disk/ata/0/master/2_2)
+ KERN: bfs: volume reports 2821259 used blocks, correct is 2821279
+ KERN: APM version 1.2 available, flags 3.
+ KERN: smp_acpi_probe: entry base 0x9fc00, limit 0xa0000
+ KERN: smp_acpi_probe: entry base 0xf0000, limit 0x100000
+ KERN: smp_acpi_probe: found ACPI RSDP signature at 0x000f6d00
+ KERN: smp: using ACPI to detect MP configuration
+ KERN: smp: found rsdp at 0x000f6d00 oem id: PTLTD
+ KERN: smp: rsdp points to rsdt at 0x13ffac85
+ KERN: smp: searching 2 entries for APIC information
+ KERN: smp: skipping uninteresting header 'FACP'
+ KERN: smp: skipping uninteresting header 'BOOT'
+ KERN: smp_mp_probe: entry base 0x9fc00, limit 0xa0000
+ KERN: smp_mp_probe: entry base 0xf0000, limit 0x100000
+ KERN: VESA version = 2.0
+ KERN: oem string: MagicMedia 256AV  48K
+ KERN: EDID1: 4f
+ KERN: EDID2: ebx 0
+ KERN: Welcome to the Haiku boot loader!
+ KERN: number of drives: 1
+ KERN: add_partitions_for(0x00105190, mountFS = no)
+ KERN: add_partitions_for(fd = 0, mountFS = no)
+ KERN: 0x001052e4 Partition::Partition
+ KERN: 0x001052e4 Partition::Scan()
+ KERN: check for partitioning_system: Amiga Partition Map
+ KERN: check for partitioning_system: EFI GUID Partition Map
+ KERN: check for partitioning_system: Intel Partition Map
+ KERN: intel: pm_identify_partition(1, 1069796: 0, 10056130560, 512)
+ KERN: Partition::SetTo(): active: 80
+ KERN: Partition::SetTo(): active: 0
+ Last message repeated 9 times
+ KERN:   priority: 810
+ KERN: check for partitioning_system: Intel Extended Partition
+ KERN: check for partitioning_system: Apple Partition Map
+ KERN: intel: pm_scan_partition(1, 1069796: 0, 10056130560, 512)
+ KERN: 0x00105438 Partition::Partition
+ KERN: 0x001052e4 Partition::AddChild 0x00105438
+ KERN: 0x00105438 Partition::SetParent 0x001052e4
+ KERN: new child partition!
+ KERN: 0x001054ec Partition::Partition
+ KERN: 0x001052e4 Partition::AddChild 0x001054ec
+ KERN: 0x001054ec Partition::SetParent 0x001052e4
+ KERN: new child partition!
+ KERN: 0x001055a0 Partition::Partition
+ KERN: 0x001052e4 Partition::AddChild 0x001055a0
+ KERN: 0x001055a0 Partition::SetParent 0x001052e4
+ KERN: new child partition!
+ KERN: 0x001052e4 Partition::Scan: *** scan child 0x00105438 (start =
+ 32256, size = 98671104, parent = 0x001052e4)!
+ KERN: 0x00105438 Partition::Scan()
+ KERN: check for partitioning_system: Amiga Partition Map
+ KERN: check for partitioning_system: EFI GUID Partition Map
+ KERN: check for partitioning_system: Intel Partition Map
+ KERN: intel: pm_identify_partition(2, 1070136: 32256, 98671104, 512)
+ KERN: Partition::SetTo(): active: c3
+ KERN: intel: _ParsePrimary(): partition 0: bad location, ignoring
+ KERN: Partition::SetTo(): active: ad
+ KERN: intel: _ParsePrimary(): partition 1: bad location, ignoring
+ KERN: Partition::SetTo(): active: 69
+ KERN: intel: _ParsePrimary(): partition 2: bad location, ignoring
+ KERN: Partition::SetTo(): active: 79
+ KERN: intel: _ParsePrimary(): partition 3: bad location, ignoring
+ KERN:   priority: 100
+ KERN: check for partitioning_system: Intel Extended Partition
+ KERN: intel: ep_identify_partition(2, 32256, 98671104, 512)
+ KERN: check for partitioning_system: Apple Partition Map
+ KERN: 0x001052e4 Partition::Scan: *** scan child 0x001054ec (start =
+ 98703360, size = 254983680, parent = 0x001052e4)!
+ KERN: 0x001054ec Partition::Scan()
+ KERN: check for partitioning_system: Amiga Partition Map
+ KERN: check for partitioning_system: EFI GUID Partition Map
+ KERN: check for partitioning_system: Intel Partition Map
+ KERN: intel: pm_identify_partition(2, 1070316: 98703360, 254983680, 512)
+ KERN: Partition::SetTo(): active: c3
+ KERN: intel: _ParsePrimary(): partition 0: bad location, ignoring
+ KERN: Partition::SetTo(): active: ad
+ KERN: intel: _ParsePrimary(): partition 1: bad location, ignoring
+ KERN: Partition::SetTo(): active: 69
+ KERN: intel: _ParsePrimary(): partition 2: bad location, ignoring
+ KERN: Partition::SetTo(): active: 79
+ KERN: intel: _ParsePrimary(): partition 3: bad location, ignoring
+ KERN:   priority: 100
+ KERN: check for partitioning_system: Intel Extended Partition
+ KERN: intel: ep_identify_partition(2, 98703360, 254983680, 512)
+ KERN: check for partitioning_system: Apple Partition Map
+ KERN: 0x001052e4 Partition::Scan: *** scan child 0x001055a0 (start =
+ 353687040, size = 9697605120, parent = 0x001052e4)!
+ KERN: 0x001055a0 Partition::Scan()
+ KERN: check for partitioning_system: Amiga Partition Map
+ KERN: check for partitioning_system: EFI GUID Partition Map
+ KERN: check for partitioning_system: Intel Partition Map
+ KERN:   priority: 949
+ KERN: initialize_commpage_syscall(): sysenter/sysexit supported
+ KERN: allocate_commpage_entry(3, 5) -&gt; 0xffff0100
+ KERN: allocate_commpage_entry(2, 12) -&gt; 0xffff0108
+ KERN: apm_init()
+ KERN:   code32: 0xf000, 0x4108, length 0xffff
+ KERN:   code16: 0xf000, length 0xffff
+ KERN:   data: 0x40, length 0xffff
+ KERN: heap_attach: attached to 0x90800000 - usable range 0x90803000 -
+ 0x90a00000
+ KERN: [35mahci:[0m ahci_get_supported_paths
+ KERN:   found root!!
+ KERN:   add module bus_managers/isa/root/device_v1 to list
+ KERN: PCI: pci_module_init
+ KERN: PCI: mechanism 1 controller found
+ KERN: PCI: [dom 0, bus  0] bus   0, device  0, function  0: vendor 8086,
+ device 7190, revision 03
+ KERN: PCI:   class_base 06, class_function 00, class_api 00
+ KERN: PCI:   vendor 8086: Intel Corporation
+ KERN: PCI:   device 7190: 440BX/ZX/DX - 82443BX/ZX/DX Host bridge
+ KERN: PCI:   info: Bridge (Host bridge)
+ KERN: PCI:   line_size 00, latency 40, header_type 00, BIST 00
+ KERN: PCI:   ROM base host 00000000, pci 00000000, size 00000000
+ KERN: PCI:   cardbus_CIS 00000000, subsystem_id 0000, subsystem_vendor_id
+ 0000
+ KERN: PCI:   interrupt_line 00, interrupt_pin 00, min_grant 00,
+ max_latency 00
+ KERN: PCI:   base reg 0: host f8000000, pci f8000000, size 04000000, flags
+ 08
+ KERN: PCI:   base reg 1: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 2: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 3: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 4: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 5: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   Capabilities: AGP
+ KERN: PCI: [dom 0, bus  0] bus   0, device  1, function  0: vendor 8086,
+ device 7191, revision 03
+ KERN: PCI:   class_base 06, class_function 04, class_api 00
+ KERN: PCI:   vendor 8086: Intel Corporation
+ KERN: PCI:   device 7191: 440BX/ZX/DX - 82443BX/ZX/DX AGP bridge
+ KERN: PCI:   info: Bridge (PCI bridge, Normal decode)
+ KERN: PCI:   line_size 00, latency 40, header_type 01, BIST 00
+ KERN: PCI:   subsystem_id 0000, subsystem_vendor_id 0000
+ KERN: PCI:   primary_bus 00, secondary_bus 01, subordinate_bus 01,
+ secondary_latency 40
+ KERN: PCI:   io_base_upper_16  0000, io_base  f0
+ KERN: PCI:   io_limit_upper_16 0000, io_limit 00
+ KERN: PCI:   memory_base f420, memory_limit f470
+ KERN: PCI:   prefetchable_memory_base_upper32  00000000,
+ prefetchable_memory_base  f500
+ KERN: PCI:   prefetchable_memory_limit_upper32 00000000,
+ prefetchable_memory_limit f5f0
+ KERN: PCI:   bridge_control 8c, secondary_status a2a0
+ KERN: PCI:   interrupt_line 00, interrupt_pin 00
+ KERN: PCI:   ROM base host 00000000, pci 00000000, size ??
+ KERN: PCI:   base reg 0: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 1: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   Capabilities: (not supported)
+ KERN: PCI: [dom 0, bus  1] bus   1, device  0, function  0: vendor 10c8,
+ device 0005, revision 20
+ KERN: PCI:   class_base 03, class_function 00, class_api 00
+ KERN: PCI:   vendor 10c8: Neomagic Corporation
+ KERN: PCI:   device 0005: ThinkPad 570
+ KERN: PCI:   info: Display controller (VGA compatible controller, VGA)
+ KERN: PCI:   line_size 00, latency 80, header_type 00, BIST 00
+ KERN: PCI:   ROM base host 00000000, pci 00000000, size 00000000
+ KERN: PCI:   cardbus_CIS 00000000, subsystem_id 00dd, subsystem_vendor_id
+ 1014
+ KERN: PCI:   interrupt_line 0b, interrupt_pin 01, min_grant 10,
+ max_latency ff
+ KERN: PCI:   base reg 0: host f5000000, pci f5000000, size 01000000, flags
+ 08
+ KERN: PCI:   base reg 1: host f4400000, pci f4400000, size 00400000, flags
+ 00
+ KERN: PCI:   base reg 2: host f4200000, pci f4200000, size 00100000, flags
+ 00
+ KERN: PCI:   base reg 3: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 4: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 5: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   Capabilities: PM
+ KERN: PCI: [dom 0, bus  0] bus   0, device  2, function  0: vendor 104c,
+ device ac1b, revision 03
+ KERN: PCI:   class_base 06, class_function 07, class_api 00
+ KERN: PCI:   vendor 104c: Texas Instruments
+ KERN: PCI:   device ac1b: PCI1450
+ KERN: PCI:   info: Bridge (CardBus bridge)
+ KERN: PCI:   line_size 08, latency 40, header_type 82, BIST 00
+ KERN: PCI:   subsystem_id 0130, subsystem_vendor_id 1014
+ KERN: PCI:   primary_bus 00, secondary_bus 07, subordinate_bus 08,
+ secondary_latency b0
+ KERN: PCI:   bridge_controKERN: l c0, secondary_status 0200
+ KERN: PCI:   memory_base_upper32  00000000, memory_base  00000000
+ KERN: PCI:   memory_limit_upper32 00000000, memory_limit 00000000
+ KERN: PCI:   io_base_upper32  00000000, io_base  00000000
+ KERN: PCI:   io_limit_upper32 00000000, io_limit 00000000
+ KERN: PCI:   Capabilities: PM
+ KERN: PCI: [dom 0, bus  0] bus   0, device  2, function  1: vendor 104c,
+ device ac1b, revision 03
+ KERN: PCI:   class_base 06, class_function 07, class_api 00
+ KERN: PCI:   vendor 104c: Texas Instruments
+ KERN: PCI:   device ac1b: PCI1450
+ KERN: PCI:   info: Bridge (CardBus bridge)
+ KERN: PCI:   line_size 08, latency 40, header_type 82, BIST 00
+ KERN: PCI:   subsystem_id 0130, subsystem_vendor_id 1014
+ KERN: PCI:   primary_bus 00, secondary_bus 09, subordinate_bus 0a,
+ secondary_latency b0
+ KERN: PCI:   bridge_control c0, secondary_status 0200
+ KERN: PCI:   memory_base_upper32  00000000, memory_base  00000000
+ KERN: PCI:   memory_limit_upper32 00000000, memory_limit 00000000
+ KERN: PCI:   io_base_upper32  00000000, io_base  00000000
+ KERN: PCI:   io_limit_upper32 00000000, io_limit 00000000
+ KERN: PCI:   Capabilities: PM
+ KERN: PCI: [dom 0, bus  0] bus   0, device  5, function  0: vendor 1013,
+ device 6003, revision 01
+ KERN: PCI:   class_base 04, class_function 01, class_api 00
+ KERN: PCI:   vendor 1013: Cirrus Logic
+ KERN: PCI:   device 6003: CS 4614/22/24/30 [CrystalClear SoundFusion Audio
+ Accelerator]
+ KERN: PCI:   info: Multimedia controller (Multimedia audio controller)
+ KERN: PCI:   line_size 00, latency 40, header_type 00, BIST 00
+ KERN: PCI:   ROM base host 00000000, pci 00000000, size 00000000
+ KERN: PCI:   cardbus_CIS 00000000, subsystem_id 0132, subsystem_vendor_id
+ 1014
+ KERN: PCI:   interrupt_line 0b, interrupt_pin 01, min_grant 04,
+ max_latency 18
+ KERN: PCI:   base reg 0: host f4100000, pci f4100000, size 00001000, flags
+ 00
+ KERN: PCI:   base reg 1: host f4000000, pci f4000000, size 00100000, flags
+ 00
+ KERN: PCI:   base reg 2: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 3: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 4: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 5: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   Capabilities: PM
+ KERN: PCI: [dom 0, bus  0] bus   0, device  6, function  0: vendor 8086,
+ device 7110, revision 02
+ KERN: PCI:   class_base 06, class_function 80, class_api 00
+ KERN: PCI:   vendor 8086: Intel Corporation
+ KERN: PCI:   device 7110: 82371AB/EB/MB PIIX4 ISA
+ KERN: PCI:   info: Bridge
+ KERN: PCI:   line_size 00, latency 00, header_type 80, BIST 00
+ KERN: PCI:   ROM base host 00000000, pci 00000000, size 00000000
+ KERN: PCI:   cardbus_CIS 00000000, subsystem_id 0000, subsystem_vendor_id
+ 0000
+ KERN: PCI:   interrupt_line 00, interrupt_pin 00, min_grant 00,
+ max_latency 00
+ KERN: PCI:   base reg 0: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 1: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 2: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 3: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 4: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 5: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   Capabilities: (not supported)
+ KERN: PCI: [dom 0, bus  0] bus   0, device  6, function  1: vendor 8086,
+ device 7111, revision 01
+ KERN: PCI:   class_base 01, class_function 01, class_api 80
+ KERN: PCI:   vendor 8086: Intel Corporation
+ KERN: PCI:   device 7111: 82371AB/EB/MB PIIX4 IDE
+ KERN: PCI:   info: Mass storage controller (IDE interface)
+ KERN: PCI:   line_size 00, latency 40, header_type 00, BIST 00
+ KERN: PCI:   ROM base host 00000000, pci 00000000, size 00000000
+ KERN: PCI:   cardbus_CIS 00000000, subsystem_id 0000, subsystem_vendor_id
+ 0000
+ KERN: PCI:   interrupt_line 00, interrupt_pin 00, min_grant 00,
+ max_latency 00
+ KERN: PCI:   base reg 0: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 1: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 2: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 3: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 4: host 00001800, pci 00001800, size 00000010, flags
+ 01
+ KERN: PCI:   base reg 5: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   Capabilities: (not supported)
+ KERN: PCI: [dom 0, bus  0] bus   0, device  6, function  2: vendor 8086,
+ device 7112, revision 01
+ KERN: PCI:   class_base 0c, class_function 03, class_api 00
+ KERN: PCI:   vendor 8086: Intel Corporation
+ KERN: PCI:   device 7112: 82371AB/EB/MB PIIX4 USB
+ KERN: PCI:   info: Serial bus controller (USB Controller, UHCI)
+ KERN: PCI:   line_size 00, latency 40, header_type 00, BIST 00
+ KERN: PCI:   ROM base host 00000000, pci 00000000, size 00000000
+ KERN: PCI:   cardbus_CIS 00000000, subsystem_id 0000, subsystem_vendor_id
+ 0000
+ KERN: PCI:   interrupt_line 0b, interrupt_pin 04, min_grant 00,
+ max_latency 00
+ KERN: PCI:   base reg 0: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 1: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 2: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 3: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 4: host 00001820, pci 00001820, size 00000020, flags
+ 01
+ KERN: PCI:   base reg 5: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   Capabilities: (not supported)
+ KERN: PCI: [dom 0, bus  0] bus   0, device  6, function  3: vendor 8086,
+ device 7113, revision 02
+ KERN: PCI:   class_base 06, class_function 80, class_api 00
+ KERN: PCI:   vendor 8086: Intel Corporation
+ KERN: PCI:   device 7113: 82371AB/EB/MB PIIX4 ACPI
+ KERN: PCI:   info: Bridge
+ KERN: PCI:   line_size 00, latency 00, header_type 00, BIST 00
+ KERN: PCI:   ROM base host 00000000, pci 00000000, size 00000000
+ KERN: PCI:   cardbus_CIS 00000000, subsystem_id 0000, subsystem_vendor_id
+ 0000
+ KERN: PCI:   interrupt_line 00, interrupt_pin 00, min_grant 00,
+ max_latency 00
+ KERN: PCI:   base reg 0: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 1: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 2: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 3: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 4: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 5: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   Capabilities: (not supported)
+ KERN: PCI: [dom 0, bus  0] bus   0, device  7, function  0: vendor 11c1,
+ device 0448, revision 01
+ KERN: PCI:   class_base 07, class_function 80, class_api 00
+ KERN: PCI:   vendor 11c1: Agere Systems
+ KERN: PCI:   device 0448: Lucent Win Modem
+ KERN: PCI:   info: Communication controller
+ KERN: PCI:   line_size 00, latency 00, header_type 00, BIST 00
+ KERN: PCI:   ROM base host 00000000, pci 00000000, size 00000000
+ KERN: PCI:   cardbus_CIS 00000040, subsystem_id 0131, subsystem_vendor_id
+ 1014
+ KERN: PCI:   interrupt_line 0b, interrupt_pin 01, min_grant fc,
+ max_latency 0e
+ KERN: PCI:   base reg 0: host f4101000, pci f4101000, size 00000100, flags
+ 00
+ KERN: PCI:   base reg 1: host 00001810, pci 00001810, size 00000010, flags
+ 09
+ KERN: PCI:   base reg 2: host 00002000, pci 00002000, size 00000100, flags
+ 01
+ KERN: PCI:   base reg 3: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 4: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   base reg 5: host 00000000, pci 00000000, size 00000000, flags
+ 00
+ KERN: PCI:   Capabilities: PM
+ KERN:   found root!!
+ KERN:   add module bus_managers/pci/root/device_v1 to list
+ KERN: has connection? no
+ KERN: module: bus_managers/isa/root/device_v1, support: 1
+ KERN: module: bus_managers/pci/root/device_v1, support: 1
+ KERN: register rest: bus_managers/isa/root/device_v1
+ KERN: free bus_managers/isa/root/device_v1
+ KERN: register rest: bus_managers/pci/root/device_v1
+ KERN: free bus_managers/pci/root/device_v1
+ KERN: get_boot_partitions(): boot volume message:
+ KERN: field: &quot;booted from image&quot;, type: BOOL (0x424f4f4c):
+ KERN:   [ 0] false
+ KERN: field: &quot;partition offset&quot;, type: LLNG (0x4c4c4e47):
+ KERN:   [ 0] 7057322496 (0x1a4a63200)
+ KERN: field: &quot;boot method&quot;, type: LONG (0x4c4f4e47):
+ KERN:   [ 0] 0 (0x0)
+ KERN: field: &quot;boot drive number&quot;, type: LLNG (0x4c4c4e47):
+ KERN:   [ 0] 128 (0x80)
+ KERN: field: &quot;disk identifier&quot;, type: RAWT (0x52415754):
+ KERN:   [ 0] data: &quot;0x805e89bc&quot;, 80 bytes
+ KERN: get_boot_partitions(): boot method type: 0
+ KERN: partitioning system: partitioning_systems/intel/extended/v1
+ KERN:
+ KDiskDeviceManager::_AddDiskSystem(partitioning_systems/intel/extended/v1)
+ KERN: KDiskSystem::Load(): partitioning_systems/intel/extended/v1 -&gt; 1
+ KERN: intel: ep_std_ops(0x1)
+ KERN: KDiskSystem::Unload(): partitioning_systems/intel/extended/v1 -&gt; 0
+ KERN: intel: ep_std_ops(0x2)
+ KERN: KKERN: DiskDeviceManager::_AddDiskSystem() done: No error
+ KERN: partitioning system: partitioning_systems/intel/map/v1
+ KERN:
+ KDiskDeviceManager::_AddDiskSystem(partitioning_systems/intel/map/v1)
+ KERN: KDiskSystem::Load(): partitioning_systems/intel/map/v1 -&gt; 1
+ KERN: intel: pm_std_ops(0x1)
+ KERN: KDiskSystem::Unload(): partitioning_systems/intel/map/v1 -&gt; 0
+ KERN: intel: pm_std_ops(0x2)
+ KERN: KDiskDeviceManager::_AddDiskSystem() done: No error
+ KERN: file system: file_systems/bfs/v1
+ KERN: KDiskDeviceManager::_AddDiskSystem(file_systems/bfs/v1)
+ KERN: KDiskSystem::Load(): file_systems/bfs/v1 -&gt; 1
+ KERN: KDiskSystem::Unload(): file_systems/bfs/v1 -&gt; 0
+ KERN: KDiskDeviceManager::_AddDiskSystem() done: No error
+ KERN: file system: file_systems/devfs/v1
+ KERN: KDiskDeviceManager::_AddDiskSystem(file_systems/devfs/v1)
+ KERN: KDiskSystem::Load(): file_systems/devfs/v1 -&gt; 1
+ KERN: KDiskSystem::Unload(): file_systems/devfs/v1 -&gt; 0
+ KERN: KDiskDeviceManager::_AddDiskSystem() done: No error
+ KERN: file system: file_systems/rootfs/v1
+ KERN: KDiskDeviceManager::_AddDiskSystem(file_systems/rootfs/v1)
+ KERN: KDiskSystem::Load(): file_systems/rootfs/v1 -&gt; 1
+ KERN: KDiskSystem::Unload(): file_systems/rootfs/v1 -&gt; 0
+ KERN: KDiskDeviceManager::_AddDiskSystem() done: No error
+ KERN: number of disk systems: 5
+ KERN: KDiskDeviceManager::_Scan(/dev/disk)
+ KERN: [35mahci:[0m ahci_get_supported_paths
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/scsi/ahci/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/ide/legacy_sata/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/ide/silicon_image_3112/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/ide!!
+ KERN:   add module busses/ide/generic_ide_pci/device_v1 to list
+ KERN: has connection? yes
+ KERN: [35mahci:[0m ahci_supports_device
+ KERN: module: busses/scsi/ahci/device_v1, support: 0
+ KERN: module: busses/ide/legacy_sata/device_v1, support: 0
+ KERN: module: busses/ide/silicon_image_3112/device_v1, support: 0
+ KERN: module: busses/ide/generic_ide_pci/device_v1, support: 0
+ KERN: free busses/scsi/ahci/device_v1
+ KERN: free busses/ide/legacy_sata/device_v1
+ KERN: free busses/ide/silicon_image_3112/device_v1
+ KERN: free busses/ide/generic_ide_pci/device_v1
+ KERN: [35mahci:[0m ahci_get_supported_paths
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/scsi/ahci/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/ide/legacy_sata/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/ide/silicon_image_3112/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/ide!!
+ KERN:   add module busses/ide/generic_ide_pci/device_v1 to list
+ KERN: has connection? yes
+ KERN: [35mahci:[0m ahci_supports_device
+ KERN: module: busses/scsi/ahci/device_v1, support: 0
+ KERN: module: busses/ide/legacy_sata/device_v1, support: 0
+ KERN: module: busses/ide/silicon_image_3112/device_v1, support: 0
+ KERN: module: busses/ide/generic_ide_pci/device_v1, support: 0
+ KERN: free busses/scsi/ahci/device_v1
+ KERN: free busses/ide/legacy_sata/device_v1
+ KERN: free busses/ide/silicon_image_3112/device_v1
+ KERN: free busses/ide/generic_ide_pci/device_v1
+ KERN: [35mahci:[0m ahci_get_supported_paths
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/scsi/ahci/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/ide/legacy_sata/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/ide/silicon_image_3112/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/ide!!
+ KERN:   add module busses/ide/generic_ide_pci/device_v1 to list
+ KERN: has connection? yes
+ KERN: [35mahci:[0m ahci_supports_device
+ KERN: module: busses/scsi/ahci/device_v1, support: 0
+ KERN: module: busses/ide/legacy_sata/device_v1, support: 0
+ KERN: module: busses/ide/silicon_image_3112/device_v1, support: 0
+ KERN: module: busses/ide/generic_ide_pci/device_v1, support: 0
+ KERN: free busses/scsi/ahci/device_v1
+ KERN: free busses/ide/legacy_sata/device_v1
+ KERN: free busses/ide/silicon_image_3112/device_v1
+ KERN: free busses/ide/generic_ide_pci/device_v1
+ KERN: [35mahci:[0m ahci_get_supported_paths
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/scsi/ahci/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/ide/legacy_sata/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/ide/silicon_image_3112/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/ide!!
+ KERN:   add module busses/ide/generic_ide_pci/device_v1 to list
+ KERN: has connection? yes
+ KERN: [35mahci:[0m ahci_supports_device
+ KERN: module: busses/scsi/ahci/device_v1, support: 0
+ KERN: module: busses/ide/legacy_sata/device_v1, support: 0
+ KERN: module: busses/ide/silicon_image_3112/device_v1, support: 0
+ KERN: module: busses/ide/generic_ide_pci/device_v1, support: 0.3
+ KERN: PCI-IDE: Controller in legacy mode: cmd 0x1f0, ctrl 0x3f6, irq 14
+ KERN: PCI-IDE: init channel...
+ KERN: PCI-IDE: bus   0, device  6, function  1: vendor 8086, device 7111
+ KERN: PCI-IDE: channel index 0
+ KERN: PCI-IDE: bus master base 0x1800
+ KERN: PCI-IDE: init channel done
+ KERN: IDE: scan_device_worker: bus 0x90ad2100, device-number 0
+ KERN: IDE: create_device: bus 0x90ad2100, device-number 0
+ KERN: IDE: setup_device_links: bus 0x90ad2100, device 0x90ad0400
+ KERN: IDE: scan_device_int: device 0x90ad0400, atapi 0
+ KERN: IDE: scan_device_int: waiting 100ms...
+ KERN: IDE: scan_device_int: got a fast response
+ KERN: IDE: scan_device_int: device found
+ KERN: IDE: scan_device_worker: bus 0x90ad2100, device-number 1
+ KERN: IDE: create_device: bus 0x90ad2100, device-number 1
+ KERN: IDE: setup_device_links: bus 0x90ad2100, device 0x90ad0800
+ KERN: IDE: scan_device_int: device 0x90ad0800, atapi 0
+ KERN: IDE: scan_device_int: send_command failed
+ KERN: IDE: scan_device_int: device 0x90ad0800, atapi 1
+ KERN: IDE: scan_device_int: waiting 100ms...
+ KERN: IDE: scan_device_int: got a fast response
+ KERN: IDE: scan_device_int: device found
+ KERN: IDE: destroy_device: device 0x90ad0800
+ KERN: IDE: cleanup_device_links: device 0x90ad0800
+ KERN: IDE: scan_device_worker: bus 0x90ad2100, device-number 0
+ KERN: IDE: destroy_device: device 0x90ad0400
+ KERN: IDE: cleanup_device_links: device 0x90ad0400
+ KERN: IDE: create_device: bus 0x90ad2100, device-number 0
+ KERN: IDE: setup_device_links: bus 0x90ad2100, device 0x90ad0400
+ KERN: IDE: scan_device_int: device 0x90ad0400, atapi 0
+ KERN: IDE: scan_device_int: waiting 100ms...
+ KERN: IDE: scan_device_int: got a fast response
+ KERN: IDE: scan_device_int: device found
+ KERN: IDE: scan_device_worker: bus 0x90ad2100, device-number 1
+ KERN: IDE: create_device: bus 0x90ad2100, device-number 1
+ KERN: IDE: setup_device_links: bus 0x90ad2100, device 0x90ad0800
+ KERN: IDE: scan_device_int: device 0x90ad0800, atapi 0
+ KERN: IDE: scan_device_int: send_command failed
+ KERN: IDE: scan_device_int: device 0x90ad0800, atapi 1
+ KERN: IDE: scan_device_int: waiting 100ms...
+ KERN: IDE: scan_device_int: got a fast response
+ KERN: IDE: scan_device_int: device found
+ KERN: IDE: destroy_device: device 0x90ad0800
+ KERN: IDE: cleanup_device_links: device 0x90ad0800
+ KERN:   found scsi!!
+ KERN:   add module drivers/disk/scsi/scsi_dsk/device_v1 to list
+ KERN: [35mahci:[0m ahci_get_supported_paths
+ KERN:   found scsi!!
+ KERN:   add module drivers/disk/scsi/scsi_cd/device_v1 to list
+ KERN: has connection? yes
+ KERN: module: drivers/disk/scsi/scsi_dsk/device_v1, support: 0.6
+ KERN: module: drivers/disk/scsi/scsi_cd/device_v1, support: 0
+ KERN: tried best module: drivers/disk/scsi/scsi_dsk/device_v1: No error
+ KERN: free drivers/disk/scsi/scsi_cd/device_v1
+ KERN: PCI-IDE: Controller in legacy mode: cmd 0x170, ctrl 0x376, irq 15
+ KERN: PCI-IDE: init channel...
+ KERN: PCI-IDE: bus   0, device  6, function  1: vendor 8086, device 7111
+ KERN: PCI-IDE: channel index 1
+ KERN: PCI-IDE: bus master base 0x1808
+ KERN: PCI-IDE: init channel done
+ KERN: IDE: scan_device_worker: bus 0x90ad2300, device-number 0
+ KERN: IDE: create_device: bus 0x90ad2300, device-number 0
+ KERN: IDE: setup_device_links: bus 0x90ad2300, device 0x90ad0800
+ KERN: IDE: scan_device_int: device 0x90ad0800, atapi 0
+ KERN: IDE: scan_device_int: waiting 100ms...
+ KERN: IDE: scan_device_int: got a fast response
+ KERN: IDE: scan_device_int: error bit set - no device or wrong type
+ (status: 0x51)
+ KERN: IDE: scan_device_int: device 0x90ad0800, atapi 1
+ KERN: IDE: scan_device_int: waiting 100ms...
+ KERN: IDE: scan_device_int: got a fast response
+ KERN: IDE: scan_device_int: device found
+ KERN: IDE: scan_device_worker: bus 0x90ad2300, device-number 1
+ KERN: IDE: create_device: bus 0x90ad2300, device-number 1
+ KERN: IDE: setup_device_links: bus 0x90ad2300, device 0x90ad0c00
+ KERN: IDE: scan_device_int: device 0x90ad0c00, atapi 0
+ KERN: IDE: scan_device_int: send_command failed
+ KERN: IDE: scan_device_int: device 0x90ad0c00, atapi 1
+ KERN: IDE: scan_device_int: waiting 100ms...
+ KERN: IDE: scan_device_int: no fast response to inquiry
+ KERN: IDE: scan_device_int: status 0x01
+ KERN: IDE: scan_device_int: bKERN: usy bit not set after 100ms - probably
+ noone there
+ KERN: IDE: scan_device_int: aborting because busy bit not set
+ KERN: IDE: destroy_device: device 0x90ad0c00
+ KERN: IDE: cleanup_device_links: device 0x90ad0c00
+ KERN: IDE: scan_device_worker: bus 0x90ad2300, device-number 0
+ KERN: IDE: destroy_device: device 0x90ad0800
+ KERN: IDE: cleanup_device_links: device 0x90ad0800
+ KERN: IDE: create_device: bus 0x90ad2300, device-number 0
+ KERN: IDE: setup_device_links: bus 0x90ad2300, device 0x90ad0800
+ KERN: IDE: scan_device_int: device 0x90ad0800, atapi 0
+ KERN: IDE: scan_device_int: waiting 100ms...
+ KERN: IDE: scan_device_int: got a fast response
+ KERN: IDE: scan_device_int: error bit set - no device or wrong type
+ (status: 0x51)
+ KERN: IDE: scan_device_int: device 0x90ad0800, atapi 1
+ KERN: IDE: scan_device_int: waiting 100ms...
+ KERN: IDE: scan_device_int: got a fast response
+ KERN: IDE: scan_device_int: device found
+ KERN: IDE: scan_device_worker: bus 0x90ad2300, device-number 1
+ KERN: IDE: create_device: bus 0x90ad2300, device-number 1
+ KERN: IDE: setup_device_links: bus 0x90ad2300, device 0x90ad0c00
+ KERN: IDE: scan_device_int: device 0x90ad0c00, atapi 0
+ KERN: IDE: scan_device_int: send_command failed
+ KERN: IDE: scan_device_int: device 0x90ad0c00, atapi 1
+ KERN: IDE: scan_device_int: waiting 100ms...
+ KERN: IDE: scan_device_int: no fast response to inquiry
+ KERN: IDE: scan_device_int: status 0x01
+ KERN: IDE: scan_device_int: busy bit not set after 100ms - probably noone
+ there
+ KERN: IDE: scan_device_int: aborting because busy bit not set
+ KERN: IDE: destroy_device: device 0x90ad0c00
+ KERN: IDE: cleanup_device_links: device 0x90ad0c00
+ KERN:   found scsi!!
+ KERN:   add module drivers/disk/scsi/scsi_dsk/device_v1 to list
+ KERN: [35mahci:[0m ahci_get_supported_paths
+ KERN:   found scsi!!
+ KERN:   add module drivers/disk/scsi/scsi_cd/device_v1 to list
+ KERN: has connection? yes
+ KERN: module: drivers/disk/scsi/scsi_dsk/device_v1, support: 0
+ KERN: module: drivers/disk/scsi/scsi_cd/device_v1, support: 0.6
+ KERN: tried best module: drivers/disk/scsi/scsi_cd/device_v1: No error
+ KERN: free drivers/disk/scsi/scsi_dsk/device_v1
+ KERN: tried best module: busses/ide/generic_ide_pci/device_v1: No error
+ KERN: free busses/scsi/ahci/device_v1
+ KERN: free busses/ide/legacy_sata/device_v1
+ KERN: free busses/ide/silicon_image_3112/device_v1
+ KERN: [35mahci:[0m ahci_get_supported_paths
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/scsi/ahci/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/ide/legacy_sata/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/ide/silicon_image_3112/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/ide!!
+ KERN:   add module busses/ide/generic_ide_pci/device_v1 to list
+ KERN: has connection? yes
+ KERN: [35mahci:[0m ahci_supports_device
+ KERN: module: busses/scsi/ahci/device_v1, support: 0
+ KERN: module: busses/ide/legacy_sata/device_v1, support: 0
+ KERN: module: busses/ide/silicon_image_3112/device_v1, support: 0
+ KERN: module: busses/ide/generic_ide_pci/device_v1, support: 0
+ KERN: free busses/scsi/ahci/device_v1
+ KERN: free busses/ide/legacy_sata/device_v1
+ KERN: free busses/ide/silicon_image_3112/device_v1
+ KERN: free busses/ide/generic_ide_pci/device_v1
+ KERN: [35mahci:[0m ahci_get_supported_paths
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/scsi/ahci/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/ide/legacy_sata/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/ide/silicon_image_3112/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/ide!!
+ KERN:   add module busses/ide/generic_ide_pci/device_v1 to list
+ KERN: has connection? yes
+ KERN: [35mahci:[0m ahci_supports_device
+ KERN: module: busses/scsi/ahci/device_v1, support: 0
+ KERN: module: busses/ide/legacy_sata/device_v1, support: 0
+ KERN: module: busses/ide/silicon_image_3112/device_v1, support: 0
+ KERN: module: busses/ide/generic_ide_pci/device_v1, support: 0
+ KERN: free busses/scsi/ahci/device_v1
+ KERN: free busses/ide/legacy_sata/device_v1
+ KERN: free busses/ide/silicon_image_3112/device_v1
+ KERN: free busses/ide/generic_ide_pci/device_v1
+ KERN: [35mahci:[0m ahci_get_supported_paths
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/scsi/ahci/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/ide/legacy_sata/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/ide/silicon_image_3112/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/ide!!
+ KERN:   add module busses/ide/generic_ide_pci/device_v1 to list
+ KERN: has connection? yes
+ KERN: [35mahci:[0m ahci_supports_device
+ KERN: module: busses/scsi/ahci/device_v1, support: 0
+ KERN: module: busses/ide/legacy_sata/device_v1, support: 0
+ KERN: module: busses/ide/silicon_image_3112/device_v1, support: 0
+ KERN: module: busses/ide/generic_ide_pci/device_v1, support: 0
+ KERN: free busses/scsi/ahci/device_v1
+ KERN: free busses/ide/legacy_sata/device_v1
+ KERN: free busses/ide/silicon_image_3112/device_v1
+ KERN: free busses/ide/generic_ide_pci/device_v1
+ KERN: [35mahci:[0m ahci_get_supported_paths
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/scsi/ahci/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/ide/legacy_sata/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/ide/silicon_image_3112/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/ide!!
+ KERN:   add module busses/ide/generic_ide_pci/device_v1 to list
+ KERN: has connection? yes
+ KERN: [35mahci:[0m ahci_supports_device
+ KERN: module: busses/scsi/ahci/device_v1, support: 0
+ KERN: module: busses/ide/legacy_sata/device_v1, support: 0
+ KERN: module: busses/ide/silicon_image_3112/device_v1, support: 0
+ KERN: module: busses/ide/generic_ide_pci/device_v1, support: 0
+ KERN: free busses/scsi/ahci/device_v1
+ KERN: free busses/ide/legacy_sata/device_v1
+ KERN: free busses/ide/silicon_image_3112/device_v1
+ KERN: free busses/ide/generic_ide_pci/device_v1
+ KERN: [35mahci:[0m ahci_get_supported_paths
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/scsi/ahci/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/ide/legacy_sata/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/ide/silicon_image_3112/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/ide!!
+ KERN:   add module busses/ide/generic_ide_pci/device_v1 to list
+ KERN: has connection? yes
+ KERN: [35mahci:[0m ahci_supports_device
+ KERN: module: busses/scsi/ahci/device_v1, support: 0
+ KERN: module: busses/ide/legacy_sata/device_v1, support: 0
+ KERN: module: busses/ide/silicon_image_3112/device_v1, support: 0
+ KERN: module: busses/ide/generic_ide_pci/device_v1, support: 0
+ KERN: free busses/scsi/ahci/device_v1
+ KERN: free busses/ide/legacy_sata/device_v1
+ KERN: free busses/ide/silicon_image_3112/device_v1
+ KERN: free busses/ide/generic_ide_pci/device_v1
+ KERN: [35mahci:[0m ahci_get_supported_paths
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/scsi/ahci/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/ide/legacy_sata/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/ide/silicon_image_3112/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/ide!!
+ KERN:   add module busses/ide/generic_ide_pci/device_v1 to list
+ KERN: has connection? yes
+ KERN: [35mahci:[0m ahci_supports_device
+ KERN: module: busses/scsi/ahci/device_v1, support: 0
+ KERN: module: busses/ide/legacy_sata/device_v1, support: 0
+ KERN: module: busses/ide/silicon_image_3112/device_v1, support: 0
+ KERN: module: busses/ide/generic_ide_pci/device_v1, support: 0
+ KERN: free busses/scsi/ahci/device_v1
+ KERN: free busses/ide/legacy_sata/device_v1
+ KERN: free busses/ide/silicon_image_3112/device_v1
+ KERN: free busses/ide/generic_ide_pci/device_v1
+ KERN: [35mahci:[0m ahci_get_supported_paths
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/scsi/ahci/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/ide/legacy_sata/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/sata!!
+ KERN:   add module busses/ide/silicon_image_3112/device_v1 to list
+ KERN:   found pci!!
+ KERN:   found drivers/dev/disk/ide!!
+ KERN:   add module busses/ide/generic_ide_pci/device_v1 to list
+ KERN: has connection? yes
+ KERN: [35mahci:[0m ahci_supports_device
+ KERN: module: busses/scsi/ahci/device_v1, support: 0
+ KERN: module: busses/ide/legacy_sata/device_v1, support: 0
+ KERN: module: busses/ide/silicon_image_3112/device_v1, support: 0
+ KERN: module: busses/ide/generic_ide_pci/device_v1, support: 0
+ KERN: free busses/scsi/ahci/device_v1
+ KERN: free busses/ide/legacy_sata/device_v1
+ KERN: free busses/ide/silicon_image_3112/device_v1
+ KERN: free busses/ide/generic_ide_pci/device_v1
+ KERN: [35mahci:[0m ahci_get_supported_paths
+ KERN:   foundKERN:  isa!!
+ KERN:   found drivers/dev/disk/ide!!
+ KERN:   add module busses/ide/ide_isa/device_v1 to list
+ KERN: has connection? yes
+ KERN: module: busses/ide/ide_isa/device_v1, support: 0.6
+ KERN: ISA-IDE: can't acquire resources 0x1f0 and 0x3f6
+ KERN: ISA-IDE: can't acquire resources 0x170 and 0x376
+ KERN: tried best module: busses/ide/ide_isa/device_v1: No error
+ KERN: [35mahci:[0m ahci_get_supported_paths
+ KERN:   found isa!!
+ KERN:   found drivers/dev/disk/ide!!
+ KERN:   add module busses/ide/ide_isa/device_v1 to list
+ KERN: has connection? yes
+ KERN: module: busses/ide/ide_isa/device_v1, support: 0.6
+ KERN: ISA-IDE: can't acquire resources 0x1f0 and 0x3f6
+ KERN: ISA-IDE: can't acquire resources 0x170 and 0x376
+ KERN: tried best module: busses/ide/ide_isa/device_v1: No error
+ KERN: KDiskDeviceManager::_Scan(/dev/disk/ata)
+ KERN: [35mahci:[0m ahci_get_supported_paths
+ KERN:   found isa!!
+ KERN: has connection? yes
+ KERN: KDiskDeviceManager::_Scan(/dev/disk/ata/0)
+ KERN: [35mahci:[0m ahci_get_supported_paths
+ KERN:   found isa!!
+ KERN: has connection? yes
+ KERN: KDiskDeviceManager::_Scan(/dev/disk/ata/0/master)
+ KERN: [35mahci:[0m ahci_get_supported_paths
+ KERN:   found isa!!
+ KERN: has connection? yes
+ KERN: KDiskDeviceManager::_Scan(/dev/disk/ata/0/master/raw)
+ KERN:   found device: /dev/disk/ata/0/master/raw
+ KERN: KDiskDeviceManager::_Scan(/dev/disk/atapi)
+ KERN: [35mahci:[0m ahci_get_supported_paths
+ KERN:   found isa!!
+ KERN: has connection? yes
+ KERN: KDiskDeviceManager::_Scan(/dev/disk/atapi/1)
+ KERN: [35mahci:[0m ahci_get_supported_paths
+ KERN:   found isa!!
+ KERN: has connection? yes
+ KERN: KDiskDeviceManager::_Scan(/dev/disk/atapi/1/master)
+ KERN: [35mahci:[0m ahci_get_supported_paths
+ KERN:   found isa!!
+ KERN: has connection? yes
+ KERN: KDiskDeviceManager::_Scan(/dev/disk/atapi/1/master/raw)
+ KERN:   found device: /dev/disk/atapi/1/master/raw
+ KERN: KDiskDeviceManager::_ScanPartition(/dev/disk/ata/0/master/raw)
+ KERN: KDiskSystem::Load(): partitioning_systems/intel/extended/v1 -&gt; 1
+ KERN: intel: ep_std_ops(0x1)
+ KERN:   trying: partitioning_systems/intel/extended/v1
+ KERN:   returned: -1000/1000
+ KERN: KDiskSystem::Unload(): partitioning_systems/intel/extended/v1 -&gt; 0
+ KERN: intel: ep_std_ops(0x2)
+ KERN: KDiskSystem::Load(): partitioning_systems/intel/map/v1 -&gt; 1
+ KERN: intel: pm_std_ops(0x1)
+ KERN:   trying: partitioning_systems/intel/map/v1
+ KERN: intel: pm_identify_partition(0, 0: 0, 10056130560, 512)
+ KERN: Partition::SetTo(): active: 80
+ KERN: Partition::SetTo(): active: 0
+ KERN: Last message repeated 9 times.
+ KERN:   returned: 810/1000
+ KERN: KDiskSystem::Load(): file_systems/bfs/v1 -&gt; 1
+ KERN:   trying: file_systems/bfs/v1
+ KERN:   returned: -2147483648/1000
+ KERN: KDiskSystem::Unload(): file_systems/bfs/v1 -&gt; 0
+ KERN: KDiskSystem::Load(): file_systems/devfs/v1 -&gt; 1
+ KERN:   trying: file_systems/devfs/v1
+ KERN:   returned: -1000/1000
+ KERN: KDiskSystem::Unload(): file_systems/devfs/v1 -&gt; 0
+ KERN: KDiskSystem::Load(): file_systems/rootfs/v1 -&gt; 1
+ KERN:   trying: file_systems/rootfs/v1
+ KERN:   returned: -1000/1000
+ KERN: KDiskSystem::Unload(): file_systems/rootfs/v1 -&gt; 0
+ KERN:   scanning with: partitioning_systems/intel/map/v1
+ KERN: intel: pm_scan_partition(0, 0: 0, 10056130560, 512)
+ KERN: KDiskSystem::Load(): partitioning_systems/intel/map/v1 -&gt; 2
+ KERN: KDiskDeviceManager::_ScanPartition(/dev/disk/ata/0/master/0)
+ KERN: KDiskSystem::Load(): partitioning_systems/intel/extended/v1 -&gt; 1
+ KERN: intel: ep_std_ops(0x1)
+ KERN:   trying: partitioning_systems/intel/extended/v1
+ KERN: intel: ep_identify_partition(0, 32256, 98671104, 512)
+ KERN:   returned: -1000/1000
+ KERN: KDiskSystem::Unload(): partitioning_systems/intel/extended/v1 -&gt; 0
+ KERN: intel: ep_std_ops(0x2)
+ KERN: KDiskSystem::Load(): partitioning_systems/intel/map/v1 -&gt; 3
+ KERN:   trying: partitioning_systems/intel/map/v1
+ KERN: intel: pm_identify_partition(0, 2: 32256, 98671104, 512)
+ KERN: Partition::SetTo(): active: c3
+ KERN: intel: _ParsePrimary(): partition 0: bad location, ignoring
+ KERN: Partition::SetTo(): active: ad
+ KERN: intel: _ParsePrimary(): partition 1: bad location, ignoring
+ KERN: Partition::SetTo(): active: 69
+ KERN: intel: _ParsePrimary(): partition 2: bad location, ignoring
+ KERN: Partition::SetTo(): active: 79
+ KERN: intel: _ParsePrimary(): partition 3: bad location, ignoring
+ KERN:   returned: 100/1000
+ KERN: KDiskSystem::Load(): file_systems/bfs/v1 -&gt; 1
+ KERN:   trying: file_systems/bfs/v1
+ KERN:   returned: 800/1000
+ KERN: KDiskSystem::Unload(): partitioning_systems/intel/map/v1 -&gt; 2
+ KERN: KDiskSystem::Load(): file_systems/devfs/v1 -&gt; 1
+ KERN:   trying: file_systems/devfs/v1
+ KERN:   returned: -1000/1000
+ KERN: KDiskSystem::Unload(): file_systems/devfs/v1 -&gt; 0
+ KERN: KDiskSystem::Load(): file_systems/rootfs/v1 -&gt; 1
+ KERN:   trying: file_systems/rootfs/v1
+ KERN:   returned: -1000/1000
+ KERN: KDiskSystem::Unload(): file_systems/rootfs/v1 -&gt; 0
+ KERN:   scanning with: file_systems/bfs/v1
+ KERN: KDiskSystem::Load(): file_systems/bfs/v1 -&gt; 2
+ KERN: KDiskSystem::Unload(): file_systems/bfs/v1 -&gt; 1
+ KERN: KDiskDeviceManager::_ScanPartition(/dev/disk/ata/0/master/1)
+ KERN: KDiskSystem::Load(): partitioning_systems/intel/extended/v1 -&gt; 1
+ KERN: intel: ep_std_ops(0x1)
+ KERN:   trying: partitioning_systems/intel/extended/v1
+ KERN: intel: ep_identify_partition(0, 98703360, 254983680, 512)
+ KERN:   returned: -1000/1000
+ KERN: KDiskSystem::Unload(): partitioning_systems/intel/extended/v1 -&gt; 0
+ KERN: intel: ep_std_ops(0x2)
+ KERN: KDiskSystem::Load(): partitioning_systems/intel/map/v1 -&gt; 3
+ KERN:   trying: partitioning_systems/intel/map/v1
+ KERN: intel: pm_identify_partition(0, 3: 98703360, 254983680, 512)
+ KERN: Partition::SetTo(): active: c3
+ KERN: intel: _ParsePrimary(): partition 0: bad location, ignoring
+ KERN: Partition::SetTo(): active: ad
+ KERN: intel: _ParsePrimary(): partition 1: bad location, ignoring
+ KERN: Partition::SetTo(): active: 69
+ KERN: intel: _ParsePrimary(): partition 2: bad location, ignoring
+ KERN: Partition::SetTo(): active: 79
+ KERN: intel: _ParsePrimary(): partition 3: bad location, ignoring
+ KERN:   returned: 100/1000
+ KERN: KDiskSystem::Load(): file_systems/bfs/v1 -&gt; 2
+ KERN:   trying: file_systems/bfs/v1
+ KERN:   returned: 800/1000
+ KERN: KDiskSystem::Unload(): partitioning_systems/intel/map/v1 -&gt; 2
+ KERN: KDiskSystem::Load(): file_systems/devfs/v1 -&gt; 1
+ KERN:   trying: file_systems/devfs/v1
+ KERN:   returned: -1000/1000
+ KERN: KDiskSystem::Unload(): file_systems/devfs/v1 -&gt; 0
+ KERN: KDiskSystem::Load(): file_systems/rootfs/v1 -&gt; 1
+ KERN:   trying: file_systems/rootfs/v1
+ KERN:   returned: -1000/1000
+ KERN: KDiskSystem::Unload(): file_systems/rootfs/v1 -&gt; 0
+ KERN:   scanning with: file_systems/bfs/v1
+ KERN: KDiskSystem::Load(): file_systems/bfs/v1 -&gt; 3
+ KERN: KDiskSystem::Unload(): file_systems/bfs/v1 -&gt; 2
+ KERN: KDiskDeviceManager::_ScanPartition(/dev/disk/ata/0/master/2)
+ KERN: KDiskSystem::Load(): partitioning_systems/intel/extended/v1 -&gt; 1
+ KERN: intel: ep_std_ops(0x1)
+ KERN:   trying: partitioning_systems/intel/extended/v1
+ KERN: intel: ep_identify_partition(0, 353687040, 9697605120, 512)
+ KERN:   returned: 949/1000
+ KERN: KDiskSystem::Load(): partitioning_systems/intel/map/v1 -&gt; 3
+ KERN:   trying: partitioning_systems/intel/map/v1
+ KERN: intel: pm_identify_partition(0, 4: 353687040, 9697605120, 512)
+ KERN:   returned: -1000/1000
+ KERN: KDiskSystem::Unload(): partitioning_systems/intel/map/v1 -&gt; 2
+ KERN: KDiskSystem::Load(): file_systems/bfs/v1 -&gt; 3
+ KERN:   trying: file_systems/bfs/v1
+ KERN:   returned: -2147483648/1000
+ KERN: KDiskSystem::Unload(): file_systems/bfs/v1 -&gt; 2
+ KERN: KDiskSystem::Load(): file_systems/devfs/v1 -&gt; 1
+ KERN:   trying: file_systems/devfs/v1
+ KERN:   returned: -1000/1000
+ KERN: KDiskSystem::Unload(): file_systems/devfs/v1 -&gt; 0
+ KERN: KDiskSystem::Load(): file_systems/rootfs/v1 -&gt; 1
+ KERN:   trying: file_systems/rootfs/v1
+ KERN:   returned: -1000/1000
+ KERN: KDiskSystem::Unload(): file_systems/rootfs/v1 -&gt; 0
+ KERN:   scanning with: partitioning_systems/intel/extended/v1
+ KERN: intel: ep_scan_partition(0, 353687040, 9697605120, 512)
+ KERN: KDiskSystem::Load(): partitioning_systems/intel/extended/v1 -&gt; 2
+ KERN: KDiskDeviceManager::_ScanPartition(/dev/disk/ata/0/master/2_0)
+ KERN: KDiskSystem::Load(): partitioning_systems/intel/extended/v1 -&gt; 3
+ KERN:   trying: partitioning_systems/intel/extended/v1
+ KERN: intel: ep_identify_partition(0, 353719296, 2697859584, 512)
+ KERN:   returned: -1000/1000
+ KERN: KDiskSystem::Unload(): partitioning_systems/intel/extended/v1 -&gt; 2
+ KERN: KDiskSystem::Load(): partitioning_systems/intel/map/v1 -&gt; 3
+ KERN:   trying: partitioning_systems/intel/map/v1
+ KERN: intel: pm_identify_partition(0, 5: 353719296, 2697859584, 512)
+ KERN: Partition::SetTo(): active: c3
+ KERN: intel: _ParsePrimary(): partition 0: bad location, ignoring
+ KERN: Partition::SetTo(): active: ad
+ KERN: intel: _ParsePrimary(): partition 1: bad location, ignoring
+ KERN: Partition::SetTo(): active: 69
+ KERN: intel: _ParsePrimary(): partition 2: bad location, ignoring
+ KERN: Partition::SetTo(): active: 79
+ KERN: intel: _ParsePrimary(): partition 3: bad location, ignoring
+ KERN:   returned: 100/1000
+ KERN: KDiskSystem::Load(): file_systems/bfs/v1 -&gt; 3
+ KERN:   trying: file_systems/bfs/v1
+ KERN:   returned: 800/1000
+ KERN: KDiskSystem::Unload(): partitioning_systems/intel/map/v1 -&gt; 2
+ KERN: KDiskSystem::Load(): file_systems/devfs/v1 -&gt; 1
+ KERN:   trying: file_systems/devfs/v1
+ KERN:   returned: KERN: -1000/1000
+ KERN: KDiskSystem::Unload(): file_systems/devfs/v1 -&gt; 0
+ KERN: KDiskSystem::Load(): file_systems/rootfs/v1 -&gt; 1
+ KERN:   trying: file_systems/rootfs/v1
+ KERN:   returned: -1000/1000
+ KERN: KDiskSystem::Unload(): file_systems/rootfs/v1 -&gt; 0
+ KERN:   scanning with: file_systems/bfs/v1
+ KERN: KDiskSystem::Load(): file_systems/bfs/v1 -&gt; 4
+ KERN: KDiskSystem::Unload(): file_systems/bfs/v1 -&gt; 3
+ KERN: KDiskDeviceManager::_ScanPartition(/dev/disk/ata/0/master/2_1)
+ KERN: KDiskSystem::Load(): partitioning_systems/intel/extended/v1 -&gt; 3
+ KERN:   trying: partitioning_systems/intel/extended/v1
+ KERN: intel: ep_identify_partition(0, 3051611136, 1003451904, 512)
+ KERN:   returned: -1000/1000
+ KERN: KDiskSystem::Unload(): partitioning_systems/intel/extended/v1 -&gt; 2
+ KERN: KDiskSystem::Load(): partitioning_systems/intel/map/v1 -&gt; 3
+ KERN:   trying: partitioning_systems/intel/map/v1
+ KERN: intel: pm_identify_partition(0, 6: 3051611136, 1003451904, 512)
+ KERN: Partition::SetTo(): active: c3
+ KERN: intel: _ParsePrimary(): partition 0: bad location, ignoring
+ KERN: Partition::SetTo(): active: ad
+ KERN: intel: _ParsePrimary(): partition 1: bad location, ignoring
+ KERN: Partition::SetTo(): active: 69
+ KERN: intel: _ParsePrimary(): partition 2: bad location, ignoring
+ KERN: Partition::SetTo(): active: 79
+ KERN: intel: _ParsePrimary(): partition 3: bad location, ignoring
+ KERN:   returned: 100/1000
+ KERN: KDiskSystem::Load(): file_systems/bfs/v1 -&gt; 4
+ KERN:   trying: file_systems/bfs/v1
+ KERN:   returned: 800/1000
+ KERN: KDiskSystem::Unload(): partitioning_systems/intel/map/v1 -&gt; 2
+ KERN: KDiskSystem::Load(): file_systems/devfs/v1 -&gt; 1
+ KERN:   trying: file_systems/devfs/v1
+ KERN:   returned: -1000/1000
+ KERN: KDiskSystem::Unload(): file_systems/devfs/v1 -&gt; 0
+ KERN: KDiskSystem::Load(): file_systems/rootfs/v1 -&gt; 1
+ KERN:   trying: file_systems/rootfs/v1
+ KERN:   returned: -1000/1000
+ KERN: KDiskSystem::Unload(): file_systems/rootfs/v1 -&gt; 0
+ KERN:   scanning with: file_systems/bfs/v1
+ KERN: KDiskSystem::Load(): file_systems/bfs/v1 -&gt; 5
+ KERN: KDiskSystem::Unload(): file_systems/bfs/v1 -&gt; 4
+ KERN: KDiskDeviceManager::_ScanPartition(/dev/disk/ata/0/master/2_2)
+ KERN: KDiskSystem::Load(): partitioning_systems/intel/extended/v1 -&gt; 3
+ KERN:   trying: partitioning_systems/intel/extended/v1
+ KERN: intel: ep_identify_partition(0, 4055095296, 3002194944, 512)
+ KERN:   returned: -1000/1000
+ KERN: KDiskSystem::Unload(): partitioning_systems/intel/extended/v1 -&gt; 2
+ KERN: KDiskSystem::Load(): partitioning_systems/intel/map/v1 -&gt; 3
+ KERN:   trying: partitioning_systems/intel/map/v1
+ KERN: intel: pm_identify_partition(0, 7: 4055095296, 3002194944, 512)
+ KERN: Partition::SetTo(): active: 58
+ KERN: intel: _ParsePrimary(): partition 0: bad location, ignoring
+ KERN: Partition::SetTo(): active: 66
+ KERN: intel: _ParsePrimary(): partition 1: bad location, ignoring
+ KERN: Partition::SetTo(): active: 6f
+ KERN: intel: _ParsePrimary(): partition 2: bad location, ignoring
+ KERN: Partition::SetTo(): active: 79
+ KERN: intel: _ParsePrimary(): partition 3: bad location, ignoring
+ KERN:   returned: 100/1000
+ KERN: KDiskSystem::Load(): file_systems/bfs/v1 -&gt; 5
+ KERN:   trying: file_systems/bfs/v1
+ KERN:   returned: 800/1000
+ KERN: KDiskSystem::Unload(): partitioning_systems/intel/map/v1 -&gt; 2
+ KERN: KDiskSystem::Load(): file_systems/devfs/v1 -&gt; 1
+ KERN:   trying: file_systems/devfs/v1
+ KERN:   returned: -1000/1000
+ KERN: KDiskSystem::Unload(): file_systems/devfs/v1 -&gt; 0
+ KERN: KDiskSystem::Load(): file_systems/rootfs/v1 -&gt; 1
+ KERN:   trying: file_systems/rootfs/v1
+ KERN:   returned: -1000/1000
+ KERN: KDiskSystem::Unload(): file_systems/rootfs/v1 -&gt; 0
+ KERN:   scanning with: file_systems/bfs/v1
+ KERN: KDiskSystem::Load(): file_systems/bfs/v1 -&gt; 6
+ KERN: KDiskSystem::Unload(): file_systems/bfs/v1 -&gt; 5
+ KERN: KDiskDeviceManager::_ScanPartition(/dev/disk/ata/0/master/2_3)
+ KERN: KDiskSystem::Load(): partitioning_systems/intel/extended/v1 -&gt; 3
+ KERN:   trying: partitioning_systems/intel/extended/v1
+ KERN: intel: ep_identify_partition(0, 7057322496, 2993969664, 512)
+ KERN:   returned: -1000/1000
+ KERN: KDiskSystem::Unload(): partitioning_systems/intel/extended/v1 -&gt; 2
+ KERN: KDiskSystem::Load(): partitioning_systems/intel/map/v1 -&gt; 3
+ KERN:   trying: partitioning_systems/intel/map/v1
+ KERN: intel: pm_identify_partition(0, 8: 7057322496, 2993969664, 512)
+ KERN: Partition::SetTo(): active: c3
+ KERN: intel: _ParsePrimary(): partition 0: bad location, ignoring
+ KERN: Partition::SetTo(): active: ad
+ KERN: intel: _ParsePrimary(): partition 1: bad location, ignoring
+ KERN: Partition::SetTo(): active: 69
+ KERN: intel: _ParsePrimary(): partition 2: bad location, ignoring
+ KERN: Partition::SetTo(): active: 79
+ KERN: intel: _ParsePrimary(): partition 3: bad location, ignoring
+ KERN:   returned: 100/1000
+ KERN: KDiskSystem::Load(): file_systems/bfs/v1 -&gt; 6
+ KERN:   trying: file_systems/bfs/v1
+ KERN:   returned: 800/1000
+ KERN: KDiskSystem::Unload(): partitioning_systems/intel/map/v1 -&gt; 2
+ KERN: KDiskSystem::Load(): file_systems/devfs/v1 -&gt; 1
+ KERN:   trying: file_systems/devfs/v1
+ KERN:   returned: -1000/1000
+ KERN: KDiskSystem::Unload(): file_systems/devfs/v1 -&gt; 0
+ KERN: KDiskSystem::Load(): file_systems/rootfs/v1 -&gt; 1
+ KERN:   trying: file_systems/rootfs/v1
+ KERN:   returned: -1000/1000
+ KERN: KDiskSystem::Unload(): file_systems/rootfs/v1 -&gt; 0
+ KERN:   scanning with: file_systems/bfs/v1
+ KERN: KDiskSystem::Load(): file_systems/bfs/v1 -&gt; 7
+ KERN: KDiskSystem::Unload(): file_systems/bfs/v1 -&gt; 6
+ KERN: KDiskSystem::Unload(): partitioning_systems/intel/extended/v1 -&gt; 1
+ KERN: KDiskSystem::Unload(): partitioning_systems/intel/map/v1 -&gt; 1
+ KERN: device 0: /dev/disk/ata/0/master/raw
+ KERN:   media status:      No error
+ KERN:   device flags:      2
+ KERN:   offset:            0
+ KERN:   size:              10056130560 (9590.273 MB)
+ KERN:   content size:      10056130560
+ KERN:   block size:        512
+ KERN:   child count:       3
+ KERN:   index:             -1
+ KERN:   status:            0
+ KERN:   flags:             5
+ KERN:   volume:            -1
+ KERN:   disk system:       partitioning_systems/intel/map/v1
+ KERN:   name:              &lt;NULL&gt;
+ KERN:   content name:      &lt;NULL&gt;
+ KERN:   type:              &lt;NULL&gt;
+ KERN:   content type:      Intel Partition Map
+ KERN:   params:            &lt;NULL&gt;
+ KERN:   content params:    &lt;NULL&gt;
+ KERN:   partition 2: /dev/disk/ata/0/master/0
+ KERN:     offset:            32256
+ KERN:     size:              98671104 (94.1 MB)
+ KERN:     content size:      98670592
+ KERN:     block size:        1024
+ KERN:     child count:       0
+ KERN:     index:             0
+ KERN:     status:            0
+ KERN:     flags:             2
+ KERN:     volume:            -1
+ KERN:     disk system:       file_systems/bfs/v1
+ KERN:     name:              &lt;NULL&gt;
+ KERN:     content name:      -boot
+ KERN:     type:              BFS Filesystem
+ KERN:     content type:      Be File System
+ KERN:     params:            type = 235 ; active = 1
+ KERN:     content params:    &lt;NULL&gt;
+ KERN:   partition 3: /dev/disk/ata/0/master/1
+ KERN:     offset:            98703360
+ KERN:     size:              254983680 (243.171 MB)
+ KERN:     content size:      254983168
+ KERN:     block size:        1024
+ KERN:     child count:       0
+ KERN:     index:             1
+ KERN:     status:            0
+ KERN:     flags:             2
+ KERN:     volume:            -1
+ KERN:     disk system:       file_systems/bfs/v1
+ KERN:     name:              &lt;NULL&gt;
+ KERN:     content name:      untitled
+ KERN:     type:              BFS Filesystem
+ KERN:     content type:      Be File System
+ KERN:     params:            type = 235 ; active = 0
+ KERN:     content params:    &lt;NULL&gt;
+ KERN:   partition 4: /dev/disk/ata/0/master/2
+ KERN:     offset:            353687040
+ KERN:     size:              9697605120 (9248.356 MB)
+ KERN:     content size:      9697605120
+ KERN:     block size:        512
+ KERN:     child count:       4
+ KERN:     index:             2
+ KERN:     status:            0
+ KERN:     flags:             4
+ KERN:     volume:            -1
+ KERN:     disk system:       partitioning_systems/intel/extended/v1
+ KERN:     name:              &lt;NULL&gt;
+ KERN:     content name:      &lt;NULL&gt;
+ KERN:     type:              Intel Extended Partition
+ KERN:     content type:      Intel Extended Partition
+ KERN:     params:            type = 5 ; active = 0
+ KERN:     content params:    &lt;NULL&gt;
+ KERN:     partition 5: /dev/disk/ata/0/master/2_0
+ KERN:       offset:            353719296
+ KERN:       size:              2697859584 (2572.879 MB)
+ KERN:       content size:      2697859072
+ KERN:       block size:        1024
+ KERN:       child count:       0
+ KERN:       index:             0
+ KERN:       status:            0
+ KERN:       flags:             2
+ KERN:       volume:            -1
+ KERN:       disk system:       file_systems/bfs/v1
+ KERN:       name:              &lt;NULL&gt;
+ KERN:       content name:      BeOS5Max
+ KERN:       type:              BFS Filesystem
+ KERN:       content type:      Be File System
+ KERN:       params:            type = 235 ; active = 0
+ KERN:       content params:    &lt;NULL&gt;
+ KERN:     partition 6: /dev/disk/ata/0/master/2_1
+ KERN:       offset:            3051611136
+ KERN:       size:              1003451904 (956.966 MB)
+ KERN:       content size:      1003451392
+ KERN:       block size:        1024
+ KERN:       child count:       0
+ KERN:       index:             1
+ KERN:       status:            0
+ KERN:       flags:             2
+ KERN:       volume:            -1
+ KERN:       KERN: disk system:       file_systems/bfs/v1
+ KERN:       name:              &lt;NULL&gt;
+ KERN:       content name:      -home
+ KERN:       type:              BFS Filesystem
+ KERN:       content type:      Be File System
+ KERN:       params:            type = 235 ; active = 0
+ KERN:       content params:    &lt;NULL&gt;
+ KERN:     partition 7: /dev/disk/ata/0/master/2_2
+ KERN:       offset:            4055095296
+ KERN:       size:              3002194944 (2863.116 MB)
+ KERN:       content size:      3002194944
+ KERN:       block size:        1024
+ KERN:       child count:       0
+ KERN:       index:             2
+ KERN:       status:            0
+ KERN:       flags:             2
+ KERN:       volume:            -1
+ KERN:       disk system:       file_systems/bfs/v1
+ KERN:       name:              &lt;NULL&gt;
+ KERN:       content name:      BeOS Dano
+ KERN:       type:              BFS Filesystem
+ KERN:       content type:      Be File System
+ KERN:       params:            type = 235 ; active = 0
+ KERN:       content params:    &lt;NULL&gt;
+ KERN:     partition 8: /dev/disk/ata/0/master/2_3
+ KERN:       offset:            7057322496
+ KERN:       size:              2993969664 (2855.271 MB)
+ KERN:       content size:      2993969152
+ KERN:       block size:        1024
+ KERN:       child count:       0
+ KERN:       index:             3
+ KERN:       status:            0
+ KERN:       flags:             2
+ KERN:       volume:            -1
+ KERN:       disk system:       file_systems/bfs/v1
+ KERN:       name:              &lt;NULL&gt;
+ KERN:       content name:      Haiku
+ KERN:       type:              BFS Filesystem
+ KERN:       content type:      Be File System
+ KERN:       params:            type = 235 ; active = 0
+ KERN:       content params:    &lt;NULL&gt;
+ KERN: device 1: /dev/disk/atapi/1/master/raw
+ KERN:   media status:      No media present
+ KERN:   device flags:      5
+ KERN: bfs: mounted &quot;Haiku&quot; (root node at 65536, device =
+ /dev/disk/ata/0/master/2_3)
+ KERN: module: Search for file_cache/launch_speedup/v1 failed.
+ KERN: partitioning system: partitioning_systems/session/v1
+ KERN: KDiskDeviceManager::_AddDiskSystem(partitioning_systems/session/v1)
+ KERN: KDiskSystem::Load(): partitioning_systems/session/v1 -&gt; 1
+ KERN: KDiskSystem::Unload(): partitioning_systems/session/v1 -&gt; 0
+ KERN: KDiskDeviceManager::_AddDiskSystem() done: No error
+ KERN: file system: file_systems/fat/v1
+ KERN: KDiskDeviceManager::_AddDiskSystem(file_systems/fat/v1)
+ KERN: KDiskSystem::Load(): file_systems/fat/v1 -&gt; 1
+ KERN: KDiskSystem::Unload(): file_systems/fat/v1 -&gt; 0
+ KERN: KDiskDeviceManager::_AddDiskSystem() done: No error
+ KERN: file system: file_systems/iso9660/v1
+ KERN: KDiskDeviceManager::_AddDiskSystem(file_systems/iso9660/v1)
+ KERN: KDiskSystem::Load(): file_systems/iso9660/v1 -&gt; 1
+ KERN: KDiskSystem::Unload(): file_systems/iso9660/v1 -&gt; 0
+ KERN: KDiskDeviceManager::_AddDiskSystem() done: No error
+ KERN: KDiskDeviceManager::_Scan(/dev/disk)
+ KERN: con_init: trying module console/frame_buffer/v1
+ KERN: loaded driver /boot/beos/system/add-ons/kernel/drivers/dev/console
+ KERN: loaded driver /boot/beos/system/add-ons/kernel/drivers/dev/dprintf
+ KERN: loaded driver /boot/beos/system/add-ons/kernel/drivers/dev/keyboard
+ KERN: loaded driver /boot/beos/system/add-ons/kernel/drivers/dev/null
+ KERN: loaded driver /boot/beos/system/add-ons/kernel/drivers/dev/random
+ KERN: loaded driver /boot/beos/system/add-ons/kernel/drivers/dev/tty
+ KERN: loaded driver /boot/beos/system/add-ons/kernel/drivers/dev/zero
+ KERN: KDiskDeviceManager::_Scan(/dev/disk/ata)
+ KERN: KDiskDeviceManager::_Scan(/dev/disk/ata/0)
+ KERN: KDiskDeviceManager::_Scan(/dev/disk/ata/0/master)
+ KERN: KDiskDeviceManager::_Scan(/dev/disk/ata/0/master/0)
+ KERN: KDiskDeviceManager::_Scan(/dev/disk/ata/0/master/1)
+ KERN: KDiskDeviceManager::_Scan(/dev/disk/ata/0/master/2)
+ KERN: KDiskDeviceManager::_Scan(/dev/disk/ata/0/master/2_0)
+ KERN: KDiskDeviceManager::_Scan(/dev/disk/ata/0/master/2_1)
+ KERN: KDiskDeviceManager::_Scan(/dev/disk/ata/0/master/2_2)
+ KERN: KDiskDeviceManager::_Scan(/dev/disk/ata/0/master/2_3)
+ KERN: KDiskDeviceManager::_Scan(/dev/disk/ata/0/master/raw)
+ KERN: KDiskDeviceManager::_Scan(/dev/disk/atapi)
+ KERN: KDiskDeviceManager::_Scan(/dev/disk/atapi/1)
+ KERN: KDiskDeviceManager::_Scan(/dev/disk/atapi/1/master)
+ KERN: KDiskDeviceManager::_Scan(/dev/disk/atapi/1/master/raw)
+ KERN: KDiskDeviceManager::_Scan(/dev/disk/scsi)
+ KERN: loaded module /boot/beos/system/add-
+ ons/kernel/drivers/dev/disk/scsi/scsi_cd
+ KERN: loaded module /boot/beos/system/add-
+ ons/kernel/drivers/dev/disk/scsi/scsi_dsk
+ KERN: KDiskDeviceManager::_Scan(/dev/disk/usb)
+ KERN: usb_uhci: successfully started the controller
+ KERN: module: Search for busses/usb/ohci failed.
+ KERN: usb_ehci: no devices found
+ KERN: loaded driver /boot/beos/system/add-
+ ons/kernel/drivers/dev/disk/usb/usb_disk
+ KERN: KDiskDeviceManager::_Scan(/dev/disk/virtual)
+ KERN: nbd:&gt;init_hardware()
+ KERN: nbd:&gt;init_driver()
+ KERN: allocate_commpage_entry(4, 34) -&gt; 0xffff0118
+ KERN: set_memory_write_back base 0 length 13ff0000
+ KERN: find_nearest 13ff0000 0
+ KERN: find_nearest 3ff0000 1
+ KERN: find_nearest 1ff0000 2
+ KERN: find_nearest ff0000 3
+ KERN: find_nearest 7f0000 4
+ KERN: find_nearest c010000 1
+ KERN: solutions: 0x10000000 0xfffffffffc000000
+ KERN: allocate MTRR slot 0, base = 0, length = 10000000, type=0x6
+ KERN: allocate MTRR slot 1, base = 10000000, length = 4000000, type=0x6
+ KERN: kernel debugger extension &quot;debugger/hangman/v1&quot;: loaded
+ KERN: kernel debugger extension &quot;debugger/invalidate_on_exit/v1&quot;: loaded
+ KERN: allocate MTRR slot 2, base = f5000000, length = 400000, type=0x1
+ KERN: REG: Failed to open shadow passwd DB file &quot;/etc/shadow&quot;: No such
+ file or directory
+ KERN: bfs: bfs_open_dir:1461: Invalid Argument
+ KERN: register_domain(1, internet)
+ KERN: unregister_domain(0x90bb66c0, 1, internet)
+ KERN: register_domain(9, unix)
+ KERN: unregister_domain(0x90bb6a80, 9, unix)
+ KERN: register_domain(1, internet)
+ KERN: get_device_interface: ask &quot;network/devices/ethernet/v1&quot; for loop
+ KERN: get_device_interface: ask &quot;network/devices/loopback/v1&quot; for loop
+ KERN: 3com: init_hardware(0x80415958)
+ KERN: 3com: no hardware found.
+ KERN: etherpci: init_driver init_driver: etherpci not found
+ KERN: ipro100: init_hardware(0x80412f04)
+ KERN: ipro100: no hardware found.
+ KERN: ipro1000: init_hardware(0x804317c4)
+ KERN: ipro1000: no hardware found.
+ KERN: marvell_yukon: init_hardware(0x80418c3c)
+ KERN: marvell_yukon: no hardware found.
+ KERN: nforce: init_hardware(0x80415cd8)
+ KERN: nforce: no hardware found.
+ KERN: rtl8139: init_hardware(0x80411ee0)
+ KERN: rtl8139: no hardware found.
+ KERN: syskonnect: init_hardware(0x80418258)
+ KERN: syskonnect: no hardware found.
+ KERN: via_rhine: init_hardware(0x80412238)
+ KERN: via_rhine: no hardware found.
+ KERN: intel_extreme: init_hardware()
+ KERN: loaded driver /boot/beos/system/add-
+ ons/kernel/drivers/dev/graphics/neomagic
+ KERN: Radeon - init_hardware: Version: 5.1.6.0
+ KERN: Radeon - Radeon_CardDetect: no supported devices found
+ KERN: savage: init_hardware - no supported devices
+ KERN: vesa: init_hardware()
+ KERN: vesa: init_driver()
+ KERN: vesa: publish_devices()
+ KERN: vesa: find_device()
+ KERN: loaded driver /boot/beos/system/add-
+ ons/kernel/drivers/dev/graphics/vesa
+ KERN: allocate MTRR slot 3, base = f5000000, length = 1000000, type=0x1
+ KERN: ps2_hid: init_hardware
+ KERN: ps2_hid: init_driver
+ KERN: ps2_hid: publish_devices
+ KERN: ps2_hid: uninit_driver
+ KERN: loaded driver /boot/beos/system/add-
+ ons/kernel/drivers/dev/input/ps2_hid
+ KERN: loaded driver /boot/beos/system/add-
+ ons/kernel/drivers/dev/input/usb_hid
+ KERN: loaded driver /boot/beos/system/add-
+ ons/kernel/drivers/dev/input/wacom
+ KERN: emuxki: init_hardware()
+ KERN: ps2: devfs_publish_device input/mouse/ps2/0, status = 0x00000000
+ KERN: ps2: probe_mouse Standard PS/2 mouse found
+ KERN: bfs: bfs_open_dir:1461: Invalid Argument
+ KERN: ps2: devfs_publish_device input/keyboard/at/0, status = 0x00000000
+ KERN: ps2: keyboard found
+ KERN: cx23882: init_hardware()
+ KERN: auich: init_hardware()
+ KERN: auvia: init_hardware()
+ KERN: loaded driver /boot/beos/system/add-
+ ons/kernel/drivers/dev/audio/hmulti/emuxki
+ KERN: bfs: bfs_create_index:1941: File or Directory already exists
+ KERN: firewire: fw_module_init
+ KERN: firewire: found 0 cards
+ KERN: firewire: fw_module_uninit
+ KERN: loaded driver /boot/beos/system/add-
+ ons/kernel/drivers/dev/bus/usb_raw
+ KERN: bfs: bfs_create_index:1941: File or Directory already exists
+ Last message repeated 1 time
+ KERN: SCSI_DSK -- synchronize_cache:
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2188#comment:13">http://dev.haiku-os.org/ticket/2188#comment:13</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007075.html">[Haiku-bugs] [Haiku] #2188: Screen prefs. window shows wrong	options
+</A></li>
+	<LI>Next message: <A HREF="007077.html">[Haiku-bugs] [Haiku] #2188: Screen prefs. window shows wrong	options
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7076">[ date ]</a>
+              <a href="thread.html#7076">[ thread ]</a>
+              <a href="subject.html#7076">[ subject ]</a>
+              <a href="author.html#7076">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2833: Shortcut for closing all Tracker	windows (Easy)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232833%3A%20Shortcut%20for%20closing%20all%20Tracker%0A%09windows%20%28Easy%29&In-Reply-To=%3C053.c86a7b175a60d56ba1337969ad6d2180%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="015322.html">
+   <LINK REL="Next"  HREF="015326.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2833: Shortcut for closing all Tracker	windows (Easy)</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232833%3A%20Shortcut%20for%20closing%20all%20Tracker%0A%09windows%20%28Easy%29&In-Reply-To=%3C053.c86a7b175a60d56ba1337969ad6d2180%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2833: Shortcut for closing all Tracker	windows (Easy)">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Mar 24 14:59:20 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="015322.html">[Haiku-bugs] [Haiku] #2833: Shortcut for closing all Tracker	windows (Easy)
+</A></li>
+        <LI>Next message: <A HREF="015326.html">[Haiku-bugs] [Haiku] #3601: Add tool to convert BeIDE project files	to jamfiles
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15324">[ date ]</a>
+              <a href="thread.html#15324">[ thread ]</a>
+              <a href="subject.html#15324">[ subject ]</a>
+              <a href="author.html#15324">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2833: Shortcut for closing all Tracker windows (Easy)
+----------------------------------+-----------------------------------------
+ Reporter:  humdinger             |       Owner:  axeld         
+     Type:  enhancement           |      Status:  new           
+ Priority:  normal                |   Milestone:  R1            
+Component:  Applications/Tracker  |     Version:  R1 development
+ Keywords:                        |   Blockedby:                
+ Platform:  All                   |    Blocking:                
+----------------------------------+-----------------------------------------
+
+Comment(by axeld):
+
+ I think overloading Command-Q for this is just fine - after all that's
+ what the Tracker currently does as well, it just doesn't allow you to quit
+ it (ie. the well known shortcut is left with no action at all). I also
+ wouldn't mind having &quot;shift&quot; change its meaning; as humdinger said, this
+ is often in Haiku. While it's not necessarily obvious or intuitive, it's
+ nice for those who actually read docs and improve the usability by
+ remembering those oddities :-)
+
+ I'm not sure it deserves a menu entry, though. I would rather add a
+ shortcut, and that's it.
+
+ Anyway, thanks for your patch, nastee! It looks good overall and
+ everything has been added to where it belongs. Just a minor style thing:
+ when the block following an if/for/while or whatever spans over more than
+ one line (no matter if due to a comment or not), we always use brackets
+ around the block. Ie.
+
+ {{{
+ +               if (window-&gt;Workspaces() &amp; currentWorkspace)
+ +                       // avoid the desktop
+ +                       if (!dynamic_cast&lt;BDeskWindow *&gt;(window)
+ +                               &amp;&amp; !dynamic_cast&lt;BStatusWindow *&gt;(window))
+ +                               window-&gt;PostMessage(B_QUIT_REQUESTED);
+ }}}
+
+ would become:
+
+ {{{
+ +               if (window-&gt;Workspaces() &amp; currentWorkspace) {
+ +                       // avoid the desktop
+ +                       if (!dynamic_cast&lt;BDeskWindow *&gt;(window)
+ +                               &amp;&amp; !dynamic_cast&lt;BStatusWindow *&gt;(window))
+ +                               window-&gt;PostMessage(B_QUIT_REQUESTED);
+ +               }
+ }}}
+
+ Also, we usually prefer to use &quot;if ((window-&gt;Workspaces() &amp;
+ currentWorkspace) != 0)&quot; with the extra parenthesis, as the '&amp;' binds less
+ strong than the logical operators '||' and '&amp;&amp;'; &quot;if (a &amp; 1 &amp;&amp; c == 0)&quot; is
+ a common source of errors. Plus you have a real boolean check here :-)
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2833#comment:8">http://dev.haiku-os.org/ticket/2833#comment:8</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="015322.html">[Haiku-bugs] [Haiku] #2833: Shortcut for closing all Tracker	windows (Easy)
+</A></li>
+	<LI>Next message: <A HREF="015326.html">[Haiku-bugs] [Haiku] #3601: Add tool to convert BeIDE project files	to jamfiles
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15324">[ date ]</a>
+              <a href="thread.html#15324">[ thread ]</a>
+              <a href="subject.html#15324">[ subject ]</a>
+              <a href="author.html#15324">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

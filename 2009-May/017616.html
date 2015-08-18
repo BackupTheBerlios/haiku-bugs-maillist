@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3886: problems with GeForce 7300 GT
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233886%3A%20problems%20with%20GeForce%207300%20GT&In-Reply-To=%3C052.1d7f2aa008767ad5a495d0f6ef546fb5%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="017568.html">
+   <LINK REL="Next"  HREF="017638.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3886: problems with GeForce 7300 GT</H1>
+    <B>pacman</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233886%3A%20problems%20with%20GeForce%207300%20GT&In-Reply-To=%3C052.1d7f2aa008767ad5a495d0f6ef546fb5%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3886: problems with GeForce 7300 GT">trac at haiku-os.org
+       </A><BR>
+    <I>Thu May 28 13:56:17 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="017568.html">[Haiku-bugs] [Haiku] #3886: problems with GeForce 7300 GT
+</A></li>
+        <LI>Next message: <A HREF="017638.html">[Haiku-bugs] [Haiku] #3886: problems with GeForce 7300 GT
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17616">[ date ]</a>
+              <a href="thread.html#17616">[ thread ]</a>
+              <a href="subject.html#17616">[ subject ]</a>
+              <a href="author.html#17616">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3886: problems with GeForce 7300 GT
+-------------------------------------+--------------------------------------
+ Reporter:  HaikuBot                 |       Owner:  rudolfc       
+     Type:  bug                      |      Status:  new           
+ Priority:  normal                   |   Milestone:  R1            
+Component:  Drivers/Graphics/nVidia  |     Version:  R1 development
+Blockedby:                           |    Platform:  x86           
+ Blocking:                           |  
+-------------------------------------+--------------------------------------
+
+Comment(by pacman):
+
+ Replying to [comment:23 axeld]:
+ &gt; Stippi, about acceleration in general on older systems: unlike new
+ systems, they have, in today's standards, an insanely limited memory
+ bandwidth. So many things, most notably moving windows around, or
+ scrolling, can still be done a lot faster using the hardware acceleration
+ than you could do via software.
+
+ This is only generally true for PCI cards, which will often be limited to
+ 40-60 MB/s write speed or less. On very bad motherboards this may drop to
+ 20 MB/s or so, if the PCI implementation is buggy.
+
+ On AGP cards, you generally get 200+ MB/s write speed unless AGP is
+ improperly configured. With write combining and fast writes, 200 MB/s is
+ pretty much the lower bound (but 130MB/s has been observed on one of
+ Rudolfs systems, a TNT-1/AGPx1 on Intel 400 BX). These low values only
+ happen on cards so old that they will run only in very low resolutions
+ anyway, which negates the effect from the low bandwidth. Most AGP cards
+ can easily write 400-1000 MB/s, which is enough bandwith even for higher
+ resolutions.
+ Note: this only goes for writes, reads are insanely slow on AGP. 13 MB/s
+ is the fastest I've ever seen for that; 5 MB/s seems to be normal.
+
+ With 200 MB/s write, you can push 60 full 1024x768 32-bit screen updates
+ per second; I think this should be enough for most scenarios (you'll
+ rarely need full screen updates).
+
+ One thing: to reach the maximum bandwith, write combining has to be
+ properly configured. Without WC, write speeds depends on operand size, and
+ there are drastic differences between using 64/32/8-bit operands.
+ The relationships between WC/FW combinations and write speeds are a bit...
+ strange. The only way to find optimum settings will be testing on many
+ different machines - speeds can be influenced by hardware bugs/suboptimal
+ implemenation of AGP specs by mainboard or graphics card manufacturer.
+
+ I have some older GfxBussBench results from my own and Rudolfs machines
+ lying around in the GfxBusBench sources; I'll see that I dust that off as
+ soon as I find the time. I'm willing to donate GfxBusBench to Haiku (as
+ Rudolf already stated, it runs without changes) if there's interest. There
+ might be a need to rework the command line parameters or such, but the
+ core should be reliable.
+
+ &gt; This is where we might want to improve our acceleration usage (if
+ possible) - this will definitely be faster on &quot;slow&quot; machines. The other
+ stuff isn't so bad when ignored.
+
+ As long as support for PCI and AGPx1 cards is desired, yes. For all other
+ cards, correct configuration of write combining and AGP fast writes should
+ basically always give sufficient bandwith for working without hw
+ acceleration.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3886#comment:28">http://dev.haiku-os.org/ticket/3886#comment:28</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="017568.html">[Haiku-bugs] [Haiku] #3886: problems with GeForce 7300 GT
+</A></li>
+	<LI>Next message: <A HREF="017638.html">[Haiku-bugs] [Haiku] #3886: problems with GeForce 7300 GT
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17616">[ date ]</a>
+              <a href="thread.html#17616">[ thread ]</a>
+              <a href="subject.html#17616">[ subject ]</a>
+              <a href="author.html#17616">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

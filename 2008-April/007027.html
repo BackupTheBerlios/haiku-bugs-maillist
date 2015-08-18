@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2172: neon's single_read test hangs at	100% CPU
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232172%3A%20neon%27s%20single_read%20test%20hangs%20at%0A%09100%25%20CPU&In-Reply-To=%3C052.a11740ecd9edd463656c04859b028125%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007019.html">
+   <LINK REL="Next"  HREF="007034.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2172: neon's single_read test hangs at	100% CPU</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232172%3A%20neon%27s%20single_read%20test%20hangs%20at%0A%09100%25%20CPU&In-Reply-To=%3C052.a11740ecd9edd463656c04859b028125%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2172: neon's single_read test hangs at	100% CPU">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Apr 30 19:10:22 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007019.html">[Haiku-bugs] [Haiku] #2172: neon's single_read test hangs at	100% CPU
+</A></li>
+        <LI>Next message: <A HREF="007034.html">[Haiku-bugs] [Haiku] #2172: neon's single_read test hangs at	100% CPU
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7027">[ date ]</a>
+              <a href="thread.html#7027">[ thread ]</a>
+              <a href="subject.html#7027">[ subject ]</a>
+              <a href="author.html#7027">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2172: neon's single_read test hangs at 100% CPU
+---------------------------------+------------------------------------------
+  Reporter:  andreasf            |       Owner:  axeld         
+      Type:  bug                 |      Status:  new           
+  Priority:  normal              |   Milestone:  R1            
+ Component:  Network &amp; Internet  |     Version:  R1 development
+Resolution:                      |    Platform:  x86           
+---------------------------------+------------------------------------------
+Comment (by andreasf):
+
+ (the above should have read {{{peek_close}}})
+
+ Replying to [comment:2 korli]:
+ &gt; You could try &quot;bt 3230&quot; or &quot;sc 3230&quot; to see the current stacktrace.
+
+ Thanks for the hint.
+
+ Still at r25256, it occurred at {{{addr_connect}}} test (another two
+ earlier) this time:
+ {{{
+ kdebug&gt; threads 174
+ thread         id  state        sem/cv cpu pri  stack      team  name
+ 0x90db7800    174  running        -      1  10  0x90ac9000  174  socket
+ kdebug&gt; sc 174
+ stack trace for thread 174 &quot;socket&quot;
+     kernel stack: 0x90ac9000 to 0x90acd000
+       user stack: 0x7efe7000 to 0x7ffe7000
+ frame            caller     &lt;image&gt;:function + offset
+ 800d053c (+2146630340) 90b183e0
+ }}}
+
+ and after {{{continue}}}, during next F12:
+ {{{
+ kdebug&gt; threads 174
+ thread         id  state        sem/cv cpu pri  stack      team  name
+ 0x90db7800    174  running        -      1  10  0x90ac9000  174  socket
+ kdebug&gt; sc 174
+ stack trace for thread 174 &quot;socket&quot;
+     kernel stack: 0x90ac9000 to 0x90acd000
+       user stack: 0x7efe7000 to 0x7ffe7000
+ frame            caller     &lt;image&gt;:function + offset
+ 00000082 -- read fault
+ }}}
+
+ I assume this lack of sensible output indicates some kind of stack
+ corruption?
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2172#comment:3">http://dev.haiku-os.org/ticket/2172#comment:3</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007019.html">[Haiku-bugs] [Haiku] #2172: neon's single_read test hangs at	100% CPU
+</A></li>
+	<LI>Next message: <A HREF="007034.html">[Haiku-bugs] [Haiku] #2172: neon's single_read test hangs at	100% CPU
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7027">[ date ]</a>
+              <a href="thread.html#7027">[ thread ]</a>
+              <a href="subject.html#7027">[ subject ]</a>
+              <a href="author.html#7027">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

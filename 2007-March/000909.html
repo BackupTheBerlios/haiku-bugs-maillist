@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1071: Identify and fix performance bottlenecks in the kernel and I/O subsystems
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231071%3A%20Identify%20and%20fix%20performance%0A%20bottlenecks%20in%20the%20kernel%20and%20I/O%20subsystems&In-Reply-To=%3C049.f9625eba43e777160595818cd059a593%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000908.html">
+   <LINK REL="Next"  HREF="000606.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1071: Identify and fix performance bottlenecks in the kernel and I/O subsystems</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231071%3A%20Identify%20and%20fix%20performance%0A%20bottlenecks%20in%20the%20kernel%20and%20I/O%20subsystems&In-Reply-To=%3C049.f9625eba43e777160595818cd059a593%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1071: Identify and fix performance bottlenecks in the kernel and I/O subsystems">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Mar 30 00:30:57 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000908.html">[Haiku-bugs] [Haiku] #1071: Identify and fix performance bottlenecks in the kernel and I/O subsystems
+</A></li>
+        <LI>Next message: <A HREF="000606.html">[Haiku-bugs] [Haiku] #1072: Write an HDA audio driver and add-on
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#909">[ date ]</a>
+              <a href="thread.html#909">[ thread ]</a>
+              <a href="subject.html#909">[ subject ]</a>
+              <a href="author.html#909">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1071: Identify and fix performance bottlenecks in the kernel and I/O subsystems
+----------------------------+-----------------------------------------------
+  Reporter:  axeld          |       Owner:  axeld         
+      Type:  enhancement    |      Status:  new           
+  Priority:  normal         |   Milestone:  R1            
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |    Platform:  All           
+----------------------------+-----------------------------------------------
+Comment (by kaoutsis):
+
+ Even though, i am aware of the new protections
+ that wm.cpp have, i made all the switches that
+ create_area can take: (B_ANY_KERNEL_ADDRESS, etc)
+ for testing purposes.
+ So i managed to kdl r5... with my own hands:)
+ I am planning to make more test for areas, sems, ports, etc
+ to study bug #1071.
+
+ Playing around with it, a made a small patch
+ for vm.cpp
+ Log: if the requested area has zero size
+ don't let the app crash (in this case: strcpy);
+ return a B_BAD_VALUE instead,
+ as r5 does.
+
+ But i am still skeptic, if this is right.
+ The userspace program might want to create the area with zero size,
+ (as a kind of initialization)
+ and call resize_area with some real value later.
+ In this case some other protection means should be taken,
+ to avoid crashing. (I don't have any idea for this yet).
+ It's up to you.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1071#comment:10">http://dev.haiku-os.org/ticket/1071#comment:10</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000908.html">[Haiku-bugs] [Haiku] #1071: Identify and fix performance bottlenecks in the kernel and I/O subsystems
+</A></li>
+	<LI>Next message: <A HREF="000606.html">[Haiku-bugs] [Haiku] #1072: Write an HDA audio driver and add-on
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#909">[ date ]</a>
+              <a href="thread.html#909">[ thread ]</a>
+              <a href="subject.html#909">[ subject ]</a>
+              <a href="author.html#909">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

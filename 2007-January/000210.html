@@ -1,0 +1,194 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #511: [ScreenSaver] Many stability and	other problems
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-January/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23511%3A%20%5BScreenSaver%5D%20Many%20stability%20and%0A%09other%20problems&In-Reply-To=%3C049.a0ed69dfa1ef0132b1037b9bfee96ccb%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000209.html">
+   <LINK REL="Next"  HREF="000211.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #511: [ScreenSaver] Many stability and	other problems</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23511%3A%20%5BScreenSaver%5D%20Many%20stability%20and%0A%09other%20problems&In-Reply-To=%3C049.a0ed69dfa1ef0132b1037b9bfee96ccb%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #511: [ScreenSaver] Many stability and	other problems">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Jan 24 12:16:10 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000209.html">[Haiku-bugs] [Haiku] #625: Forums: No confirmation code image during registration
+</A></li>
+        <LI>Next message: <A HREF="000211.html">[Haiku-bugs] [Haiku] #590: Wiki software is out of date
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#210">[ date ]</a>
+              <a href="thread.html#210">[ thread ]</a>
+              <a href="subject.html#210">[ subject ]</a>
+              <a href="author.html#210">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#511: [ScreenSaver] Many stability and other problems
+----------------------------+-----------------------------------------------
+  Reporter:  diver          |       Owner:  axeld
+      Type:  bug            |      Status:  new  
+  Priority:  normal         |   Milestone:  R1   
+ Component:  - Preferences  |     Version:       
+Resolution:                 |    Platform:  All  
+----------------------------+-----------------------------------------------
+Old description:
+
+&gt;<i> I will attach my screensaver collection (115 items -2,4Mb) which i used
+</I>&gt;<i> for
+</I>&gt;<i> testing Haiku's ScreenSavers. Good news is that most of them (~100) seems
+</I>&gt;<i> to
+</I>&gt;<i> work, didn't test them in fullscreen mode though.
+</I>&gt;<i> Here are what i've found for the rest of them:
+</I>&gt;<i>
+</I>&gt;<i> *1. I've started ScreenSaver from Terminal and on every ssaver selection
+</I>&gt;<i> i got
+</I>&gt;<i>  &quot;runtime_loader: cannot open file /boot/beos/system/add-ons/Screen
+</I>&gt;<i> Savers/&lt;screensaver_name&gt;&quot;.
+</I>&gt;<i>
+</I>&gt;<i> Tip: open ~/config/settings window to delete screensaver_settings file
+</I>&gt;<i> when
+</I>&gt;<i> ScreenSaver start to crash on start. I think this is something to work
+</I>&gt;<i> out too.
+</I>&gt;<i>
+</I>&gt;<i> *2. This screensavers will crash ScreenSaver pref:
+</I>&gt;<i> DS_Wobble:      Segment violation
+</I>&gt;<i> KanjiSaver:     Segment violation
+</I>&gt;<i> LicenseBreaker: Segment violation
+</I>&gt;<i> MeltdownBlur:   Trying to delete a view that belongs to a window.Call
+</I>&gt;<i> RemoveSelf
+</I>&gt;<i> first.
+</I>&gt;<i> PrimalVision:   Trying to delete a view that belongs to a window.Call
+</I>&gt;<i> RemoveSelf
+</I>&gt;<i> first.
+</I>&gt;<i> Roto_saver:     elf_resolve_symbol: could not resolve symbol
+</I>&gt;<i> SetiSaver:      Segment violation
+</I>&gt;<i> Sphere:         Segment violation
+</I>&gt;<i> ZeroWing:       addon_file ain't readable.  darn!
+</I>&gt;<i> ChaoticLine:    have some problems too, don't remember.
+</I>&gt;<i> Samhain:        will freeze ScreenSaver.
+</I>&gt;<i> MapSaver:       !!!Haiku will reboot!!!
+</I>&gt;<i> BrainWash:      !!!Haiku will became black&amp;white!!!
+</I>&gt;<i> IdleMind:       ScreenSaver will close.
+</I>&gt;<i>
+</I>&gt;<i> *3. Screensavers are wrongly sorted in the end of that list.
+</I>&gt;<i> *4. Almost all ssaver have font sensitive issues. (e.g. Nebula ;-) )
+</I>&gt;<i> *5. ScreenSaver itself isn't font sensetive.
+</I>&gt;<i> *6. Running almost every screensaver in fullscreen will not let you out.
+</I>&gt;<i> You
+</I>&gt;<i> have to switch to another workspace and kill screen_blanker. (test case:
+</I>&gt;<i> Nebula)
+</I>&gt;<i> *7. After you killed screen_blanker in #6 via team monitor switch to
+</I>&gt;<i> first
+</I>&gt;<i> workspace, team monitor will be behind ScreenSaver pref.
+</I>&gt;<i> *8. If you have this savers installed and delete ScreenSaver_settings,
+</I>&gt;<i> after
+</I>&gt;<i> ScreenSaver start it will not select 1st module, but 6th or 7th instead.
+</I>&gt;<i> *9. Module listview need to prettfy.
+</I>&gt;<i>
+</I>&gt;<i> All in all this is collection is a good stress tests for haiku, which
+</I>&gt;<i> should
+</I>&gt;<i> show it week sides.
+</I>&gt;<i> If there is a need, i could attach back traces for every crashing module.
+</I>
+New description:
+
+ I will attach my screensaver collection (115 items -2,4Mb) which i used
+ for
+ testing Haiku's ScreenSavers. Good news is that most of them (~100) seems
+ to
+ work, didn't test them in fullscreen mode though.
+ Here are what i've found for the rest of them:
+
+ *1. I've started ScreenSaver from Terminal and on every ssaver selection i
+ got
+  &quot;runtime_loader: cannot open file /boot/beos/system/add-ons/Screen
+ Savers/&lt;screensaver_name&gt;&quot;.
+
+ Tip: open ~/config/settings window to delete screensaver_settings file
+ when
+ ScreenSaver start to crash on start. I think this is something to work out
+ too.
+
+ *2. This screensavers will crash ScreenSaver pref:
+ DS_Wobble:      Segment violation
+ KanjiSaver:     Segment violation
+ LicenseBreaker: Segment violation
+ MeltdownBlur:   Trying to delete a view that belongs to a window.Call
+ RemoveSelf
+ first.
+ PrimalVision:   Trying to delete a view that belongs to a window.Call
+ RemoveSelf
+ first.
+ Roto_saver:     elf_resolve_symbol: could not resolve symbol
+ SetiSaver:      Segment violation
+ Sphere:         Segment violation
+ ZeroWing:       addon_file ain't readable.  darn!
+ ChaoticLine:    have some problems too, don't remember.
+ Samhain:        will freeze ScreenSaver.
+ MapSaver:       !!!Haiku will reboot!!!
+ BrainWash:      !!!Haiku will became black&amp;white!!!
+ IdleMind:       ScreenSaver will close.
+
+ *3. Screensavers are wrongly sorted in the end of that list.
+ *4. Almost all ssaver have font sensitive issues. (e.g. Nebula ;-) )
+ *5. ScreenSaver itself isn't font sensetive.
+ *6. Running almost every screensaver in fullscreen will not let you out.
+ You
+ have to switch to another workspace and kill screen_blanker. (test case:
+ Nebula)
+ *7. After you killed screen_blanker in #6 via team monitor switch to first
+ workspace, team monitor will be behind ScreenSaver pref.
+ *8. If you have this savers installed and delete ScreenSaver_settings,
+ after
+ ScreenSaver start it will not select 1st module, but 6th or 7th instead.
+ *9. Module listview need to prettfy.
+
+ All in all this is collection is a good stress tests for haiku, which
+ should
+ show it week sides.
+ If there is a need, i could attach back traces for every crashing module.
+
+Comment (by jackburton):
+
+ Diver, can you recheck after r19891 ?
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/511#comment:3">http://dev.haiku-os.org/ticket/511#comment:3</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000209.html">[Haiku-bugs] [Haiku] #625: Forums: No confirmation code image during registration
+</A></li>
+	<LI>Next message: <A HREF="000211.html">[Haiku-bugs] [Haiku] #590: Wiki software is out of date
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#210">[ date ]</a>
+              <a href="thread.html#210">[ thread ]</a>
+              <a href="subject.html#210">[ subject ]</a>
+              <a href="author.html#210">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

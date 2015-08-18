@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3912: Issues changing from DHCP to Static
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233912%3A%20Issues%20changing%20from%20DHCP%20to%20Static&In-Reply-To=%3C043.8682d06e296dcf4e2edbdb22f5a5b476%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="017220.html">
+   <LINK REL="Next"  HREF="017224.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3912: Issues changing from DHCP to Static</H1>
+    <B>andreasf</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233912%3A%20Issues%20changing%20from%20DHCP%20to%20Static&In-Reply-To=%3C043.8682d06e296dcf4e2edbdb22f5a5b476%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3912: Issues changing from DHCP to Static">trac at haiku-os.org
+       </A><BR>
+    <I>Sun May 10 12:11:28 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="017220.html">[Haiku-bugs] [Haiku] #3203: Add menu &quot;Font Size&quot;
+</A></li>
+        <LI>Next message: <A HREF="017224.html">[Haiku-bugs] [Haiku] #3913: [net_server] DHCP client doesn't add domain name to resolv.conf
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17222">[ date ]</a>
+              <a href="thread.html#17222">[ thread ]</a>
+              <a href="subject.html#17222">[ subject ]</a>
+              <a href="author.html#17222">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3912: Issues changing from DHCP to Static
+---------------------------------+------------------------------------------
+ Reporter:  andreasf             |       Owner:  axeld         
+     Type:  bug                  |      Status:  new           
+ Priority:  normal               |   Milestone:  R1            
+Component:  Preferences/Network  |     Version:  R1 development
+Blockedby:                       |    Platform:  x86           
+ Blocking:                       |  
+---------------------------------+------------------------------------------
+ I just gave my SiS900 built-in network another try with DHCP (#1744), no
+ luck, so I select 'Static' and enter all the info (except for DNS 2) and
+ press 'Apply', then close the preflet.
+
+  i. `ifconfig` has the right IP address, broadcast address and mask.
+  i. {{{/boot/system/etc/resolv.conf}}} has the right nameserver.
+  i. Network preflet still shows DHCP, reproducibly.
+  i. A newly opened BeZillaBrowser doesn't use the new, static DNS server.
+
+ After a reboot, the preflet does show 'Static', and the correct DNS server
+ is used.
+
+ Note that the opposite direction (from Static to DHCP) worked as expected
+ as far as preflet and browser are concerned.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3912">http://dev.haiku-os.org/ticket/3912</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="017220.html">[Haiku-bugs] [Haiku] #3203: Add menu &quot;Font Size&quot;
+</A></li>
+	<LI>Next message: <A HREF="017224.html">[Haiku-bugs] [Haiku] #3913: [net_server] DHCP client doesn't add domain name to resolv.conf
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17222">[ date ]</a>
+              <a href="thread.html#17222">[ thread ]</a>
+              <a href="subject.html#17222">[ subject ]</a>
+              <a href="author.html#17222">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

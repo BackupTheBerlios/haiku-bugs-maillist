@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1263: Tracker scrollbar confusion
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231263%3A%20Tracker%20scrollbar%20confusion&In-Reply-To=%3C057.64bc6717c46b397cd61b997e42077ccc%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007999.html">
+   <LINK REL="Next"  HREF="008001.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1263: Tracker scrollbar confusion</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231263%3A%20Tracker%20scrollbar%20confusion&In-Reply-To=%3C057.64bc6717c46b397cd61b997e42077ccc%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1263: Tracker scrollbar confusion">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Jun 10 12:10:17 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007999.html">[Haiku-bugs] [Haiku] #2268: vm_page_fault in kernel space with RTL8139 network card
+</A></li>
+        <LI>Next message: <A HREF="008001.html">[Haiku-bugs] [Haiku] #1641: KDL:  rtl8139
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8000">[ date ]</a>
+              <a href="thread.html#8000">[ thread ]</a>
+              <a href="subject.html#8000">[ subject ]</a>
+              <a href="author.html#8000">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1263: Tracker scrollbar confusion
+-----------------------------------+----------------------------------------
+  Reporter:  jonas.kirilla         |       Owner:  axeld         
+      Type:  bug                   |      Status:  new           
+  Priority:  normal                |   Milestone:  R1            
+ Component:  Applications/Tracker  |     Version:  R1 development
+Resolution:                        |    Platform:  All           
+-----------------------------------+----------------------------------------
+Comment (by stippi):
+
+ I still have one problem, it should be easily reproducible with a fresh
+ install: Open the folder /boot/beos/apps and switch it to icon mode (I
+ used size 32). Cleanup the icons and resize the window to fit using the
+ decor zoom button. The window should now enclose all icons and the
+ scrollbars should be &quot;off&quot;. Close the window. The state /should/ be saved.
+ Open the window again, you should see that the contents are scrolled to
+ one direction. If you move the scrollbar to scroll all the way there, the
+ original state can be restored. No matter how many times you close and re-
+ open the window, the initial unnecessary scroll offset can be observed.
+ But it continues: If you manually try to drag all the icons by the scroll
+ offset, you will see that re-opening the window has now a different scroll
+ offset, unless you dragged them just right. This hints in the direction
+ that the &quot;absolute&quot; icon locations directly influence the initial
+ confusion. In other words, there is an internal coordinate space, which
+ can be out of sync with the visible content arrangement, or at least is
+ not correctly restored, in which case it wouldn't matter. Tracker could
+ use internal icon locations as it likes, as long as it is able to restore
+ the visual arrangement correctly. Two windows could enclose two piles of
+ icons without need for scrolling (scrollbars off), while the top left
+ location of the pile in one window could have an (internal) negative
+ location, while the pile in the other window could use a large positive
+ offset. However, these offsets seem to affect the initial scrolling of the
+ windows when they are opened, while they shouldn't, or at least should
+ restore correctly.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1263#comment:3">http://dev.haiku-os.org/ticket/1263#comment:3</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007999.html">[Haiku-bugs] [Haiku] #2268: vm_page_fault in kernel space with RTL8139 network card
+</A></li>
+	<LI>Next message: <A HREF="008001.html">[Haiku-bugs] [Haiku] #1641: KDL:  rtl8139
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8000">[ date ]</a>
+              <a href="thread.html#8000">[ thread ]</a>
+              <a href="subject.html#8000">[ subject ]</a>
+              <a href="author.html#8000">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

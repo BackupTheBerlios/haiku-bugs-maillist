@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2041: In some cases, __mbrtowc can enter in an infinite loop
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232041%3A%20In%20some%20cases%2C%0A%20__mbrtowc%20can%20enter%20in%20an%20infinite%20loop&In-Reply-To=%3C047.5df16e7583414ced6ebf8a7d864c203a%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006250.html">
+   <LINK REL="Next"  HREF="006500.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2041: In some cases, __mbrtowc can enter in an infinite loop</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232041%3A%20In%20some%20cases%2C%0A%20__mbrtowc%20can%20enter%20in%20an%20infinite%20loop&In-Reply-To=%3C047.5df16e7583414ced6ebf8a7d864c203a%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2041: In some cases, __mbrtowc can enter in an infinite loop">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Apr 17 12:18:47 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006250.html">[Haiku-bugs] [Haiku] #2041: In some cases, __mbrtowc can enter in an infinite loop
+</A></li>
+        <LI>Next message: <A HREF="006500.html">[Haiku-bugs] [Haiku] #2041: In some cases, __mbrtowc can enter in an infinite loop
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6499">[ date ]</a>
+              <a href="thread.html#6499">[ thread ]</a>
+              <a href="subject.html#6499">[ subject ]</a>
+              <a href="author.html#6499">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2041: In some cases, __mbrtowc can enter in an infinite loop
+--------------------------------+-------------------------------------------
+  Reporter:  oco                |       Owner:  axeld         
+      Type:  bug                |      Status:  new           
+  Priority:  normal             |   Milestone:  R1            
+ Component:  System/libroot.so  |     Version:  R1 development
+Resolution:                     |    Platform:  All           
+--------------------------------+-------------------------------------------
+Comment (by mjw):
+
+ I also found this bug when trying to port file, and I think I have found
+ out what is causing it.  I'm compiling the program under Haiku in qemu.
+
+ glibc expects wchar_t to be 4 bytes wide, however, the current build of
+ GCC ends up doing:  &quot;typedef short unsigned int wchar_t&quot;, meaning that
+ wchar_t is only 2 bytes wide.
+
+ The line in question is in: /boot/develop/tools/gnupro/lib/gcc-lib/i586
+ -pc-haiku-080323/include/stddef.h, line 251.  I _think_ that
+ __WCHAR_TYPE__ is defined somewhere inside the compiler - there is an
+ interesting note about it on line 88 of stddef.h.
+
+ I have attached a noddy test program.  The test will fail by default.  If
+ you uncomment the 4 lines from line 37, then it will work (albeit with a
+ warning).
+
+ Hope that helps.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2041#comment:4">http://dev.haiku-os.org/ticket/2041#comment:4</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006250.html">[Haiku-bugs] [Haiku] #2041: In some cases, __mbrtowc can enter in an infinite loop
+</A></li>
+	<LI>Next message: <A HREF="006500.html">[Haiku-bugs] [Haiku] #2041: In some cases, __mbrtowc can enter in an infinite loop
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6499">[ date ]</a>
+              <a href="thread.html#6499">[ thread ]</a>
+              <a href="subject.html#6499">[ subject ]</a>
+              <a href="author.html#6499">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

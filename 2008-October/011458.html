@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2409: [kernel] &quot;cat /dev/random&quot; exits after first screen of random data
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232409%3A%20%5Bkernel%5D%20%22cat%20/dev/random%22%20exits%0A%20after%20first%20screen%20of%20random%20data&In-Reply-To=%3C049.8a7adab76f03fa24ab6f85f5d796a65f%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011457.html">
+   <LINK REL="Next"  HREF="011461.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2409: [kernel] &quot;cat /dev/random&quot; exits after first screen of random data</H1>
+    <B>sdeken</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232409%3A%20%5Bkernel%5D%20%22cat%20/dev/random%22%20exits%0A%20after%20first%20screen%20of%20random%20data&In-Reply-To=%3C049.8a7adab76f03fa24ab6f85f5d796a65f%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2409: [kernel] &quot;cat /dev/random&quot; exits after first screen of random data">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Oct 24 21:51:19 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011457.html">[Haiku-bugs] [Haiku] #1805: [Tracker] unneded redraw
+</A></li>
+        <LI>Next message: <A HREF="011461.html">[Haiku-bugs] [Haiku] #2477: Haiku's bootman doesn't show the same partitions as BeOS's
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11458">[ date ]</a>
+              <a href="thread.html#11458">[ thread ]</a>
+              <a href="subject.html#11458">[ subject ]</a>
+              <a href="author.html#11458">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2409: [kernel] &quot;cat /dev/random&quot; exits after first screen of random data
+----------------------------+-----------------------------------------------
+  Reporter:  diver          |       Owner:  axeld         
+      Type:  bug            |      Status:  new           
+  Priority:  normal         |   Milestone:  R1            
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |   Blockedby:                
+  Platform:  All            |    Blocking:                
+----------------------------+-----------------------------------------------
+
+Comment(by sdeken):
+
+ This appears to be a problem with control codes which are being sent to
+ the terminal.  If you filter the characters before they're sent, it
+ doesn't quit:
+
+ {{{
+ cat /dev/random | sed 's/[^a-z]//g'
+ }}}
+
+ So the question is, what sequence of control codes triggers this, and why?
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2409#comment:1">http://dev.haiku-os.org/ticket/2409#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011457.html">[Haiku-bugs] [Haiku] #1805: [Tracker] unneded redraw
+</A></li>
+	<LI>Next message: <A HREF="011461.html">[Haiku-bugs] [Haiku] #2477: Haiku's bootman doesn't show the same partitions as BeOS's
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11458">[ date ]</a>
+              <a href="thread.html#11458">[ thread ]</a>
+              <a href="subject.html#11458">[ subject ]</a>
+              <a href="author.html#11458">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

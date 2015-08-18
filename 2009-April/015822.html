@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3711: Bug in BOutlineListView
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233711%3A%20Bug%20in%20BOutlineListView&In-Reply-To=%3C047.a0bd3104e73dc1e72440b4756ccd5e78%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="015821.html">
+   <LINK REL="Next"  HREF="015823.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3711: Bug in BOutlineListView</H1>
+    <B>PieterPanman</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233711%3A%20Bug%20in%20BOutlineListView&In-Reply-To=%3C047.a0bd3104e73dc1e72440b4756ccd5e78%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3711: Bug in BOutlineListView">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Apr  7 18:14:03 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="015821.html">[Haiku-bugs] [Haiku] #3710: Tracker crashes with BColumnTitle::Draw
+</A></li>
+        <LI>Next message: <A HREF="015823.html">[Haiku-bugs] [Haiku] #3711: Bug in BOutlineListView
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15822">[ date ]</a>
+              <a href="thread.html#15822">[ thread ]</a>
+              <a href="subject.html#15822">[ subject ]</a>
+              <a href="author.html#15822">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3711: Bug in BOutlineListView
+--------------------------+-------------------------------------------------
+ Reporter:  PieterPanman  |       Owner:  axeld         
+     Type:  bug           |      Status:  new           
+ Priority:  normal        |   Milestone:  R1            
+Component:  - General     |     Version:  R1 development
+Blockedby:                |    Platform:  All           
+ Blocking:                |  
+--------------------------+-------------------------------------------------
+ When I enable a selection message for an OutlineListView, I get a crash if
+ you select one of the last items, and collapse their parent.
+
+ Simple testcase: see attachment. Select last item, and collapse its
+ parent. Boom.
+
+ I suspect it is something with the index of the collapsed items.
+
+ {{{
+ GNU gdb 6.3
+ Copyright 2004 Free Software Foundation, Inc.
+ GDB is free software, covered by the GNU General Public License, and you
+ are
+ welcome to change it and/or distribute copies of it under certain
+ conditions.
+ Type &quot;show copying&quot; to see the conditions.
+ There is absolutely no warranty for GDB.  Type &quot;show warranty&quot; for
+ details.
+ This GDB was configured as &quot;i586-pc-haiku&quot;...(no debugging symbols found)
+
+ [tcsetpgrp failed in terminal_inferior: Invalid Argument]
+ Thread 3349 caused an exception: Segment violation
+ Reading symbols from /boot/system/runtime_loader...done.
+ Loaded symbols for /boot/system/runtime_loader
+ Reading symbols from /boot/system/lib/libroot.so...done.
+ Loaded symbols for /boot/system/lib/libroot.so
+ Reading symbols from /boot/system/lib/libbe.so...done.
+ Loaded symbols for /boot/system/lib/libbe.so
+ Reading symbols from /boot/system/lib/libstdc++.r4.so...done.
+ Loaded symbols for /boot/system/lib/libstdc++.r4.so
+ [tcsetpgrp failed in terminal_inferior: Invalid Argument]
+ [Switching to team ./TestOutlineListView (3345) thread w&gt;Test (3349)]
+ 0x003f29d6 in BListItem::IsSelected () from /boot/system/lib/libbe.so
+ (gdb) bt
+ #0  0x003f29d6 in BListItem::IsSelected () from /boot/system/lib/libbe.so
+ #1  0x003f5a6e in BListView::Invoke () from /boot/system/lib/libbe.so
+ #2  0x003a1951 in BInvoker::InvokeNotify () from /boot/system/lib/libbe.so
+ #3  0x003f57d2 in BListView::Select () from /boot/system/lib/libbe.so
+ #4  0x004094ee in BOutlineListView::Collapse () from
+ /boot/system/lib/libbe.so
+ #5  0x0040881d in BOutlineListView::MouseDown () from
+ /boot/system/lib/libbe.so
+ #6  0x0045d4bf in BWindow::DispatchMessage () from
+ /boot/system/lib/libbe.so
+ #7  0x00461808 in BWindow::task_looper () from /boot/system/lib/libbe.so
+ #8  0x003a4e83 in BLooper::_task0_ () from /boot/system/lib/libbe.so
+ #9  0x00228cd8 in thread_entry () from /boot/system/lib/libroot.so
+ #10 0x7003ffec in ?? ()
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3711">http://dev.haiku-os.org/ticket/3711</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="015821.html">[Haiku-bugs] [Haiku] #3710: Tracker crashes with BColumnTitle::Draw
+</A></li>
+	<LI>Next message: <A HREF="015823.html">[Haiku-bugs] [Haiku] #3711: Bug in BOutlineListView
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15822">[ date ]</a>
+              <a href="thread.html#15822">[ thread ]</a>
+              <a href="subject.html#15822">[ subject ]</a>
+              <a href="author.html#15822">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,150 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2425: KDL when using poll function,	test case included
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232425%3A%20KDL%20when%20using%20poll%20function%2C%0A%09test%20case%20included&In-Reply-To=%3C042.55e51515ce72a9f8a6ca4b4d18a0d550%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008663.html">
+   <LINK REL="Next"  HREF="008393.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2425: KDL when using poll function,	test case included</H1>
+    <B>kaliber</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232425%3A%20KDL%20when%20using%20poll%20function%2C%0A%09test%20case%20included&In-Reply-To=%3C042.55e51515ce72a9f8a6ca4b4d18a0d550%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2425: KDL when using poll function,	test case included">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Jun 21 19:28:04 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008663.html">[Haiku-bugs] [Haiku] #2424: usb disk not published if plugged during boot (vmware)
+</A></li>
+        <LI>Next message: <A HREF="008393.html">[Haiku-bugs] [Haiku] #2425: KDL when using poll function,	test case included
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8391">[ date ]</a>
+              <a href="thread.html#8391">[ thread ]</a>
+              <a href="subject.html#8391">[ subject ]</a>
+              <a href="author.html#8391">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2425: KDL when using poll function, test case included
+---------------------------+------------------------------------------------
+ Reporter:  kaliber        |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1 development
+Blockedby:                 |    Platform:  All           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+ During glib configure, checking for broken poll... I get KDL
+
+ {{{
+ PANIC: vm_page_fault: unhandled page fault in kernel space at 0x0, ip 0x0
+
+ Welcome to Kernel Debugging Land...
+ Running on CPU 0
+ kdebug&gt; bt
+ stack trace for thread 8044 &quot;conftest&quot;
+     kernel stack: 0x90b30000 to 0x90b34000
+       user stack: 0x7efe7000 to 0x7ffe7000
+ frame            caller     &lt;image&gt;:function + offset
+ 90b339ec (+  48) 8004b9d9   &lt;kernel&gt;:invoke_debugger_command + 0x00ed
+ 90b33a1c (+  64) 8004b7d1
+ &lt;kernel&gt;:invoke_pipe_segment__FP21debugger_command_pipelPc + 0x0079
+ 90b33a5c (+  64) 8004bb19   &lt;kernel&gt;:invoke_debugger_command_pipe + 0x009d
+ 90b33a9c (+  48) 8004c9f4
+ &lt;kernel&gt;:_ParseCommandPipe__16ExpressionParserRi + 0x0234
+ 90b33acc (+  48) 8004c3aa
+ &lt;kernel&gt;:EvaluateCommand__16ExpressionParserPCcRi + 0x01de
+ 90b33afc (+ 224) 8004ddc0   &lt;kernel&gt;:evaluate_debug_command + 0x0088
+ 90b33bdc (+  64) 80049fea   &lt;kernel&gt;:kernel_debugger_loop__Fv + 0x017a
+ 90b33c1c (+  48) 8004aa1b   &lt;kernel&gt;:kernel_debugger + 0x0117
+ 90b33c4c (+ 192) 8004a8f9   &lt;kernel&gt;:panic + 0x0029
+ 90b33d0c (+  64) 800969c9   &lt;kernel&gt;:vm_page_fault + 0x00b1
+ 90b33d4c (+  64) 800a0e55   &lt;kernel&gt;:page_fault_exception + 0x00b1
+ 90b33d8c (+  12) 800a454a   &lt;kernel&gt;:int_bottom + 0x002a (nearest)
+ iframe at 0x90b33d98 (end = 0x90b33df0)
+  eax 0x0            ebx 0x91347501      ecx 0x0          edx 0x801ca740
+  esi 0x90cd3660     edi 0x91347530      ebp 0x90b33e04   esp 0x90b33dcc
+  eip 0x0         eflags 0x10246
+  vector: 0xe, error code: 0x0
+ 90b33d98 (+ 108) 00000000
+ 90b33e04 (+  48) 800586c1
+ &lt;kernel&gt;:devfs_select__FP9fs_volumeP8fs_vnodePvUcP10selectsync + 0x0055
+ 90b33e34 (+  64) 8007c9c4
+ &lt;kernel&gt;:file_select__FP15file_descriptorUcP10selectsync + 0x0038
+ 90b33e74 (+  80) 8006ce00   &lt;kernel&gt;:select_fd + 0x0180
+ 90b33ec4 (+  64) 80047a21   &lt;kernel&gt;:common_poll__FP6pollfdUlxb + 0x0085
+ 90b33f04 (+  64) 800485e9   &lt;kernel&gt;:_user_poll + 0x00c1
+ 90b33f44 (+ 100) 800a4722   &lt;kernel&gt;:pre_syscall_debug_done + 0x0002
+ (nearest)
+ iframe at 0x90b33fa8 (end = 0x90b34000)
+  eax 0x6c           ebx 0x2fae08        ecx 0x7ffe6f10   edx 0xffff0104
+  esi 0x7ffe6f74     edi 0x7ffe7100      ebp 0x7ffe6f3c   esp 0x90b33fdc
+  eip 0xffff0104  eflags 0x212
+  vector: 0x63, error code: 0x0
+ 90b33fa8 (+   0) ffff0104
+ 7ffe6f3c (+  64) 002008a7   &lt;conftest&gt;:main + 0x0047
+ 7ffe6f7c (+  48) 0020072f   &lt;conftest&gt;:_start + 0x005b
+ 7ffe6fac (+  48) 0010084a   183368:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">runtime_loader_seg0ro at 0x00100000</A> +
+ 0x84a
+ 7ffe6fdc (+   0) 7ffe6fec   183367:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">conftest_main_stack at 0x7efe7000</A> +
+ 0xffffec
+ }}}
+
+ Test case:
+
+ {{{
+ #include &lt;stdlib.h&gt;
+ #include &lt;fcntl.h&gt;
+ #include &lt;sys/poll.h&gt;
+ int main(void) {
+   struct pollfd fds[1];
+   int fd;
+   fd = open(&quot;/dev/null&quot;, 1);
+   fds[0].fd = fd;
+   fds[0].events = POLLIN;
+   fds[0].revents = 0;
+   if (poll(fds, 1, 0) &lt; 0 || (fds[0].revents &amp; POLLNVAL) != 0) {
+         exit(1);  /* Does not work for devices -- fail */
+   }
+   exit(0);
+ }
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2425">http://dev.haiku-os.org/ticket/2425</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008663.html">[Haiku-bugs] [Haiku] #2424: usb disk not published if plugged during boot (vmware)
+</A></li>
+	<LI>Next message: <A HREF="008393.html">[Haiku-bugs] [Haiku] #2425: KDL when using poll function,	test case included
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8391">[ date ]</a>
+              <a href="thread.html#8391">[ thread ]</a>
+              <a href="subject.html#8391">[ subject ]</a>
+              <a href="author.html#8391">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3336: copy too many files,	KDL : kernel/fs/vfs.cpp
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-January/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233336%3A%20copy%20too%20many%20files%2C%0A%09KDL%20%3A%20kernel/fs/vfs.cpp&In-Reply-To=%3C041.73ae42d91487d88ae281c165d16bd8e7%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="013968.html">
+   <LINK REL="Next"  HREF="013851.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3336: copy too many files,	KDL : kernel/fs/vfs.cpp</H1>
+    <B>mmadia</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233336%3A%20copy%20too%20many%20files%2C%0A%09KDL%20%3A%20kernel/fs/vfs.cpp&In-Reply-To=%3C041.73ae42d91487d88ae281c165d16bd8e7%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3336: copy too many files,	KDL : kernel/fs/vfs.cpp">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Jan 21 01:16:36 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="013968.html">[Haiku-bugs] [Haiku] #3335: Error &quot;vm_page_fault&quot; with boot	LiveCD
+</A></li>
+        <LI>Next message: <A HREF="013851.html">[Haiku-bugs] [Haiku] #3336: copy too many files,	KDL : kernel/fs/vfs.cpp
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13848">[ date ]</a>
+              <a href="thread.html#13848">[ thread ]</a>
+              <a href="subject.html#13848">[ subject ]</a>
+              <a href="author.html#13848">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3336: copy too many files, KDL : kernel/fs/vfs.cpp
+---------------------------+------------------------------------------------
+ Reporter:  mmadia         |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1 development
+Blockedby:                 |    Platform:  All           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+ If I attempt copying mozilla's cvs 1.8 branch code from one bfs partition
+ to another, Haiku will KDL.
+
+ ASSERT FAILED (src/system/kernel/fs/vfs.cpp:1020): vnode-&gt;ref_count == 0
+ &amp;&amp; vnode-&gt;busy
+
+ This applies for using either Tracker or `cp -R -L source/* dest`
+
+ The first KDL occured while the system was up and very active for 8+hrs.
+ This was with Tracker.
+
+ Immediately on reboot, I attempted `cp -R -L mozilla_source/*
+ dest_another_drive` with the same KDL and slightly different backtraces.
+
+ This is a fairly recent revision, running natively.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3336">http://dev.haiku-os.org/ticket/3336</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="013968.html">[Haiku-bugs] [Haiku] #3335: Error &quot;vm_page_fault&quot; with boot	LiveCD
+</A></li>
+	<LI>Next message: <A HREF="013851.html">[Haiku-bugs] [Haiku] #3336: copy too many files,	KDL : kernel/fs/vfs.cpp
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13848">[ date ]</a>
+              <a href="thread.html#13848">[ thread ]</a>
+              <a href="subject.html#13848">[ subject ]</a>
+              <a href="author.html#13848">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

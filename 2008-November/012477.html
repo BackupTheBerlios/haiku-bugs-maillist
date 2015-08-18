@@ -1,0 +1,153 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3131: PANIC: _mutex_unlock() failure: thread 43 is trying to release mutex 0x834ec3c0 (current holder 0)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233131%3A%20PANIC%3A%20_mutex_unlock%28%29%20failure%3A%20thread%0A%2043%20is%20trying%20to%20release%20mutex%200x834ec3c0%20%28current%20holder%200%29&In-Reply-To=%3C042.279f6f5ccfbfdad811173fd3370322fd%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012475.html">
+   <LINK REL="Next"  HREF="012487.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3131: PANIC: _mutex_unlock() failure: thread 43 is trying to release mutex 0x834ec3c0 (current holder 0)</H1>
+    <B>kaliber</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233131%3A%20PANIC%3A%20_mutex_unlock%28%29%20failure%3A%20thread%0A%2043%20is%20trying%20to%20release%20mutex%200x834ec3c0%20%28current%20holder%200%29&In-Reply-To=%3C042.279f6f5ccfbfdad811173fd3370322fd%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3131: PANIC: _mutex_unlock() failure: thread 43 is trying to release mutex 0x834ec3c0 (current holder 0)">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Nov 13 21:45:25 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012475.html">[Haiku-bugs] [Haiku] #2813: Wonderbrush About Box is an empty	black window
+</A></li>
+        <LI>Next message: <A HREF="012487.html">[Haiku-bugs] [Haiku] #975: the filesystem API should support sparse files for the call &quot;get_file_map&quot;
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12477">[ date ]</a>
+              <a href="thread.html#12477">[ thread ]</a>
+              <a href="subject.html#12477">[ subject ]</a>
+              <a href="author.html#12477">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3131: PANIC: _mutex_unlock() failure: thread 43 is trying to release mutex
+0x834ec3c0 (current holder 0)
+-----------------------+----------------------------------------------------
+ Reporter:  kaliber    |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+Blockedby:             |    Platform:  All           
+ Blocking:             |  
+-----------------------+----------------------------------------------------
+ I cannot reproduce the bug, but backtrace may be useful.
+
+ {{{
+ PANIC: _mutex_unlock() failure: thread 43 is trying to release mutex
+ 0x834ec3c0 (current holder 0)
+
+ Welcome to Kernel Debugging Land...
+ Thread 43 &quot;timer_thread&quot; running on CPU 0
+ kdebug&gt; bt
+ stack trace for thread 43 &quot;timer_thread&quot;
+     kernel stack: 0x8021c000 to 0x80220000
+       user stack: 0x70041000 to 0x70081000
+ frame               caller     &lt;image&gt;:function + offset
+  0 8021faa4 (+  48) 8005bcd5   &lt;kernel_x86&gt;:invoke_debugger_command +
+ 0x00f5
+  1 8021fad4 (+  64) 8005bac5   &lt;kernel_x86&gt;
+ invoke_pipe_segment(debugger_command_pipe*: 0x80122a60, int32: 0, 0x0
+ &quot;&lt;NULL&gt;&quot;) + 0x0079
+  2 8021fb14 (+  64) 8005be4c   &lt;kernel_x86&gt;:invoke_debugger_command_pipe +
+ 0x009c
+  3 8021fb54 (+  48) 8005d3d4   &lt;kernel_x86&gt;
+ ExpressionParser&lt;0x8021fc08&gt;::_ParseCommandPipe(0x8021fc04) + 0x0234
+  4 8021fb84 (+  64) 8005c80e   &lt;kernel_x86&gt;
+ ExpressionParser&lt;0x8021fc08&gt;::EvaluateCommand(0x801128a0 &quot;bt&quot;, 0x8021fc04)
+ + 0x02ba
+  5 8021fbc4 (+ 224) 8005e7fc   &lt;kernel_x86&gt;:evaluate_debug_command +
+ 0x0088
+  6 8021fca4 (+  64) 80059bea   &lt;kernel_x86&gt; kernel_debugger_loop() +
+ 0x01ae
+  7 8021fce4 (+  32) 8005aa55   &lt;kernel_x86&gt;:kernel_debugger + 0x004d
+  8 8021fd04 (+ 192) 8005a9fd   &lt;kernel_x86&gt;:panic + 0x0029
+  9 8021fdc4 (+  64) 8003ce20   &lt;kernel_x86&gt;:_mutex_unlock + 0x0074
+ 10 8021fe04 (+  48) 80038b20   &lt;kernel_x86&gt;:heap_memalign + 0x0070
+ 11 8021fe34 (+  48) 8003992a   &lt;kernel_x86&gt;:memalign + 0x0146
+ 12 8021fe64 (+  32) 80039ab0   &lt;kernel_x86&gt;:malloc + 0x0014
+ 13 8021fe84 (+  48) 8004341c   &lt;kernel_x86&gt; get_port_msg(int32:
+ 1886023792, uint32: 0x6c (108)) + 0x0018
+ 14 8021feb4 (+  64) 80044b98   &lt;kernel_x86&gt;:writev_port_etc + 0x0180
+ 15 8021fef4 (+  80) 80045304   &lt;kernel_x86&gt;:_user_write_port_etc + 0x00dc
+ 16 8021ff44 (+ 100) 800cdff2   &lt;kernel_x86&gt;:handle_syscall + 0x00af
+ user iframe at 0x8021ffa8 (end = 0x80220000)
+  eax 0xc7           ebx 0x5ca560        ecx 0x70080c70   edx 0xffff0104
+  esi 0x0            edi 0x706a7070      ebp 0x70080cac   esp 0x8021ffdc
+  eip 0xffff0104  eflags 0x217      user esp 0x70080c70
+  vector: 0x63, error code: 0x0
+ 17 8021ffa8 (+   0) ffff0104   &lt;commpage&gt;:commpage_syscall + 0x0004
+ 18 70080cac (+  64) 00340f59   &lt;libbe.so&gt;
+ BMessage&lt;0x18042480&gt;::_SendFlattenedMessage(0x6c, int32: 258171, int32:
+ 12, int32: 0, int64: 1729878823849164800) + 0x0089
+ 19 70080cec (+  64) 0023c55b   &lt;_APP_&gt;
+ MessageDeliverer&lt;0x18014330&gt;::_SendMessage(MessageDeliverer::Message*:
+ 0x1803e1b0, int32: 258171, int32: 12) + 0x0033
+ 20 70080d2c (+ 128) 0023bdeb   &lt;_APP_&gt;
+ MessageDeliverer&lt;0x18014330&gt;::DeliverMessage(0x18044928, int32: 108,
+ MessagingTargetSet&amp;: 0x70080e7c, int64: 9223372036854775807) + 0x028f
+ 21 70080dac (+ 112) 0023baf1   &lt;_APP_&gt;
+ MessageDeliverer&lt;0x18014330&gt;::DeliverMessage(BMessage*: 0x1800ff50,
+ MessagingTargetSet&amp;: 0x70080e7c, int64: 9223372036854775807) + 0x0095
+ 22 70080e1c (+ 112) 0023b9b6   &lt;_APP_&gt;
+ MessageDeliverer&lt;0x18014330&gt;::DeliverMessage(BMessage*: 0x1800ff50,
+ BMessenger: 0x70080ee8, int64: 9223372036854775807) + 0x004e
+ 23 70080e8c (+ 128) 002405f7   &lt;_APP_&gt;
+ MessageRunnerManager&lt;0x18015ff8&gt;::_DoEvent(MessageRunnerManager::RunnerInfo*:
+ 0x180209d0) + 0x011f
+ 24 70080f0c (+  48) 0024095e   &lt;_APP_&gt;
+ MessageRunnerManager::RunnerEvent&lt;0x1801bf40&gt;::Do(EventQueue*: 0x18022368)
+ + 0x0026
+ 25 70080f3c (+  64) 0023b200   &lt;_APP_&gt;
+ EventQueue&lt;0x18022368&gt;::_EventLooper(0x0) + 0x0114
+ 26 70080f7c (+  48) 0023b0e3   &lt;_APP_&gt;
+ EventQueue&lt;0x18022368&gt;::_EventLooperEntry(NULL) + 0x001f
+ 27 70080fac (+  48) 0053e9b8   &lt;libroot.so&gt;:_get_next_team_info (nearest)
+ + 0x005c
+ 28 70080fdc (+   0) 70080fec   2380:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">timer_thread_43_stack at 0x70041000</A> +
+ 0x3ffec
+
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3131">http://dev.haiku-os.org/ticket/3131</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012475.html">[Haiku-bugs] [Haiku] #2813: Wonderbrush About Box is an empty	black window
+</A></li>
+	<LI>Next message: <A HREF="012487.html">[Haiku-bugs] [Haiku] #975: the filesystem API should support sparse files for the call &quot;get_file_map&quot;
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12477">[ date ]</a>
+              <a href="thread.html#12477">[ thread ]</a>
+              <a href="subject.html#12477">[ subject ]</a>
+              <a href="author.html#12477">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #627: Cannot open another copy of the	Terminal program
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-January/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23627%3A%20Cannot%20open%20another%20copy%20of%20the%0A%09Terminal%20program&In-Reply-To=%3C061.6f366acea7ed7f5052fff0b1bf83d570%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000324.html">
+   <LINK REL="Next"  HREF="000326.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #627: Cannot open another copy of the	Terminal program</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23627%3A%20Cannot%20open%20another%20copy%20of%20the%0A%09Terminal%20program&In-Reply-To=%3C061.6f366acea7ed7f5052fff0b1bf83d570%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #627: Cannot open another copy of the	Terminal program">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Jan 30 00:01:40 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000324.html">[Haiku-bugs] [Haiku] #234: [Deskbar] dragging any icon over Deskbar crashes it
+</A></li>
+        <LI>Next message: <A HREF="000326.html">[Haiku-bugs] [Haiku] #1001: Vision IRC client crashes on close
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#325">[ date ]</a>
+              <a href="thread.html#325">[ thread ]</a>
+              <a href="subject.html#325">[ subject ]</a>
+              <a href="author.html#325">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#627: Cannot open another copy of the Terminal program
+--------------------------------+-------------------------------------------
+  Reporter:  <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">ajsmale at gmail.com</A>  |       Owner:  axeld
+      Type:  bug                |      Status:  new  
+  Priority:  normal             |   Milestone:  R1   
+ Component:  - Applications     |     Version:       
+Resolution:                     |    Platform:  All  
+--------------------------------+-------------------------------------------
+Comment (by korli):
+
+ To reproduce the problem, I press Alt+N several times.
+ Terminal tries to find which number it should put in its window title. It
+ asks the running instances of Terminal and gets some not yet running apps
+ which can't answer requests.
+ Here is a patch which fixes the problem, please comment
+
+ Index: src/servers/registrar/TRoster.cpp
+ ===================================================================
+ --- src/servers/registrar/TRoster.cpp   (r&#233;vision 20011)
+ +++ src/servers/registrar/TRoster.cpp   (copie de travail)
+ @@ -705,6 +705,8 @@
+                 for (AppInfoList::Iterator it(fRegisteredApps.It());
+                          RosterAppInfo *info = *it;
+                          ++it) {
+ +                       if (info-&gt;state != APP_STATE_REGISTERED)
+ +                               continue;
+                         if (!signature || !strcasecmp(signature,
+ info-&gt;signature))
+                                 reply.AddInt32(&quot;teams&quot;, info-&gt;team);
+                 }
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/627#comment:22">http://dev.haiku-os.org/ticket/627#comment:22</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000324.html">[Haiku-bugs] [Haiku] #234: [Deskbar] dragging any icon over Deskbar crashes it
+</A></li>
+	<LI>Next message: <A HREF="000326.html">[Haiku-bugs] [Haiku] #1001: Vision IRC client crashes on close
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#325">[ date ]</a>
+              <a href="thread.html#325">[ thread ]</a>
+              <a href="subject.html#325">[ subject ]</a>
+              <a href="author.html#325">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

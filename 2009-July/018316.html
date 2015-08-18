@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4068: Enable wget timestamping for file download jamrules
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-July/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234068%3A%20Enable%20wget%20timestamping%20for%20file%0A%20download%20jamrules&In-Reply-To=%3C053.efdb21fd0c6abb780239f30534aa0cd5%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="018313.html">
+   <LINK REL="Next"  HREF="018317.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4068: Enable wget timestamping for file download jamrules</H1>
+    <B>bonefish</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234068%3A%20Enable%20wget%20timestamping%20for%20file%0A%20download%20jamrules&In-Reply-To=%3C053.efdb21fd0c6abb780239f30534aa0cd5%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4068: Enable wget timestamping for file download jamrules">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Jul  7 01:34:40 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="018313.html">[Haiku-bugs] [Haiku] #4068: Enable wget timestamping for file download jamrules
+</A></li>
+        <LI>Next message: <A HREF="018317.html">[Haiku-bugs] [Haiku] #4068: Enable wget timestamping for file download jamrules
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18316">[ date ]</a>
+              <a href="thread.html#18316">[ thread ]</a>
+              <a href="subject.html#18316">[ subject ]</a>
+              <a href="author.html#18316">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4068: Enable wget timestamping for file download jamrules
+--------------------------+-------------------------------------------------
+ Reporter:  meianoite     |       Owner:  bonefish      
+     Type:  enhancement   |      Status:  new           
+ Priority:  normal        |   Milestone:  R1            
+Component:  Build System  |     Version:  R1 development
+Blockedby:                |    Platform:  All           
+ Blocking:                |  
+--------------------------+-------------------------------------------------
+
+Comment(by bonefish):
+
+ Replying to [comment:4 meianoite]:
+ &gt; Replying to [comment:3 bonefish]:
+ &gt; &gt; I don't get the point of this ticket. Please elaborate.
+ &gt;
+ &gt; First and foremost, it's an enhancement ticket, not a bug report. Maybe
+ what I find to be &quot;enhanced&quot; behaviour is actually considered undesirable
+ by you or other developers, but my rationale is as follows:
+ &gt;
+ &gt; If you invoje jam with the -a option, it will re-download packages
+ unconditionally. Since I had to do it quite a number of times today
+ because of what became #4070 (to check that I wasn't messing up somewhere
+ else), I thought it would be better for both the servers' bandwidth, and
+ my monthly download limit, if those files weren't redownloaded in case
+ they were identical.
+
+ Mmh, I don't think I've ever built an image with &quot;-a&quot;. I usually just
+ remove the &quot;objects&quot; directory and built normally, which also has the
+ advantage of removing all the files that the build system doesn't know
+ about anymore.
+
+ &gt; Ideally the build system would invoke a port of the to-become Haiku
+ packaging system to check for new versions of packages along with a more
+ robust check of md5/sha1 signatures, and download remote packages only
+ when they differ from the local copy, but I figured that for the time
+ being the timestamping option of wget would suffice.
+
+ Actually the files at the URLs are not intended to change. If a new
+ version of a package is built, it gets a new (unique) name and
+ OptionalPackages is adjusted accordingly. The point is that the build
+ system is supposed to define the the contents of the image, not &quot;third
+ parties&quot; swapping optional package files behind the scenes. So IMO the
+ timestamp change is superfluous. Either we decide not to let the build
+ system update downloads ever -- then the files could simply be marked
+ NoUpdate -- or we are fine with &quot;-a&quot; updating them (which is consistent
+ behavior) and tell people not to build jam with &quot;-a&quot;, if they don't want
+ that to happen.
+
+ Regarding your patch. pushd/popd are superfluous, since actions are run in
+ separate shells anyway.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4068#comment:5">http://dev.haiku-os.org/ticket/4068#comment:5</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="018313.html">[Haiku-bugs] [Haiku] #4068: Enable wget timestamping for file download jamrules
+</A></li>
+	<LI>Next message: <A HREF="018317.html">[Haiku-bugs] [Haiku] #4068: Enable wget timestamping for file download jamrules
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18316">[ date ]</a>
+              <a href="thread.html#18316">[ thread ]</a>
+              <a href="subject.html#18316">[ subject ]</a>
+              <a href="author.html#18316">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

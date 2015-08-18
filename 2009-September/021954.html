@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3744: Wacom Bamboo Fun (small) doesn't	work
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233744%3A%20Wacom%20Bamboo%20Fun%20%28small%29%20doesn%27t%0A%09work&In-Reply-To=%3C052.090ac5be3c82b6a5030f3854176199a7%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="021953.html">
+   <LINK REL="Next"  HREF="021955.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3744: Wacom Bamboo Fun (small) doesn't	work</H1>
+    <B>idefix</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233744%3A%20Wacom%20Bamboo%20Fun%20%28small%29%20doesn%27t%0A%09work&In-Reply-To=%3C052.090ac5be3c82b6a5030f3854176199a7%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3744: Wacom Bamboo Fun (small) doesn't	work">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Sep 24 19:00:53 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="021953.html">[Haiku-bugs] [Haiku] #4121: A link to WikiFormatting
+</A></li>
+        <LI>Next message: <A HREF="021955.html">[Haiku-bugs] [Haiku] #4152: acpi_battery: throw ACPI exceptions about GlobalLock acquisition/release failures
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21954">[ date ]</a>
+              <a href="thread.html#21954">[ thread ]</a>
+              <a href="subject.html#21954">[ subject ]</a>
+              <a href="author.html#21954">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3744: Wacom Bamboo Fun (small) doesn't work
+----------------------+-----------------------------------------------------
+ Reporter:  HaiColon  |       Owner:  stippi       
+     Type:  bug       |      Status:  new          
+ Priority:  normal    |   Milestone:  R1           
+Component:  Drivers   |     Version:  R1/pre-alpha1
+Blockedby:            |    Platform:  x86          
+ Blocking:            |  
+----------------------+-----------------------------------------------------
+
+Comment(by idefix):
+
+ Replying to [comment:7 mmlr]:
+ &gt; From looking at that patch it seems like you figured out that these
+ wacoms are just plain normal HID devices and they use the standard (but in
+ this case vendor specific) feature report interface to program the tablet.
+ If this is the case for all these wacom devices, then the whole wacom
+ driver stack should be moved into usb_hid as a WacomDevice.
+ Yes, while looking through the code I was wondering what these
+ `send_request` lines specifically did, so I did a bit of digging through
+ the USB and HID specifications and the Linux driver. What I've written in
+ the comments of the patch is essentially what I came up with so far.
+
+ &gt; The wacom input_server device add-on right now &quot;parses&quot; the raw data
+ with known offsets, but if these are HID devices then these items should
+ be easily extractable from the normal HIDReport as HIDReportItems.
+ I don't know this for sure yet. I know the Wacom tablet acts as an HID
+ device when setting it to 'Wacom'-mode, but I don't know if the tablet-
+ data it is sending in 'Wacom'-mode is also a normal HIDReport.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3744#comment:9">http://dev.haiku-os.org/ticket/3744#comment:9</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="021953.html">[Haiku-bugs] [Haiku] #4121: A link to WikiFormatting
+</A></li>
+	<LI>Next message: <A HREF="021955.html">[Haiku-bugs] [Haiku] #4152: acpi_battery: throw ACPI exceptions about GlobalLock acquisition/release failures
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21954">[ date ]</a>
+              <a href="thread.html#21954">[ thread ]</a>
+              <a href="subject.html#21954">[ subject ]</a>
+              <a href="author.html#21954">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

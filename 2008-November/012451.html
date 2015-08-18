@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3127: NULL pointer access inside fork()
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233127%3A%20NULL%20pointer%20access%20inside%20fork%28%29&In-Reply-To=%3C042.6d29390e0cc7d21be153af6c26f0727e%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012450.html">
+   <LINK REL="Next"  HREF="012456.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3127: NULL pointer access inside fork()</H1>
+    <B>bhaible</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233127%3A%20NULL%20pointer%20access%20inside%20fork%28%29&In-Reply-To=%3C042.6d29390e0cc7d21be153af6c26f0727e%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3127: NULL pointer access inside fork()">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Nov 13 04:07:40 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012450.html">[Haiku-bugs] [Haiku] #2889: ext3: can read first megabyte only
+</A></li>
+        <LI>Next message: <A HREF="012456.html">[Haiku-bugs] [Haiku] #3127: NULL pointer access inside fork()
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12451">[ date ]</a>
+              <a href="thread.html#12451">[ thread ]</a>
+              <a href="subject.html#12451">[ subject ]</a>
+              <a href="author.html#12451">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3127: NULL pointer access inside fork()
+-----------------------+----------------------------------------------------
+ Reporter:  bhaible    |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+Blockedby:             |    Platform:  All           
+ Blocking:             |  
+-----------------------+----------------------------------------------------
+ While running a configure script in tight memory situation, I got an
+ application crash. Clicking on the &quot;Debug&quot; button of the error dialog,
+ I was presented a gdb session the shell that was executing the
+ configure script. At the top, function fork().
+
+ To reproduce:
+
+ 0. Start Haiku in QEMU with 256 MB RAM allocated to it,
+
+ 1. Open a Terminal.
+
+ 2. $ wget <A HREF="http://www.haible.de/bruno/gnu/testdir3.tar.gz">http://www.haible.de/bruno/gnu/testdir3.tar.gz</A>
+
+ 3. $ tar xvfz testdir3.tar.gz
+
+ 4. $ cd testdir3
+
+ 5. $ ./configure --host=i586-pc-haiku --build=i586-pc-haiku
+ --prefix=/boot/home/config CPPFLAGS=&quot;-Wall&quot; 2&gt;&amp;1 | tee log1
+
+ 6. Wait a couple of hours.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3127">http://dev.haiku-os.org/ticket/3127</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012450.html">[Haiku-bugs] [Haiku] #2889: ext3: can read first megabyte only
+</A></li>
+	<LI>Next message: <A HREF="012456.html">[Haiku-bugs] [Haiku] #3127: NULL pointer access inside fork()
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12451">[ date ]</a>
+              <a href="thread.html#12451">[ thread ]</a>
+              <a href="subject.html#12451">[ subject ]</a>
+              <a href="author.html#12451">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

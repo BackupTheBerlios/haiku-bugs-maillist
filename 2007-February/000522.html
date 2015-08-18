@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1036: Tracker Doesn't Like Hard Links
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-February/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231036%3A%20Tracker%20Doesn%27t%20Like%20Hard%20Links&In-Reply-To=%3C043.2063c9e64a289c76edcea5e9f963d139%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000521.html">
+   <LINK REL="Next"  HREF="000539.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1036: Tracker Doesn't Like Hard Links</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231036%3A%20Tracker%20Doesn%27t%20Like%20Hard%20Links&In-Reply-To=%3C043.2063c9e64a289c76edcea5e9f963d139%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1036: Tracker Doesn't Like Hard Links">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Feb 24 22:38:09 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000521.html">[Haiku-bugs] [Haiku] #1001: Vision IRC client crashes on close
+</A></li>
+        <LI>Next message: <A HREF="000539.html">[Haiku-bugs] [Haiku] #1036: Tracker Doesn't Like Hard Links
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#522">[ date ]</a>
+              <a href="thread.html#522">[ thread ]</a>
+              <a href="subject.html#522">[ subject ]</a>
+              <a href="author.html#522">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1036: Tracker Doesn't Like Hard Links
+------------------------------------+---------------------------------------
+ Reporter:  bonefish                |       Owner:  axeld         
+     Type:  bug                     |      Status:  new           
+ Priority:  normal                  |   Milestone:  R1            
+Component:  - Applications/Tracker  |     Version:  R1 development
+ Platform:  All                     |  
+------------------------------------+---------------------------------------
+ Tracker has a few issues with respect to hard links, apparently because it
+ doesn't distinguish between nodes and entries consequently enough. The
+ following observation were made under BeOS R5:
+
+ * In a Tracker window displaying a directory that contains several entries
+ referring to the same node, only one of those entries is displayed, the
+ others are missing.
+
+ * Similarly to the first point, a query window displaying entries only
+ lists one entry per node, even if the responsible file system reported
+ more than one entry for the node.
+
+ * A B_ENTRY_REMOVED live query notification will remove the node (i.e. the
+ one entry displayed for it) from the query window, even if other entries
+ referring to the node did and still do belong to the query result set (and
+ were correctly reported by the responsible file system)
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1036">http://dev.haiku-os.org/ticket/1036</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000521.html">[Haiku-bugs] [Haiku] #1001: Vision IRC client crashes on close
+</A></li>
+	<LI>Next message: <A HREF="000539.html">[Haiku-bugs] [Haiku] #1036: Tracker Doesn't Like Hard Links
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#522">[ date ]</a>
+              <a href="thread.html#522">[ thread ]</a>
+              <a href="subject.html#522">[ subject ]</a>
+              <a href="author.html#522">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

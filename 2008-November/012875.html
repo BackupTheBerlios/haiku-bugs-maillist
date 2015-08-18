@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3186: BDirectory::Contains() is broken for certain cases of similar paths
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233186%3A%20BDirectory%3A%3AContains%28%29%20is%20broken%20for%0A%20certain%20cases%20of%20similar%20paths&In-Reply-To=%3C044.464da36a12234c4eb94e40438d103128%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012872.html">
+   <LINK REL="Next"  HREF="012876.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3186: BDirectory::Contains() is broken for certain cases of similar paths</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233186%3A%20BDirectory%3A%3AContains%28%29%20is%20broken%20for%0A%20certain%20cases%20of%20similar%20paths&In-Reply-To=%3C044.464da36a12234c4eb94e40438d103128%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3186: BDirectory::Contains() is broken for certain cases of similar paths">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Nov 30 17:55:09 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012872.html">[Haiku-bugs] [Haiku] #2531: DHCP changes IP address every 5	minutes
+</A></li>
+        <LI>Next message: <A HREF="012876.html">[Haiku-bugs] [Haiku] #3186: BDirectory::Contains() is broken for certain cases of similar paths
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12875">[ date ]</a>
+              <a href="thread.html#12875">[ thread ]</a>
+              <a href="subject.html#12875">[ subject ]</a>
+              <a href="author.html#12875">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3186: BDirectory::Contains() is broken for certain cases of similar paths
+------------------------------+---------------------------------------------
+ Reporter:  anevilyak         |       Owner:  axeld         
+     Type:  bug               |      Status:  new           
+ Priority:  normal            |   Milestone:  R1            
+Component:  Kits/Storage Kit  |     Version:  R1 development
+Blockedby:                    |    Platform:  All           
+ Blocking:                    |  
+------------------------------+---------------------------------------------
+ Steps to reproduce:
+
+ 1. Create a directory called New Folder.[BR]
+ 2. Create a directory called New Folder 2.[BR]
+ 3. Get a BDirectory object for New Folder 2, a BEntry for New Folder, and
+ call BDirectory::Contains() on the resulting entry. It will (incorrectly)
+ return true, because Contains currently compares the paths of the two up
+ to the length of the directory itself. Attached please find a patch
+ intended to fix the situation by comparing the path components
+ individually.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3186">http://dev.haiku-os.org/ticket/3186</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012872.html">[Haiku-bugs] [Haiku] #2531: DHCP changes IP address every 5	minutes
+</A></li>
+	<LI>Next message: <A HREF="012876.html">[Haiku-bugs] [Haiku] #3186: BDirectory::Contains() is broken for certain cases of similar paths
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12875">[ date ]</a>
+              <a href="thread.html#12875">[ thread ]</a>
+              <a href="subject.html#12875">[ subject ]</a>
+              <a href="author.html#12875">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1290: Problem compiling on MacOS X
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-July/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231290%3A%20Problem%20compiling%20on%20MacOS%20X&In-Reply-To=%3C054.a117addc59fb6f0f90ef52be43386307%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001741.html">
+   <LINK REL="Next"  HREF="001744.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1290: Problem compiling on MacOS X</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231290%3A%20Problem%20compiling%20on%20MacOS%20X&In-Reply-To=%3C054.a117addc59fb6f0f90ef52be43386307%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1290: Problem compiling on MacOS X">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Jul  3 16:47:22 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001741.html">[Haiku-bugs] [Haiku] #1290: Problem compiling on MacOS X
+</A></li>
+        <LI>Next message: <A HREF="001744.html">[Haiku-bugs] [Haiku] #1290: Problem compiling on MacOS X
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1742">[ date ]</a>
+              <a href="thread.html#1742">[ thread ]</a>
+              <a href="subject.html#1742">[ subject ]</a>
+              <a href="author.html#1742">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1290: Problem compiling on MacOS X
+-------------------------+--------------------------------------------------
+  Reporter:  jimmiejams  |       Owner:  axeld         
+      Type:  bug         |      Status:  new           
+  Priority:  normal      |   Milestone:  R1            
+ Component:  - General   |     Version:  R1 development
+Resolution:              |    Platform:  All           
+-------------------------+--------------------------------------------------
+Comment (by bonefish):
+
+ r21546 should fix the first issue.
+
+ Regarding the missing !___gxx_personality_v0, I don't know. Maybe it's
+ defined in another library. Though AFAIK, we have not changed what
+ libraries we link against since Morgan Howe finished porting the build
+ system to MacOS X. Some Google hits suggest that it might be a gcc version
+ problem, e.g. if you build a library with one gcc version and then an
+ executable that links against the library with another gcc version. But
+ since only the gcc library is involved in this case, this seems unlikely.
+
+ You could check which library the symbol lives in. Not sure how that is
+ done best on MacOS X. On other platforms I'd iterate through the existing
+ libraries and do a {{{&quot;nm &lt;library&gt; | grep ___gxx_personality_v0&quot;}}}.
+ Maybe that works too.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1290#comment:1">http://dev.haiku-os.org/ticket/1290#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001741.html">[Haiku-bugs] [Haiku] #1290: Problem compiling on MacOS X
+</A></li>
+	<LI>Next message: <A HREF="001744.html">[Haiku-bugs] [Haiku] #1290: Problem compiling on MacOS X
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1742">[ date ]</a>
+              <a href="thread.html#1742">[ thread ]</a>
+              <a href="subject.html#1742">[ subject ]</a>
+              <a href="author.html#1742">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,164 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1670: ide adapter crash
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-December/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231670%3A%20ide%20adapter%20crash&In-Reply-To=%3C050.27f49fda7c0f9a6c37a7d0d2cbea8f8c%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003967.html">
+   <LINK REL="Next"  HREF="003972.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1670: ide adapter crash</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231670%3A%20ide%20adapter%20crash&In-Reply-To=%3C050.27f49fda7c0f9a6c37a7d0d2cbea8f8c%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1670: ide adapter crash">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Dec 19 23:25:34 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003967.html">[Haiku-bugs] [Haiku] #843: Bug dependencies not possible
+</A></li>
+        <LI>Next message: <A HREF="003972.html">[Haiku-bugs] [Haiku] #1238: ftp only downloads filess smaller than 1447 bytes. Sometimes appears 'hung' on larger files.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3971">[ date ]</a>
+              <a href="thread.html#3971">[ thread ]</a>
+              <a href="subject.html#3971">[ subject ]</a>
+              <a href="author.html#3971">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1670: ide adapter crash
+-----------------------------+----------------------------------------------
+ Reporter:  marcusoverhagen  |       Owner:  axeld         
+     Type:  bug              |      Status:  new           
+ Priority:  normal           |   Milestone:  R1            
+Component:  System/Kernel    |     Version:  R1 development
+ Platform:  All              |  
+-----------------------------+----------------------------------------------
+ Code from r23143 will, when enabled, crash in vmware:
+
+ PCI-IDE: Controller in legacy mode: cmd 0x1f0, ctrl 0x3f6, irq 14
+ PCI-IDE: bus master base 0x1050
+ PCI-IDE: init channel...
+ vm_soft_fault: kernel thread accessing invalid user memory!
+ vm_page_fault: vm_soft_fault returned error 'Bad address' on fault at 0x0,
+ ip 0x0, write 0, user 0, thread 0x7
+ PANIC: vm_page_fault: unhandled page fault in kernel space at 0x0, ip 0x0
+
+ Welcome to Kernel Debugging Land...
+ Running on CPU 0
+ kdebug&gt; sc
+ stack trace for thread 0x7 &quot;main2&quot;
+     kernel stack: 0x80144000 to 0x80148000
+ frame            caller     &lt;image&gt;:function + offset
+ 80146d24 (+  52) 8007b33c   &lt;kernel&gt;:invoke_command + 0x0074
+ 80146d58 (+  48) 8007b45a   &lt;kernel&gt;:kernel_debugger_loop + 0x00de
+ 80146d88 (+  32) 8007bf2e   &lt;kernel&gt;:kernel_debugger + 0x00b6
+ 80146da8 (+ 192) 8007be6d   &lt;kernel&gt;:panic + 0x0029
+ 80146e68 (+  64) 800560e2   &lt;kernel&gt;:vm_page_fault + 0x00aa
+ 80146ea8 (+ 176) 80084a87   &lt;kernel&gt;:i386_handle_trap + 0x0217
+ iframe at 0x80146f60 (end = 0x80146fb4)
+  eax 0x0            ebx 0x80310604      ecx 0x9080b780   edx 0x9080bb80
+  esi 0x800aa280     edi 0x90819920      ebp 0x80146fe8   esp 0x80146f90
+  eip 0x0         eflags 0x210246
+  vector: 0xe, error code: 0x0
+ 80146f58 (+ 144) 00000000
+ 80146fe8 (+  64) 80274583   &lt;ide_adapter&gt;:ide_adapter_init_controller +
+ 0x00a7
+ 80147028 (+  48) 802678d1   &lt;generic_ide_pci&gt;:init_controller + 0x002d
+ 80147058 (+  64) 80063334   &lt;kernel&gt;:load_driver_int + 0x0090
+ 80147098 (+  48) 8006348a   &lt;kernel&gt;:pnp_load_driver + 0x00ea
+ 801470c8 (+  80) 80273f11   &lt;ide_adapter&gt;:ide_adapter_init_channel +
+ 0x00dd
+ 80147118 (+  64) 8026783d   &lt;generic_ide_pci&gt;:init_channel + 0x0035
+ 80147158 (+  64) 80063334   &lt;kernel&gt;:load_driver_int + 0x0090
+ 80147198 (+  48) 8006348a   &lt;kernel&gt;:pnp_load_driver + 0x00ea
+ 801471c8 (+  80) 8026dc6e   &lt;ide&gt;:ide_sim_init_bus + 0x02b6
+ 80147218 (+  64) 80063334   &lt;kernel&gt;:load_driver_int + 0x0090
+ 80147258 (+  48) 8006348a   &lt;kernel&gt;:pnp_load_driver + 0x00ea
+ 80147288 (+  80) 80349057   &lt;scsi&gt;:scsi_init_bus + 0x023b
+ 801472d8 (+  64) 80063334   &lt;kernel&gt;:load_driver_int + 0x0090
+ 80147318 (+  48) 8006348a   &lt;kernel&gt;:pnp_load_driver + 0x00ea
+ 80147348 (+  48) 80067562   &lt;kernel&gt;:scan_bus + 0x001e
+ 80147378 (+  64) 800676fb   &lt;kernel&gt;:scan + 0x0073
+ 801473b8 (+  32) 80067844   &lt;kernel&gt;:dm_register_child_devices + 0x0014
+ 801473d8 (+  64) 800672fd   &lt;kernel&gt;:dm_register_node + 0x00f9
+ 80147418 (+ 208) 80274282   &lt;ide_adapter&gt;:ide_adapter_publish_channel +
+ 0x0132
+ 801474e8 (+ 144) 802744ad   &lt;ide_adapter&gt;:ide_adapter_detect_channel +
+ 0x021d
+ 80147578 (+ 144) 80274abf   &lt;ide_adapter&gt;:ide_adapter_probe_controller +
+ 0x01cb
+ 80147608 (+  80) 8026798b   &lt;generic_ide_pci&gt;:probe_controller + 0x0053
+ 80147658 (+  64) 80066554
+ &lt;kernel&gt;:register_supporting_child_devices__FP16device_node_infoP4list +
+ 0x00dc
+ 80147698 (+ 240) 80066dba   &lt;kernel&gt;:probe_for_driver_modules__FPCc +
+ 0x00ae
+ 80147788 (+ 112) 800670f6   &lt;kernel&gt;:probe_for_device_type + 0x003a
+ 801477f8 (+  80) 8003951c   &lt;kernel&gt;:scan_for_drivers__FP11devfs_vnode +
+ 0x0064
+ 80147848 (+  64) 8003a551   &lt;kernel&gt;:devfs_lookup__FPvT0PCcPxPi + 0x005d
+ 80147888 (+ 112) 80041f81
+ &lt;kernel&gt;:vnode_path_to_vnode__FP5vnodePcbiPP5vnodePxPi + 0x0159
+ 801478f8 (+  64) 800422c6   &lt;kernel&gt;:path_to_vnode__FPcbPP5vnodePxT1 +
+ 0x00de
+ 80147938 (+  64) 80042a1d
+ &lt;kernel&gt;:fd_and_path_to_vnode__FiPcbPP5vnodePxT2 + 0x0061
+ 80147978 (+  64) 80046b25   &lt;kernel&gt;:common_path_read_stat__FiPcbP4statT2
+ + 0x0031
+ 801479b8 (+ 144) 8004983c   &lt;kernel&gt;:_kern_read_stat + 0x00a0
+ 80147a48 (+  64) 8008f433   &lt;kernel&gt;:_lstat + 0x001f
+ 80147a88 (+  32) 8008f3d4   &lt;kernel&gt;:lstat + 0x0018
+ 80147aa8 (+ 160) 8006ef39
+ &lt;kernel&gt;:_Scan__Q38BPrivate10DiskDevice18KDiskDeviceManagerPCc + 0x0031
+ 80147b48 (+  80) 8006e8c7
+ &lt;kernel&gt;:InitialDeviceScan__Q38BPrivate10DiskDevice18KDiskDeviceManager +
+ 0x003f
+ 80147b98 (+ 128) 8004c435
+ &lt;kernel&gt;:get_boot_partitions__FP11kernel_argsRt5Stack1ZPQ38BPrivate10DiskDevice10KPartition
+ + 0x02f5
+ 80147c18 (+ 816) 8004c6dd   &lt;kernel&gt;:vfs_mount_boot_file_system + 0x0031
+ 80147f48 (+ 144) 800259f9   &lt;kernel&gt;:main2 + 0x00d1
+ 80147fd8 (+  32) 80034443   &lt;kernel&gt;:_create_kernel_thread_kentry__Fv +
+ 0x001b
+ 80147ff8 (+2146140168) 800343d8   &lt;kernel&gt;:thread_kthread_exit__Fv +
+ 0x0000
+ kdebug&gt;
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1670">http://dev.haiku-os.org/ticket/1670</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003967.html">[Haiku-bugs] [Haiku] #843: Bug dependencies not possible
+</A></li>
+	<LI>Next message: <A HREF="003972.html">[Haiku-bugs] [Haiku] #1238: ftp only downloads filess smaller than 1447 bytes. Sometimes appears 'hung' on larger files.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3971">[ date ]</a>
+              <a href="thread.html#3971">[ thread ]</a>
+              <a href="subject.html#3971">[ subject ]</a>
+              <a href="author.html#3971">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1254: rtl8139 read_hook: Error in package reception: bits: 20704 length 26088!!!
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231254%3A%20rtl8139%20read_hook%3A%20Error%20in%20package%0A%20reception%3A%20bits%3A%2020704%20length%2026088%21%21%21&In-Reply-To=%3C052.ff3e8e31460a7cf844d484ffb99b19b7%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002371.html">
+   <LINK REL="Next"  HREF="002374.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1254: rtl8139 read_hook: Error in package reception: bits: 20704 length 26088!!!</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231254%3A%20rtl8139%20read_hook%3A%20Error%20in%20package%0A%20reception%3A%20bits%3A%2020704%20length%2026088%21%21%21&In-Reply-To=%3C052.ff3e8e31460a7cf844d484ffb99b19b7%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1254: rtl8139 read_hook: Error in package reception: bits: 20704 length 26088!!!">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Aug 19 12:37:00 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002371.html">[Haiku-bugs] [Haiku] #1071: Identify and fix performance bottlenecks in the kernel and I/O subsystems
+</A></li>
+        <LI>Next message: <A HREF="002374.html">[Haiku-bugs] [Haiku] #1254: rtl8139 read_hook: Error in package reception: bits: 20704 length 26088!!!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2372">[ date ]</a>
+              <a href="thread.html#2372">[ thread ]</a>
+              <a href="subject.html#2372">[ subject ]</a>
+              <a href="author.html#2372">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1254: rtl8139 read_hook: Error in package reception: bits: 20704 length 26088!!!
+------------------------------+---------------------------------------------
+  Reporter:  kaoutsis         |       Owner:  nielx         
+      Type:  bug              |      Status:  new           
+  Priority:  normal           |   Milestone:  R1            
+ Component:  Drivers/Network  |     Version:  R1 development
+Resolution:                   |    Platform:  All           
+------------------------------+---------------------------------------------
+Comment (by nielx):
+
+ I've investigated the problem. Unfortunately my rtl8139 seems to have died
+ in the mean time, so I probably won't be fixing this (soon or at all). You
+ know what: I'll give it a go and I'll check with you guys if the patch
+ works or not.
+
+ What happens is this: somewhere there is a read error. Now I'm not
+ completely certain whether or not the driver is to blame for it (which it
+ might be), but what it should do after a read error is restart the read
+ queue of the hardware. This is where the bug is.
+
+ The other reported problem of the original bug report, the running out of
+ pages, is not in the driver. The driver does not allocate that much
+ memory. So that might be in rsync. It's probably a bug in the kernel.
+ Maybe the recent vm updates fixed this particular issue.
+
+ kaoutsis, does the problem always occur at the same point?
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1254#comment:3">http://dev.haiku-os.org/ticket/1254#comment:3</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002371.html">[Haiku-bugs] [Haiku] #1071: Identify and fix performance bottlenecks in the kernel and I/O subsystems
+</A></li>
+	<LI>Next message: <A HREF="002374.html">[Haiku-bugs] [Haiku] #1254: rtl8139 read_hook: Error in package reception: bits: 20704 length 26088!!!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2372">[ date ]</a>
+              <a href="thread.html#2372">[ thread ]</a>
+              <a href="subject.html#2372">[ subject ]</a>
+              <a href="author.html#2372">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

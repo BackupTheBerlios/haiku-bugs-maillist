@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4109: Syslog duplicate message suppression seems to be eating more messages than it should.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-July/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234109%3A%20Syslog%20duplicate%20message%20suppression%0A%20seems%20to%20be%20eating%20more%20messages%20than%20it%20should.&In-Reply-To=%3C038.5251afce6885a2b9459da314a5d360d1%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="018568.html">
+   <LINK REL="Next"  HREF="018567.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4109: Syslog duplicate message suppression seems to be eating more messages than it should.</H1>
+    <B>bga</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234109%3A%20Syslog%20duplicate%20message%20suppression%0A%20seems%20to%20be%20eating%20more%20messages%20than%20it%20should.&In-Reply-To=%3C038.5251afce6885a2b9459da314a5d360d1%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4109: Syslog duplicate message suppression seems to be eating more messages than it should.">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Jul 21 00:52:47 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="018568.html">[Haiku-bugs] [Haiku] #4108: Debugger doesn't correctly handle retrieving source file for a program consisting only of main()
+</A></li>
+        <LI>Next message: <A HREF="018567.html">[Haiku-bugs] [Haiku] #4109: Syslog duplicate message suppression seems to be eating more messages than it should.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18559">[ date ]</a>
+              <a href="thread.html#18559">[ thread ]</a>
+              <a href="subject.html#18559">[ subject ]</a>
+              <a href="author.html#18559">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4109: Syslog duplicate message suppression seems to be eating more messages than
+it should.
+-----------------------------------+----------------------------------------
+ Reporter:  bga                    |       Owner:  axeld         
+     Type:  bug                    |      Status:  new           
+ Priority:  normal                 |   Milestone:  R1            
+Component:  Servers/syslog_daemon  |     Version:  R1 development
+Blockedby:                         |    Platform:  All           
+ Blocking:                         |  
+-----------------------------------+----------------------------------------
+ I was starting to track down a bug related to query update messages being
+ lost and I started it by checking the syslog for any suspicious messages.
+ Here is the relevant part of what I saw:
+
+ {{{
+ 2009-07-20 19:45:33 DAEMON 'DHCP': DHCP timeout shift: 4 secs (try 0)
+ 2009-07-20 19:45:37 DAEMON 'DHCP': DHCP timeout shift: 8 secs (try 0)
+ 2009-07-20 19:45:45 DAEMON 'DHCP': DHCP timeout shift: 2 secs (try 1)
+ 2009-07-20 19:45:46 KERN: bfs: bfs_open_dir:1550: Invalid Argument
+ 2009-07-20 19:45:47 DAEMON 'DHCP': DHCP timeout shift: 4 secs (try 1)
+ 2009-07-20 19:45:47 KERN: Last message repeated 2577 times.
+ 2009-07-20 19:45:51 DAEMON 'DHCP': DHCP timeout shift: 8 secs (try 1)
+ 2009-07-20 19:45:59 DAEMON 'DHCP': DHCP timeout shift: 2 secs (try 2)
+ 2009-07-20 19:46:01 DAEMON 'DHCP': DHCP timeout shift: 4 secs (try 2)
+ 2009-07-20 19:46:05 DAEMON 'DHCP': DHCP timeout shift: 8 secs (try 2)
+ }}}
+
+ The interesting line is the &quot;Last message repeated 2577 times&quot;. if you
+ look at the syslog it seems to be saying that the message above it was
+ repeated this many times but it was obviously not it. This message was a
+ result of deleting 2577 emails at once from Tracker so it seems the syslog
+ not only ate the repeated messages but also at the first message that it
+ should show (which I am pretty sure is &quot;port full&quot; or something like
+ that).
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4109">http://dev.haiku-os.org/ticket/4109</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="018568.html">[Haiku-bugs] [Haiku] #4108: Debugger doesn't correctly handle retrieving source file for a program consisting only of main()
+</A></li>
+	<LI>Next message: <A HREF="018567.html">[Haiku-bugs] [Haiku] #4109: Syslog duplicate message suppression seems to be eating more messages than it should.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18559">[ date ]</a>
+              <a href="thread.html#18559">[ thread ]</a>
+              <a href="subject.html#18559">[ subject ]</a>
+              <a href="author.html#18559">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

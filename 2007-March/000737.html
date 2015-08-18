@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1102: Enable the kernel to run as a userland process on top of itself
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231102%3A%20Enable%20the%20kernel%20to%20run%20as%20a%20userland%0A%20process%20on%20top%20of%20itself&In-Reply-To=%3C040.09650cdbe83e40edd361bea4e9714617%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000829.html">
+   <LINK REL="Next"  HREF="000738.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1102: Enable the kernel to run as a userland process on top of itself</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231102%3A%20Enable%20the%20kernel%20to%20run%20as%20a%20userland%0A%20process%20on%20top%20of%20itself&In-Reply-To=%3C040.09650cdbe83e40edd361bea4e9714617%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1102: Enable the kernel to run as a userland process on top of itself">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Mar 11 14:03:06 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000829.html">[Haiku-bugs] [Haiku] #1101: Cannot add background image
+</A></li>
+        <LI>Next message: <A HREF="000738.html">[Haiku-bugs] [Haiku] #1102: Enable the kernel to run as a userland process on top of itself
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#737">[ date ]</a>
+              <a href="thread.html#737">[ thread ]</a>
+              <a href="subject.html#737">[ subject ]</a>
+              <a href="author.html#737">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1102: Enable the kernel to run as a userland process on top of itself
+---------------------------+------------------------------------------------
+ Reporter:  axeld          |       Owner:  axeld         
+     Type:  enhancement    |      Status:  new           
+ Priority:  normal         |   Milestone:  Unscheduled   
+Component:  System/Kernel  |     Version:  R1 development
+ Platform:  All            |  
+---------------------------+------------------------------------------------
+ As a testbed for kernel development, profiling, etc. a virtual kernel
+ running on top of the actual kernel would be beneficial. Also having it
+ run on top of ie. Linux or BeOS would be nice, if possible, especially as
+ long Haiku is not self hosting.
+
+ Jonas Sundstr&#246;m was kind enough to collect some more informations:
+
+ &quot;Reduces the engineering cycle time for testing new kernel code
+  from 5 minutes to 5 seconds.&quot;  -- Matthew Dillon
+
+ DragonFlyBSD:
+ Reasons for wanting to have a working virtual kernel
+ <A HREF="http://leaf.dragonflybsd.org/mailarchive/kernel/2007-01/msg00082.html">http://leaf.dragonflybsd.org/mailarchive/kernel/2007-01/msg00082.html</A>
+
+ A few questions and answers
+ <A HREF="http://leaf.dragonflybsd.org/mailarchive/users/2007-01/msg00237.html">http://leaf.dragonflybsd.org/mailarchive/users/2007-01/msg00237.html</A>
+
+ Performance ans system resources
+ <A HREF="http://leaf.dragonflybsd.org/mailarchive/kernel/2007-01/msg00107.html">http://leaf.dragonflybsd.org/mailarchive/kernel/2007-01/msg00107.html</A>
+
+ Use of memory
+ <A HREF="http://leaf.dragonflybsd.org/mailarchive/kernel/2007-01/msg00157.html">http://leaf.dragonflybsd.org/mailarchive/kernel/2007-01/msg00157.html</A>
+ <A HREF="http://leaf.dragonflybsd.org/mailarchive/kernel/2007-01/msg00039.html">http://leaf.dragonflybsd.org/mailarchive/kernel/2007-01/msg00039.html</A>
+
+ Short-term goals
+ <A HREF="http://leaf.dragonflybsd.org/mailarchive/kernel/2007-01/msg00010.html">http://leaf.dragonflybsd.org/mailarchive/kernel/2007-01/msg00010.html</A>
+
+ A few tickets
+ <A HREF="http://leaf.dragonflybsd.org/mailarchive/kernel/2007-01/msg00002.html">http://leaf.dragonflybsd.org/mailarchive/kernel/2007-01/msg00002.html</A>
+
+ Function conflicts between kernel and libc
+ <A HREF="http://leaf.dragonflybsd.org/mailarchive/kernel/2006-12/msg00018.html">http://leaf.dragonflybsd.org/mailarchive/kernel/2006-12/msg00018.html</A>
+ <A HREF="http://leaf.dragonflybsd.org/mailarchive/kernel/2006-12/msg00030.html">http://leaf.dragonflybsd.org/mailarchive/kernel/2006-12/msg00030.html</A>
+ <A HREF="http://leaf.dragonflybsd.org/mailarchive/kernel/2006-12/msg00039.html">http://leaf.dragonflybsd.org/mailarchive/kernel/2006-12/msg00039.html</A>
+
+ Man page
+ <A HREF="http://leaf.dragonflybsd.org/cgi/web-man?command=vkernel&amp;section=ANY">http://leaf.dragonflybsd.org/cgi/web-man?command=vkernel&amp;section=ANY</A>
+
+ Production uses for virtual kernels
+ <A HREF="http://leaf.dragonflybsd.org/mailarchive/kernel/2007-01/msg00054.html">http://leaf.dragonflybsd.org/mailarchive/kernel/2007-01/msg00054.html</A>
+
+ &quot;Checkpointing&quot; vkernels
+ <A HREF="http://leaf.dragonflybsd.org/mailarchive/kernel/2007-02/msg00079.html">http://leaf.dragonflybsd.org/mailarchive/kernel/2007-02/msg00079.html</A>
+
+ Linux:
+ <A HREF="http://user-mode-linux.sourceforge.net/kernel.html">http://user-mode-linux.sourceforge.net/kernel.html</A>
+ <A HREF="http://user-mode-linux.sourceforge.net/UserModeLinux-HOWTO.html">http://user-mode-linux.sourceforge.net/UserModeLinux-HOWTO.html</A>
+ <A HREF="http://en.wikipedia.org/wiki/User-mode_Linux">http://en.wikipedia.org/wiki/User-mode_Linux</A>
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1102">http://dev.haiku-os.org/ticket/1102</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000829.html">[Haiku-bugs] [Haiku] #1101: Cannot add background image
+</A></li>
+	<LI>Next message: <A HREF="000738.html">[Haiku-bugs] [Haiku] #1102: Enable the kernel to run as a userland process on top of itself
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#737">[ date ]</a>
+              <a href="thread.html#737">[ thread ]</a>
+              <a href="subject.html#737">[ subject ]</a>
+              <a href="author.html#737">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

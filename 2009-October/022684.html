@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4770: How to crash Haiku (KDL via recv()	function)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234770%3A%20How%20to%20crash%20Haiku%20%28KDL%20via%20recv%28%29%0A%09function%29&In-Reply-To=%3C043.529285e27de0758d466e6d106519a8a0%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="022683.html">
+   <LINK REL="Next"  HREF="022685.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4770: How to crash Haiku (KDL via recv()	function)</H1>
+    <B>rogueeve</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234770%3A%20How%20to%20crash%20Haiku%20%28KDL%20via%20recv%28%29%0A%09function%29&In-Reply-To=%3C043.529285e27de0758d466e6d106519a8a0%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4770: How to crash Haiku (KDL via recv()	function)">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Oct 13 00:42:15 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="022683.html">[Haiku-bugs] [Haiku] #4769: Nightly Build RSS Feed	Enhancement...
+</A></li>
+        <LI>Next message: <A HREF="022685.html">[Haiku-bugs] [Haiku] #4770: How to crash Haiku (KDL via recv()	function)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22684">[ date ]</a>
+              <a href="thread.html#22684">[ thread ]</a>
+              <a href="subject.html#22684">[ subject ]</a>
+              <a href="author.html#22684">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4770: How to crash Haiku (KDL via recv() function)
+-----------------------+----------------------------------------------------
+ Reporter:  rogueeve   |       Owner:  nobody   
+     Type:  bug        |      Status:  new      
+ Priority:  normal     |   Milestone:  R1       
+Component:  - General  |     Version:  R1/alpha1
+Blockedby:             |    Platform:  All      
+ Blocking:             |  
+-----------------------+----------------------------------------------------
+ Hi all...
+
+ The attached .cpp program will reproducibly cause a KDL under r33411. The
+ crash is initiated by passing a bad pointer as the buffer argument to the
+ Berkeley recv() function. The exact error displayed is &quot;Page fault in
+ kernel space&quot;.
+
+ This is a distilled version of a bug I found in one of my real programs.
+ In that case it was caused by recv()'ing into a variable but forgetting to
+ include the &quot;&amp;&quot;.
+
+ Of course calling recv() this way is incorrect, but I assume bringing down
+ the whole system is not an &quot;acceptable&quot; response.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4770">http://dev.haiku-os.org/ticket/4770</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="022683.html">[Haiku-bugs] [Haiku] #4769: Nightly Build RSS Feed	Enhancement...
+</A></li>
+	<LI>Next message: <A HREF="022685.html">[Haiku-bugs] [Haiku] #4770: How to crash Haiku (KDL via recv()	function)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22684">[ date ]</a>
+              <a href="thread.html#22684">[ thread ]</a>
+              <a href="subject.html#22684">[ subject ]</a>
+              <a href="author.html#22684">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

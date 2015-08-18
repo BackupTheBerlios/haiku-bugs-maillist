@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3399: The system reboots while running jam -q on the haiku trunk.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233399%3A%20The%20system%20reboots%20while%20running%0A%20jam%20-q%20on%20the%20haiku%20trunk.&In-Reply-To=%3C051.d4c5ab364b93a0ca1a8ab959aa15bc0c%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="019002.html">
+   <LINK REL="Next"  HREF="019006.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3399: The system reboots while running jam -q on the haiku trunk.</H1>
+    <B>bonefish</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233399%3A%20The%20system%20reboots%20while%20running%0A%20jam%20-q%20on%20the%20haiku%20trunk.&In-Reply-To=%3C051.d4c5ab364b93a0ca1a8ab959aa15bc0c%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3399: The system reboots while running jam -q on the haiku trunk.">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Aug  3 15:55:49 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="019002.html">[Haiku-bugs] [Haiku] #3399: The system reboots while running jam -q on the haiku trunk.
+</A></li>
+        <LI>Next message: <A HREF="019006.html">[Haiku-bugs] [Haiku] #1389: [FlattenPictureTest] Not all tests	succeed
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19003">[ date ]</a>
+              <a href="thread.html#19003">[ thread ]</a>
+              <a href="subject.html#19003">[ subject ]</a>
+              <a href="author.html#19003">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3399: The system reboots while running jam -q on the haiku trunk.
+---------------------------+------------------------------------------------
+ Reporter:  bbjimmy        |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1 development
+Blockedby:                 |    Platform:  All           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+
+Comment(by bonefish):
+
+ Replying to [comment:7 mmlr]:
+ &gt; I have yet to try with your recent changes, but I have narrowed it down
+ on my side to a workaround that fully removes the double/triple faults for
+ me. If I change &quot;vm_translation_map_arch_info::Delete()&quot; in [<A HREF="http://dev">http://dev</A>
+ .haiku-
+ os.org/browser/haiku/trunk/src/system/kernel/arch/x86/arch_vm_translation_map.cpp#L188
+ arch_vm_translation_map.cpp] to always use the deferred_delete instead of
+ the direct delete, the faults do not occur anymore. Is it possible that
+ the translation map that is being freed there can still be in use?
+
+ I don't see how that could happen. The vm_translation_map_arch_info
+ objects are ref-counted. And the ref-counting scheme is extremely simple
+ (feel encouraged to review):
+  - The translation map creating the arch info objects owns the initial
+ reference and frees it in destroy_tmap().
+  - A CPU using an arch info has a reference to it. The CPUs' initial
+ references to the kernel translation map arch info are acquired in
+ arch_cpu_init_post_vm(). When the arch info changes (in
+ arch_thread_context_switch()) the reference of the old arch info is
+ released, and one acquired for the new arch info.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3399#comment:8">http://dev.haiku-os.org/ticket/3399#comment:8</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="019002.html">[Haiku-bugs] [Haiku] #3399: The system reboots while running jam -q on the haiku trunk.
+</A></li>
+	<LI>Next message: <A HREF="019006.html">[Haiku-bugs] [Haiku] #1389: [FlattenPictureTest] Not all tests	succeed
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19003">[ date ]</a>
+              <a href="thread.html#19003">[ thread ]</a>
+              <a href="subject.html#19003">[ subject ]</a>
+              <a href="author.html#19003">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

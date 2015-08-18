@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1250: hostname not fully implemented
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231250%3A%20hostname%20not%20fully%20implemented&In-Reply-To=%3C057.083d2ffbb2935cdf3b73e4bb6a61210b%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001570.html">
+   <LINK REL="Next"  HREF="001572.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1250: hostname not fully implemented</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231250%3A%20hostname%20not%20fully%20implemented&In-Reply-To=%3C057.083d2ffbb2935cdf3b73e4bb6a61210b%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1250: hostname not fully implemented">trac at haiku-os.org
+       </A><BR>
+    <I>Thu May 31 12:44:33 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001570.html">[Haiku-bugs] [Haiku] #1250: hostname not fully implemented
+</A></li>
+        <LI>Next message: <A HREF="001572.html">[Haiku-bugs] [Haiku] #1250: hostname not fully implemented
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1571">[ date ]</a>
+              <a href="thread.html#1571">[ thread ]</a>
+              <a href="subject.html#1571">[ subject ]</a>
+              <a href="author.html#1571">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1250: hostname not fully implemented
+--------------------------------+-------------------------------------------
+  Reporter:  jonas.kirilla      |       Owner:  axeld         
+      Type:  bug                |      Status:  new           
+  Priority:  normal             |   Milestone:  R1            
+ Component:  System/libroot.so  |     Version:  R1 development
+Resolution:                     |    Platform:  All           
+--------------------------------+-------------------------------------------
+Comment (by jonas.kirilla):
+
+ 1. Looking at it some more I may have to rewrite the patch for uname.c, as
+ gethostname() can return errors.
+
+
+ 2. hostname -&gt; nodename truncation okay?
+
+ Utsname.nodename is limited by _SYS_NAMELEN to 32 bytes, whereas
+ MAXHOSTNAMELEN is defined as 256 in sys/param.h. Calling gethostname()
+ with a too short string would of course truncate it. I don't know if this
+ truncation of the hostname is a problem for uname or not.
+
+ FreeBSD appears to use a 32 bytes field length for utsname in the kernel,
+ and 256 when in user space.
+ <A HREF="http://fxr.watson.org/fxr/source/sys/utsname.h?v=RELENG62">http://fxr.watson.org/fxr/source/sys/utsname.h?v=RELENG62</A>
+
+
+ 3. HOST_NAME_MAX appears to be the better choice over MAXHOSTNAMELEN
+
+ <A HREF="http://www.opengroup.org/onlinepubs/009695399/functions/gethostname.html">http://www.opengroup.org/onlinepubs/009695399/functions/gethostname.html</A>
+
+ The FreeBSD man page on GETHOSTNAME(3) has this to say:
+
+ STANDARDS
+ The gethostname() function conforms to IEEE Std 1003.1-2001
+ (``POSIX.1'').  Callers should be aware that {HOST_NAME_MAX} may be
+ variable or infinite, but is guaranteed to be no less than
+ {_POSIX_HOST_NAME_MAX}.  On older systems, this limit was defined in the
+ non-standard header &lt;sys/param.h&gt; as MAXHOSTNAMELEN, and counted the
+ terminating null.  The sethostname() function and the error returns for
+ gethostname() are not standardized.
+
+ So far I haven't figured out whether HOST_NAME_MAX is used in Linux. I've
+ only found a lot of MAXHOSTNAMELEN in the sources.
+
+ 4. Would things such as these be better discussed on the development
+ mailinglist?
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1250#comment:1">http://dev.haiku-os.org/ticket/1250#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001570.html">[Haiku-bugs] [Haiku] #1250: hostname not fully implemented
+</A></li>
+	<LI>Next message: <A HREF="001572.html">[Haiku-bugs] [Haiku] #1250: hostname not fully implemented
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1571">[ date ]</a>
+              <a href="thread.html#1571">[ thread ]</a>
+              <a href="subject.html#1571">[ subject ]</a>
+              <a href="author.html#1571">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

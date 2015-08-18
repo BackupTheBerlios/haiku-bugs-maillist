@@ -1,0 +1,167 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2789: writing to usb disks fail after 10-100Mb of writing files
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232789%3A%20writing%20to%20usb%20disks%20fail%20after%0A%2010-100Mb%20of%20writing%20files&In-Reply-To=%3C051.b4b636e9a39911ecc711e4b76fed5e17%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="022520.html">
+   <LINK REL="Next"  HREF="022523.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2789: writing to usb disks fail after 10-100Mb of writing files</H1>
+    <B>rudolfc</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232789%3A%20writing%20to%20usb%20disks%20fail%20after%0A%2010-100Mb%20of%20writing%20files&In-Reply-To=%3C051.b4b636e9a39911ecc711e4b76fed5e17%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2789: writing to usb disks fail after 10-100Mb of writing files">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Oct  7 10:03:39 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="022520.html">[Haiku-bugs] [Haiku] #4053: USB MIDI not recognized dynamically
+</A></li>
+        <LI>Next message: <A HREF="022523.html">[Haiku-bugs] [Haiku] #2789: writing to usb disks fail after 10-100Mb of writing files
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22522">[ date ]</a>
+              <a href="thread.html#22522">[ thread ]</a>
+              <a href="subject.html#22522">[ subject ]</a>
+              <a href="author.html#22522">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2789: writing to usb disks fail after 10-100Mb of writing files
+----------------------+-----------------------------------------------------
+  Reporter:  rudolfc  |       Owner:  mmlr         
+      Type:  bug      |      Status:  closed       
+  Priority:  normal   |   Milestone:  R1           
+ Component:  Drivers  |     Version:  R1/pre-alpha1
+Resolution:  fixed    |   Blockedby:               
+  Platform:  x86      |    Blocking:               
+----------------------+-----------------------------------------------------
+
+Comment(by rudolfc):
+
+ Hi there mmlr,
+
+ Thanks for the pointers you gave me. I've been testing a lot since that
+ previous message of yours (I'll post benchmark details later) and I've got
+ a few remarks/questions.
+ I hope you will answer them. I'll just post it here, if you think we
+ should continue this topic elsewhere please let me know.
+
+ So, I have been tweaking with the usb_disk driver. From the looks of it,
+ you are right: reading mostly takes place at 4k chuncks per read (although
+ on a few occasions 8kb happens as well).
+
+ I am guessing 4kb is used because that's equvalent to Be's page size.
+ Correct?
+
+ So: question, why is writing taking place at only 2kb chunks instead of
+ 4kb chuncks? This unnessesarily takes down speed.. Is this  a fault? if so
+ I'd love to see that fixed.
+
+ Question 2:  while reading, I see a lot of sequential reading takes place.
+ That is, sequential chunks are read from the disk, although they might be
+ placed on non-sequental adresses in (virtual) memory.
+
+ Why is writing taking place in reversed sequential order? I am guessing
+ this happens on for instance writing to the syslog, while writing a new
+ file (so copying a file) does take place in normal sequential order. Is
+ this correct?
+ Couldn't the logfiles be written in sequential order as well? (I'd love
+ that :)
+
+
+ So, why am I asking?
+ Well, I just implemented a simple caching piece of code inside the
+ usb_disk driver that dramatically speeds up I/O.
+
+ I tested on two systems, using some 5 different sticks, using cachesizes
+ of:
+ none, 16kb, 32kb, 64kb and 128kb.
+
+ The sticks varied from 1Gb to 16Gb sticks, both slow types (write in
+ windows @ 2,5Mb/sec, read @ 6Mb/sec) to fast types (write @ 22Mb/sec, read
+ @ 32Mb/sec).
+
+ I found that using 16Kb cache is a nice setting as a compromize between
+ loading small scattered files to large sequential files.
+
+ Using 16kB cache made the reading speed go from 0.93Mb/sec on seq. files,
+ to 3.3Mb/sec. I have to note here that the kernel's caching system
+ considerably slows down disk access (I think that's the interfering
+ component, will check later).
+
+ For instance, using 128kB cache gives me a read speed (seq. files) of
+ around 20Mb/sec  at the start of a file copy for a second or so (for
+ instance during 35Mb of a 160Mb file), then speed drops to around 5Mb/sec.
+ (The 3.3Mb/sec mentioned above is with the slowdown, before it will be
+ above 6Mb or so).
+
+ Hmm, come to think of it, maybe the system cache does speedup things, but
+ after the 35Mb it's full and can't place data quicky enough on the HD, I
+ saw that HD copy is slow as well on haiku: around 6-7Mb/sec (half for
+ reading, half for writing if copy takes place inside one HD).
+
+ Oh, I have bootspeed figures as well (booting on stick, all types):
+ with 16Mb cache I found the optimum booting speed, being some 15-20
+ seconds shorter on all systems. using 128Mb slows down speed with say 15
+ secs.
+
+ I have to note here the cache I did only caches sequential reads.
+ I don't have writing speed info yet, I'm implementing the same cache
+ technique in the driver atm to see what that does.
+ I can tell you I can work very nice already with haiku booted from stick
+ now, even playback fullHD movies (that was unthinkable before..). The only
+ stuttering I see is when a write access to the stick takes place. This can
+ be made to be better when caching, though very small non sequential
+ chuncks will always remain slow as long as the internal technique of USB
+ sticks don't improve.
+
+ Oh, I also plan to do some testing/benchmarking on a real USB HD to see if
+ that behaves likewise.
+
+ -------
+
+ mmlr, you did not tell me yet what the plans are to improve things, or
+ which ticket describes those plans? All info you have is interesting to
+ me.. :-)
+
+ Bye!
+
+ Rudolf.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2789#comment:18">http://dev.haiku-os.org/ticket/2789#comment:18</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="022520.html">[Haiku-bugs] [Haiku] #4053: USB MIDI not recognized dynamically
+</A></li>
+	<LI>Next message: <A HREF="022523.html">[Haiku-bugs] [Haiku] #2789: writing to usb disks fail after 10-100Mb of writing files
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22522">[ date ]</a>
+              <a href="thread.html#22522">[ thread ]</a>
+              <a href="subject.html#22522">[ subject ]</a>
+              <a href="author.html#22522">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

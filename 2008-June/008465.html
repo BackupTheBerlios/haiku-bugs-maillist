@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2344: Hang when booting with USB Mass Storage device connected.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232344%3A%20Hang%20when%20booting%20with%20USB%20Mass%0A%20Storage%20device%20connected.&In-Reply-To=%3C057.2cdc2e0394ae1bfdd1cb290f90ce4925%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008461.html">
+   <LINK REL="Next"  HREF="008469.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2344: Hang when booting with USB Mass Storage device connected.</H1>
+    <B>mmlr</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232344%3A%20Hang%20when%20booting%20with%20USB%20Mass%0A%20Storage%20device%20connected.&In-Reply-To=%3C057.2cdc2e0394ae1bfdd1cb290f90ce4925%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2344: Hang when booting with USB Mass Storage device connected.">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Jun 23 19:48:42 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008461.html">[Haiku-bugs] [Haiku] #2344: Hang when booting with USB Mass Storage device connected.
+</A></li>
+        <LI>Next message: <A HREF="008469.html">[Haiku-bugs] [Haiku] #2344: Hang when booting with USB Mass Storage device connected.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8465">[ date ]</a>
+              <a href="thread.html#8465">[ thread ]</a>
+              <a href="subject.html#8465">[ subject ]</a>
+              <a href="author.html#8465">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2344: Hang when booting with USB Mass Storage device connected.
+----------------------------+-----------------------------------------------
+  Reporter:  dustin howett  |       Owner:  mmlr          
+      Type:  bug            |      Status:  assigned      
+  Priority:  normal         |   Milestone:  R1            
+ Component:  Drivers/USB    |     Version:  R1 development
+Resolution:                 |   Blockedby:                
+  Platform:  x86            |    Blocking:                
+----------------------------+-----------------------------------------------
+
+Comment(by mmlr):
+
+ Replying to [comment:6 idefix]:
+ &gt; It doesn't hang at boot any more, but the serial log is continually
+ filled with errors, see seriallog3.txt.[[BR]]
+ &gt; Haiku does recognize the cardreader though, see usb_dev_info.txt.
+
+ That looks a bit strange to me. The continued errors are triggered by
+ polling for media changes. This triggers a TEST_UNIT_READY SCSI command on
+ the device, that is apparently not supported or doesn't work when there
+ are no media in the reader. What really surprises me though is that
+ apparently clearing the stall conditions after a mass storage reset
+ results in a stall response. Looking at the tokens in the log the only
+ thing I can guess is that the last phase of the request to clear the halt
+ condition is stalled by the device, as the tokens indicate inbound traffic
+ with no data on endpoint 0, which is only the case for exactly these
+ requests.
+
+ As the device info seems to be still readable from usb_dev_info the device
+ and the UHCI controller are in fact not blocked. So the question is, when
+ you insert a card into that card reader, are you able to mount and use it?
+ If it is usable, then I could imagine the device to just stall the clear
+ requests if the bulk pipes aren't actually halted, to indicate that a
+ clear wouldn't have been necessary. In that case they could simply be
+ ignored.
+
+ The different errors that get output with the wacom device, they do only
+ show up as soon as you unplug that wacom device again, right? If so that's
+ normal and can be ignored. While the stack and the driver haven't yet
+ noticed the removal of the device they will continue using it resulting in
+ failing transfer descriptors. That stops as soon as the device disconnect
+ is handled. If they come up while the device is plugged in this would
+ indicate some other problem. Again the question, does the wacom device
+ work while you have it plugged?
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2344#comment:8">http://dev.haiku-os.org/ticket/2344#comment:8</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008461.html">[Haiku-bugs] [Haiku] #2344: Hang when booting with USB Mass Storage device connected.
+</A></li>
+	<LI>Next message: <A HREF="008469.html">[Haiku-bugs] [Haiku] #2344: Hang when booting with USB Mass Storage device connected.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8465">[ date ]</a>
+              <a href="thread.html#8465">[ thread ]</a>
+              <a href="subject.html#8465">[ subject ]</a>
+              <a href="author.html#8465">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

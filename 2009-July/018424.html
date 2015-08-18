@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4074: eMachines 19&quot; WS LCD monitor native resolution not avail. using AGP Geforce 2/3
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-July/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234074%3A%20eMachines%2019%22%20WS%20LCD%20monitor%20native%0A%20resolution%20not%20avail.%20using%20AGP%20Geforce%202/3&In-Reply-To=%3C052.8c6e6684718adad7afe44e312198f616%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="018419.html">
+   <LINK REL="Next"  HREF="018425.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4074: eMachines 19&quot; WS LCD monitor native resolution not avail. using AGP Geforce 2/3</H1>
+    <B>Luposian</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234074%3A%20eMachines%2019%22%20WS%20LCD%20monitor%20native%0A%20resolution%20not%20avail.%20using%20AGP%20Geforce%202/3&In-Reply-To=%3C052.8c6e6684718adad7afe44e312198f616%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4074: eMachines 19&quot; WS LCD monitor native resolution not avail. using AGP Geforce 2/3">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Jul 12 02:07:22 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="018419.html">[Haiku-bugs] [Haiku] #4074: eMachines 19&quot; WS LCD monitor native resolution not avail. using AGP Geforce 2/3
+</A></li>
+        <LI>Next message: <A HREF="018425.html">[Haiku-bugs] [Haiku] #4074: eMachines 19&quot; WS LCD monitor native resolution not avail. using AGP Geforce 2/3
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18424">[ date ]</a>
+              <a href="thread.html#18424">[ thread ]</a>
+              <a href="subject.html#18424">[ subject ]</a>
+              <a href="author.html#18424">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4074: eMachines 19&quot; WS LCD monitor native resolution not avail. using AGP Geforce
+2/3
+-------------------------------------+--------------------------------------
+ Reporter:  Luposian                 |       Owner:  rudolfc       
+     Type:  bug                      |      Status:  new           
+ Priority:  normal                   |   Milestone:  R1            
+Component:  Drivers/Graphics/nVidia  |     Version:  R1 development
+Blockedby:                           |    Platform:  x86           
+ Blocking:                           |  
+-------------------------------------+--------------------------------------
+
+Comment(by Luposian):
+
+ Replying to [comment:8 umccullough]:
+ &gt; Please understand... my point was simple: it shouldn't be required. The
+ reason it worked is because the file contains non-standard options to
+ manipulate the driver in ways that can't be anticipated automatically.
+ &gt;
+ &gt; Ultimately, the proper solution would be to fix the driver to detect the
+ situation which required manual tweaking of the settings file.
+ &gt;
+ &gt; The reason the file is not included by default is because it should not
+ be needed unless the driver is having issues doing the &quot;right thing&quot;
+ without manual intervention. Clearly there is an issue with your
+ particular hardware and monitor that prevents the driver from
+ automatically detecting your resolution.
+ &gt;
+ &gt; Tou should probably put a # in front of each value in the
+ nvidia.settings and restart until you find the one setting that breaks it
+ again, that would be the most helpful for rudolf to determine what the
+ actual issue is.
+
+ The only thing in that file that I needed to change, in order to make my
+ monitor's native resolution (1440x900) seen and available, was to change
+ &quot;force_ws&quot; to true.  Nothing else made any difference, as the *resolution*
+ was the only issue.
+
+ The funny thing is, the syslog shows that the native resolution is right
+ there all along... but Haiku never makes it available without the file and
+ &quot;force_ws&quot; being set to true.  I don't understand that.
+
+ Why can't the file just be left and, if there is a display issue, it can
+ be (hopefully) fixed by adjusting the &quot;nvidia.settings&quot; file?  The same
+ for every other graphics card settings file.
+
+ If the file is to be removed, then why not have an &quot;Other display options&quot;
+ button somewhere in &quot;Screen&quot;, that offers you every possible display
+ settings combination that isn't normally available.  Maybe make it so that
+ you have to hold down Shift or something to make it appear (or to ungrey
+ it, as it's normally greyed out), to click on it and access the other
+ options.  That way it's not messed with accidentally.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4074#comment:9">http://dev.haiku-os.org/ticket/4074#comment:9</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="018419.html">[Haiku-bugs] [Haiku] #4074: eMachines 19&quot; WS LCD monitor native resolution not avail. using AGP Geforce 2/3
+</A></li>
+	<LI>Next message: <A HREF="018425.html">[Haiku-bugs] [Haiku] #4074: eMachines 19&quot; WS LCD monitor native resolution not avail. using AGP Geforce 2/3
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18424">[ date ]</a>
+              <a href="thread.html#18424">[ thread ]</a>
+              <a href="subject.html#18424">[ subject ]</a>
+              <a href="author.html#18424">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

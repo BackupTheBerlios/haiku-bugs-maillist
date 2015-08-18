@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2025: usb_disk + installer causes system	instability.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232025%3A%20usb_disk%20%2B%20installer%20causes%20system%0A%09instability.&In-Reply-To=%3C054.ce6e192d56c39187eb426bbe6d8055e4%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006151.html">
+   <LINK REL="Next"  HREF="006177.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2025: usb_disk + installer causes system	instability.</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232025%3A%20usb_disk%20%2B%20installer%20causes%20system%0A%09instability.&In-Reply-To=%3C054.ce6e192d56c39187eb426bbe6d8055e4%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2025: usb_disk + installer causes system	instability.">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Apr  5 14:01:24 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006151.html">[Haiku-bugs] [Haiku] #2025: usb_disk + installer causes system	instability.
+</A></li>
+        <LI>Next message: <A HREF="006177.html">[Haiku-bugs] [Haiku] #2025: usb_disk + installer causes system instability/KDL
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6170">[ date ]</a>
+              <a href="thread.html#6170">[ thread ]</a>
+              <a href="subject.html#6170">[ subject ]</a>
+              <a href="author.html#6170">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2025: usb_disk + installer causes system instability.
+--------------------------+-------------------------------------------------
+  Reporter:  netster403   |       Owner:  mmlr          
+      Type:  bug          |      Status:  assigned      
+  Priority:  normal       |   Milestone:  R1            
+ Component:  Drivers/USB  |     Version:  R1 development
+Resolution:               |    Platform:  All           
+--------------------------+-------------------------------------------------
+Comment (by mmlr):
+
+ You don't by any chance have the serial log of the first KDL? The one with
+ &quot;could not write back block x&quot;? Because that's the one that really
+ interests me as this should show if the usb_disk driver somehow failed and
+ returned errors. Generally initializing a partition under Haiku is at
+ least fragile right now especially in combination with falsh media. That
+ the name was not updated indicates that the partition was not actually
+ rescanned - which is currently also the case when un- and replugging flash
+ media. This easily leads into a KDL. You could try to initialize and then
+ reboot, but the best thing would be if you could initialize from a BeOS
+ installation. Anyway the serial log does not really look good as it
+ contains a really long list of log replays. This could easily be related
+ to the recent block cache issues.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2025#comment:7">http://dev.haiku-os.org/ticket/2025#comment:7</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006151.html">[Haiku-bugs] [Haiku] #2025: usb_disk + installer causes system	instability.
+</A></li>
+	<LI>Next message: <A HREF="006177.html">[Haiku-bugs] [Haiku] #2025: usb_disk + installer causes system instability/KDL
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6170">[ date ]</a>
+              <a href="thread.html#6170">[ thread ]</a>
+              <a href="subject.html#6170">[ subject ]</a>
+              <a href="author.html#6170">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

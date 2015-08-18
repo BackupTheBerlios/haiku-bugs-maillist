@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4756: Panic with r33489 (did not with alpha) on Acer Aspire One netbook
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234756%3A%20Panic%20with%20r33489%20%28did%20not%20with%20alpha%29%0A%20on%20Acer%20Aspire%20One%20netbook&In-Reply-To=%3C039.b0e1d14a461b35f14ee7c898b576231c%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="022823.html">
+   <LINK REL="Next"  HREF="022596.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4756: Panic with r33489 (did not with alpha) on Acer Aspire One netbook</H1>
+    <B>olaf</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234756%3A%20Panic%20with%20r33489%20%28did%20not%20with%20alpha%29%0A%20on%20Acer%20Aspire%20One%20netbook&In-Reply-To=%3C039.b0e1d14a461b35f14ee7c898b576231c%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4756: Panic with r33489 (did not with alpha) on Acer Aspire One netbook">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Oct 10 02:15:48 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="022823.html">[Haiku-bugs] [Haiku] #4755: ICH7,	8 &amp; 9 Audio Not working with Alpha
+</A></li>
+        <LI>Next message: <A HREF="022596.html">[Haiku-bugs] [Haiku] #4756: Panic with r33489 (did not with alpha) on Acer Aspire One netbook
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22595">[ date ]</a>
+              <a href="thread.html#22595">[ thread ]</a>
+              <a href="subject.html#22595">[ subject ]</a>
+              <a href="author.html#22595">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4756: Panic with r33489 (did not with alpha) on Acer Aspire One netbook
+---------------------------+------------------------------------------------
+ Reporter:  olaf           |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1/Development
+Blockedby:                 |    Platform:  x86           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+ Using the r33489 nightly (for October 9th) causes a panic when the alpha
+ did not. I think the October 7th and October 6th probably did too (I don't
+ remember which one it was, but I used that image as well and panicked).
+ This is on my Acer Aspire One (model AOA150-1786) using the ggc2hybrid raw
+ image on a 8GB SanDisk Cruzer. I booted and installed the alpha with this
+ same drive. Haiku starts to boot as normal and displays the Deskbar but (I
+ think before the desktop icons are displayed) it panics.
+
+ If anymore information/testing is needed feel free to contact me. I will
+ attach the panic message to this ticket as well as paste it below...
+
+
+ PANIC: transaction 728 aborted, inode 0x81024aa0 still around!
+
+ Welcome to Kernel Debugging Land...
+ Thread 12 &quot;block notifier/writer&quot; running on CPU 1
+ kdebug&gt; bt
+ stack trace for thread 12 &quot;block notifier/writer&quot;
+     kernel stack: 0x80198000 to 0x8019c000
+ frame               caller      &lt;image&gt;:function + offset
+  0 8019b9cc (+  48) 80067628    &lt;kernel_x86&gt;
+ invoke_command_trampoline(0x8019ba64) + 0x001c
+  1 8019b9fc (+  12) 800e0cbb
+ &lt;kernel_x86&gt;:arch_debug_call_with_fault_handler + 0x001b
+  2 8019ba08 (+  48) 80066408    &lt;kernel_x86&gt;:debug_call_with_fault_handler
+ + 0x0054
+  3 8019ba38 (+  64) 80067881    &lt;kernel_x86&gt;:invoke_debugger_command +
+ 0x00b9
+  4 8019ba78 (+  64) 800676ad    &lt;kernel_x86&gt;
+ invoke_pipe_segment(debugger_command_pipe*: 0x82a54030, int32: 0, 0x0
+ &quot;&lt;NULL&gt;&quot;) + 0x0079
+  5 8019bab8 (+  64) 800679ec    &lt;kernel_x86&gt;:invoke_debugger_command_pipe
+ + 0x009c
+  6 8019baf8 (+  48) 800693e8    &lt;kernel_x86&gt;
+ ExpressionParser&lt;0x8019bba8&gt;::_ParseCommandPipe(0x8019bba4) + 0x0234
+  7 8019bb28 (+  64) 80068822    &lt;kernel_x86&gt;
+ ExpressionParser&lt;0x8019bba8&gt;::EvaluateCommand(0x8012bca0 &quot;bt&quot;, 0x8019bba4)
+ + 0x02ba
+  8 8019bb68 (+ 224) 8006a7fc    &lt;kernel_x86&gt;:evaluate_debug_command +
+ 0x0080
+  9 8019bc48 (+  64) 800653fa    &lt;kernel_x86&gt;
+ kernel_debugger_loop(0x8019bd28 &quot;transaction 728 aborted, inode 0x81024aa0
+ still around!
+ &quot;, int32: 1) + 0x0276
+ 10 8019bc88 (+  48) 8006564e    &lt;kernel_x86&gt;
+ kernel_debugger_internal(0x8019bd28 &quot;transaction 728 aborted, inode
+ 0x81024aa0 still around!
+ &quot;, int32: 1) + 0x0042
+ 11 8019bcb8 (+  48) 800665bf    &lt;kernel_x86&gt;:kernel_debugger + 0x0023
+ 12 8019bce8 (+ 192) 80066591    &lt;kernel_x86&gt;:panic + 0x0029
+ 13 8019bda8 (+  48) 804c8d60    &lt;bfs&gt;
+ InodeAllocator&lt;0x000002d8&gt;::_TransactionListener(int32: 2, int32:
+ -2130556256, 0x800dd659) + 0x0030
+ 14 8019bdd8 (+  96) 80030381    &lt;kernel_x86&gt;
+ flush_pending_notifications(block_cache*: 0x80ebf348) + 0x01a1
+ 15 8019be38 (+  64) 80030471    &lt;kernel_x86&gt; flush_pending_notifications()
+ + 0x006d
+ 16 8019be78 (+ 352) 8003276d    &lt;kernel_x86&gt;
+ block_notifier_and_writer(NULL) + 0x0055
+ 17 8019bfd8 (+  32) 8005954b    &lt;kernel_x86&gt;
+ _create_kernel_thread_kentry() + 0x001b
+ 18 8019bff8 (+2145796104) 800594e8    &lt;kernel_x86&gt; thread_kthread_exit() +
+ 0x0000
+ kdebug&gt;
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4756">http://dev.haiku-os.org/ticket/4756</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="022823.html">[Haiku-bugs] [Haiku] #4755: ICH7,	8 &amp; 9 Audio Not working with Alpha
+</A></li>
+	<LI>Next message: <A HREF="022596.html">[Haiku-bugs] [Haiku] #4756: Panic with r33489 (did not with alpha) on Acer Aspire One netbook
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22595">[ date ]</a>
+              <a href="thread.html#22595">[ thread ]</a>
+              <a href="subject.html#22595">[ subject ]</a>
+              <a href="author.html#22595">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

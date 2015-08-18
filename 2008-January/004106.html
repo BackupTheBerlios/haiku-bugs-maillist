@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1693: TCP sockets not cleaned up correctly
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-January/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231693%3A%20TCP%20sockets%20not%20cleaned%20up%20correctly&In-Reply-To=%3C038.aa986d16da99962a4ae1c8a34a4aac28%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="004105.html">
+   <LINK REL="Next"  HREF="004109.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1693: TCP sockets not cleaned up correctly</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231693%3A%20TCP%20sockets%20not%20cleaned%20up%20correctly&In-Reply-To=%3C038.aa986d16da99962a4ae1c8a34a4aac28%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1693: TCP sockets not cleaned up correctly">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Jan  2 21:25:23 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="004105.html">[Haiku-bugs] [Haiku] #1684: Add -n option to netstat
+</A></li>
+        <LI>Next message: <A HREF="004109.html">[Haiku-bugs] [Haiku] #1693: TCP sockets not cleaned up correctly
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4106">[ date ]</a>
+              <a href="thread.html#4106">[ thread ]</a>
+              <a href="subject.html#4106">[ subject ]</a>
+              <a href="author.html#4106">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1693: TCP sockets not cleaned up correctly
+----------------------------------------+-----------------------------------
+ Reporter:  mjw                         |       Owner:  axeld         
+     Type:  bug                         |      Status:  new           
+ Priority:  normal                      |   Milestone:  R1            
+Component:  - Network &amp; Internet/Stack  |     Version:  R1 development
+ Platform:  All                         |  
+----------------------------------------+-----------------------------------
+ Consider two processes: a server and a client.  If the server dies or
+ exits gracefully when there is still data in the server socket's receive
+ queue, then neither the server or client's sockets get cleaned up
+ correctly by the OS.
+
+ To reproduce, I have created two example programs, a server and a client.
+ The server waits for a connection, then reads 100 bytes, waits for a
+ second, then exits.  The client attaches to the server, sends 100 * 100
+ bytes, waits 10 seconds, then exits.
+
+ After the processes have finished, Running netstat shows that the server's
+ socket has got 9900 bytes in the recv queue, and the socket goes into the
+ time-wait state.  The client's socket goes into the closed state with 0
+ bytes in both the send and recv queues.  Running netstat repeatedly for
+ some time shows that the sockets never get cleaned up.
+
+ I am not a real TCP expert, but I would imagine that these sockets would
+ disappear from the netstat output after about 2 minutes.
+
+ The attached test case includes 2 .c files, and a Jamfile which assumes
+ that the .c files are copied into $HAIKU/src/apps/sock_close_test.
+
+ I am running Haiku r23220 under qemu.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1693">http://dev.haiku-os.org/ticket/1693</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="004105.html">[Haiku-bugs] [Haiku] #1684: Add -n option to netstat
+</A></li>
+	<LI>Next message: <A HREF="004109.html">[Haiku-bugs] [Haiku] #1693: TCP sockets not cleaned up correctly
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4106">[ date ]</a>
+              <a href="thread.html#4106">[ thread ]</a>
+              <a href="subject.html#4106">[ subject ]</a>
+              <a href="author.html#4106">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

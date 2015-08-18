@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2151: KDL in block notifier when using dd to	create a file
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232151%3A%20KDL%20in%20block%20notifier%20when%20using%20dd%20to%0A%09create%20a%20file&In-Reply-To=%3C038.aa170f304c6bf80f43a811f20269a8f8%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006764.html">
+   <LINK REL="Next"  HREF="006770.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2151: KDL in block notifier when using dd to	create a file</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232151%3A%20KDL%20in%20block%20notifier%20when%20using%20dd%20to%0A%09create%20a%20file&In-Reply-To=%3C038.aa170f304c6bf80f43a811f20269a8f8%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2151: KDL in block notifier when using dd to	create a file">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Apr 24 12:35:20 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006764.html">[Haiku-bugs] [Haiku] #2150: KDL: when running 'svn up' on	haiku-host
+</A></li>
+        <LI>Next message: <A HREF="006770.html">[Haiku-bugs] [Haiku] #2151: KDL in block notifier when using dd to create a file
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6768">[ date ]</a>
+              <a href="thread.html#6768">[ thread ]</a>
+              <a href="subject.html#6768">[ subject ]</a>
+              <a href="author.html#6768">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2151: KDL in block notifier when using dd to create a file
+---------------------------+------------------------------------------------
+ Reporter:  bga            |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  critical       |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1 development
+ Platform:  All            |  
+---------------------------+------------------------------------------------
+ I am trying to figure out where our memory goes when running stuff and one
+ of the tests I did was trying to exercise the cache to see if we were, for
+ example, considering some memory that was actually cache memory as normal
+ used memory (the good news is, it seems we are not). For that I used dd
+ with the following parameters:
+
+ dd if=/dev/zero of=test.img bs=8192 count=393216
+
+ The command above can be seen in the screenshot you can also see the df
+ output that showed the partition had 3.6 Gb free (and the dd command above
+ would generate a 3 Gb file).
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2151">http://dev.haiku-os.org/ticket/2151</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006764.html">[Haiku-bugs] [Haiku] #2150: KDL: when running 'svn up' on	haiku-host
+</A></li>
+	<LI>Next message: <A HREF="006770.html">[Haiku-bugs] [Haiku] #2151: KDL in block notifier when using dd to create a file
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6768">[ date ]</a>
+              <a href="thread.html#6768">[ thread ]</a>
+              <a href="subject.html#6768">[ subject ]</a>
+              <a href="author.html#6768">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

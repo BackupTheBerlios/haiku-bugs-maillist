@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1963: execvp() Tries to Execute	Directories
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231963%3A%20execvp%28%29%20Tries%20to%20Execute%0A%09Directories&In-Reply-To=%3C052.df2b0c21d4b0b937c81c5e2024ab6540%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005785.html">
+   <LINK REL="Next"  HREF="005806.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1963: execvp() Tries to Execute	Directories</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231963%3A%20execvp%28%29%20Tries%20to%20Execute%0A%09Directories&In-Reply-To=%3C052.df2b0c21d4b0b937c81c5e2024ab6540%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1963: execvp() Tries to Execute	Directories">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Mar 27 00:02:24 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005785.html">[Haiku-bugs] [Haiku] #1963: BFS Finds Spurious File
+</A></li>
+        <LI>Next message: <A HREF="005806.html">[Haiku-bugs] [Haiku] #1963: execvp() Tries to Execute	Directories
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5805">[ date ]</a>
+              <a href="thread.html#5805">[ thread ]</a>
+              <a href="subject.html#5805">[ subject ]</a>
+              <a href="author.html#5805">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1963: execvp() Tries to Execute Directories
+--------------------------------+-------------------------------------------
+  Reporter:  bonefish           |       Owner:  bonefish      
+      Type:  bug                |      Status:  assigned      
+  Priority:  critical           |   Milestone:  R1/alpha1     
+ Component:  System/libroot.so  |     Version:  R1 development
+Resolution:                     |    Platform:  All           
+--------------------------------+-------------------------------------------
+Changes (by bonefish):
+
+  * owner:  axeld =&gt; bonefish
+  * status:  new =&gt; assigned
+  * component:  File Systems/BFS =&gt; System/libroot.so
+  * summary:  BFS Finds Spurious File =&gt; execvp() Tries to Execute
+              Directories
+
+Old description:
+
+&gt;<i> r24582, VMware
+</I>&gt;<i>
+</I>&gt;<i> While configuring/building gcc, a spurious &quot;cp&quot; entry appeared in the
+</I>&gt;<i> current output directory (.../gcc-obj/gcc/). According to the kernel
+</I>&gt;<i> tracing access() returned OK for the entry and it could even be opened.
+</I>&gt;<i> Reading from it failed with B_BAD_VALUE, though. There's also a
+</I>&gt;<i> respective &quot;bfs_read()...&quot; line in the serial debug output. I suspended
+</I>&gt;<i> and uploaded the virtual machine state (512 MB RAM, 1 GB disk):
+</I>&gt;<i>
+</I>&gt;<i>   <A HREF="http://tfs.cs.tu-berlin.de/~bonefish/private/haiku/CrashOMatic-non-">http://tfs.cs.tu-berlin.de/~bonefish/private/haiku/CrashOMatic-non-</A>
+</I>&gt;<i> existent-cp.zip
+</I>&gt;<i>
+</I>&gt;<i> BFS tracing was enabled, but I forgot to enable block cache tracing. :-/
+</I>
+New description:
+
+ r24582, VMware
+
+ When execvp() finds a matching entry in the PATH, it doesn't make sure
+ that it is a regular file. E.g. create a &quot;cp&quot; directory in the cwd and
+ make it executable. execvp(&quot;cp&quot;,...) will try to execute it.
+
+Comment:
+
+ Never write bug reports when too tired. There actually is an entry &quot;cp&quot;, I
+ just missed it; it's a directory. This is just another execvp() bug. I
+ thought I was really clever replacing the stat() in the code copied from
+ my APR code by access(), but we obviously also need to make sure that the
+ entry is a regular file.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1963#comment:1">http://dev.haiku-os.org/ticket/1963#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005785.html">[Haiku-bugs] [Haiku] #1963: BFS Finds Spurious File
+</A></li>
+	<LI>Next message: <A HREF="005806.html">[Haiku-bugs] [Haiku] #1963: execvp() Tries to Execute	Directories
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5805">[ date ]</a>
+              <a href="thread.html#5805">[ thread ]</a>
+              <a href="subject.html#5805">[ subject ]</a>
+              <a href="author.html#5805">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

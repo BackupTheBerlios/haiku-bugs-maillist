@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4074: eMachines 19&quot; WS LCD monitor native resolution not avail. using AGP Geforce 2/3
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-July/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234074%3A%20eMachines%2019%22%20WS%20LCD%20monitor%20native%0A%20resolution%20not%20avail.%20using%20AGP%20Geforce%202/3&In-Reply-To=%3C052.f8b843080747ea1bd524e35e2fb7f77c%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="018425.html">
+   <LINK REL="Next"  HREF="018451.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4074: eMachines 19&quot; WS LCD monitor native resolution not avail. using AGP Geforce 2/3</H1>
+    <B>Luposian</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234074%3A%20eMachines%2019%22%20WS%20LCD%20monitor%20native%0A%20resolution%20not%20avail.%20using%20AGP%20Geforce%202/3&In-Reply-To=%3C052.f8b843080747ea1bd524e35e2fb7f77c%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4074: eMachines 19&quot; WS LCD monitor native resolution not avail. using AGP Geforce 2/3">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Jul 12 22:26:05 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="018425.html">[Haiku-bugs] [Haiku] #4074: eMachines 19&quot; WS LCD monitor native resolution not avail. using AGP Geforce 2/3
+</A></li>
+        <LI>Next message: <A HREF="018451.html">[Haiku-bugs] [Haiku] #4074: eMachines 19&quot; WS LCD monitor native resolution not avail. using AGP Geforce 2/3
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18450">[ date ]</a>
+              <a href="thread.html#18450">[ thread ]</a>
+              <a href="subject.html#18450">[ subject ]</a>
+              <a href="author.html#18450">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4074: eMachines 19&quot; WS LCD monitor native resolution not avail. using AGP Geforce
+2/3
+-------------------------------------+--------------------------------------
+ Reporter:  Luposian                 |       Owner:  rudolfc       
+     Type:  bug                      |      Status:  new           
+ Priority:  normal                   |   Milestone:  R1            
+Component:  Drivers/Graphics/nVidia  |     Version:  R1 development
+Blockedby:                           |    Platform:  x86           
+ Blocking:                           |  
+-------------------------------------+--------------------------------------
+
+Comment(by Luposian):
+
+ Replying to [comment:10 umccullough]:
+ &gt; Interestingly, force_ws is set to false in the settings file in
+ subversion, so you must have manually edited to make it work anyway...
+ &gt;
+ &gt; In any case, as you can see from the tickets already here:
+ &gt;
+ &gt; <A HREF="http://dev.haiku-os.org/search?q=force_ws&amp;noquickjump=1&amp;ticket=on">http://dev.haiku-os.org/search?q=force_ws&amp;noquickjump=1&amp;ticket=on</A>
+ &gt;
+ &gt; The use of that setting is sometimes problematic as well. Rudolf is
+ already adding EDID support to the driver to have it detect the
+ resolutions automatically (perhaps the EDID info is what you're seeing the
+ syslog when the vesa driver queries the card for monitor resolutions).
+ &gt;
+ &gt; In any case, perhaps attaching a syslog to this ticket would even help
+ more, since you seem to already have viewed it and determined that there
+ is useful information there.
+
+ I also tried turning everything off (using the # symbol) in the settings
+ file and activating (removing the #) each one and then rebooting.
+ Nothing, but NOTHING made any difference in finding my monitor's native
+ resolution, until I activated &quot;force_ws&quot; and made it true.  Then Haiku
+ found my monitor's native resolution.
+
+ Funny thing is... why does Screen create a VESA file with the
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">1440x900 at 60Hz</A> (native resolution), when I'm supposedly not using Vesa
+ mode?  It creates this file, whether or not I have &quot;nvidia.settings&quot;
+ installed/enabled or not.  It was said by &quot;anevilyak&quot;, that if I can
+ change refresh rates (which I can, even from the very beginning), then I
+ am supposedly NOT in Vesa mode.  Yet, Screen creates a file called &quot;Vesa&quot;
+ with the resolution/refresh rate in it.  This doesn't make any sense!
+
+ Are you suggesting that I should include a 2nd Syslog file, in addition to
+ the one I already put in this ticket?  I can do that, if you think it will
+ help, but I doubt it will say anything different...
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4074#comment:11">http://dev.haiku-os.org/ticket/4074#comment:11</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="018425.html">[Haiku-bugs] [Haiku] #4074: eMachines 19&quot; WS LCD monitor native resolution not avail. using AGP Geforce 2/3
+</A></li>
+	<LI>Next message: <A HREF="018451.html">[Haiku-bugs] [Haiku] #4074: eMachines 19&quot; WS LCD monitor native resolution not avail. using AGP Geforce 2/3
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18450">[ date ]</a>
+              <a href="thread.html#18450">[ thread ]</a>
+              <a href="subject.html#18450">[ subject ]</a>
+              <a href="author.html#18450">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

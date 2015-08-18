@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3878: Faults in haiku-cd build target
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233878%3A%20Faults%20in%20haiku-cd%20build%20target&In-Reply-To=%3C049.5ad10bf4b493196e7f52f0d2cf56eda2%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="017004.html">
+   <LINK REL="Next"  HREF="017007.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3878: Faults in haiku-cd build target</H1>
+    <B>haiqu</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233878%3A%20Faults%20in%20haiku-cd%20build%20target&In-Reply-To=%3C049.5ad10bf4b493196e7f52f0d2cf56eda2%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3878: Faults in haiku-cd build target">trac at haiku-os.org
+       </A><BR>
+    <I>Wed May  6 18:20:17 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="017004.html">[Haiku-bugs] [Haiku] #3878: Faults in haiku-cd build target
+</A></li>
+        <LI>Next message: <A HREF="017007.html">[Haiku-bugs] [Haiku] #3878: Faults in haiku-cd build target
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17006">[ date ]</a>
+              <a href="thread.html#17006">[ thread ]</a>
+              <a href="subject.html#17006">[ subject ]</a>
+              <a href="author.html#17006">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3878: Faults in haiku-cd build target
+---------------------------+------------------------------------------------
+  Reporter:  haiqu         |       Owner:  bonefish      
+      Type:  bug           |      Status:  reopened      
+  Priority:  normal        |   Milestone:  R1            
+ Component:  Build System  |     Version:  R1 development
+Resolution:                |   Blockedby:                
+  Platform:  x86           |    Blocking:                
+---------------------------+------------------------------------------------
+
+Comment(by haiqu):
+
+ There are two minor differences. One is some missing white space, the
+ other is a build target I added, but which is commented out.
+
+ {{{
+ ~&gt; svn diff /BeOS\ 5.1d0/src/haiku/build/jam/HaikuImage
+ Index: /BeOS 5.1d0/src/haiku/build/jam/HaikuImage
+ ===================================================================
+ --- /BeOS 5.1d0/src/haiku/build/jam/HaikuImage  (revision 30645)
+ +++ /BeOS 5.1d0/src/haiku/build/jam/HaikuImage  (working copy)
+ @@ -252,7 +252,7 @@
+  AddFilesToHaikuImage system servers : $(SYSTEM_SERVERS) ;
+
+  # apps
+ -AddFilesToHaikuImage system                            : runtime_loader
+ Deskbar Tracker ;
+ +AddFilesToHaikuImage system                    : runtime_loader Deskbar
+ Tracker ;
+  AddFilesToHaikuImage system bin                        : $(SYSTEM_BIN)
+ consoled ;
+  AddFilesToHaikuImage system apps               : $(SYSTEM_APPS) ;
+  AddFilesToHaikuImage system preferences        : $(SYSTEM_PREFERENCES) ;
+ @@ -460,6 +460,7 @@
+         : $(SYSTEM_ADD_ONS_MEDIA_PLUGINS) ;
+  AddFilesToHaikuImage system add-ons Tracker
+         : FileType-F ZipOMatic-Z Open\ Target\ Folder-T ;
+ +#      : FileType-F ZipOMatic-Z TarNFeather-R Open\ Target\ Folder-T ;
+  AddSymlinkToHaikuImage system add-ons Tracker
+         : /boot/system/preferences/Backgrounds : Background-B ;
+  AddSymlinkToHaikuImage system add-ons Tracker
+ ~&gt;
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3878#comment:6">http://dev.haiku-os.org/ticket/3878#comment:6</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="017004.html">[Haiku-bugs] [Haiku] #3878: Faults in haiku-cd build target
+</A></li>
+	<LI>Next message: <A HREF="017007.html">[Haiku-bugs] [Haiku] #3878: Faults in haiku-cd build target
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17006">[ date ]</a>
+              <a href="thread.html#17006">[ thread ]</a>
+              <a href="subject.html#17006">[ subject ]</a>
+              <a href="author.html#17006">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

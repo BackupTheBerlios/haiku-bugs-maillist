@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1203: Haiku USB in BeOS R5
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231203%3A%20Haiku%20USB%20in%20BeOS%20R5&In-Reply-To=%3C050.f8b238665566183e0a1efb657f91483e%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006635.html">
+   <LINK REL="Next"  HREF="006639.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1203: Haiku USB in BeOS R5</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231203%3A%20Haiku%20USB%20in%20BeOS%20R5&In-Reply-To=%3C050.f8b238665566183e0a1efb657f91483e%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1203: Haiku USB in BeOS R5">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Apr 21 17:18:19 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006635.html">[Haiku-bugs] [Haiku] #2114: App Server freezes after brief use.
+</A></li>
+        <LI>Next message: <A HREF="006639.html">[Haiku-bugs] [Haiku] #1203: Haiku USB in BeOS R5
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6636">[ date ]</a>
+              <a href="thread.html#6636">[ thread ]</a>
+              <a href="subject.html#6636">[ subject ]</a>
+              <a href="author.html#6636">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1203: Haiku USB in BeOS R5
+--------------------------+-------------------------------------------------
+  Reporter:  nutela       |       Owner:  mmlr          
+      Type:  bug          |      Status:  assigned      
+  Priority:  normal       |   Milestone:  R1            
+ Component:  Drivers/USB  |     Version:  R1 development
+Resolution:               |    Platform:  x86           
+--------------------------+-------------------------------------------------
+Comment (by mmlr):
+
+ I hope that you did not update using the attached script. If you did I'm
+ surprised that you didn't get crashes. You must in any case update the
+ EHCI driver too when you update the USB bus_manager. Then, as stated a few
+ comments above, the usb_scsi driver is not compatible with R5 anymore. The
+ old BeOS SCSI interface was removed, so this driver cannot work anymore if
+ you compile it from a current tree. Then the usb_hid is apparently not
+ copied after being built? Then you should of course also update the wacom
+ driver as you've obviously have such a device.
+
+ {{{
+ TARGET_PLATFORM=r5 jam usb &quot;&lt;usb&gt;uhci&quot; &quot;&lt;usb&gt;ehci&quot; usb_raw usb_hid wacom
+ copyattr -d &quot;generated...&quot; &quot;/boot/home...&quot;
+ }}}
+
+ As in this example you could use a single line command to build all the
+ stuff. Then do the corresponding copy for each of the targets.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1203#comment:29">http://dev.haiku-os.org/ticket/1203#comment:29</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006635.html">[Haiku-bugs] [Haiku] #2114: App Server freezes after brief use.
+</A></li>
+	<LI>Next message: <A HREF="006639.html">[Haiku-bugs] [Haiku] #1203: Haiku USB in BeOS R5
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6636">[ date ]</a>
+              <a href="thread.html#6636">[ thread ]</a>
+              <a href="subject.html#6636">[ subject ]</a>
+              <a href="author.html#6636">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

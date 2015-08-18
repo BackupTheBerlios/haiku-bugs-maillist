@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2956: GDB very often attaches to wrong thread (main thread)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232956%3A%20GDB%20very%20often%20attaches%20to%20wrong%0A%20thread%20%28main%20thread%29&In-Reply-To=%3C050.01b27d26a8d76d88dd79e5c9fc481a6e%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012150.html">
+   <LINK REL="Next"  HREF="012153.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2956: GDB very often attaches to wrong thread (main thread)</H1>
+    <B>bonefish</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232956%3A%20GDB%20very%20often%20attaches%20to%20wrong%0A%20thread%20%28main%20thread%29&In-Reply-To=%3C050.01b27d26a8d76d88dd79e5c9fc481a6e%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2956: GDB very often attaches to wrong thread (main thread)">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Nov  6 16:18:35 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012150.html">[Haiku-bugs] [Haiku] #2956: GDB very often attaches to wrong thread (main thread)
+</A></li>
+        <LI>Next message: <A HREF="012153.html">[Haiku-bugs] [Haiku] #2707: cannot mount ext3 file system
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12151">[ date ]</a>
+              <a href="thread.html#12151">[ thread ]</a>
+              <a href="subject.html#12151">[ subject ]</a>
+              <a href="author.html#12151">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2956: GDB very often attaches to wrong thread (main thread)
+------------------------+---------------------------------------------------
+  Reporter:  stippi     |       Owner:  bonefish      
+      Type:  bug        |      Status:  new           
+  Priority:  normal     |   Milestone:  R1/alpha1     
+ Component:  - General  |     Version:  R1 development
+Resolution:             |   Blockedby:                
+  Platform:  All        |    Blocking:                
+------------------------+---------------------------------------------------
+
+Comment(by bonefish):
+
+ To stop the speculations: gdb can only be attached to a team, and that's
+ what the debug server does. When handing over the debugged team all
+ threads that already caused a debug event (and are waiting for
+ instructions from the debugger) will resend the notification messages to
+ the new debugger. gdb will simply focus on the thread from which it gets
+ the first message. The main problem is that gdb also enables other debug
+ events, and that another thread could cause such a debug event quickly
+ enough, sending its notification message earlier than any other thread,
+ thus resulting in the input loop to be set to that thread instead of the
+ &quot;bad&quot; one. Most likely this will be the main thread, since gdb also does a
+ debug_thread() on this one (gdb doesn't know the debugged team has been
+ handed over from the debug server, so it has to do that), but it could
+ also be another thread that just received a signal, created a thread,
+ loaded an add-on, etc.
+
+ Anyway while this is certainly annoying, there's also no need to guess the
+ thread in question. A &quot;cont&quot; should usually switch to the right one, and
+ in doubt a look into the syslog will bring certainty. The debug server
+ logs which thread was the cause and also dumps a stack trace.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2956#comment:3">http://dev.haiku-os.org/ticket/2956#comment:3</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012150.html">[Haiku-bugs] [Haiku] #2956: GDB very often attaches to wrong thread (main thread)
+</A></li>
+	<LI>Next message: <A HREF="012153.html">[Haiku-bugs] [Haiku] #2707: cannot mount ext3 file system
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12151">[ date ]</a>
+              <a href="thread.html#12151">[ thread ]</a>
+              <a href="subject.html#12151">[ subject ]</a>
+              <a href="author.html#12151">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

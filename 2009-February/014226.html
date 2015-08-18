@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3403: PANIC: vm_page_fault: unhandled page fault in kernel space at 0x808046e4, ip 0x800cd1ce
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-February/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233403%3A%20PANIC%3A%20vm_page_fault%3A%20unhandled%20page%0A%20fault%20in%20kernel%20space%20at%200x808046e4%2C%20ip%200x800cd1ce&In-Reply-To=%3C042.188043bdd774ab342d55e671a9088fd3%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="014225.html">
+   <LINK REL="Next"  HREF="014227.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3403: PANIC: vm_page_fault: unhandled page fault in kernel space at 0x808046e4, ip 0x800cd1ce</H1>
+    <B>kaliber</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233403%3A%20PANIC%3A%20vm_page_fault%3A%20unhandled%20page%0A%20fault%20in%20kernel%20space%20at%200x808046e4%2C%20ip%200x800cd1ce&In-Reply-To=%3C042.188043bdd774ab342d55e671a9088fd3%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3403: PANIC: vm_page_fault: unhandled page fault in kernel space at 0x808046e4, ip 0x800cd1ce">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Feb  3 20:19:09 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="014225.html">[Haiku-bugs] [Haiku] #2801: rtl8169 stops responding after a	while
+</A></li>
+        <LI>Next message: <A HREF="014227.html">[Haiku-bugs] [Haiku] #3404: haiku panics when given 3 cpu's in qemu
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14226">[ date ]</a>
+              <a href="thread.html#14226">[ thread ]</a>
+              <a href="subject.html#14226">[ subject ]</a>
+              <a href="author.html#14226">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3403: PANIC: vm_page_fault: unhandled page fault in kernel space at 0x808046e4,
+ip 0x800cd1ce
+---------------------------+------------------------------------------------
+ Reporter:  kaliber        |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1 development
+Blockedby:                 |    Platform:  All           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+ {{{
+ vm_page_fault: vm_soft_fault returned error 'Bad address' on fault at
+ 0x808046e4, ip 0x800cd1ce, write 0, user 0, thread 0x6a34
+ PANIC: vm_page_fault: unhandled page fault in kernel space at 0x808046e4,
+ ip 0x800cd1ce
+
+ Welcome to Kernel Debugging Land...
+ Thread 27188 &quot;gcc&quot; running on CPU 0
+ kdebug&gt; bt
+ stack trace for thread 27188 &quot;gcc&quot;
+     kernel stack: 0x826e8000 to 0x826ec000
+       user stack: 0x7efef000 to 0x7ffef000
+ frame               caller     &lt;image&gt;:function + offset
+  0 826eb570 (+  48) 8005bd65   &lt;kernel_x86&gt;:invoke_debugger_command +
+ 0x00f5
+  1 826eb5a0 (+  64) 8005bb55   &lt;kernel_x86&gt;
+ invoke_pipe_segment(debugger_command_pipe*: 0x80122a60, int32: 0, 0x0
+ &quot;&lt;NULL&gt;&quot;) + 0x0079
+  2 826eb5e0 (+  64) 8005bedc   &lt;kernel_x86&gt;:invoke_debugger_command_pipe +
+ 0x009c
+  3 826eb620 (+  48) 8005d464   &lt;kernel_x86&gt;
+ ExpressionParser&lt;0x826eb6d4&gt;::_ParseCommandPipe(0x826eb6d0) + 0x0234
+  4 826eb650 (+  64) 8005c89e   &lt;kernel_x86&gt;
+ ExpressionParser&lt;0x826eb6d4&gt;::EvaluateCommand(0x801128a0 &quot;bt&quot;, 0x826eb6d0)
+ + 0x02ba
+  5 826eb690 (+ 224) 8005e88c   &lt;kernel_x86&gt;:evaluate_debug_command +
+ 0x0088
+  6 826eb770 (+  64) 80059c62   &lt;kernel_x86&gt; kernel_debugger_loop() +
+ 0x01ae
+  7 826eb7b0 (+  32) 8005aae5   &lt;kernel_x86&gt;:kernel_debugger + 0x004d
+  8 826eb7d0 (+ 192) 8005aa8d   &lt;kernel_x86&gt;:panic + 0x0029
+  9 826eb890 (+  80) 800ba96d   &lt;kernel_x86&gt;:vm_page_fault + 0x0139
+ 10 826eb8e0 (+  64) 800ca8cd   &lt;kernel_x86&gt;:page_fault_exception + 0x00d9
+ 11 826eb920 (+  12) 800cdfb6   &lt;kernel_x86&gt;:int_bottom + 0x0036
+ kernel iframe at 0x826eb92c (end = 0x826eb97c)
+  eax 0x80804000     ebx 0x1b9           ecx 0x8013164c   edx 0x3
+  esi 0x80200000     edi 0x826eb9e0      ebp 0x826eb9b4   esp 0x826eb960
+  eip 0x800cd1ce  eflags 0x10202
+  vector: 0xe, error code: 0x0
+ 12 826eb92c (+ 136) 800cd1ce   &lt;kernel_x86&gt;
+ query_tmap(vm_translation_map*: 0x80f8e030, uint32: 0x835b9000,
+ 0x814ff49c, 0x826eb9e0) + 0x0076
+ 13 826eb9b4 (+  48) 800b8139   &lt;kernel_x86&gt;:vm_get_page_mapping + 0x0035
+ 14 826eb9e4 (+  64) 800cd811
+ &lt;kernel_x86&gt;:arch_vm_translation_map_init_map + 0x0191
+ 15 826eba24 (+  64) 800bdf28   &lt;kernel_x86&gt;:vm_create_address_space +
+ 0x0094
+ 16 826eba64 (+1232) 8004e060   &lt;kernel_x86&gt; fork_team() + 0x01cc
+ 17 826ebf34 (+  16) 8005068b   &lt;kernel_x86&gt;:_user_fork + 0x000b
+ 18 826ebf44 (+ 100) 800ce1e2   &lt;kernel_x86&gt;:handle_syscall + 0x00af
+ user iframe at 0x826ebfa8 (end = 0x826ec000)
+  eax 0x27           ebx 0x2c57f0        ecx 0x7ffeea00   edx 0xffff0104
+  esi 0x0            edi 0x18018028      ebp 0x7ffeea2c   esp 0x826ebfdc
+  eip 0xffff0104  eflags 0x246      user esp 0x7ffeea00
+  vector: 0x63, error code: 0x0
+ 19 826ebfa8 (+   0) ffff0104   &lt;commpage&gt;:commpage_syscall + 0x0004
+ 20 7ffeea2c (+  32) 002a4b94   &lt;libroot.so&gt;:vfork + 0x0018
+ 21 7ffeea4c (+  64) 0020cf59   &lt;gcc&gt;:pexecute + 0x00d9
+ 22 7ffeea8c (+ 128) 0020456d   &lt;gcc&gt;:xstrerror (nearest) + 0x1a5d
+ 23 7ffeeb0c (+ 112) 00207354   &lt;gcc&gt;:do_spec (nearest) + 0x02ec
+ 24 7ffeeb7c (+  96) 00209234   &lt;gcc&gt;:do_spec (nearest) + 0x21cc
+ 25 7ffeebdc (+ 128) 00208954   &lt;gcc&gt;:do_spec (nearest) + 0x18ec
+ 26 7ffeec5c (+  96) 00209234   &lt;gcc&gt;:do_spec (nearest) + 0x21cc
+ 27 7ffeecbc (+ 128) 00208954   &lt;gcc&gt;:do_spec (nearest) + 0x18ec
+ 28 7ffeed3c (+  96) 00209234   &lt;gcc&gt;:do_spec (nearest) + 0x21cc
+ 29 7ffeed9c (+ 128) 00208954   &lt;gcc&gt;:do_spec (nearest) + 0x18ec
+ 30 7ffeee1c (+  48) 002070c4   &lt;gcc&gt;:do_spec + 0x005c
+ 31 7ffeee4c (+ 304) 0020b06a   &lt;gcc&gt;:main + 0x176a
+ 32 7ffeef7c (+  48) 002020bf   &lt;gcc&gt;:_start + 0x005b
+ 33 7ffeefac (+  48) 0010090a
+ &lt;/boot/beos/system/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">runtime_loader at 0x00100000</A>&gt;:unknown + 0x090a
+ 34 7ffeefdc (+   0) 7ffeefec   1065203:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">gcc_main_stack at 0x7efef000</A> +
+ 0xffffec
+
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3403">http://dev.haiku-os.org/ticket/3403</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="014225.html">[Haiku-bugs] [Haiku] #2801: rtl8169 stops responding after a	while
+</A></li>
+	<LI>Next message: <A HREF="014227.html">[Haiku-bugs] [Haiku] #3404: haiku panics when given 3 cpu's in qemu
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14226">[ date ]</a>
+              <a href="thread.html#14226">[ thread ]</a>
+              <a href="subject.html#14226">[ subject ]</a>
+              <a href="author.html#14226">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

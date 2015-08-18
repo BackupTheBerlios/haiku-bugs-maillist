@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4536: Icon-O-Matic Crash, reproducible.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234536%3A%20Icon-O-Matic%20Crash%2C%20reproducible.&In-Reply-To=%3C053.9a9f7aee3f301ce426882e1519187b0b%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="021382.html">
+   <LINK REL="Next"  HREF="021615.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4536: Icon-O-Matic Crash, reproducible.</H1>
+    <B>kallisti5</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234536%3A%20Icon-O-Matic%20Crash%2C%20reproducible.&In-Reply-To=%3C053.9a9f7aee3f301ce426882e1519187b0b%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4536: Icon-O-Matic Crash, reproducible.">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Sep 16 00:54:33 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="021382.html">[Haiku-bugs] [Haiku] #4536: Icon-O-Matic Crash, reproducible.
+</A></li>
+        <LI>Next message: <A HREF="021615.html">[Haiku-bugs] [Haiku] #4536: Icon-O-Matic Crash, reproducible.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21383">[ date ]</a>
+              <a href="thread.html#21383">[ thread ]</a>
+              <a href="subject.html#21383">[ subject ]</a>
+              <a href="author.html#21383">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4536: Icon-O-Matic Crash, reproducible.
+---------------------------------------+------------------------------------
+ Reporter:  kallisti5                  |       Owner:  stippi   
+     Type:  bug                        |      Status:  new      
+ Priority:  normal                     |   Milestone:  R1       
+Component:  Applications/Icon-O-Matic  |     Version:  R1/alpha1
+Blockedby:                             |    Platform:  All      
+ Blocking:                             |  
+---------------------------------------+------------------------------------
+
+Comment(by kallisti5):
+
+ {{{
+ [Switching to team /boot/system/apps/Icon-O-Matic (3043) thread
+ w&gt;Icon-O-Matic (3060)]
+ 0xffff0114 in ?? ()
+ (gdb) bt
+ #0  0xffff0114 in ?? ()
+ #1  0x00816c26 in debugger () from /boot/system/lib/libroot.so
+ #2  0x0028dedf in Observable::~Observable ()
+ #3  0x00274881 in IconObject::~IconObject ()
+ #4  0x002599b8 in BPrivate::Icon::Shape::~Shape ()
+ #5  0x0029a7de in Referenceable::Release ()
+ #6  0x002c52e6 in AddShapesCommand::~AddShapesCommand ()
+ #7  0x002775a1 in CompoundCommand::~CompoundCommand ()
+ #8  0x00276d05 in CommandStack::_AddCommand ()
+ #9  0x00276372 in CommandStack::Perform ()
+ #10 0x002a080e in PathListView::MessageReceived ()
+ #11 0x003efdf7 in BLooper::DispatchMessage () from
+ /boot/system/lib/libbe.so
+ #12 0x004aff49 in BWindow::DispatchMessage () from
+ /boot/system/lib/libbe.so
+ #13 0x004b3d9c in BWindow::task_looper () from /boot/system/lib/libbe.so
+ #14 0x003f1353 in BLooper::_task0_ () from /boot/system/lib/libbe.so
+ #15 0x0081b0c8 in thread_entry () from /boot/system/lib/libroot.so
+ #16 0x70143fec in ?? ()
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4536#comment:1">http://dev.haiku-os.org/ticket/4536#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="021382.html">[Haiku-bugs] [Haiku] #4536: Icon-O-Matic Crash, reproducible.
+</A></li>
+	<LI>Next message: <A HREF="021615.html">[Haiku-bugs] [Haiku] #4536: Icon-O-Matic Crash, reproducible.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21383">[ date ]</a>
+              <a href="thread.html#21383">[ thread ]</a>
+              <a href="subject.html#21383">[ subject ]</a>
+              <a href="author.html#21383">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,140 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3355: using mv to move a folder onto itself	should fail
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-January/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233355%3A%20using%20mv%20to%20move%20a%20folder%20onto%20itself%0A%09should%20fail&In-Reply-To=%3C042.8776d10458e37f0488de3d38177d92a8%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="013910.html">
+   <LINK REL="Next"  HREF="013937.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3355: using mv to move a folder onto itself	should fail</H1>
+    <B>scottmc</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233355%3A%20using%20mv%20to%20move%20a%20folder%20onto%20itself%0A%09should%20fail&In-Reply-To=%3C042.8776d10458e37f0488de3d38177d92a8%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3355: using mv to move a folder onto itself	should fail">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Jan 23 07:50:08 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="013910.html">[Haiku-bugs] [Haiku] #3354: f.seekable() fails in python	test_fileio.py
+</A></li>
+        <LI>Next message: <A HREF="013937.html">[Haiku-bugs] [Haiku] #3355: using mv to move a folder onto	itself should fail
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13911">[ date ]</a>
+              <a href="thread.html#13911">[ thread ]</a>
+              <a href="subject.html#13911">[ subject ]</a>
+              <a href="author.html#13911">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3355: using mv to move a folder onto itself should fail
+-----------------------+----------------------------------------------------
+ Reporter:  scottmc    |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+Blockedby:             |    Platform:  All           
+ Blocking:             |  
+-----------------------+----------------------------------------------------
+ Another python regression test failure, this one is the test_shutil.py
+ test.
+ {{{
+ ~/develop/python/Lib/test&gt; python test_shutil.py
+ test_copytree_simple (__main__.TestShutil) ... ok
+ test_copytree_with_exclude (__main__.TestShutil) ... ok
+ test_dont_copy_file_onto_link_to_itself (__main__.TestShutil) ... ERROR
+ test_rmtree_dont_delete_file (__main__.TestShutil) ... ok
+ test_rmtree_errors (__main__.TestShutil) ... ok
+ test_rmtree_on_symlink (__main__.TestShutil) ... ok
+ test_dont_move_dir_in_itself (__main__.TestMove) ... FAIL
+ test_existing_file_inside_dest_dir (__main__.TestMove) ... ok
+ test_move_dir (__main__.TestMove) ... ok
+ test_move_dir_other_fs (__main__.TestMove) ... ok
+ test_move_dir_to_dir (__main__.TestMove) ... ok
+ test_move_dir_to_dir_other_fs (__main__.TestMove) ... ok
+ test_move_file (__main__.TestMove) ... ok
+ test_move_file_other_fs (__main__.TestMove) ... ok
+ test_move_file_to_dir (__main__.TestMove) ... ok
+ test_move_file_to_dir_other_fs (__main__.TestMove) ... ok
+
+ ======================================================================
+ ERROR: test_dont_copy_file_onto_link_to_itself (__main__.TestShutil)
+ ----------------------------------------------------------------------
+ Traceback (most recent call last):
+   File &quot;test_shutil.py&quot;, line 199, in
+ test_dont_copy_file_onto_link_to_itself
+     os.link(src, dst)
+ OSError: [Errno -2147454933] Operation not supported
+
+ ======================================================================
+ FAIL: test_dont_move_dir_in_itself (__main__.TestMove)
+ ----------------------------------------------------------------------
+ Traceback (most recent call last):
+   File &quot;test_shutil.py&quot;, line 341, in test_dont_move_dir_in_itself
+     self.assertRaises(shutil.Error, shutil.move, self.src_dir, dst)
+ AssertionError: Error not raised
+
+ ----------------------------------------------------------------------
+ Ran 16 tests in 3.612s
+
+ FAILED (failures=1, errors=1)
+ Traceback (most recent call last):
+   File &quot;test_shutil.py&quot;, line 349, in &lt;module&gt;
+     test_main()
+   File &quot;test_shutil.py&quot;, line 346, in test_main
+     test_support.run_unittest(TestShutil, TestMove)
+   File &quot;/boot/common/lib/python2.7/test/test_support.py&quot;, line 710, in
+ run_unittest
+     _run_suite(suite)
+   File &quot;/boot/common/lib/python2.7/test/test_support.py&quot;, line 693, in
+ _run_suite
+     raise TestFailed(err)
+ test.test_support.TestFailed: errors occurred; run in verbose mode for
+ details
+ ~/develop/python/Lib/test&gt;
+ }}}
+
+ You can also see this happen if you create a folder, and then use mv to
+ move it onto itself:
+
+ mkdir /boot/home/testfolder
+ mv /boot/home/testfolder /boot/home/testfolder
+ it completes without showing any error, but if you then search for the
+ testfolder it will be show as /testfolder and you can't get rid of it...
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3355">http://dev.haiku-os.org/ticket/3355</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="013910.html">[Haiku-bugs] [Haiku] #3354: f.seekable() fails in python	test_fileio.py
+</A></li>
+	<LI>Next message: <A HREF="013937.html">[Haiku-bugs] [Haiku] #3355: using mv to move a folder onto	itself should fail
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13911">[ date ]</a>
+              <a href="thread.html#13911">[ thread ]</a>
+              <a href="subject.html#13911">[ subject ]</a>
+              <a href="author.html#13911">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

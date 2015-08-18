@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4473: KDL in put_fd at team exit - unhandled page fault in kernel space at 0xdeadbf1b
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234473%3A%20KDL%20in%20put_fd%20at%20team%20exit%20-%20unhandled%0A%20page%20fault%20in%20kernel%20space%20at%200xdeadbf1b&In-Reply-To=%3C048.77a1eea47c4ea5b9b0ce63df7c4f9651%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="021816.html">
+   <LINK REL="Next"  HREF="021095.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4473: KDL in put_fd at team exit - unhandled page fault in kernel space at 0xdeadbf1b</H1>
+    <B>jonas.kirilla</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234473%3A%20KDL%20in%20put_fd%20at%20team%20exit%20-%20unhandled%0A%20page%20fault%20in%20kernel%20space%20at%200xdeadbf1b&In-Reply-To=%3C048.77a1eea47c4ea5b9b0ce63df7c4f9651%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4473: KDL in put_fd at team exit - unhandled page fault in kernel space at 0xdeadbf1b">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Sep 11 01:58:54 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="021816.html">[Haiku-bugs] [Haiku] #4472: pauses during desktop use
+</A></li>
+        <LI>Next message: <A HREF="021095.html">[Haiku-bugs] [Haiku] #4473: KDL in put_fd at team exit - unhandled page fault in kernel space at 0xdeadbf1b
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21094">[ date ]</a>
+              <a href="thread.html#21094">[ thread ]</a>
+              <a href="subject.html#21094">[ subject ]</a>
+              <a href="author.html#21094">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4473: KDL in put_fd at team exit - unhandled page fault in kernel space at
+0xdeadbf1b
+---------------------------+------------------------------------------------
+ Reporter:  jonas.kirilla  |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1 development
+Blockedby:                 |    Platform:  All           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+ See attached file.
+ Excerpt:
+ {{{
+ 16 81383bfc (+ 104) 80096929   &lt;kernel_x86&gt;:put_fd + 0x005d
+ 17 81383c64 (+  64) 800a798c   &lt;kernel_x86&gt;
+ vfs_free_io_context(io_context*: 0x8169ce14) + 0x0084
+ 18 81383ca4 (+  48) 800a7a15   &lt;kernel_x86&gt;:vfs_put_io_context + 0x0029
+ 19 81383cd4 (+ 112) 80056e84   &lt;kernel_x86&gt;:team_delete_team + 0x0224
+ 20 81383d44 (+ 368) 8005ab24   &lt;kernel_x86&gt;:thread_exit + 0x0470
+ 21 81383eb4 (+  80) 8004f535   &lt;kernel_x86&gt;:handle_signals + 0x03d9
+ 22 81383f04 (+  64) 8005b0fa   &lt;kernel_x86&gt;:thread_at_kernel_exit + 0x008e
+ 23 81383f44 (+ 100) 800dfe4b   &lt;kernel_x86&gt;:kernel_exit_handle_signals +
+ 0x0006
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4473">http://dev.haiku-os.org/ticket/4473</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="021816.html">[Haiku-bugs] [Haiku] #4472: pauses during desktop use
+</A></li>
+	<LI>Next message: <A HREF="021095.html">[Haiku-bugs] [Haiku] #4473: KDL in put_fd at team exit - unhandled page fault in kernel space at 0xdeadbf1b
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21094">[ date ]</a>
+              <a href="thread.html#21094">[ thread ]</a>
+              <a href="subject.html#21094">[ subject ]</a>
+              <a href="author.html#21094">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,145 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3150: OpenBFS directory corruption.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233150%3A%20OpenBFS%20directory%20corruption.&In-Reply-To=%3C038.28292c867ae3be742393ec086836c73f%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012572.html">
+   <LINK REL="Next"  HREF="012594.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3150: OpenBFS directory corruption.</H1>
+    <B>bga</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233150%3A%20OpenBFS%20directory%20corruption.&In-Reply-To=%3C038.28292c867ae3be742393ec086836c73f%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3150: OpenBFS directory corruption.">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Nov 16 12:57:05 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012572.html">[Haiku-bugs] [Haiku] #2598: sshd occasionally segfaults on connect (possibly when forking)
+</A></li>
+        <LI>Next message: <A HREF="012594.html">[Haiku-bugs] [Haiku] #3150: OpenBFS directory corruption.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12575">[ date ]</a>
+              <a href="thread.html#12575">[ thread ]</a>
+              <a href="subject.html#12575">[ subject ]</a>
+              <a href="author.html#12575">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3150: OpenBFS directory corruption.
+------------------------------+---------------------------------------------
+ Reporter:  bga               |       Owner:  axeld         
+     Type:  bug               |      Status:  new           
+ Priority:  blocker           |   Milestone:  R1/alpha1     
+Component:  File Systems/BFS  |     Version:  R1 development
+Blockedby:                    |    Platform:  x86           
+ Blocking:                    |  
+------------------------------+---------------------------------------------
+ I set up a new partition to run Haiku and did a clean install of r28657.
+ Setting it up included downloading sources for stuff I am working on,
+ configuring/dowmnloading emails, setting backgrounds, etc.
+
+ This morning I turned my computer on and booted to this partition. I was
+ decided to get ArmyKnife to compile under Haiku and switched to its
+ directory. Doing &quot;ls&quot; on it resulted into this:
+
+ {{{
+ ~/development&gt; cd armyknife/
+ ~/development/armyknife&gt; ls
+ ls: reading directory .: Bad data
+ Makefile  Makefile_armyknife  Makefile_armyknife_tte  Makefile_libsanta
+ }}}
+
+ syslog showed this:
+
+ {{{
+ KERN: B+tree header size 6132779464041449732 doesn't fit file size 2048!
+ KERN: bfs: SetTo:471: Bad data
+ KERN: bfs: KERN: inode tree at block 2624136 corrupt!
+ KERN: bfs: InitCheck:432: Bad data
+ }}}
+
+ This is the disk, just in case:
+
+ {{{
+ ~/development&gt; df
+ Mount           Type      Total     Free     Flags   Device
+ --------------- -------- --------- --------- -------
+ --------------------------
+ /boot           bfs          77.0G     66.6G QAM-P-W
+ /dev/disk/scsi/0/2/0/2
+ }}}
+
+ I decided to run checkfs on it although I imagined it would not handle
+ this kind of problem:
+
+ {{{
+ ~/development&gt; checkfs /dev/disk/scsi/0/2/0/2
+ prop-base (inode = 4719490), could not be opened
+ lock (inode = 3148138), has blocks already set, names don't match
+ documentation (inode = 2624136), could not be opened
+ checked 115255 nodes, 0 blocks not allocated, 2 blocks already set, 3943
+ blocks could be freed
+         files           92648
+         directories     22225
+         attributes      268
+         attr. dirs      84
+         indices         30
+ }}}
+
+ Then trying to run ls on the dir again (note no files are showing now.
+ That's because I tried to remove the directory but it failed with
+ directory not empty and removed the files inside it that were ok but not
+ the corrupt ones):
+
+ {{{
+ ~/development/armyknife&gt; ls
+ ls: reading directory .: Bad data
+ }}}
+
+ Ans syslog still showed the same error:
+
+ {{{
+ KERN: B+tree header size 6132779464041449732 doesn't fit file size 2048!
+ KERN: bfs: SetTo:471: Bad data
+ KERN: bfs: inode tree at block 2624136 corrupt!
+ KERN: bfs: InitCheck:432: Bad data
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3150">http://dev.haiku-os.org/ticket/3150</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012572.html">[Haiku-bugs] [Haiku] #2598: sshd occasionally segfaults on connect (possibly when forking)
+</A></li>
+	<LI>Next message: <A HREF="012594.html">[Haiku-bugs] [Haiku] #3150: OpenBFS directory corruption.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12575">[ date ]</a>
+              <a href="thread.html#12575">[ thread ]</a>
+              <a href="subject.html#12575">[ subject ]</a>
+              <a href="author.html#12575">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

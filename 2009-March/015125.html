@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3566: Data corruption when compiling under	hybrid
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233566%3A%20Data%20corruption%20when%20compiling%20under%0A%09hybrid&In-Reply-To=%3C042.e061678fdf344c6417af6a462797356c%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="015124.html">
+   <LINK REL="Next"  HREF="015126.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3566: Data corruption when compiling under	hybrid</H1>
+    <B>Adek336</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233566%3A%20Data%20corruption%20when%20compiling%20under%0A%09hybrid&In-Reply-To=%3C042.e061678fdf344c6417af6a462797356c%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3566: Data corruption when compiling under	hybrid">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Mar 15 19:03:21 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="015124.html">[Haiku-bugs] [Haiku] #2643: Black screen when DVI connected
+</A></li>
+        <LI>Next message: <A HREF="015126.html">[Haiku-bugs] [Haiku] #2643: Black screen when DVI connected
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15125">[ date ]</a>
+              <a href="thread.html#15125">[ thread ]</a>
+              <a href="subject.html#15125">[ subject ]</a>
+              <a href="author.html#15125">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3566: Data corruption when compiling under hybrid
+-----------------------+----------------------------------------------------
+ Reporter:  Adek336    |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+Blockedby:             |    Platform:  All           
+ Blocking:             |  
+-----------------------+----------------------------------------------------
+ I've been compiling some userland applications a lot recently. I have seen
+
+ under vmware, hybrid, two BFS partitions, code is being compiled on the
+ non-boot partition, suddenly the build process ends with an error like
+ garbage in config.status, syntax error in .c file, lack of separator in
+ Makefile. These error always turned out to be caused by corruption in the
+ mentioned files. This happened a lot in a revision circa r29330, now under
+ circa r29500 I didn't see it but perhaps it's just a matter of chance.
+ Perhaps related to #3347 which happened even more often than data
+ corruption.
+
+ under real hw, r29503, hybrid, two partitions, compiling on non-boot
+ partition, I've seen this happen once: compiling compiling then boom
+ restart, after booting up many files are corrupt, even sources which were
+ compiled an hour earlier didn't want to compile again due to garbage in
+ files, some stuff in /boot/common/bin and /boot/common/lib didn't work
+ because of elf header errors like if they were corrupted.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3566">http://dev.haiku-os.org/ticket/3566</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="015124.html">[Haiku-bugs] [Haiku] #2643: Black screen when DVI connected
+</A></li>
+	<LI>Next message: <A HREF="015126.html">[Haiku-bugs] [Haiku] #2643: Black screen when DVI connected
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15125">[ date ]</a>
+              <a href="thread.html#15125">[ thread ]</a>
+              <a href="subject.html#15125">[ subject ]</a>
+              <a href="author.html#15125">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

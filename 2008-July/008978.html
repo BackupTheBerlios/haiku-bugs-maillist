@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1797: Possible block cache memory leak
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-July/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231797%3A%20Possible%20block%20cache%20memory%20leak&In-Reply-To=%3C053.70eaacbae2fdc0b68f8d8f31fbf70b33%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008976.html">
+   <LINK REL="Next"  HREF="008979.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1797: Possible block cache memory leak</H1>
+    <B>bbjimmy</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231797%3A%20Possible%20block%20cache%20memory%20leak&In-Reply-To=%3C053.70eaacbae2fdc0b68f8d8f31fbf70b33%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1797: Possible block cache memory leak">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Jul 13 22:32:59 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008976.html">[Haiku-bugs] [Haiku] #2470: DriveSetup error preparing disk
+</A></li>
+        <LI>Next message: <A HREF="008979.html">[Haiku-bugs] [Haiku] #1797: Possible block cache memory leak
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8978">[ date ]</a>
+              <a href="thread.html#8978">[ thread ]</a>
+              <a href="subject.html#8978">[ subject ]</a>
+              <a href="author.html#8978">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1797: Possible block cache memory leak
+----------------------------+-----------------------------------------------
+  Reporter:  anevilyak      |       Owner:  axeld         
+      Type:  bug            |      Status:  new           
+  Priority:  normal         |   Milestone:  R1            
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |   Blockedby:                
+  Platform:  All            |    Blocking:                
+----------------------------+-----------------------------------------------
+
+Comment(by bbjimmy):
+
+ Replying to [comment:1 axeld]:
+ &gt; The ultimate check would be to have done these things on a different
+ volume than the boot volume, and then unmount it. Unless there is any
+ memory pressure, the block cache will not free up any memory.
+
+
+
+
+ I am sure I am looking at the same issue.
+
+ Performing:
+
+ jam -q
+
+
+ ...patience...
+
+ ...patience...
+
+ ...patience...
+
+ ...found 67858 target(s)...
+
+ ...updating 6981 target(s)...
+
+ InitScript1 generated/haiku.image-init-vars
+
+ vfork: Out of memory
+
+
+
+
+ running r26389
+
+
+ I have only 448 MB of ram.
+
+ I performed the jam on an svn checkout that resides on a different
+ partition.
+
+ Before the jam, 19% was used.
+
+ The memory used peaked at 89%
+
+ After the jam error, there was 49% still used ... mostly in System
+ Resources &amp; Cashes according to the ProcessController app.
+
+ After dismounting the volume that contained the haiku source tree, I was
+ back to 19% used.
+
+ It seems that the issue is not a memory leak, but there is still an issue.
+ This same computer can jam the haiku image from two trees at the same time
+ using Ubuntu Linux, but I am unable to build Haiku within Haiku.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1797#comment:2">http://dev.haiku-os.org/ticket/1797#comment:2</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008976.html">[Haiku-bugs] [Haiku] #2470: DriveSetup error preparing disk
+</A></li>
+	<LI>Next message: <A HREF="008979.html">[Haiku-bugs] [Haiku] #1797: Possible block cache memory leak
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8978">[ date ]</a>
+              <a href="thread.html#8978">[ thread ]</a>
+              <a href="subject.html#8978">[ subject ]</a>
+              <a href="author.html#8978">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1389: [FlattenPictureTest] Not all tests	succeed
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231389%3A%20%5BFlattenPictureTest%5D%20Not%20all%20tests%0A%09succeed&In-Reply-To=%3C051.9fad8724e49c7ba21af73cf4565df76d%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002274.html">
+   <LINK REL="Next"  HREF="002284.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1389: [FlattenPictureTest] Not all tests	succeed</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231389%3A%20%5BFlattenPictureTest%5D%20Not%20all%20tests%0A%09succeed&In-Reply-To=%3C051.9fad8724e49c7ba21af73cf4565df76d%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1389: [FlattenPictureTest] Not all tests	succeed">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Aug 13 22:34:26 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002274.html">[Haiku-bugs] [Haiku] #1389: [FlattenPictureTest] Not all tests	succeed
+</A></li>
+        <LI>Next message: <A HREF="002284.html">[Haiku-bugs] [Haiku] #1389: [FlattenPictureTest] Not all tests	succeed
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2279">[ date ]</a>
+              <a href="thread.html#2279">[ thread ]</a>
+              <a href="subject.html#2279">[ subject ]</a>
+              <a href="author.html#2279">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1389: [FlattenPictureTest] Not all tests succeed
+---------------------------------+------------------------------------------
+  Reporter:  laplace             |       Owner:  jackburton    
+      Type:  bug                 |      Status:  assigned      
+  Priority:  normal              |   Milestone:  R1            
+ Component:  Kits/Interface Kit  |     Version:  R1 development
+Resolution:                      |    Platform:  All           
+---------------------------------+------------------------------------------
+Comment (by jackburton):
+
+ Replying to [comment:5 laplace]:
+ &gt; I think the print_server itself does not use the clipping functions, but
+ printer drivers could use it.
+ &gt; Anyway an application that is able to print is for sure allowed to use
+ them.
+ &gt;
+ &gt; I have added more tests.
+ &gt; The following fail:
+ &gt; - ConstrainClippingRegion
+ &gt; - SetPenSize: Pen size of 0 is not drawn as if it had size of 1
+ &gt; - SetPenSize2: Scaling is not applied to the pen size
+ &gt; - TestPattern: pattern seems not to be taken into account
+
+ Thanks, I'll try to fix these problems.
+
+ &gt; The following do not create the correct bitmap:
+ &gt; - ClipTo[Inverse]Picture
+
+ ClipToPicture is not even implemented as a &quot;normal&quot; op (outside of
+ BPicture, I mean). I think this should be a different bug (&quot;ClipToPicture
+ not implemented&quot;);
+
+ &gt; ConstrainClippingRegion and ClipTo[Inverse]Picture are documented here:
+ &gt;
+ <A HREF="http://www.beunited.org/bebook/The%20Interface%20Kit/ViewGraphicsState.html">http://www.beunited.org/bebook/The%20Interface%20Kit/ViewGraphicsState.html</A>
+
+ Sorry, I didn't explain correctly: I meant I don't have any docs about how
+ the SetClipRects op (ConstrainClippingRegion) is encoded in BPicture data.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1389#comment:6">http://dev.haiku-os.org/ticket/1389#comment:6</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002274.html">[Haiku-bugs] [Haiku] #1389: [FlattenPictureTest] Not all tests	succeed
+</A></li>
+	<LI>Next message: <A HREF="002284.html">[Haiku-bugs] [Haiku] #1389: [FlattenPictureTest] Not all tests	succeed
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2279">[ date ]</a>
+              <a href="thread.html#2279">[ thread ]</a>
+              <a href="subject.html#2279">[ subject ]</a>
+              <a href="author.html#2279">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,213 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3345: add ncurses' panel.h to 3rd party	headers (easy)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-January/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233345%3A%20add%20ncurses%27%20panel.h%20to%203rd%20party%0A%09headers%20%28easy%29&In-Reply-To=%3C051.93f0506316561696a14bd5b429efbcfd%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="014083.html">
+   <LINK REL="Next"  HREF="013878.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3345: add ncurses' panel.h to 3rd party	headers (easy)</H1>
+    <B>scottmc</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233345%3A%20add%20ncurses%27%20panel.h%20to%203rd%20party%0A%09headers%20%28easy%29&In-Reply-To=%3C051.93f0506316561696a14bd5b429efbcfd%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3345: add ncurses' panel.h to 3rd party	headers (easy)">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Jan 28 08:32:07 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="014083.html">[Haiku-bugs] [Haiku] #3345: add ncurses' panel.h to 3rd party	headers (easy)
+</A></li>
+        <LI>Next message: <A HREF="013878.html">[Haiku-bugs] [Haiku] #3346: Focus Follows Mouse / Warping / Instant	Warping
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14084">[ date ]</a>
+              <a href="thread.html#14084">[ thread ]</a>
+              <a href="subject.html#14084">[ subject ]</a>
+              <a href="author.html#14084">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3345: add ncurses' panel.h to 3rd party headers (easy)
+-------------------------+--------------------------------------------------
+ Reporter:  scottmc      |       Owner:  axeld         
+     Type:  enhancement  |      Status:  new           
+ Priority:  normal       |   Milestone:  R1            
+Component:  - General    |     Version:  R1 development
+Blockedby:               |    Platform:  All           
+ Blocking:               |  
+-------------------------+--------------------------------------------------
+
+Comment(by scottmc):
+
+ ... but then crashed to gdb in the test_curses.py test:
+ {{{
+ GNU gdb 6.3
+ Copyright 2004 Free Software Foundation, Inc.
+ GDB is free software, covered by the GNU General Public License, and you
+ are
+ welcome to change it and/or distribute copies of it under certain
+ conditions.
+ Type &quot;show copying&quot; to see the conditions.
+ There is absolutely no warranty for GDB.  Type &quot;show warranty&quot; for
+ details.
+ This GDB was configured as &quot;i586-pc-haiku&quot;...
+ [tcsetpgrp failed in terminal_inferior: Invalid Argument]
+ Thread 108173 caused an exception: Segment violation
+ Reading symbols from /boot/beos/system/runtime_loader...done.
+ Loaded symbols for /boot/beos/system/runtime_loader
+ Reading symbols from /boot/common/lib/libpython2.7.so.1.0...done.
+ Loaded symbols for /boot/common/lib/libpython2.7.so.1.0
+ Reading symbols from /boot/beos/system/lib/libnetwork.so...done.
+ Loaded symbols for /boot/beos/system/lib/libnetwork.so
+ Reading symbols from /boot/beos/system/lib/libbsd.so...done.
+ Loaded symbols for /boot/beos/system/lib/libbsd.so
+ Reading symbols from /boot/beos/system/lib/libroot.so...done.
+ Loaded symbols for /boot/beos/system/lib/libroot.so
+ Reading symbols from /boot/beos/system/lib/libbe.so...done.
+ Loaded symbols for /boot/beos/system/lib/libbe.so
+ Reading symbols from /boot/beos/system/lib/libstdc++.r4.so...done.
+ Loaded symbols for /boot/beos/system/lib/libstdc++.r4.so
+ Reading symbols from /boot/common/lib/python2.7/lib-
+ dynload/_curses.so...done.
+ Loaded symbols for /boot/common/lib/python2.7/lib-dynload/_curses.so
+ Reading symbols from /boot/common/lib/python2.7/lib-
+ dynload/math.so...done.
+ Loaded symbols for /boot/common/lib/python2.7/lib-dynload/math.so
+ Reading symbols from /boot/common/lib/python2.7/lib-
+ dynload/binascii.so...done.
+ Loaded symbols for /boot/common/lib/python2.7/lib-dynload/binascii.so
+ Reading symbols from /boot/common/lib/libz.so.1.2.3...done.
+ Loaded symbols for /boot/common/lib/libz.so.1.2.3
+ Reading symbols from /boot/common/lib/python2.7/lib-
+ dynload/_random.so...done.
+ Loaded symbols for /boot/common/lib/python2.7/lib-dynload/_random.so
+ Reading symbols from /boot/common/lib/python2.7/lib-
+ dynload/cStringIO.so...done.
+ Loaded symbols for /boot/common/lib/python2.7/lib-dynload/cStringIO.so
+ Reading symbols from /boot/common/lib/python2.7/lib-
+ dynload/fcntl.so...done.
+ Loaded symbols for /boot/common/lib/python2.7/lib-dynload/fcntl.so
+ Reading symbols from /boot/common/lib/python2.7/lib-
+ dynload/_curses_panel.so...done.
+ Loaded symbols for /boot/common/lib/python2.7/lib-dynload/_curses_panel.so
+ Reading symbols from /boot/common/lib/python2.7/lib-
+ dynload/_functools.so...done.
+ Loaded symbols for /boot/common/lib/python2.7/lib-dynload/_functools.so
+ Reading symbols from /boot/common/lib/python2.7/lib-
+ dynload/_socket.so...done.
+ Loaded symbols for /boot/common/lib/python2.7/lib-dynload/_socket.so
+ Reading symbols from /boot/common/lib/python2.7/lib-
+ dynload/_ssl.so...done.
+ Loaded symbols for /boot/common/lib/python2.7/lib-dynload/_ssl.so
+ Reading symbols from /boot/common/lib/python2.7/lib-
+ dynload/time.so...done.
+ Loaded symbols for /boot/common/lib/python2.7/lib-dynload/time.so
+ [tcsetpgrp failed in terminal_inferior: Invalid Argument]
+ [Switching to team /boot/common/bin/python test_curses.py (108173) thread
+ python (108173)]
+ 0x007ad455 in new_panel ()
+    from /boot/common/lib/python2.7/lib-dynload/_curses_panel.so
+ (gdb) bt
+ #0  0x007ad455 in new_panel ()
+    from /boot/common/lib/python2.7/lib-dynload/_curses_panel.so
+ #1  0x007abbfc in PyCurses_new_panel (self=0x0, args=0xffffffff)
+     at /boot/home/develop/python/Modules/_curses_panel.c:395
+ #2  0x00266876 in PyCFunction_Call (func=0x180e99ac, arg=0x1805e36c,
+     kw=0xffffffff) at Objects/methodobject.c:81
+ #3  0x002c49e2 in call_function (pp_stack=0x7ffee6dc, oparg=-1)
+     at Python/ceval.c:3850
+ #4  0x002c2b56 in PyEval_EvalFrameEx (f=0x181eff24, throwflag=0)
+     at Python/ceval.c:2513
+ #5  0x002c6c88 in fast_function (func=0xffffffff, pp_stack=0x7ffee87c,
+ n=1,
+     na=-1, nk=0) at Python/ceval.c:3936
+ #6  0x002c4a82 in call_function (pp_stack=0x7ffee87c, oparg=-1)
+     at Python/ceval.c:3871
+ #7  0x002c2b56 in PyEval_EvalFrameEx (f=0x181d91e4, throwflag=0)
+     at Python/ceval.c:2513
+ #8  0x002c3af1 in PyEval_EvalCodeEx (co=0x1805b458, globals=0xffffffff,
+     locals=0xffffffff, args=0x1805e458, argcount=1, kws=0x1800e290,
+ kwcount=0,
+     defs=0x0, defcount=0, closure=0x0) at Python/ceval.c:3101
+ #9  0x00254999 in function_call (func=0x18157534, arg=0x1805e44c,
+     kw=0x18154824) at Objects/funcobject.c:524
+ #10 0x0022d71f in PyObject_Call (func=0x18157534, arg=0xffffffff,
+     kw=0xffffffff) at Objects/abstract.c:2487
+ #11 0x002c511b in ext_do_call (func=0x18157534, pp_stack=0x7ffeea98,
+ flags=3,
+ ---Type &lt;return&gt; to continue, or q &lt;return&gt; to quit---
+     na=1, nk=0) at Python/ceval.c:4149
+ #12 0x002c2c28 in PyEval_EvalFrameEx (f=0x181d9884, throwflag=0)
+     at Python/ceval.c:2553
+ #13 0x002c3af1 in PyEval_EvalCodeEx (co=0x180d1de8, globals=0xffffffff,
+     locals=0xffffffff, args=0x18119a50, argcount=1, kws=0x18119a54,
+ kwcount=0,
+     defs=0x0, defcount=0, closure=0x0) at Python/ceval.c:3101
+ #14 0x002c6cf3 in fast_function (func=0xffffffff, pp_stack=0x7ffeeccc,
+ n=1,
+     na=-1, nk=0) at Python/ceval.c:3946
+ #15 0x002c4a82 in call_function (pp_stack=0x7ffeeccc, oparg=-1)
+     at Python/ceval.c:3871
+ #16 0x002c2b56 in PyEval_EvalFrameEx (f=0x18119914, throwflag=0)
+     at Python/ceval.c:2513
+ #17 0x002c3af1 in PyEval_EvalCodeEx (co=0x1805b4a0, globals=0xffffffff,
+     locals=0xffffffff, args=0x0, argcount=0, kws=0x0, kwcount=0, defs=0x0,
+     defcount=0, closure=0x0) at Python/ceval.c:3101
+ #18 0x002c6b59 in PyEval_EvalCode (co=0x0, globals=0xffffffff,
+     locals=0xffffffff) at Python/ceval.c:647
+ #19 0x002e62a8 in run_mod (mod=0x1805b4a0, filename=0x0,
+ globals=0xffffffff,
+     locals=0xffffffff, flags=0xffffffff, arena=0xffffffff)
+     at Python/pythonrun.c:1334
+ #20 0x002e5e21 in PyRun_FileExFlags (fp=0x18119ab0,
+     filename=0x7ffef5bb &quot;test_curses.py&quot;, start=-1, globals=0xffffffff,
+     locals=0xffffffff, closeit=1, flags=0x7ffeef00) at
+ Python/pythonrun.c:1320
+ #21 0x002e4722 in PyRun_SimpleFileExFlags (fp=0x18119ab0,
+ ---Type &lt;return&gt; to continue, or q &lt;return&gt; to quit---
+     filename=0x7ffef5bb &quot;test_curses.py&quot;, closeit=1, flags=0x7ffeef00)
+     at Python/pythonrun.c:930
+ #22 0x002e5a1f in PyRun_AnyFileExFlags (fp=0x18119ab0,
+     filename=0x7ffef5bb &quot;test_curses.py&quot;, closeit=1, flags=0x7ffeef00)
+     at Python/pythonrun.c:735
+ #23 0x002f446d in Py_Main (argc=1, argv=0x7ffef538) at Modules/main.c:597
+ #24 0x00200837 in main (argc=-1, argv=0xffffffff) at ./Modules/python.c:23
+ (gdb)
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3345#comment:3">http://dev.haiku-os.org/ticket/3345#comment:3</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="014083.html">[Haiku-bugs] [Haiku] #3345: add ncurses' panel.h to 3rd party	headers (easy)
+</A></li>
+	<LI>Next message: <A HREF="013878.html">[Haiku-bugs] [Haiku] #3346: Focus Follows Mouse / Warping / Instant	Warping
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14084">[ date ]</a>
+              <a href="thread.html#14084">[ thread ]</a>
+              <a href="subject.html#14084">[ subject ]</a>
+              <a href="author.html#14084">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

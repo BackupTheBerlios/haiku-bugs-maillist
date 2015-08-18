@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3255: malformed unix socket filename
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-January/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233255%3A%20malformed%20unix%20socket%20filename&In-Reply-To=%3C042.8e8ef022bfdc92a9fbcef4f72815ca04%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="013363.html">
+   <LINK REL="Next"  HREF="013421.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3255: malformed unix socket filename</H1>
+    <B>kaliber</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233255%3A%20malformed%20unix%20socket%20filename&In-Reply-To=%3C042.8e8ef022bfdc92a9fbcef4f72815ca04%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3255: malformed unix socket filename">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Jan  2 15:53:17 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="013363.html">[Haiku-bugs] [Haiku] #2930: The Mail Daemon can't use SSL in default in pre-alpha1
+</A></li>
+        <LI>Next message: <A HREF="013421.html">[Haiku-bugs] [Haiku] #3255: malformed unix socket filename
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13364">[ date ]</a>
+              <a href="thread.html#13364">[ thread ]</a>
+              <a href="subject.html#13364">[ subject ]</a>
+              <a href="author.html#13364">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3255: malformed unix socket filename
+-----------------------+----------------------------------------------------
+ Reporter:  kaliber    |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+Blockedby:             |    Platform:  All           
+ Blocking:             |  
+-----------------------+----------------------------------------------------
+ Attached code creates 'socket_test_filenam\302^K\200\^C' instead of
+ 'socket_test_filename'. It works on linux.
+
+ gcc socket.c -lnetwork
+
+ {{{
+ #include &lt;stdio.h&gt;
+ #include &lt;stdlib.h&gt;
+ #include &lt;errno.h&gt;
+ #include &lt;string.h&gt;
+ #include &lt;sys/types.h&gt;
+ #include &lt;sys/socket.h&gt;
+ #include &lt;sys/un.h&gt;
+
+ #define SOCK_PATH &quot;socket_test_filename&quot;
+
+ int main(void)
+ {
+     int s, len;
+     struct sockaddr_un local;
+     char str[100];
+
+     if ((s = socket(AF_UNIX, SOCK_STREAM, 0)) == -1) {
+         perror(&quot;socket&quot;);
+         exit(1);
+     }
+
+     local.sun_family = AF_UNIX;
+     strcpy(local.sun_path, SOCK_PATH);
+     unlink(local.sun_path);
+     len = strlen(local.sun_path) + sizeof(local.sun_family);
+     if (bind(s, (struct sockaddr *)&amp;local, len) == -1) {
+         perror(&quot;bind&quot;);
+         exit(1);
+     }
+     return 0;
+ }
+
+
+
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3255">http://dev.haiku-os.org/ticket/3255</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="013363.html">[Haiku-bugs] [Haiku] #2930: The Mail Daemon can't use SSL in default in pre-alpha1
+</A></li>
+	<LI>Next message: <A HREF="013421.html">[Haiku-bugs] [Haiku] #3255: malformed unix socket filename
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13364">[ date ]</a>
+              <a href="thread.html#13364">[ thread ]</a>
+              <a href="subject.html#13364">[ subject ]</a>
+              <a href="author.html#13364">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

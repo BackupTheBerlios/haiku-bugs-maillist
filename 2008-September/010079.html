@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2659: [input_server] crash in	Keymap::IsDeadKey ()
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232659%3A%20%5Binput_server%5D%20crash%20in%0A%09Keymap%3A%3AIsDeadKey%20%28%29&In-Reply-To=%3C049.cecaaaf59219bfc681976400f1e70d1d%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010078.html">
+   <LINK REL="Next"  HREF="010080.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2659: [input_server] crash in	Keymap::IsDeadKey ()</H1>
+    <B>aldeck</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232659%3A%20%5Binput_server%5D%20crash%20in%0A%09Keymap%3A%3AIsDeadKey%20%28%29&In-Reply-To=%3C049.cecaaaf59219bfc681976400f1e70d1d%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2659: [input_server] crash in	Keymap::IsDeadKey ()">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Sep  3 14:23:14 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010078.html">[Haiku-bugs] [Haiku] #2659: [input_server] crash in	Keymap::IsDeadKey ()
+</A></li>
+        <LI>Next message: <A HREF="010080.html">[Haiku-bugs] [Haiku] #2610: USB mouse dies when input_server is	restarted.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10079">[ date ]</a>
+              <a href="thread.html#10079">[ thread ]</a>
+              <a href="subject.html#10079">[ subject ]</a>
+              <a href="author.html#10079">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2659: [input_server] crash in Keymap::IsDeadKey ()
+---------------------------------+------------------------------------------
+  Reporter:  diver               |       Owner:  anevilyak     
+      Type:  bug                 |      Status:  new           
+  Priority:  normal              |   Milestone:  R1            
+ Component:  Preferences/Keymap  |     Version:  R1 development
+Resolution:                      |   Blockedby:                
+  Platform:  All                 |    Blocking:                
+---------------------------------+------------------------------------------
+
+Comment(by aldeck):
+
+ Replying to [comment:7 korli]:
+ &gt; Replying to [comment:6 aldeck]:
+ &gt; &gt; Well, there's a memcpy that shouldnt happen when in some cases Rene's
+ &quot;name in attributes&quot; technique fails for some reason.
+ &gt;
+ &gt; I didn't know this.
+
+ That's what i'm saying from the begining. There was a check missing in I.S
+ but the actual bug is in the preflet.
+
+ &gt;
+ &gt; &gt;
+ &gt; &gt; I think that to definitely close the matter and allow for further
+ enhancement, we should enhance the input server as has been discussed on
+ the commit list for r24924.
+ &gt;
+ &gt; Maybe postpone this a bit, but file an enhancement ticket about it
+ anyway. input_server is critical: it shouldn't crash at all. If r24924
+ introduced something wrong, it should be fixed first.
+
+ Heh, you fixed the IS first ;-)
+ Well I.S doesn't crash anymore, ok. But the preflet has to be fixed too to
+ close this bug imho, this is part of the same problem.
+
+ Now instead of patching the preflet, i took the liberty to start to rework
+ how it's done in the IS and then simplify the preflet implementation (not
+ a big change btw). But please read the commit list thread, everything is
+ said there.
+
+ Anyway, as said in the ml, i already started, but i'll file a ticket so
+ that it's more clear.
+
+ Best regards
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2659#comment:8">http://dev.haiku-os.org/ticket/2659#comment:8</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010078.html">[Haiku-bugs] [Haiku] #2659: [input_server] crash in	Keymap::IsDeadKey ()
+</A></li>
+	<LI>Next message: <A HREF="010080.html">[Haiku-bugs] [Haiku] #2610: USB mouse dies when input_server is	restarted.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10079">[ date ]</a>
+              <a href="thread.html#10079">[ thread ]</a>
+              <a href="subject.html#10079">[ subject ]</a>
+              <a href="author.html#10079">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

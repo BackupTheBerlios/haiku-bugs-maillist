@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2284: Page Fault on boot (25717)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232284%3A%20Page%20Fault%20on%20boot%20%2825717%29&In-Reply-To=%3C057.8b4082fe3489e39c92d251573ff12d00%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008594.html">
+   <LINK REL="Next"  HREF="008596.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2284: Page Fault on boot (25717)</H1>
+    <B>donn</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232284%3A%20Page%20Fault%20on%20boot%20%2825717%29&In-Reply-To=%3C057.8b4082fe3489e39c92d251573ff12d00%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2284: Page Fault on boot (25717)">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Jun 26 20:53:21 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008594.html">[Haiku-bugs] [Haiku] #2460: Mouse doesn't follow split window divider when dragging it sideways in Vision
+</A></li>
+        <LI>Next message: <A HREF="008596.html">[Haiku-bugs] [Haiku] #1600: Change name of the Appearance preference applet to Colors
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8595">[ date ]</a>
+              <a href="thread.html#8595">[ thread ]</a>
+              <a href="subject.html#8595">[ subject ]</a>
+              <a href="author.html#8595">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2284: Page Fault on boot (25717)
+----------------------------+-----------------------------------------------
+  Reporter:  dustin howett  |       Owner:  axeld         
+      Type:  bug            |      Status:  new           
+  Priority:  blocker        |   Milestone:  R1/alpha1     
+ Component:  - General      |     Version:  R1 development
+Resolution:                 |   Blockedby:                
+  Platform:  x86            |    Blocking:                
+----------------------------+-----------------------------------------------
+
+Comment(by donn):
+
+ legacy_sata.c:sChannelInterface {} needs an implementation for
+ set_channel().
+
+ I added one, modelled after generic_ide_pc.c, and that allows boot to
+ complete without page fault.
+
+ I actually re-coded the struct initial value per generic_ide_pc.c, with
+ order-dependent struct member values rather than assignments, and so added
+ some NULL initializers that weren't there before.  Don't know if this made
+ any difference, but it's an advantage of this classic initializer code -
+ static type analysis will notice some cases where a new member isn't
+ initialized in an old module.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2284#comment:24">http://dev.haiku-os.org/ticket/2284#comment:24</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008594.html">[Haiku-bugs] [Haiku] #2460: Mouse doesn't follow split window divider when dragging it sideways in Vision
+</A></li>
+	<LI>Next message: <A HREF="008596.html">[Haiku-bugs] [Haiku] #1600: Change name of the Appearance preference applet to Colors
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8595">[ date ]</a>
+              <a href="thread.html#8595">[ thread ]</a>
+              <a href="subject.html#8595">[ subject ]</a>
+              <a href="author.html#8595">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

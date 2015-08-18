@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2071: No accelerated video starting	r24669 nightly
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232071%3A%20No%20accelerated%20video%20starting%0A%09r24669%20nightly&In-Reply-To=%3C052.f4db9c43018e3afffa0617b4d4adb52a%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008077.html">
+   <LINK REL="Next"  HREF="008083.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2071: No accelerated video starting	r24669 nightly</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232071%3A%20No%20accelerated%20video%20starting%0A%09r24669%20nightly&In-Reply-To=%3C052.f4db9c43018e3afffa0617b4d4adb52a%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2071: No accelerated video starting	r24669 nightly">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Jun 12 10:31:09 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008077.html">[Haiku-bugs] [Haiku] #932: [Icons] White space behind desktop icon after icon view change
+</A></li>
+        <LI>Next message: <A HREF="008083.html">[Haiku-bugs] [Haiku] #1919: Cursor hangs on startup
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8081">[ date ]</a>
+              <a href="thread.html#8081">[ thread ]</a>
+              <a href="subject.html#8081">[ subject ]</a>
+              <a href="author.html#8081">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2071: No accelerated video starting r24669 nightly
+--------------------------------------+-------------------------------------
+  Reporter:  tigerdog                 |       Owner:  axeld         
+      Type:  bug                      |      Status:  closed        
+  Priority:  normal                   |   Milestone:  R1            
+ Component:  Drivers/Graphics/nVidia  |     Version:  R1 development
+Resolution:  fixed                    |    Platform:  x86           
+--------------------------------------+-------------------------------------
+Comment (by rudolfc):
+
+ Hi tigerdog,
+
+ Your description is not clear enough for me to fully grasp what you're
+ trying to say. What I do get is this:
+
+
+ (1920x1200) I get the feeling that this a modeline issue. That won't be
+ solved until the driver has EDID support: you probably need a custom
+ modelin for the 1920x1200 res, if it's going to work at all:
+
+ While VESA EDID might get the max/native resolution your panel supports,
+ it's not certain that it's 'pre'-programmed for that mode by the cards
+ VGABIOS. The driver cannot set that mode then since it uses those values
+ still (if all is right though it disables that mode then, you simply
+ cannot choose it).
+
+ So, it's theoretical possible that Haiku wants to start-up the nvidia
+ driver in a mode reported by VESA DDC which the nvidia driver actually
+ doesn't support on that machine. I don't know if Haiku does that BTW (copy
+ the mode used for vESA modeswitch to being the actual workspace 0 mode for
+ a real driver??)
+
+ About the cursor: that's a Haiku problem, not a driver problem.
+
+
+ (just a thought here:)
+ If Haiku should work failsafe for everyone outrhere I have a simple
+ solution: simple remove _all_ gfx drivers and let everyone use VESA only.
+ If people want more, they should enable a accelerated driver themselves.
+ It's impossible to make every system outthere work perfectly. Period.
+
+ Bye!
+
+ Rudolf.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2071#comment:13">http://dev.haiku-os.org/ticket/2071#comment:13</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008077.html">[Haiku-bugs] [Haiku] #932: [Icons] White space behind desktop icon after icon view change
+</A></li>
+	<LI>Next message: <A HREF="008083.html">[Haiku-bugs] [Haiku] #1919: Cursor hangs on startup
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8081">[ date ]</a>
+              <a href="thread.html#8081">[ thread ]</a>
+              <a href="subject.html#8081">[ subject ]</a>
+              <a href="author.html#8081">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,171 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2347: usb_hid causes panic on boot
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232347%3A%20usb_hid%20causes%20panic%20on%20boot&In-Reply-To=%3C044.ab44d2c975c1291cc64340e9eeac9d00%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007890.html">
+   <LINK REL="Next"  HREF="007892.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2347: usb_hid causes panic on boot</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232347%3A%20usb_hid%20causes%20panic%20on%20boot&In-Reply-To=%3C044.ab44d2c975c1291cc64340e9eeac9d00%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2347: usb_hid causes panic on boot">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Jun  6 22:25:54 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007890.html">[Haiku-bugs] [Haiku] #2127: USB drive published name incorrect
+</A></li>
+        <LI>Next message: <A HREF="007892.html">[Haiku-bugs] [Haiku] #2347: usb_hid causes panic on boot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7891">[ date ]</a>
+              <a href="thread.html#7891">[ thread ]</a>
+              <a href="subject.html#7891">[ subject ]</a>
+              <a href="author.html#7891">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2347: usb_hid causes panic on boot
+-------------------------+--------------------------------------------------
+ Reporter:  anevilyak    |       Owner:  mmlr          
+     Type:  bug          |      Status:  new           
+ Priority:  blocker      |   Milestone:  R1            
+Component:  Drivers/USB  |     Version:  R1 development
+ Platform:  All          |  
+-------------------------+--------------------------------------------------
+ When booting, usb_hid fails with the following panic:
+
+ PANIC: _mutex_lock(): using unitialized lock 0x947e52f8
+ Welcome to Kernel Debugging Land...
+ Running on CPU 0
+ kdebug&gt; bt
+ stack trace for thread 112 &quot;AddOnMonitor&quot;
+     kernel stack: 0x94749000 to 0x9474d000
+       user stack: 0x700c3000 to 0x70103000
+ frame            caller     &lt;image&gt;:function + offset
+ 9474c5b4 (+  48) 8004ba2d   &lt;kernel&gt;:invoke_debugger_command + 0x00ed
+ 9474c5e4 (+  64) 8004b825
+ &lt;kernel&gt;:invoke_pipe_segment__FP21debugger_command_pipelPc + 0x0079
+ 9474c624 (+  64) 8004bb6d   &lt;kernel&gt;:invoke_debugger_command_pipe + 0x009d
+ 9474c664 (+  48) 8004ca48
+ &lt;kernel&gt;:_ParseCommandPipe__16ExpressionParserRi + 0x0234
+ 9474c694 (+  48) 8004c3fe
+ &lt;kernel&gt;:EvaluateCommand__16ExpressionParserPCcRi + 0x01de
+ 9474c6c4 (+ 224) 8004de14   &lt;kernel&gt;:evaluate_debug_command + 0x0088
+ 9474c7a4 (+  64) 8004a03e   &lt;kernel&gt;:kernel_debugger_loop__Fv + 0x017a
+ 9474c7e4 (+  48) 8004aa6f   &lt;kernel&gt;:kernel_debugger + 0x0117
+ 9474c814 (+ 192) 8004a94d   &lt;kernel&gt;:panic + 0x0029
+ 9474c8d4 (+  64) 80031dbc   &lt;kernel&gt;:_mutex_lock + 0x00e0
+ 9474c914 (+  64) 947e1c06   &lt;/boot/beos/system/add-
+ ons/kernel/drivers/dev/input/usb_hid&gt;:usb_hid_device_added + 0x012e
+ 9474c954 (+  80) 806490cf   &lt;/boot/beos/system/add-
+ ons/kernel/bus_managers/usb&gt;:ReportDevice__6DeviceP22usb_support_descriptorUlPC16usb_notify_hooksPP17usb_driver_cookiebT5
+ + 0x02af
+ 9474c9a4 (+  64) 80669e60   &lt;/boot/beos/system/add-
+ ons/kernel/busses/usb/ohci&gt;:ReportDevice__3HubP22usb_support_descriptorUlPC16usb_notify_hooksPP17usb_driver_cookiebT5
+ + 0x0094
+ 9474c9e4 (+  64) 80647de9   &lt;/boot/beos/system/add-
+ ons/kernel/bus_managers/usb&gt;:InstallNotify__5StackPCcPC16usb_notify_hooks
+ + 0x00b5
+ 9474ca24 (+  48) 80646750   &lt;/boot/beos/system/add-
+ ons/kernel/bus_managers/usb&gt;:install_notify__FPCcPC16usb_notify_hooks +
+ 0x002c
+ 9474ca54 (+  64) 947e203a   &lt;/boot/beos/system/add-
+ ons/kernel/drivers/dev/input/usb_hid&gt;:init_driver + 0x0092
+ 9474ca94 (+  48) 80059f61   &lt;kernel&gt;:load_driver__FP13legacy_driver +
+ 0x0139
+ 9474cac4 (+ 128) 8005a3d5   &lt;kernel&gt;:add_driver__FPCcl + 0x01e9
+ 9474cb44 (+  32) 8005bfa4   &lt;kernel&gt;:legacy_driver_add + 0x0014
+ 9474cb64 (+  48) 8005b688
+ &lt;kernel&gt;:try_drivers__FRt16DoublyLinkedList2Z12driver_entryZt31DoublyLinkedListStandardGetLink1Z12driver_entry
+ + 0x00a4
+ 9474cb94 (+ 192) 8005bad7   &lt;kernel&gt;:probe_for_drivers__FPCc + 0x03ff
+ 9474cc54 (+ 144) 8005c452   &lt;kernel&gt;:legacy_driver_probe + 0x0172
+ 9474cce4 (+  96) 80056345   &lt;kernel&gt;:scan_for_drivers__FP11devfs_vnode +
+ 0x0085
+ 9474cd44 (+  64) 800572d9
+ &lt;kernel&gt;:devfs_lookup__FP9fs_volumeP8fs_vnodePCcPx + 0x0061
+ 9474cd84 (+  48) 80077f65   &lt;kernel&gt;:lookup_dir_entry__FP5vnodePCcPP5vnode
+ + 0x0025
+ 9474cdb4 (+  80) 8007811c
+ &lt;kernel&gt;:vnode_path_to_vnode__FP5vnodePcbiP10io_contextPP5vnodePx + 0x0144
+ 9474ce04 (+  48) 800783b9
+ &lt;kernel&gt;:vnode_path_to_vnode__FP5vnodePcbiT2PP5vnodePx + 0x0049
+ 9474ce34 (+  64) 800784b4   &lt;kernel&gt;:path_to_vnode__FPcbPP5vnodePxT1 +
+ 0x00f4
+ 9474ce74 (+  64) 80078c68
+ &lt;kernel&gt;:fd_and_path_to_vnode__FiPcbPP5vnodePxT2 + 0x0064
+ 9474ceb4 (+  80) 8007c3d8   &lt;kernel&gt;:file_open__FiPcib + 0x0044
+ 9474cf04 (+  64) 8008161d   &lt;kernel&gt;:_user_open + 0x00a1
+ 9474cf44 (+ 100) 800a4492   &lt;kernel&gt;:pre_syscall_debug_done + 0x0002
+ (nearest)
+ iframe at 0x9474cfa8 (end = 0x9474d000)
+  eax 0x58           ebx 0x456be0        ecx 0x70102a40   edx 0xffff0104
+  esi 0x70102b28     edi 0x0             ebp 0x70102a6c   esp 0x9474cfdc
+  eip 0xffff0104  eflags 0x206
+  vector: 0x63, error code: 0x0
+ 9474cfa8 (+   0) ffff0104
+ 70102a6c (+  48) 0039532a   &lt;libbe.so&gt;:SetTo__10BDirectoryPCc + 0x002a
+ 70102a9c (+  48) 00394f71   &lt;libbe.so&gt;:__10BDirectoryPCc + 0x0055
+ 70102acc (+ 224) 005c86a7
+ &lt;keyboard&gt;:_RecursiveScan__19KeyboardInputDevicePCc + 0x0037
+ 70102bac (+  48) 005c7533   &lt;keyboard&gt;:InitCheck__19KeyboardInputDevice +
+ 0x0037
+ 70102bdc (+ 112) 00217742   &lt;_APP_&gt;:RegisterAddOn__12AddOnManagerR6BEntry
+ + 0x011e
+ 70102c4c (+ 128) 0021ac85
+ &lt;_APP_&gt;:AddOnEnabled__Q212AddOnManager25InputServerMonitorHandlerPCQ38BPrivate7Storage17add_on_entry_info
+ + 0x0069
+ 70102ccc (+ 528) 00221134
+ &lt;_APP_&gt;:HandlePulse__Q38BPrivate7Storage19AddOnMonitorHandler + 0x0520
+ 70102edc (+  48) 0021f058
+ &lt;_APP_&gt;:MessageReceived__Q38BPrivate7Storage19AddOnMonitorHandlerP8BMessage
+ + 0x002c
+ 70102f0c (+  48) 002d8b0f
+ &lt;libbe.so&gt;:DispatchMessage__7BLooperP8BMessageP8BHandler + 0x005b
+ 70102f3c (+  64) 002da47d   &lt;libbe.so&gt;:task_looper__7BLooper + 0x0211
+ 70102f7c (+  48) 002da06b   &lt;libbe.so&gt;:_task0___7BLooperPv + 0x003f
+ 70102fac (+  48) 004cd770   &lt;libroot.so&gt;:_get_next_team_info + 0x005c
+ (nearest)
+ 70102fdc (+   0) 70102fec   3542:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">AddOnMonitor_112_stack at 0x700c3000</A> +
+ 0x3ffec
+ kdebug&gt;
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2347">http://dev.haiku-os.org/ticket/2347</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007890.html">[Haiku-bugs] [Haiku] #2127: USB drive published name incorrect
+</A></li>
+	<LI>Next message: <A HREF="007892.html">[Haiku-bugs] [Haiku] #2347: usb_hid causes panic on boot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7891">[ date ]</a>
+              <a href="thread.html#7891">[ thread ]</a>
+              <a href="subject.html#7891">[ subject ]</a>
+              <a href="author.html#7891">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

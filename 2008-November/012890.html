@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3189: [mail_daemon] crashes in	BList::CountItems()
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233189%3A%20%5Bmail_daemon%5D%20crashes%20in%0A%09BList%3A%3ACountItems%28%29&In-Reply-To=%3C041.7817e1e704ad57db0d5788985dcce2ba%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012889.html">
+   <LINK REL="Next"  HREF="012891.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3189: [mail_daemon] crashes in	BList::CountItems()</H1>
+    <B>karmak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233189%3A%20%5Bmail_daemon%5D%20crashes%20in%0A%09BList%3A%3ACountItems%28%29&In-Reply-To=%3C041.7817e1e704ad57db0d5788985dcce2ba%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3189: [mail_daemon] crashes in	BList::CountItems()">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Nov 30 23:43:05 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012889.html">[Haiku-bugs] [Haiku] #2735: Low memory (64MB) causes PS/2 keyboard to stop functioning
+</A></li>
+        <LI>Next message: <A HREF="012891.html">[Haiku-bugs] [Haiku] #3189: [mail_daemon] crashes in	BList::CountItems()
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12890">[ date ]</a>
+              <a href="thread.html#12890">[ thread ]</a>
+              <a href="subject.html#12890">[ subject ]</a>
+              <a href="author.html#12890">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3189: [mail_daemon] crashes in BList::CountItems()
+---------------------------------+------------------------------------------
+ Reporter:  karmak               |       Owner:  axeld         
+     Type:  bug                  |      Status:  new           
+ Priority:  normal               |   Milestone:  R1            
+Component:  Servers/mail_server  |     Version:  R1 development
+Blockedby:                       |    Platform:  x86           
+ Blocking:                       |  
+---------------------------------+------------------------------------------
+ Recently (r287xx), on real hardware (IBM R52), while fetching my IMAP mail
+ :
+ {{{
+ #0  0x004bad4e in BList::CountItems () from /boot/beos/system/lib/libbe.so
+ #1  0x009293a3 in NestedString::CountItems ()
+    from /boot/beos/system/add-ons/mail_daemon/inbound_protocols/IMAP
+ #2  0x00927154 in IMAP4Client::GetMessage ()
+    from /boot/beos/system/add-ons/mail_daemon/inbound_protocols/IMAP
+ #3  0x0058d518 in BRemoteMailStorageProtocol::GetMessage ()
+    from /boot/beos/system/lib/libmail.so
+ #4  0x009281ed in IMAP4Client::GetMessage ()
+    from /boot/beos/system/add-ons/mail_daemon/inbound_protocols/IMAP
+ #5  0x0058230e in BMailProtocol::ProcessMailMessage ()
+    from /boot/beos/system/lib/libmail.so
+ #6  0x0056f044 in BMailChainRunner::get_messages ()
+    from /boot/beos/system/lib/libmail.so
+ #7  0x0056e583 in BMailChainRunner::MessageReceived ()
+    from /boot/beos/system/lib/libmail.so
+ #8  0x003b027b in BLooper::DispatchMessage ()
+    from /boot/beos/system/lib/libbe.so
+ #9  0x003b1be9 in BLooper::task_looper () from
+ /boot/beos/system/lib/libbe.so
+ #10 0x003b17d7 in BLooper::_task0_ () from /boot/beos/system/lib/libbe.so
+ #11 0x002389b8 in thread_entry () from /boot/beos/system/lib/libroot.so
+ #12 0x70080fec in ?? ()
+ }}}
+
+ I cannot reproduce it at will, but encountered it more than once.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3189">http://dev.haiku-os.org/ticket/3189</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012889.html">[Haiku-bugs] [Haiku] #2735: Low memory (64MB) causes PS/2 keyboard to stop functioning
+</A></li>
+	<LI>Next message: <A HREF="012891.html">[Haiku-bugs] [Haiku] #3189: [mail_daemon] crashes in	BList::CountItems()
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12890">[ date ]</a>
+              <a href="thread.html#12890">[ thread ]</a>
+              <a href="subject.html#12890">[ subject ]</a>
+              <a href="author.html#12890">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

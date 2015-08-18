@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1714: Mouse events mostly do not reach BWindow in Mozilla, aswell as drawing messages
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-January/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231714%3A%20Mouse%20events%20mostly%20do%20not%20reach%0A%20BWindow%20in%20Mozilla%2C%20aswell%20as%20drawing%20messages&In-Reply-To=%3C050.a6f4e9fe0fede7a0a568a06ca34255b6%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="004366.html">
+   <LINK REL="Next"  HREF="004370.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1714: Mouse events mostly do not reach BWindow in Mozilla, aswell as drawing messages</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231714%3A%20Mouse%20events%20mostly%20do%20not%20reach%0A%20BWindow%20in%20Mozilla%2C%20aswell%20as%20drawing%20messages&In-Reply-To=%3C050.a6f4e9fe0fede7a0a568a06ca34255b6%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1714: Mouse events mostly do not reach BWindow in Mozilla, aswell as drawing messages">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Jan 20 15:34:33 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="004366.html">[Haiku-bugs] [Haiku] #1714: Mouse events mostly do not reach BWindow in Mozilla, aswell as drawing messages
+</A></li>
+        <LI>Next message: <A HREF="004370.html">[Haiku-bugs] [Haiku] #1714: Mouse events mostly do not reach BWindow in Mozilla, aswell as drawing messages
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4368">[ date ]</a>
+              <a href="thread.html#4368">[ thread ]</a>
+              <a href="subject.html#4368">[ subject ]</a>
+              <a href="author.html#4368">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1714: Mouse events mostly do not reach BWindow in Mozilla, aswell as drawing
+messages
+---------------------------------+------------------------------------------
+  Reporter:  fyysik              |       Owner:  stippi        
+      Type:  bug                 |      Status:  new           
+  Priority:  high                |   Milestone:  R1            
+ Component:  Servers/app_server  |     Version:  R1 development
+Resolution:                      |    Platform:  x86           
+---------------------------------+------------------------------------------
+Comment (by fyysik):
+
+ &gt;  I've investigated this a bit, and it seems like the clipping is
+ computed
+ &gt;  incorrectly, at least it doesn't match what you see on screen.
+ &gt;
+ I thought about clipping, but it raises question about Haiku's
+ appserver difference - does it submit mousse messages to to clipping
+ region only?
+
+ If so, that's weird in general, and also will break, IMHO,
+ compatibility with Set*EventMask() methods.
+
+ Now about setting clipping region. In code under our control, like
+ widget code, explicit clipping is set only inside Scroll procedure.
+ Also I tried to use ConstrainClippingRegion(0) to onscreen-views
+ before we send mozilla's internal message to redraw/reflow widget.
+ Didn't help.
+
+ But on other side, Mozilla sets clipping (using also BView's method)
+ by it's own quite intensively via our gfx-backend. I can try to put
+ some debug-statements in those gfx-methods, if you can tell me which
+ info can help you in investigations.
+
+ Also I can try to play with clipping myself in gfx-backend.
+
+ Call to ConstrainClippingRegion is here
+ <A HREF="http://lxr.mozilla.org/mozilla1.8/source/gfx/src/beos/nsRenderingContextBeOS.cpp#366">http://lxr.mozilla.org/mozilla1.8/source/gfx/src/beos/nsRenderingContextBeOS.cpp#366</A>
+ it is called in each drawing primitive.
+ And it gets info about region to clip from Mozilla's clipping
+ structure which is also set via group of methods in same file, like
+ this one:
+ <A HREF="http://lxr.mozilla.org/mozilla1.8/source/gfx/src/beos/nsRenderingContextBeOS.cpp#295">http://lxr.mozilla.org/mozilla1.8/source/gfx/src/beos/nsRenderingContextBeOS.cpp#295</A>
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1714#comment:4">http://dev.haiku-os.org/ticket/1714#comment:4</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="004366.html">[Haiku-bugs] [Haiku] #1714: Mouse events mostly do not reach BWindow in Mozilla, aswell as drawing messages
+</A></li>
+	<LI>Next message: <A HREF="004370.html">[Haiku-bugs] [Haiku] #1714: Mouse events mostly do not reach BWindow in Mozilla, aswell as drawing messages
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4368">[ date ]</a>
+              <a href="thread.html#4368">[ thread ]</a>
+              <a href="subject.html#4368">[ subject ]</a>
+              <a href="author.html#4368">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

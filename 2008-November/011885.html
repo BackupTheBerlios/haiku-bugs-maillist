@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3001: OpenGL demos segfault in MesaSoftwareRenderer::SwapBuffers() when moving window
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233001%3A%20OpenGL%20demos%20segfault%20in%0A%20MesaSoftwareRenderer%3A%3ASwapBuffers%28%29%20when%20moving%20window&In-Reply-To=%3C050.9fec9df1438763c2432d72fda6c8384e%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012382.html">
+   <LINK REL="Next"  HREF="011886.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3001: OpenGL demos segfault in MesaSoftwareRenderer::SwapBuffers() when moving window</H1>
+    <B>bonefish</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233001%3A%20OpenGL%20demos%20segfault%20in%0A%20MesaSoftwareRenderer%3A%3ASwapBuffers%28%29%20when%20moving%20window&In-Reply-To=%3C050.9fec9df1438763c2432d72fda6c8384e%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3001: OpenGL demos segfault in MesaSoftwareRenderer::SwapBuffers() when moving window">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Nov  1 14:20:51 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012382.html">[Haiku-bugs] [Haiku] #3020: Wrong scrollbar behaviour
+</A></li>
+        <LI>Next message: <A HREF="011886.html">[Haiku-bugs] [Haiku] #3011: Filling Tracker windows with many files takes too long
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11885">[ date ]</a>
+              <a href="thread.html#11885">[ thread ]</a>
+              <a href="subject.html#11885">[ subject ]</a>
+              <a href="author.html#11885">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3001: OpenGL demos segfault in MesaSoftwareRenderer::SwapBuffers() when moving
+window
+------------------------------+---------------------------------------------
+  Reporter:  aldeck           |       Owner:  korli         
+      Type:  bug              |      Status:  new           
+  Priority:  high             |   Milestone:  R1            
+ Component:  Kits/OpenGL Kit  |     Version:  R1 development
+Resolution:                   |   Blockedby:                
+  Platform:  All              |    Blocking:                
+------------------------------+---------------------------------------------
+Changes (by bonefish):
+
+  * owner:  axeld =&gt; korli
+  * component:  System/Kernel =&gt; Kits/OpenGL Kit
+
+
+Comment:
+
+ Actually this looks very much like a race condition in userland. Since
+ r28223 when a thread wakes up another one (e.g. by releasing a semaphore)
+ the woken up thread is scheduled immediately on another CPU, if one is
+ idle. Before that revision the new thread wouldn't be scheduled before the
+ current thread's quantum or the quantum of the idle thread on another CPU
+ was used up. I.e. if the first thread has a race condition with the second
+ one, it is just way more likely that it shows now.
+
+ GDB's stack trace isn't particularly beautiful in this case. At any rate
+ the innermost function (0xffff012c) is memcpy(). The syslog says:
+
+ {{{
+ vm_page_fault: thread &quot;Simon&quot; (182) in team &quot;GLTeapot&quot; (177) tried to read
+ address 0x5ffffb5c, ip 0xffff012c (&quot;???&quot; +0xffff012c)
+ }}}
+
+ The fault address is in esi i.e. the source of the memcpy() and slightly
+ besides a bitmap area:
+
+ {{{
+ kdebug&gt; areas 177
+ addr          id  base          size    protect lock  name
+ ...
+ 0x810bb8c0  1003  0x60000000    0x0004f000 2033    0  server_memory
+ ...
+ }}}
+
+ Looking at MesaSoftwareRenderer::SwapBuffers() I'd say {{{clip-&gt;top -
+ fInfo-&gt;window_bounds.top}}} becomes negative for whatever reason and the
+ memory before the start of the bitmap's Bits() is addressed.
+
+ Bouncing the ticket back to the OpenGL Kit. It might still be a
+ BDirectWindow or app server problem, though.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3001#comment:4">http://dev.haiku-os.org/ticket/3001#comment:4</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012382.html">[Haiku-bugs] [Haiku] #3020: Wrong scrollbar behaviour
+</A></li>
+	<LI>Next message: <A HREF="011886.html">[Haiku-bugs] [Haiku] #3011: Filling Tracker windows with many files takes too long
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11885">[ date ]</a>
+              <a href="thread.html#11885">[ thread ]</a>
+              <a href="subject.html#11885">[ subject ]</a>
+              <a href="author.html#11885">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

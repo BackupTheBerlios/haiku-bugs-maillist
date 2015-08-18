@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4848: raw_char field in B_KEY_DOWN message when using input method
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234848%3A%20raw_char%20field%20in%20B_KEY_DOWN%20message%0A%20when%20using%20input%20method&In-Reply-To=%3C040.e755ae94334f4f3bed2ca5b23b7c1976%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="023117.html">
+   <LINK REL="Next"  HREF="023110.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4848: raw_char field in B_KEY_DOWN message when using input method</H1>
+    <B>hiron</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234848%3A%20raw_char%20field%20in%20B_KEY_DOWN%20message%0A%20when%20using%20input%20method&In-Reply-To=%3C040.e755ae94334f4f3bed2ca5b23b7c1976%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4848: raw_char field in B_KEY_DOWN message when using input method">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Oct 25 05:44:58 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="023117.html">[Haiku-bugs] [Haiku] #4847: Wacom Intuos not handled
+</A></li>
+        <LI>Next message: <A HREF="023110.html">[Haiku-bugs] [Haiku] #4849: BSlider - broken BArchivable	implementation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#23109">[ date ]</a>
+              <a href="thread.html#23109">[ thread ]</a>
+              <a href="subject.html#23109">[ subject ]</a>
+              <a href="author.html#23109">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4848: raw_char field in B_KEY_DOWN message when using input method
+-----------------------+----------------------------------------------------
+ Reporter:  hiron      |       Owner:  nobody        
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1/Development
+Blockedby:             |    Platform:  All           
+ Blocking:             |  
+-----------------------+----------------------------------------------------
+ In pe editor, when I input Japanese characters by IM (input method), pe
+ says &quot;An OS error occurred: Name not found&quot; and no characters are
+ displayed.
+ This is because pe checks the existance of &quot;raw_char&quot; field in a
+ B_KEY_DOWN message (in PText::KeyDown()):
+ {{{
+ #!cpp
+ FailOSErr(Looper()-&gt;CurrentMessage()-&gt;FindInt32(&quot;raw_char&quot;, &amp;ch));
+ }}}
+
+ On BeOS R5, I got 0x0a as &quot;raw_char&quot; value in B_KEY_DOWN message.
+ I don't know why 0x0a is used but I never got other value on inputting
+ text by IM.
+
+ On Haiku, BottomlineWindow for non-input-method-aware views doesn't put
+ &quot;raw_char&quot; field in B_KEY_DOWN message.
+ I tried to put it (as attached patch) and pe worked well this time.
+
+ Is this behavior intended one? : there may not be &quot;raw_char&quot; field in
+ B_KEY_DOWN message.
+ If so, it's not a Haiku's bug but a pe's.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4848">http://dev.haiku-os.org/ticket/4848</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="023117.html">[Haiku-bugs] [Haiku] #4847: Wacom Intuos not handled
+</A></li>
+	<LI>Next message: <A HREF="023110.html">[Haiku-bugs] [Haiku] #4849: BSlider - broken BArchivable	implementation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#23109">[ date ]</a>
+              <a href="thread.html#23109">[ thread ]</a>
+              <a href="subject.html#23109">[ subject ]</a>
+              <a href="author.html#23109">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,241 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2223: KDL in tty driver (rev. 25445)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232223%3A%20KDL%20in%20tty%20driver%20%28rev.%2025445%29&In-Reply-To=%3C051.fd7cad79ae13300e07a62715493d3e0b%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009251.html">
+   <LINK REL="Next"  HREF="009253.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2223: KDL in tty driver (rev. 25445)</H1>
+    <B>bonefish</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232223%3A%20KDL%20in%20tty%20driver%20%28rev.%2025445%29&In-Reply-To=%3C051.fd7cad79ae13300e07a62715493d3e0b%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2223: KDL in tty driver (rev. 25445)">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Aug  3 15:36:57 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009251.html">[Haiku-bugs] [Haiku] #2527: PANIC: vm_page_fault: unhandled page fault in kernel space at 0x1001004, ip 0x8004fafb
+</A></li>
+        <LI>Next message: <A HREF="009253.html">[Haiku-bugs] [Haiku] #2561: bfs_shell no more sems
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9252">[ date ]</a>
+              <a href="thread.html#9252">[ thread ]</a>
+              <a href="subject.html#9252">[ subject ]</a>
+              <a href="author.html#9252">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2223: KDL in tty driver (rev. 25445)
+--------------------------+-------------------------------------------------
+  Reporter:  kaliber      |       Owner:  bonefish      
+      Type:  bug          |      Status:  new           
+  Priority:  high         |   Milestone:  R1            
+ Component:  Drivers/TTY  |     Version:  R1 development
+Resolution:               |   Blockedby:                
+  Platform:  All          |    Blocking:                
+--------------------------+-------------------------------------------------
+Changes (by bonefish):
+
+  * priority:  normal =&gt; high
+
+
+Old description:
+
+&gt;<i> {{{
+</I>&gt;<i> vm_soft_fault: va 0xdeadbef3 not covered by area in address space
+</I>&gt;<i> vm_page_fault: vm_soft_fault returned error 'Bad address' on fault at
+</I>&gt;<i> 0xdeadbef3, ip 0x80045773, write 0, user 0, thread 0x24f5
+</I>&gt;<i> PANIC: vm_page_fault: unhandled page fault in kernel space at 0xdeadbef3,
+</I>&gt;<i> ip 0x80045773
+</I>&gt;<i>
+</I>&gt;<i> Welcome to Kernel Debugging Land...
+</I>&gt;<i> Running on CPU 0
+</I>&gt;<i> kdebug&gt;
+</I>&gt;<i> kdebug&gt; bt
+</I>&gt;<i> stack trace for thread 9461 &quot;w&gt;Terminal 1&quot;
+</I>&gt;<i>     kernel stack: 0x977b4000 to 0x977b8000
+</I>&gt;<i>       user stack: 0x70082000 to 0x700c2000
+</I>&gt;<i> frame            caller     &lt;image&gt;:function + offset
+</I>&gt;<i> 977b7730 (+  48) 80048dab   &lt;kernel&gt;:invoke_debugger_command + 0x00cf
+</I>&gt;<i> 977b7760 (+  64) 80049b54   &lt;kernel&gt;:_ParseCommand__16ExpressionParserRi
+</I>&gt;<i> + 0x01f8
+</I>&gt;<i> 977b77a0 (+  48) 80049546
+</I>&gt;<i> &lt;kernel&gt;:EvaluateCommand__16ExpressionParserPCcRi + 0x01de
+</I>&gt;<i> 977b77d0 (+ 224) 8004ac68   &lt;kernel&gt;:evaluate_debug_command + 0x0088
+</I>&gt;<i> 977b78b0 (+  64) 800478e6   &lt;kernel&gt;:kernel_debugger_loop__Fv + 0x017a
+</I>&gt;<i> 977b78f0 (+  48) 80048599   &lt;kernel&gt;:kernel_debugger + 0x010d
+</I>&gt;<i> 977b7920 (+ 192) 80048481   &lt;kernel&gt;:panic + 0x0029
+</I>&gt;<i> 977b79e0 (+  64) 800935a7   &lt;kernel&gt;:vm_page_fault + 0x00ab
+</I>&gt;<i> 977b7a20 (+  64) 8009d675   &lt;kernel&gt;:page_fault_exception + 0x00b1
+</I>&gt;<i> 977b7a60 (+  12) 800a0d4d   &lt;kernel&gt;:int_bottom + 0x001d (nearest)
+</I>&gt;<i> iframe at 0x977b7a6c (end = 0x977b7ac4)
+</I>&gt;<i>  eax 0xdeadbeef     ebx 0x90c8d880      ecx 0x0          edx 0x90c8d880
+</I>&gt;<i>  esi 0x1            edi 0x801cc0a8      ebp 0x977b7ad4   esp 0x977b7aa0
+</I>&gt;<i>  eip 0x80045773  eflags 0x10282
+</I>&gt;<i>  vector: 0xe, error code: 0x0
+</I>&gt;<i> 977b7a6c (+ 104) 80045773   &lt;kernel&gt;:notify_select_events + 0x001b
+</I>&gt;<i> 977b7ad4 (+  32) 8004581b   &lt;kernel&gt;:notify_select_event + 0x0027
+</I>&gt;<i> 977b7af4 (+  64) 80045c40   &lt;kernel&gt;:notify_select_event_pool + 0x005c
+</I>&gt;<i> 977b7b34 (+  48) 801c5f45   &lt;/boot/beos/system/add-
+</I>&gt;<i> ons/kernel/drivers/dev/tty&gt;:tty_notify_select_event__FP3ttyUc + 0x0031
+</I>&gt;<i> 977b7b64 (+  48) 801c5fd1   &lt;/boot/beos/system/add-
+</I>&gt;<i> ons/kernel/drivers/dev/tty&gt;:tty_notify_if_available__FP3ttyT0b + 0x0085
+</I>&gt;<i> 977b7b94 (+  48) 801c4ef3   &lt;/boot/beos/system/add-
+</I>&gt;<i> ons/kernel/drivers/dev/tty&gt;:_._12WriterLocker + 0x0067
+</I>&gt;<i> 977b7bc4 (+ 208) 801c7a1d   &lt;/boot/beos/system/add-
+</I>&gt;<i> ons/kernel/drivers/dev/tty&gt;:tty_write_to_tty_master_unsafe__FP10tty_cookiePCcPUl
+</I>&gt;<i> + 0x0469
+</I>&gt;<i> 977b7c94 (+ 320) 801c7b5d   &lt;/boot/beos/system/add-
+</I>&gt;<i> ons/kernel/drivers/dev/tty&gt;:tty_write_to_tty_master__FP10tty_cookiePCvPUl
+</I>&gt;<i> + 0x0089
+</I>&gt;<i> 977b7dd4 (+  48) 801c9093   &lt;/boot/beos/system/add-
+</I>&gt;<i> ons/kernel/drivers/dev/tty&gt;:master_write__FPvxPCvPUl + 0x0027
+</I>&gt;<i> 977b7e04 (+ 128) 80067b20
+</I>&gt;<i> &lt;kernel&gt;:devfs_write__FP9fs_volumeP8fs_vnodePvxPCvPUl + 0x0178
+</I>&gt;<i> 977b7e84 (+  64) 8007955a
+</I>&gt;<i> &lt;kernel&gt;:file_write__FP15file_descriptorxPCvPUl + 0x0036
+</I>&gt;<i> 977b7ec4 (+  80) 80069fe9   &lt;kernel&gt;:common_user_io__FixPvUlb + 0x017d
+</I>&gt;<i> 977b7f14 (+  48) 8006a4dc   &lt;kernel&gt;:_user_write + 0x0028
+</I>&gt;<i> 977b7f44 (+ 100) 800a0ec2   &lt;kernel&gt;:pre_syscall_debug_done + 0x0002
+</I>&gt;<i> (nearest)
+</I>&gt;<i> iframe at 0x977b7fa8 (end = 0x977b8000)
+</I>&gt;<i>  eax 0x78           ebx 0x81aaec        ecx 0x700c1c90   edx 0xffff0104
+</I>&gt;<i>  esi 0x22740b       edi 0x22740d        ebp 0x700c1ccc   esp 0x977b7fdc
+</I>&gt;<i>  eip 0xffff0104  eflags 0x203
+</I>&gt;<i>  vector: 0x63, error code: 0x0
+</I>&gt;<i> 977b7fa8 (+   0) ffff0104
+</I>&gt;<i> 700c1ccc (+  48) 00216e7a   &lt;_APP_&gt;:Write__5ShellPCvUl + 0x002e
+</I>&gt;<i> 700c1cfc (+  80) 0021fa1a   &lt;_APP_&gt;:KeyDown__8TermViewPCcl + 0x03b2
+</I>&gt;<i> 700c1d4c (+ 464) 00385ceb
+</I>&gt;<i> &lt;libbe.so&gt;:DispatchMessage__7BWindowP8BMessageP8BHandler + 0x0aef
+</I>&gt;<i> 700c1f1c (+  96) 00389fc4   &lt;libbe.so&gt;:task_looper__7BWindow + 0x0270
+</I>&gt;<i> 700c1f7c (+  48) 002e2ed3   &lt;libbe.so&gt;:_task0___7BLooperPv + 0x003f
+</I>&gt;<i> 700c1fac (+  48) 00795030   &lt;libroot.so&gt;:_get_next_team_info + 0x005c
+</I>&gt;<i> (nearest)
+</I>&gt;<i> 700c1fdc (+   0) 700c1fec   196701:w&gt;Terminal <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">1_9461_stack at 0x70082000</A> +
+</I>&gt;<i> 0x3ffec
+</I>&gt;<i> kdebug&gt;
+</I>&gt;<i> }}}
+</I>
+New description:
+
+ {{{
+ vm_soft_fault: va 0xdeadbef3 not covered by area in address space
+ vm_page_fault: vm_soft_fault returned error 'Bad address' on fault at
+ 0xdeadbef3, ip 0x80045773, write 0, user 0, thread 0x24f5
+ PANIC: vm_page_fault: unhandled page fault in kernel space at 0xdeadbef3,
+ ip 0x80045773
+
+ Welcome to Kernel Debugging Land...
+ Running on CPU 0
+ kdebug&gt;
+ kdebug&gt; bt
+ stack trace for thread 9461 &quot;w&gt;Terminal 1&quot;
+     kernel stack: 0x977b4000 to 0x977b8000
+       user stack: 0x70082000 to 0x700c2000
+ frame            caller     &lt;image&gt;:function + offset
+ 977b7730 (+  48) 80048dab   &lt;kernel&gt;:invoke_debugger_command + 0x00cf
+ 977b7760 (+  64) 80049b54   &lt;kernel&gt;:_ParseCommand__16ExpressionParserRi +
+ 0x01f8
+ 977b77a0 (+  48) 80049546
+ &lt;kernel&gt;:EvaluateCommand__16ExpressionParserPCcRi + 0x01de
+ 977b77d0 (+ 224) 8004ac68   &lt;kernel&gt;:evaluate_debug_command + 0x0088
+ 977b78b0 (+  64) 800478e6   &lt;kernel&gt;:kernel_debugger_loop__Fv + 0x017a
+ 977b78f0 (+  48) 80048599   &lt;kernel&gt;:kernel_debugger + 0x010d
+ 977b7920 (+ 192) 80048481   &lt;kernel&gt;:panic + 0x0029
+ 977b79e0 (+  64) 800935a7   &lt;kernel&gt;:vm_page_fault + 0x00ab
+ 977b7a20 (+  64) 8009d675   &lt;kernel&gt;:page_fault_exception + 0x00b1
+ 977b7a60 (+  12) 800a0d4d   &lt;kernel&gt;:int_bottom + 0x001d (nearest)
+ iframe at 0x977b7a6c (end = 0x977b7ac4)
+  eax 0xdeadbeef     ebx 0x90c8d880      ecx 0x0          edx 0x90c8d880
+  esi 0x1            edi 0x801cc0a8      ebp 0x977b7ad4   esp 0x977b7aa0
+  eip 0x80045773  eflags 0x10282
+  vector: 0xe, error code: 0x0
+ 977b7a6c (+ 104) 80045773   &lt;kernel&gt;:notify_select_events + 0x001b
+ 977b7ad4 (+  32) 8004581b   &lt;kernel&gt;:notify_select_event + 0x0027
+ 977b7af4 (+  64) 80045c40   &lt;kernel&gt;:notify_select_event_pool + 0x005c
+ 977b7b34 (+  48) 801c5f45   &lt;/boot/beos/system/add-
+ ons/kernel/drivers/dev/tty&gt;:tty_notify_select_event__FP3ttyUc + 0x0031
+ 977b7b64 (+  48) 801c5fd1   &lt;/boot/beos/system/add-
+ ons/kernel/drivers/dev/tty&gt;:tty_notify_if_available__FP3ttyT0b + 0x0085
+ 977b7b94 (+  48) 801c4ef3   &lt;/boot/beos/system/add-
+ ons/kernel/drivers/dev/tty&gt;:_._12WriterLocker + 0x0067
+ 977b7bc4 (+ 208) 801c7a1d   &lt;/boot/beos/system/add-
+ ons/kernel/drivers/dev/tty&gt;:tty_write_to_tty_master_unsafe__FP10tty_cookiePCcPUl
+ + 0x0469
+ 977b7c94 (+ 320) 801c7b5d   &lt;/boot/beos/system/add-
+ ons/kernel/drivers/dev/tty&gt;:tty_write_to_tty_master__FP10tty_cookiePCvPUl
+ + 0x0089
+ 977b7dd4 (+  48) 801c9093   &lt;/boot/beos/system/add-
+ ons/kernel/drivers/dev/tty&gt;:master_write__FPvxPCvPUl + 0x0027
+ 977b7e04 (+ 128) 80067b20
+ &lt;kernel&gt;:devfs_write__FP9fs_volumeP8fs_vnodePvxPCvPUl + 0x0178
+ 977b7e84 (+  64) 8007955a
+ &lt;kernel&gt;:file_write__FP15file_descriptorxPCvPUl + 0x0036
+ 977b7ec4 (+  80) 80069fe9   &lt;kernel&gt;:common_user_io__FixPvUlb + 0x017d
+ 977b7f14 (+  48) 8006a4dc   &lt;kernel&gt;:_user_write + 0x0028
+ 977b7f44 (+ 100) 800a0ec2   &lt;kernel&gt;:pre_syscall_debug_done + 0x0002
+ (nearest)
+ iframe at 0x977b7fa8 (end = 0x977b8000)
+  eax 0x78           ebx 0x81aaec        ecx 0x700c1c90   edx 0xffff0104
+  esi 0x22740b       edi 0x22740d        ebp 0x700c1ccc   esp 0x977b7fdc
+  eip 0xffff0104  eflags 0x203
+  vector: 0x63, error code: 0x0
+ 977b7fa8 (+   0) ffff0104
+ 700c1ccc (+  48) 00216e7a   &lt;_APP_&gt;:Write__5ShellPCvUl + 0x002e
+ 700c1cfc (+  80) 0021fa1a   &lt;_APP_&gt;:KeyDown__8TermViewPCcl + 0x03b2
+ 700c1d4c (+ 464) 00385ceb
+ &lt;libbe.so&gt;:DispatchMessage__7BWindowP8BMessageP8BHandler + 0x0aef
+ 700c1f1c (+  96) 00389fc4   &lt;libbe.so&gt;:task_looper__7BWindow + 0x0270
+ 700c1f7c (+  48) 002e2ed3   &lt;libbe.so&gt;:_task0___7BLooperPv + 0x003f
+ 700c1fac (+  48) 00795030   &lt;libroot.so&gt;:_get_next_team_info + 0x005c
+ (nearest)
+ 700c1fdc (+   0) 700c1fec   196701:w&gt;Terminal <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">1_9461_stack at 0x70082000</A> +
+ 0x3ffec
+ kdebug&gt;
+ }}}
+
+--
+
+Comment:
+
+ #2557 is a duplicate of this one. The bug apparently still persists.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2223#comment:6">http://dev.haiku-os.org/ticket/2223#comment:6</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009251.html">[Haiku-bugs] [Haiku] #2527: PANIC: vm_page_fault: unhandled page fault in kernel space at 0x1001004, ip 0x8004fafb
+</A></li>
+	<LI>Next message: <A HREF="009253.html">[Haiku-bugs] [Haiku] #2561: bfs_shell no more sems
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9252">[ date ]</a>
+              <a href="thread.html#9252">[ thread ]</a>
+              <a href="subject.html#9252">[ subject ]</a>
+              <a href="author.html#9252">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

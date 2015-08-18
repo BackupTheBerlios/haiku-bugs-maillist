@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3532: PANIC: ASSERT FAILED (src/add-ons/kernel/file_systems/bfs/BlockAllocator.cpp:448): !fLargestValid || start + length &lt;= fLargestStart |
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233532%3A%20PANIC%3A%20ASSERT%20FAILED%0A%20%28src/add-ons/kernel/file_systems/bfs/BlockAllocator.cpp%3A448%29%3A%0A%20%21fLargestValid%20%7C%7C%20start%20%2B%20length%20%3C%3D%20fLargestStart%20%7C&In-Reply-To=%3C049.a7c87226eeefae3548f611c7a76369bf%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="015111.html">
+   <LINK REL="Next"  HREF="015143.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3532: PANIC: ASSERT FAILED (src/add-ons/kernel/file_systems/bfs/BlockAllocator.cpp:448): !fLargestValid || start + length &lt;= fLargestStart |</H1>
+    <B>luroh</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233532%3A%20PANIC%3A%20ASSERT%20FAILED%0A%20%28src/add-ons/kernel/file_systems/bfs/BlockAllocator.cpp%3A448%29%3A%0A%20%21fLargestValid%20%7C%7C%20start%20%2B%20length%20%3C%3D%20fLargestStart%20%7C&In-Reply-To=%3C049.a7c87226eeefae3548f611c7a76369bf%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3532: PANIC: ASSERT FAILED (src/add-ons/kernel/file_systems/bfs/BlockAllocator.cpp:448): !fLargestValid || start + length &lt;= fLargestStart |">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Mar 14 22:37:11 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="015111.html">[Haiku-bugs] [Haiku] #3532: PANIC: ASSERT FAILED (src/add-ons/kernel/file_systems/bfs/BlockAllocator.cpp:448): !fLargestValid || start + length &lt;= fLargestStart |
+</A></li>
+        <LI>Next message: <A HREF="015143.html">[Haiku-bugs] [Haiku] #3532: PANIC: ASSERT FAILED (src/add-ons/kernel/file_systems/bfs/BlockAllocator.cpp:448): !fLargestValid || start + length &lt;= fLargestStart |
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15115">[ date ]</a>
+              <a href="thread.html#15115">[ thread ]</a>
+              <a href="subject.html#15115">[ subject ]</a>
+              <a href="author.html#15115">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3532: PANIC: ASSERT FAILED (src/add-
+ons/kernel/file_systems/bfs/BlockAllocator.cpp:448): !fLargestValid ||
+start + length &lt;= fLargestStart |
+------------------------------+---------------------------------------------
+ Reporter:  luroh             |       Owner:  axeld         
+     Type:  bug               |      Status:  new           
+ Priority:  normal            |   Milestone:  R1            
+Component:  File Systems/BFS  |     Version:  R1 development
+Blockedby:                    |    Platform:  All           
+ Blocking:                    |  
+------------------------------+---------------------------------------------
+
+Comment(by luroh):
+
+ Hang on, I think I know what is going on here; Haiku picks up the presence
+ of an old deleted Haiku partition on my SATA drive (an old revision number
+ in About gave it away!):[[BR]][[BR]]
+ 1. Booting starts from the USB stick.[[BR]]
+ 2. At some point during boot, the system detects an old deleted Haiku
+ partition on the SATA drive and decides to set it as /boot. This explains
+ why the system loaded slowly during bootsplash but fast once it reached
+ Desktop.[[BR]]
+
+ To avoid 2 from happening, I not only had to delete the old Haiku
+ partition on the SATA drive, but reformat the partition with an alien file
+ system to completely rid it from its BFS-edness.[[BR]][[BR]]
+ Perhaps we should close this ticket as invalid and start fresh, as it
+ seems to have morphed into something completely different than it
+ initially was.[[BR]][[BR]]
+ Tested with rev 29529.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3532#comment:6">http://dev.haiku-os.org/ticket/3532#comment:6</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="015111.html">[Haiku-bugs] [Haiku] #3532: PANIC: ASSERT FAILED (src/add-ons/kernel/file_systems/bfs/BlockAllocator.cpp:448): !fLargestValid || start + length &lt;= fLargestStart |
+</A></li>
+	<LI>Next message: <A HREF="015143.html">[Haiku-bugs] [Haiku] #3532: PANIC: ASSERT FAILED (src/add-ons/kernel/file_systems/bfs/BlockAllocator.cpp:448): !fLargestValid || start + length &lt;= fLargestStart |
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15115">[ date ]</a>
+              <a href="thread.html#15115">[ thread ]</a>
+              <a href="subject.html#15115">[ subject ]</a>
+              <a href="author.html#15115">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

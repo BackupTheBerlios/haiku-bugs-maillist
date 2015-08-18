@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1420: Copying a folder with the same name as an existing folder should offer the option to merge both folders
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231420%3A%20Copying%20a%20folder%20with%20the%20same%20name%0A%20as%20an%20existing%20folder%20should%20offer%20the%20option%20to%20merge%20both%20folders&In-Reply-To=%3C051.cd6a60d7e5942e3c40ae3d34a5e043da%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012736.html">
+   <LINK REL="Next"  HREF="012731.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1420: Copying a folder with the same name as an existing folder should offer the option to merge both folders</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231420%3A%20Copying%20a%20folder%20with%20the%20same%20name%0A%20as%20an%20existing%20folder%20should%20offer%20the%20option%20to%20merge%20both%20folders&In-Reply-To=%3C051.cd6a60d7e5942e3c40ae3d34a5e043da%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1420: Copying a folder with the same name as an existing folder should offer the option to merge both folders">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Nov 24 06:20:57 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012736.html">[Haiku-bugs] [Haiku] #3167: freetype-config is missing (although freetype is provided)
+</A></li>
+        <LI>Next message: <A HREF="012731.html">[Haiku-bugs] [Haiku] #3168: traced --difftime #filter shows time deltas against filtered out entries
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12728">[ date ]</a>
+              <a href="thread.html#12728">[ thread ]</a>
+              <a href="subject.html#12728">[ subject ]</a>
+              <a href="author.html#12728">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1420: Copying a folder with the same name as an existing folder should offer the
+option to merge both folders
+-----------------------------------+----------------------------------------
+  Reporter:  scottmc               |       Owner:  anevilyak     
+      Type:  enhancement           |      Status:  assigned      
+  Priority:  normal                |   Milestone:  R1            
+ Component:  Applications/Tracker  |     Version:  R1 development
+Resolution:                        |   Blockedby:                
+  Platform:  All                   |    Blocking:                
+-----------------------------------+----------------------------------------
+
+Comment(by anevilyak):
+
+ Attached an initial patch aimed at fixing this problem and one or two
+ others
+
+ 1) Move To now actually moves in all cases, not just when the same
+ volume's involved. Note that this has the side effect that drag and drop
+ between volumes is now also a move. Whether that remains the case before
+ this patch is finalized is to be determined.
+ 2) The &quot;Replace&quot; option now does a Merge rather than a flat out nuke of
+ the previous dir's contents. Still working on adjusting the GUI portion of
+ it so one can do the merge interactively since it was never previously
+ designed to cope with that (right now it's essentially replace all or
+ cancel). This will also be adjusted as I find time.
+
+ For now I'd mainly like to know that it's functionally stable, I haven't
+ found a way to break it yet, but if you do find any regressions I'd like
+ to hear it please.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1420#comment:9">http://dev.haiku-os.org/ticket/1420#comment:9</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012736.html">[Haiku-bugs] [Haiku] #3167: freetype-config is missing (although freetype is provided)
+</A></li>
+	<LI>Next message: <A HREF="012731.html">[Haiku-bugs] [Haiku] #3168: traced --difftime #filter shows time deltas against filtered out entries
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12728">[ date ]</a>
+              <a href="thread.html#12728">[ thread ]</a>
+              <a href="subject.html#12728">[ subject ]</a>
+              <a href="author.html#12728">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

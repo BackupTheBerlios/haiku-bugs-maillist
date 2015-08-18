@@ -1,0 +1,245 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4285: emuxki goes dead after media server	restart
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234285%3A%20emuxki%20goes%20dead%20after%20media%20server%0A%09restart&In-Reply-To=%3C053.08b7ffce9d2694a9256a096f414ac472%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="019761.html">
+   <LINK REL="Next"  HREF="020180.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4285: emuxki goes dead after media server	restart</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234285%3A%20emuxki%20goes%20dead%20after%20media%20server%0A%09restart&In-Reply-To=%3C053.08b7ffce9d2694a9256a096f414ac472%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4285: emuxki goes dead after media server	restart">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Aug 26 01:11:48 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="019761.html">[Haiku-bugs] [Haiku] #4285: emuxki goes dead after media server	restart
+</A></li>
+        <LI>Next message: <A HREF="020180.html">[Haiku-bugs] [Haiku] #4285: emuxki goes dead after media server	restart
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20179">[ date ]</a>
+              <a href="thread.html#20179">[ thread ]</a>
+              <a href="subject.html#20179">[ subject ]</a>
+              <a href="author.html#20179">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4285: emuxki goes dead after media server restart
+---------------------------+------------------------------------------------
+ Reporter:  anevilyak      |       Owner:  korli         
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1            
+Component:  Drivers/Audio  |     Version:  R1 development
+Blockedby:                 |    Platform:  All           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+
+Comment(by anevilyak):
+
+ log from media_server after such a restart:
+
+ {{{
+ BMessage(0x0) {
+         be:_default = int32(0xfffffffe or -2)
+         be:_addon_id = int32(0x5 or 5)
+         be:_internal_id = int32(0x0 or 0)
+         be:_input_id = int32(0x0 or 0)
+         be:_flavor_name = string(&quot;Emuxki SB Live 5.1&quot;, 19 bytes)
+         be:_path = string(&quot;/boot/system/add-
+ ons/media/hmulti_audio.media_addon&quot;, 52 bytes)
+ }
+ BMessage(0x0) {
+         be:_default = int32(0xffffffff or -1)
+         be:_addon_id = int32(0x5 or 5)
+         be:_internal_id = int32(0x0 or 0)
+         be:_input_id = int32(0x0 or 0)
+         be:_flavor_name = string(&quot;Emuxki SB Live 5.1&quot;, 19 bytes)
+         be:_path = string(&quot;/boot/system/add-
+ ons/media/hmulti_audio.media_addon&quot;, 52 bytes)
+ }
+ couldn't find MediaAddonServerPort
+ NodeManager::RegisterAddon: ref-name &quot;cortex_audioadapter.media_addon&quot;,
+ assigning id 1
+ NodeManager::AddDormantFlavorInfo, addon-id 1, flavor-id 0, name
+ &quot;AudioAdapter&quot;, flavor-name &quot;AudioAdapter&quot;, flavor-info &quot;AudioAdapter
+ (generic raw-audio format conversion).
+ by Eric Moon (8 September 1999)&quot;
+ NodeManager::RegisterAddon: ref-name &quot;cortex_flanger.media_addon&quot;,
+ assigning id 2
+ NodeManager::AddDormantFlavorInfo, addon-id 2, flavor-id 0, name
+ &quot;Flanger&quot;, flavor-name &quot;Flanger&quot;, flavor-info &quot;An add-on version of
+ FlangerNode.
+ by Eric Moon (16 June, 1999)&quot;
+ NodeManager::RegisterAddon: ref-name &quot;dvb.media_addon&quot;, assigning id 3
+ DVB: DVBMediaAddon::WantsAutoStart - NO
+ NodeManager::RegisterAddon: ref-name &quot;firewire_dv.media_addon&quot;, assigning
+ id 4
+ NodeManager::RegisterAddon: ref-name &quot;hmulti_audio.media_addon&quot;, assigning
+ id 5
+ fSettings       BMessage(0x0) {
+ }
+ NodeManager::AddDormantFlavorInfo, addon-id 5, flavor-id 0, name &quot;Emuxki
+ SB Live 5.1&quot;, flavor-name &quot;Emuxki SB Live 5.1&quot;, flavor-info &quot;The
+ MultiAudioNode node outputs to multi_audio drivers.&quot;
+ NodeManager::RegisterAddon: ref-name &quot;mixer.media_addon&quot;, assigning id 6
+ NodeManager::AddDormantFlavorInfo, addon-id 6, flavor-id 0, name &quot;Audio
+ Mixer (Haiku)&quot;, flavor-name &quot;Audio Mixer (Haiku)&quot;, flavor-info &quot;Haiku
+ Audio Mixer media addon&quot;
+ NodeManager::RegisterAddon: ref-name &quot;opensound.media_addon&quot;, assigning id
+ 7
+ NodeManager::RegisterAddon: ref-name &quot;tone_producer_demo.media_addon&quot;,
+ assigning id 8
+ NodeManager::AddDormantFlavorInfo, addon-id 8, flavor-id 0, name &quot;Demo
+ Audio Producer&quot;, flavor-name &quot;Demo Audio Producer&quot;, flavor-info &quot;An add-on
+ version of the ToneProducer node.
+ See the Be Developer Newsletter: 2 June, 1999
+ adapted by Eric Moon (4 June, 1999)&quot;
+ NodeManager::RegisterAddon: ref-name &quot;usb_webcam.media_addon&quot;, assigning
+ id 9
+ NodeManager::RegisterAddon: ref-name &quot;video_producer_demo.media_addon&quot;,
+ assigning id 10
+ NodeManager::AddDormantFlavorInfo, addon-id 10, flavor-id 0, name &quot;Demo
+ Video Producer&quot;, flavor-name &quot;Demo Video Producer&quot;, flavor-info &quot;Demo
+ Video Producer&quot;
+ NodeManager::RegisterAddon: ref-name &quot;video_window_demo.media_addon&quot;,
+ assigning id 11
+ NodeManager::AddDormantFlavorInfo, addon-id 11, flavor-id 0, name
+ &quot;VideoWindow Consumer&quot;, flavor-name &quot;VideoWindow Consumer&quot;, flavor-info
+ &quot;This node displays a simple video window&quot;
+ MediaAddonServer::InstantiatePhysialInputsAndOutputs: &quot;Emuxki SB Live 5.1&quot;
+ is a physical input/output
+ BMediaRoster::InstantiateDormantNode: addon-id 5, flavor_id 0, flags 0x0
+ ### BMediaRosterEx::LoadNodeConfiguration should load addon-id 5, flavor-
+ id 0 config NOW!
+ BMediaEventLooper: SchedulingLatency is 0
+ Node created!
+ trying autostart of node 6, index 0
+ started node 0
+ BMediaEventLooper: SchedulingLatency is 0
+ BMediaEventLooper: SchedulingLatency is 0
+ DefaultManager::RescanThread() enter
+ QueryPort: write_port failed, msgcode 0x101, port -222, error 0x80001200
+ (Bad port ID)
+ Couldn't find physical video output node
+ Couldn't find physical audio output node
+ Couldn't find physical video input node
+ Couldn't find physical audio input node
+ Default audio mixer node created
+ Default DAC timesource created!
+ DefaultManager: Trying connect in native format (1)
+ DefaultManager: GetFormatFor failed
+ DefaultManager: Trying connect in format 1
+ BMediaRoster::Connect connection established!
+ TimeSourceObject::DeleteHook enter
+ BMediaRoster::ReleaseNode, trying to release reference counting disabled
+ timesource, node 1, port 680039, team 269
+ TimeSourceObject::DeleteHook leave
+ BTimeSource::DirectAddMe should not add itself to slave nodes
+ TimeSourceObject::DeleteHook enter
+ BMediaRoster::ReleaseNode, trying to release reference counting disabled
+ timesource, node 2, port 688246, team 262
+ TimeSourceObject::DeleteHook leave
+ BMediaRoster::ReleaseNode, trying to release reference counting disabled
+ timesource, node 2, port 688246, team 262
+ DefaultManager::RescanThread() leave
+ AddOnManager::_RegisterAddOn(): trying to load &quot;/boot/system/add-
+ ons/media/plugins/aiff_reader&quot;
+ AddOnManager::_RegisterReader, name aiff_reader
+ AddOnManager::_RegisterAddOn(): trying to load &quot;/boot/system/add-
+ ons/media/plugins/ape_reader&quot;
+ AddOnManager::_RegisterReader, name ape_reader
+ AddOnManager::_RegisterAddOn(): trying to load &quot;/boot/system/add-
+ ons/media/plugins/asf_reader&quot;
+ AddOnManager::_RegisterReader, name asf_reader
+ AddOnManager::_RegisterAddOn(): trying to load &quot;/boot/system/add-
+ ons/media/plugins/au_reader&quot;
+ AddOnManager::_RegisterReader, name au_reader
+ AddOnManager::_RegisterAddOn(): trying to load &quot;/boot/system/add-
+ ons/media/plugins/avi_reader&quot;
+ AddOnManager::_RegisterReader, name avi_reader
+ AddOnManager::_RegisterAddOn(): trying to load &quot;/boot/system/add-
+ ons/media/plugins/ffmpeg&quot;
+ AddOnManager::_RegisterReader, name ffmpeg
+ AddOnManager::_RegisterDecoder, name ffmpeg
+ AddOnManager::_RegisterWriter, name ffmpeg
+ AddOnManager::_RegisterEncoder, name ffmpeg
+ AddOnManager::_RegisterAddOn(): trying to load &quot;/boot/system/add-
+ ons/media/plugins/matroska&quot;
+ AddOnManager::_RegisterReader, name matroska
+ AddOnManager::_RegisterAddOn(): trying to load &quot;/boot/system/add-
+ ons/media/plugins/mov_reader&quot;
+ AddOnManager::_RegisterReader, name mov_reader
+ AddOnManager::_RegisterAddOn(): trying to load &quot;/boot/system/add-
+ ons/media/plugins/mp3_decoder&quot;
+ AddOnManager::_RegisterDecoder, name mp3_decoder
+ AddOnManager::_RegisterAddOn(): trying to load &quot;/boot/system/add-
+ ons/media/plugins/mp3_reader&quot;
+ AddOnManager::_RegisterReader, name mp3_reader
+ AddOnManager::_RegisterAddOn(): trying to load &quot;/boot/system/add-
+ ons/media/plugins/mp4_reader&quot;
+ AddOnManager::_RegisterReader, name mp4_reader
+ AddOnManager::_RegisterAddOn(): trying to load &quot;/boot/system/add-
+ ons/media/plugins/musepack&quot;
+ AddOnManager::_RegisterReader, name musepack
+ AddOnManager::_RegisterDecoder, name musepack
+ AddOnManager::_RegisterAddOn(): trying to load &quot;/boot/system/add-
+ ons/media/plugins/ogg&quot;
+ AddOnManager::_RegisterReader, name ogg
+ AddOnManager::_RegisterAddOn(): trying to load &quot;/boot/system/add-
+ ons/media/plugins/raw_decoder&quot;
+ AddOnManager::_RegisterDecoder, name raw_decoder
+ AddOnManager::_RegisterAddOn(): trying to load &quot;/boot/system/add-
+ ons/media/plugins/speex&quot;
+ AddOnManager::_RegisterDecoder, name speex
+ AddOnManager::_RegisterAddOn(): trying to load &quot;/boot/system/add-
+ ons/media/plugins/vorbis&quot;
+ AddOnManager::_RegisterDecoder, name vorbis
+ AddOnManager::_RegisterAddOn(): trying to load &quot;/boot/system/add-
+ ons/media/plugins/wav_reader&quot;
+ AddOnManager::_RegisterReader, name wav_reader
+ FormatManager::GetFormats(): put 160 formats into message
+ AddOnManager::GetDecoderForFormat: searching decoder for encoding 1140
+ AddOnManager::GetDecoderForFormat: found decoder mp3_decoder for encoding
+ 1140
+ AudioMixer::GetLatencyFor 21332, timesource is 2
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4285#comment:1">http://dev.haiku-os.org/ticket/4285#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="019761.html">[Haiku-bugs] [Haiku] #4285: emuxki goes dead after media server	restart
+</A></li>
+	<LI>Next message: <A HREF="020180.html">[Haiku-bugs] [Haiku] #4285: emuxki goes dead after media server	restart
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20179">[ date ]</a>
+              <a href="thread.html#20179">[ thread ]</a>
+              <a href="subject.html#20179">[ subject ]</a>
+              <a href="author.html#20179">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

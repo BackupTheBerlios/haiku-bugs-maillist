@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1476: pipefs doesn't handle close of last reader(/writer?) correctly
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231476%3A%20pipefs%20doesn%27t%20handle%20close%20of%20last%0A%20reader%28/writer%3F%29%20correctly&In-Reply-To=%3C054.44fd542435f02c5224a240400bccd5c9%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002745.html">
+   <LINK REL="Next"  HREF="002849.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1476: pipefs doesn't handle close of last reader(/writer?) correctly</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231476%3A%20pipefs%20doesn%27t%20handle%20close%20of%20last%0A%20reader%28/writer%3F%29%20correctly&In-Reply-To=%3C054.44fd542435f02c5224a240400bccd5c9%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1476: pipefs doesn't handle close of last reader(/writer?) correctly">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Sep 18 17:03:38 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002745.html">[Haiku-bugs] [Haiku] #1476: pipefs doesn't handle close of last reader(/writer?) correctly
+</A></li>
+        <LI>Next message: <A HREF="002849.html">[Haiku-bugs] [Haiku] #1476: pipefs doesn't handle close of last reader(/writer?) correctly
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2746">[ date ]</a>
+              <a href="thread.html#2746">[ thread ]</a>
+              <a href="subject.html#2746">[ subject ]</a>
+              <a href="author.html#2746">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1476: pipefs doesn't handle close of last reader(/writer?) correctly
+----------------------------+-----------------------------------------------
+  Reporter:  jackburton     |       Owner:  axeld         
+      Type:  bug            |      Status:  new           
+  Priority:  normal         |   Milestone:  R1            
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |    Platform:  All           
+----------------------------+-----------------------------------------------
+Comment (by bonefish):
+
+ Replying to [comment:6 jackburton]:
+ &gt; Replying to [comment:5 bonefish]:
+ &gt; &gt; Replying to [comment:4 jackburton]:
+ &gt; &gt; &gt; This way the script works correctly,
+ &gt; &gt;
+ &gt; &gt; I think, it does only, because the writer keeps trying to write. So
+ after returning with B_BAD_SEM_ID, it tries again and then a SIGPIPE is
+ sent.
+ &gt;
+ &gt; Yeah, I understand. But isn't that the point ? I mean, arent' we trying
+ to get that signal to the thread ?
+
+ Yep, but ideally we do that according to the standard. Letting the write()
+ fail with B_BAD_SEM_ID, hoping that the caller will retry is definitely
+ not the way it should work.
+
+ &gt; Of course, if the pipe can be opened again later (I have no idea about
+ pipes semantics), that approach won't work correctly.
+
+ No, the pipe can't be opened again. Once all users of one end have closed
+ it, the pipe is unusable.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1476#comment:7">http://dev.haiku-os.org/ticket/1476#comment:7</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002745.html">[Haiku-bugs] [Haiku] #1476: pipefs doesn't handle close of last reader(/writer?) correctly
+</A></li>
+	<LI>Next message: <A HREF="002849.html">[Haiku-bugs] [Haiku] #1476: pipefs doesn't handle close of last reader(/writer?) correctly
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2746">[ date ]</a>
+              <a href="thread.html#2746">[ thread ]</a>
+              <a href="subject.html#2746">[ subject ]</a>
+              <a href="author.html#2746">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

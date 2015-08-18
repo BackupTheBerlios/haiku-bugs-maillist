@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2531: DHCP changes IP address every 5	minutes
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232531%3A%20DHCP%20changes%20IP%20address%20every%205%0A%09minutes&In-Reply-To=%3C050.f670d8750aa8c427b057ce1a1e09f7df%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012859.html">
+   <LINK REL="Next"  HREF="012861.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2531: DHCP changes IP address every 5	minutes</H1>
+    <B>idefix</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232531%3A%20DHCP%20changes%20IP%20address%20every%205%0A%09minutes&In-Reply-To=%3C050.f670d8750aa8c427b057ce1a1e09f7df%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2531: DHCP changes IP address every 5	minutes">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Nov 29 19:13:35 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012859.html">[Haiku-bugs] [Haiku] #2531: DHCP changes IP address every 5	minutes
+</A></li>
+        <LI>Next message: <A HREF="012861.html">[Haiku-bugs] [Haiku] #2531: DHCP changes IP address every 5	minutes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12860">[ date ]</a>
+              <a href="thread.html#12860">[ thread ]</a>
+              <a href="subject.html#12860">[ subject ]</a>
+              <a href="author.html#12860">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2531: DHCP changes IP address every 5 minutes
+---------------------------------+------------------------------------------
+  Reporter:  idefix              |       Owner:  axeld         
+      Type:  bug                 |      Status:  new           
+  Priority:  normal              |   Milestone:  R1            
+ Component:  Network &amp; Internet  |     Version:  R1 development
+Resolution:                      |   Blockedby:                
+  Platform:  All                 |    Blocking:                
+---------------------------------+------------------------------------------
+
+Comment(by idefix):
+
+ Replying to [comment:13 Adek336]:
+ &gt; After rebooting and having Haiku send a few dhcp requests, please press
+ F12 and type trac 0 80 and attach a screenshot of the result.
+ I must have done something wrong, as haiku r28749 won't send any DHCP
+ request after enabling kernel tracing. The system is also behaving
+ strange: slow booting; Tracker won't show the desktop-icons;
+ ProcessController is not shown in the Desktop; applications won't start
+ from the start menu. I think the amount of memory reserved for kernel
+ tracing is a bit high for this machine.
+
+ 'trac 0 80' gives:
+ {{{
+ kdebug&gt; trac 0 80
+     1. [    49]   63575839: user: DHCP: src/servers/net/NetServer.cpp:
+ _BringUpInterfaces: 830
+     2. [    49]   63575857: user: DHCP: src/servers/net/NetServer.cpp:
+ _ConfigureInterface: 490
+     3. [    49]   63993595: user: DHCP: src/servers/net/NetServer.cpp:
+ _ConfigureInterface: 682
+ printed 3 entries within range 1 to 3 (3 of 3 total, 3 ever)
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2531#comment:19">http://dev.haiku-os.org/ticket/2531#comment:19</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012859.html">[Haiku-bugs] [Haiku] #2531: DHCP changes IP address every 5	minutes
+</A></li>
+	<LI>Next message: <A HREF="012861.html">[Haiku-bugs] [Haiku] #2531: DHCP changes IP address every 5	minutes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12860">[ date ]</a>
+              <a href="thread.html#12860">[ thread ]</a>
+              <a href="subject.html#12860">[ subject ]</a>
+              <a href="author.html#12860">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

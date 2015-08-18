@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2696: unimplemented functions
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232696%3A%20unimplemented%20functions&In-Reply-To=%3C051.3251d0d65cbd594fbeec476add7f0f8c%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="017848.html">
+   <LINK REL="Next"  HREF="017823.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2696: unimplemented functions</H1>
+    <B>kaliber</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232696%3A%20unimplemented%20functions&In-Reply-To=%3C051.3251d0d65cbd594fbeec476add7f0f8c%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2696: unimplemented functions">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Jun  5 08:08:14 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="017848.html">[Haiku-bugs] [Haiku] #3995: Nightly builds not working
+</A></li>
+        <LI>Next message: <A HREF="017823.html">[Haiku-bugs] [Haiku] #2702: unimplemented functions part 2
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17822">[ date ]</a>
+              <a href="thread.html#17822">[ thread ]</a>
+              <a href="subject.html#17822">[ subject ]</a>
+              <a href="author.html#17822">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2696: unimplemented functions
+-------------------------------+--------------------------------------------
+ Reporter:  kaliber            |       Owner:  axeld         
+     Type:  bug                |      Status:  new           
+ Priority:  normal             |   Milestone:  R1            
+Component:  System/libroot.so  |     Version:  R1 development
+Blockedby:  2564               |    Platform:  All           
+ Blocking:                     |  
+-------------------------------+--------------------------------------------
+
+Comment(by kaliber):
+
+ Here is updated report (r30960). It covers everything except compatibility
+ headers (bsd):
+
+
+ {{{
+ stdio.h:
+         _ftell (_IO_ftell)
+
+ math.h:
+         gammaf_r (__ieee754_gammaf_r)
+         gamma_r (__ieee754_gamma_r)
+         lgammal (__ieee754_lgammal_r)
+
+ search.h:
+         hcreate
+         hdestroy
+         hsearch
+
+ iconv.h:
+         iconv (libiconv)
+         iconv_close (libiconv_close)
+         iconv_open (libiconv_open)
+
+ dirent.h:
+         seekdir
+         telldir
+
+ setjmp.h:
+         _setjmp (setjmp)
+
+ wchar.h:
+         wcsftime
+ }}}
+
+ Please close the ticket #2702
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2696#comment:11">http://dev.haiku-os.org/ticket/2696#comment:11</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="017848.html">[Haiku-bugs] [Haiku] #3995: Nightly builds not working
+</A></li>
+	<LI>Next message: <A HREF="017823.html">[Haiku-bugs] [Haiku] #2702: unimplemented functions part 2
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17822">[ date ]</a>
+              <a href="thread.html#17822">[ thread ]</a>
+              <a href="subject.html#17822">[ subject ]</a>
+              <a href="author.html#17822">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

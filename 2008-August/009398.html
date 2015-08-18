@@ -1,0 +1,213 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2579: File cache failure with read-only	volumes.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232579%3A%20File%20cache%20failure%20with%20read-only%0A%09volumes.&In-Reply-To=%3C047.3d65c1ae7fcca94af84c72058d730933%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009388.html">
+   <LINK REL="Next"  HREF="009399.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2579: File cache failure with read-only	volumes.</H1>
+    <B>marcusoverhagen</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232579%3A%20File%20cache%20failure%20with%20read-only%0A%09volumes.&In-Reply-To=%3C047.3d65c1ae7fcca94af84c72058d730933%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2579: File cache failure with read-only	volumes.">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Aug  7 11:26:00 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009388.html">[Haiku-bugs] [Haiku] #2579: File cache failure with read-only	volumes.
+</A></li>
+        <LI>Next message: <A HREF="009399.html">[Haiku-bugs] [Haiku] #2579: File cache failure with read-only	volumes.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9398">[ date ]</a>
+              <a href="thread.html#9398">[ thread ]</a>
+              <a href="subject.html#9398">[ subject ]</a>
+              <a href="author.html#9398">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2579: File cache failure with read-only volumes.
+------------------------+---------------------------------------------------
+  Reporter:  bga        |       Owner:  axeld         
+      Type:  bug        |      Status:  new           
+  Priority:  normal     |   Milestone:  R1            
+ Component:  - General  |     Version:  R1 development
+Resolution:             |   Blockedby:                
+  Platform:  All        |    Blocking:                
+------------------------+---------------------------------------------------
+
+Old description:
+
+&gt;<i> I finally managed to get my IDE controller to work and mounted my Zeta
+</I>&gt;<i> partition under Haiku. Just to be safe, I mounted it read-only. To my
+</I>&gt;<i> surprise, I can not read any file on the volume. Here is what I get:
+</I>&gt;<i>
+</I>&gt;<i> /Zeta 1.2/home&gt; cat readat_test.cpp
+</I>&gt;<i> cat: readat_test.cpp: Read-only file system
+</I>&gt;<i>
+</I>&gt;<i> Syslog shows:
+</I>&gt;<i>
+</I>&gt;<i> KERN: file_cache: read pages failed: Read-only file system
+</I>&gt;<i>
+</I>&gt;<i> And strace:
+</I>&gt;<i>
+</I>&gt;<i> /Zeta 1.2/home&gt; strace cat readat_test
+</I>&gt;<i> [   728] _kern_image_relocated(0x681) (215 us)
+</I>&gt;<i> [   728] --- SIGCONT (Continued) ---
+</I>&gt;<i> [   728] _kern_create_sem(0x0, &quot;exit stack lock&quot;) = 0x00003856 (15 us)
+</I>&gt;<i> [   728] _kern_create_sem(0x1, &quot;fork lock&quot;) = 0x00003857 (15 us)
+</I>&gt;<i> [   728] _kern_get_system_info(0x7ffeecb4, 0x1fc) = 0x00000000 No error
+</I>&gt;<i> (7 us)
+</I>&gt;<i> [   728] _kern_reserve_heap_address_range([0x18000000], 0x1, 0x48000000)
+</I>&gt;<i> = 0x00000000 No error (7 us)
+</I>&gt;<i> [   728] _kern_create_area(&quot;heap&quot;, 0x2c29f0, 0x1, 0x32000, 0x0, 0x33) =
+</I>&gt;<i> 0x00001d6a (22 us)
+</I>&gt;<i> [   728] _kern_acquire_sem(0x3857) = 0x00000000 No error (0 us)
+</I>&gt;<i> [   728] _kern_release_sem(0x3857) = 0x00000000 No error (1 us)
+</I>&gt;<i> [   728] _kern_create_sem(0x1, &quot;env lock&quot;) = 0x00003858 (1 us)
+</I>&gt;<i> [   728] _kern_acquire_sem(0x3857) = 0x00000000 No error (0 us)
+</I>&gt;<i> [   728] _kern_release_sem(0x3857) = 0x00000000 No error (0 us)
+</I>&gt;<i> [   728] _kern_create_sem(0x0, &quot;user group&quot;) = 0x00003859 (15 us)
+</I>&gt;<i> [   728] _kern_set_area_protection(0x1d64, 0x15) = 0x00000000 No error
+</I>&gt;<i> (14 us)
+</I>&gt;<i> [   728] _kern_set_area_protection(0x1d66, 0x15) = 0x00000000 No error
+</I>&gt;<i> (23 us)
+</I>&gt;<i> [   728] _kern_release_sem(0x3849) = 0x00000000 No error (0 us)
+</I>&gt;<i> [   728] _kern_release_sem(0x3856) = 0x00000000 No error (0 us)
+</I>&gt;<i> [   728] _kern_acquire_sem(0x3858) = 0x00000000 No error (0 us)
+</I>&gt;<i> [   728] _kern_release_sem(0x3858) = 0x00000000 No error (0 us)
+</I>&gt;<i> [   728] _kern_read_stat(0x1, (nil), false, 0x7ffeef3c, 0x3c) =
+</I>&gt;<i> 0x00000000 No error (1 us)
+</I>&gt;<i> [   728] _kern_open(0xffffffff, &quot;readat_test&quot;, 0x0, 0x0) = 0x00000003 (19
+</I>&gt;<i> us)
+</I>&gt;<i> [   728] _kern_read_stat(0x3, (nil), false, 0x7ffeef3c, 0x3c) =
+</I>&gt;<i> 0x00000000 No error (1 us)
+</I>&gt;<i> [   728] _kern_read(0x3, 0xffffffffffffffff, 0x1802d000, 0x1000) =
+</I>&gt;<i> 0x80006008 (159 us)
+</I>&gt;<i> /bin/cat: [   728] _kern_write(0x2, 0xffffffffffffffff, 0x7ffec85c, 0xa)
+</I>&gt;<i> = 0x0000000a (4 us)
+</I>&gt;<i> readat_test[   728] _kern_write(0x2, 0xffffffffffffffff, 0x7ffec85c, 0xb)
+</I>&gt;<i> = 0x0000000b (3 us)
+</I>&gt;<i> : Read-only file system[   728] _kern_write(0x2, 0xffffffffffffffff,
+</I>&gt;<i> 0x7ffec3fc, 0x17) = 0x00000017 (8 us)
+</I>&gt;<i>
+</I>&gt;<i> [   728] _kern_write(0x2, 0xffffffffffffffff, 0x2b518b, 0x1) = 0x00000001
+</I>&gt;<i> (3 us)
+</I>&gt;<i> [   728] _kern_close(0x3) = 0x00000000 No error (2 us)
+</I>&gt;<i> [   728] _kern_close(0x1) = 0x00000000 No error (0 us)
+</I>&gt;<i> [   728] _kern_close(0x2) = 0x00000000 No error (1 us)
+</I>&gt;<i> [   728] _kern_release_sem(0x3856) = 0x00000000 No error (0 us)
+</I>&gt;<i> [   728] _kern_exit_team(0x1) (2 us)
+</I>&gt;<i>
+</I>&gt;<i> It seems the problem is the _kern_write() calls in a read-only volume.
+</I>&gt;<i> But why does reading a file result in a write operation?
+</I>
+New description:
+
+ I finally managed to get my IDE controller to work and mounted my Zeta
+ partition under Haiku. Just to be safe, I mounted it read-only. To my
+ surprise, I can not read any file on the volume. Here is what I get:
+
+ /Zeta 1.2/home&gt; cat readat_test.cpp
+ cat: readat_test.cpp: Read-only file system
+
+ Syslog shows:
+
+ KERN: file_cache: read pages failed: Read-only file system
+
+ And strace:
+ {{{
+ /Zeta 1.2/home&gt; strace cat readat_test
+ [   728] _kern_image_relocated(0x681) (215 us)
+ [   728] --- SIGCONT (Continued) ---
+ [   728] _kern_create_sem(0x0, &quot;exit stack lock&quot;) = 0x00003856 (15 us)
+ [   728] _kern_create_sem(0x1, &quot;fork lock&quot;) = 0x00003857 (15 us)
+ [   728] _kern_get_system_info(0x7ffeecb4, 0x1fc) = 0x00000000 No error (7
+ us)
+ [   728] _kern_reserve_heap_address_range([0x18000000], 0x1, 0x48000000) =
+ 0x00000000 No error (7 us)
+ [   728] _kern_create_area(&quot;heap&quot;, 0x2c29f0, 0x1, 0x32000, 0x0, 0x33) =
+ 0x00001d6a (22 us)
+ [   728] _kern_acquire_sem(0x3857) = 0x00000000 No error (0 us)
+ [   728] _kern_release_sem(0x3857) = 0x00000000 No error (1 us)
+ [   728] _kern_create_sem(0x1, &quot;env lock&quot;) = 0x00003858 (1 us)
+ [   728] _kern_acquire_sem(0x3857) = 0x00000000 No error (0 us)
+ [   728] _kern_release_sem(0x3857) = 0x00000000 No error (0 us)
+ [   728] _kern_create_sem(0x0, &quot;user group&quot;) = 0x00003859 (15 us)
+ [   728] _kern_set_area_protection(0x1d64, 0x15) = 0x00000000 No error (14
+ us)
+ [   728] _kern_set_area_protection(0x1d66, 0x15) = 0x00000000 No error (23
+ us)
+ [   728] _kern_release_sem(0x3849) = 0x00000000 No error (0 us)
+ [   728] _kern_release_sem(0x3856) = 0x00000000 No error (0 us)
+ [   728] _kern_acquire_sem(0x3858) = 0x00000000 No error (0 us)
+ [   728] _kern_release_sem(0x3858) = 0x00000000 No error (0 us)
+ [   728] _kern_read_stat(0x1, (nil), false, 0x7ffeef3c, 0x3c) = 0x00000000
+ No error (1 us)
+ [   728] _kern_open(0xffffffff, &quot;readat_test&quot;, 0x0, 0x0) = 0x00000003 (19
+ us)
+ [   728] _kern_read_stat(0x3, (nil), false, 0x7ffeef3c, 0x3c) = 0x00000000
+ No error (1 us)
+ [   728] _kern_read(0x3, 0xffffffffffffffff, 0x1802d000, 0x1000) =
+ 0x80006008 (159 us)
+ /bin/cat: [   728] _kern_write(0x2, 0xffffffffffffffff, 0x7ffec85c, 0xa) =
+ 0x0000000a (4 us)
+ readat_test[   728] _kern_write(0x2, 0xffffffffffffffff, 0x7ffec85c, 0xb)
+ = 0x0000000b (3 us)
+ : Read-only file system[   728] _kern_write(0x2, 0xffffffffffffffff,
+ 0x7ffec3fc, 0x17) = 0x00000017 (8 us)
+
+ [   728] _kern_write(0x2, 0xffffffffffffffff, 0x2b518b, 0x1) = 0x00000001
+ (3 us)
+ [   728] _kern_close(0x3) = 0x00000000 No error (2 us)
+ [   728] _kern_close(0x1) = 0x00000000 No error (0 us)
+ [   728] _kern_close(0x2) = 0x00000000 No error (1 us)
+ [   728] _kern_release_sem(0x3856) = 0x00000000 No error (0 us)
+ [   728] _kern_exit_team(0x1) (2 us)
+ }}}
+ It seems the problem is the _kern_write() calls in a read-only volume. But
+ why does reading a file result in a write operation?
+
+--
+
+Comment(by marcusoverhagen):
+
+ I think _kern_write(0x2, ...) is a write to stdout.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2579#comment:1">http://dev.haiku-os.org/ticket/2579#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009388.html">[Haiku-bugs] [Haiku] #2579: File cache failure with read-only	volumes.
+</A></li>
+	<LI>Next message: <A HREF="009399.html">[Haiku-bugs] [Haiku] #2579: File cache failure with read-only	volumes.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9398">[ date ]</a>
+              <a href="thread.html#9398">[ thread ]</a>
+              <a href="subject.html#9398">[ subject ]</a>
+              <a href="author.html#9398">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3261: multi_audio KDL: page fault with interrupts disabled
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-January/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233261%3A%20multi_audio%20KDL%3A%20page%20fault%20with%0A%20interrupts%20disabled&In-Reply-To=%3C055.4786940259e0f294f1a0c2542f630eb5%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="013473.html">
+   <LINK REL="Next"  HREF="013478.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3261: multi_audio KDL: page fault with interrupts disabled</H1>
+    <B>axeld</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233261%3A%20multi_audio%20KDL%3A%20page%20fault%20with%0A%20interrupts%20disabled&In-Reply-To=%3C055.4786940259e0f294f1a0c2542f630eb5%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3261: multi_audio KDL: page fault with interrupts disabled">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Jan  8 17:46:29 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="013473.html">[Haiku-bugs] [Haiku] #3261: multi_audio KDL: page fault with interrupts disabled
+</A></li>
+        <LI>Next message: <A HREF="013478.html">[Haiku-bugs] [Haiku] #3261: multi_audio KDL: page fault with interrupts disabled
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13474">[ date ]</a>
+              <a href="thread.html#13474">[ thread ]</a>
+              <a href="subject.html#13474">[ subject ]</a>
+              <a href="author.html#13474">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3261: multi_audio KDL: page fault with interrupts disabled
+---------------------------+------------------------------------------------
+ Reporter:  umccullough    |       Owner:  korli         
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1            
+Component:  Drivers/Audio  |     Version:  R1 development
+Blockedby:                 |    Platform:  All           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+
+Comment(by axeld):
+
+ You always need to use user_memcpy() in the kernel for memory that has not
+ been locked. The reason is simple that it could go away at any time; since
+ an eventual page could not be resolved, the kernel would crash with
+ memcpy() where it would just return an error with user_memcpy().
+
+ And yes, you are right in that we have to review lots of drivers to do
+ that correctly.
+
+ We could follow BeOS that locked the buffers for read/write calls. There,
+ only ioctl() was completely unsafe and each app could easily crash the
+ system by passing an invalid buffer to an ioctl. Unfortunately, there is
+ no way to automatically make sure the buffers passed to ioctl are safe to
+ be used.
+
+ In any case, if you need to copy a buffer with interrupts disabled, you
+ have to use lock_memory() to protect it from going away at the wrong time.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3261#comment:10">http://dev.haiku-os.org/ticket/3261#comment:10</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="013473.html">[Haiku-bugs] [Haiku] #3261: multi_audio KDL: page fault with interrupts disabled
+</A></li>
+	<LI>Next message: <A HREF="013478.html">[Haiku-bugs] [Haiku] #3261: multi_audio KDL: page fault with interrupts disabled
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13474">[ date ]</a>
+              <a href="thread.html#13474">[ thread ]</a>
+              <a href="subject.html#13474">[ subject ]</a>
+              <a href="author.html#13474">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

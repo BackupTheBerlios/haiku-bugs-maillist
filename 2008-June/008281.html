@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2397: Build system writes over actual filesystem contents while trying to add boot sector to partition
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232397%3A%20Build%20system%20writes%20over%20actual%0A%20filesystem%20contents%20while%20trying%20to%20add%20boot%20sector%20to%20partition&In-Reply-To=%3C049.48336a967fc74ba964fd0b1e1de79277%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008275.html">
+   <LINK REL="Next"  HREF="008283.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2397: Build system writes over actual filesystem contents while trying to add boot sector to partition</H1>
+    <B>bonefish</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232397%3A%20Build%20system%20writes%20over%20actual%0A%20filesystem%20contents%20while%20trying%20to%20add%20boot%20sector%20to%20partition&In-Reply-To=%3C049.48336a967fc74ba964fd0b1e1de79277%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2397: Build system writes over actual filesystem contents while trying to add boot sector to partition">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Jun 17 23:52:24 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008275.html">[Haiku-bugs] [Haiku] #2397: Build system writes over actual filesystem contents while trying to add boot sector to partition
+</A></li>
+        <LI>Next message: <A HREF="008283.html">[Haiku-bugs] [Haiku] #2397: Build system writes over actual filesystem contents while trying to add boot sector to partition
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8281">[ date ]</a>
+              <a href="thread.html#8281">[ thread ]</a>
+              <a href="subject.html#8281">[ subject ]</a>
+              <a href="author.html#8281">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2397: Build system writes over actual filesystem contents while trying to add
+boot sector to partition
+---------------------------+------------------------------------------------
+  Reporter:  monni         |       Owner:  bonefish      
+      Type:  bug           |      Status:  new           
+  Priority:  normal        |   Milestone:  R1            
+ Component:  Build System  |     Version:  R1 development
+Resolution:                |   Blockedby:                
+  Platform:  All           |    Blocking:                
+---------------------------+------------------------------------------------
+
+Comment(by bonefish):
+
+ Replying to [comment:2 monni]:
+ &gt; Most likely the error is that &quot;makebootable&quot; is invoked before trying to
+ access the actual file system on partition...
+ &gt;
+ &gt; If build script can't access the file system, &quot;makebootable&quot; shouldn't
+ try to write to partition boot block either.
+
+ That's exactly how it works:
+ {{{
+                 $bfsShell --initialize $imageOffsetFlags &quot;$imagePath&quot;
+ Haiku \
+                         &quot;block_size 2048&quot; || exit 1
+                 $makebootable $imageOffsetFlags &quot;$imagePath&quot;
+ }}}
+
+ When initializing the FS fails, the script exits.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2397#comment:3">http://dev.haiku-os.org/ticket/2397#comment:3</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008275.html">[Haiku-bugs] [Haiku] #2397: Build system writes over actual filesystem contents while trying to add boot sector to partition
+</A></li>
+	<LI>Next message: <A HREF="008283.html">[Haiku-bugs] [Haiku] #2397: Build system writes over actual filesystem contents while trying to add boot sector to partition
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8281">[ date ]</a>
+              <a href="thread.html#8281">[ thread ]</a>
+              <a href="subject.html#8281">[ subject ]</a>
+              <a href="author.html#8281">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

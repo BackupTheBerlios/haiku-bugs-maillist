@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #550: Looks like BMenus dont tint their	colors
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-December/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23550%3A%20Looks%20like%20BMenus%20dont%20tint%20their%0A%09colors&In-Reply-To=%3C070.6e34727cad01de43dd8255073d09b9ea%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003869.html">
+   <LINK REL="Next"  HREF="003843.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #550: Looks like BMenus dont tint their	colors</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23550%3A%20Looks%20like%20BMenus%20dont%20tint%20their%0A%09colors&In-Reply-To=%3C070.6e34727cad01de43dd8255073d09b9ea%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #550: Looks like BMenus dont tint their	colors">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Dec  6 11:55:26 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003869.html">[Haiku-bugs] [Haiku] #1658: KDL: when tracker is trying to show the /dev contents
+</A></li>
+        <LI>Next message: <A HREF="003843.html">[Haiku-bugs] [Haiku] #550: Looks like BMenus dont tint their	colors
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3842">[ date ]</a>
+              <a href="thread.html#3842">[ thread ]</a>
+              <a href="subject.html#3842">[ subject ]</a>
+              <a href="author.html#3842">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#550: Looks like BMenus dont tint their colors
+-----------------------------------------+----------------------------------
+  Reporter:  <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">mikael.konradson at gmail.com</A>  |       Owner:  jackburton
+      Type:  bug                         |      Status:  assigned  
+  Priority:  normal                      |   Milestone:  R1        
+ Component:  - General                   |     Version:            
+Resolution:                              |    Platform:  All       
+-----------------------------------------+----------------------------------
+Changes (by jackburton):
+
+  * status:  new =&gt; assigned
+  * platform:  =&gt; All
+
+Old description:
+
+&gt;<i> 1. Change colors using the menu preflet. (Choose a very dark color).
+</I>&gt;<i> 2. Restart tracker
+</I>&gt;<i> 3. you will now see the 3d effect colors with their original colors, a
+</I>&gt;<i> much
+</I>&gt;<i> better (the correct) way would be to use tint_color /Darken/Lighten here.
+</I>&gt;<i> (LeftTop -RightTop/LeftBottom) should be using tint_color(HighColor(),
+</I>&gt;<i> B_LIGHTEN_*_COLOR).
+</I>&gt;<i> And the opposite coordinates should use a Darer version.
+</I>&gt;<i>
+</I>&gt;<i> P.S I dont have the source here, maybe its already tinted, but its a bug
+</I>&gt;<i> though D.S
+</I>&gt;<i> /Mikael Konradsson
+</I>
+New description:
+
+ 1. Change colors using the menu preflet. (Choose a very dark color).
+ 2. Restart tracker
+ 3. you will now see the 3d effect colors with their original colors, a
+ much
+ better (the correct) way would be to use tint_color /Darken/Lighten here.
+ (LeftTop -RightTop/LeftBottom) should be using tint_color(HighColor(),
+ B_LIGHTEN_*_COLOR).
+ And the opposite coordinates should use a Darer version.
+
+ P.S I dont have the source here, maybe its already tinted, but its a bug
+ though D.S
+ /Mikael Konradsson
+
+Comment:
+
+ I had a look at this bug again, and looks like I was wrong. The problem is
+ that the menu preflet uses set_menu_info() to set the menu colors, but
+ that function only updates the menu_info struct, and not the color
+ returned by ui_color(B_MENU_BACKGROUND_COLOR).
+ And, since we use either ui_color(B_MENU_BACKGROUND_COLOR) or the
+ background_color member of menu_info to get the menu background color, we
+ should make sure that DesktopSettingsPrivate::SetMenuInfo() also updates
+ the ui_color.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/550#comment:6">http://dev.haiku-os.org/ticket/550#comment:6</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003869.html">[Haiku-bugs] [Haiku] #1658: KDL: when tracker is trying to show the /dev contents
+</A></li>
+	<LI>Next message: <A HREF="003843.html">[Haiku-bugs] [Haiku] #550: Looks like BMenus dont tint their	colors
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3842">[ date ]</a>
+              <a href="thread.html#3842">[ thread ]</a>
+              <a href="subject.html#3842">[ subject ]</a>
+              <a href="author.html#3842">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

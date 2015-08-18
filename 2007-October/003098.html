@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1547: Panic in vfs_mount_boot_file_system()
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231547%3A%20Panic%20in%20vfs_mount_boot_file_system%28%29&In-Reply-To=%3C040.42b45a95307af4a68cfbacf5d4353184%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003097.html">
+   <LINK REL="Next"  HREF="003099.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1547: Panic in vfs_mount_boot_file_system()</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231547%3A%20Panic%20in%20vfs_mount_boot_file_system%28%29&In-Reply-To=%3C040.42b45a95307af4a68cfbacf5d4353184%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1547: Panic in vfs_mount_boot_file_system()">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Oct  9 20:56:44 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003097.html">[Haiku-bugs] [Haiku] #1217: AUICH looping media_server
+</A></li>
+        <LI>Next message: <A HREF="003099.html">[Haiku-bugs] [Haiku] #1547: Panic in	vfs_mount_boot_file_system()
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3098">[ date ]</a>
+              <a href="thread.html#3098">[ thread ]</a>
+              <a href="subject.html#3098">[ subject ]</a>
+              <a href="author.html#3098">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1547: Panic in vfs_mount_boot_file_system()
+---------------------------+------------------------------------------------
+ Reporter:  korli          |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1 development
+ Platform:  All            |  
+---------------------------+------------------------------------------------
+ KDiskSystem::Unload(): partitioning_systems/session/v1 -&gt; 0
+ KDiskDeviceManager::_AddDiskSystem() done: No error
+ file system: file_systems/cdda/v1
+ KDiskDeviceManager::_AddDiskSystem(file_systems/cdda/v1)
+ KDiskSystem::Load(): file_systems/cdda/v1 -&gt; 1
+ KDiskSystem::Unload(): file_systems/cdda/v1 -&gt; 0
+ KDiskDeviceManager::_AddDiskSystem() done: No error
+ vm_soft_fault: va 0xe182f320 not covered by area in address space
+ vm_page_fault: vm_soft_fault returned error 'Bad address' on fault at
+ 0xe182f320, ip 0x800a2a33, write 0, user 0, thread 0x8
+ PANIC: vm_page_fault: unhandled page fault in kernel space at 0xe182f320,
+ ip 0x800a2a33
+
+ Welcome to Kernel Debugging Land...
+ Running on CPU 0
+ kdebug&gt; bt
+ stack trace for thread 0x8 &quot;main2&quot;
+     kernel stack: 0x800fa000 to 0x800fe000
+ frame            caller     &lt;image&gt;:function + offset
+ 800fd828 (+  52) 8008c1eb   &lt;kernel&gt;:invoke_command + 0x0073
+ 800fd85c (+  48) 8008c332   &lt;kernel&gt;:kernel_debugger_loop + 0x0102
+ 800fd88c (+  32) 8008cd8e   &lt;kernel&gt;:kernel_debugger + 0x00b6
+ 800fd8ac (+ 192) 8008cccd   &lt;kernel&gt;:panic + 0x0029
+ 800fd96c (+  64) 8005d936   &lt;kernel&gt;:vm_page_fault + 0x00a6
+ 800fd9ac (+ 176) 800955ca   &lt;kernel&gt;:i386_handle_trap + 0x023a
+ iframe at 0x800fda64 (end = 0x800fdab8)
+  eax 0xe182f320     ebx 0xc             ecx 0x90a2b850   edx 0x90a3c200
+  esi 0x800fdb48     edi 0x90a2e01e      ebp 0x800fdac8   esp 0x800fda94
+  eip 0x800a2a33  eflags 0x210206
+  vector: 0xe, error code: 0x0
+ 800fda5c (+ 108) 800a2a33   &lt;kernel&gt;:strncmp + 0x0023
+ 800fdac8 (+ 144) 8002ff75
+ &lt;kernel&gt;:iterator_get_next_module__FP15module_iteratorPcPUl + 0x0439
+ 800fdb58 (+  64) 800306e4   &lt;kernel&gt;:read_next_module_name + 0x0044
+ 800fdb98 (+  64) 8007b558
+ &lt;kernel&gt;:_RescanDiskSystems__Q38BPrivate10DiskDevice18KDiskDeviceManagerb
+ + 0x0064
+ 800fdbd8 (+  64) 8007b66c
+ &lt;kernel&gt;:RescanDiskSystems__Q38BPrivate10DiskDevice18KDiskDeviceManager +
+ 0x0028
+ 800fdc18 (+ 816) 8005553a   &lt;kernel&gt;:vfs_mount_boot_file_system + 0x018a
+ 800fdf48 (+ 144) 8002f255   &lt;kernel&gt;:main2 + 0x00d1
+ 800fdfd8 (+  32) 8003de57   &lt;kernel&gt;:_create_kernel_thread_kentry__Fv +
+ 0x001b
+ 800fdff8 (+2146443272) 8003ddec   &lt;kernel&gt;:thread_kthread_exit__Fv +
+ 0x0000
+ kdebug&gt;
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1547">http://dev.haiku-os.org/ticket/1547</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003097.html">[Haiku-bugs] [Haiku] #1217: AUICH looping media_server
+</A></li>
+	<LI>Next message: <A HREF="003099.html">[Haiku-bugs] [Haiku] #1547: Panic in	vfs_mount_boot_file_system()
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3098">[ date ]</a>
+              <a href="thread.html#3098">[ thread ]</a>
+              <a href="subject.html#3098">[ subject ]</a>
+              <a href="author.html#3098">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4053: USB MIDI not recognized dynamically
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234053%3A%20USB%20MIDI%20not%20recognized%20dynamically&In-Reply-To=%3C048.8aeea8db963c51549c2e05da465f6f1a%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="022507.html">
+   <LINK REL="Next"  HREF="022517.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4053: USB MIDI not recognized dynamically</H1>
+    <B>mmlr</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234053%3A%20USB%20MIDI%20not%20recognized%20dynamically&In-Reply-To=%3C048.8aeea8db963c51549c2e05da465f6f1a%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4053: USB MIDI not recognized dynamically">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Oct  7 01:45:48 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="022507.html">[Haiku-bugs] [Haiku] #4053: USB MIDI not recognized dynamically
+</A></li>
+        <LI>Next message: <A HREF="022517.html">[Haiku-bugs] [Haiku] #4738: enable tui mode in gdb
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22515">[ date ]</a>
+              <a href="thread.html#22515">[ thread ]</a>
+              <a href="subject.html#22515">[ subject ]</a>
+              <a href="author.html#22515">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4053: USB MIDI not recognized dynamically
+---------------------------------+------------------------------------------
+ Reporter:  Pete                 |       Owner:  phoudoin     
+     Type:  bug                  |      Status:  assigned     
+ Priority:  normal               |   Milestone:  R1           
+Component:  Servers/midi_server  |     Version:  R1/pre-alpha1
+Blockedby:                       |    Platform:  All          
+ Blocking:                       |  
+---------------------------------+------------------------------------------
+
+Comment(by mmlr):
+
+ Replying to [comment:35 Pete]:
+ &gt; To prevent this, I've moved object deletion as late as possible.  The
+ device removal itself is now in usb_midi_free.  Even this was apparently
+ not enough if too many dprintf statements were also enabled, so I think
+ there must still be a hazard somewhere.  (Part of the reason I was having
+ so much trouble tracking things down.)  With printout suppressed, though,
+ it seems to be stable.
+
+ The free hook is supposed to be called only after all open handles have
+ been close()d and all other calls like read/write/ioctl have completed. So
+ if there is still an open count in the free hook or access to the device
+ after the free hook returned that'd be a bug in the devfs code for legacy
+ drivers.
+
+ &gt; I think this is because publish_devices is not invoked when the device
+ is finally removed; when it is called in response to a new device things
+ get corrected.
+
+ Any add/remove of a device that matches the support descriptors of your
+ driver will also cause a rescan of the driver to happen. It should in that
+ case call publish_devices also after the unplug. That requires that you
+ have the list updated before returning from the device_removed hook you
+ provide. Again, if this doesn't work there might be a bug in the devfs
+ code.
+
+ &gt; I think I can live with this, but the user will need to be aware of the
+ need to adjust things if they replug the cable.
+
+ Um, they are bugs, so living with them isn't really the way to go ;-)
+
+ &gt; I've attached a zip of the sources (not a diff) that have changed (since
+ r33202).
+
+ It's generally easier if you avoid attaching zips. That is because the
+ zips can't be viewed inline in the bug tracker.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4053#comment:36">http://dev.haiku-os.org/ticket/4053#comment:36</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="022507.html">[Haiku-bugs] [Haiku] #4053: USB MIDI not recognized dynamically
+</A></li>
+	<LI>Next message: <A HREF="022517.html">[Haiku-bugs] [Haiku] #4738: enable tui mode in gdb
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22515">[ date ]</a>
+              <a href="thread.html#22515">[ thread ]</a>
+              <a href="subject.html#22515">[ subject ]</a>
+              <a href="author.html#22515">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

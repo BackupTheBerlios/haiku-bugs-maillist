@@ -1,0 +1,1259 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2614: Indexes not being correctly	maintained.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232614%3A%20Indexes%20not%20being%20correctly%0A%09maintained.&In-Reply-To=%3C047.2bf170b453c7076479bb82b113c9ae8a%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009507.html">
+   <LINK REL="Next"  HREF="009703.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2614: Indexes not being correctly	maintained.</H1>
+    <B>bga</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232614%3A%20Indexes%20not%20being%20correctly%0A%09maintained.&In-Reply-To=%3C047.2bf170b453c7076479bb82b113c9ae8a%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2614: Indexes not being correctly	maintained.">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Aug 19 13:06:51 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009507.html">[Haiku-bugs] [Haiku] #2614: Indexes not being correctly maintained.
+</A></li>
+        <LI>Next message: <A HREF="009703.html">[Haiku-bugs] [Haiku] #2614: Indexes not being correctly	maintained.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9742">[ date ]</a>
+              <a href="thread.html#9742">[ thread ]</a>
+              <a href="subject.html#9742">[ subject ]</a>
+              <a href="author.html#9742">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2614: Indexes not being correctly maintained.
+-------------------------------+--------------------------------------------
+  Reporter:  bga               |       Owner:  axeld         
+      Type:  bug               |      Status:  new           
+  Priority:  blocker           |   Milestone:  R1/alpha1     
+ Component:  File Systems/BFS  |     Version:  R1 development
+Resolution:                    |   Blockedby:                
+  Platform:  All               |    Blocking:                
+-------------------------------+--------------------------------------------
+
+Comment(by bga):
+
+ More index problems:
+
+ {{{
+ ~/mail/BGA(BUG-Br)/in&gt; query MAIL:subject=\* | wc -l
+ query: could not get path for entry
+ query: could not get path for entry
+ 152
+ }}}
+
+ BTW, there are only 110 emails in my system right now and it seems the
+ MAIL:subject index have 152 entries.
+
+ Here is what I see on syslog when running the command above:
+
+ {{{
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623466 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623466 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: KERN: inode at 2623397 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623397 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623494 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623494 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623377 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623377 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623526 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623526 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623462 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623462 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623489 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623489 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: KERN: inode at 2623513 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623513 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623487 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623487 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623482 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623482 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623486 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623486 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623492 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623492 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623381 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623381 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623400 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: KERN: could not get inode 2623400 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: KERN: inode at 2623405 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623405 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623377 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623377 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623387 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623387 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623418 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623418 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623550 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623550 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623686 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623686 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: KERN: inode at 2623463 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623463 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623441 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623441 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623430 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623430 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623382 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623382 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623400 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623400 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623453 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623453 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623460 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623460 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623454 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623454 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623456 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: KERN: could not get inode 2623456 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623531 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623531 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623419 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623419 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623420 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623420 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623421 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: KERN: could not get inode 2623421 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623427 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: KERN: could not get inode 2623427 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623426 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623426 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623425 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623425 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: KERN: inode at 2623388 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623388 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623378 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623378 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623381 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623381 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623398 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623398 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623424 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623424 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: inode 2623354 in query has no name!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623398 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623398 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623367 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623367 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623378 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623378 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623369 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623369 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623462 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623462 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623461 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623461 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623463 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: KERN: could not get inode 2623463 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623467 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: KERN: could not get inode 2623467 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623434 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623434 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623460 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623460 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623367 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623367 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623379 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623379 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623419 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623419 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623355 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623355 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: KERN: inode 2623356 in query has no name!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623666 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623666 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623585 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623585 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623612 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623612 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623384 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623384 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623369 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: KERN: could not get inode 2623369 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623485 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623485 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623566 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623566 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623571 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623571 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623572 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623572 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623407 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623407 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623426 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623426 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623427 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623427 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623414 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623414 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623479 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623479 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623397 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623397 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623399 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623399 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623431 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623431 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623388 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623388 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623380 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: KERN: could not get inode 2623380 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623630 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623630 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623451 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623451 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623410 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623410 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623421 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623421 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623383 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623383 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: KERN: inode at 2623369 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623369 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623379 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623379 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623380 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623380 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623381 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623381 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623385 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623385 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623408 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623408 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623444 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623444 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623367 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623367 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623405 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623405 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623422 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623422 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623604 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: KERN: could not get inode 2623604 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623456 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623456 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623412 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623412 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623407 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623407 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623404 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623404 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623588 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623588 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623377 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623377 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623422 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623422 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: KERN: inode at 2623423 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: KERN: could not get inode 2623423 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623401 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623401 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623385 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623385 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623493 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623493 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: inode 2623354 in query has no name!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623495 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623495 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623376 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623376 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623400 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623400 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623378 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623378 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: KERN: inode at 2623385 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623385 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: KERN: inode at 2623390 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623390 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623399 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623399 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623410 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623410 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623432 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623432 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: KERN: inode at 2623450 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623450 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623456 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623456 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623457 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623457 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623461 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623461 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: KERN: inode at 2623464 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623464 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623469 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623469 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623416 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623416 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623649 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623649 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623457 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623457 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623699 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623699 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623355 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623355 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623367 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623367 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623391 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: KERN: could not get inode 2623391 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623430 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623430 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623434 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: KERN: could not get inode 2623434 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623445 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623445 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623458 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623458 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623388 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623388 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623466 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: KERN: could not get inode 2623466 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623378 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623378 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623509 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623509 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623510 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623510 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623511 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623511 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623387 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623387 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623419 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623419 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623420 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623420 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623398 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623398 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623712 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623712 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623713 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623713 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623376 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623376 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623379 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623379 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623382 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623382 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: KERN: inode at 2623383 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: KERN: could not get inode 2623383 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623383 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623383 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623383 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623383 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623383 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623383 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623384 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623384 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623385 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623385 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623389 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623389 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623389 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: KERN: could not get inode 2623389 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: KERN: inode at 2623390 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623390 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623391 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623391 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: KERN: inode at 2623392 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: KERN: could not get inode 2623392 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623393 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: KERN: could not get inode 2623393 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: KERN: inode at 2623397 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623397 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623399 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623399 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623399 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623399 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623405 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623405 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623410 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623410 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623412 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623412 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623413 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: KERN: could not get inode 2623413 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623417 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623417 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623419 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623419 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623422 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623422 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623430 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623430 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: KERN: inode at 2623445 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623445 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623455 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623455 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623458 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: KERN: could not get inode 2623458 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623615 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623615 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623440 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623440 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623441 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623441 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623423 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623423 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623377 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623377 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623414 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623414 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623464 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: KERN: could not get inode 2623464 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623391 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623391 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623464 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623464 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623541 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623541 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623384 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623384 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623387 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623387 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623398 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623398 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623441 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623441 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623446 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623446 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: KERN: inode at 2623449 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623449 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623379 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623379 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623416 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623416 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: KERN: inode at 2623425 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623425 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623428 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623428 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623446 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623446 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623448 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623448 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623475 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: KERN: could not get inode 2623475 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: KERN: inode at 2623477 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623477 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623528 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623528 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623396 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623396 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623385 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623385 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623414 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623414 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623393 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623393 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623384 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623384 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623462 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: KERN: could not get inode 2623462 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623400 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623400 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: KERN: inode at 2623404 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623404 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623409 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623409 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623413 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623413 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623442 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623442 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623451 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623451 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623460 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623460 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623387 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623387 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623367 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623367 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623378 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623378 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623382 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623382 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623384 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623384 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623385 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623385 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623386 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623386 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: KERN: inode at 2623386 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623386 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623387 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623387 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623391 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623391 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623396 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623396 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623396 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623396 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623428 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623428 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623431 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623431 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623443 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: KERN: could not get inode 2623443 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623447 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623447 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623459 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: KERN: could not get inode 2623459 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: KERN: inode at 2623463 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623463 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: KERN: inode at 2623466 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623466 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623467 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623467 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623468 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623468 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623470 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623470 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623474 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623474 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623377 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623377 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623408 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: KERN: could not get inode 2623408 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623389 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623389 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623392 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623392 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623401 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623401 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623455 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623455 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623369 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623369 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: inode 2623356 in query has no name!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623454 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623454 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623382 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623382 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623671 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623671 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623381 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623381 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623408 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623408 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623717 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623717 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623646 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623646 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623506 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623506 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623650 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623650 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623529 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623529 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623445 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623445 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623501 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623501 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623405 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623405 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623393 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: KERN: could not get inode 2623393 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623702 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623702 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623378 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: KERN: could not get inode 2623378 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623425 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623425 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623637 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623637 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623449 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: KERN: could not get inode 2623449 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623411 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623411 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623689 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623689 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: KERN: inode at 2623396 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623396 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623479 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623479 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623407 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623407 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623565 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623565 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623407 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623407 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623414 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623414 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623392 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623392 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623386 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623386 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: KERN: inode at 2623555 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623555 in index &quot;MAIL:subject&quot;!
+ KERN: bfs: InitCheck:301: Bad data
+ KERN: bfs: inode at 2623447 is corrupt!
+ KERN: bfs: GetNextMatching:1060: Bad data
+ KERN: bfs: could not get inode 2623447 in index &quot;MAIL:subject&quot;!
+ }}}
+
+ The system has only been running for a few hours (after installing r27057)
+ and I checked for emails (and downloaded then) around 10 times in this
+ period. No unexpected reboot, crash or anything else that would have a
+ bigger chance of corrupting data.
+
+ And. just as reported originally (and considering all my email files are
+ inside the mail directory:
+
+ {{{
+ ~/mail/BGA(BUG-Br)/in&gt; query MAIL:subject=\* | grep -v mail
+ query: could not get path for entry
+ /boot/home/development/haiku/generated/Jamfile
+ /boot/home/config/settings/AGMSBayesianSpam/AGMSBayesianSpam\
+ Database.backup\ 9
+ /boot/home/config/settings/AGMSBayesianSpam/AGMSBayesianSpam\
+ Database.backup\ 1
+ /boot/home/config/settings/AGMSBayesianSpam/AGMSBayesianSpam\
+ Database.backup\ 8
+ /boot/home/config/settings/Media/MDefaultManager
+ /boot/home/config/settings/Media/multi_audio_settings
+ /boot/home/config/settings/AGMSBayesianSpam/AGMSBayesianSpam\
+ Database.backup\ 1
+ /boot/home/config/settings/Mail/BeMail\ Settings
+ /boot/home/config/settings/AGMSBayesianSpam/AGMSBayesianSpam\
+ Database.backup\ 0
+ /boot/home/config/settings/Media/multi_audio_settings
+ /boot/home/config/settings/Mail/BeMail\ Settings
+ query: could not get path for entry
+ /boot/home/development/haiku/generated/haiku.image
+ /boot/home/config/settings/AGMSBayesianSpam/AGMSBayesianSpam\
+ Database.backup\ 7
+ /boot/home/development/haiku/data
+ /boot/home/config/settings/AGMSBayesianSpam/AGMSBayesianSpam\
+ Database.backup\ 0
+ /boot/home/config/settings/AGMSBayesianSpam/AGMSBayesianSpam\
+ Database.backup\ 0
+ /boot/home/config/settings/AGMSBayesianSpam/AGMSBayesianSpam\
+ Database.backup\ 2
+ /boot/home/development/haiku/generated/haiku.image
+ /boot/home/config/settings/AGMSBayesianSpam/AGMSBayesianSpam\
+ Database.backup\ 7
+ /boot/home/config/settings/AGMSBayesianSpam/AGMSBayesianSpam\
+ Database.backup\ 3
+ /boot/home/development/haiku/headers
+ /boot/home/development/haiku/generated/haiku.image
+ /boot/home/development/haiku/3rdparty
+ /boot/home/development/haiku/3rdparty
+ /boot/home/development/haiku/docs
+ /boot/home/development/haiku/headers
+ /boot/home/config/settings/AGMSBayesianSpam/AGMSBayesianSpam\
+ Database.backup\ 9
+ /boot/home/config/settings/Media/multi_audio_settings
+ /boot/home/config/settings/Media/multi_audio_settings
+ /boot/home/development/haiku/docs
+ /boot/home/config/settings/AGMSBayesianSpam/AGMSBayesianSpam\
+ Database.backup\ 9
+ /boot/home/development/haiku/data
+ /boot/home/config/settings/Media/multi_audio_settings
+ /boot/home/config/settings/Media/MDefaultManager
+ /boot/home/development/haiku/generated/Jamfile
+ /boot/home/config/settings/AGMSBayesianSpam/AGMSBayesianSpam\
+ Database.backup\ 5
+ /boot/home/config/settings/AGMSBayesianSpam/AGMSBayesianSpam\
+ Database.backup\ 4
+ /boot/home/config/settings/Media/MDefaultManager
+ /boot/home/config/settings/AGMSBayesianSpam/AGMSBayesianSpam\
+ Database.backup\ 0
+ }}}
+
+ So this is definitely the case that files that have nothing to do with a
+ specific index but were accessed (in some cases, even read-only, it
+ seems), were incorrectly added to it.
+
+ Note that my example involves MAIL:* indexes, but It is probably also
+ affecting BEOS:APP_SIG, for example, and maybe even last_modified, name
+ and size indexes. In fact:
+
+ {{{
+ ~/mail/BGA(BUG-Br)/in&gt; query name=\* | wc -l
+ 116415
+
+ ~/mail/BGA(BUG-Br)/in&gt; query size\&lt;1000000000 | wc -l
+ 93916
+ }}}
+
+ Considering I have no files that are equal or bigger to the size I used,
+ those numbers shoulkd match, right? Not that I another thing I also see
+ from time to time is the same file added twice to one index so it could be
+ that name has more files than it should, size has less files than it
+ should or even both.
+
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2614#comment:4">http://dev.haiku-os.org/ticket/2614#comment:4</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009507.html">[Haiku-bugs] [Haiku] #2614: Indexes not being correctly maintained.
+</A></li>
+	<LI>Next message: <A HREF="009703.html">[Haiku-bugs] [Haiku] #2614: Indexes not being correctly	maintained.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9742">[ date ]</a>
+              <a href="thread.html#9742">[ thread ]</a>
+              <a href="subject.html#9742">[ subject ]</a>
+              <a href="author.html#9742">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

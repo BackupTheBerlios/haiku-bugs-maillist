@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1530: Nvidia GeForce FX 6600 doesn't work
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231530%3A%20Nvidia%20GeForce%20FX%206600%20doesn%27t%20work&In-Reply-To=%3C059.33024c8bc28c8f3d539d733231197582%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="017058.html">
+   <LINK REL="Next"  HREF="017067.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1530: Nvidia GeForce FX 6600 doesn't work</H1>
+    <B>rudolfc</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231530%3A%20Nvidia%20GeForce%20FX%206600%20doesn%27t%20work&In-Reply-To=%3C059.33024c8bc28c8f3d539d733231197582%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1530: Nvidia GeForce FX 6600 doesn't work">trac at haiku-os.org
+       </A><BR>
+    <I>Thu May  7 19:45:05 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="017058.html">[Haiku-bugs] [Haiku] #1530: Nvidia GeForce FX 6600 doesn't work
+</A></li>
+        <LI>Next message: <A HREF="017067.html">[Haiku-bugs] [Haiku] #1728: PANIC: supposed to be free page 0x95b76524 has cache
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17063">[ date ]</a>
+              <a href="thread.html#17063">[ thread ]</a>
+              <a href="subject.html#17063">[ subject ]</a>
+              <a href="author.html#17063">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1530: Nvidia GeForce FX 6600 doesn't work
+-------------------------------------+--------------------------------------
+ Reporter:  marcusoverhagen          |       Owner:  rudolfc       
+     Type:  bug                      |      Status:  new           
+ Priority:  normal                   |   Milestone:  R1            
+Component:  Drivers/Graphics/nVidia  |     Version:  R1 development
+Blockedby:                           |    Platform:  All           
+ Blocking:                           |  
+-------------------------------------+--------------------------------------
+
+Comment(by rudolfc):
+
+ Hi guys!
+
+ Glad to hear that Marcus!
+ I would be curious to the results. For isntance:
+ - Would the driver nowadays 'just work'for your setup?
+ - would the driver work if you tell Haiku to use another resolution via
+ the VESA call by the kernel during boot-up (iconscreen), like use 16 bit
+ instead of 32, use say 1024x768x18 instead of the default resolution.
+ - What resolution is used by haiku as default during bootup?
+ - I'd love to see a full logfile from the driver (have nvidia.settings in
+ the home folder and enable 'full logging', reboot and grab resulting
+ logfile from home folder.
+ - Would your monitor work using the VGA connection?
+ - Could you send me a photo of what your screen looks like when trouble
+ arises?
+
+ Shall I re-enable the card already? I mean, it's indeed working OK.
+ Apparantly it's the combination of your screen and the driver that causes
+ the trouble. Maybe specifically because of the high resolution..
+
+ Things might go wrong because the card BIOS sets a lower than native
+ modeline for your card, and if you instruct the driver to do above that:
+ it won't work.
+ And maybe, because haiku now switches the card during bootup, it's now set
+ to the native modeline and might just work OK as a sideeffect of that.
+
+ As you see: lots of questions from my part :-)
+
+ If you find some time to do at least some tests, that would be helpfull.
+
+ So let me know if I should re-enable the card, or someone else just do it
+ :-)
+
+ Bye!
+
+ Rudolf.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1530#comment:12">http://dev.haiku-os.org/ticket/1530#comment:12</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="017058.html">[Haiku-bugs] [Haiku] #1530: Nvidia GeForce FX 6600 doesn't work
+</A></li>
+	<LI>Next message: <A HREF="017067.html">[Haiku-bugs] [Haiku] #1728: PANIC: supposed to be free page 0x95b76524 has cache
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17063">[ date ]</a>
+              <a href="thread.html#17063">[ thread ]</a>
+              <a href="subject.html#17063">[ subject ]</a>
+              <a href="author.html#17063">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

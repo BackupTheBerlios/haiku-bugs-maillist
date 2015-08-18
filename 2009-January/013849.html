@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3299: Crash on changing setting in	3dmorph screensaver
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-January/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233299%3A%20Crash%20on%20changing%20setting%20in%0A%093dmorph%20screensaver&In-Reply-To=%3C047.5e962eaf5766563f544ccda13fed495c%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="013847.html">
+   <LINK REL="Next"  HREF="013850.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3299: Crash on changing setting in	3dmorph screensaver</H1>
+    <B>umccullough</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233299%3A%20Crash%20on%20changing%20setting%20in%0A%093dmorph%20screensaver&In-Reply-To=%3C047.5e962eaf5766563f544ccda13fed495c%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3299: Crash on changing setting in	3dmorph screensaver">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Jan 21 01:24:35 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="013847.html">[Haiku-bugs] [Haiku] #3299: Crash on changing setting in	3dmorph screensaver
+</A></li>
+        <LI>Next message: <A HREF="013850.html">[Haiku-bugs] [Haiku] #3299: Crash on changing setting in	3dmorph screensaver
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13849">[ date ]</a>
+              <a href="thread.html#13849">[ thread ]</a>
+              <a href="subject.html#13849">[ subject ]</a>
+              <a href="author.html#13849">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3299: Crash on changing setting in 3dmorph screensaver
+-----------------------------------+----------------------------------------
+ Reporter:  HAL                    |       Owner:  korli         
+     Type:  bug                    |      Status:  new           
+ Priority:  normal                 |   Milestone:  R1            
+Component:  Add-Ons/Screen Savers  |     Version:  R1 development
+Blockedby:                         |    Platform:  All           
+ Blocking:                         |  
+-----------------------------------+----------------------------------------
+
+Comment(by umccullough):
+
+ something fishy in the backtrace:
+
+ {{{
+ Reading symbols from /boot/home/config/lib/libstdc++.r4.so...done.
+ Loaded symbols for /boot/home/config/lib/libstdc++.r4.so
+ }}}
+
+ At least on my system, libstdc++.r4.so is located in /boot/beos/system/lib
+ along with the rest of the system libs.
+
+ I suppose perhaps whatever method is being used to create Senryu is
+ installing some different (incompatible) version of this lib in
+ /boot/home/config/lib ?
+
+ I'd say you should investigate that and discuss it with the Haikuware
+ folks.
+
+ To verify this for yourself, you can run the following:
+
+ {{{
+ cd /
+ find | grep libstdc++.r4.so
+ }}}
+
+ and see what shows up.
+
+ Note: I also have some copies under /boot/develop but these should not be
+ picked up by the runtime_loader anyway.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3299#comment:2">http://dev.haiku-os.org/ticket/3299#comment:2</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="013847.html">[Haiku-bugs] [Haiku] #3299: Crash on changing setting in	3dmorph screensaver
+</A></li>
+	<LI>Next message: <A HREF="013850.html">[Haiku-bugs] [Haiku] #3299: Crash on changing setting in	3dmorph screensaver
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13849">[ date ]</a>
+              <a href="thread.html#13849">[ thread ]</a>
+              <a href="subject.html#13849">[ subject ]</a>
+              <a href="author.html#13849">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

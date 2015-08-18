@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1378: [Tracker] double click runtime_loader to freeze tracker
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231378%3A%20%5BTracker%5D%20double%20click%0A%20runtime_loader%20to%20freeze%20tracker&In-Reply-To=%3C049.b4afae591cce3c588f3cc8a62e18492f%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002198.html">
+   <LINK REL="Next"  HREF="002201.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1378: [Tracker] double click runtime_loader to freeze tracker</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231378%3A%20%5BTracker%5D%20double%20click%0A%20runtime_loader%20to%20freeze%20tracker&In-Reply-To=%3C049.b4afae591cce3c588f3cc8a62e18492f%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1378: [Tracker] double click runtime_loader to freeze tracker">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Aug 11 01:29:51 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002198.html">[Haiku-bugs] [Haiku] #1378: [Tracker] double click runtime_loader to freeze tracker
+</A></li>
+        <LI>Next message: <A HREF="002201.html">[Haiku-bugs] [Haiku] #1378: [Tracker] double click runtime_loader to freeze tracker
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2199">[ date ]</a>
+              <a href="thread.html#2199">[ thread ]</a>
+              <a href="subject.html#2199">[ subject ]</a>
+              <a href="author.html#2199">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1378: [Tracker] double click runtime_loader to freeze tracker
+------------------------------------+---------------------------------------
+  Reporter:  diver                  |       Owner:  axeld         
+      Type:  bug                    |      Status:  new           
+  Priority:  normal                 |   Milestone:  R1            
+ Component:  System/runtime_loader  |     Version:  R1 development
+Resolution:                         |    Platform:  All           
+------------------------------------+---------------------------------------
+Comment (by diver):
+
+ From serial port:
+
+ vm_soft_fault: va 0x220 not covered by area in address space
+ vm_page_fault: vm_soft_fault returned error 'Bad address' on fault at
+ 0x220, ip 0x29106c, write 1, user 1, thread 0x7b
+ vm_page_fault: sending team &quot;/boot/beos/system/servers/app_s&quot; 0x23
+ SIGSEGV, ip 0x29106c (&quot;app_server_seg0ro&quot; +0x9106c)
+ stack trace:
+   0x00286a86 (app_server_seg0ro + 0x86a86)
+   0x0027a0d4 (app_server_seg0ro + 0x7a0d4)
+   0x0027a131 (app_server_seg0ro + 0x7a131)
+   0x0027f074 (app_server_seg0ro + 0x7f074)
+   0x0027d05f (app_server_seg0ro + 0x7d05f)
+   0x0027681a (app_server_seg0ro + 0x7681a)
+   0x0025b31c (app_server_seg0ro + 0x5b31c)
+   0x007257d0 (libroot.so_seg0ro + 0x207d0)
+   0x70553fec (w:61:TrackerWindow_7b_stack + 0x3ffec)
+ vm_soft_fault: va 0x0 not covered by area in address space
+ vm_page_fault: vm_soft_fault returned error 'Bad address' on fault at 0x0,
+ ip 0x80094e1c, write 0, user 0, thread 0x7b
+ debug_server: Thread 123 entered the debugger: Segment violation
+ stack trace, current PC 0x29106c
+ FillRectNoClipping__C7PainterRC5BRectRC9rgb_color + 0x10c:
+   (0x70553d40)  0x286a86  FillRegion__13DrawingEngineR7BRegionRC8RGBColor
+ + 0xf2
+   (0x70553dbc)  0x27a0d4  Draw__9ViewLayerP13DrawingEngineP7BRegionT2b +
+ 0x520
+   (0x70553e2c)  0x27a131  Draw__9ViewLayerP13DrawingEngineP7BRegionT2b +
+ 0x57d
+   (0x70553eac)  0x27f074  _TriggerContentRedraw__11WindowLayerR7BRegion +
+ 0xe0
+   (0x70553efc)  0x27d05f  RedrawDirtyRegion__11WindowLayer + 0x77
+   (0x70553f3c)  0x27681a  _MessageLooper__12ServerWindow + 0x126
+   (0x70553f7c)  0x25b31c  _message_thread__13MessageLooperPv + 0x28
+   (0x70553fac)  0x7257d0  _get_next_team_info + 0x5c (closest symbol)
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1378#comment:1">http://dev.haiku-os.org/ticket/1378#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002198.html">[Haiku-bugs] [Haiku] #1378: [Tracker] double click runtime_loader to freeze tracker
+</A></li>
+	<LI>Next message: <A HREF="002201.html">[Haiku-bugs] [Haiku] #1378: [Tracker] double click runtime_loader to freeze tracker
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2199">[ date ]</a>
+              <a href="thread.html#2199">[ thread ]</a>
+              <a href="subject.html#2199">[ subject ]</a>
+              <a href="author.html#2199">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,123 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3593: strtod doesn't support &quot;INF&quot; input
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233593%3A%20strtod%20doesn%27t%20support%20%22INF%22%20input&In-Reply-To=%3C051.07c5b9a7809ed51d8bf57e205313a3cf%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="015296.html">
+   <LINK REL="Next"  HREF="015297.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3593: strtod doesn't support &quot;INF&quot; input</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233593%3A%20strtod%20doesn%27t%20support%20%22INF%22%20input&In-Reply-To=%3C051.07c5b9a7809ed51d8bf57e205313a3cf%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3593: strtod doesn't support &quot;INF&quot; input">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Mar 23 03:02:34 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="015296.html">[Haiku-bugs] [Haiku] #3593: strtod doesn't support &quot;INF&quot; input
+</A></li>
+        <LI>Next message: <A HREF="015297.html">[Haiku-bugs] [Haiku] #3594: PS2 Keyboard/Mouse problems on HP Compaq NX7400 Notebook
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15302">[ date ]</a>
+              <a href="thread.html#15302">[ thread ]</a>
+              <a href="subject.html#15302">[ subject ]</a>
+              <a href="author.html#15302">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3593: strtod doesn't support &quot;INF&quot; input
+-------------------------------+--------------------------------------------
+ Reporter:  Adek336            |       Owner:  axeld         
+     Type:  bug                |      Status:  new           
+ Priority:  normal             |   Milestone:  R1            
+Component:  System/libroot.so  |     Version:  R1 development
+ Keywords:                     |   Blockedby:                
+ Platform:  All                |    Blocking:                
+-------------------------------+--------------------------------------------
+
+Comment(by Adek336):
+
+ Additionaly, strtod failed with this testcase
+
+ {{{
+ #include &lt;stdio.h&gt;
+ #include &lt;stdlib.h&gt;
+
+ int main()
+ {
+    double d = strtod(&quot;+8E153&quot;, NULL);
+    printf(&quot;%.10e\n&quot;, d);
+    return 0;
+ }
+
+ Linux result: 8.0000000000e+153
+ Haiku result: 7.9999999873e+153
+ }}}
+
+ {{{
+ The testcase is inspired by the results of running &quot;python test_float.py&quot;
+ for the floating point test.
+ Both python 2.6 on Haiku-gcc4 and python 2.7 on Haiku-gcc2 we print the
+ following message -
+
+ [...]
+     self.assertEqual(v, eval(repr(v)))
+ AssertionError: 7.9999999872500254e+153 != 7.9999999745000492e+153
+
+
+ The test which errors out in python is equivalent to
+
+ x = &quot;+8E153&quot;
+ v = eval(x)
+ assert v == eval(repr(v))
+
+ }}}
+
+ So it looks like #3308 's test_float.py issue is caused by problems with
+ strtod(). Our implementation comes from FreeBSD. The following is the last
+ revision of their stdtod.c file; in later revisions, FreeBSD uses gdtoa (
+ <A HREF="http://cvsweb.netbsd.org/bsdweb.cgi/src/lib/libc/gdtoa/">http://cvsweb.netbsd.org/bsdweb.cgi/src/lib/libc/gdtoa/</A> link to NetBSD
+ gdtoa as I couldn't find an online viewable FreeBSD link ):
+ <A HREF="http://svn.freebsd.org/viewvc/base/head/lib/libc/stdlib/strtod.c?revision=106918&amp;view=markup&amp;pathrev=112256">http://svn.freebsd.org/viewvc/base/head/lib/libc/stdlib/strtod.c?revision=106918&amp;view=markup&amp;pathrev=112256</A>
+
+ However, importing rev 112256 of FreeBSD's strtod.c into the Haiku tree
+ and doing a full rebuild doesn't help.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3593#comment:2">http://dev.haiku-os.org/ticket/3593#comment:2</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="015296.html">[Haiku-bugs] [Haiku] #3593: strtod doesn't support &quot;INF&quot; input
+</A></li>
+	<LI>Next message: <A HREF="015297.html">[Haiku-bugs] [Haiku] #3594: PS2 Keyboard/Mouse problems on HP Compaq NX7400 Notebook
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15302">[ date ]</a>
+              <a href="thread.html#15302">[ thread ]</a>
+              <a href="subject.html#15302">[ subject ]</a>
+              <a href="author.html#15302">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

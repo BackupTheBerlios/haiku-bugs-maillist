@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1608: dd statistics broken
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-December/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231608%3A%20dd%20statistics%20broken&In-Reply-To=%3C059.04c25702c192a8875b25d5dfce62fd8e%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003946.html">
+   <LINK REL="Next"  HREF="003948.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1608: dd statistics broken</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231608%3A%20dd%20statistics%20broken&In-Reply-To=%3C059.04c25702c192a8875b25d5dfce62fd8e%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1608: dd statistics broken">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Dec 16 12:02:54 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003946.html">[Haiku-bugs] [Haiku] #852: [bin:gdb] won't quit correctly
+</A></li>
+        <LI>Next message: <A HREF="003948.html">[Haiku-bugs] [Haiku] #1383: Improve Trac&#8217;s mails to haiku-bugs at lists.berlios.de
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3947">[ date ]</a>
+              <a href="thread.html#3947">[ thread ]</a>
+              <a href="subject.html#3947">[ subject ]</a>
+              <a href="author.html#3947">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1608: dd statistics broken
+------------------------------+---------------------------------------------
+  Reporter:  marcusoverhagen  |       Owner:  zooey         
+      Type:  bug              |      Status:  new           
+  Priority:  normal           |   Milestone:  R1            
+ Component:  System           |     Version:  R1 development
+Resolution:                   |    Platform:  All           
+------------------------------+---------------------------------------------
+Changes (by korli):
+
+  * owner:  korli =&gt; zooey
+
+Comment:
+
+ I found out the problem : the float.h header provided by gcc2.95 is not
+ correct for long double values (which pretty much a copy-paste of double
+ values).
+ here is the path generated_v2/cross-tools/lib/gcc-lib/i586-pc-
+ beos/2.95.3-beos-060710/include/float.h
+
+ Oliver, could you have a look ? To fix the problem locally, I had to copy
+ gcc4 float.h values to this file.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1608#comment:3">http://dev.haiku-os.org/ticket/1608#comment:3</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003946.html">[Haiku-bugs] [Haiku] #852: [bin:gdb] won't quit correctly
+</A></li>
+	<LI>Next message: <A HREF="003948.html">[Haiku-bugs] [Haiku] #1383: Improve Trac&#8217;s mails to haiku-bugs at lists.berlios.de
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3947">[ date ]</a>
+              <a href="thread.html#3947">[ thread ]</a>
+              <a href="subject.html#3947">[ subject ]</a>
+              <a href="author.html#3947">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

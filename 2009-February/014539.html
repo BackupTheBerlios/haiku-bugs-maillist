@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3465: TCP/IP panics after a few days
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-February/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233465%3A%20TCP/IP%20panics%20after%20a%20few%20days&In-Reply-To=%3C044.bc2b603d3b425bde6923faeda9d4f37c%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="014577.html">
+   <LINK REL="Next"  HREF="014549.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3465: TCP/IP panics after a few days</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233465%3A%20TCP/IP%20panics%20after%20a%20few%20days&In-Reply-To=%3C044.bc2b603d3b425bde6923faeda9d4f37c%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3465: TCP/IP panics after a few days">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Feb 21 04:23:04 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="014577.html">[Haiku-bugs] [Haiku] #3464: Intel GMA950 - Monitor switches off, freeze on boot
+</A></li>
+        <LI>Next message: <A HREF="014549.html">[Haiku-bugs] [Haiku] #3465: TCP/IP panics after a few days
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14539">[ date ]</a>
+              <a href="thread.html#14539">[ thread ]</a>
+              <a href="subject.html#14539">[ subject ]</a>
+              <a href="author.html#14539">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3465: TCP/IP panics after a few days
+--------------------------------------+-------------------------------------
+ Reporter:  anevilyak                 |       Owner:  axeld         
+     Type:  bug                       |      Status:  new           
+ Priority:  normal                    |   Milestone:  R1            
+Component:  Network &amp; Internet/Stack  |     Version:  R1 development
+Blockedby:                            |    Platform:  All           
+ Blocking:                            |  
+--------------------------------------+-------------------------------------
+ I haven't tracked down what revision this started at, but at least for the
+ past week or so, Haiku has been KDLing in the net stack for me after a few
+ days uptime, backtrace as follows:
+ {{{
+ PANIC: vm_page_fault: unhandled page fault in kernel space at 0x3c, ip
+ 0x80775b91
+ stack trace for thread 68 &quot;net timer&quot;
+     kernel stack: 0x80243000 to 0x80247000
+ frame               caller     &lt;image&gt;:function + offset
+  0 80246a04 (+  48) 800613c1   &lt;kernel_x86&gt;:invoke_debugger_command +
+ 0x00f5
+  1 80246a34 (+  64) 800611b1   &lt;kernel_x86&gt;
+ invoke_pipe_segment(debugger_command_pipe*: 0x80121f40, int32: 0, 0x0
+ &quot;&lt;NULL&gt;&quot;) + 0x0079
+  2 80246a74 (+  64) 80061538   &lt;kernel_x86&gt;:invoke_debugger_command_pipe +
+ 0x009c
+  3 80246ab4 (+  48) 80062ac0   &lt;kernel_x86&gt;
+ ExpressionParser&lt;0x80246b68&gt;::_ParseCommandPipe(0x80246b64) + 0x0234
+  4 80246ae4 (+  64) 80061efa   &lt;kernel_x86&gt;
+ ExpressionParser&lt;0x80246b68&gt;::EvaluateCommand(0x80113ea0 &quot;bt&quot;, 0x80246b64)
+ + 0x02ba
+  5 80246b24 (+ 224) 80063ee8   &lt;kernel_x86&gt;:evaluate_debug_command +
+ 0x0088
+  6 80246c04 (+  64) 8005f2be   &lt;kernel_x86&gt; kernel_debugger_loop() +
+ 0x01ae
+  7 80246c44 (+  32) 80060141   &lt;kernel_x86&gt;:kernel_debugger + 0x004d
+  8 80246c64 (+ 192) 800600e9   &lt;kernel_x86&gt;:panic + 0x0029
+  9 80246d24 (+  80) 800c1c95   &lt;kernel_x86&gt;:vm_page_fault + 0x0139
+ 10 80246d74 (+  64) 800d1d3d   &lt;kernel_x86&gt;:page_fault_exception + 0x00d9
+ 11 80246db4 (+  12) 800d5466   &lt;kernel_x86&gt;:int_bottom + 0x0036
+ kernel iframe at 0x80246dc0 (end = 0x80246e10)
+  eax 0x90ac88bc     ebx 0x80779ee8      ecx 0x90ac883c   edx 0x0
+  esi 0x81269744     edi 0x90ac8800      ebp 0x80246e68   esp 0x80246df4
+  eip 0x80775b91  eflags 0x210282
+  vector: 0xe, error code: 0x0
+ 12 80246dc0 (+ 168) 80775b91   &lt;/boot/beos/system/add-
+ ons/kernel/network/protocols/ipv4&gt; ipv4_send_routed_data(net_protocol*:
+ 0x813ce5ac, net_route*: 0x8131c7a8, net_buffer*: 0x90ac8800) + 0x003d
+ 13 80246e68 (+ 128) 90af5a1c   &lt;/boot/beos/system/add-
+ ons/kernel/network/protocols/tcp&gt;
+ TCPEndpoint&lt;0x81269744&gt;::_SendQueued(false, uint32: 0x16c0 (5824)) +
+ 0x0564
+ 14 80246ee8 (+  48) 90af54af   &lt;/boot/beos/system/add-
+ ons/kernel/network/protocols/tcp&gt;
+ TCPEndpoint&lt;0x81269744&gt;::_SendQueued(false) + 0x002b
+ 15 80246f18 (+  64) 90af5d6d   &lt;/boot/beos/system/add-
+ ons/kernel/network/protocols/tcp&gt;
+ TCPEndpoint&lt;0x81269744&gt;::_Retransmit(0xffffffff, int8: -104) + 0x0035
+ 16 80246f58 (+  64) 90af5e8d   &lt;/boot/beos/system/add-
+ ons/kernel/network/protocols/tcp&gt;
+ TCPEndpoint&lt;0x81269830&gt;::_RetransmitTimer(net_timer*: 0x81269744,
+ 0x80768d20) + 0x0069
+ 17 80246f98 (+  64) 807669f0   &lt;/boot/beos/system/add-
+ ons/kernel/network/stack&gt; timer_thread(NULL) + 0x0100
+ 18 80246fd8 (+  32) 8005347f   &lt;kernel_x86&gt; _create_kernel_thread_kentry()
+ + 0x001b
+ 19 80246ff8 (+2145095688) 8005341c   &lt;kernel_x86&gt; thread_kthread_exit() +
+ 0x0000
+ }}}
+
+ net_timers at that point:
+ {{{
+ kdebug&gt; net_timer
+ timer       hook        data        due in
+ 0x81327918  0x90a18a00  0x813278e8  -7397171850
+ 0x81404030  0x90a18a00  0x81404000  -7631141712
+ 0x816b4a80  0x90a18a00  0x816b4a50  -9184225571
+ 0x816b4300  0x90a18a00  0x816b42d0  -9184167325
+ 0x93c15b70  0x90a18a00  0x93c15b40  -9184026889
+ 0x81e56978  0x81158704  0x81e56978  -9183982072
+ 0x93c15378  0x90a18a00  0x93c15348  -9183891477
+ 0x81269548  0x90af5e24  0x8126945c  -9184549968
+ 0x817f1cd8  0x90a18a00  0x817f1ca8  -9183615204
+ }}}
+
+ Not sure what else would be useful at this point.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3465">http://dev.haiku-os.org/ticket/3465</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="014577.html">[Haiku-bugs] [Haiku] #3464: Intel GMA950 - Monitor switches off, freeze on boot
+</A></li>
+	<LI>Next message: <A HREF="014549.html">[Haiku-bugs] [Haiku] #3465: TCP/IP panics after a few days
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14539">[ date ]</a>
+              <a href="thread.html#14539">[ thread ]</a>
+              <a href="subject.html#14539">[ subject ]</a>
+              <a href="author.html#14539">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

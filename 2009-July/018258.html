@@ -1,0 +1,154 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4058: Boot fails, new ATA stack
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-July/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234058%3A%20Boot%20fails%2C%20new%20ATA%20stack&In-Reply-To=%3C041.80baf0320e11494d3dd20f9dd3ca327a%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="018259.html">
+   <LINK REL="Next"  HREF="018350.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4058: Boot fails, new ATA stack</H1>
+    <B>aldeck</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234058%3A%20Boot%20fails%2C%20new%20ATA%20stack&In-Reply-To=%3C041.80baf0320e11494d3dd20f9dd3ca327a%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4058: Boot fails, new ATA stack">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Jul  2 18:12:19 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="018259.html">[Haiku-bugs] [Haiku] #4057: Boot fails, new ATA stack
+</A></li>
+        <LI>Next message: <A HREF="018350.html">[Haiku-bugs] [Haiku] #4058: Boot fails, new ATA stack
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18258">[ date ]</a>
+              <a href="thread.html#18258">[ thread ]</a>
+              <a href="subject.html#18258">[ subject ]</a>
+              <a href="author.html#18258">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4058: Boot fails, new ATA stack
+--------------------------+-------------------------------------------------
+ Reporter:  aldeck        |       Owner:  marcusoverhagen
+     Type:  bug           |      Status:  new            
+ Priority:  normal        |   Milestone:  R1             
+Component:  Drivers/Disk  |     Version:  R1 development 
+Blockedby:                |    Platform:  All            
+ Blocking:                |  
+--------------------------+-------------------------------------------------
+ Boot fails and enters KDL with:
+ {{{
+ PANIC: did not find any boot partitions!
+ Welcome to KDL...
+ Thread 13 &quot;main2&quot; running on CPU 0
+ }}}
+
+ r31372 built with HAIKU_ATA_STACK=1[[BR]]
+ Core 1 duo laptop, PATA hardrive.
+
+ lspci
+ {{{
+ 00:00.0 Host bridge: Intel Corporation Mobile 945GM/PM/GMS, 943/940GML and
+ 945GT Express Memory Controller Hub (rev 03)
+ 00:01.0 PCI bridge: Intel Corporation Mobile 945GM/PM/GMS, 943/940GML and
+ 945GT Express PCI Express Root Port (rev 03)
+ 00:1b.0 Audio device: Intel Corporation 82801G (ICH7 Family) High
+ Definition Audio Controller (rev 02)
+ 00:1c.0 PCI bridge: Intel Corporation 82801G (ICH7 Family) PCI Express
+ Port 1 (rev 02)
+ 00:1c.2 PCI bridge: Intel Corporation 82801G (ICH7 Family) PCI Express
+ Port 3 (rev 02)
+ 00:1c.3 PCI bridge: Intel Corporation 82801G (ICH7 Family) PCI Express
+ Port 4 (rev 02)
+ 00:1d.0 USB Controller: Intel Corporation 82801G (ICH7 Family) USB UHCI
+ Controller #1 (rev 02)
+ 00:1d.1 USB Controller: Intel Corporation 82801G (ICH7 Family) USB UHCI
+ Controller #2 (rev 02)
+ 00:1d.2 USB Controller: Intel Corporation 82801G (ICH7 Family) USB UHCI
+ Controller #3 (rev 02)
+ 00:1d.3 USB Controller: Intel Corporation 82801G (ICH7 Family) USB UHCI
+ Controller #4 (rev 02)
+ 00:1d.7 USB Controller: Intel Corporation 82801G (ICH7 Family) USB2 EHCI
+ Controller (rev 02)
+ 00:1e.0 PCI bridge: Intel Corporation 82801 Mobile PCI Bridge (rev e2)
+ 00:1f.0 ISA bridge: Intel Corporation 82801GBM (ICH7-M) LPC Interface
+ Bridge (rev 02)
+ 00:1f.1 IDE interface: Intel Corporation 82801G (ICH7 Family) IDE
+ Controller (rev 02)
+ 01:00.0 VGA compatible controller: nVidia Corporation G70 [GeForce Go
+ 7600] (rev a1)
+ 02:00.0 Network controller: Intel Corporation PRO/Wireless 3945ABG [Golan]
+ Network Connection (rev 02)
+ 03:00.0 Ethernet controller: Realtek Semiconductor Co., Ltd. RTL8111/8168B
+ PCI Express Gigabit Ethernet controller (rev 01)
+ 06:00.0 FireWire (IEEE 1394): Ricoh Co Ltd R5C832 IEEE 1394 Controller
+ 06:00.1 SD Host controller: Ricoh Co Ltd R5C822 SD/SDIO/MMC/MS/MSPro Host
+ Adapter (rev 19)
+ 06:00.2 System peripheral: Ricoh Co Ltd R5C843 MMC Host Controller (rev
+ 0a)
+ 06:00.3 System peripheral: Ricoh Co Ltd R5C592 Memory Stick Bus Host
+ Adapter (rev 05)
+ 06:00.4 System peripheral: Ricoh Co Ltd xD-Picture Card Controller (rev
+ ff)
+ }}}
+
+ hdparm -i /dev/sda
+ {{{
+ /dev/sda:
+
+  Model=FUJITSU MHV2120AT PL                    , FwRev=000000A0, SerialNo=
+ NSA4T5B255HV
+  Config={ HardSect NotMFM HdSw&gt;15uSec Fixed DTR&gt;10Mbs }
+  RawCHS=16383/16/63, TrkSize=0, SectSize=0, ECCbytes=0
+  BuffType=DualPortCache, BuffSize=8192kB, MaxMultSect=16, MultSect=?16?
+  CurCHS=16383/16/63, CurSects=16514064, LBA=yes, LBAsects=234441648
+  IORDY=yes, tPIO={min:240,w/IORDY:120}, tDMA={min:120,rec:120}
+  PIO modes:  pio0 pio1 pio2 pio3 pio4
+  DMA modes:  mdma0 mdma1 mdma2
+  UDMA modes: udma0 udma1 udma2 udma3 udma4 *udma5
+  AdvancedPM=yes: mode=0x80 (128) WriteCache=enabled
+  Drive conforms to: unknown:  ATA/ATAPI-2,3,4,5,6,7
+
+  * signifies the current active mode
+ }}}
+
+ screenshots of the syslog already uploaded there (i can upload them to
+ trac if prefered):[[BR]]
+  <A HREF="http://haikubeat.free.fr/files/testing/ata_stack">http://haikubeat.free.fr/files/testing/ata_stack</A>
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4058">http://dev.haiku-os.org/ticket/4058</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="018259.html">[Haiku-bugs] [Haiku] #4057: Boot fails, new ATA stack
+</A></li>
+	<LI>Next message: <A HREF="018350.html">[Haiku-bugs] [Haiku] #4058: Boot fails, new ATA stack
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18258">[ date ]</a>
+              <a href="thread.html#18258">[ thread ]</a>
+              <a href="subject.html#18258">[ subject ]</a>
+              <a href="author.html#18258">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

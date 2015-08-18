@@ -1,0 +1,176 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2148: BFS volume not fully written to
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232148%3A%20BFS%20volume%20not%20fully%20written%20to&In-Reply-To=%3C043.3083193f1d74cb863e554761dcc63606%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006749.html">
+   <LINK REL="Next"  HREF="006758.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2148: BFS volume not fully written to</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232148%3A%20BFS%20volume%20not%20fully%20written%20to&In-Reply-To=%3C043.3083193f1d74cb863e554761dcc63606%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2148: BFS volume not fully written to">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Apr 23 23:37:56 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006749.html">[Haiku-bugs] [Haiku] #2147: [PATCH] Margin around tab view in	fonts preflet
+</A></li>
+        <LI>Next message: <A HREF="006758.html">[Haiku-bugs] [Haiku] #2148: BFS volume not fully written to
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6757">[ date ]</a>
+              <a href="thread.html#6757">[ thread ]</a>
+              <a href="subject.html#6757">[ subject ]</a>
+              <a href="author.html#6757">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2148: BFS volume not fully written to
+------------------------------+---------------------------------------------
+ Reporter:  andreasf          |       Owner:  axeld         
+     Type:  bug               |      Status:  new           
+ Priority:  normal            |   Milestone:  R1            
+Component:  File Systems/BFS  |     Version:  R1 development
+ Platform:  x86               |  
+------------------------------+---------------------------------------------
+ As discussed on the haiku-development list, I have a 4.0 GB BFS volume,
+ second primary Intel partition, slave IDE device.
+ I am unable to get more than ~2400 MB onto the volume.
+
+ Ways to reproduce:
+
+ i)
+ {{{
+ bzr branch <A HREF="http://bazaar-vcs.org/bzr/bzr.dev">http://bazaar-vcs.org/bzr/bzr.dev</A> bzr.dev
+ }}}
+ results 100% reproducible (here during phase 2/5) in the KDL:
+ {{{
+ PANIC: block_cache: supposed to be clean block was changed!
+ }}}
+ Corresponding {{{sc}}} (shortened):
+ {{{
+ [...]
+ panic
+ put_cached_block block_cache cached_block
+ put_cached_block block_cache
+ &lt;kernel&gt;block_cache_put
+ &lt;bfs&gt;Unset CachedBlock
+ _GrowStream Inode Transaction
+ SetFileSize Inode Transaction
+ WriteAt Inode Transaction
+ bfs_write fs_volume fs_vnode
+ &lt;bfs&gt;file_write file_descriptor
+ common_user_io_FixPvUlb
+ _user_write
+ &lt;kernel&gt;pre_syscall_debug_done
+ [iframe]
+ _IO_new_file_write
+ _IO_do_write
+ _IO_new_file_xsputn
+ &lt;libroot.so&gt;fwrite
+ &lt;python&gt;PyFile_GetLine
+ }}}
+ (This KDL can be `continue`'d.)
+ ''Bazaar 1.3.1 is based on Python &gt;= 2.4 and requires {{{_socket}}} and
+ {{{bz2}}} modules; to satisfy the latter, I compiled Python 2.5.x (stable)
+ SVN branch using [<A HREF="http://tools.assembla.com/BePorts/browser/BePorts/trunk">http://tools.assembla.com/BePorts/browser/BePorts/trunk</A>
+ /dev-lang/python/python-2.5.x.diff?rev=30 this patch], enabling said
+ modules in {{{Modules/Setup}}}. This patch was still considered work-in-
+ progress but its incompleteness shouldn't be able to cause such a KDL.
+ To successfully run Bazaar, the hostname needs to be set, here using
+ `hostname test`.''
+
+ ii) Copying a large source code folder (such as a successful {{{bzr.dev}}}
+ branch from my main volume) onto the volume (dragging from one window to
+ another) results in a Tracker error message box (during Tracker Status
+ progress window), showing a large negative system error code.
+
+ iii)
+ {{{
+ dd if=/dev/zero of=/ToBe/zerofile
+ }}}
+ stops and presents the error message
+ {{{
+ Read-only file system
+ }}}
+
+ After each of these ways to reproduce, unexpected high CPU usage remains,
+ and the volume has become read-only - no further files can be written or
+ removed. But the volume is neither shown as full, nor could it
+ theoretically be full number-wise. For i) it was slightly over 2400 MB the
+ first time, for ii) and iii) slightly above to 2380 MB.
+ In each case, `chkbfs` on BeOS Max is able to repair the volume, it fixes
+ {{{block allocation mismatches}}}.
+
+ System is a real P4 with HyperThreading (SMP), 512 MB DDR RAM. firewire
+ bus_manager was removed to avoid issues like on gcc4, no difference.
+
+ The partition was created using GParted on Linux, left unformatted, it is
+ being shown as {{{Linux native}}} (not {{{BeOS}}}) in BeOS' DriveSetup.
+ The partition was most likely initialized with Haiku's DriveSetup, using
+ default values. Despite the apparently wrong partition type, BFS
+ filesystem is always recognized correctly.
+
+ From `bfsinfo -s /dev/disk/ide/ata/0/slave/0/0_1` on BeOS I get this
+ twice, in the clean state:
+ {{{
+ disk_super_block:
+  name = &quot;ToBe&quot;
+  magic1 = 0x42465331 (BFS1) valid
+  fs_byte_order = 0x42494745 (BIGE, little endian)
+  block_size = 2048
+  block_shift = 11
+  num_blocks = 2096482
+  used_blocks = 1174951
+  inode_size = 2048
+  magic2 = 0xdd121031 (...1) valid
+  blocks_per_ag = 4
+  ag_shift = 16
+  num_ags = 32
+  flags = 0x434c454e (CLEN)
+  log_blocks = (0, 129, 2048)
+  log_start = 1483
+  log_end = 1483
+  magic3 = 0x15b6830e
+  root_dir = (8, 0, 1)
+  indices = (0, 2177, 1)
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2148">http://dev.haiku-os.org/ticket/2148</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006749.html">[Haiku-bugs] [Haiku] #2147: [PATCH] Margin around tab view in	fonts preflet
+</A></li>
+	<LI>Next message: <A HREF="006758.html">[Haiku-bugs] [Haiku] #2148: BFS volume not fully written to
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6757">[ date ]</a>
+              <a href="thread.html#6757">[ thread ]</a>
+              <a href="subject.html#6757">[ subject ]</a>
+              <a href="author.html#6757">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,317 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #446: [Cortex] fails to load
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-December/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23446%3A%20%5BCortex%5D%20fails%20to%20load&In-Reply-To=%3C049.aa45f5f6ee36fec54baad1a49a89323d%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003849.html">
+   <LINK REL="Next"  HREF="003851.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #446: [Cortex] fails to load</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23446%3A%20%5BCortex%5D%20fails%20to%20load&In-Reply-To=%3C049.aa45f5f6ee36fec54baad1a49a89323d%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #446: [Cortex] fails to load">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Dec  6 13:12:07 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003849.html">[Haiku-bugs] [Haiku] #731: [Cortex] media_addon_server start to	eat cpu
+</A></li>
+        <LI>Next message: <A HREF="003851.html">[Haiku-bugs] [Haiku] #1309: [app_server] freeze if you start	Cortex
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3850">[ date ]</a>
+              <a href="thread.html#3850">[ thread ]</a>
+              <a href="subject.html#3850">[ subject ]</a>
+              <a href="author.html#3850">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#446: [Cortex] fails to load
+------------------------+---------------------------------------------------
+  Reporter:  diver      |       Owner:  marcusoverhagen
+      Type:  bug        |      Status:  closed         
+  Priority:  normal     |   Milestone:  R1             
+ Component:  - General  |     Version:                 
+Resolution:  duplicate  |    Platform:  All            
+------------------------+---------------------------------------------------
+Changes (by marcusoverhagen):
+
+  * status:  new =&gt; closed
+  * platform:  =&gt; All
+  * resolution:  =&gt; duplicate
+
+Old description:
+
+&gt;<i> Cortex fails to load. It works in vmware and 2 weeks ago when may audigy
+</I>&gt;<i> wasn't
+</I>&gt;<i> detexted. Now Cortex just eat all cpu and print this to terminal:
+</I>&gt;<i>
+</I>&gt;<i> ~/config/add-ons/Tracker&gt;Cortex
+</I>&gt;<i> ui_color(): unknown color_which 3
+</I>&gt;<i> ui_color(): unknown color_which 3
+</I>&gt;<i> ui_color(): unknown color_which 3
+</I>&gt;<i> ui_color(): unknown color_which 3
+</I>&gt;<i> ui_color(): unknown color_which 3
+</I>&gt;<i> ### ERROR: BMediaRosterEx::SaveNodeConfiguration node 1 not instantiated
+</I>&gt;<i> from
+</I>&gt;<i> BMediaAddOn!
+</I>&gt;<i> TimeSourceObject::DeleteHook enter
+</I>&gt;<i> BMediaRoster::ReleaseNode, trying to release reference counting disabled
+</I>&gt;<i> timesource, node 1, port 8277, team 115
+</I>&gt;<i> TimeSourceObject::DeleteHook leave
+</I>&gt;<i> BMediaRoster::SetTimeSourceFor: node 1 time source 2 enter
+</I>&gt;<i> BMediaRoster::SetTimeSourceFor: node 1 time source 2 leave
+</I>&gt;<i> BMediaRoster::SetTimeSourceFor: node 2 time source 2 enter
+</I>&gt;<i> BMediaRoster::SetTimeSourceFor: node 2 time source 2 leave
+</I>&gt;<i>
+</I>
+&gt;<i> Without media_server it prints this:
+</I>&gt;<i>
+</I>&gt;<i> ui_color(): unknown color_which 3
+</I>&gt;<i> ui_color(): unknown color_which 3
+</I>&gt;<i> ui_color(): unknown color_which 3
+</I>&gt;<i> ui_color(): unknown color_which 3
+</I>&gt;<i> ui_color(): unknown color_which 3
+</I>&gt;<i> ### ERROR: BMediaRosterEx::SaveNodeConfiguration node 1 not instantiated
+</I>&gt;<i> from
+</I>&gt;<i> BMediaAddOn!
+</I>&gt;<i> TimeSourceObject::DeleteHook enter
+</I>&gt;<i> BMediaRoster::ReleaseNode, trying to release reference counting disabled
+</I>&gt;<i> timesource, node 1, port 8277, team 115
+</I>&gt;<i> TimeSourceObject::DeleteHook leave
+</I>&gt;<i> BMediaRoster::SetTimeSourceFor: node 1 time source 2 enter
+</I>&gt;<i> BMediaRoster::SetTimeSourceFor: node 1 time source 2 leave
+</I>&gt;<i> BMediaRoster::SetTimeSourceFor: node 2 time source 2 enter
+</I>&gt;<i> BMediaRoster::SetTimeSourceFor: node 2 time source 2 leave
+</I>&gt;<i>
+</I>&gt;<i> ~/config/add-ons/Tracker&gt;sync~/config/add-ons/Tracker&gt;Cortex
+</I>&gt;<i> ### ERROR: couldn't find MediaServerPort
+</I>&gt;<i> ### ERROR: couldn't find MediaAddonServerPort
+</I>&gt;<i> ui_color(): unknown color_which 3
+</I>&gt;<i> ui_color(): unknown color_which 3
+</I>&gt;<i> ui_color(): unknown color_which 3
+</I>&gt;<i> ui_color(): unknown color_which 3
+</I>&gt;<i> ui_color(): unknown color_which 3
+</I>&gt;<i> ### ERROR: QueryPort: write_port failed, msgcode 0x101, port -222, error
+</I>&gt;<i> 0x80001200 (Bad port ID)
+</I>&gt;<i> ### ERROR: couldn't find MediaServerPort
+</I>&gt;<i> ### ERROR: QueryPort: retrying write_port failed, msgcode 0x101, port
+</I>&gt;<i> -222,
+</I>&gt;<i> error 0x80001200 (Bad port ID)
+</I>&gt;<i> ### ERROR: QueryPort: write_port failed, msgcode 0x102, port -222, error
+</I>&gt;<i> 0x80001200 (Bad port ID)
+</I>&gt;<i> ### ERROR: couldn't find MediaServerPort
+</I>&gt;<i> ### ERROR: QueryPort: retrying write_port failed, msgcode 0x102, port
+</I>&gt;<i> -222,
+</I>&gt;<i> error 0x80001200 (Bad port ID)
+</I>&gt;<i> ### ERROR: QueryPort: write_port failed, msgcode 0x103, port -222, error
+</I>&gt;<i> 0x80001200 (Bad port ID)
+</I>&gt;<i> ### ERROR: couldn't find MediaServerPort
+</I>&gt;<i> ### ERROR: QueryPort: retrying write_port failed, msgcode 0x103, port
+</I>&gt;<i> -222,
+</I>&gt;<i> error 0x80001200 (Bad port ID)
+</I>&gt;<i> ### ERROR: QueryPort: write_port failed, msgcode 0x103, port -222, error
+</I>&gt;<i> 0x80001200 (Bad port ID)
+</I>&gt;<i> ### ERROR: couldn't find MediaServerPort
+</I>&gt;<i> ### ERROR: QueryPort: retrying write_port failed, msgcode 0x103, port
+</I>&gt;<i> -222,
+</I>&gt;<i> error 0x80001200 (Bad port ID)
+</I>&gt;<i> ### ERROR: QueryPort: write_port failed, msgcode 0x103, port -222, error
+</I>&gt;<i> 0x80001200 (Bad port ID)
+</I>&gt;<i> ### ERROR: couldn't find MediaServerPort
+</I>&gt;<i> ### ERROR: QueryPort: retrying write_port failed, msgcode 0x103, port
+</I>&gt;<i> -222,
+</I>&gt;<i> error 0x80001200 (Bad port ID)
+</I>&gt;<i> ### ERROR: QueryPort: write_port failed, msgcode 0x103, port -222, error
+</I>&gt;<i> 0x80001200 (Bad port ID)
+</I>&gt;<i> ### ERROR: couldn't find MediaServerPort
+</I>&gt;<i> ### ERROR: QueryPort: retrying write_port failed, msgcode 0x103, port
+</I>&gt;<i> -222,
+</I>&gt;<i> error 0x80001200 (Bad port ID)
+</I>&gt;<i> ### ERROR: QueryPort: write_port failed, msgcode 0x103, port -222, error
+</I>&gt;<i> 0x80001200 (Bad port ID)
+</I>&gt;<i> ### ERROR: couldn't find MediaServerPort
+</I>&gt;<i> ### ERROR: QueryPort: retrying write_port failed, msgcode 0x103, port
+</I>&gt;<i> -222,
+</I>&gt;<i> error 0x80001200 (Bad port ID)
+</I>&gt;<i> ### ERROR: SendToServer: SendMessage failed, error 0x80001200 (Bad port
+</I>&gt;<i> ID)
+</I>&gt;<i> BMessage: what = '' (0x3e8, or 1000)
+</I>&gt;<i>     entry be:media:internal:what, type='LONG', c=1, size= 4, data[0]:
+</I>&gt;<i> 0x54525743
+</I>&gt;<i> (1414682435 'TRWC')
+</I>&gt;<i>     entry be:media:internal:team, type='LONG', c=1, size= 4, data[0]:
+</I>&gt;<i> 0xaf (175'')
+</I>&gt;<i>     entry be:media:internal:messenger, type='MSNG', c=1, size=24,
+</I>&gt;<i>     entry           node, type='RAWT', c=1, size=24,
+</I>&gt;<i> ### ERROR: QueryPort: write_port failed, msgcode 0x103, port -222, error
+</I>&gt;<i> 0x80001200 (Bad port ID)
+</I>&gt;<i> ### ERROR: couldn't find MediaServerPort
+</I>&gt;<i> ### ERROR: QueryPort: retrying write_port failed, msgcode 0x103, port
+</I>&gt;<i> -222,
+</I>&gt;<i> error 0x80001200 (Bad port ID)
+</I>&gt;<i> ### ERROR: QueryPort: write_port failed, msgcode 0x103, port -222, error
+</I>&gt;<i> 0x80001200 (Bad port ID)
+</I>&gt;<i> ### ERROR: couldn't find MediaServerPort
+</I>&gt;<i> ### ERROR: QueryPort: retrying write_port failed, msgcode 0x103, port
+</I>&gt;<i> -222,
+</I>&gt;<i> error 0x80001200 (Bad port ID)
+</I>
+New description:
+
+ Cortex fails to load. It works in vmware and 2 weeks ago when may audigy
+ wasn't
+ detexted. Now Cortex just eat all cpu and print this to terminal:
+
+ ~/config/add-ons/Tracker&gt;Cortex
+ ui_color(): unknown color_which 3
+ ui_color(): unknown color_which 3
+ ui_color(): unknown color_which 3
+ ui_color(): unknown color_which 3
+ ui_color(): unknown color_which 3
+ ### ERROR: BMediaRosterEx::SaveNodeConfiguration node 1 not instantiated
+ from
+ BMediaAddOn!
+ TimeSourceObject::DeleteHook enter
+ BMediaRoster::ReleaseNode, trying to release reference counting disabled
+ timesource, node 1, port 8277, team 115
+ TimeSourceObject::DeleteHook leave
+ BMediaRoster::SetTimeSourceFor: node 1 time source 2 enter
+ BMediaRoster::SetTimeSourceFor: node 1 time source 2 leave
+ BMediaRoster::SetTimeSourceFor: node 2 time source 2 enter
+ BMediaRoster::SetTimeSourceFor: node 2 time source 2 leave
+
+
+ Without media_server it prints this:
+
+ ui_color(): unknown color_which 3
+ ui_color(): unknown color_which 3
+ ui_color(): unknown color_which 3
+ ui_color(): unknown color_which 3
+ ui_color(): unknown color_which 3
+ ### ERROR: BMediaRosterEx::SaveNodeConfiguration node 1 not instantiated
+ from
+ BMediaAddOn!
+ TimeSourceObject::DeleteHook enter
+ BMediaRoster::ReleaseNode, trying to release reference counting disabled
+ timesource, node 1, port 8277, team 115
+ TimeSourceObject::DeleteHook leave
+ BMediaRoster::SetTimeSourceFor: node 1 time source 2 enter
+ BMediaRoster::SetTimeSourceFor: node 1 time source 2 leave
+ BMediaRoster::SetTimeSourceFor: node 2 time source 2 enter
+ BMediaRoster::SetTimeSourceFor: node 2 time source 2 leave
+
+ ~/config/add-ons/Tracker&gt;sync~/config/add-ons/Tracker&gt;Cortex
+ ### ERROR: couldn't find MediaServerPort
+ ### ERROR: couldn't find MediaAddonServerPort
+ ui_color(): unknown color_which 3
+ ui_color(): unknown color_which 3
+ ui_color(): unknown color_which 3
+ ui_color(): unknown color_which 3
+ ui_color(): unknown color_which 3
+ ### ERROR: QueryPort: write_port failed, msgcode 0x101, port -222, error
+ 0x80001200 (Bad port ID)
+ ### ERROR: couldn't find MediaServerPort
+ ### ERROR: QueryPort: retrying write_port failed, msgcode 0x101, port
+ -222,
+ error 0x80001200 (Bad port ID)
+ ### ERROR: QueryPort: write_port failed, msgcode 0x102, port -222, error
+ 0x80001200 (Bad port ID)
+ ### ERROR: couldn't find MediaServerPort
+ ### ERROR: QueryPort: retrying write_port failed, msgcode 0x102, port
+ -222,
+ error 0x80001200 (Bad port ID)
+ ### ERROR: QueryPort: write_port failed, msgcode 0x103, port -222, error
+ 0x80001200 (Bad port ID)
+ ### ERROR: couldn't find MediaServerPort
+ ### ERROR: QueryPort: retrying write_port failed, msgcode 0x103, port
+ -222,
+ error 0x80001200 (Bad port ID)
+ ### ERROR: QueryPort: write_port failed, msgcode 0x103, port -222, error
+ 0x80001200 (Bad port ID)
+ ### ERROR: couldn't find MediaServerPort
+ ### ERROR: QueryPort: retrying write_port failed, msgcode 0x103, port
+ -222,
+ error 0x80001200 (Bad port ID)
+ ### ERROR: QueryPort: write_port failed, msgcode 0x103, port -222, error
+ 0x80001200 (Bad port ID)
+ ### ERROR: couldn't find MediaServerPort
+ ### ERROR: QueryPort: retrying write_port failed, msgcode 0x103, port
+ -222,
+ error 0x80001200 (Bad port ID)
+ ### ERROR: QueryPort: write_port failed, msgcode 0x103, port -222, error
+ 0x80001200 (Bad port ID)
+ ### ERROR: couldn't find MediaServerPort
+ ### ERROR: QueryPort: retrying write_port failed, msgcode 0x103, port
+ -222,
+ error 0x80001200 (Bad port ID)
+ ### ERROR: QueryPort: write_port failed, msgcode 0x103, port -222, error
+ 0x80001200 (Bad port ID)
+ ### ERROR: couldn't find MediaServerPort
+ ### ERROR: QueryPort: retrying write_port failed, msgcode 0x103, port
+ -222,
+ error 0x80001200 (Bad port ID)
+ ### ERROR: SendToServer: SendMessage failed, error 0x80001200 (Bad port
+ ID)
+ BMessage: what = '' (0x3e8, or 1000)
+     entry be:media:internal:what, type='LONG', c=1, size= 4, data[0]:
+ 0x54525743
+ (1414682435 'TRWC')
+     entry be:media:internal:team, type='LONG', c=1, size= 4, data[0]: 0xaf
+ (175'')
+     entry be:media:internal:messenger, type='MSNG', c=1, size=24,
+     entry           node, type='RAWT', c=1, size=24,
+ ### ERROR: QueryPort: write_port failed, msgcode 0x103, port -222, error
+ 0x80001200 (Bad port ID)
+ ### ERROR: couldn't find MediaServerPort
+ ### ERROR: QueryPort: retrying write_port failed, msgcode 0x103, port
+ -222,
+ error 0x80001200 (Bad port ID)
+ ### ERROR: QueryPort: write_port failed, msgcode 0x103, port -222, error
+ 0x80001200 (Bad port ID)
+ ### ERROR: couldn't find MediaServerPort
+ ### ERROR: QueryPort: retrying write_port failed, msgcode 0x103, port
+ -222,
+ error 0x80001200 (Bad port ID)
+
+Comment:
+
+ this is a duplicate of bug #731
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/446#comment:3">http://dev.haiku-os.org/ticket/446#comment:3</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003849.html">[Haiku-bugs] [Haiku] #731: [Cortex] media_addon_server start to	eat cpu
+</A></li>
+	<LI>Next message: <A HREF="003851.html">[Haiku-bugs] [Haiku] #1309: [app_server] freeze if you start	Cortex
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3850">[ date ]</a>
+              <a href="thread.html#3850">[ thread ]</a>
+              <a href="subject.html#3850">[ subject ]</a>
+              <a href="author.html#3850">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

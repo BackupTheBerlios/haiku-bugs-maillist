@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3978: Update install from CD fails at	r30914
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233978%3A%20Update%20install%20from%20CD%20fails%20at%0A%09r30914&In-Reply-To=%3C049.d0cdde9a1eeb1e2b44d02bf0236cc277%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="017680.html">
+   <LINK REL="Next"  HREF="017691.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3978: Update install from CD fails at	r30914</H1>
+    <B>haiqu</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233978%3A%20Update%20install%20from%20CD%20fails%20at%0A%09r30914&In-Reply-To=%3C049.d0cdde9a1eeb1e2b44d02bf0236cc277%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3978: Update install from CD fails at	r30914">trac at haiku-os.org
+       </A><BR>
+    <I>Sat May 30 17:08:57 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="017680.html">[Haiku-bugs] [Haiku] #3978: Update install from CD fails at	r30914
+</A></li>
+        <LI>Next message: <A HREF="017691.html">[Haiku-bugs] [Haiku] #3978: Update install from CD fails at	r30914
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17685">[ date ]</a>
+              <a href="thread.html#17685">[ thread ]</a>
+              <a href="subject.html#17685">[ subject ]</a>
+              <a href="author.html#17685">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3978: Update install from CD fails at r30914
+--------------------------+-------------------------------------------------
+ Reporter:  haiqu         |       Owner:  bonefish      
+     Type:  bug           |      Status:  new           
+ Priority:  normal        |   Milestone:  R1            
+Component:  Build System  |     Version:  R1 development
+Blockedby:                |    Platform:  x86           
+ Blocking:                |  
+--------------------------+-------------------------------------------------
+
+Comment(by haiqu):
+
+ Builds fine. Problem is in the change to the directory structure. The
+ installer is trying to create symlinks to /boot/develop/headers/cpp and
+ /boot/develop/lib/x86 where directories already exist. These directories
+ need to be deleted or renamed first.
+
+ The new link to the compiler is also wrong, /boot/develop/tools/gnupro now
+ points to /boot/develop/abi/current/tools/current (broken).
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3978#comment:2">http://dev.haiku-os.org/ticket/3978#comment:2</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="017680.html">[Haiku-bugs] [Haiku] #3978: Update install from CD fails at	r30914
+</A></li>
+	<LI>Next message: <A HREF="017691.html">[Haiku-bugs] [Haiku] #3978: Update install from CD fails at	r30914
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17685">[ date ]</a>
+              <a href="thread.html#17685">[ thread ]</a>
+              <a href="subject.html#17685">[ subject ]</a>
+              <a href="author.html#17685">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

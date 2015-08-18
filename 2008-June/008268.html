@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2398: build system doesn't honor HAIKU_DONT_CLEAR_IMAGE when HAIKU_IMAGE_SIZE is not set
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232398%3A%20build%20system%20doesn%27t%20honor%0A%20HAIKU_DONT_CLEAR_IMAGE%20when%20HAIKU_IMAGE_SIZE%20is%20not%20set&In-Reply-To=%3C049.b4e2624e8e6ca6d5df1cc5697641f72e%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008263.html">
+   <LINK REL="Next"  HREF="008271.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2398: build system doesn't honor HAIKU_DONT_CLEAR_IMAGE when HAIKU_IMAGE_SIZE is not set</H1>
+    <B>bonefish</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232398%3A%20build%20system%20doesn%27t%20honor%0A%20HAIKU_DONT_CLEAR_IMAGE%20when%20HAIKU_IMAGE_SIZE%20is%20not%20set&In-Reply-To=%3C049.b4e2624e8e6ca6d5df1cc5697641f72e%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2398: build system doesn't honor HAIKU_DONT_CLEAR_IMAGE when HAIKU_IMAGE_SIZE is not set">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Jun 17 22:43:39 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008263.html">[Haiku-bugs] [Haiku] #2398: build system doesn't honor HAIKU_DONT_CLEAR_IMAGE when HAIKU_IMAGE_SIZE is not set
+</A></li>
+        <LI>Next message: <A HREF="008271.html">[Haiku-bugs] [Haiku] #2398: build system doesn't honor HAIKU_DONT_CLEAR_IMAGE when HAIKU_IMAGE_SIZE is not set
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8268">[ date ]</a>
+              <a href="thread.html#8268">[ thread ]</a>
+              <a href="subject.html#8268">[ subject ]</a>
+              <a href="author.html#8268">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2398: build system doesn't honor HAIKU_DONT_CLEAR_IMAGE when HAIKU_IMAGE_SIZE is
+not set
+---------------------------+------------------------------------------------
+  Reporter:  monni         |       Owner:  bonefish      
+      Type:  bug           |      Status:  new           
+  Priority:  normal        |   Milestone:  R1            
+ Component:  Build System  |     Version:  R1 development
+Resolution:                |   Blockedby:                
+  Platform:  All           |    Blocking:                
+---------------------------+------------------------------------------------
+
+Comment(by bonefish):
+
+ Works for me (OpenSuse 10.3). The part in the build_haiku_image script
+ looks good too:
+ {{{
+                 if [ $isVMwareImage ]; then
+                         vmdkImageFlags=
+                         if [ ! &quot;$dontClearImage&quot; ]; then
+                                 vmdkImageFlags=&quot;-c&quot;
+                         fi
+                         $vmdkimage -h 64k -i${imageSize}M $vmdkImageFlags
+ &quot;$imagePath&quot; \
+                                 || exit 1
+                 elif [ ! -e &quot;$imagePath&quot; -o ! &quot;$dontClearImage&quot; ]; then
+                         dd if=/dev/zero of=&quot;$imagePath&quot; bs=1048576
+ count=$imageSize \
+                                 || exit 1
+                 fi
+ }}}
+
+ dd is only invoked, if the image path doesn't exist or
+ HAIKU_DONT_CLEAR_IMAGE is not set. I can only ask you to analyze what goes
+ wrong on your system.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2398#comment:1">http://dev.haiku-os.org/ticket/2398#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008263.html">[Haiku-bugs] [Haiku] #2398: build system doesn't honor HAIKU_DONT_CLEAR_IMAGE when HAIKU_IMAGE_SIZE is not set
+</A></li>
+	<LI>Next message: <A HREF="008271.html">[Haiku-bugs] [Haiku] #2398: build system doesn't honor HAIKU_DONT_CLEAR_IMAGE when HAIKU_IMAGE_SIZE is not set
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8268">[ date ]</a>
+              <a href="thread.html#8268">[ thread ]</a>
+              <a href="subject.html#8268">[ subject ]</a>
+              <a href="author.html#8268">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

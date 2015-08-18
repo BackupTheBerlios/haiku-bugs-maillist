@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3198: [Pe] I-beam cursor in save dialog
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233198%3A%20%5BPe%5D%20I-beam%20cursor%20in%20save%20dialog&In-Reply-To=%3C049.0d22a953c239797a3954a3ed3b68afc7%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="021592.html">
+   <LINK REL="Next"  HREF="021215.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3198: [Pe] I-beam cursor in save dialog</H1>
+    <B>stippi</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233198%3A%20%5BPe%5D%20I-beam%20cursor%20in%20save%20dialog&In-Reply-To=%3C049.0d22a953c239797a3954a3ed3b68afc7%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3198: [Pe] I-beam cursor in save dialog">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Sep 13 13:32:41 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="021592.html">[Haiku-bugs] [Haiku] #4491: No sound with auich and Intel	82801DB/DBL/DBM
+</A></li>
+        <LI>Next message: <A HREF="021215.html">[Haiku-bugs] [Haiku] #3198: System cursor often does not update at the correct time. (was: [Pe] I-beam cursor in save dialog)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21214">[ date ]</a>
+              <a href="thread.html#21214">[ thread ]</a>
+              <a href="subject.html#21214">[ subject ]</a>
+              <a href="author.html#21214">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3198: [Pe] I-beam cursor in save dialog
+---------------------------------+------------------------------------------
+  Reporter:  diver               |       Owner:  stippi       
+      Type:  bug                 |      Status:  reopened     
+  Priority:  normal              |   Milestone:  R1           
+ Component:  Servers/app_server  |     Version:  R1/pre-alpha1
+Resolution:                      |   Blockedby:               
+  Platform:  All                 |    Blocking:               
+---------------------------------+------------------------------------------
+Changes (by stippi):
+
+  * status:  closed =&gt; reopened
+  * resolution:  invalid =&gt;
+  * component:  User Interface =&gt; Servers/app_server
+
+
+Comment:
+
+ This is actually an app_server problem I recently introduced when I
+ reworked the reference counting of server side cursor resources. It
+ affects other parts of the system. For example, drag a folder from a non-
+ boot partition into a Terminal while passing the Desktop with the mouse.
+ Since the Desktop is on the boot volume, the cursor will change to
+ indicate a file copy would take place if you dropped it there. In the
+ Terminal, after releasing the mouse to drop the folder there, the copy
+ cursor is still being displayed. The specific change I did which could
+ have caused it is that ServerApp had a pointer to the current system
+ cursor, but didn't have it's own reference, which means the pointer could
+ go stale. Now it keeps the reference, which is correct, but seems to point
+ at a problem in the code elsewhere.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3198#comment:2">http://dev.haiku-os.org/ticket/3198#comment:2</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="021592.html">[Haiku-bugs] [Haiku] #4491: No sound with auich and Intel	82801DB/DBL/DBM
+</A></li>
+	<LI>Next message: <A HREF="021215.html">[Haiku-bugs] [Haiku] #3198: System cursor often does not update at the correct time. (was: [Pe] I-beam cursor in save dialog)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21214">[ date ]</a>
+              <a href="thread.html#21214">[ thread ]</a>
+              <a href="subject.html#21214">[ subject ]</a>
+              <a href="author.html#21214">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

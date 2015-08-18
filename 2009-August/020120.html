@@ -1,0 +1,149 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3122: makebootable says invalid partition	index
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233122%3A%20makebootable%20says%20invalid%20partition%0A%09index&In-Reply-To=%3C053.86c3f999446d6e82eea7ae90b9aba777%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="020231.html">
+   <LINK REL="Next"  HREF="020122.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3122: makebootable says invalid partition	index</H1>
+    <B>begasus</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233122%3A%20makebootable%20says%20invalid%20partition%0A%09index&In-Reply-To=%3C053.86c3f999446d6e82eea7ae90b9aba777%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3122: makebootable says invalid partition	index">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Aug 25 09:37:39 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="020231.html">[Haiku-bugs] [Haiku] #4343: Debugger's console output frequently deadlocks Terminal
+</A></li>
+        <LI>Next message: <A HREF="020122.html">[Haiku-bugs] [Haiku] #2912: [Alpha 1]: Tracker for the proposals
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20120">[ date ]</a>
+              <a href="thread.html#20120">[ thread ]</a>
+              <a href="subject.html#20120">[ subject ]</a>
+              <a href="author.html#20120">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3122: makebootable says invalid partition index
+--------------------------+-------------------------------------------------
+ Reporter:  plfiorini     |       Owner:  bonefish      
+     Type:  bug           |      Status:  new           
+ Priority:  normal        |   Milestone:  R1            
+Component:  Build System  |     Version:  R1 development
+Blockedby:                |    Platform:  All           
+ Blocking:                |  
+--------------------------+-------------------------------------------------
+
+Comment(by begasus):
+
+ Enabling the debug doesn't seem to work, build fails on
+ PartitionMapParser, output:
+
+
+ {{{
+ InitScript1 /home/begasus/develop/trunk/generated-gcc4/haiku.image-init-
+ vars
+ C++ /home/begasus/develop/trunk/generated-
+ gcc4/objects/linux/x86/release/tools/makebootable/platform/bios_ia32/PartitionMapParser.o
+ /home/begasus/develop/trunk/src/add-
+ ons/kernel/partitioning_systems/intel/PartitionMapParser.cpp:6: error:
+ stray &#8216;@&#8217; in program
+ /home/begasus/develop/trunk/src/add-
+ ons/kernel/partitioning_systems/intel/PartitionMapParser.cpp:2: error:
+ expected constructor, destructor, or type conversion before numeric
+ constant
+ In file included from /usr/include/c++/4.3/new:45,
+                  from /home/begasus/develop/trunk/src/add-
+ ons/kernel/partitioning_systems/intel/PartitionMapParser.cpp:19:
+ /usr/include/c++/4.3/exception:40: error: expected declaration before end
+ of line
+
+ cc -c &quot;/home/begasus/develop/trunk/src/add-
+ ons/kernel/partitioning_systems/intel/PartitionMapParser.cpp&quot; -O -Wall
+ -Wno-trigraphs -Wno-ctor-dtor-privacy -Woverloaded-virtual -Wpointer-arith
+ -Wcast-align -Wsign-compare -Wno-multichar -D_ZETA_USING_DEPRECATED_API_=1
+ -D_ZETA_TS_FIND_DIR_=1 -include BeOSBuildCompatibility.h -D_USER_MODE
+ -DARCH_x86 -D_NO_INLINE_ASM -D__INTEL__ -D_GNU_SOURCE
+ -D_FILE_OFFSET_BITS=64 -DHAIKU_HOST_PLATFORM_LINUX -iquote
+ /home/begasus/develop/trunk/build/user_config_headers -iquote
+ /home/begasus/develop/trunk/build/config_headers -iquote
+ /home/begasus/develop/trunk/src/tools/makebootable/platform/bios_ia32
+ -iquote /home/begasus/develop/trunk/generated-
+ gcc4/objects/common/tools/makebootable/platform/bios_ia32 -iquote
+ /home/begasus/develop/trunk/generated-
+ gcc4/objects/linux/x86/common/tools/makebootable/platform/bios_ia32
+ -iquote /home/begasus/develop/trunk/generated-
+ gcc4/objects/haiku/x86/common/tools/makebootable/platform/bios_ia32
+ -iquote
+ /home/begasus/develop/trunk/src/bin/makebootable/platform/bios_ia32
+ -iquote /home/begasus/develop/trunk/src/add-
+ ons/kernel/partitioning_systems/intel -iquote
+ /home/begasus/develop/trunk/src/add-ons/kernel/file_systems/bfs -I
+ /home/begasus/develop/trunk/headers/private/storage -I
+ /home/begasus/develop/trunk/headers/private/shared -I
+ /home/begasus/develop/trunk/headers/build/host/linux -I
+ /home/begasus/develop/trunk/headers/build -I
+ /home/begasus/develop/trunk/headers/build/os -I
+ /home/begasus/develop/trunk/headers/build/os/app -I
+ /home/begasus/develop/trunk/headers/build/os/drivers -I
+ /home/begasus/develop/trunk/headers/build/os/kernel -I
+ /home/begasus/develop/trunk/headers/build/os/interface -I
+ /home/begasus/develop/trunk/headers/build/os/opengl -I
+ /home/begasus/develop/trunk/headers/build/os/storage -I
+ /home/begasus/develop/trunk/headers/build/os/support -o
+ &quot;/home/begasus/develop/trunk/generated-
+ gcc4/objects/linux/x86/release/tools/makebootable/platform/bios_ia32/PartitionMapParser.o&quot;
+ ;
+
+ ...failed C++ /home/begasus/develop/trunk/generated-
+ gcc4/objects/linux/x86/release/tools/makebootable/platform/bios_ia32/PartitionMapParser.o
+ ...
+ ...skipped &lt;build&gt;makebootable for lack of
+ &lt;src!tools!makebootable!platform!bios_ia32&gt;PartitionMapParser.o...
+ ...skipped &lt;HaikuImage&gt;haiku.image-init-vars for lack of
+ &lt;build&gt;makebootable...
+ ...skipped hdb6 for lack of &lt;HaikuImage&gt;haiku.image-init-vars...
+ ...failed updating 1 target(s)...
+ ...skipped 3 target(s)...
+ ...updated 1 target(s)...
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3122#comment:13">http://dev.haiku-os.org/ticket/3122#comment:13</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="020231.html">[Haiku-bugs] [Haiku] #4343: Debugger's console output frequently deadlocks Terminal
+</A></li>
+	<LI>Next message: <A HREF="020122.html">[Haiku-bugs] [Haiku] #2912: [Alpha 1]: Tracker for the proposals
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20120">[ date ]</a>
+              <a href="thread.html#20120">[ thread ]</a>
+              <a href="subject.html#20120">[ subject ]</a>
+              <a href="author.html#20120">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

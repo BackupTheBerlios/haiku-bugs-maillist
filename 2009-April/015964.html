@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3735: Patch for using layouts in the preferences window of Mail
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233735%3A%20Patch%20for%20using%20layouts%20in%20the%0A%20preferences%20window%20of%20Mail&In-Reply-To=%3C047.51a0521ba1a5509577baa00469f89898%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="015950.html">
+   <LINK REL="Next"  HREF="016014.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3735: Patch for using layouts in the preferences window of Mail</H1>
+    <B>stippi</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233735%3A%20Patch%20for%20using%20layouts%20in%20the%0A%20preferences%20window%20of%20Mail&In-Reply-To=%3C047.51a0521ba1a5509577baa00469f89898%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3735: Patch for using layouts in the preferences window of Mail">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Apr 11 12:19:30 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="015950.html">[Haiku-bugs] [Haiku] #3735: Patch for using layouts in the preferences window of Mail
+</A></li>
+        <LI>Next message: <A HREF="016014.html">[Haiku-bugs] [Haiku] #3735: Patch for using layouts in the preferences window of Mail
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15964">[ date ]</a>
+              <a href="thread.html#15964">[ thread ]</a>
+              <a href="subject.html#15964">[ subject ]</a>
+              <a href="author.html#15964">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3735: Patch for using layouts in the preferences window of Mail
+-------------------------------+--------------------------------------------
+ Reporter:  fcr                |       Owner:  stippi        
+     Type:  enhancement        |      Status:  assigned      
+ Priority:  normal             |   Milestone:  R1            
+Component:  Applications/Mail  |     Version:  R1 development
+Blockedby:                     |    Platform:  All           
+ Blocking:                     |  
+-------------------------------+--------------------------------------------
+Changes (by stippi):
+
+  * owner:  bga =&gt; stippi
+  * status:  new =&gt; assigned
+
+
+Comment:
+
+ Thanks a lot for the patch! You've done everything right, only two coding
+ style hints:
+ {{{
+ button_ok -&gt; buttonOk.
+
+ interfaceGrid-&gt;SetInsets(r.left+10, r.top+10, r.right+10, r.bottom+10);
+ -&gt;
+ interfaceGrid-&gt;SetInsets(r.left + 10, r.top + 10, r.right + 10, r.bottom +
+ 10);
+
+ }}}
+
+ Also, there is a way to make the two grid layouts use the same alignment.
+ Unfortunately we duplicated work, as I've also made the Mail prefs window
+ use layout some time ago, but I didn't commit this yet, since I wanted to
+ ask Axel how he liked the menu fields that used the full available
+ width... I have the patch at home. The only difference to your patch is
+ that I kept Mail compiling for BeOS and that I reduced some code
+ duplication by using a small helper function that adds a BMenuField to the
+ grid and increments the row.
+
+ Again, thanks a lot! I will merge our patches and commit when I am back
+ home on Tuesday.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3735#comment:1">http://dev.haiku-os.org/ticket/3735#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="015950.html">[Haiku-bugs] [Haiku] #3735: Patch for using layouts in the preferences window of Mail
+</A></li>
+	<LI>Next message: <A HREF="016014.html">[Haiku-bugs] [Haiku] #3735: Patch for using layouts in the preferences window of Mail
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15964">[ date ]</a>
+              <a href="thread.html#15964">[ thread ]</a>
+              <a href="subject.html#15964">[ subject ]</a>
+              <a href="author.html#15964">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

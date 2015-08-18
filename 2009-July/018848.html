@@ -1,0 +1,286 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4158: Unable to boot with r31957
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-July/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234158%3A%20Unable%20to%20boot%20with%20r31957&In-Reply-To=%3C053.dc294126963df4e6d5a9ffb7178a36f0%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="018847.html">
+   <LINK REL="Next"  HREF="018851.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4158: Unable to boot with r31957</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234158%3A%20Unable%20to%20boot%20with%20r31957&In-Reply-To=%3C053.dc294126963df4e6d5a9ffb7178a36f0%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4158: Unable to boot with r31957">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Jul 30 15:06:06 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="018847.html">[Haiku-bugs] [Haiku] #4158: Unable to boot with r31957
+</A></li>
+        <LI>Next message: <A HREF="018851.html">[Haiku-bugs] [Haiku] #4158: Unable to boot with r31957
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18848">[ date ]</a>
+              <a href="thread.html#18848">[ thread ]</a>
+              <a href="subject.html#18848">[ subject ]</a>
+              <a href="author.html#18848">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4158: Unable to boot with r31957
+---------------------------+------------------------------------------------
+ Reporter:  anevilyak      |       Owner:  bonefish      
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1 development
+Blockedby:                 |    Platform:  All           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+
+Comment(by anevilyak):
+
+ Keyboard input to the kernel debugger does indeed work, but it recognizes
+ none of its commands at this point:
+
+ {{{
+ kdebug&gt; bt
+ Unknown command &quot;bt&quot;. Enter &quot;help&quot; to get a list of all supported
+ commands.
+ kdebug&gt; sc
+ Unknown command &quot;sc&quot;. Enter &quot;help&quot; to get a list of all supported
+ commands.
+ kdebug&gt; help
+ Unknown command &quot;help&quot;. Enter &quot;help&quot; to get a list of all supported
+ commands.
+ }}}
+
+ Assuming I did so correctly, objdump:
+ {{{
+ [<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">rene at leviathan</A> ~/devel/haiku/generated-
+ gcc4/objects/haiku/x86/release/system/kernel]$ objdump -d --start-
+ address=0x80074e09 ./kernel_x86 | less
+
+ ./kernel_x86:     file format elf32-i386-freebsd
+
+ Disassembly of section .text:
+
+ 80074e09 &lt;_ZL14allocate_entrymt+0x14&gt;:
+ 80074e09:       83 78 0c 00             cmpl   $0x0,0xc(%eax)
+ 80074e0d:       0f 84 4b 01 00 00       je     80074f5e
+ &lt;_ZL14allocate_entrymt+0x169&gt;
+ 80074e13:       85 db                   test   %ebx,%ebx
+ 80074e15:       0f 84 43 01 00 00       je     80074f5e
+ &lt;_ZL14allocate_entrymt+0x169&gt;
+ 80074e1b:       81 fb fb ff 00 00       cmp    $0xfffb,%ebx
+ 80074e21:       0f 87 37 01 00 00       ja     80074f5e
+ &lt;_ZL14allocate_entrymt+0x169&gt;
+ 80074e27:       e9 41 01 00 00          jmp    80074f6d
+ &lt;_ZL14allocate_entrymt+0x178&gt;
+ 80074e2c:       9c                      pushf
+ 80074e2d:       58                      pop    %eax
+ 80074e2e:       fa                      cli
+ 80074e2f:       c1 e8 09                shr    $0x9,%eax
+ 80074e32:       83 e0 01                and    $0x1,%eax
+ 80074e35:       89 45 ec                mov    %eax,0xffffffec(%ebp)
+ 80074e38:       83 ec 0c                sub    $0xc,%esp
+ 80074e3b:       ff 75 e4                pushl  0xffffffe4(%ebp)
+ 80074e3e:       e8 80 fd fd ff          call   80054bc3 &lt;acquire_spinlock&gt;
+ 80074e43:       c6 45 eb 01             movb   $0x1,0xffffffeb(%ebp)
+ 80074e47:       83 c4 10                add    $0x10,%esp
+ 80074e4a:       8d 43 03                lea    0x3(%ebx),%eax
+ 80074e4d:       c1 e8 02                shr    $0x2,%eax
+ 80074e50:       89 45 f0                mov    %eax,0xfffffff0(%ebp)
+ 80074e53:       89 c7                   mov    %eax,%edi
+ 80074e55:       47                      inc    %edi
+ 80074e56:       a1 f0 56 13 80          mov    0x801356f0,%eax
+ 80074e5b:       8d 14 bd 00 00 00 00    lea    0x0(,%edi,4),%edx
+ 80074e62:       03 50 0c                add    0xc(%eax),%edx
+ 80074e65:       8b 40 04                mov    0x4(%eax),%eax
+ 80074e68:       05 00 00 40 01          add    $0x1400000,%eax
+ 80074e6d:       39 c2                   cmp    %eax,%edx
+ 80074e6f:       77 0f                   ja     80074e80
+ &lt;_ZL14allocate_entrymt+0x8b&gt;
+ 80074e71:       eb 63                   jmp    80074ed6
+ &lt;_ZL14allocate_entrymt+0xe1&gt;
+ 80074e73:       e8 ff f9 ff ff          call   80074877
+ &lt;_ZL16free_first_entryv&gt;
+ 80074e78:       84 c0                   test   %al,%al
+ 80074e7a:       0f 84 a2 00 00 00       je     80074f22
+ &lt;_ZL14allocate_entrymt+0x12d&gt;
+ 80074e80:       a1 f0 56 13 80          mov    0x801356f0,%eax
+ 80074e85:       8b 50 0c                mov    0xc(%eax),%edx
+ 80074e88:       39 50 08                cmp    %edx,0x8(%eax)
+ 80074e8b:       77 e6                   ja     80074e73
+ &lt;_ZL14allocate_entrymt+0x7e&gt;
+ 80074e8d:       39 50 04                cmp    %edx,0x4(%eax)
+ 80074e90:       0f 84 f3 00 00 00       je     80074f89
+ &lt;_ZL14allocate_entrymt+0x194&gt;
+ 80074e96:       e8 dc f9 ff ff          call   80074877
+ &lt;_ZL16free_first_entryv&gt;
+ 80074e9b:       84 c0                   test   %al,%al
+ 80074e9d:       0f 85 e6 00 00 00       jne    80074f89
+ &lt;_ZL14allocate_entrymt+0x194&gt;
+ 80074ea3:       eb 7d                   jmp    80074f22
+ &lt;_ZL14allocate_entrymt+0x12d&gt;
+ 80074ea5:       66 81 22 00 c0          andw   $0xc000,(%edx)
+ 80074eaa:       8a 42 03                mov    0x3(%edx),%al
+ 80074ead:       83 e0 0f                and    $0xf,%eax
+ 80074eb0:       83 c8 10                or     $0x10,%eax
+ 80074eb3:       88 42 03                mov    %al,0x3(%edx)
+ 80074eb6:       8b 4b 04                mov    0x4(%ebx),%ecx
+ 80074eb9:       89 4b 0c                mov    %ecx,0xc(%ebx)
+ 80074ebc:       89 c8                   mov    %ecx,%eax
+ 80074ebe:       29 d0                   sub    %edx,%eax
+ 80074ec0:       89 c2                   mov    %eax,%edx
+ 80074ec2:       c1 e2 0c                shl    $0xc,%edx
+ 80074ec5:       81 e2 00 c0 ff 0f       and    $0xfffc000,%edx
+ 80074ecb:       8b 01                   mov    (%ecx),%eax
+ 80074ecd:       25 ff 3f 00 f0          and    $0xf0003fff,%eax
+ 80074ed2:       09 d0                   or     %edx,%eax
+ 80074ed4:       89 01                   mov    %eax,(%ecx)
+ 80074ed6:       a1 f0 56 13 80          mov    0x801356f0,%eax
+ 80074edb:       8b 50 08                mov    0x8(%eax),%edx
+ 80074ede:       8b 40 0c                mov    0xc(%eax),%eax
+ 80074ee1:       39 c2                   cmp    %eax,%edx
+ 80074ee3:       0f 86 b2 00 00 00       jbe    80074f9b
+ &lt;_ZL14allocate_entrymt+0x1a6&gt;
+ 80074ee9:       29 c2                   sub    %eax,%edx
+ 80074eeb:       89 d3                   mov    %edx,%ebx
+ 80074eed:       c1 fb 02                sar    $0x2,%ebx
+ 80074ef0:       39 df                   cmp    %ebx,%edi
+ 80074ef2:       0f 86 a3 00 00 00       jbe    80074f9b
+ &lt;_ZL14allocate_entrymt+0x1a6&gt;
+ 80074ef8:       a1 f0 56 13 80          mov    0x801356f0,%eax
+ 80074efd:       8b 40 08                mov    0x8(%eax),%eax
+ 80074f00:       8b 00                   mov    (%eax),%eax
+ 80074f02:       89 c6                   mov    %eax,%esi
+ 80074f04:       81 e6 ff 3f 00 00       and    $0x3fff,%esi
+ 80074f0a:       e8 68 f9 ff ff          call   80074877
+ &lt;_ZL16free_first_entryv&gt;
+ 80074f0f:       84 c0                   test   %al,%al
+ 80074f11:       74 0f                   je     80074f22
+ &lt;_ZL14allocate_entrymt+0x12d&gt;
+ 80074f13:       89 f0                   mov    %esi,%eax
+ 80074f15:       25 ff ff 00 00          and    $0xffff,%eax
+ 80074f1a:       01 c3                   add    %eax,%ebx
+ 80074f1c:       39 df                   cmp    %ebx,%edi
+ 80074f1e:       77 d8                   ja     80074ef8
+ &lt;_ZL14allocate_entrymt+0x103&gt;
+ 80074f20:       eb 79                   jmp    80074f9b
+ &lt;_ZL14allocate_entrymt+0x1a6&gt;
+ 80074f22:       bb 00 00 00 00          mov    $0x0,%ebx
+ 80074f27:       eb 03                   jmp    80074f2c
+ &lt;_ZL14allocate_entrymt+0x137&gt;
+ 80074f29:       ff 46 10                incl   0x10(%esi)
+ 80074f2c:       83 7d e4 00             cmpl   $0x0,0xffffffe4(%ebp)
+ 80074f30:       74 31                   je     80074f63
+ &lt;_ZL14allocate_entrymt+0x16e&gt;
+ 80074f32:       80 7d eb 00             cmpb   $0x0,0xffffffeb(%ebp)
+ 80074f36:       74 2b                   je     80074f63
+ &lt;_ZL14allocate_entrymt+0x16e&gt;
+ 80074f38:       83 ec 0c                sub    $0xc,%esp
+ 80074f3b:       ff 75 e4                pushl  0xffffffe4(%ebp)
+ 80074f3e:       e8 7f f8 fd ff          call   800547c2 &lt;release_spinlock&gt;
+ 80074f43:       83 c4 10                add    $0x10,%esp
+ 80074f46:       8b 45 ec                mov    0xffffffec(%ebp),%eax
+ 80074f49:       f7 d8                   neg    %eax
+ 80074f4b:       25 00 02 00 00          and    $0x200,%eax
+ 80074f50:       9c                      pushf
+ 80074f51:       5a                      pop    %edx
+ 80074f52:       81 e2 ff fd ff ff       and    $0xfffffdff,%edx
+ 80074f58:       09 c2                   or     %eax,%edx
+ 80074f5a:       52                      push   %edx
+ 80074f5b:       9d                      popf
+ 80074f5c:       eb 05                   jmp    80074f63
+ &lt;_ZL14allocate_entrymt+0x16e&gt;
+ 80074f5e:       bb 00 00 00 00          mov    $0x0,%ebx
+ 80074f63:       89 d8                   mov    %ebx,%eax
+ 80074f65:       8d 65 f4                lea    0xfffffff4(%ebp),%esp
+ 80074f68:       5b                      pop    %ebx
+ 80074f69:       5e                      pop    %esi
+ 80074f6a:       5f                      pop    %edi
+ 80074f6b:       5d                      pop    %ebp
+ 80074f6c:       c3                      ret
+ 80074f6d:       83 c0 1c                add    $0x1c,%eax
+ 80074f70:       89 45 e4                mov    %eax,0xffffffe4(%ebp)
+ 80074f73:       0f 85 b3 fe ff ff       jne    80074e2c
+ &lt;_ZL14allocate_entrymt+0x37&gt;
+ 80074f79:       c6 45 eb 00             movb   $0x0,0xffffffeb(%ebp)
+ 80074f7d:       c7 45 ec 00 00 00 00    movl   $0x0,0xffffffec(%ebp)
+ 80074f84:       e9 c1 fe ff ff          jmp    80074e4a
+ &lt;_ZL14allocate_entrymt+0x55&gt;
+ 80074f89:       8b 1d f0 56 13 80       mov    0x801356f0,%ebx
+ 80074f8f:       8b 53 0c                mov    0xc(%ebx),%edx
+ 80074f92:       3b 53 04                cmp    0x4(%ebx),%edx
+ 80074f95:       0f 85 0a ff ff ff       jne    80074ea5
+ &lt;_ZL14allocate_entrymt+0xb0&gt;
+ 80074f9b:       8b 35 f0 56 13 80       mov    0x801356f0,%esi
+ 80074fa1:       8b 5e 0c                mov    0xc(%esi),%ebx
+ 80074fa4:       8b 4d f0                mov    0xfffffff0(%ebp),%ecx
+ 80074fa7:       81 e1 ff 3f 00 00       and    $0x3fff,%ecx
+ 80074fad:       8b 03                   mov    (%ebx),%eax
+ 80074faf:       25 00 c0 ff ff          and    $0xffffc000,%eax
+ 80074fb4:       09 c8                   or     %ecx,%eax
+ 80074fb6:       66 89 03                mov    %ax,(%ebx)
+ 80074fb9:       8a 55 e2                mov    0xffffffe2(%ebp),%dl
+ 80074fbc:       c1 e2 04                shl    $0x4,%edx
+ 80074fbf:       8a 43 03                mov    0x3(%ebx),%al
+ 80074fc2:       83 e0 0f                and    $0xf,%eax
+ 80074fc5:       09 d0                   or     %edx,%eax
+ 80074fc7:       88 43 03                mov    %al,0x3(%ebx)
+ 80074fca:       8b 55 f0                mov    0xfffffff0(%ebp),%edx
+ 80074fcd:       c1 e2 02                shl    $0x2,%edx
+ 80074fd0:       03 56 0c                add    0xc(%esi),%edx
+ 80074fd3:       89 56 0c                mov    %edx,0xc(%esi)
+ 80074fd6:       81 e1 ff 3f 00 00       and    $0x3fff,%ecx
+ 80074fdc:       c1 e1 0e                shl    $0xe,%ecx
+ 80074fdf:       8b 02                   mov    (%edx),%eax
+ 80074fe1:       25 ff 3f 00 f0          and    $0xf0003fff,%eax
+ 80074fe6:       09 c8                   or     %ecx,%eax
+ 80074fe8:       89 02                   mov    %eax,(%edx)
+ 80074fea:       f6 45 e2 04             testb  $0x4,0xffffffe2(%ebp)
+ 80074fee:       0f 84 35 ff ff ff       je     80074f29
+ &lt;_ZL14allocate_entrymt+0x134&gt;
+ 80074ff4:       e9 33 ff ff ff          jmp    80074f2c
+ &lt;_ZL14allocate_entrymt+0x137&gt;
+ }}}
+
+ If necessary, I can attach a zipped copy of the relevant kernel_x86
+ binary.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4158#comment:7">http://dev.haiku-os.org/ticket/4158#comment:7</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="018847.html">[Haiku-bugs] [Haiku] #4158: Unable to boot with r31957
+</A></li>
+	<LI>Next message: <A HREF="018851.html">[Haiku-bugs] [Haiku] #4158: Unable to boot with r31957
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18848">[ date ]</a>
+              <a href="thread.html#18848">[ thread ]</a>
+              <a href="subject.html#18848">[ subject ]</a>
+              <a href="author.html#18848">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2911: vm_page_fault: unhandled page fault in kernel space at 0xcccccccc, ip 0x80049b42
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232911%3A%20vm_page_fault%3A%20unhandled%20page%20fault%0A%20in%20kernel%20space%20at%200xcccccccc%2C%20ip%200x80049b42&In-Reply-To=%3C050.63a4e7c4fa1dbb8357ec58c8c6667760%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011325.html">
+   <LINK REL="Next"  HREF="011328.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2911: vm_page_fault: unhandled page fault in kernel space at 0xcccccccc, ip 0x80049b42</H1>
+    <B>bonefish</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232911%3A%20vm_page_fault%3A%20unhandled%20page%20fault%0A%20in%20kernel%20space%20at%200xcccccccc%2C%20ip%200x80049b42&In-Reply-To=%3C050.63a4e7c4fa1dbb8357ec58c8c6667760%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2911: vm_page_fault: unhandled page fault in kernel space at 0xcccccccc, ip 0x80049b42">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Oct 23 14:29:26 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011325.html">[Haiku-bugs] [Haiku] #2911: vm_page_fault: unhandled page fault in kernel space at 0xcccccccc, ip 0x80049b42 (was: vm_page_fault: unhandled page fault in kernel space at 9xcccccccc, ip 0x80049b42)
+</A></li>
+        <LI>Next message: <A HREF="011328.html">[Haiku-bugs] [Haiku] #2605: PANIC: remove page 0x91d43ae8 from cache 0x976e5f78: page still has mappings!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11376">[ date ]</a>
+              <a href="thread.html#11376">[ thread ]</a>
+              <a href="subject.html#11376">[ subject ]</a>
+              <a href="author.html#11376">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2911: vm_page_fault: unhandled page fault in kernel space at 0xcccccccc, ip
+0x80049b42
+------------------------+---------------------------------------------------
+  Reporter:  stippi     |       Owner:  bonefish      
+      Type:  bug        |      Status:  new           
+  Priority:  normal     |   Milestone:  R1            
+ Component:  - General  |     Version:  R1 development
+Resolution:             |   Blockedby:                
+  Platform:  All        |    Blocking:                
+------------------------+---------------------------------------------------
+
+Comment(by bonefish):
+
+ What thread is it? Apparently some newly-created userland thread. For
+ later reference the revision number would be good, too.
+
+ In my build handle_signals() + 0x66 doesn't hit an instruction, so you've
+ apparently built with other parameters. An objdump of handle_signals()
+ would be helpful (can be done on your build platform: {{{objdump -D
+ --demangle .../kernel_x86}}}; copy only handle_signals() part).
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2911#comment:2">http://dev.haiku-os.org/ticket/2911#comment:2</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011325.html">[Haiku-bugs] [Haiku] #2911: vm_page_fault: unhandled page fault in kernel space at 0xcccccccc, ip 0x80049b42 (was: vm_page_fault: unhandled page fault in kernel space at 9xcccccccc, ip 0x80049b42)
+</A></li>
+	<LI>Next message: <A HREF="011328.html">[Haiku-bugs] [Haiku] #2605: PANIC: remove page 0x91d43ae8 from cache 0x976e5f78: page still has mappings!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11376">[ date ]</a>
+              <a href="thread.html#11376">[ thread ]</a>
+              <a href="subject.html#11376">[ subject ]</a>
+              <a href="author.html#11376">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

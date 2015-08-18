@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2591: haiku fail to boot load
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232591%3A%20haiku%20fail%20to%20boot%20load&In-Reply-To=%3C052.a0b86a04adb6fd5cc30ff476cdff2c96%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009448.html">
+   <LINK REL="Next"  HREF="009450.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2591: haiku fail to boot load</H1>
+    <B>rvndrk32</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232591%3A%20haiku%20fail%20to%20boot%20load&In-Reply-To=%3C052.a0b86a04adb6fd5cc30ff476cdff2c96%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2591: haiku fail to boot load">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Aug  8 22:42:19 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009448.html">[Haiku-bugs] [Haiku] #2591: haiku fail to boot load
+</A></li>
+        <LI>Next message: <A HREF="009450.html">[Haiku-bugs] [Haiku] #2591: haiku fail to boot load
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9449">[ date ]</a>
+              <a href="thread.html#9449">[ thread ]</a>
+              <a href="subject.html#9449">[ subject ]</a>
+              <a href="author.html#9449">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2591: haiku fail to boot load
+------------------------+---------------------------------------------------
+  Reporter:  rvndrk32   |       Owner:  axeld         
+      Type:  bug        |      Status:  new           
+  Priority:  normal     |   Milestone:  R1            
+ Component:  - General  |     Version:  R1 development
+Resolution:             |   Blockedby:                
+  Platform:  x86        |    Blocking:                
+------------------------+---------------------------------------------------
+
+Comment(by rvndrk32):
+
+ my bad.lemme explain:
+
+ made a new image (qcow) with qemu.i think 250mb.
+ used haiku to format with driveUtil.formats fine, show as 250mb drive.
+
+ do the same on a hard disk attached as emu disk with -hdb=/dev/yyy and the
+ size is misreported.(2TB on a 112GB drive as i recall...)
+
+ Not only that, makebootable, when run from within Haiku at this point,
+ does work on both.
+
+ [zero offset for emu drive, non-zero for actual drive.you have to give
+ makebootable the partition number on the phys. disk, as trying it normally
+ hangs the process.(or either leave the disk still unbootable, i forget its
+ been over a few weeks.)]
+
+ during this process you must use:
+ makebootable /dev/ata/0/disk/&lt;partnum&gt; (pulled from DiskUtil)for the phys.
+ disk to be 'made' bootable, else returns the offset of zero, but wont
+ work.
+
+ you cant 'makebootable' the phys. disk as a whole drive, nor can you
+ 'format' it that way.it has to be done as a partition.this is what haiku
+ already does if you use a cleared hard disk thru qemu and try to format it
+ or 'make' it 'BEOS'.
+
+ the emu disk does not have this limitation.
+
+ NOTE: copying the FS over is not necessary to reproduce this error,
+ however it still occurs after a full copy with 'cp -R / &lt;destination&gt;'.
+
+ However, the only BOOTABLE volume is the emulated one.(the file you made)
+
+ hence the bug.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2591#comment:2">http://dev.haiku-os.org/ticket/2591#comment:2</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009448.html">[Haiku-bugs] [Haiku] #2591: haiku fail to boot load
+</A></li>
+	<LI>Next message: <A HREF="009450.html">[Haiku-bugs] [Haiku] #2591: haiku fail to boot load
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9449">[ date ]</a>
+              <a href="thread.html#9449">[ thread ]</a>
+              <a href="subject.html#9449">[ subject ]</a>
+              <a href="author.html#9449">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

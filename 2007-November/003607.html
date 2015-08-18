@@ -1,0 +1,141 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1606: &quot;controller doesn't implement any ports&quot; with ICH6M
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231606%3A%20%22controller%20doesn%27t%20implement%20any%0A%20ports%22%20with%20ICH6M&In-Reply-To=%3C053.f1aee2570b97e1ba2c6215c4aeaebaea%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003596.html">
+   <LINK REL="Next"  HREF="003645.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1606: &quot;controller doesn't implement any ports&quot; with ICH6M</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231606%3A%20%22controller%20doesn%27t%20implement%20any%0A%20ports%22%20with%20ICH6M&In-Reply-To=%3C053.f1aee2570b97e1ba2c6215c4aeaebaea%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1606: &quot;controller doesn't implement any ports&quot; with ICH6M">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Nov 16 22:57:26 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003596.html">[Haiku-bugs] [Haiku] #1606: Kernel Panic at boot
+</A></li>
+        <LI>Next message: <A HREF="003645.html">[Haiku-bugs] [Haiku] #1606: &quot;controller doesn't implement any ports&quot; with ICH6M
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3607">[ date ]</a>
+              <a href="thread.html#3607">[ thread ]</a>
+              <a href="subject.html#3607">[ subject ]</a>
+              <a href="author.html#3607">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1606: &quot;controller doesn't implement any ports&quot; with ICH6M
+----------------------------+-----------------------------------------------
+  Reporter:  pfoetchen      |       Owner:  axeld         
+      Type:  bug            |      Status:  new           
+  Priority:  normal         |   Milestone:  R1            
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |    Platform:  x86           
+----------------------------+-----------------------------------------------
+Changes (by pfoetchen):
+
+  * summary:  Kernel Panic at boot =&gt; &quot;controller doesn't implement any
+              ports&quot; with ICH6M
+
+Comment:
+
+ ok I &quot;forced&quot; the driver to have 4 ports ( linux does the same thing in
+ it's driver)  but  it still doesn't find the hd ...
+
+ here is the output of the linux driver I hope it helps a bit..
+
+ {{{
+ ahci 0000:00:1f.2: version 2.2
+ ACPI: PCI Interrupt Link [LNKC] enabled at IRQ 10
+ ACPI: PCI Interrupt 0000:00:1f.2[B] -&gt; Link [LNKC] -&gt; GSI 10 (level, low)
+ -&gt; IRQ 10
+ ahci 0000:00:1f.2: PORTS_IMPL is zero, forcing 0xf
+ ahci 0000:00:1f.2: AHCI 0001.0000 32 slots 4 ports 1.5 Gbps 0xf impl IDE
+ mode
+ ahci 0000:00:1f.2: flags: 64bit ncq pm led pmp slum part
+ PCI: Setting latency timer of device 0000:00:1f.2 to 64
+ scsi0 : ahci
+ PM: Adding info for No Bus:host0
+ scsi1 : ahci
+ PM: Adding info for No Bus:host1
+ scsi2 : ahci
+ PM: Adding info for No Bus:host2
+ scsi3 : ahci
+ PM: Adding info for No Bus:host3
+ ata1: SATA max UDMA/133 cmd 0xe0820500 ctl 0x00000000 bmdma 0x00000000 irq
+ 10
+ ata2: SATA max UDMA/133 cmd 0xe0820580 ctl 0x00000000 bmdma 0x00000000 irq
+ 10
+ ata3: SATA max UDMA/133 cmd 0xe0820600 ctl 0x00000000 bmdma 0x00000000 irq
+ 10
+ ata4: SATA max UDMA/133 cmd 0xe0820680 ctl 0x00000000 bmdma 0x00000000 irq
+ 10
+ ata1: SATA link up 1.5 Gbps (SStatus 113 SControl 300)
+ ata1.00: ATA-6: HTS541060G9SA00, MB3OC40J, max UDMA/100
+ ata1.00: 117210240 sectors, multi 0: LBA48
+ ata1.00: configured for UDMA/100
+ ata2: SATA link down (SStatus 0 SControl 0)
+ ata3: SATA link down (SStatus 0 SControl 300)
+ ata4: SATA link down (SStatus 0 SControl 0)
+ PM: Adding info for No Bus:target0:0:0
+ scsi 0:0:0:0: Direct-Access     ATA      HTS541060G9SA00  MB3O PQ: 0 ANSI:
+ 5
+ PM: Adding info for scsi:0:0:0:0
+ sd 0:0:0:0: [sda] 117210240 512-byte hardware sectors (60012 MB)
+ sd 0:0:0:0: [sda] Write Protect is off
+ sd 0:0:0:0: [sda] Mode Sense: 00 3a 00 00
+ sd 0:0:0:0: [sda] Write cache: enabled, read cache: enabled, doesn't
+ support DPO or FUA
+ sd 0:0:0:0: [sda] 117210240 512-byte hardware sectors (60012 MB)
+ sd 0:0:0:0: [sda] Write Protect is off
+ sd 0:0:0:0: [sda] Mode Sense: 00 3a 00 00
+ sd 0:0:0:0: [sda] Write cache: enabled, read cache: enabled, doesn't
+ support DPO or FUA
+  sda: sda1 sda2 sda3 sda4
+ sd 0:0:0:0: [sda] Attached SCSI disk
+ sd 0:0:0:0: Attached scsi generic sg0 type 0
+
+ }}}
+
+ I will try to do some screenshots during boot. And compare the linux and
+ the haiku driver a bit more...
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1606#comment:8">http://dev.haiku-os.org/ticket/1606#comment:8</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003596.html">[Haiku-bugs] [Haiku] #1606: Kernel Panic at boot
+</A></li>
+	<LI>Next message: <A HREF="003645.html">[Haiku-bugs] [Haiku] #1606: &quot;controller doesn't implement any ports&quot; with ICH6M
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3607">[ date ]</a>
+              <a href="thread.html#3607">[ thread ]</a>
+              <a href="subject.html#3607">[ subject ]</a>
+              <a href="author.html#3607">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

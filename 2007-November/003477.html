@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1603: Media server crashes on shutdown
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231603%3A%20Media%20server%20crashes%20on%20shutdown&In-Reply-To=%3C040.f116bc055c874d2dfec5ccfff96fbac2%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003480.html">
+   <LINK REL="Next"  HREF="003681.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1603: Media server crashes on shutdown</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231603%3A%20Media%20server%20crashes%20on%20shutdown&In-Reply-To=%3C040.f116bc055c874d2dfec5ccfff96fbac2%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1603: Media server crashes on shutdown">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Nov  6 20:42:46 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003480.html">[Haiku-bugs] [Haiku] #1602: Using Preferences -&gt; Backgrounds does not clear image when resetting to None
+</A></li>
+        <LI>Next message: <A HREF="003681.html">[Haiku-bugs] [Haiku] #1603: Media server crashes on shutdown
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3477">[ date ]</a>
+              <a href="thread.html#3477">[ thread ]</a>
+              <a href="subject.html#3477">[ subject ]</a>
+              <a href="author.html#3477">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1603: Media server crashes on shutdown
+----------------------------------+-----------------------------------------
+ Reporter:  el-al                 |       Owner:  marcusoverhagen
+     Type:  bug                   |      Status:  new            
+ Priority:  normal                |   Milestone:  R1             
+Component:  Servers/media_server  |     Version:  R1 development 
+ Platform:  All                   |  
+----------------------------------+-----------------------------------------
+ I get the following error every time I shutdown my system:
+
+ &quot;The application: /boot/beos/system/servers/media_server
+
+ has encountered an error which prevents it from continuing....&quot;
+
+ If I then proceed to click the Debug button on the dialog, the dialog
+ disappears and I am then able to use the Restart System button on the
+ underlying 'System Is Shutdown' dialog in the normal way. I am expecting
+ to see debug output but (obviously) the system has almost completed its
+ shutdown procedure so is unable to produce any output.
+
+ This problem has been around on this system for a while now, so goes back
+ way beyond  a revision that I can recall.
+
+ Test system is using a standard Audigy soundcard (which is configured in
+ Prefs -&gt; Media as using Emuxki In and Out/Channel 0.  It is a P4 1.8 Ghz +
+ 520 Mb Rambus memory.
+
+ This behaviour is also reproducable by Enabling Real-Time Audio in Media
+ -&gt;Prefs.
+ Debug output is available here although I can't mail it to myself due to
+ connection problems (so I will transcribe the relevant bit here:
+
+ [tcsetpgrp failed in terminal_inferior:Invalid Argument]
+ Thread 78 caused an exception: Segment violation
+ ...
+ ...
+ ...
+ [tcsetpgrp failed in terminal_inferior:Invalid Argument]
+ [Switching to team /boot/beos/system/servers/media_server (78) thread
+ media_server (78)
+ 0x00656450 in ??()
+
+ This seems to me to be the only useful bit.
+
+ And lastly, enabling Real-Time Audio does not persist over a re-boot
+ although the setting survives a re-start of the media server (via the
+ prefs panel).
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1603">http://dev.haiku-os.org/ticket/1603</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003480.html">[Haiku-bugs] [Haiku] #1602: Using Preferences -&gt; Backgrounds does not clear image when resetting to None
+</A></li>
+	<LI>Next message: <A HREF="003681.html">[Haiku-bugs] [Haiku] #1603: Media server crashes on shutdown
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3477">[ date ]</a>
+              <a href="thread.html#3477">[ thread ]</a>
+              <a href="subject.html#3477">[ subject ]</a>
+              <a href="author.html#3477">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

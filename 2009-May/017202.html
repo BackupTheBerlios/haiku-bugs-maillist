@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3856: page fault in	LegacyDevice::UninitDevice
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233856%3A%20page%20fault%20in%0A%09LegacyDevice%3A%3AUninitDevice&In-Reply-To=%3C059.a492780e3b98255163bf25280e88a68b%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="017072.html">
+   <LINK REL="Next"  HREF="017263.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3856: page fault in	LegacyDevice::UninitDevice</H1>
+    <B>bonefish</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233856%3A%20page%20fault%20in%0A%09LegacyDevice%3A%3AUninitDevice&In-Reply-To=%3C059.a492780e3b98255163bf25280e88a68b%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3856: page fault in	LegacyDevice::UninitDevice">trac at haiku-os.org
+       </A><BR>
+    <I>Sat May  9 22:41:08 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="017072.html">[Haiku-bugs] [Haiku] #3856: page fault in	LegacyDevice::UninitDevice
+</A></li>
+        <LI>Next message: <A HREF="017263.html">[Haiku-bugs] [Haiku] #3856: page fault in	LegacyDevice::UninitDevice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17202">[ date ]</a>
+              <a href="thread.html#17202">[ thread ]</a>
+              <a href="subject.html#17202">[ subject ]</a>
+              <a href="author.html#17202">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3856: page fault in LegacyDevice::UninitDevice
+-----------------------------+----------------------------------------------
+ Reporter:  marcusoverhagen  |       Owner:  axeld         
+     Type:  bug              |      Status:  new           
+ Priority:  normal           |   Milestone:  R1            
+Component:  System/Kernel    |     Version:  R1 development
+Blockedby:                   |    Platform:  All           
+ Blocking:                   |  
+-----------------------------+----------------------------------------------
+
+Comment(by bonefish):
+
+ I've seen that too in r30603 while unplugging my Kinesis keyboard to which
+ a mouse was attached.
+
+ As for a possible cause: The there are several places in
+ legacy_drivers.cpp where the device is deleted right after a
+ devfs_unpublish_device(, true). It is not guaranteed that after
+ vfs_disconnect_vnode() returns there won't be anymore calls using that
+ node, though, since it only marks the FDs disconnected. Any thread that is
+ in put_fd() past the check could cause this problem. Unless I'm mistaken
+ even more generally, anyone who has already acquired a reference to the
+ vnode (or even a file_descriptor) at this point can still call into the
+ devfs with the &quot;stale&quot; node.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3856#comment:2">http://dev.haiku-os.org/ticket/3856#comment:2</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="017072.html">[Haiku-bugs] [Haiku] #3856: page fault in	LegacyDevice::UninitDevice
+</A></li>
+	<LI>Next message: <A HREF="017263.html">[Haiku-bugs] [Haiku] #3856: page fault in	LegacyDevice::UninitDevice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17202">[ date ]</a>
+              <a href="thread.html#17202">[ thread ]</a>
+              <a href="subject.html#17202">[ subject ]</a>
+              <a href="author.html#17202">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

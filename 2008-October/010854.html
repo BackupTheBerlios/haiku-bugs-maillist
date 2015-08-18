@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2598: sshd occasionally segfaults on connect (possibly when forking)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232598%3A%20sshd%20occasionally%20segfaults%20on%0A%20connect%20%28possibly%20when%20forking%29&In-Reply-To=%3C053.28aa130be37b87cd5297c5399d375010%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010853.html">
+   <LINK REL="Next"  HREF="010855.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2598: sshd occasionally segfaults on connect (possibly when forking)</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232598%3A%20sshd%20occasionally%20segfaults%20on%0A%20connect%20%28possibly%20when%20forking%29&In-Reply-To=%3C053.28aa130be37b87cd5297c5399d375010%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2598: sshd occasionally segfaults on connect (possibly when forking)">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Oct  9 05:28:27 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010853.html">[Haiku-bugs] [Haiku] #2598: sshd occasionally segfaults on connect (possibly when forking)
+</A></li>
+        <LI>Next message: <A HREF="010855.html">[Haiku-bugs] [Haiku] #2598: sshd occasionally segfaults on connect (possibly when forking)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10854">[ date ]</a>
+              <a href="thread.html#10854">[ thread ]</a>
+              <a href="subject.html#10854">[ subject ]</a>
+              <a href="author.html#10854">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2598: sshd occasionally segfaults on connect (possibly when forking)
+----------------------------+-----------------------------------------------
+  Reporter:  anevilyak      |       Owner:  bonefish      
+      Type:  bug            |      Status:  assigned      
+  Priority:  normal         |   Milestone:  R1            
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |   Blockedby:                
+  Platform:  All            |    Blocking:                
+----------------------------+-----------------------------------------------
+
+Comment(by anevilyak):
+
+ OK, got the crash again, trace from syslog as follows (note, this time it
+ happened in mid data transfer, not on forking a new child connection
+ though):
+
+ {{{
+ USER: Disconnecting: Bad packet length 905182364.
+ KERN: vm_soft_fault: va 0xb2000 not covered by area in address space
+ KERN: vm_page_fault: vm_soft_fault returned error 'Bad address' on fault
+ at 0xb2ee0, ip 0x40f159, write 0, user 1, thread 0x14dec
+ KERN: vm_page_fault: thread &quot;sshd&quot; (85484) in team &quot;sshd&quot; (85484) tried to
+ read address 0xb2ee0, ip 0x40f159 (&quot;libroot.so_seg0ro&quot; +0x33159)
+ KERN: stack trace:
+ KERN:   0x0040fbaaKERN:  (libroot.so_seg0ro + 0x33baa)
+ KERN:   0x004112e1 (libroot.so_seg0ro + 0x352e1)
+ KERN:   0x0023b2ca (sshd_seg0ro + 0x3b2ca)
+ KERN:   0x0020e457 (sshd_seg0ro + 0xe457)
+ KERN:   0x0020fc63 (sshd_seg0ro + 0xfc63)
+ KERN:   0x0020ca1f (sshd_seg0ro + 0xca1f)
+ KERN:   0x001008eaKERN:  (runtime_loader_seg0ro + 0x8ea)
+ KERN:   0x7ffeefec (sshd_main_stack + 0xffffec)
+ KERN: vm_soft_fault: va 0x0 not covered by area in address space
+ KERN: vm_page_fault: vm_soft_fault returned error 'Bad address' on fault
+ at 0x0, ip 0x800cde34, write 0, user 0, thread 0x14dec
+ KERN: debug_server: Thread 85484 entered the debugger: Segment violation
+ KERN: stack trace, current PC 0x40f159
+ freeBlock__Q28BPrivate9hoardHeapRPQ28BPrivate5blockRPQ28BPrivate10superblockiPQ28BPrivate11processHeap
+ + 0x879:
+ KERN:   (0x7ffeec9c)  0x40fbaa  free__Q28BPrivate11processHeapPv + 0x1ee
+ KERN:   (0x7ffeecec)  0x4112e1  free + 0xb1
+ KERN:   (0x7ffeed1c)  0x23b2ca  xfree + 0x36
+ KERN:   (0x7ffeed4c)  0x20e457  server_accept_loop + 0x143
+ KERN:   (0x7ffeee1c)  0x20fc63  main + 0x1137
+ KERN:   (0x7ffeef7c)  0x20ca1f  _start + 0x5b
+ KERN:   (0x7ffeefac)  0x1008ea  runtime_loader + 0x126
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2598#comment:25">http://dev.haiku-os.org/ticket/2598#comment:25</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010853.html">[Haiku-bugs] [Haiku] #2598: sshd occasionally segfaults on connect (possibly when forking)
+</A></li>
+	<LI>Next message: <A HREF="010855.html">[Haiku-bugs] [Haiku] #2598: sshd occasionally segfaults on connect (possibly when forking)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10854">[ date ]</a>
+              <a href="thread.html#10854">[ thread ]</a>
+              <a href="subject.html#10854">[ subject ]</a>
+              <a href="author.html#10854">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4732: Installer doesn't show expanded files when installing to a volume with a space in it
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234732%3A%20Installer%20doesn%27t%20show%20expanded%20files%0A%20when%20installing%20to%20a%20volume%20with%20a%20space%20in%20it&In-Reply-To=%3C041.b9cc87c44c0dab9bc351ceec9e21f987%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="022501.html">
+   <LINK REL="Next"  HREF="022429.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4732: Installer doesn't show expanded files when installing to a volume with a space in it</H1>
+    <B>idefix</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234732%3A%20Installer%20doesn%27t%20show%20expanded%20files%0A%20when%20installing%20to%20a%20volume%20with%20a%20space%20in%20it&In-Reply-To=%3C041.b9cc87c44c0dab9bc351ceec9e21f987%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4732: Installer doesn't show expanded files when installing to a volume with a space in it">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Oct  5 23:40:35 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="022501.html">[Haiku-bugs] [Haiku] #4731: Wacom causes erratic mouse cursor	movement
+</A></li>
+        <LI>Next message: <A HREF="022429.html">[Haiku-bugs] [Haiku] #4732: Installer doesn't show expanded files when installing to a volume with a space in it
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22413">[ date ]</a>
+              <a href="thread.html#22413">[ thread ]</a>
+              <a href="subject.html#22413">[ subject ]</a>
+              <a href="author.html#22413">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4732: Installer doesn't show expanded files when installing to a volume with a
+space in it
+------------------------------------+---------------------------------------
+ Reporter:  idefix                  |       Owner:  korli    
+     Type:  bug                     |      Status:  new      
+ Priority:  normal                  |   Milestone:  R1       
+Component:  Applications/Installer  |     Version:  R1/alpha1
+Blockedby:                          |    Platform:  All      
+ Blocking:                          |  
+------------------------------------+---------------------------------------
+ When you install Haiku from the R1/Alpha1 cd to a volume with a space in
+ it (eg. `Haiku test`), it won't show the file it's currently expanding
+ from the optional packages but shows the first part of the volume name
+ (eg. `\Haiku`).
+
+ This is caused by the `sscanf` function stopping at the first space it
+ encounters. See
+ source:haiku/trunk/src/apps/installer/UnzipEngine.cpp#L306.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4732">http://dev.haiku-os.org/ticket/4732</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="022501.html">[Haiku-bugs] [Haiku] #4731: Wacom causes erratic mouse cursor	movement
+</A></li>
+	<LI>Next message: <A HREF="022429.html">[Haiku-bugs] [Haiku] #4732: Installer doesn't show expanded files when installing to a volume with a space in it
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22413">[ date ]</a>
+              <a href="thread.html#22413">[ thread ]</a>
+              <a href="subject.html#22413">[ subject ]</a>
+              <a href="author.html#22413">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,180 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #553: /boot/beos/system/add-ons/kernel/cpu/generic_x86 makes Haiku goes -ons/kernel/cpu/generic_x86 makes Haiku goeKDL in a pentium 233 mmx
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-January/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23553%3A%0A%20/boot/beos/system/add-ons/kernel/cpu/generic_x86%20makes%20Haiku%20goes%0A%20-ons/kernel/cpu/generic_x86%20makes%20Haiku%20goeKDL%20in%20a%20pentium%20233%20mmx&In-Reply-To=%3C069.199d5e1146daff5d69ea76d47447a325%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000157.html">
+   <LINK REL="Next"  HREF="000159.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #553: /boot/beos/system/add-ons/kernel/cpu/generic_x86 makes Haiku goes -ons/kernel/cpu/generic_x86 makes Haiku goeKDL in a pentium 233 mmx</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23553%3A%0A%20/boot/beos/system/add-ons/kernel/cpu/generic_x86%20makes%20Haiku%20goes%0A%20-ons/kernel/cpu/generic_x86%20makes%20Haiku%20goeKDL%20in%20a%20pentium%20233%20mmx&In-Reply-To=%3C069.199d5e1146daff5d69ea76d47447a325%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #553: /boot/beos/system/add-ons/kernel/cpu/generic_x86 makes Haiku goes -ons/kernel/cpu/generic_x86 makes Haiku goeKDL in a pentium 233 mmx">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Jan 19 16:45:01 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000157.html">[Haiku-bugs] [Haiku] #553: /boot/beos/system/add-ons/kernel/cpu/generic_x86 makes Haiku goes -ons/kernel/cpu/generic_x86 makes Haiku goeKDL in a pentium 233 mmx
+</A></li>
+        <LI>Next message: <A HREF="000159.html">[Haiku-bugs] [Haiku] #553: add-ons: kernel/cpu/generic_x86 -&gt; KDL on pentium 233mmx
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#158">[ date ]</a>
+              <a href="thread.html#158">[ thread ]</a>
+              <a href="subject.html#158">[ subject ]</a>
+              <a href="author.html#158">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#553: /boot/beos/system/add-ons/kernel/cpu/generic_x86 makes Haiku goes
+-ons/kernel/cpu/generic_x86 makes Haiku goeKDL in a pentium 233 mmx
+------------------------------+---------------------------------------------
+  Reporter:  <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">kaoutsis at sch.gr</A>  |       Owner:  axeld
+      Type:  bug              |      Status:  new  
+  Priority:  normal           |   Milestone:  R1   
+ Component:  Applications     |     Version:       
+Resolution:                   |    Platform:  All  
+------------------------------+---------------------------------------------
+Comment (by kaoutsis):
+
+ J&#233;r&#244;me wrote:
+ &gt; Maybe try this :
+ &gt; strings generic_x86 | grep intel_count_mtrrs
+ &gt;
+ &gt; With a current build it shouldn't return a match (the function doesn't
+ exist anymore)
+
+ It doesn't return a match:
+ $ strings generic_x86 | grep intel_count_mtrrs
+ $ strings generic_x86 | grep intel_count_mtrrs
+ $ strings generic_x86 | grep intel_count_mtrrs
+ $ strings generic_x86 | grep intel_count_mtrrs
+ $ strings generic_x86
+ _DYNAMIC
+ _GLOBAL_OFFSET_TABLE_
+ __deregister_frame_info
+ __register_frame_info
+ gPhysicalMask
+ generic_count_mtrrs
+ get_current_cpuid
+ x86_read_msr
+ generic_init_mtrrs
+ x86_write_msr
+ generic_set_mtrr
+ generic_get_mtrr
+ generic_mtrr_compute_physical_mask
+ get_cpuid
+ generic_dump_mtrrs
+ modules
+ gIntelModule
+ gAMDModule
+ gVIAModule
+ _get_system_info
+ generated/objects/haiku/x86/release/system/kernel/kernel.so
+ _edata
+ __bss_start
+ generic_x86
+ cpu/generic_x86/amd/v1
+ cpu/generic_x86/intel/v1
+ cpu/generic_x86/via/v1
+ GCC: (GNU) 2.95.3-beos-060710
+ GCC: (GNU) 2.95.3-beos-060710
+ GCC: (GNU) 2.95.3-beos-060710
+ GCC: (GNU) 2.95.3-beos-060710
+ GCC: (GNU) 2.95.3-beos-060710
+ GCC: (GNU) 2.95.3-beos-060710
+ .symtab
+ .strtab
+ .shstrtab
+ .hash
+ .dynsym
+ .dynstr
+ .rel.dyn
+ .rel.plt
+ .init
+ .text
+ .fini
+ .rodata
+ .data
+ .eh_frame
+ .dynamic
+ .ctors
+ .dtors
+ .comment
+ generic_x86.cpp
+ amd.cpp
+ amd_init_mtrrs__Fv
+ amd_init__Fv
+ amd_stdops__Fle
+ intel.cpp
+ intel_init_mtrrs__Fv
+ intel_init__Fv
+ intel_stdops__Fle
+ via.cpp
+ via_count_mtrrs__Fv
+ via_init_mtrrs__Fv
+ via_init__Fv
+ via_stdops__Fle
+ generic_init_mtrrs
+ _DYNAMIC
+ gAMDModule
+ get_cpuid
+ get_current_cpuid
+ generic_mtrr_compute_physical_mask
+ gIntelModule
+ modules
+ gVIAModule
+ __deregister_frame_info
+ gPhysicalMask
+ generic_get_mtrr
+ __bss_start
+ _get_system_info
+ x86_write_msr
+ _edata
+ _GLOBAL_OFFSET_TABLE_
+ generic_count_mtrrs
+ generic_set_mtrr
+ generic_dump_mtrrs
+ x86_read_msr
+ __register_frame_info
+ Developer Build
+ BEOS:APP_VERSION
+ $
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku.webfactional.com/ticket/553#comment:11">http://dev.haiku.webfactional.com/ticket/553#comment:11</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku.webfactional.com">http://dev.haiku.webfactional.com</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000157.html">[Haiku-bugs] [Haiku] #553: /boot/beos/system/add-ons/kernel/cpu/generic_x86 makes Haiku goes -ons/kernel/cpu/generic_x86 makes Haiku goeKDL in a pentium 233 mmx
+</A></li>
+	<LI>Next message: <A HREF="000159.html">[Haiku-bugs] [Haiku] #553: add-ons: kernel/cpu/generic_x86 -&gt; KDL on pentium 233mmx
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#158">[ date ]</a>
+              <a href="thread.html#158">[ thread ]</a>
+              <a href="subject.html#158">[ subject ]</a>
+              <a href="author.html#158">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

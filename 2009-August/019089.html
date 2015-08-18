@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2769: Radeon driver is Slower than VESA	...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232769%3A%20Radeon%20driver%20is%20Slower%20than%20VESA%0A%09...&In-Reply-To=%3C052.ce4abe7a50e3a3e92192657c3632fc04%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="019088.html">
+   <LINK REL="Next"  HREF="019090.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2769: Radeon driver is Slower than VESA	...</H1>
+    <B>bga</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232769%3A%20Radeon%20driver%20is%20Slower%20than%20VESA%0A%09...&In-Reply-To=%3C052.ce4abe7a50e3a3e92192657c3632fc04%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2769: Radeon driver is Slower than VESA	...">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Aug  5 02:51:11 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="019088.html">[Haiku-bugs] [Haiku] #4166: Recent changes to video modes seem to have removed some modes.
+</A></li>
+        <LI>Next message: <A HREF="019090.html">[Haiku-bugs] [Haiku] #2769: Radeon driver is Slower than VESA	...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19089">[ date ]</a>
+              <a href="thread.html#19089">[ thread ]</a>
+              <a href="subject.html#19089">[ subject ]</a>
+              <a href="author.html#19089">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2769: Radeon driver is Slower than VESA ...
+-------------------------------------+--------------------------------------
+ Reporter:  herdemir                 |       Owner:  euan          
+     Type:  bug                      |      Status:  new           
+ Priority:  normal                   |   Milestone:  R1            
+Component:  Drivers/Graphics/radeon  |     Version:  R1 development
+Blockedby:                           |    Platform:  All           
+ Blocking:                           |  
+-------------------------------------+--------------------------------------
+
+Comment(by bga):
+
+ Could you try committing whatever you didn't commit yet? My experience is
+ completely different from yours. In all color modes, moving a window uses
+ 100% of the CPU almost all the time. If I have anything else running, it
+ gets jumpy (with acceleration enabled, this does not happen and cpu usage
+ is well below 20%).
+
+ To make things a bit worse, some BWindowScreen programs will refuse to
+ work if the acceleration hooks are not set as they try to get the hooks
+ and will see they are not set.
+
+ Based on all this, I would suggest the following if you guys are ok with
+ that:
+
+ 1 - Wrap the code around a define so stippi can still set it for his
+ machine to be the way it is now.[[BR]]
+ 2 - By default, revert to have acceleration enabled.[[BR]]
+ 3 - mention the nVidia problems you, stippi, are seeing to Rudolf now that
+ he is back developing the driver. This could result in the problems you
+ are seeing being sorted up on the probable correct place.
+
+ Are you guys ok with that?
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2769#comment:18">http://dev.haiku-os.org/ticket/2769#comment:18</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="019088.html">[Haiku-bugs] [Haiku] #4166: Recent changes to video modes seem to have removed some modes.
+</A></li>
+	<LI>Next message: <A HREF="019090.html">[Haiku-bugs] [Haiku] #2769: Radeon driver is Slower than VESA	...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19089">[ date ]</a>
+              <a href="thread.html#19089">[ thread ]</a>
+              <a href="subject.html#19089">[ subject ]</a>
+              <a href="author.html#19089">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

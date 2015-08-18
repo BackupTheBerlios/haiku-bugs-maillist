@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2900: panic: double fault, always thread 4 kernel_daemon
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232900%3A%20panic%3A%20double%20fault%2C%0A%20always%20thread%204%20kernel_daemon&In-Reply-To=%3C050.7eb50a278a92819ed521f593d7e33cac%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011280.html">
+   <LINK REL="Next"  HREF="011300.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2900: panic: double fault, always thread 4 kernel_daemon</H1>
+    <B>stippi</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232900%3A%20panic%3A%20double%20fault%2C%0A%20always%20thread%204%20kernel_daemon&In-Reply-To=%3C050.7eb50a278a92819ed521f593d7e33cac%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2900: panic: double fault, always thread 4 kernel_daemon">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Oct 22 20:32:03 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011280.html">[Haiku-bugs] [Haiku] #2900: panic: double fault, always thread 4 kernel_daemon
+</A></li>
+        <LI>Next message: <A HREF="011300.html">[Haiku-bugs] [Haiku] #2900: panic: double fault, always thread 4 kernel_daemon
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11293">[ date ]</a>
+              <a href="thread.html#11293">[ thread ]</a>
+              <a href="subject.html#11293">[ subject ]</a>
+              <a href="author.html#11293">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2900: panic: double fault, always thread 4 kernel_daemon
+----------------------------+-----------------------------------------------
+  Reporter:  stippi         |       Owner:  axeld         
+      Type:  bug            |      Status:  new           
+  Priority:  blocker        |   Milestone:  R1/alpha1     
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |   Blockedby:                
+  Platform:  All            |    Blocking:                
+----------------------------+-----------------------------------------------
+
+Comment(by stippi):
+
+ I hooked up a PS/2 keyboard and here is what I get (can't find a camera so
+ I am typing it up):
+
+ {{{
+ &lt;kernel_x86&gt;:double_fault_exception
+
+ 801236f8 &lt;kernel_x86&gt;:int_bottom_vm86 + 0x004d
+ kernel iframe at 0x80123704 (end = 0x80123754)
+  eax 0x5394      ebx 0x0         ecx 0x0         edx 0x8015ff20
+  esi 0x8010f160  edi 0x817b0800  ebp 0x8015d00c  esp 0x8015d00c
+  eip 0x800c9cd1 eflags 0x210097
+  vector: 0x8, error code: 0x0
+
+ 80123704 &lt;kernel_86&gt;:int_bottom + 0x0021
+ kernel iframe at 0x8015d00c (end = 0x8015d05c)
+  eax 0x5394      ebx 0x0         ecx 0x0         edx 0x8015ff20
+  esi 0x8010f160  edi 0x817b0800  ebp 0x8015d05c  esp 0x8015d040
+  eip 0x800c9cd1 eflags 0x210097
+  vector: 0xd, error code: 0x0
+
+ 8015d00c &lt;kernel_86&gt;:int_bottom + 0x0021
+ kernel iframe at 0x8015d05c (end = 0x8015d0ac)
+  eax 0x5394      ebx 0x0         ecx 0x0         edx 0x8015ff20
+  esi 0x8010f160  edi 0x817b0800  ebp 0x8015d0ac  esp 0x8015d090
+  eip 0x800c9cd1 eflags 0x210097
+  vector: 0xd, error code: 0x0
+
+ 8015d05c &lt;kernel_86&gt;:int_bottom + 0x0021
+ kernel iframe at 0x8015d0ac (end = 0x8015d0fc)
+  eax 0x5394      ebx 0x0         ecx 0x0         edx 0x8015ff20
+  esi 0x8010f160  edi 0x817b0800  ebp 0x8015d0fc  esp 0x8015d0e0
+  eip 0x800c9cd1 eflags 0x210097
+  vector: 0xd, error code: 0x0
+
+ 8015d0ac &lt;kernel_86&gt;:int_bottom + 0x0021
+ kernel iframe at 0x8015d0fc (end = 0x8015d14c)
+  eax 0x5394      ebx 0x0         ecx 0x0         edx 0x8015ff20
+  esi 0x8010f160  edi 0x817b0800  ebp 0x8015d14c  esp 0x8015d130
+  eip 0x800c9cd1 eflags 0x210097
+  vector: 0xd, error code: 0x0
+
+ 8015d0fc &lt;kernel_86&gt;:int_bottom + 0x0021
+ kernel iframe at 0x8015d14c (end = 0x8015d19c)
+  eax 0x5394      ebx 0x0         ecx 0x0         edx 0x8015ff20
+  esi 0x8010f160  edi 0x817b0800  ebp 0x8015d19c  esp 0x8015d180
+  eip 0x800c9cd1 eflags 0x210097
+  vector: 0xd, error code: 0x0
+
+ [...]
+ }}}
+
+ I hope I typed enough for you to see the pattern in this. (Hint: certain
+ numbers shift by 5)
+
+ This goes on several pages until there is a &quot;ff20040b -- read fault&quot;.
+
+ I am going to reinitialize the partition and do a clean build, because I
+ have that partition around for ages.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2900#comment:3">http://dev.haiku-os.org/ticket/2900#comment:3</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011280.html">[Haiku-bugs] [Haiku] #2900: panic: double fault, always thread 4 kernel_daemon
+</A></li>
+	<LI>Next message: <A HREF="011300.html">[Haiku-bugs] [Haiku] #2900: panic: double fault, always thread 4 kernel_daemon
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11293">[ date ]</a>
+              <a href="thread.html#11293">[ thread ]</a>
+              <a href="subject.html#11293">[ subject ]</a>
+              <a href="author.html#11293">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

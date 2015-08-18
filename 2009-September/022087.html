@@ -1,0 +1,208 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4656: choppy, cracking sound on Haiku
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234656%3A%20choppy%2C%20cracking%20sound%20on%20Haiku&In-Reply-To=%3C044.2ec9e392439c19cec90a4d61524f7112%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="022102.html">
+   <LINK REL="Next"  HREF="022094.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4656: choppy, cracking sound on Haiku</H1>
+    <B>farvardin</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234656%3A%20choppy%2C%20cracking%20sound%20on%20Haiku&In-Reply-To=%3C044.2ec9e392439c19cec90a4d61524f7112%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4656: choppy, cracking sound on Haiku">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Sep 27 20:49:28 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="022102.html">[Haiku-bugs] [Haiku] #4655: More Terminal scrolling fixes
+</A></li>
+        <LI>Next message: <A HREF="022094.html">[Haiku-bugs] [Haiku] #4656: choppy, cracking sound on Haiku
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22087">[ date ]</a>
+              <a href="thread.html#22087">[ thread ]</a>
+              <a href="subject.html#22087">[ subject ]</a>
+              <a href="author.html#22087">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4656: choppy, cracking sound on Haiku
+---------------------------+------------------------------------------------
+ Reporter:  farvardin      |       Owner:  nobody   
+     Type:  bug            |      Status:  new      
+ Priority:  normal         |   Milestone:  R1       
+Component:  Audio &amp; Video  |     Version:  R1/alpha1
+Blockedby:                 |    Platform:  x86      
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+ I can play ogg vorbis or mp3 files with the MediaPlayer. But the sound is
+ choppy and cracks quite much. I noticed if I disable a CPU (it's an amd64
+ dual core), it sounds a bit better. Yet if I do something on the system
+ (right clicking on the ProcessController, clicking on a tab in
+ Firefox/BeZilla), then the sound is even more degradated, as if my
+ computer was not powerful enough to handle this.
+
+ (this issue was discussed on: <A HREF="http://www.haiku-">http://www.haiku-</A>
+ os.org/community/forum/playing_music )
+
+ I noticed also when turning the &quot;real time audio&quot; off, and restarting the
+ media_server, the sound seemed slightly better too (and when I reboot
+ Haiku, the real time audio option is checked again)
+
+ I'm running Haiku on real hardware, and the music files are stored on the
+ BeOS partition (on the Desktop). I have 2 Gb of Ram.
+
+ Here is the full listdev for my hardware:
+
+
+ device Bridge (Host bridge) [6|0|0]
+   vendor 1022: Advanced Micro Devices [AMD]
+   device 1103: K8 [Athlon64/Opteron] Miscellaneous Control
+
+ device Bridge (Host bridge) [6|0|0]
+   vendor 1022: Advanced Micro Devices [AMD]
+   device 1102: K8 [Athlon64/Opteron] DRAM Controller
+
+ device Bridge (Host bridge) [6|0|0]
+   vendor 1022: Advanced Micro Devices [AMD]
+   device 1101: K8 [Athlon64/Opteron] Address Map
+
+ device Bridge (Host bridge) [6|0|0]
+   vendor 1022: Advanced Micro Devices [AMD]
+   device 1100: K8 [Athlon64/Opteron] HyperTransport Technology
+ Configuration
+
+ device Bridge [6|80|0]
+   vendor 10de: nVidia Corporation
+   device 0269: MCP51 Ethernet Controller
+
+ device Multimedia controller (Multimedia audio controller) [4|1|0]
+   vendor 10de: nVidia Corporation
+   device 026b: MCP51 AC97 Audio Controller
+
+ device Serial bus controller (FireWire (IEEE 1394), OHCI) [c|0|10]
+   vendor 104c: Texas Instruments
+   device 8023: TSB43AB22/A IEEE-1394a-2000 Controller (PHY/Link)
+
+ device Bridge (PCI bridge, Subtractive decode) [6|4|1]
+   vendor 10de: nVidia Corporation
+   device 026f: MCP51 PCI Bridge
+
+ device Mass storage controller (IDE interface) [1|1|85]
+   vendor 10de: nVidia Corporation
+   device 0267: MCP51 Serial ATA Controller
+
+ device Mass storage controller (IDE interface) [1|1|85]
+   vendor 10de: nVidia Corporation
+   device 0266: MCP51 Serial ATA Controller
+
+ device Mass storage controller (IDE interface) [1|1|8a]
+   vendor 10de: nVidia Corporation
+   device 0265: MCP51 IDE
+
+ device Serial bus controller (USB Controller, EHCI) [c|3|20]
+   vendor 10de: nVidia Corporation
+   device 026e: MCP51 USB Controller
+
+ device Serial bus controller (USB Controller, OHCI) [c|3|10]
+   vendor 10de: nVidia Corporation
+   device 026d: MCP51 USB Controller
+
+ device Memory controller (RAM memory) [5|0|0]
+   vendor 10de: nVidia Corporation
+   device 0272: MCP51 Memory Controller 0
+
+ device Serial bus controller (SMBus) [c|5|0]
+   vendor 10de: nVidia Corporation
+   device 0264: MCP51 SMBus
+
+ device Bridge (ISA bridge) [6|1|0]
+   vendor 10de: nVidia Corporation
+   device 0260: MCP51 LPC Bridge
+
+ device Memory controller (RAM memory) [5|0|0]
+   vendor 10de: nVidia Corporation
+   device 0270: MCP51 Host Bridge
+
+ device Display controller (VGA compatible controller, VGA controller)
+ [3|0|0]
+   vendor 10de: nVidia Corporation
+   device 0242: C51G [GeForce 6100]
+
+ device Bridge (PCI bridge, Normal decode) [6|4|0]
+   vendor 10de: nVidia Corporation
+   device 02fb: C51 PCI Express Bridge
+
+ device Bridge (PCI bridge, Normal decode) [6|4|0]
+   vendor 10de: nVidia Corporation
+   device 02fc: C51 PCI Express Bridge
+
+ device Memory controller (RAM memory) [5|0|0]
+   vendor 10de: nVidia Corporation
+   device 027e: C51 Memory Controller 2
+
+ device Memory controller (RAM memory) [5|0|0]
+   vendor 10de: nVidia Corporation
+   device 027f: C51 Memory Controller 3
+
+ device Memory controller (RAM memory) [5|0|0]
+   vendor 10de: nVidia Corporation
+   device 02ff: C51 Host Bridge
+
+ device Memory controller (RAM memory) [5|0|0]
+   vendor 10de: nVidia Corporation
+   device 02f9: C51 Memory Controller 4
+
+ device Memory controller (RAM memory) [5|0|0]
+   vendor 10de: nVidia Corporation
+   device 02f8: C51 Memory Controller 5
+
+ device Memory controller (RAM memory) [5|0|0]
+   vendor 10de: nVidia Corporation
+   device 02fe: C51 Memory Controller 1
+
+ device Memory controller (RAM memory) [5|0|0]
+   vendor 10de: nVidia Corporation
+   device 02fa: C51 Memory Controller 0
+
+ device Memory controller (RAM memory) [5|0|0]
+   vendor 10de: nVidia Corporation
+   device 02f1: C51 Host Bridge
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4656">http://dev.haiku-os.org/ticket/4656</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="022102.html">[Haiku-bugs] [Haiku] #4655: More Terminal scrolling fixes
+</A></li>
+	<LI>Next message: <A HREF="022094.html">[Haiku-bugs] [Haiku] #4656: choppy, cracking sound on Haiku
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22087">[ date ]</a>
+              <a href="thread.html#22087">[ thread ]</a>
+              <a href="subject.html#22087">[ subject ]</a>
+              <a href="author.html#22087">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

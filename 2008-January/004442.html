@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1711: Haiku stops booting at allocate_commpage_entry(4, 34)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-January/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231711%3A%20Haiku%20stops%20booting%20at%0A%20allocate_commpage_entry%284%2C%2034%29&In-Reply-To=%3C048.249223f1484265bbfcbfb8c5d5f389ee%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="004337.html">
+   <LINK REL="Next"  HREF="004463.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1711: Haiku stops booting at allocate_commpage_entry(4, 34)</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231711%3A%20Haiku%20stops%20booting%20at%0A%20allocate_commpage_entry%284%2C%2034%29&In-Reply-To=%3C048.249223f1484265bbfcbfb8c5d5f389ee%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1711: Haiku stops booting at allocate_commpage_entry(4, 34)">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Jan 24 01:26:15 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="004337.html">[Haiku-bugs] [Haiku] #1711: Haiku stops booting at allocate_commpage_entry(4, 34)
+</A></li>
+        <LI>Next message: <A HREF="004463.html">[Haiku-bugs] [Haiku] #1711: Haiku stops booting at allocate_commpage_entry(4, 34)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4442">[ date ]</a>
+              <a href="thread.html#4442">[ thread ]</a>
+              <a href="subject.html#4442">[ subject ]</a>
+              <a href="author.html#4442">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1711: Haiku stops booting at allocate_commpage_entry(4, 34)
+----------------------------+-----------------------------------------------
+  Reporter:  euan           |       Owner:  mmlr          
+      Type:  bug            |      Status:  new           
+  Priority:  critical       |   Milestone:  R1            
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |    Platform:  All           
+----------------------------+-----------------------------------------------
+Comment (by euan):
+
+ I added some addtional logging:
+
+ Adding this to the syslog:
+
+ INIT: CPU init
+
+ allocate_commpage_entry(4, 34) -&gt; 0xffff0118
+
+ INIT: VM init
+
+ INIT: debug init
+
+ register kernel daemon locking
+
+ register kernel daemon locked
+
+ register kernel daemon unlocking
+
+ register kernel daemon unlocked
+
+ syslog init post threads
+
+ syslog init post threads create sem
+
+ syslog init post threads create sem ok
+
+ syslog init post threads spawn thread
+
+ syslog init post threads spawn thread ok
+
+ open module list
+
+ The last line is from /kernel/debug.cpp:
+
+ status_t
+ debug_init_post_modules(struct kernel_args *args)
+ {
+         void *cookie;
+
+         // check for dupped lines every 10/10 second
+         register_kernel_daemon(check_pending_repeats, NULL, 10);
+
+         dprintf(&quot;syslog init post threads\n&quot;);
+         syslog_init_post_threads();
+
+         // load kernel debugger addons
+         dprintf(&quot;open module list\n&quot;);
+         cookie = open_module_list(&quot;debugger&quot;);
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1711#comment:5">http://dev.haiku-os.org/ticket/1711#comment:5</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="004337.html">[Haiku-bugs] [Haiku] #1711: Haiku stops booting at allocate_commpage_entry(4, 34)
+</A></li>
+	<LI>Next message: <A HREF="004463.html">[Haiku-bugs] [Haiku] #1711: Haiku stops booting at allocate_commpage_entry(4, 34)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4442">[ date ]</a>
+              <a href="thread.html#4442">[ thread ]</a>
+              <a href="subject.html#4442">[ subject ]</a>
+              <a href="author.html#4442">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1388: [kernel] crash on ping -s 15000
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231388%3A%20%5Bkernel%5D%20crash%20on%20ping%20-s%2015000&In-Reply-To=%3C040.50041ee2d5435b8aa5717f6db6fd8459%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002337.html">
+   <LINK REL="Next"  HREF="002232.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1388: [kernel] crash on ping -s 15000</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231388%3A%20%5Bkernel%5D%20crash%20on%20ping%20-s%2015000&In-Reply-To=%3C040.50041ee2d5435b8aa5717f6db6fd8459%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1388: [kernel] crash on ping -s 15000">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Aug 12 14:15:41 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002337.html">[Haiku-bugs] [Haiku] #1387: [StyledEdit] opens twice after	clipping
+</A></li>
+        <LI>Next message: <A HREF="002232.html">[Haiku-bugs] [Haiku] #1389: [FlattenPictureTest] Not all tests	succeed
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2228">[ date ]</a>
+              <a href="thread.html#2228">[ thread ]</a>
+              <a href="subject.html#2228">[ subject ]</a>
+              <a href="author.html#2228">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1388: [kernel] crash on ping -s 15000
+--------------------------------+-------------------------------------------
+ Reporter:  diver               |       Owner:  axeld         
+     Type:  bug                 |      Status:  new           
+ Priority:  normal              |   Milestone:  R1            
+Component:  Servers/net_server  |     Version:  R1 development
+ Platform:  All                 |  
+--------------------------------+-------------------------------------------
+ Haiku crashed when i pinged my site with ping -s 1500
+
+ {{{
+ vm_soft_fault: va 0xc1c0bfd6 not covered by area in address space
+ vm_page_fault: vm_soft_fault returned error 'Bad address' on fault at
+ 0xc1c0bfd6, ip 0x803c4785, write 0, user 0, thread 0xbf
+ PANIC: vm_page_fault: unhandled page fault in kernel space at 0xc1c0bfd6,
+ ip 0x803c4785
+
+ Welcome to Kernel Debugging Land...
+ Running on CPU 0
+ kdebug&gt; bt
+ stack trace for thread 0xbf &quot;ping&quot;
+     kernel stack: 0x9050e000 to 0x90512000
+       user stack: 0x7efe7000 to 0x7ffe7000
+ frame            caller     &lt;image&gt;:function + offset
+ 905114e4 (+  52) 8008998c   &lt;kernel&gt;:invoke_command + 0x0074
+ 90511518 (+  48) 80089aaa   &lt;kernel&gt;:kernel_debugger_loop + 0x00de
+ 90511548 (+  32) 8008a536   &lt;kernel&gt;:kernel_debugger + 0x00b2
+ 90511568 (+ 192) 8008a479   &lt;kernel&gt;:panic + 0x0029
+ 90511628 (+  64) 8005a52f   &lt;kernel&gt;:vm_page_fault + 0x00ab
+ 90511668 (+ 176) 80092c2b   &lt;kernel&gt;:i386_handle_trap + 0x0217
+ iframe at 0x90511720 (end = 0x90511774)
+  eax 0x0            ebx 0x803ceee8      ecx 0x90437610   edx 0xc1c0bfbe
+  esi 0x90437610     edi 0x904375e8      ebp 0x90511784   esp 0x90511750
+  eip 0x803c4785  eflags 0x10246
+  vector: 0xe, error code: 0x0
+ 90511718 (+ 108) 803c4785   &lt;/boot/beos/system/add-
+ ons/kernel/network/stack&gt;:write_data__FP10net_bufferUlPCvUl + 0x007d
+ 90511784 (+  64) 803c4c8b   &lt;/boot/beos/system/add-
+ ons/kernel/network/stack&gt;:append_data__FP10net_bufferPCvUl + 0x005f
+ 905117c4 (+  48) 803c4378   &lt;/boot/beos/system/add-
+ ons/kernel/network/stack&gt;:duplicate_buffer__FP10net_buffer + 0x0060
+ 905117f4 (+  48) 803c454c   &lt;/boot/beos/system/add-
+ ons/kernel/network/stack&gt;:split_buffer__FP10net_bufferUl + 0x0024
+ 90511824 (+ 144) 803da224   &lt;/boot/beos/system/add-
+ ons/kernel/network/protocols/ipv4&gt;:send_fragments__FP13ipv4_protocolP9net_routeP10net_bufferUl
+ + 0x00a8
+ 905118b4 (+ 112) 803dbeff   &lt;/boot/beos/system/add-
+ ons/kernel/network/protocols/ipv4&gt;:ipv4_send_routed_data__FP12net_protocolP9net_routeP10net_buffer
+ + 0x03b7
+ 90511924 (+  64) 803c0a2e   &lt;/boot/beos/system/add-
+ ons/kernel/network/stack&gt;:datalink_send_datagram__FP12net_protocolP10net_domainP10net_buffer
+ + 0x0096
+ 90511964 (+  80) 803dc0c0   &lt;/boot/beos/system/add-
+ ons/kernel/network/protocols/ipv4&gt;:ipv4_send_data__FP12net_protocolP10net_buffer
+ + 0x01b4
+ 905119b4 (+  80) 803c6f18   &lt;/boot/beos/system/add-
+ ons/kernel/network/stack&gt;:socket_send__FP10net_socketP6msghdrPCvUli +
+ 0x01e8
+ 90511a04 (+ 448) 80216efb   &lt;/boot/beos/system/add-
+ ons/kernel/drivers/dev/net/net_stack&gt;:net_stack_control__FPvUlT0Ul +
+ 0x0377
+ 90511bc4 (+ 336) 800402f7   &lt;kernel&gt;:devfs_ioctl__FPvN20UlT0Ul + 0x023f
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1388">http://dev.haiku-os.org/ticket/1388</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002337.html">[Haiku-bugs] [Haiku] #1387: [StyledEdit] opens twice after	clipping
+</A></li>
+	<LI>Next message: <A HREF="002232.html">[Haiku-bugs] [Haiku] #1389: [FlattenPictureTest] Not all tests	succeed
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2228">[ date ]</a>
+              <a href="thread.html#2228">[ thread ]</a>
+              <a href="subject.html#2228">[ subject ]</a>
+              <a href="author.html#2228">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1734: BDirectWindow apps compiled for R5 don't work in Haiku
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-January/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231734%3A%20BDirectWindow%20apps%20compiled%20for%20R5%0A%20don%27t%20work%20in%20Haiku&In-Reply-To=%3C054.6575e78c7a75b7cb5a0b92ab966b7391%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="004509.html">
+   <LINK REL="Next"  HREF="004499.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1734: BDirectWindow apps compiled for R5 don't work in Haiku</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231734%3A%20BDirectWindow%20apps%20compiled%20for%20R5%0A%20don%27t%20work%20in%20Haiku&In-Reply-To=%3C054.6575e78c7a75b7cb5a0b92ab966b7391%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1734: BDirectWindow apps compiled for R5 don't work in Haiku">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Jan 28 13:47:23 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="004509.html">[Haiku-bugs] [Haiku] #1734: BDirectWindow apps compiled for R5 don't work in Haiku
+</A></li>
+        <LI>Next message: <A HREF="004499.html">[Haiku-bugs] [Haiku] #1637: Frozen empty desktop with an inert cursor on startup.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4510">[ date ]</a>
+              <a href="thread.html#4510">[ thread ]</a>
+              <a href="subject.html#4510">[ subject ]</a>
+              <a href="author.html#4510">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1734: BDirectWindow apps compiled for R5 don't work in Haiku
+-------------------------+--------------------------------------------------
+  Reporter:  jackburton  |       Owner:  axeld         
+      Type:  bug         |      Status:  new           
+  Priority:  normal      |   Milestone:  R1            
+ Component:  - General   |     Version:  R1 development
+Resolution:              |    Platform:  All           
+-------------------------+--------------------------------------------------
+Old description:
+
+&gt;<i> I copied the R5 devtools to my haiku partition and compiled the sample
+</I>&gt;<i> apps Chart and Stars.
+</I>&gt;<i> They start up correctly but only show a black window. If the same
+</I>&gt;<i> applications are cross compiled from within the haiku build environment
+</I>&gt;<i> (under linux) they work correctly.
+</I>&gt;<i> After investigating a bit, it seems that their inherited
+</I>&gt;<i> DirectConnected() method is never called.
+</I>&gt;<i> I added some debug output to our BDirectWindow implementation, and the
+</I>&gt;<i> _DirectDaemon() method loops correctly, acquires the fDisableSem
+</I>&gt;<i> correctly, and then releases the fDisableSemAck correctly. So the code
+</I>&gt;<i> path looks okay, just that the virtual version of DirectConnected() is
+</I>&gt;<i> never called.
+</I>&gt;<i> Anyone has any idea ?
+</I>
+New description:
+
+ I copied the R5 devtools to my haiku partition and compiled the sample
+ apps Chart and Stars.
+ They start up correctly but only show a black window. If the same
+ applications are cross compiled from within the haiku build environment
+ (under linux) they work correctly.
+ After investigating a bit, it seems that their inherited DirectConnected()
+ method is never called.
+ I added some debug output to our BDirectWindow implementation, and the
+ _DirectDaemon() method loops correctly, acquires the fDisableSem
+ correctly, and then releases the fDisableSemAck correctly. So the code
+ path looks okay, just that the virtual inherited version of
+ DirectConnected() is never called.
+ Anyone has any idea ?
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1734#comment:4">http://dev.haiku-os.org/ticket/1734#comment:4</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="004509.html">[Haiku-bugs] [Haiku] #1734: BDirectWindow apps compiled for R5 don't work in Haiku
+</A></li>
+	<LI>Next message: <A HREF="004499.html">[Haiku-bugs] [Haiku] #1637: Frozen empty desktop with an inert cursor on startup.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4510">[ date ]</a>
+              <a href="thread.html#4510">[ thread ]</a>
+              <a href="subject.html#4510">[ subject ]</a>
+              <a href="author.html#4510">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

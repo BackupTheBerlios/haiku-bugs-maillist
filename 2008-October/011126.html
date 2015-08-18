@@ -1,0 +1,159 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2860: script doesn't recognize svn revision
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232860%3A%20script%20doesn%27t%20recognize%20svn%20revision&In-Reply-To=%3C042.87d4d91772af70d0f787abf4d95d175e%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011083.html">
+   <LINK REL="Next"  HREF="011084.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2860: script doesn't recognize svn revision</H1>
+    <B>Adek336</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232860%3A%20script%20doesn%27t%20recognize%20svn%20revision&In-Reply-To=%3C042.87d4d91772af70d0f787abf4d95d175e%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2860: script doesn't recognize svn revision">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Oct 18 02:35:08 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011083.html">[Haiku-bugs] [Haiku] #2840: via_rhine II ethernet controller:	svn hangs
+</A></li>
+        <LI>Next message: <A HREF="011084.html">[Haiku-bugs] [Haiku] #2861: LCD: show preferred resolution
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11126">[ date ]</a>
+              <a href="thread.html#11126">[ thread ]</a>
+              <a href="subject.html#11126">[ subject ]</a>
+              <a href="author.html#11126">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2860: script doesn't recognize svn revision
+--------------------------+-------------------------------------------------
+ Reporter:  Adek336       |       Owner:  bonefish      
+     Type:  bug           |      Status:  new           
+ Priority:  normal        |   Milestone:  R1            
+Component:  Build System  |     Version:  R1 development
+Blockedby:                |    Platform:  All           
+ Blocking:                |  
+--------------------------+-------------------------------------------------
+ Because of the fact the svn hangs in Haiku (#2840), I used Debian to svn
+ checkout the sources and Haiku to copy them to a BFS partition and to jam
+ them.
+ Unfortunately
+ {{{
+ AddSymlinkToContainerCopyFilesScript &lt;HaikuImage&gt;beos/system/add-
+ ons/kernel/drivers/dev/net/syskonnect
+ AddSymlinkToContainerCopyFilesScript &lt;HaikuImage&gt;beos/system/add-
+ ons/kernel/drivers/dev/net/usb_ecm
+ CopySetHaikuRevision1
+ generated/objects/haiku/x86/release/system/kernel/revisioned/kernel_x86
+ Usage: set_haiku_revision  &lt;file&gt; &lt;revision&gt;
+
+ Finds the haiku revision section in ELF object file &lt;file&gt; and replaces
+ the
+ writes the number given by &lt;revision&gt; into the first 32 bits of the
+ section.
+
+
+ revision=`(LC_ALL=C LANG=C svn info . 2&gt; /dev/null ||
+ (cd . &amp;&amp; LC_ALL=C LANG=C git svn info) 2&gt; /dev/null ||
+ (git log --max-count=1 --grep=&quot;git-svn-id:&quot; 2&gt; /dev/null |
+ grep git-svn-id: | cut -d '@' -f 2 |
+ awk '{printf &quot;Revision: &quot; $1}') 2&gt; /dev/null ||
+ echo Revision: 0) |
+ grep Revision | awk '{printf $2}'`
+ generated/objects/haiku_host/x86/release/tools/copyattr --data
+ generated/objects/haiku/x86/release/system/kernel/kernel_x86
+ generated/objects/haiku/x86/release/system/kernel/revisioned/kernel_x86 &amp;&amp;
+ generated/objects/haiku_host/x86/release/tools/set_haiku_revision
+ generated/objects/haiku/x86/release/system/kernel/revisioned/kernel_x86
+ ${revision}
+
+ ...failed CopySetHaikuRevision1
+ generated/objects/haiku/x86/release/system/kernel/revisioned/kernel_x86
+ ...
+ ...removing
+ generated/objects/haiku/x86/release/system/kernel/revisioned/kernel_x86
+ ...skipped &lt;HaikuImage&gt;haiku.image-copy-files-dummy-beos/system for lack
+ of &lt;revisioned&gt;kernel_x86...
+ }}}
+
+ I believe it is a problem with build/jam/FileRules
+ {{{
+         revision=`(LC_ALL=C LANG=C svn info $(HAIKU_TOP) 2&gt; /dev/null ||
+                 (cd $(HAIKU_TOP) &amp;&amp; LC_ALL=C LANG=C git svn info) 2&gt;
+ /dev/null ||
+                 (git log --max-count=1 --grep=&quot;git-svn-id:&quot; 2&gt; /dev/null |
+                         grep git-svn-id: | cut -d '@' -f 2 |
+                         awk '{printf &quot;Revision: &quot; $1}') 2&gt; /dev/null ||
+                 echo Revision: 0) |
+                 grep Revision | awk '{printf $2}'`
+ }}}
+
+ This is related to the fact that svn cannot find out the revision number
+ {{{
+ /haiku-dane/haiku&gt; svn info
+ svn: This client is too old to work with working copy '.'; please get a
+ newer Subversion client
+ }}}
+ the script then tries to ask git for the revision number. And git fails as
+ I don't use nor have it
+ {{{
+ /haiku-dane/haiku&gt; git
+ sh: git: command not found
+ }}}
+ but the script doesn't then fall back to revision=0; scenario:
+ {{{
+ /haiku-dane/haiku&gt; no_such_command
+ sh: no_such_command: command not found
+ /haiku-dane/haiku&gt; ((no_such_command) 2&gt; /dev/null )
+ /haiku-dane/haiku&gt; echo $?
+ 127
+ /haiku-dane/haiku&gt; ((no_such_command | awk '{printf &quot;Revision: &quot; $1}') 2&gt;
+ /dev/null )
+ /haiku-dane/haiku&gt; echo $?
+ 0
+ }}}
+
+ Expected behaviour: it should fail on getting the revision from both svn
+ and git and fall back to revision=0.
+
+ As a note, I was able to do so (check out on Debian, build on Haiku, with
+ svn versions incompatible) just about 2 weeks ago.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2860">http://dev.haiku-os.org/ticket/2860</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011083.html">[Haiku-bugs] [Haiku] #2840: via_rhine II ethernet controller:	svn hangs
+</A></li>
+	<LI>Next message: <A HREF="011084.html">[Haiku-bugs] [Haiku] #2861: LCD: show preferred resolution
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11126">[ date ]</a>
+              <a href="thread.html#11126">[ thread ]</a>
+              <a href="subject.html#11126">[ subject ]</a>
+              <a href="author.html#11126">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

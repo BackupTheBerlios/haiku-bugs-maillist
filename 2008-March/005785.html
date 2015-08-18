@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1963: BFS Finds Spurious File
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231963%3A%20BFS%20Finds%20Spurious%20File&In-Reply-To=%3C043.8c4fd8cd890b528625ba24c70c6bdf7b%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005784.html">
+   <LINK REL="Next"  HREF="005805.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1963: BFS Finds Spurious File</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231963%3A%20BFS%20Finds%20Spurious%20File&In-Reply-To=%3C043.8c4fd8cd890b528625ba24c70c6bdf7b%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1963: BFS Finds Spurious File">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Mar 26 05:55:23 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005784.html">[Haiku-bugs] [Haiku] #1444: SATA testing on real hardware -	fails to boot
+</A></li>
+        <LI>Next message: <A HREF="005805.html">[Haiku-bugs] [Haiku] #1963: execvp() Tries to Execute	Directories
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5785">[ date ]</a>
+              <a href="thread.html#5785">[ thread ]</a>
+              <a href="subject.html#5785">[ subject ]</a>
+              <a href="author.html#5785">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1963: BFS Finds Spurious File
+------------------------------+---------------------------------------------
+ Reporter:  bonefish          |       Owner:  axeld         
+     Type:  bug               |      Status:  new           
+ Priority:  critical          |   Milestone:  R1/alpha1     
+Component:  File Systems/BFS  |     Version:  R1 development
+ Platform:  All               |  
+------------------------------+---------------------------------------------
+ r24582, VMware
+
+ While configuring/building gcc, a spurious &quot;cp&quot; entry appeared in the
+ current output directory (.../gcc-obj/gcc/). According to the kernel
+ tracing access() returned OK for the entry and it could even be opened.
+ Reading from it failed with B_BAD_VALUE, though. There's also a respective
+ &quot;bfs_read()...&quot; line in the serial debug output. I suspended and uploaded
+ the virtual machine state (512 MB RAM, 1 GB disk):
+
+   <A HREF="http://tfs.cs.tu-berlin.de/~bonefish/private/haiku/CrashOMatic-non-">http://tfs.cs.tu-berlin.de/~bonefish/private/haiku/CrashOMatic-non-</A>
+ existent-cp.zip
+
+ BFS tracing was enabled, but I forgot to enable block cache tracing. :-/
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1963">http://dev.haiku-os.org/ticket/1963</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005784.html">[Haiku-bugs] [Haiku] #1444: SATA testing on real hardware -	fails to boot
+</A></li>
+	<LI>Next message: <A HREF="005805.html">[Haiku-bugs] [Haiku] #1963: execvp() Tries to Execute	Directories
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5785">[ date ]</a>
+              <a href="thread.html#5785">[ thread ]</a>
+              <a href="subject.html#5785">[ subject ]</a>
+              <a href="author.html#5785">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

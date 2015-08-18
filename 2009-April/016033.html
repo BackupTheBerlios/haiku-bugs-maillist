@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2389: [Terminal] Add a menu option to allow the user to give the terminal a custom name
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232389%3A%20%5BTerminal%5D%20Add%20a%20menu%20option%20to%0A%20allow%20the%20user%20to%20give%20the%20terminal%20a%20custom%20name&In-Reply-To=%3C051.19398f329c2165ca86acc6a0be38dfc0%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="016032.html">
+   <LINK REL="Next"  HREF="016037.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2389: [Terminal] Add a menu option to allow the user to give the terminal a custom name</H1>
+    <B>heto</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232389%3A%20%5BTerminal%5D%20Add%20a%20menu%20option%20to%0A%20allow%20the%20user%20to%20give%20the%20terminal%20a%20custom%20name&In-Reply-To=%3C051.19398f329c2165ca86acc6a0be38dfc0%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2389: [Terminal] Add a menu option to allow the user to give the terminal a custom name">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Apr 12 22:41:55 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="016032.html">[Haiku-bugs] [Haiku] #2827: [Pe] Save As dialog box has over lapping button (easy)
+</A></li>
+        <LI>Next message: <A HREF="016037.html">[Haiku-bugs] [Haiku] #3276: Event sounds are not played
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16033">[ date ]</a>
+              <a href="thread.html#16033">[ thread ]</a>
+              <a href="subject.html#16033">[ subject ]</a>
+              <a href="author.html#16033">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2389: [Terminal] Add a menu option to allow the user to give the terminal a
+custom name
+-----------------------------------+----------------------------------------
+ Reporter:  scottmc                |       Owner:  jackburton    
+     Type:  enhancement            |      Status:  new           
+ Priority:  low                    |   Milestone:  R1            
+Component:  Applications/Terminal  |     Version:  R1 development
+Blockedby:                         |    Platform:  All           
+ Blocking:                         |  
+-----------------------------------+----------------------------------------
+Changes (by heto):
+
+ * cc: henrimoi@&#8230; (added)
+
+
+Comment:
+
+ Looking at BTab, it has no way of knowing which BTabView it belongs to, so
+ it can't invalidate it. Therefore I assume that the application is
+ supposed to do the invalidation, as I don't think the BTab can go just
+ draw itself when the label is changed.
+
+ I'll attach a patch that fixes the update issue with echo -e
+ '\E]2;title\a'. Compared to the file posted earlier, it only invalidates
+ the region that belongs to the tab whose title just got updated, which
+ should reduce flicker and avoid re-drawing the whole tabview. It also
+ doesn't lock the window as I don't think this is required with invalidate.
+
+ With regards to the original suggestion, I think an in-place renaming by
+ double-clicking the tab is a more sensible option than a menu option and a
+ dialog. I'll see if I can implement this in the couple following days.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2389#comment:19">http://dev.haiku-os.org/ticket/2389#comment:19</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="016032.html">[Haiku-bugs] [Haiku] #2827: [Pe] Save As dialog box has over lapping button (easy)
+</A></li>
+	<LI>Next message: <A HREF="016037.html">[Haiku-bugs] [Haiku] #3276: Event sounds are not played
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16033">[ date ]</a>
+              <a href="thread.html#16033">[ thread ]</a>
+              <a href="subject.html#16033">[ subject ]</a>
+              <a href="author.html#16033">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

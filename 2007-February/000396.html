@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #681: [build system] garbage in Long Description attribute
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-February/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23681%3A%20%5Bbuild%20system%5D%20garbage%20in%20Long%0A%20Description%20attribute&In-Reply-To=%3C049.f34ed2a3337895d3fa427aa4a2ea1b33%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000394.html">
+   <LINK REL="Next"  HREF="000398.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #681: [build system] garbage in Long Description attribute</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23681%3A%20%5Bbuild%20system%5D%20garbage%20in%20Long%0A%20Description%20attribute&In-Reply-To=%3C049.f34ed2a3337895d3fa427aa4a2ea1b33%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #681: [build system] garbage in Long Description attribute">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Feb  5 19:43:37 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000394.html">[Haiku-bugs] [Haiku] #1003: KDL while expanding a file
+</A></li>
+        <LI>Next message: <A HREF="000398.html">[Haiku-bugs] [Haiku] #1014: Pages printed with StyledEdit are empty
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#396">[ date ]</a>
+              <a href="thread.html#396">[ thread ]</a>
+              <a href="subject.html#396">[ subject ]</a>
+              <a href="author.html#396">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#681: [build system] garbage in Long Description attribute
+---------------------------+------------------------------------------------
+  Reporter:  diver         |       Owner:  bonefish
+      Type:  bug           |      Status:  new     
+  Priority:  normal        |   Milestone:  R1      
+ Component:  Build System  |     Version:          
+Resolution:                |    Platform:  All     
+---------------------------+------------------------------------------------
+Old description:
+
+&gt;<i> Many apps in /bin folder, garbage in Long Description attribute.
+</I>&gt;<i> See for example &quot;alert&quot; or &quot;screen_blanker&quot;.
+</I>&gt;<i> This only happens if compiled from BeOS.
+</I>&gt;<i> If compiled from linux everything ok.
+</I>
+New description:
+
+ Many apps in /bin folder, garbage in Long Description attribute.
+ See for example &quot;alert&quot; or &quot;screen_blanker&quot;.
+ This only happens if compiled from BeOS.
+ If compiled from linux everything ok.
+
+Comment (by bonefish):
+
+ An executable/library can have an application and a system version info.
+ Both are stored together in the same attribute and/or resource
+ (BEOS:APP_VERSION). Thus, if present at all both have to be present. The
+ BAppFileInfo API (and using it the setversion program), however, allows to
+ set them individually. When the attribute and resource are not yet
+ present, BAppFileInfo is supposed to clear the respectively other version
+ info if only one version info is set.
+
+ This happens a lot when building a Haiku image, since the build system
+ uses setversion to set the system version info for each generated
+ executable/library, and most of them don't have resource file defining an
+ application version info. In fact most of them don't have a resource file
+ at all. What makes the mentioned files special is that they *do* have a
+ resource file, but this resource file uncommonly doesn't define an
+ application version info. My guess is, that this constellation (existing
+ resources, but no version info) triggers a BAppFileInfo bug that causes
+ garbage in the application version info.
+
+ For the R5 build the setversion build tool uses R5's libbe, while under
+ Linux, a stripped down Haiku libbe is used. R5's setversion suffers from
+ the same problem, BTW.
+
+ I suppose, we could modify our setversion to check whether a version info
+ was present and if not also write a zero'd out other version info, if only
+ one version info is given.
+
+ ... or we ignore the problem and build under Linux. :-P
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/681#comment:2">http://dev.haiku-os.org/ticket/681#comment:2</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000394.html">[Haiku-bugs] [Haiku] #1003: KDL while expanding a file
+</A></li>
+	<LI>Next message: <A HREF="000398.html">[Haiku-bugs] [Haiku] #1014: Pages printed with StyledEdit are empty
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#396">[ date ]</a>
+              <a href="thread.html#396">[ thread ]</a>
+              <a href="subject.html#396">[ subject ]</a>
+              <a href="author.html#396">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

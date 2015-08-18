@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3768: create_image -i 943718400 (or other large sizes) results in freeze
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233768%3A%20create_image%20-i%20943718400%20%28or%20other%0A%20large%20sizes%29%20results%20in%20freeze&In-Reply-To=%3C053.10e72bb4ef74c4213fd14f699fbcd264%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="016295.html">
+   <LINK REL="Next"  HREF="016299.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3768: create_image -i 943718400 (or other large sizes) results in freeze</H1>
+    <B>bonefish</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233768%3A%20create_image%20-i%20943718400%20%28or%20other%0A%20large%20sizes%29%20results%20in%20freeze&In-Reply-To=%3C053.10e72bb4ef74c4213fd14f699fbcd264%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3768: create_image -i 943718400 (or other large sizes) results in freeze">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Apr 18 10:45:48 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="016295.html">[Haiku-bugs] [Haiku] #3768: create_image -i 943718400 (or other large sizes) results in freeze
+</A></li>
+        <LI>Next message: <A HREF="016299.html">[Haiku-bugs] [Haiku] #3768: create_image -i 943718400 (or other large sizes) results in freeze
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16297">[ date ]</a>
+              <a href="thread.html#16297">[ thread ]</a>
+              <a href="subject.html#16297">[ subject ]</a>
+              <a href="author.html#16297">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3768: create_image -i 943718400 (or other large sizes) results in freeze
+---------------------------+------------------------------------------------
+ Reporter:  anevilyak      |       Owner:  bonefish      
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1 development
+Blockedby:                 |    Platform:  All           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+
+Comment(by bonefish):
+
+ Replying to [comment:14 stippi]:
+ &gt; Interesting. If the read-only executable pages had been discarded for
+ any high-priority threads, wouldn't that affect their latency also?
+
+ No, latency is just the time from the thread waking up (after sleep,
+ waiting on a semaphore,...) to it starting to run. The additional page
+ faults re-reading the executable page just make it run slower and
+ additionally wait for I/O.
+
+ Replying to [comment:15 anevilyak]:
+ &gt; I can confirm this behavior here as well. With your and Axel's changes
+ the system does indeed now recover after 3-5 seconds (nice work!) of being
+ unresponsive,
+
+ It took quite a bit longer to recover in my test, but I suspect that also
+ depends on the size of the image file, the total amount of memory etc.
+
+ &gt; though it's quite obvious all apps have been swapped out by the behavior
+ afterwards (the first click to Deskbar takes several seconds to respond
+ while it's paged back in for instance). What puzzles me is why memory
+ pressure is being exerted in this manner at all. I would have assumed the
+ VM would discard file cache pages/buffers before going after executables,
+ so I would expect the inode being created/filled in this instance to have
+ its pages flushed and reused once the pressure gets to that point. Is this
+ not the case?
+
+ ATM the VM treats mapped and just cached files pretty much the same.
+ Mapped pages get an initially higher usage count and therefore won't be
+ evicted as quickly, but after two iterations of the page daemon without
+ being touched they are back to zero, too and become available for
+ recycling.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3768#comment:16">http://dev.haiku-os.org/ticket/3768#comment:16</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="016295.html">[Haiku-bugs] [Haiku] #3768: create_image -i 943718400 (or other large sizes) results in freeze
+</A></li>
+	<LI>Next message: <A HREF="016299.html">[Haiku-bugs] [Haiku] #3768: create_image -i 943718400 (or other large sizes) results in freeze
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16297">[ date ]</a>
+              <a href="thread.html#16297">[ thread ]</a>
+              <a href="subject.html#16297">[ subject ]</a>
+              <a href="author.html#16297">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

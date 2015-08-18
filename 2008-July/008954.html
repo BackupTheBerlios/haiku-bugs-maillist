@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2519: Uninterruptible power supply beeps on Haiku boot or Haiku applications loading
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-July/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232519%3A%20Uninterruptible%20power%20supply%20beeps%0A%20on%20Haiku%20boot%20or%20Haiku%20applications%20loading&In-Reply-To=%3C049.90445af8b72332cf41f8d92753237e61%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008950.html">
+   <LINK REL="Next"  HREF="008955.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2519: Uninterruptible power supply beeps on Haiku boot or Haiku applications loading</H1>
+    <B>cebif</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232519%3A%20Uninterruptible%20power%20supply%20beeps%0A%20on%20Haiku%20boot%20or%20Haiku%20applications%20loading&In-Reply-To=%3C049.90445af8b72332cf41f8d92753237e61%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2519: Uninterruptible power supply beeps on Haiku boot or Haiku applications loading">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Jul 12 05:09:46 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008950.html">[Haiku-bugs] [Haiku] #2519: Uninterruptible power supply beeps on Haiku boot or Haiku applications loading
+</A></li>
+        <LI>Next message: <A HREF="008955.html">[Haiku-bugs] [Haiku] #2519: Uninterruptible power supply beeps on Haiku boot or Haiku applications loading
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8954">[ date ]</a>
+              <a href="thread.html#8954">[ thread ]</a>
+              <a href="subject.html#8954">[ subject ]</a>
+              <a href="author.html#8954">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2519: Uninterruptible power supply beeps on Haiku boot or Haiku applications
+loading
+--------------------------+-------------------------------------------------
+  Reporter:  cebif        |       Owner:  bonefish      
+      Type:  bug          |      Status:  closed        
+  Priority:  normal       |   Milestone:  R1            
+ Component:  Drivers/TTY  |     Version:  R1 development
+Resolution:  invalid      |   Blockedby:                
+  Platform:  All          |    Blocking:                
+--------------------------+-------------------------------------------------
+
+Comment(by cebif):
+
+ This is the content of my kernel file and the change I made:
+
+ serial_debug_output false
+         # disables serial debug output, default is enabled
+
+ #serial_debug_port 0
+         # possible values: &lt;num&gt;|&lt;port&gt;
+         # serial interface number (as enumerated by the BIOS) or the
+         # base port of the serial interface to be used for kernel
+         # debug output and the kernel debugger
+         # default is 0 (COM1)
+
+ #serial_debug_speed 57600
+         # possible values: &lt;9600|19200|38400|57600|115200&gt;
+         # default is 115200
+
+ With the hash symbol deleted before the first line there is still a little
+ bit of beeping but much less. For the line #Serial_debug_port 0
+ I also tried removing the hash and changing port number from 1 to 0, but
+ that still did not stop all beeping so I put the hash symbol back in
+ front.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2519#comment:3">http://dev.haiku-os.org/ticket/2519#comment:3</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008950.html">[Haiku-bugs] [Haiku] #2519: Uninterruptible power supply beeps on Haiku boot or Haiku applications loading
+</A></li>
+	<LI>Next message: <A HREF="008955.html">[Haiku-bugs] [Haiku] #2519: Uninterruptible power supply beeps on Haiku boot or Haiku applications loading
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8954">[ date ]</a>
+              <a href="thread.html#8954">[ thread ]</a>
+              <a href="subject.html#8954">[ subject ]</a>
+              <a href="author.html#8954">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

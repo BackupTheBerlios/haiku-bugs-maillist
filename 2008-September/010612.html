@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1641: KDL:  rtl8139
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231641%3A%20KDL%3A%20%20rtl8139&In-Reply-To=%3C052.8c7f555e87b4ba8e8247a4d428300b50%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010602.html">
+   <LINK REL="Next"  HREF="010618.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1641: KDL:  rtl8139</H1>
+    <B>siarzhuk</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231641%3A%20KDL%3A%20%20rtl8139&In-Reply-To=%3C052.8c7f555e87b4ba8e8247a4d428300b50%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1641: KDL:  rtl8139">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Sep 28 00:35:22 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010602.html">[Haiku-bugs] [Haiku] #1669: Fails on boot
+</A></li>
+        <LI>Next message: <A HREF="010618.html">[Haiku-bugs] [Haiku] #2778: KDL on boot on QEMU
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10612">[ date ]</a>
+              <a href="thread.html#10612">[ thread ]</a>
+              <a href="subject.html#10612">[ subject ]</a>
+              <a href="author.html#10612">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1641: KDL:  rtl8139
+------------------------------+---------------------------------------------
+  Reporter:  kaoutsis         |       Owner:  axeld           
+      Type:  bug              |      Status:  new             
+  Priority:  normal           |   Milestone:  R1              
+ Component:  Drivers/Network  |     Version:  R1 development  
+Resolution:                   |   Blockedby:                  
+  Platform:  All              |    Blocking:  1661, 1890, 2452
+------------------------------+---------------------------------------------
+
+Comment(by siarzhuk):
+
+ During my &quot;traced&quot; games I observed 4 cases of network-related KDLs on my
+ system with rtl8139:
+
+ 1) page fault in m_free call from compat_read. It looks like one that is
+ traced in attachment 8139-kdl.txt.[[BR]]
+
+ 2) page fault in m_free call from m_defrag. It is mentioned above in
+ attachment 8139-wget-kdl.txt[[BR]]
+
+ 3) page fault in memcpy_generic call from devfs_read in &quot;/dev/net/rtl8139
+ reader&quot; thread.[[BR]]
+
+ 4) page fault in
+ Compare__C24ConnectionHashDefinitionRCt4pair2ZPC8sockaddrZPC8sockaddrP11TCPEndpoint.
+ It is already submitted as ticket #2706.[[BR]]
+
+
+ First of all I have investigated the &quot;case 1&quot; because it was observed very
+ frequently on my system. This problem occure as follows: in interrupt
+ handler the rl_rxeof create mbuf for recieved data by call of m_devget.
+ Right after this in the same call of interrupt handler rl_rxeof create
+ another mbuf with next packet of received data by calling m_devget again.
+ After the interrupt handler is finished the compat_read copy received data
+ and attempt to free the  mbuf created by first call of m_devget. This
+ attempt failed because m_next of this mbuf is invalid (traced says that it
+ almost always has value of 0x00000d36)
+
+ The &quot;case 2&quot; was observed rarely and looks like related the same problem
+ as &quot;case 1&quot; but during rl_txeof handling.
+
+ About the &quot;case 3&quot; and &quot;case 4&quot; I thought it is not related to mbuf
+ problem.
+
+ During browsing Trac tickets for something related to this problems I
+ found ticket #2758 that describe some problem in m_devget.
+
+ I have tried mentioned in that ticked fix from Adek336 in
+ compat/sys/mbuf.h
+
+
+ {{{
+  #define MLEN            ((int)(MSIZE - sizeof(struct m_hdr)))
+ -#define MHLEN           ((int)(MSIZE - sizeof(struct pkthdr)))
+ +#define MHLEN           ((int)(MLEN - sizeof(struct pkthdr)))
+
+ }}}
+
+ Now I cannot observe &quot;Cases 1,2,3&quot; for about of 1 hour of stress testing.
+
+
+ Unfortunately the &quot;case 4&quot; (ticket #2706) is still reproducible on my
+ system.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1641#comment:18">http://dev.haiku-os.org/ticket/1641#comment:18</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010602.html">[Haiku-bugs] [Haiku] #1669: Fails on boot
+</A></li>
+	<LI>Next message: <A HREF="010618.html">[Haiku-bugs] [Haiku] #2778: KDL on boot on QEMU
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10612">[ date ]</a>
+              <a href="thread.html#10612">[ thread ]</a>
+              <a href="subject.html#10612">[ subject ]</a>
+              <a href="author.html#10612">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

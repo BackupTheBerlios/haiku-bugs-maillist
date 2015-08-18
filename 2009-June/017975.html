@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4018: MTRR: Clearing variable MTRRs on boot causes system freeze
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234018%3A%20MTRR%3A%20Clearing%20variable%20MTRRs%20on%20boot%0A%20causes%20system%20freeze&In-Reply-To=%3C039.ae8f99e86d3fe69c312b27cfc7d589e5%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="017973.html">
+   <LINK REL="Next"  HREF="017977.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4018: MTRR: Clearing variable MTRRs on boot causes system freeze</H1>
+    <B>mmlr</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234018%3A%20MTRR%3A%20Clearing%20variable%20MTRRs%20on%20boot%0A%20causes%20system%20freeze&In-Reply-To=%3C039.ae8f99e86d3fe69c312b27cfc7d589e5%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4018: MTRR: Clearing variable MTRRs on boot causes system freeze">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Jun 12 23:56:42 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="017973.html">[Haiku-bugs] [Haiku] #2643: Black screen when DVI connected (non-native resolution)
+</A></li>
+        <LI>Next message: <A HREF="017977.html">[Haiku-bugs] [Haiku] #4018: MTRR: Clearing variable MTRRs on boot causes system freeze
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17975">[ date ]</a>
+              <a href="thread.html#17975">[ thread ]</a>
+              <a href="subject.html#17975">[ subject ]</a>
+              <a href="author.html#17975">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4018: MTRR: Clearing variable MTRRs on boot causes system freeze
+---------------------------+------------------------------------------------
+ Reporter:  mmlr           |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1 development
+Blockedby:                 |    Platform:  All           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+ I've recently upgraded my desktop PC to 4GB of RAM. This worked for a few
+ days without problem. After updating the BIOS/Firmware of this machine
+ however, Haiku would hang at boot. I've tracked it down to the MTRR
+ initialization. The system hangs when all variable MTRRs are cleared in
+ generic_init_mtrrs() (<A HREF="http://dev.haiku-os.org/browser/haiku/trunk/src/add-">http://dev.haiku-os.org/browser/haiku/trunk/src/add-</A>
+ ons/kernel/cpu/x86/generic_x86.cpp#L61) and then caches are re-enabled by
+ clearing the cache-disable bit in cr0 (<A HREF="http://dev.haiku-">http://dev.haiku-</A>
+ os.org/browser/haiku/trunk/src/system/kernel/arch/x86/arch_cpu.cpp#L143).
+
+ The system does not hang if either MTRRs aren't used at all (by hacking
+ the returned count to 0 for example), if MTRRs aren't enabled again at the
+ end of generic_init_mtrrs(), or if the MTRRs aren't cleared in
+ generic_init_mtrrs().
+
+ From reading the specs and cross-referencing other implementations it
+ seems that we aren't really supposed to clear whatever has been setup in
+ the MTRRs by the BIOS/Firmware. Instead other systems seem to take the
+ existing MTRR setup as a base and then work with that.
+
+ What leads me to suspect that clearing is not intended by the specs is
+ that it states in the MTRR examples (Example 10-2 in 10.11.3): &quot;This setup
+ also fulfills the requirement that two register pairs are left for
+ operating system usage.&quot; Which could indicate that the other pairs aren't
+ really supposed to be re-set, though it doesn't explicitly state that
+ anywhere.
+
+ Linux seems to gather all MTRR info from the boot processor first and then
+ syncs the other processors to match if necessary. Otherwise it leaves the
+ existing MTRRs and later extends them as needed or uses free slots for new
+ ranges.
+
+ My current work-around is to simply skip clearing MTRRs. They are later
+ over-written by Haiku, which doesn't seem to be a problem. It only seems
+ to be a problem when caches are enabled and there are no variable MTRRs
+ programmed at all.
+
+ Board is an Intel DG33TL with latest BIOS/Firmware, 2.4GHz Core 2 Quad,
+ 4GB of RAM.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4018">http://dev.haiku-os.org/ticket/4018</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="017973.html">[Haiku-bugs] [Haiku] #2643: Black screen when DVI connected (non-native resolution)
+</A></li>
+	<LI>Next message: <A HREF="017977.html">[Haiku-bugs] [Haiku] #4018: MTRR: Clearing variable MTRRs on boot causes system freeze
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17975">[ date ]</a>
+              <a href="thread.html#17975">[ thread ]</a>
+              <a href="subject.html#17975">[ subject ]</a>
+              <a href="author.html#17975">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

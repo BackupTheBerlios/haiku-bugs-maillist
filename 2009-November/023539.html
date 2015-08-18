@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4920: gcc4 BSoundPlayer broken on Alpha
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234920%3A%20gcc4%20BSoundPlayer%20broken%20on%20Alpha&In-Reply-To=%3C042.25eae91ed4101d9c08dfe26ac8b23ac1%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="023554.html">
+   <LINK REL="Next"  HREF="023540.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4920: gcc4 BSoundPlayer broken on Alpha</H1>
+    <B>Adek336</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234920%3A%20gcc4%20BSoundPlayer%20broken%20on%20Alpha&In-Reply-To=%3C042.25eae91ed4101d9c08dfe26ac8b23ac1%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4920: gcc4 BSoundPlayer broken on Alpha">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Nov  8 03:23:12 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="023554.html">[Haiku-bugs] [Haiku] #4919: PANIC - got an in use page from the free pages list
+</A></li>
+        <LI>Next message: <A HREF="023540.html">[Haiku-bugs] [Haiku] #4920: gcc4 BSoundPlayer broken on Alpha
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#23539">[ date ]</a>
+              <a href="thread.html#23539">[ thread ]</a>
+              <a href="subject.html#23539">[ subject ]</a>
+              <a href="author.html#23539">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4920: gcc4 BSoundPlayer broken on Alpha
+----------------------------+-----------------------------------------------
+ Reporter:  Adek336         |       Owner:  marcusoverhagen
+     Type:  bug             |      Status:  new            
+ Priority:  normal          |   Milestone:  R1             
+Component:  Kits/Media Kit  |     Version:  R1/alpha1      
+Blockedby:                  |    Platform:  All            
+ Blocking:                  |  
+----------------------------+-----------------------------------------------
+ This is an application with the example code from the Be Book
+
+ <A HREF="http://www.acm.uiuc.edu/bug/Be%20Book/The%20Media%20Kit/SoundPlayer.html">http://www.acm.uiuc.edu/bug/Be%20Book/The%20Media%20Kit/SoundPlayer.html</A>
+
+ {{{
+ #include &lt;Application.h&gt;
+ #include &lt;Sound.h&gt;
+ #include &lt;SoundPlayer.h&gt;
+
+ typedef struct cookie_record {
+    float value;
+    float direction;
+ } cookie_record;
+
+
+ void BufferProc(void *theCookie, void *buffer, size_t size,
+             const media_raw_audio_format &amp;format) {
+    size_t i, j;
+    float *buf = (float *) buffer;
+    size_t float_size = size/4;
+    uint32 channel_count = format.channel_count;
+    cookie_record *cookie = (cookie_record *) theCookie;
+
+    // We're going to be cheap and only work for floating-point audio
+
+    if (format.format != media_raw_audio_format::B_AUDIO_FLOAT) {
+       return;
+    }
+
+    // Now fill the buffer with sound!
+
+    for (i=0; i&lt;float_size; i+=channel_count) {
+       for (j=0; j&lt;channel_count; j++) {
+          buf[i+j] = cookie-&gt;value;
+       }
+       if ((cookie-&gt;direction == 1.0) &amp;&amp; (cookie-&gt;value &gt;= 1.0)) {
+          cookie-&gt;direction = -1.0;
+       }
+       else if ((cookie-&gt;direction == -1.0) &amp;&amp; (cookie-&gt;value &lt;= -1.0)) {
+          cookie-&gt;direction = 1.0;
+       }
+       cookie-&gt;value += cookie-&gt;direction*(1.0/64.0);
+    }
+ }
+
+ int main()
+ {
+    BApplication app(&quot;application/dzwiek&quot;);
+
+
+    cookie_record cookie;
+
+    cookie.value = 0.0;
+    cookie.direction = 1.0;
+
+    BSoundPlayer player(&quot;wave_player&quot;, BufferProc, NULL, &amp;cookie);
+    player.Start();
+    player.SetHasData(true);
+
+    sleep(10);
+
+    player.Stop();
+ }
+ }}}
+
+
+ If we compile it with gcc4, it works on Hybrid-4 but doesn't work on
+ Hybrid-2.
+
+ If we compile it with gcc2, it works on Hybrid-2 but doesn't work on
+ Hybrid-4.
+
+
+ As a result, applications compiled with gcc4 can't play sound on a gcc2
+ Haiku build. This includes gcc4 built applications that use SDL, for
+ example Free Heroes Of Might And Magic.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4920">http://dev.haiku-os.org/ticket/4920</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="023554.html">[Haiku-bugs] [Haiku] #4919: PANIC - got an in use page from the free pages list
+</A></li>
+	<LI>Next message: <A HREF="023540.html">[Haiku-bugs] [Haiku] #4920: gcc4 BSoundPlayer broken on Alpha
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#23539">[ date ]</a>
+              <a href="thread.html#23539">[ thread ]</a>
+              <a href="subject.html#23539">[ subject ]</a>
+              <a href="author.html#23539">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,219 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2614: Indexes not being correctly	maintained.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232614%3A%20Indexes%20not%20being%20correctly%0A%09maintained.&In-Reply-To=%3C047.093134a3376912ed30acd239380054dd%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009534.html">
+   <LINK REL="Next"  HREF="009501.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2614: Indexes not being correctly	maintained.</H1>
+    <B>mmlr</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232614%3A%20Indexes%20not%20being%20correctly%0A%09maintained.&In-Reply-To=%3C047.093134a3376912ed30acd239380054dd%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2614: Indexes not being correctly	maintained.">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Aug 16 14:43:05 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009534.html">[Haiku-bugs] [Haiku] #2615: Improved keyboard navigation with	triggers
+</A></li>
+        <LI>Next message: <A HREF="009501.html">[Haiku-bugs] [Haiku] #2191: Updated posix &amp; bsd license headers
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9491">[ date ]</a>
+              <a href="thread.html#9491">[ thread ]</a>
+              <a href="subject.html#9491">[ subject ]</a>
+              <a href="author.html#9491">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2614: Indexes not being correctly maintained.
+-------------------------------+--------------------------------------------
+  Reporter:  bga               |       Owner:  axeld         
+      Type:  bug               |      Status:  new           
+  Priority:  blocker           |   Milestone:  R1/alpha1     
+ Component:  File Systems/BFS  |     Version:  R1 development
+Resolution:                    |   Blockedby:                
+  Platform:  All               |    Blocking:                
+-------------------------------+--------------------------------------------
+Description changed by mmlr:
+
+Old description:
+
+&gt;<i> I have been doing experiments on a real Haiku installation and playing
+</I>&gt;<i> with emails I just noticed the indexes are not being correctly
+</I>&gt;<i> maintained.
+</I>&gt;<i>
+</I>&gt;<i> Here is what I mean:
+</I>&gt;<i>
+</I>&gt;<i> ~&gt; query MAIL:subject=\*
+</I>&gt;<i>
+</I>&gt;<i> /boot/home/development/mdr/AGMSBayesianSpamServer/SoundUncertain
+</I>&gt;<i> /boot/home/development/mdr/outbound_filters
+</I>&gt;<i> /boot/home/config/settings/AGMSBayesianSpam/AGMSBayesianSpamServer\
+</I>&gt;<i> Settings
+</I>&gt;<i> /boot/home/development/mdr/bemail/ObjectList.h
+</I>&gt;<i> /boot/home/development/mdr/bemail
+</I>&gt;<i> /boot/home/development/mdr/daemon/.cvsignore
+</I>&gt;<i> /boot/home/development/mdr/bemail/Enclosures.cpp
+</I>&gt;<i> /boot/home/development/mdr/lib/crypt.cpp
+</I>&gt;<i> /boot/home/development/spam_server/CVS/Entries
+</I>&gt;<i> /boot/home/development/mdr/config/ConfigWindow.cpp
+</I>&gt;<i> /boot/home/development/mdr/bemail/QueryMenu.cpp
+</I>&gt;<i> /boot/home/development/mdr/CVSROOT/verifymsg
+</I>&gt;<i> /boot/home/development/mdr/CVSROOT/modules
+</I>&gt;<i> /boot/home/development/mdr/inbound_protocols
+</I>&gt;<i> /boot/home/development/mdr/CVSROOT/notify
+</I>&gt;<i> /boot/home/development/mdr/bemail/Content.h
+</I>&gt;<i> /boot/home/development/mdr/bemail/Content.cpp
+</I>&gt;<i> /boot/home/development/mdr/lib/numailkit.cpp
+</I>&gt;<i> /boot/home/development/mdr/lib/status.cp
+</I>&gt;<i> /boot/home/development/mdr/config/ConfigWindow.h
+</I>&gt;<i> /boot/home/development/mdr/bemail/FindWindow.h
+</I>&gt;<i> /boot/home/development/mdr/bemail/Header.cpp
+</I>&gt;<i> /boot/home/development/mdr/bemail/LICENSE
+</I>&gt;<i> /boot/home/development/mdr/bemail/Mail.cpp
+</I>&gt;<i> /boot/home/development/mdr/bemail/Prefs.h
+</I>&gt;<i> /boot/home/development/mdr/inbound_protocols/makefile
+</I>&gt;<i> /boot/home/development/mdr/lib
+</I>&gt;<i> /boot/home/development/mdr/bemail/Signature.h
+</I>&gt;<i> /boot/home/development/mdr/bemail/BeMail.rsrc
+</I>&gt;<i> /boot/home/development/mdr/bemail/Signature.cpp
+</I>&gt;<i> /boot/home/development/mdr/bemail/QueryMenu.h
+</I>&gt;<i> /boot/home/development/mdr/daemon/SlowMenu.h
+</I>&gt;<i> /boot/home/development/mdr/AGMSBayesianSpamServer/BuyLogoLayers.image.x-becasso
+</I>&gt;<i> /boot/home/development/mdr/bemail/Utilities.cpp
+</I>&gt;<i> /boot/home/development/mdr/bemail/WIndex.cpp
+</I>&gt;<i> /boot/home/development/mdr/bemail/Words.cpp
+</I>&gt;<i> /boot/home/development/mdr/bemail/WIndex.h
+</I>&gt;<i> /boot/home/development/mdr/bemail/Words.h
+</I>&gt;<i> /boot/home/development/mdr/bemail/geekspeak
+</I>&gt;<i> /boot/home/development/mdr/bemail/Utilities.h
+</I>&gt;<i> /boot/home/development/mdr/config/E-mail.rsrc
+</I>&gt;<i> /boot/home/development/mdr/daemon/NavMenu.h
+</I>&gt;<i> /boot/home/development/mdr/bemail/BmapButton.h
+</I>&gt;<i> /boot/home/development/mdr/daemon/main.cp
+</I>&gt;<i>
+</I>&gt;<i> And, just to confirm in one file:
+</I>&gt;<i>
+</I>&gt;<i> ~&gt; listattr /boot/home/development/mdr/daemon/main.cp
+</I>&gt;<i> File: /boot/home/development/mdr/daemon/main.cp
+</I>&gt;<i>   Type         Size                 Name
+</I>&gt;<i> -----------  ---------  -------------------------------
+</I>&gt;<i>
+</I>&gt;<i> 0 bytes total in attributes.
+</I>&gt;<i>
+</I>&gt;<i> I was working with those files before I checked the email so it looks a
+</I>&gt;<i> lot like BFS getting confused about the inodes that it puts on the
+</I>&gt;<i> indexes.
+</I>
+New description:
+
+ I have been doing experiments on a real Haiku installation and playing
+ with emails I just noticed the indexes are not being correctly maintained.
+
+ Here is what I mean:
+
+ {{{
+ ~&gt; query MAIL:subject=\*
+
+ /boot/home/development/mdr/AGMSBayesianSpamServer/SoundUncertain
+ /boot/home/development/mdr/outbound_filters
+ /boot/home/config/settings/AGMSBayesianSpam/AGMSBayesianSpamServer\
+ Settings
+ /boot/home/development/mdr/bemail/ObjectList.h
+ /boot/home/development/mdr/bemail
+ /boot/home/development/mdr/daemon/.cvsignore
+ /boot/home/development/mdr/bemail/Enclosures.cpp
+ /boot/home/development/mdr/lib/crypt.cpp
+ /boot/home/development/spam_server/CVS/Entries
+ /boot/home/development/mdr/config/ConfigWindow.cpp
+ /boot/home/development/mdr/bemail/QueryMenu.cpp
+ /boot/home/development/mdr/CVSROOT/verifymsg
+ /boot/home/development/mdr/CVSROOT/modules
+ /boot/home/development/mdr/inbound_protocols
+ /boot/home/development/mdr/CVSROOT/notify
+ /boot/home/development/mdr/bemail/Content.h
+ /boot/home/development/mdr/bemail/Content.cpp
+ /boot/home/development/mdr/lib/numailkit.cpp
+ /boot/home/development/mdr/lib/status.cp
+ /boot/home/development/mdr/config/ConfigWindow.h
+ /boot/home/development/mdr/bemail/FindWindow.h
+ /boot/home/development/mdr/bemail/Header.cpp
+ /boot/home/development/mdr/bemail/LICENSE
+ /boot/home/development/mdr/bemail/Mail.cpp
+ /boot/home/development/mdr/bemail/Prefs.h
+ /boot/home/development/mdr/inbound_protocols/makefile
+ /boot/home/development/mdr/lib
+ /boot/home/development/mdr/bemail/Signature.h
+ /boot/home/development/mdr/bemail/BeMail.rsrc
+ /boot/home/development/mdr/bemail/Signature.cpp
+ /boot/home/development/mdr/bemail/QueryMenu.h
+ /boot/home/development/mdr/daemon/SlowMenu.h
+ /boot/home/development/mdr/AGMSBayesianSpamServer/BuyLogoLayers.image.x-becasso
+ /boot/home/development/mdr/bemail/Utilities.cpp
+ /boot/home/development/mdr/bemail/WIndex.cpp
+ /boot/home/development/mdr/bemail/Words.cpp
+ /boot/home/development/mdr/bemail/WIndex.h
+ /boot/home/development/mdr/bemail/Words.h
+ /boot/home/development/mdr/bemail/geekspeak
+ /boot/home/development/mdr/bemail/Utilities.h
+ /boot/home/development/mdr/config/E-mail.rsrc
+ /boot/home/development/mdr/daemon/NavMenu.h
+ /boot/home/development/mdr/bemail/BmapButton.h
+ /boot/home/development/mdr/daemon/main.cp
+ }}}
+
+ And, just to confirm in one file:
+
+ {{{
+ ~&gt; listattr /boot/home/development/mdr/daemon/main.cp
+ File: /boot/home/development/mdr/daemon/main.cp
+   Type         Size                 Name
+ -----------  ---------  -------------------------------
+
+ 0 bytes total in attributes.
+ }}}
+
+ I was working with those files before I checked the email so it looks a
+ lot like BFS getting confused about the inodes that it puts on the
+ indexes.
+
+--
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2614#comment:3">http://dev.haiku-os.org/ticket/2614#comment:3</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009534.html">[Haiku-bugs] [Haiku] #2615: Improved keyboard navigation with	triggers
+</A></li>
+	<LI>Next message: <A HREF="009501.html">[Haiku-bugs] [Haiku] #2191: Updated posix &amp; bsd license headers
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9491">[ date ]</a>
+              <a href="thread.html#9491">[ thread ]</a>
+              <a href="subject.html#9491">[ subject ]</a>
+              <a href="author.html#9491">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

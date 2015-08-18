@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2819: destructor not called on static objects from shared libraries
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232819%3A%20destructor%20not%20called%20on%20static%20objects%0A%20from%20shared%20libraries&In-Reply-To=%3C040.3d4396a39f95c07669c8e453ea4e014f%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010928.html">
+   <LINK REL="Next"  HREF="010933.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2819: destructor not called on static objects from shared libraries</H1>
+    <B>korli</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232819%3A%20destructor%20not%20called%20on%20static%20objects%0A%20from%20shared%20libraries&In-Reply-To=%3C040.3d4396a39f95c07669c8e453ea4e014f%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2819: destructor not called on static objects from shared libraries">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Oct 12 03:15:14 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010928.html">[Haiku-bugs] [Haiku] #2508: [MediaPlayer] add icons to playlist	(easy)
+</A></li>
+        <LI>Next message: <A HREF="010933.html">[Haiku-bugs] [Haiku] #2819: destructor not called on static objects from shared libraries
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10929">[ date ]</a>
+              <a href="thread.html#10929">[ thread ]</a>
+              <a href="subject.html#10929">[ subject ]</a>
+              <a href="author.html#10929">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2819: destructor not called on static objects from shared libraries
+-----------------------------------+----------------------------------------
+ Reporter:  korli                  |       Owner:  axeld         
+     Type:  bug                    |      Status:  new           
+ Priority:  normal                 |   Milestone:  R1            
+Component:  System/runtime_loader  |     Version:  R1 development
+Blockedby:                         |    Platform:  All           
+ Blocking:                         |  
+-----------------------------------+----------------------------------------
+ Here is test code for a shared lib.
+ debugger in constructor is called.
+ debugger in destructor is not called.
+
+ {{{
+ #include &lt;Debug.h&gt;
+
+ class Test4 {
+ public:
+         Test4() { debugger(&quot;tutu&quot;); };
+         ~Test4() { debugger(&quot;~tutu&quot;); };
+ };
+
+ static Test4 test4;
+
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2819">http://dev.haiku-os.org/ticket/2819</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010928.html">[Haiku-bugs] [Haiku] #2508: [MediaPlayer] add icons to playlist	(easy)
+</A></li>
+	<LI>Next message: <A HREF="010933.html">[Haiku-bugs] [Haiku] #2819: destructor not called on static objects from shared libraries
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10929">[ date ]</a>
+              <a href="thread.html#10929">[ thread ]</a>
+              <a href="subject.html#10929">[ subject ]</a>
+              <a href="author.html#10929">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4130: [Tracker] crash in	Model::StatChanged ()
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234130%3A%20%5BTracker%5D%20crash%20in%0A%09Model%3A%3AStatChanged%20%28%29&In-Reply-To=%3C049.4eef2cc731c0713dd1cb459d87ae947a%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="020265.html">
+   <LINK REL="Next"  HREF="020268.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4130: [Tracker] crash in	Model::StatChanged ()</H1>
+    <B>bonefish</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234130%3A%20%5BTracker%5D%20crash%20in%0A%09Model%3A%3AStatChanged%20%28%29&In-Reply-To=%3C049.4eef2cc731c0713dd1cb459d87ae947a%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4130: [Tracker] crash in	Model::StatChanged ()">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Aug 28 01:22:05 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="020265.html">[Haiku-bugs] [Haiku] #4352: Pe editor bug when editing a file
+</A></li>
+        <LI>Next message: <A HREF="020268.html">[Haiku-bugs] [Haiku] #4353: 'common' folder appears as text-file	type
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20266">[ date ]</a>
+              <a href="thread.html#20266">[ thread ]</a>
+              <a href="subject.html#20266">[ subject ]</a>
+              <a href="author.html#20266">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4130: [Tracker] crash in Model::StatChanged ()
+----------------------------------+-----------------------------------------
+ Reporter:  diver                 |       Owner:  axeld         
+     Type:  bug                   |      Status:  new           
+ Priority:  normal                |   Milestone:  R1            
+Component:  Applications/Tracker  |     Version:  R1 development
+Blockedby:                        |    Platform:  All           
+ Blocking:                        |  
+----------------------------------+-----------------------------------------
+
+Comment(by bonefish):
+
+ Also encountered in r32727 alpha 1 branch.
+
+ {{{
+ 00114b90 &lt;BPrivate::Model::StatChanged(void)&gt;:
+   114b90:       55                      push   %ebp
+   114b91:       89 e5                   mov    %esp,%ebp
+   114b93:       83 ec 0c                sub    $0xc,%esp
+   114b96:       57                      push   %edi
+   114b97:       56                      push   %esi
+   114b98:       53                      push   %ebx
+   114b99:       e8 00 00 00 00          call   114b9e
+ &lt;BPrivate::Model::StatChanged(void)+0xe&gt;
+   114b9e:       5b                      pop    %ebx
+   114b9f:       81 c3 a6 c4 0c 00       add    $0xcc4a6,%ebx
+   114ba5:       8b 7d 08                mov    0x8(%ebp),%edi
+   114ba8:       8b 77 1c                mov    0x1c(%edi),%esi
+   114bab:       83 c4 f8                add    $0xfffffff8,%esp
+   114bae:       8b 57 74                mov    0x74(%edi),%edx
+   114bb1:       8b 4a 10                mov    0x10(%edx),%ecx
+ }}}
+
+ The last instruction is the point of crash; %edx is NULL. %edi should be
+ the object pointer and 0x74(%edi) the fNode member. So apparently the
+ Model's fNode member is NULL.
+
+ I've already seen the bug several times. It usually happens with a tracker
+ window for a directory in which a lot of file adding/removing is happing.
+ Easy to reproduce with:
+ {{{
+ mkdir /tmp/tt; cd /tmp/tt; open .; while true; do touch $(seq 100); rm
+ $(seq 100); done
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4130#comment:1">http://dev.haiku-os.org/ticket/4130#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="020265.html">[Haiku-bugs] [Haiku] #4352: Pe editor bug when editing a file
+</A></li>
+	<LI>Next message: <A HREF="020268.html">[Haiku-bugs] [Haiku] #4353: 'common' folder appears as text-file	type
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20266">[ date ]</a>
+              <a href="thread.html#20266">[ thread ]</a>
+              <a href="subject.html#20266">[ subject ]</a>
+              <a href="author.html#20266">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

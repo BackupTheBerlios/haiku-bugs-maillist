@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2471: PANIC: page fault but interrupts were disabled. Touching address 0x00000008 from eip 0x80031f85 while building Haiku
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232471%3A%20PANIC%3A%20page%20fault%20but%20interrupts%20were%0A%20disabled.%20Touching%20address%200x00000008%20from%20eip%200x80031f85%20while%20building%0A%20Haiku&In-Reply-To=%3C044.56406569b88a99d8ac7750d826ed82b0%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008653.html">
+   <LINK REL="Next"  HREF="008655.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2471: PANIC: page fault but interrupts were disabled. Touching address 0x00000008 from eip 0x80031f85 while building Haiku</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232471%3A%20PANIC%3A%20page%20fault%20but%20interrupts%20were%0A%20disabled.%20Touching%20address%200x00000008%20from%20eip%200x80031f85%20while%20building%0A%20Haiku&In-Reply-To=%3C044.56406569b88a99d8ac7750d826ed82b0%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2471: PANIC: page fault but interrupts were disabled. Touching address 0x00000008 from eip 0x80031f85 while building Haiku">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Jun 30 04:08:51 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008653.html">[Haiku-bugs] [Haiku] #1919: Cursor hangs on startup
+</A></li>
+        <LI>Next message: <A HREF="008655.html">[Haiku-bugs] [Haiku] #2471: PANIC: page fault but interrupts were disabled. Touching address 0x00000008 from eip 0x80031f85 while building Haiku
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8654">[ date ]</a>
+              <a href="thread.html#8654">[ thread ]</a>
+              <a href="subject.html#8654">[ subject ]</a>
+              <a href="author.html#8654">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2471: PANIC: page fault but interrupts were disabled. Touching address 0x00000008
+from eip 0x80031f85  while building Haiku
+---------------------------+------------------------------------------------
+ Reporter:  anevilyak      |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1 development
+Blockedby:                 |    Platform:  All           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+ While doing a jam of Haiku within Haiku, I hit this panic, backtrace as
+ follows:
+
+ &lt;snip&gt;kernel debugger stuff
+ &lt;kernel&gt;:panic + 0x0029
+ &lt;kernel&gt;:page_fault_exception + 0x0060
+ &lt;kernel&gt;:int_bottom + 0x002a (nearest)
+ iframe at 0x9b466da4 (end = 0x9b466dfc)
+ eax 0x9ccf6000 ebx 0x0 ecx 0x800dc5dc edx 0x5cb5
+ esi 0xb10fcd80 edi 0x0 ebp 0x9b466e1c esp 0x9b466dd8
+ eip 0x80031f85 eflags 0x10086
+ vector: 0xe, error code: 0x0
+ &lt;kernel&gt;:mutex_unlock + 0x0045
+ &lt;kernel&gt;:vm_soft_fault__FUlbT1 + 0x0e28
+ &lt;kernel&gt;:vm_page_fault + 0x002e
+ &lt;kernel&gt;:page_fault_exception + 0x00b1
+ &lt;kernel&gt;:int_bottom_user + 0x005a (nearest)
+ iframe at 0x9b466fa8 (end = 0x9b467000)
+ eax 0x18036018 ebx 0x341928 ecx 0x0 edx 0xa
+ esi 0x180343d0 edi 0x18036018 ebp 0x7ffeeb0c esp 0x9b466fdc
+ eip 0x2c7c45 eflags 0x10206 user esp 0x7ffeeae4
+ vector: 0xe, error code: 0x6
+ &lt;libroot.so&gt;:__Q28BPrivate10superblockiiPQ28BPrivate9hoardHeap + 0x0131
+ &lt;libroot.so&gt;:makeSuperblock__Q28BPrivate10superblockiPQ28BPrivate11processHeap
+ + 0x02f9
+ &lt;libroot.so&gt;:malloc__Q28BPrivate10threadHeapUl + 0x0abf
+ &lt;libroot.so&gt;:malloc + 0x0021
+ &lt;_APP_&gt;:xmalloc + 0x0021
+ &lt;_APP_&gt;:strvec_create + 0x0022
+ &lt;_APP_&gt;:merge_temporary_env + 0x005f (nearest)
+ &lt;_APP_&gt;:merge_temporary_env + 0x0272 (nearest)
+ &lt;_APP_&gt;:maybe_make_export_env + 0x00ed
+ &lt;_APP_&gt;:execute_command_internal + 0x28ed (nearest)
+ &lt;_APP_&gt;:execute_command_internal + 0x04be
+ &lt;_APP_&gt;:execute_command_internal + 0x139e (nearest)
+ &lt;_APP_&gt;:execute_command_internal + 0x160c (nearest)
+ &lt;_APP_&gt;:execute_command_internal + 0x0740
+ &lt;_APP_&gt;:parse_and_execute + 0x03ea
+ &lt;_APP_&gt;:disable_priv_mode + 0x02db (nearest)
+ &lt;_APP_&gt;:main + 0x06da
+ &lt;_APP_&gt;:start + 0x005b
+ 785284:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">runtime_loader_seg0ro at 0x00100000</A> + 0x8ea
+ 785283:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">sh_main_stack at 0x7efef000</A> + 0xffffec
+
+ This was in thread 'sh' by the way.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2471">http://dev.haiku-os.org/ticket/2471</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008653.html">[Haiku-bugs] [Haiku] #1919: Cursor hangs on startup
+</A></li>
+	<LI>Next message: <A HREF="008655.html">[Haiku-bugs] [Haiku] #2471: PANIC: page fault but interrupts were disabled. Touching address 0x00000008 from eip 0x80031f85 while building Haiku
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8654">[ date ]</a>
+              <a href="thread.html#8654">[ thread ]</a>
+              <a href="subject.html#8654">[ subject ]</a>
+              <a href="author.html#8654">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

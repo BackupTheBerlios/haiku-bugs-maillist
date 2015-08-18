@@ -1,0 +1,579 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2555: PANIC: ASSERT FAILED (src/system/kernel/condition_variable.cpp:206): sConditionVariableHash.Lookup(object) == __null
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-July/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232555%3A%20PANIC%3A%20ASSERT%20FAILED%0A%20%28src/system/kernel/condition_variable.cpp%3A206%29%3A%0A%20sConditionVariableHash.Lookup%28object%29%20%3D%3D%20__null&In-Reply-To=%3C042.f49909b6c512ca6d303c183505b167fa%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009205.html">
+   <LINK REL="Next"  HREF="009202.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2555: PANIC: ASSERT FAILED (src/system/kernel/condition_variable.cpp:206): sConditionVariableHash.Lookup(object) == __null</H1>
+    <B>emitrax</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232555%3A%20PANIC%3A%20ASSERT%20FAILED%0A%20%28src/system/kernel/condition_variable.cpp%3A206%29%3A%0A%20sConditionVariableHash.Lookup%28object%29%20%3D%3D%20__null&In-Reply-To=%3C042.f49909b6c512ca6d303c183505b167fa%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2555: PANIC: ASSERT FAILED (src/system/kernel/condition_variable.cpp:206): sConditionVariableHash.Lookup(object) == __null">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Jul 30 21:59:04 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009205.html">[Haiku-bugs] [Haiku] #2554: send gdb changes upstream
+</A></li>
+        <LI>Next message: <A HREF="009202.html">[Haiku-bugs] [Haiku] #2555: PANIC: ASSERT FAILED (src/system/kernel/condition_variable.cpp:206): sConditionVariableHash.Lookup(object) == __null
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9201">[ date ]</a>
+              <a href="thread.html#9201">[ thread ]</a>
+              <a href="subject.html#9201">[ subject ]</a>
+              <a href="author.html#9201">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2555: PANIC: ASSERT FAILED (src/system/kernel/condition_variable.cpp:206):
+sConditionVariableHash.Lookup(object) == __null
+-----------------------+----------------------------------------------------
+ Reporter:  emitrax    |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+Blockedby:             |    Platform:  All           
+ Blocking:             |  
+-----------------------+----------------------------------------------------
+ I haven't investigate it yet, just posting to get some thoughs.
+
+ It happened while running the following bonnie++ plus a simple script that
+ works on attributes, but I don't think it's relevant.
+
+ {{{
+ condition variable: 0x90b0fd38
+ PANIC: ASSERT FAILED (src/system/kernel/condition_variable.cpp:206):
+ sConditionVariableHash.Lookup(object) == __null
+
+ Welcome to Kernel Debugging Land...
+ Thread 3072 &quot;bonnie++&quot; running on CPU 0
+ kdebug&gt;  bt
+ stack trace for thread 3072 &quot;bonnie++&quot;
+     kernel stack: 0x90b08000 to 0x90b0c000
+       user stack: 0x7efef000 to 0x7ffef000
+ frame            caller     &lt;image&gt;:function + offset
+  0 90b0b984 (+  48) 8005493d   &lt;kernel&gt;:invoke_debugger_command + 0x00ed
+  1 90b0b9b4 (+  64) 80054735
+ &lt;kernel&gt;:invoke_pipe_segment__FP21debugger_command_pipelPc + 0x0079
+  2 90b0b9f4 (+  64) 80054a7d   &lt;kernel&gt;:invoke_debugger_command_pipe +
+ 0x009d
+  3 90b0ba34 (+  48) 80055958
+ &lt;kernel&gt;:_ParseCommandPipe__16ExpressionParserRi + 0x0234
+  4 90b0ba64 (+  48) 8005530e
+ &lt;kernel&gt;:EvaluateCommand__16ExpressionParserPCcRi + 0x01de
+  5 90b0ba94 (+ 224) 80056d24   &lt;kernel&gt;:evaluate_debug_command + 0x0088
+  6 90b0bb74 (+  64) 80052db6   &lt;kernel&gt;:kernel_debugger_loop__Fv + 0x01a2
+  7 90b0bbb4 (+  48) 8005394b   &lt;kernel&gt;:kernel_debugger + 0x0117
+  8 90b0bbe4 (+ 192) 80053829   &lt;kernel&gt;:panic + 0x0029
+  9 90b0bca4 (+  80) 800310c3   &lt;kernel&gt;:Publish__17ConditionVariablePCvPCc
+ + 0x011b
+ 10 90b0bcf4 (+ 112) 800b05f1   &lt;kernel&gt;:vm_page_write_modified_page_range
+ + 0x027d
+ 11 90b0bd64 (+  32) 800b0757   &lt;kernel&gt;:vm_page_write_modified_pages +
+ 0x002b
+ 12 90b0bd84 (+  48) 800adad3   &lt;kernel&gt;:WriteModified__7VMCache + 0x002f
+ 13 90b0bdb4 (+  32) 8002efd4   &lt;kernel&gt;:file_cache_sync + 0x0018
+ 14 90b0bdd4 (+ 240) 8059460b   &lt;bfs&gt;:Sync__5Inode + 0x002b
+ 15 90b0bec4 (+  48) 8059d731   &lt;bfs&gt;:bfs_fsync__FP9fs_volumeP8fs_vnode +
+ 0x0021
+ 16 90b0bef4 (+  48) 8008cb68   &lt;kernel&gt;:common_sync__Fib + 0x004c
+ 17 90b0bf24 (+  32) 80091378   &lt;kernel&gt;:_user_fsync + 0x0018
+ 18 90b0bf44 (+ 100) 800b8472   &lt;kernel&gt;:pre_syscall_debug_done + 0x0002
+ (nearest)
+ iframe at 0x90b0bfa8 (end = 0x90b0c000)
+  eax 0x60           ebx 0x2f4908        ecx 0x7ffeca40   edx 0xffff0104
+  esi 0x7ffeec3c     edi 0x7d04          ebp 0x7ffeca6c   esp 0x90b0bfdc
+  eip 0xffff0104  eflags 0x207
+  vector: 0x63, error code: 0x0
+ 19 90b0bfa8 (+   0) ffff0104
+ 20 7ffeca6c (+  48) 00205368   94564:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">bonnie++_seg0ro at 0x00200000</A> + 0x5368
+ 21 7ffeca9c (+  96) 002046dd   94564:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">bonnie++_seg0ro at 0x00200000</A> + 0x46dd
+ 22 7ffecafc (+  48) 00207776   94564:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">bonnie++_seg0ro at 0x00200000</A> + 0x7776
+ 23 7ffecb2c (+  64) 002078da   94564:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">bonnie++_seg0ro at 0x00200000</A> + 0x78da
+ 24 7ffecb6c (+8320) 00204809   94564:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">bonnie++_seg0ro at 0x00200000</A> + 0x4809
+ 25 7ffeebec (+ 144) 00203e7a   94564:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">bonnie++_seg0ro at 0x00200000</A> + 0x3e7a
+ 26 7ffeec7c (+ 768) 0020356b   94564:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">bonnie++_seg0ro at 0x00200000</A> + 0x356b
+ 27 7ffeef7c (+  48) 0020290f   94564:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">bonnie++_seg0ro at 0x00200000</A> + 0x290f
+ 28 7ffeefac (+  48) 001008ea   94559:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">runtime_loader_seg0ro at 0x00100000</A> +
+ 0x8ea
+ 29 7ffeefdc (+   0) 7ffeefec   94574:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">bonnie++_main_stack at 0x7efef000</A> +
+ 0xffffeca
+
+ kdebug&gt; team
+ TEAM: 0x90c04d14
+ id:          3072 (0xc00)
+ name:        'bonnie++'
+ args:        './bonnie++ -m haiku -u 0 -b -d ../Desktop/'
+ next:        0x90c0445c
+ parent:      0x90c04000 (id = 199)
+ children:    0x00000000
+ num_threads: 1
+ state:       1
+ flags:       0x0
+ io_context:  0x90bd7a40
+ address_space: 0x957bbf00
+ main_thread: 0x914b5800
+ thread_list: 0x914b5800
+ group_id:    199
+ session_id:  190
+
+ kdebug&gt; teams
+ team           id  parent      name
+ 0x90b7ce88    186  0x90b7ca2c  Terminal
+ 0x90c04174     94  0x90b7c000  media_server
+ 0x90b7c000      1  0x00000000  kernel_team
+ 0x90c04ba0   3071  0x90c04000  bonnie++
+ 0x90c04d14   3072  0x90c04000  bonnie++
+ 0x90c0445c     96  0x90b7c000  midi_server
+ 0x90c04e88   3073  0x90c04000  bonnie++
+ 0x90b7c174    190  0x90b7ce88  sh
+ 0x90c045d0     97  0x90b7c000  print_server
+ 0x90c04a2c   3079  0x90c048b8  dd
+ 0x90c04744    134  0x90c04174  media_addon_server
+ 0x90c04000    199  0x90b7c174  bonnie++
+ 0x90b7c8b8     76  0x90b7c000  syslog_daemon
+ 0x90c042e8    201  0x90b7ce88  Terminal
+ 0x90b7cba0     80  0x90b7c744  input_server
+ 0x90b7c2e8     49  0x90b7c000  registrar
+ 0x90c048b8    205  0x90c042e8  sh
+ 0x90b7c45c     54  0x90b7c000  debug_server
+ 0x90b7c5d0     55  0x90b7c000  net_server
+ 0x90b7c744     56  0x90b7c000  app_server
+ 0x90b7ca2c     88  0x90b7c000  Tracker
+ 0x90b7cd14     90  0x90b7c000  Deskbar
+
+ kdebug&gt; bt 3071
+ stack trace for thread 3071 &quot;bonnie++&quot;
+     kernel stack: 0x90b04000 to 0x90b08000
+       user stack: 0x7efef000 to 0x7ffef000
+ frame            caller     &lt;image&gt;:function + offset
+  0 90b07704 (+  32) 800409da   &lt;kernel&gt;:context_switch__FP6threadT0 +
+ 0x0026
+  1 90b07724 (+  64) 80040c44   &lt;kernel&gt;:scheduler_reschedule + 0x0248
+  2 90b07764 (+  64) 80041f2c   &lt;kernel&gt;:switch_sem_etc + 0x0368
+  3 90b077a4 (+  48) 80041b6c   &lt;kernel&gt;:acquire_sem + 0x001c
+  4 90b077d4 (+ 112) 806dfe96   &lt;scsi_periph&gt;:periph_read_write + 0x020a
+  5 90b07844 (+  80) 806dfc7f   &lt;scsi_periph&gt;:periph_write + 0x003f
+  6 90b07894 (+  64) 806db9c0
+ &lt;scsi_disk&gt;:das_write__FP15das_handle_infoPC9phys_vecsxUlUlPUl + 0x0040
+  7 90b078d4 (+ 160) 805abf64   &lt;block_io&gt;:block_io_writev_int + 0x04d4
+  8 90b07974 (+  80) 805ac224   &lt;block_io&gt;:block_io_write + 0x0040
+  9 90b079c4 (+  96) 800636e8
+ &lt;kernel&gt;:devfs_write_pages__FP9fs_volumeP8fs_vnodePvxPC5iovecUlPUl +
+ 0x0178
+ 10 90b07a24 (+ 192) 800892ae
+ &lt;kernel&gt;:common_file_io_vec_pages__FP5vnodePvPC11file_io_vecUlPC5iovecUlPUlPUlT7b
+ + 0x02da
+ 11 90b07ae4 (+  80) 80089c05   &lt;kernel&gt;:write_file_io_vec_pages + 0x0059
+ 12 90b07b34 (+ 224) 8059d149
+ &lt;bfs&gt;:bfs_write_pages__FP9fs_volumeP8fs_vnodePvxPC5iovecUlPUl + 0x0141
+ 13 90b07c14 (+  64) 8008a8e7   &lt;kernel&gt;:vfs_write_pages + 0x0037
+ 14 90b07c54 (+  64) 8002ff80
+ &lt;kernel&gt;:Write__12VMVnodeCachexPC5iovecUlPUl + 0x002c
+ 15 90b07c94 (+  80) 800af5a8   &lt;kernel&gt;:write_page__FP7vm_page + 0x0074
+ 16 90b07ce4 (+ 128) 800b0617   &lt;kernel&gt;:vm_page_write_modified_page_range
+ + 0x02a3
+ 17 90b07d64 (+  32) 800b0757   &lt;kernel&gt;:vm_page_write_modified_pages +
+ 0x002b
+ 18 90b07d84 (+  48) 800adad3   &lt;kernel&gt;:WriteModified__7VMCache + 0x002f
+ 19 90b07db4 (+  32) 8002efd4   &lt;kernel&gt;:file_cache_sync + 0x0018
+ 20 90b07dd4 (+ 240) 8059460b   &lt;bfs&gt;:Sync__5Inode + 0x002b
+ 21 90b07ec4 (+  48) 8059d731   &lt;bfs&gt;:bfs_fsync__FP9fs_volumeP8fs_vnode +
+ 0x0021
+ 22 90b07ef4 (+  48) 8008cb68   &lt;kernel&gt;:common_sync__Fib + 0x004c
+ 23 90b07f24 (+  32) 80091378   &lt;kernel&gt;:_user_fsync + 0x0018
+ 24 90b07f44 (+ 100) 800b8472   &lt;kernel&gt;:pre_syscall_debug_done + 0x0002
+ (nearest)
+ iframe at 0x90b07fa8 (end = 0x90b08000)
+  eax 0x60           ebx 0x2f4908        ecx 0x7ffeca40   edx 0xffff0104
+  esi 0x7ffeec3c     edi 0x4648          ebp 0x7ffeca6c   esp 0x90b07fdc
+  eip 0xffff0104  eflags 0x207
+  vector: 0x63, error code: 0x0
+ 25 90b07fa8 (+   0) ffff0104
+ 26 7ffeca6c (+  48) 00205368   94547:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">bonnie++_seg0ro at 0x00200000</A> + 0x5368
+ 27 7ffeca9c (+  96) 002046dd   94547:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">bonnie++_seg0ro at 0x00200000</A> + 0x46dd
+ 28 7ffecafc (+  48) 00207776   94547:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">bonnie++_seg0ro at 0x00200000</A> + 0x7776
+ 29 7ffecb2c (+  64) 002078da   94547:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">bonnie++_seg0ro at 0x00200000</A> + 0x78da
+ 30 7ffecb6c (+8320) 00204809   94547:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">bonnie++_seg0ro at 0x00200000</A> + 0x4809
+ 31 7ffeebec (+ 144) 00203e7a   94547:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">bonnie++_seg0ro at 0x00200000</A> + 0x3e7a
+ 32 7ffeec7c (+ 768) 0020356b   94547:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">bonnie++_seg0ro at 0x00200000</A> + 0x356b
+ 33 7ffeef7c (+  48) 0020290f   94547:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">bonnie++_seg0ro at 0x00200000</A> + 0x290f
+ 34 7ffeefac (+  48) 001008ea   94542:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">runtime_loader_seg0ro at 0x00100000</A> +
+ 0x8ea
+ 35 7ffeefdc (+   0) 7ffeefec   94557:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">bonnie++_main_stack at 0x7efef000</A> +
+ 0xffffec
+
+ kdebug&gt; thread bonnie++
+ THREAD: 0x914b4000
+ id:                 3071 (0xbff)
+ name:               &quot;bonnie++&quot;
+ all_next:           0x91492000
+ team_next:          0x00000000
+ q_next:             0x914b2800
+ priority:           10 (next 10)
+ state:              waiting
+ next_state:         waiting
+ cpu:                0x00000000
+ sig_pending:        0x0 (blocked: 0x0)
+ in_kernel:          1
+ waiting for:        semaphore 154
+ fault_handler:      0x00000000
+ args:               0x957bd7f8 0x00000000
+ entry:              0x8004841c
+ team:               0x90c04ba0, &quot;bonnie++&quot;
+   exit.sem:         56031
+   exit.status:      0x0 (No error)
+   exit.reason:      0x0
+   exit.signal:      0x0
+   exit.waiters:
+ kernel_stack_area:  94558
+ kernel_stack_base:  0x90b04000
+ user_stack_area:    94557
+ user_stack_base:    0x7efef000
+ user_local_storage: 0x7ffef000
+ kernel_errno:       0x0 (No error)
+ kernel_time:        139263
+ user_time:          8814
+ flags:              0x0
+ architecture dependant section:
+         esp: 0x90b076a8
+         ss: 0x00000010
+         fpu_state at 0x914b4380
+ kdebug&gt; sem 154
+ SEM: 0x923eff48
+ id:      154 (0x9a)
+ name:    'ccb_sem'
+ owner:   1
+ count:   -1
+ queue:   3071
+ last acquired by: 3071, count: 1
+ last released by: 35, count: 1
+
+ kdebug&gt; bt 3079
+ stack trace for thread 3079 &quot;dd&quot;
+     kernel stack: 0x90b00000 to 0x90b04000
+       user stack: 0x7efef000 to 0x7ffef000
+ frame            caller     &lt;image&gt;:function + offset
+  0 90b03c54 (+  32) 800409da   &lt;kernel&gt;:context_switch__FP6threadT0 +
+ 0x0026
+  1 90b03c74 (+  64) 80040c44   &lt;kernel&gt;:scheduler_reschedule + 0x0248
+  2 90b03cb4 (+  32) 8004d71d   &lt;kernel&gt;:thread_yield + 0x0059
+  3 90b03cd4 (+ 144) 801f9792   &lt;/boot/beos/system/add-
+ ons/kernel/drivers/dev/random&gt;:reseed + 0x0056
+  4 90b03d64 (+ 208) 801faba0   &lt;/boot/beos/system/add-
+ ons/kernel/drivers/dev/random&gt;:random_read + 0x0064
+  5 90b03e34 (+  80) 80062add
+ &lt;kernel&gt;:devfs_read__FP9fs_volumeP8fs_vnodePvxT2PUl + 0x0121
+  6 90b03e84 (+  64) 8008bddc
+ &lt;kernel&gt;:file_read__FP15file_descriptorxPvPUl + 0x0044
+  7 90b03ec4 (+  80) 8007c849   &lt;kernel&gt;:common_user_io__FixPvUlb + 0x017d
+  8 90b03f14 (+  48) 8007cce4   &lt;kernel&gt;:_user_read + 0x0028
+  9 90b03f44 (+ 100) 800b8472   &lt;kernel&gt;:pre_syscall_debug_done + 0x0002
+ (nearest)
+ iframe at 0x90b03fa8 (end = 0x90b04000)
+  eax 0x7c           ebx 0x2b7908        ecx 0x7ffeee50   edx 0xffff0104
+  esi 0x1802f000     edi 0x200           ebp 0x7ffeee8c   esp 0x90b03fdc
+  eip 0xffff0104  eflags 0x203
+  vector: 0x63, error code: 0x0
+ 10 90b03fa8 (+   0) ffff0104
+ 11 7ffeee8c (+  48) 002024ae   &lt;_APP_&gt;:usage + 0x070e (nearest)
+ 12 7ffeeebc (+  64) 002037c4   &lt;_APP_&gt;:usage + 0x1a24 (nearest)
+ 13 7ffeeefc (+ 128) 00204078   &lt;_APP_&gt;:main + 0x03f0
+ 14 7ffeef7c (+  48) 00201c7b   &lt;_APP_&gt;:_start + 0x005b
+ 15 7ffeefac (+  48) 001008ea   94771:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">runtime_loader_seg0ro at 0x00100000</A> +
+ 0x8ea
+ 16 7ffeefdc (+   0) 7ffeefec   94770:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">dd_main_stack at 0x7efef000</A> + 0xffffec
+ kdebug&gt; thead 3079
+ THREAD: 0x914b2800
+ id:                 3079 (0xc07)
+ name:               &quot;dd&quot;
+ all_next:           0x91462000
+ team_next:          0x00000000
+ q_next:             0x91488800
+ priority:           10 (next 10)
+ state:              ready
+ next_state:         ready
+ cpu:                0x00000000
+ sig_pending:        0x0 (blocked: 0x0)
+ in_kernel:          1
+ waiting for:        fault_handler:      0x00000000
+ args:               0x957bd870 0x00000000
+ entry:              0x8004841c
+ team:               0x90c04a2c, &quot;dd&quot;
+   exit.sem:         56150
+   exit.status:      0x0 (No error)
+   exit.reason:      0x0
+   exit.signal:      0x0
+   exit.waiters:
+ kernel_stack_area:  94768
+ kernel_stack_base:  0x90b00000
+ user_stack_area:    94770
+ user_stack_base:    0x7efef000
+ user_local_storage: 0x7ffef000
+ kernel_errno:       0x0 (No error)
+ kernel_time:        478002
+ user_time:          89609
+ flags:              0x200
+ architecture dependant section:
+         esp: 0x90b03bf8
+         ss: 0x00000010
+         fpu_state at 0x914b2b80
+
+
+ kdebug&gt; continue
+ ide: ide_timeout() bus 0x90b86660
+ PANIC: Condition variable 0x90b0fd38 not published, found: 0x90b0bd38
+ Welcome to Kernel Debugging Land...
+ Thread 3073 &quot;bonnie++&quot; running on CPU 0
+ kdebug&gt; thread 3073
+ THREAD: 0x914b4800
+ id:                 3073 (0xc01)
+ name:               &quot;bonnie++&quot;
+ all_next:           0x91484000
+ team_next:          0x00000000
+ q_next:             0x913eb800
+ priority:           10 (next 10)
+ state:              running
+ next_state:         ready
+ cpu:                0x801156c0 (0)
+ sig_pending:        0x0 (blocked: 0x0)
+ in_kernel:          1
+ waiting for:        fault_handler:      0x80054958
+ args:               0x957bd7f8 0x00000000
+ entry:              0x8004841c
+ team:               0x90c04e88, &quot;bonnie++&quot;
+   exit.sem:         56042
+   exit.status:      0x0 (No error)
+   exit.reason:      0x0
+   exit.signal:      0x0
+
+   exit.waiters:
+ kernel_stack_area:  94592
+ kernel_stack_base:  0x90b0c000
+ user_stack_area:    94591
+ user_stack_base:    0x7efef000
+ user_local_storage: 0x7ffef000
+ kernel_errno:       0x0 (No error)
+ kernel_time:        103630
+ user_time:          8516
+ flags:              0x0
+ architecture dependant section:
+         esp: 0x90b0f6a8
+         ss: 0x00000010
+         fpu_state at 0x914b4b80
+
+ kdebug&gt; bt 3073
+ stack trace for thread 3073 &quot;bonnie++&quot;
+     kernel stack: 0x90b0c000 to 0x90b10000
+       user stack: 0x7efef000 to 0x7ffef000
+ frame            caller     &lt;image&gt;:function + offset
+  0 90b0f984 (+  48) 8005493d   &lt;kernel&gt;:invoke_debugger_command + 0x00ed
+  1 90b0f9b4 (+  64) 80054735
+ &lt;kernel&gt;:invoke_pipe_segment__FP21debugger_command_pipelPc + 0x0079
+  2 90b0f9f4 (+  64) 80054a7d   &lt;kernel&gt;:invoke_debugger_command_pipe +
+ 0x009d
+  3 90b0fa34 (+  48) 80055958
+ &lt;kernel&gt;:_ParseCommandPipe__16ExpressionParserRi + 0x0234
+  4 90b0fa64 (+  48) 8005530e
+ &lt;kernel&gt;:EvaluateCommand__16ExpressionParserPCcRi + 0x01de
+  5 90b0fa94 (+ 224) 80056d24   &lt;kernel&gt;:evaluate_debug_command + 0x0088
+  6 90b0fb74 (+  64) 80052db6   &lt;kernel&gt;:kernel_debugger_loop__Fv + 0x01a2
+  7 90b0fbb4 (+  48) 8005394b   &lt;kernel&gt;:kernel_debugger + 0x0117
+  8 90b0fbe4 (+ 192) 80053829   &lt;kernel&gt;:panic + 0x0029
+  9 90b0fca4 (+  80) 80031206   &lt;kernel&gt;:Unpublish__17ConditionVariableb +
+ 0x00da
+ 10 90b0fcf4 (+ 112) 800b06e2   &lt;kernel&gt;:vm_page_write_modified_page_range
+ + 0x036e
+ 11 90b0fd64 (+  32) 800b0757   &lt;kernel&gt;:vm_page_write_modified_pages +
+ 0x002b
+ 12 90b0fd84 (+  48) 800adad3   &lt;kernel&gt;:WriteModified__7VMCache + 0x002f
+ 13 90b0fdb4 (+  32) 8002efd4   &lt;kernel&gt;:file_cache_sync + 0x0018
+ 14 90b0fdd4 (+ 240) 8059460b   &lt;bfs&gt;:Sync__5Inode + 0x002b
+ 15 90b0fec4 (+  48) 8059d731   &lt;bfs&gt;:bfs_fsync__FP9fs_volumeP8fs_vnode +
+ 0x0021
+ 16 90b0fef4 (+  48) 8008cb68   &lt;kernel&gt;:common_sync__Fib + 0x004c
+ 17 90b0ff24 (+  32) 80091378   &lt;kernel&gt;:_user_fsync + 0x0018
+ 18 90b0ff44 (+ 100) 800b8472   &lt;kernel&gt;:pre_syscall_debug_done + 0x0002
+ (nearest)
+ iframe at 0x90b0ffa8 (end = 0x90b10000)
+  eax 0x60           ebx 0x2f4908        ecx 0x7ffeca40   edx 0xffff0104
+  esi 0x7ffeec3c     edi 0xb95a          ebp 0x7ffeca6c   esp 0x90b0ffdc
+  eip 0xffff0104  eflags 0x207
+  vector: 0x63, error code: 0x0
+ 19 90b0ffa8 (+   0) ffff0104
+ 20 7ffeca6c (+  48) 00205368   94581:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">bonnie++_seg0ro at 0x00200000</A> + 0x5368
+ 21 7ffeca9c (+  96) 002046dd   94581:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">bonnie++_seg0ro at 0x00200000</A> + 0x46dd
+ 22 7ffecafc (+  48) 00207776   94581:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">bonnie++_seg0ro at 0x00200000</A> + 0x7776
+ 23 7ffecb2c (+  64) 002078da   94581:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">bonnie++_seg0ro at 0x00200000</A> + 0x78da
+ 24 7ffecb6c (+8320) 00204809   94581:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">bonnie++_seg0ro at 0x00200000</A> + 0x4809
+ 25 7ffeebec (+ 144) 00203e7a   94581:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">bonnie++_seg0ro at 0x00200000</A> + 0x3e7a
+ 26 7ffeec7c (+ 768) 0020356b   94581:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">bonnie++_seg0ro at 0x00200000</A> + 0x356b
+ 27 7ffeef7c (+  48) 0020290f   94581:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">bonnie++_seg0ro at 0x00200000</A> + 0x290f
+ 28 7ffeefac (+  48) 001008ea   94576:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">runtime_loader_seg0ro at 0x00100000</A> +
+ 0x8ea
+ 29 7ffeefdc (+   0) 7ffeefec   94591:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">bonnie++_main_stack at 0x7efef000</A> +
+ 0xffffec
+
+ kdebug&gt; bt 3071
+ stack trace for thread 3071 &quot;bonnie++&quot;
+     kernel stack: 0x90b04000 to 0x90b08000
+       user stack: 0x7efef000 to 0x7ffef000
+ frame            caller     &lt;image&gt;:function + offset
+  0 90b07704 (+  32) 800409da   &lt;kernel&gt;:context_switch__FP6threadT0 +
+ 0x0026
+  1 90b07724 (+  64) 80040c44   &lt;kernel&gt;:scheduler_reschedule + 0x0248
+  2 90b07764 (+  64) 80041f2c   &lt;kernel&gt;:switch_sem_etc + 0x0368
+  3 90b077a4 (+  48) 80041b6c   &lt;kernel&gt;:acquire_sem + 0x001c
+  4 90b077d4 (+ 112) 806dfe96   &lt;scsi_periph&gt;:periph_read_write + 0x020a
+  5 90b07844 (+  80) 806dfc7f   &lt;scsi_periph&gt;:periph_write + 0x003f
+  6 90b07894 (+  64) 806db9c0
+ &lt;scsi_disk&gt;:das_write__FP15das_handle_infoPC9phys_vecsxUlUlPUl + 0x0040
+  7 90b078d4 (+ 160) 805abf64   &lt;block_io&gt;:block_io_writev_int + 0x04d4
+  8 90b07974 (+  80) 805ac224   &lt;block_io&gt;:block_io_write + 0x0040
+  9 90b079c4 (+  96) 800636e8
+ &lt;kernel&gt;:devfs_write_pages__FP9fs_volumeP8fs_vnodePvxPC5iovecUlPUl +
+ 0x0178
+ 10 90b07a24 (+ 192) 800892ae
+ &lt;kernel&gt;:common_file_io_vec_pages__FP5vnodePvPC11file_io_vecUlPC5iovecUlPUlPUlT7b
+ + 0x02da
+ 11 90b07ae4 (+  80) 80089c05   &lt;kernel&gt;:write_file_io_vec_pages + 0x0059
+ 12 90b07b34 (+ 224) 8059d149
+ &lt;bfs&gt;:bfs_write_pages__FP9fs_volumeP8fs_vnodePvxPC5iovecUlPUl + 0x0141
+ 13 90b07c14 (+  64) 8008a8e7   &lt;kernel&gt;:vfs_write_pages + 0x0037
+ 14 90b07c54 (+  64) 8002ff80
+ &lt;kernel&gt;:Write__12VMVnodeCachexPC5iovecUlPUl + 0x002c
+ 15 90b07c94 (+  80) 800af5a8   &lt;kernel&gt;:write_page__FP7vm_page + 0x0074
+ 16 90b07ce4 (+ 128) 800b0617   &lt;kernel&gt;:vm_page_write_modified_page_range
+ + 0x02a3
+ 17 90b07d64 (+  32) 800b0757   &lt;kernel&gt;:vm_page_write_modified_pages +
+ 0x002b
+ 18 90b07d84 (+  48) 800adad3   &lt;kernel&gt;:WriteModified__7VMCache + 0x002f
+ 19 90b07db4 (+  32) 8002efd4   &lt;kernel&gt;:file_cache_sync + 0x0018
+ 20 90b07dd4 (+ 240) 8059460b   &lt;bfs&gt;:Sync__5Inode + 0x002b
+ 21 90b07ec4 (+  48) 8059d731   &lt;bfs&gt;:bfs_fsync__FP9fs_volumeP8fs_vnode +
+ 0x0021
+ 22 90b07ef4 (+  48) 8008cb68   &lt;kernel&gt;:common_sync__Fib + 0x004c
+ 23 90b07f24 (+  32) 80091378   &lt;kernel&gt;:_user_fsync + 0x0018
+ 24 90b07f44 (+ 100) 800b8472   &lt;kernel&gt;:pre_syscall_debug_done + 0x0002
+ (nearest)
+ iframe at 0x90b07fa8 (end = 0x90b08000)
+  eax 0x60           ebx 0x2f4908        ecx 0x7ffeca40   edx 0xffff0104
+  esi 0x7ffeec3c     edi 0x4648          ebp 0x7ffeca6c   esp 0x90b07fdc
+  eip 0xffff0104  eflags 0x207
+  vector: 0x63, error code: 0x0
+ 25 90b07fa8 (+   0) ffff0104
+ 26 7ffeca6c (+  48) 00205368   94547:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">bonnie++_seg0ro at 0x00200000</A> + 0x5368
+ 27 7ffeca9c (+  96) 002046dd   94547:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">bonnie++_seg0ro at 0x00200000</A> + 0x46dd
+ 28 7ffecafc (+  48) 00207776   94547:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">bonnie++_seg0ro at 0x00200000</A> + 0x7776
+ 29 7ffecb2c (+  64) 002078da   94547:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">bonnie++_seg0ro at 0x00200000</A> + 0x78da
+ 30 7ffecb6c (+8320) 00204809   94547:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">bonnie++_seg0ro at 0x00200000</A> + 0x4809
+ 31 7ffeebec (+ 144) 00203e7a   94547:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">bonnie++_seg0ro at 0x00200000</A> + 0x3e7a
+ 32 7ffeec7c (+ 768) 0020356b   94547:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">bonnie++_seg0ro at 0x00200000</A> + 0x356b
+ 33 7ffeef7c (+  48) 0020290f   94547:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">bonnie++_seg0ro at 0x00200000</A> + 0x290f
+ 34 7ffeefac (+  48) 001008ea   94542:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">runtime_loader_seg0ro at 0x00100000</A> +
+ 0x8ea
+ 35 7ffeefdc (+   0) 7ffeefec   94557:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">bonnie++_main_stack at 0x7efef000</A> +
+ 0xffffec
+
+ kdebug&gt; bt 3072
+ stack trace for thread 3072 &quot;bonnie++&quot;
+     kernel stack: 0x90b08000 to 0x90b0c000
+       user stack: 0x7efef000 to 0x7ffef000
+ frame            caller     &lt;image&gt;:function + offset
+  0 90b0b704 (+  32) 800409da   &lt;kernel&gt;:context_switch__FP6threadT0 +
+ 0x0026
+  1 90b0b724 (+  64) 80040c44   &lt;kernel&gt;:scheduler_reschedule + 0x0248
+  2 90b0b764 (+  64) 80041f2c   &lt;kernel&gt;:switch_sem_etc + 0x0368
+  3 90b0b7a4 (+  48) 80041b6c   &lt;kernel&gt;:acquire_sem + 0x001c
+  4 90b0b7d4 (+ 112) 806dfe96   &lt;scsi_periph&gt;:periph_read_write + 0x020a
+  5 90b0b844 (+  80) 806dfc7f   &lt;scsi_periph&gt;:periph_write + 0x003f
+  6 90b0b894 (+  64) 806db9c0
+ &lt;scsi_disk&gt;:das_write__FP15das_handle_infoPC9phys_vecsxUlUlPUl + 0x0040
+  7 90b0b8d4 (+ 160) 805abf64   &lt;block_io&gt;:block_io_writev_int + 0x04d4
+  8 90b0b974 (+  80) 805ac224   &lt;block_io&gt;:block_io_write + 0x0040
+  9 90b0b9c4 (+  96) 800636e8
+ &lt;kernel&gt;:devfs_write_pages__FP9fs_volumeP8fs_vnodePvxPC5iovecUlPUl +
+ 0x0178
+ 10 90b0ba24 (+ 192) 800892ae
+ &lt;kernel&gt;:common_file_io_vec_pages__FP5vnodePvPC11file_io_vecUlPC5iovecUlPUlPUlT7b
+ + 0x02da
+ 11 90b0bae4 (+  80) 80089c05   &lt;kernel&gt;:write_file_io_vec_pages + 0x0059
+ 12 90b0bb34 (+ 224) 8059d149
+ &lt;bfs&gt;:bfs_write_pages__FP9fs_volumeP8fs_vnodePvxPC5iovecUlPUl + 0x0141
+ 13 90b0bc14 (+  64) 8008a8e7   &lt;kernel&gt;:vfs_write_pages + 0x0037
+ 14 90b0bc54 (+  64) 8002ff80
+ &lt;kernel&gt;:Write__12VMVnodeCachexPC5iovecUlPUl + 0x002c
+ 15 90b0bc94 (+  80) 800af5a8   &lt;kernel&gt;:write_page__FP7vm_page + 0x0074
+ 16 90b0bce4 (+ 128) 800b0617   &lt;kernel&gt;:vm_page_write_modified_page_range
+ + 0x02a3
+ 17 90b0bd64 (+  32) 800b0757   &lt;kernel&gt;:vm_page_write_modified_pages +
+ 0x002b
+ 18 90b0bd84 (+  48) 800adad3   &lt;kernel&gt;:WriteModified__7VMCache + 0x002f
+ 19 90b0bdb4 (+  32) 8002efd4   &lt;kernel&gt;:file_cache_sync + 0x0018
+ 20 90b0bdd4 (+ 240) 8059460b   &lt;bfs&gt;:Sync__5Inode + 0x002b
+ 21 90b0bec4 (+  48) 8059d731   &lt;bfs&gt;:bfs_fsync__FP9fs_volumeP8fs_vnode +
+ 0x0021
+ 22 90b0bef4 (+  48) 8008cb68   &lt;kernel&gt;:common_sync__Fib + 0x004c
+ 23 90b0bf24 (+  32) 80091378   &lt;kernel&gt;:_user_fsync + 0x0018
+ 24 90b0bf44 (+ 100) 800b8472   &lt;kernel&gt;:pre_syscall_debug_done + 0x0002
+ (nearest)
+ iframe at 0x90b0bfa8 (end = 0x90b0c000)
+  eax 0x60           ebx 0x2f4908        ecx 0x7ffeca40   edx 0xffff0104
+  esi 0x7ffeec3c     edi 0x7d04          ebp 0x7ffeca6c   esp 0x90b0bfdc
+  eip 0xffff0104  eflags 0x207
+  vector: 0x63, error code: 0x0
+ 25 90b0bfa8 (+   0) ffff0104
+ 26 7ffeca6c (+  48) 00205368   94564:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">bonnie++_seg0ro at 0x00200000</A> + 0x5368
+ 27 7ffeca9c (+  96) 002046dd   94564:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">bonnie++_seg0ro at 0x00200000</A> + 0x46dd
+ 28 7ffecafc (+  48) 00207776   94564:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">bonnie++_seg0ro at 0x00200000</A> + 0x7776
+ 29 7ffecb2c (+  64) 002078da   94564:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">bonnie++_seg0ro at 0x00200000</A> + 0x78da
+ 30 7ffecb6c (+8320) 00204809   94564:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">bonnie++_seg0ro at 0x00200000</A> + 0x4809
+ 31 7ffeebec (+ 144) 00203e7a   94564:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">bonnie++_seg0ro at 0x00200000</A> + 0x3e7a
+ 32 7ffeec7c (+ 768) 0020356b   94564:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">bonnie++_seg0ro at 0x00200000</A> + 0x356b
+ 33 7ffeef7c (+  48) 0020290f   94564:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">bonnie++_seg0ro at 0x00200000</A> + 0x290f
+ 34 7ffeefac (+  48) 001008ea   94559:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">runtime_loader_seg0ro at 0x00100000</A> +
+ 0x8ea
+ 35 7ffeefdc (+   0) 7ffeefec   94574:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">bonnie++_main_stack at 0x7efef000</A> +
+ 0xffffec
+ kdebug&gt; reboot
+
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2555">http://dev.haiku-os.org/ticket/2555</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009205.html">[Haiku-bugs] [Haiku] #2554: send gdb changes upstream
+</A></li>
+	<LI>Next message: <A HREF="009202.html">[Haiku-bugs] [Haiku] #2555: PANIC: ASSERT FAILED (src/system/kernel/condition_variable.cpp:206): sConditionVariableHash.Lookup(object) == __null
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9201">[ date ]</a>
+              <a href="thread.html#9201">[ thread ]</a>
+              <a href="subject.html#9201">[ subject ]</a>
+              <a href="author.html#9201">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

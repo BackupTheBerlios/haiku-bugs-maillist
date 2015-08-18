@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3647: Full PoorMan source codes
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233647%3A%20Full%20PoorMan%20source%20codes&In-Reply-To=%3C049.361e4dd88ae0b1ec01997ffb84a78764%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="015583.html">
+   <LINK REL="Next"  HREF="015587.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3647: Full PoorMan source codes</H1>
+    <B>majie</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233647%3A%20Full%20PoorMan%20source%20codes&In-Reply-To=%3C049.361e4dd88ae0b1ec01997ffb84a78764%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3647: Full PoorMan source codes">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Apr  2 12:43:33 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="015583.html">[Haiku-bugs] [Haiku] #2316: [app_server] crash in	Painter::StraightLine()
+</A></li>
+        <LI>Next message: <A HREF="015587.html">[Haiku-bugs] [Haiku] #3012: Terminal only draws up to the first non-ascii character on a line
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15586">[ date ]</a>
+              <a href="thread.html#15586">[ thread ]</a>
+              <a href="subject.html#15586">[ subject ]</a>
+              <a href="author.html#15586">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3647: Full PoorMan source codes
+--------------------------+-------------------------------------------------
+ Reporter:  majie         |       Owner:  stippi  
+     Type:  enhancement   |      Status:  assigned
+ Priority:  normal        |   Milestone:  R1      
+Component:  Applications  |     Version:          
+Blockedby:                |    Platform:  All     
+ Blocking:                |  
+--------------------------+-------------------------------------------------
+
+Comment(by majie):
+
+ Replying to [comment:4 stippi]:
+ &gt; I've looked into the patch, and you have done a lot of good work. I
+ would go ahead and commit this, but you said you wanted to mention the
+ libhttpd license in AboutSystem? I can do this for you, just tell me.
+ &gt;
+
+ Yes, please help me update the About System app. License declarations can
+ be obtained from libhttpd.c. A copy of the license should be placed in
+ /data/etc/licenses. Thank you.
+
+ &gt; Here are a few things I noticed when testing Poorman a bit:
+ &gt; * On first start, when no settings were present, Poorman correctly
+ prompted me to specify the public html folder, but when I clicked on
+ Specify, the main window opened, as well as the file requester to pick the
+ folder. Picking the folder was then ignored, I had to go into the settings
+ and pick it again.
+ &gt;
+
+ My fault. I'll fix it.
+
+ &gt; * When serving websites with UTF-8 content, Firefox will not display the
+ multi-byte chars correctly. When I load the same page from disk, it works
+ just fine.
+ &gt;
+
+ Thttpd don't have the ability to detect the encoding of an text file. The
+ Content-Type header confuses firefox which chooses a false encoding to
+ decode the text. There is a walk around. I'll fix this when I finish my
+ gsoc application.
+
+ &gt; About the patch itself:
+ &gt; * There are a lot of coding style violations (in the old code but also
+ in the new code). Do you intend to work on those yet?
+ &gt;
+
+ I'm trying to follow the haiku coding guidelines in the codes I wrote, but
+ I didn't mean to modify the old codes.
+
+ &gt; * As with so many apps, the interface would improve a lot if it used the
+ new Haiku layout-management. The code would become much simpler and easier
+ to maintain/extend as well.
+ &gt;
+ &gt; Anyways, thanks a lot for this work, it's greatly appreciated!
+
+ The gui stub was originally developed on r5. But haiku uses a new font
+ with a larger size. I used to develop java programs and I know that layout
+ managers are good things. When I picked up the codes I thought I should
+ fix the gui problem. But later I realised I should put more works to the
+ httpd codes. In fact, this is a high priority item in my TODO list. I'll
+ fix it when I have time.
+
+ With the two problems above(coding style and layout manager) plus the
+ unclear license declaration, I wonder whether the gui needs to be
+ completely rewritten in the future.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3647#comment:5">http://dev.haiku-os.org/ticket/3647#comment:5</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="015583.html">[Haiku-bugs] [Haiku] #2316: [app_server] crash in	Painter::StraightLine()
+</A></li>
+	<LI>Next message: <A HREF="015587.html">[Haiku-bugs] [Haiku] #3012: Terminal only draws up to the first non-ascii character on a line
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15586">[ date ]</a>
+              <a href="thread.html#15586">[ thread ]</a>
+              <a href="subject.html#15586">[ subject ]</a>
+              <a href="author.html#15586">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

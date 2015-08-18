@@ -1,0 +1,153 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4079: Freezing 1or2 shapes with 1or2	paths fails
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-July/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234079%3A%20Freezing%201or2%20shapes%20with%201or2%0A%09paths%20fails&In-Reply-To=%3C053.541b0e57722b3f83a80e69e9e43477fc%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="018344.html">
+   <LINK REL="Next"  HREF="018346.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4079: Freezing 1or2 shapes with 1or2	paths fails</H1>
+    <B>humdinger</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234079%3A%20Freezing%201or2%20shapes%20with%201or2%0A%09paths%20fails&In-Reply-To=%3C053.541b0e57722b3f83a80e69e9e43477fc%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4079: Freezing 1or2 shapes with 1or2	paths fails">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Jul  8 17:49:35 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="018344.html">[Haiku-bugs] [Haiku] #4079: Freezing 1or2 shapes with 1or2 paths	fails
+</A></li>
+        <LI>Next message: <A HREF="018346.html">[Haiku-bugs] [Haiku] #4080: Disable/Implement path property	&quot;Rounding&quot;
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18345">[ date ]</a>
+              <a href="thread.html#18345">[ thread ]</a>
+              <a href="subject.html#18345">[ subject ]</a>
+              <a href="author.html#18345">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4079: Freezing 1or2 shapes with 1or2 paths fails
+---------------------------------------+------------------------------------
+ Reporter:  humdinger                  |       Owner:  stippi        
+     Type:  bug                        |      Status:  new           
+ Priority:  normal                     |   Milestone:  R1            
+Component:  Applications/Icon-O-Matic  |     Version:  R1 development
+Blockedby:                             |    Platform:  All           
+ Blocking:                             |  
+---------------------------------------+------------------------------------
+Description changed by humdinger:
+
+Old description:
+
+&gt;<i> This is r31444.
+</I>&gt;<i>
+</I>&gt;<i> Here are two scenarios where freezing a shape fails.
+</I>&gt;<i>
+</I>&gt;<i> First scenario: 2 Shapes sharing 1 path:
+</I>&gt;<i>
+</I>&gt;<i> 1. Create a shape with a path and a style.
+</I>&gt;<i> 2. Select the path and add a couple of points.
+</I>&gt;<i> 3. Create a second shape and use the same path.
+</I>&gt;<i> 2. Move/resize/rotate the 2nd shape a bit.
+</I>&gt;<i> 3. Select &quot;Shape | Freeze Transformation&quot;.
+</I>&gt;<i>
+</I>&gt;<i> Now, the path should snap to the selected shape's new
+</I>&gt;<i> position/size/orientation. It doesn't. Instead the shape snaps to the
+</I>&gt;<i> original path's position.[[BR]]
+</I>&gt;<i> If there's an issue, because the path is shared with another shape, the
+</I>&gt;<i> command to &quot;Freeze Transformation&quot; should be disabled.
+</I>&gt;<i>
+</I>
+&gt;<i> Second scenario: 1 Shape from 2 paths:
+</I>&gt;<i>
+</I>&gt;<i> 1. Create a shape with a path and a style.
+</I>&gt;<i> 2. Select the path and add a couple of points.
+</I>&gt;<i> 2. Create another path.
+</I>&gt;<i> 2. Select this second path and add a couple of points.
+</I>&gt;<i> 2. Move/resize/rotate the shape a bit.
+</I>&gt;<i> 3. Select &quot;Shape | Freeze Transformation&quot;.
+</I>&gt;<i>
+</I>&gt;<i> Now, the paths should snap to the shape's new position/size/orientation.
+</I>&gt;<i> Instead only the second path snaps to the new location, the shape snaps
+</I>&gt;<i> to the original first path's position.[[BR]]
+</I>&gt;<i> So for example, if you created the second path inside the first path,
+</I>&gt;<i> creating a hole in the shape, the hole stays put, while the rest of the
+</I>&gt;<i> shape snaps back to the original first path's location.
+</I>
+New description:
+
+ This is r31444.
+
+ [Messed up numbering and formatting before.][[BR]]
+ Here are two scenarios where freezing a shape fails.
+
+ First scenario: 2 Shapes sharing 1 path:
+
+ 1. Create a shape with a path and a style.[[BR]]
+ 2. Select the path and add a couple of points.[[BR]]
+ 3. Create a second shape and use the same path.[[BR]]
+ 4. Move/resize/rotate the 2nd shape a bit.[[BR]]
+ 5. Select &quot;Shape | Freeze Transformation&quot;.[[BR]]
+
+ Now, the path should snap to the selected shape's new
+ position/size/orientation. It doesn't. Instead the shape snaps to the
+ original path's position.[[BR]]
+ If there's an issue, because the path is shared with another shape, the
+ command to &quot;Freeze Transformation&quot; should be disabled.
+
+
+ Second scenario: 1 Shape from 2 paths:
+
+ 1. Create a shape with a path and a style.[[BR]]
+ 2. Select the path and add a couple of points.[[BR]]
+ 3. Create another path.[[BR]]
+ 4. Select this second path and add a couple of points.[[BR]]
+ 5. Move/resize/rotate the shape a bit.[[BR]]
+ 6. Select &quot;Shape | Freeze Transformation&quot;.[[BR]]
+
+ Now, the paths should snap to the shape's new position/size/orientation.
+ Instead only the second path snaps to the new location, the shape snaps to
+ the original first path's position.[[BR]]
+ So for example, if you created the second path inside the first path,
+ creating a hole in the shape, the hole stays put, while the rest of the
+ shape snaps back to the original first path's location.
+
+--
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4079#comment:1">http://dev.haiku-os.org/ticket/4079#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="018344.html">[Haiku-bugs] [Haiku] #4079: Freezing 1or2 shapes with 1or2 paths	fails
+</A></li>
+	<LI>Next message: <A HREF="018346.html">[Haiku-bugs] [Haiku] #4080: Disable/Implement path property	&quot;Rounding&quot;
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18345">[ date ]</a>
+              <a href="thread.html#18345">[ thread ]</a>
+              <a href="subject.html#18345">[ subject ]</a>
+              <a href="author.html#18345">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

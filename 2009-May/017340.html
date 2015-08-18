@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2327: Please add langinfo.h as a public	header
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232327%3A%20Please%20add%20langinfo.h%20as%20a%20public%0A%09header&In-Reply-To=%3C051.9d61d95549558271b4044b66fd38ed13%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="017339.html">
+   <LINK REL="Next"  HREF="017342.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2327: Please add langinfo.h as a public	header</H1>
+    <B>scottmc</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232327%3A%20Please%20add%20langinfo.h%20as%20a%20public%0A%09header&In-Reply-To=%3C051.9d61d95549558271b4044b66fd38ed13%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2327: Please add langinfo.h as a public	header">trac at haiku-os.org
+       </A><BR>
+    <I>Fri May 15 01:55:32 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="017339.html">[Haiku-bugs] [Haiku] #2327: Please add langinfo.h as a public	header
+</A></li>
+        <LI>Next message: <A HREF="017342.html">[Haiku-bugs] [Haiku] #2327: Please add langinfo.h as a public	header
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17340">[ date ]</a>
+              <a href="thread.html#17340">[ thread ]</a>
+              <a href="subject.html#17340">[ subject ]</a>
+              <a href="author.html#17340">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2327: Please add langinfo.h as a public header
+-------------------------+--------------------------------------------------
+ Reporter:  kaliber      |       Owner:  axeld         
+     Type:  enhancement  |      Status:  new           
+ Priority:  normal       |   Milestone:  R1            
+Component:  - General    |     Version:  R1 development
+Blockedby:               |    Platform:  All           
+ Blocking:               |  
+-------------------------+--------------------------------------------------
+
+Comment(by scottmc):
+
+ I just tried to comment out the #include line for LocalStrings.h and it
+ then allowed configure to find and use langinfo.h but then it fails during
+ make:
+ {{{
+ gcc -c -fno-strict-aliasing -DNDEBUG -g  -O3 -Wall -Wstrict-prototypes
+ -I. -IInclude -I./Include   -DPy_BUILD_CORE -o Python/pythonrun.o
+ Python/pythonrun.c
+ /boot/home/Python-2.6.2-haiku-test/Python/pythonrun.c: In function
+ `Py_InitializeEx':
+ /boot/home/Python-2.6.2-haiku-test/Python/pythonrun.c:275: `B_CODESET'
+ undeclared (first use in this function)
+ /boot/home/Python-2.6.2-haiku-test/Python/pythonrun.c:275: (Each
+ undeclared identifier is reported only once
+ /boot/home/Python-2.6.2-haiku-test/Python/pythonrun.c:275: for each
+ function it appears in.)
+ make: *** [Python/pythonrun.o] Error 1
+ ~/Python-2.6.2-haiku-test&gt;
+ }}}
+ Line 275 refers to CODESET which gets set (I assume) to B_CODESET, but
+ B_CODESET is undeclared
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2327#comment:9">http://dev.haiku-os.org/ticket/2327#comment:9</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="017339.html">[Haiku-bugs] [Haiku] #2327: Please add langinfo.h as a public	header
+</A></li>
+	<LI>Next message: <A HREF="017342.html">[Haiku-bugs] [Haiku] #2327: Please add langinfo.h as a public	header
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17340">[ date ]</a>
+              <a href="thread.html#17340">[ thread ]</a>
+              <a href="subject.html#17340">[ subject ]</a>
+              <a href="author.html#17340">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

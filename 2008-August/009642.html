@@ -1,0 +1,237 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2644: Panic on Scheduler::_Finisher
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232644%3A%20Panic%20on%20Scheduler%3A%3A_Finisher&In-Reply-To=%3C042.dd1510cedfb1e76e3c5d793ae3673b8a%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009641.html">
+   <LINK REL="Next"  HREF="009686.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2644: Panic on Scheduler::_Finisher</H1>
+    <B>emitrax</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232644%3A%20Panic%20on%20Scheduler%3A%3A_Finisher&In-Reply-To=%3C042.dd1510cedfb1e76e3c5d793ae3673b8a%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2644: Panic on Scheduler::_Finisher">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Aug 19 11:46:19 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009641.html">[Haiku-bugs] [Haiku] #1255: Make Multi-Selection Modifier Semantics in Tracker Consistent with Standard List Selection (easy)
+</A></li>
+        <LI>Next message: <A HREF="009686.html">[Haiku-bugs] [Haiku] #2644: Panic on Scheduler::_Finisher
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9642">[ date ]</a>
+              <a href="thread.html#9642">[ thread ]</a>
+              <a href="subject.html#9642">[ subject ]</a>
+              <a href="author.html#9642">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2644: Panic on Scheduler::_Finisher
+-----------------------+----------------------------------------------------
+ Reporter:  emitrax    |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+Blockedby:             |    Platform:  All           
+ Blocking:             |  
+-----------------------+----------------------------------------------------
+ Happened with latest rev while doing the following
+ {{{
+ dd if=/dev/zero of=/the/file bs=2M
+ }}}
+
+ Serial debug output
+ {{{
+ PANIC: page fault, but interrupts were disabled. Touching address
+ 0xdeadbf03 from eip 0x80066337
+
+ Welcome to Kernel Debugging Land...
+ Thread 25 &quot;scsi scheduler&quot; running on CPU 0
+ kdebug&gt; bt
+ stack trace for thread 25 &quot;scsi scheduler&quot;
+     kernel stack: 0x80266000 to 0x8026a000
+ frame            caller     &lt;image&gt;:function + offset
+  0 80269b44 (+  48) 80055dd1   &lt;kernel&gt;:invoke_debugger_command + 0x00f5
+  1 80269b74 (+  64) 80055bc1
+ &lt;kernel&gt;:invoke_pipe_segment__FP21debugger_command_pipelPc + 0x0079
+  2 80269bb4 (+  64) 80055f49   &lt;kernel&gt;:invoke_debugger_command_pipe +
+ 0x009d
+  3 80269bf4 (+  48) 80056e24
+ &lt;kernel&gt;:_ParseCommandPipe__16ExpressionParserRi + 0x0234
+  4 80269c24 (+  48) 800567da
+ &lt;kernel&gt;:EvaluateCommand__16ExpressionParserPCcRi + 0x01de
+  5 80269c54 (+ 224) 800581f0   &lt;kernel&gt;:evaluate_debug_command + 0x0088
+  6 80269d34 (+  64) 8005420e   &lt;kernel&gt;:kernel_debugger_loop__Fv + 0x01ae
+  7 80269d74 (+  48) 80054dd7   &lt;kernel&gt;:kernel_debugger + 0x0117
+  8 80269da4 (+ 192) 80054cb5   &lt;kernel&gt;:panic + 0x0029
+  9 80269e64 (+  48) 800b8180   &lt;kernel&gt;:page_fault_exception + 0x0078
+ 10 80269e94 (+  12) 800bb776   &lt;kernel&gt;:int_bottom + 0x0036 (nearest)
+ kernel iframe at 0x80269ea0 (end = 0x80269ef0)
+  eax 0x90b92870     ebx 0x90b9407c      ecx 0x90b927e4   edx 0xdeadbeef
+  esi 0x90b927d0     edi 0x90b94000      ebp 0x80269f28   esp 0x80269ed4
+  eip 0x80066337  eflags 0x210082
+  vector: 0xe, error code: 0x2
+ 11 80269ea0 (+ 136) 80066337   &lt;kernel&gt;:_Finisher__11IOScheduler + 0x008f
+ 12 80269f28 (+  96) 80066a43
+ &lt;kernel&gt;:_GetNextUnscheduledRequest__11IOScheduler + 0x0177
+ 13 80269f88 (+  48) 80066b85   &lt;kernel&gt;:_Scheduler__11IOScheduler + 0x0015
+ 14 80269fb8 (+  32) 80066c32   &lt;kernel&gt;:_SchedulerThread__11IOSchedulerPv
+ + 0x0012
+ 15 80269fd8 (+  32) 8004ca3b   &lt;kernel&gt;:_create_kernel_thread_kentry__Fv +
+ 0x001b
+ 16 80269ff8 (+2144952328) 8004c9d8   &lt;kernel&gt;:thread_kthread_exit__Fv +
+ 0x0000
+ kdebug&gt; teams
+ team           id  parent      name
+ 0x90b7e000      1  0x00000000  kernel_team
+ 0x90b7e8b8     69  0x90b7e000  syslog_daemon
+ 0x90c10ba0    134  0x90c102e8  sh
+ 0x90b7ee88     73  0x90b7e744  input_server
+ 0x90b7e2e8     43  0x90b7e000  registrar
+ 0x90c10e88    138  0x90c1045c  media_addon_server
+ 0x90b7e45c     48  0x90b7e000  debug_server
+ 0x90b7e5d0     49  0x90b7e000  net_server
+ 0x90b7e174    174  0x90c10ba0  dd
+ 0x90b7e744     50  0x90b7e000  app_server
+ 0x90b7ed14     85  0x90b7e000  Tracker
+ 0x90c10000     86  0x90b7e000  Deskbar
+ 0x90c102e8     88  0x90b7e000  Terminal
+ 0x90c1045c     89  0x90b7e000  media_server
+ 0x90c10744     91  0x90b7e000  midi_server
+ 0x90c108b8     92  0x90b7e000  print_server
+ kdebug&gt; bt 174
+ stack trace for thread 174 &quot;dd&quot;
+     kernel stack: 0x80209000 to 0x8020d000
+       user stack: 0x7efef000 to 0x7ffef000
+ frame            caller     &lt;image&gt;:function + offset
+  0 8020c780 (+  32) 80041d42   &lt;kernel&gt;:context_switch__FP6threadT0 +
+ 0x0026
+  1 8020c7a0 (+  64) 80041fac   &lt;kernel&gt;:scheduler_reschedule + 0x0248
+  2 8020c7e0 (+  48) 800b828e   &lt;kernel&gt;:hardware_interrupt + 0x00a6
+  3 8020c810 (+  12) 800bb776   &lt;kernel&gt;:int_bottom + 0x0036 (nearest)
+ kernel iframe at 0x8020c81c (end = 0x8020c86c)
+  eax 0x0            ebx 0x0             ecx 0x800f969c   edx 0x246
+  esi 0x90d24a80     edi 0x1820d000      ebp 0x8020c8b4   esp 0x8020c850
+  eip 0x800ada07  eflags 0x246
+  vector: 0xfb, error code: 0x0
+  4 8020c81c (+ 152) 800ada07   &lt;kernel&gt;:lock_memory_etc + 0x00ff
+  5 8020c8b4 (+  48) 8006aff9   &lt;kernel&gt;:LockMemory__8IOBufferlb + 0x003d
+  6 8020c8e4 (+  64) 80065fed
+ &lt;kernel&gt;:ScheduleRequest__11IOSchedulerP9IORequest + 0x002d
+  7 8020c924 (+  48) 806db109   &lt;scsi_disk&gt;:das_io__FPvP9IORequest + 0x0029
+  8 8020c954 (+  64) 80064ba4
+ &lt;kernel&gt;:devfs_io__FP9fs_volumeP8fs_vnodePvP9IORequest + 0x0144
+  9 8020c994 (+  64) 800952e9   &lt;kernel&gt;:vfs_vnode_io + 0x0029
+ 10 8020c9d4 (+ 224) 80094c5d
+ &lt;kernel&gt;:do_iterative_fd_io_iterate__FPvP9IORequestPb + 0x024d
+ 11 8020cab4 (+  64) 8009562f   &lt;kernel&gt;:do_iterative_fd_io + 0x015b
+ 12 8020caf4 (+  80) 8059e7e3
+ &lt;bfs&gt;:bfs_io__FP9fs_volumeP8fs_vnodePvP9IORequest + 0x009b
+ 13 8020cb44 (+  64) 800952e9   &lt;kernel&gt;:vfs_vnode_io + 0x0029
+ 14 8020cb84 (+ 192) 8008c5eb   &lt;kernel&gt;:vfs_write_pages + 0x0063
+ 15 8020cc44 (+  96) 8002f217
+ &lt;kernel&gt;:write_to_file__FP14file_cache_refPvxlUlUlbUlUl + 0x01ab
+ 16 8020cca4 (+ 208) 8002f895   &lt;kernel&gt;:cache_io__FPvT0xUlPUlb + 0x063d
+ 17 8020cd74 (+  96) 8003004d   &lt;kernel&gt;:file_cache_write + 0x00e1
+ 18 8020cdd4 (+  80) 80593c15   &lt;bfs&gt;:WriteAt__5InodeR11TransactionxPCUcPUl
+ + 0x031d
+ 19 8020ce24 (+  96) 805a0667
+ &lt;bfs&gt;:bfs_write__FP9fs_volumeP8fs_vnodePvxPCvPUl + 0x00d3
+ 20 8020ce84 (+  64) 8008db70
+ &lt;kernel&gt;:file_write__FP15file_descriptorxPCvPUl + 0x0044
+ 21 8020cec4 (+  80) 8007e459   &lt;kernel&gt;:common_user_io__FixPvUlb + 0x017d
+ 22 8020cf14 (+  48) 8007e94c   &lt;kernel&gt;:_user_write + 0x0028
+ 23 8020cf44 (+ 100) 800bb9a2   &lt;kernel&gt;:pre_syscall_debug_done + 0x0002
+ (nearest)
+ user iframe at 0x8020cfa8 (end = 0x8020d000)
+  eax 0x7e           ebx 0x2b7d40        ecx 0x7ffeee50   edx 0xffff0104
+  esi 0x0            edi 0x200000        ebp 0x7ffeee8c   esp 0x8020cfdc
+  eip 0xffff0104  eflags 0x203      user esp 0x7ffeee50
+  vector: 0x63, error code: 0x0
+ 24 8020cfa8 (+   0) ffff0104
+ 25 7ffeee8c (+  48) 0020250a   &lt;/boot/beos/bin/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">dd at 0x00200000</A>&gt;:unknown +
+ 0x250a
+ 26 7ffeeebc (+  64) 00203919   &lt;/boot/beos/bin/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">dd at 0x00200000</A>&gt;:unknown +
+ 0x3919
+ 27 7ffeeefc (+ 128) 00204078   &lt;/boot/beos/bin/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">dd at 0x00200000</A>&gt;:unknown +
+ 0x4078
+ 28 7ffeef7c (+  48) 00201c7b   &lt;/boot/beos/bin/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">dd at 0x00200000</A>&gt;:unknown +
+ 0x1c7b
+ 29 7ffeefac (+  48) 001008ea   3867:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">runtime_loader_seg0ro at 0x00100000</A> +
+ 0x8ea
+ 30 7ffeefdc (+   0) 7ffeefec   3866:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">dd_main_stack at 0x7efef000</A> + 0xffffec
+ kdebug&gt; thread 174
+ THREAD: 0x914e0000
+ id:                 174 (0xae)
+ name:               &quot;dd&quot;
+ all_next:           0x9150d000
+ team_next:          0x00000000
+ q_next:             0x9151b800
+ priority:           10 (next 10)
+ state:              ready
+ next_state:         ready
+ cpu:                0x00000000
+ sig_pending:        0x0 (blocked: 0x0)
+ in_kernel:          1
+ fault_handler:      0x00000000
+ args:               0x90d249d8 0x00000000
+ entry:              0x80049774
+ team:               0x90b7e174, &quot;dd&quot;
+   exit.sem:         2124
+   exit.status:      0x0 (No error)
+   exit.reason:      0x0
+   exit.signal:      0x0
+   exit.waiters:
+ kernel_stack_area:  3864
+ kernel_stack_base:  0x80209000
+ user_stack_area:    3866
+ user_stack_base:    0x7efef000
+ user_local_storage: 0x7ffef000
+ kernel_errno:       0x0 (No error)
+ kernel_time:        5297401
+ user_time:          84371
+ flags:              0x200
+ architecture dependant section:
+         esp: 0x8020c724
+         ss: 0x00000010
+         fpu_state at 0x914e0380
+ kdebug&gt;
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2644">http://dev.haiku-os.org/ticket/2644</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009641.html">[Haiku-bugs] [Haiku] #1255: Make Multi-Selection Modifier Semantics in Tracker Consistent with Standard List Selection (easy)
+</A></li>
+	<LI>Next message: <A HREF="009686.html">[Haiku-bugs] [Haiku] #2644: Panic on Scheduler::_Finisher
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9642">[ date ]</a>
+              <a href="thread.html#9642">[ thread ]</a>
+              <a href="subject.html#9642">[ subject ]</a>
+              <a href="author.html#9642">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

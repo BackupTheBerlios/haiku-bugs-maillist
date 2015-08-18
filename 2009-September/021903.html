@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4053: USB MIDI not recognized dynamically
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234053%3A%20USB%20MIDI%20not%20recognized%20dynamically&In-Reply-To=%3C048.8818366b43056a8f65bb6d269d61fe5f%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="022045.html">
+   <LINK REL="Next"  HREF="021905.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4053: USB MIDI not recognized dynamically</H1>
+    <B>stippi</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234053%3A%20USB%20MIDI%20not%20recognized%20dynamically&In-Reply-To=%3C048.8818366b43056a8f65bb6d269d61fe5f%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4053: USB MIDI not recognized dynamically">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Sep 23 12:54:19 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="022045.html">[Haiku-bugs] [Haiku] #4631: Two Haiku partitions cannot change settings independently
+</A></li>
+        <LI>Next message: <A HREF="021905.html">[Haiku-bugs] [Haiku] #1026: Black screen when Haiku switch to graphical mode after bootscreen GeForce 6150
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21903">[ date ]</a>
+              <a href="thread.html#21903">[ thread ]</a>
+              <a href="subject.html#21903">[ subject ]</a>
+              <a href="author.html#21903">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4053: USB MIDI not recognized dynamically
+---------------------------------+------------------------------------------
+ Reporter:  Pete                 |       Owner:  phoudoin     
+     Type:  bug                  |      Status:  assigned     
+ Priority:  normal               |   Milestone:  R1           
+Component:  Servers/midi_server  |     Version:  R1/pre-alpha1
+Blockedby:                       |    Platform:  All          
+ Blocking:                       |  
+---------------------------------+------------------------------------------
+
+Comment(by stippi):
+
+ Replying to [comment:17 phoudoin]:
+ &gt; MidiPortProducer reader thread is blocking on read(), and I do nothing
+ to wake him. Before the wait_for_thread(), a send_signal(fReaderThread,
+ SIGINT) should do it.
+ &gt; If not, let's try the brutal kill_thread(fReaderThread) instead, but it
+ will leak SysEx buffer eventually.
+
+ Or you could close the FD that the reader thread is read()ing from. That
+ should also wake up the thread and seems like the cleanest solution.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4053#comment:19">http://dev.haiku-os.org/ticket/4053#comment:19</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="022045.html">[Haiku-bugs] [Haiku] #4631: Two Haiku partitions cannot change settings independently
+</A></li>
+	<LI>Next message: <A HREF="021905.html">[Haiku-bugs] [Haiku] #1026: Black screen when Haiku switch to graphical mode after bootscreen GeForce 6150
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21903">[ date ]</a>
+              <a href="thread.html#21903">[ thread ]</a>
+              <a href="subject.html#21903">[ subject ]</a>
+              <a href="author.html#21903">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

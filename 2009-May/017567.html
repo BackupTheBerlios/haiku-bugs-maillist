@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3971: Patch: enable mixed mouse+keyboard	input in Sudoku
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233971%3A%20Patch%3A%20enable%20mixed%20mouse%2Bkeyboard%0A%09input%20in%20Sudoku&In-Reply-To=%3C039.421ef8de14e55896db470bf1f6c80639%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="017566.html">
+   <LINK REL="Next"  HREF="017673.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3971: Patch: enable mixed mouse+keyboard	input in Sudoku</H1>
+    <B>Stef</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233971%3A%20Patch%3A%20enable%20mixed%20mouse%2Bkeyboard%0A%09input%20in%20Sudoku&In-Reply-To=%3C039.421ef8de14e55896db470bf1f6c80639%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3971: Patch: enable mixed mouse+keyboard	input in Sudoku">trac at haiku-os.org
+       </A><BR>
+    <I>Tue May 26 21:14:07 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="017566.html">[Haiku-bugs] [Haiku] #2253: usb_hid should support composite devices and non-boot protocol keyboards
+</A></li>
+        <LI>Next message: <A HREF="017673.html">[Haiku-bugs] [Haiku] #3971: Patch: enable mixed mouse+keyboard input in Sudoku
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17567">[ date ]</a>
+              <a href="thread.html#17567">[ thread ]</a>
+              <a href="subject.html#17567">[ subject ]</a>
+              <a href="author.html#17567">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3971: Patch: enable mixed mouse+keyboard input in Sudoku
+---------------------------------+------------------------------------------
+ Reporter:  Stef                 |       Owner:  axeld         
+     Type:  enhancement          |      Status:  new           
+ Priority:  normal               |   Milestone:  R1            
+Component:  Applications/Sudoku  |     Version:  R1 development
+Blockedby:                       |    Platform:  All           
+ Blocking:                       |  
+---------------------------------+------------------------------------------
+ Currently, Sudoku supports either mouse input (point at cell, click to
+ insert numbers) or keyboard input (arrow keys select cell, type numbers to
+ insert them). When attempting to combine the two (point to select cells,
+ type a number to insert it) weird things happen.
+
+ The first keypress selects the cell under the mouse cursor (blue outline).
+ The second keypress inserts the number in this cell. However, when forcing
+ a repaint (drag the window off the screen and back), it can be seen that
+ the first keypress inserts the number at the previous keyboard position
+ without updating the screen.
+
+ The attached patch does not address the repaint issue directly. Instead,
+ it always sets the keyboard input position to the mouse input position (if
+ valid). Not only does this solve this issue, it also enables mixed input
+ as described above (point and type).
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3971">http://dev.haiku-os.org/ticket/3971</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="017566.html">[Haiku-bugs] [Haiku] #2253: usb_hid should support composite devices and non-boot protocol keyboards
+</A></li>
+	<LI>Next message: <A HREF="017673.html">[Haiku-bugs] [Haiku] #3971: Patch: enable mixed mouse+keyboard input in Sudoku
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17567">[ date ]</a>
+              <a href="thread.html#17567">[ thread ]</a>
+              <a href="subject.html#17567">[ subject ]</a>
+              <a href="author.html#17567">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

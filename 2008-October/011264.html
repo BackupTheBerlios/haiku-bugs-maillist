@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2899: Automounter fails to read the mountflags and will mount read-write
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232899%3A%20Automounter%20fails%20to%20read%20the%0A%20mountflags%20and%20will%20mount%20read-write&In-Reply-To=%3C041.c1173677c4fe7ffd05a58a8b8d2704d6%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011257.html">
+   <LINK REL="Next"  HREF="011267.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2899: Automounter fails to read the mountflags and will mount read-write</H1>
+    <B>aldeck</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232899%3A%20Automounter%20fails%20to%20read%20the%0A%20mountflags%20and%20will%20mount%20read-write&In-Reply-To=%3C041.c1173677c4fe7ffd05a58a8b8d2704d6%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2899: Automounter fails to read the mountflags and will mount read-write">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Oct 22 13:00:38 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011257.html">[Haiku-bugs] [Haiku] #156: syslog is corrupted
+</A></li>
+        <LI>Next message: <A HREF="011267.html">[Haiku-bugs] [Haiku] #2899: Automounter fails to read the mountflags and will mount read-write
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11264">[ date ]</a>
+              <a href="thread.html#11264">[ thread ]</a>
+              <a href="subject.html#11264">[ subject ]</a>
+              <a href="author.html#11264">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2899: Automounter fails to read the mountflags and will mount read-write
+----------------------------------+-----------------------------------------
+ Reporter:  aldeck                |       Owner:  axeld         
+     Type:  bug                   |      Status:  new           
+ Priority:  high                  |   Milestone:  R1/alpha1     
+Component:  Applications/Tracker  |     Version:  R1 development
+Blockedby:                        |    Platform:  All           
+ Blocking:                        |  
+----------------------------------+-----------------------------------------
+ r28276
+
+ This happens reliably with a fat partition and with the &quot;mount all disks&quot;
+ automount option.
+
+ I did some debugging and the flags are properly written, it fails when
+ reading them back though:
+
+ in AutoMounter::InitialMountVisitor::Visit():
+  &quot;BPath path&quot; is not retrieved in some cases wich causes &quot;mountFlagsKey&quot;
+ to be wrong.
+
+ I'm working on something else, i leave it to someone more familiar with
+ the mount settings logic :)
+
+ Setting milestone R1/alpha1 as this could allow unwanted data corruption.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2899">http://dev.haiku-os.org/ticket/2899</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011257.html">[Haiku-bugs] [Haiku] #156: syslog is corrupted
+</A></li>
+	<LI>Next message: <A HREF="011267.html">[Haiku-bugs] [Haiku] #2899: Automounter fails to read the mountflags and will mount read-write
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11264">[ date ]</a>
+              <a href="thread.html#11264">[ thread ]</a>
+              <a href="subject.html#11264">[ subject ]</a>
+              <a href="author.html#11264">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

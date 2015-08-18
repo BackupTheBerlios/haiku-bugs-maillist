@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2083: EHCI bus hanging at boot.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-February/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232083%3A%20EHCI%20bus%20hanging%20at%20boot.&In-Reply-To=%3C047.d859de7e19c830872b98da5cd479be9c%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="014758.html">
+   <LINK REL="Next"  HREF="014760.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2083: EHCI bus hanging at boot.</H1>
+    <B>vegardw</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232083%3A%20EHCI%20bus%20hanging%20at%20boot.&In-Reply-To=%3C047.d859de7e19c830872b98da5cd479be9c%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2083: EHCI bus hanging at boot.">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Feb 28 19:50:59 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="014758.html">[Haiku-bugs] [Haiku] #2083: EHCI bus hanging at boot.
+</A></li>
+        <LI>Next message: <A HREF="014760.html">[Haiku-bugs] [Haiku] #3110: [kernel] PANIC: page still has	mappings
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14759">[ date ]</a>
+              <a href="thread.html#14759">[ thread ]</a>
+              <a href="subject.html#14759">[ subject ]</a>
+              <a href="author.html#14759">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2083: EHCI bus hanging at boot.
+-------------------------+--------------------------------------------------
+ Reporter:  bga          |       Owner:  mmlr          
+     Type:  bug          |      Status:  assigned      
+ Priority:  blocker      |   Milestone:  R1            
+Component:  Drivers/USB  |     Version:  R1 development
+Blockedby:               |    Platform:  All           
+ Blocking:               |  
+-------------------------+--------------------------------------------------
+
+Comment(by vegardw):
+
+ When booting Ubuntu Linux 8.10 on the computer I have the following
+ messages in the dmesg output
+
+ {{{
+ [    4.872585] ehci_hcd 0000:00:12.2: applying AMD SB600/SB700 USB freeze
+ workaround
+ }}}
+
+ {{{
+  [    5.092602] ehci_hcd 0000:00:13.2: applying AMD SB600/SB700 USB freeze
+ workaround
+ }}}
+
+ A couple of quick google searches after yields the following
+
+  *
+ <A HREF="http://groups.google.com/group/linux.kernel/browse_thread/thread/7e160b95efb18cff">http://groups.google.com/group/linux.kernel/browse_thread/thread/7e160b95efb18cff</A>
+  * <A HREF="http://linux.derkeiler.com/Mailing-Lists/Kernel/2008-11/msg09663.html">http://linux.derkeiler.com/Mailing-Lists/Kernel/2008-11/msg09663.html</A>
+
+ Seems like a bug in the SB700 chipset, could this be related to the
+ hanging I'm experiencing in Haiku?
+
+ I can attach the complete output from dmesg in Ubuntu if that is of any
+ help
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2083#comment:29">http://dev.haiku-os.org/ticket/2083#comment:29</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="014758.html">[Haiku-bugs] [Haiku] #2083: EHCI bus hanging at boot.
+</A></li>
+	<LI>Next message: <A HREF="014760.html">[Haiku-bugs] [Haiku] #3110: [kernel] PANIC: page still has	mappings
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14759">[ date ]</a>
+              <a href="thread.html#14759">[ thread ]</a>
+              <a href="subject.html#14759">[ subject ]</a>
+              <a href="author.html#14759">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

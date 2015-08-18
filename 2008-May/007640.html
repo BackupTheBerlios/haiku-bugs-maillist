@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2071: No accelerated video starting	r24669 nightly
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232071%3A%20No%20accelerated%20video%20starting%0A%09r24669%20nightly&In-Reply-To=%3C052.50efc8e2a1619bc70040f1e6ebe5f3e1%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007674.html">
+   <LINK REL="Next"  HREF="007641.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2071: No accelerated video starting	r24669 nightly</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232071%3A%20No%20accelerated%20video%20starting%0A%09r24669%20nightly&In-Reply-To=%3C052.50efc8e2a1619bc70040f1e6ebe5f3e1%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2071: No accelerated video starting	r24669 nightly">trac at haiku-os.org
+       </A><BR>
+    <I>Mon May 26 22:18:19 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007674.html">[Haiku-bugs] [Haiku] #2264: Media Checker Crash
+</A></li>
+        <LI>Next message: <A HREF="007641.html">[Haiku-bugs] [Haiku] #1950: Garbled screen contents with true colour mode on nvidia gf2mx
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7640">[ date ]</a>
+              <a href="thread.html#7640">[ thread ]</a>
+              <a href="subject.html#7640">[ subject ]</a>
+              <a href="author.html#7640">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2071: No accelerated video starting r24669 nightly
+-------------------------------+--------------------------------------------
+  Reporter:  tigerdog          |       Owner:  axeld         
+      Type:  bug               |      Status:  new           
+  Priority:  normal            |   Milestone:  R1            
+ Component:  Drivers/Graphics  |     Version:  R1 development
+Resolution:                    |    Platform:  x86           
+-------------------------------+--------------------------------------------
+Comment (by rudolfc):
+
+ Hi there,
+
+ I've traced the versions where it went wrong:
+ r24493 is working OK;
+ r24511 is faulty.
+
+ It's MTRR-WC failed mapping because of overlapping regions after all:
+ commenting out the change in the kernel done in r24494 fixes the problem.
+ I'm now running r24865 in 32bit accelerated mode on my NV15.
+
+ I don't know what is the first mapped region that is later on overlapped
+ by my driver's request, but that deserves to be investigated. If that's
+ legal then overlapping regions may not be blocked I'd say!
+
+ Can someone (kernel) have a look at this????
+
+ Bye!
+
+ Rudolf.
+
+
+ PS: I'm posting this finding in ticket #1950 as well.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2071#comment:4">http://dev.haiku-os.org/ticket/2071#comment:4</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007674.html">[Haiku-bugs] [Haiku] #2264: Media Checker Crash
+</A></li>
+	<LI>Next message: <A HREF="007641.html">[Haiku-bugs] [Haiku] #1950: Garbled screen contents with true colour mode on nvidia gf2mx
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7640">[ date ]</a>
+              <a href="thread.html#7640">[ thread ]</a>
+              <a href="subject.html#7640">[ subject ]</a>
+              <a href="author.html#7640">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

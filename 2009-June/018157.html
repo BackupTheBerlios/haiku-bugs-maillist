@@ -1,0 +1,193 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4045: mkfs ignores noindex option first time when no argument is supplied
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234045%3A%20mkfs%20ignores%20noindex%20option%20first%20time%0A%20when%20no%20argument%20is%20supplied&In-Reply-To=%3C041.6b2069907d184b5735c82139e02b5d1f%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="018156.html">
+   <LINK REL="Next"  HREF="018158.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4045: mkfs ignores noindex option first time when no argument is supplied</H1>
+    <B>idefix</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234045%3A%20mkfs%20ignores%20noindex%20option%20first%20time%0A%20when%20no%20argument%20is%20supplied&In-Reply-To=%3C041.6b2069907d184b5735c82139e02b5d1f%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4045: mkfs ignores noindex option first time when no argument is supplied">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Jun 27 19:47:21 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="018156.html">[Haiku-bugs] [Haiku] #3963: Haiku wrongly initialises volume according to BeOS
+</A></li>
+        <LI>Next message: <A HREF="018158.html">[Haiku-bugs] [Haiku] #4045: mkfs ignores noindex option first time when no argument is supplied
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18157">[ date ]</a>
+              <a href="thread.html#18157">[ thread ]</a>
+              <a href="subject.html#18157">[ subject ]</a>
+              <a href="author.html#18157">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4045: mkfs ignores noindex option first time when no argument is supplied
+---------------------------------------------+------------------------------
+ Reporter:  idefix                           |       Owner:  axeld         
+     Type:  bug                              |      Status:  new           
+ Priority:  normal                           |   Milestone:  R1            
+Component:  Applications/Command Line Tools  |     Version:  R1 development
+Blockedby:                                   |    Platform:  All           
+ Blocking:                                   |  
+---------------------------------------------+------------------------------
+ When you don't supply an argument to the noindex option, mkfs will ignore
+ it the first time. The second time however, it won't ignore it.
+
+ Steps to reproduce:
+  - Initialise a volume with an index:
+ {{{
+ ~&gt; mkfs -t bfs -v /dev/disk/ata/1/master/0 test0mkfs
+ Preparing for modifications...
+
+ Parameters Validation...
+
+
+ About to initialize /dev/disk/ata/1/master/0 with Be File System
+ Are you sure you want to do this now?
+
+ ALL YOUR DATA in /dev/disk/ata/1/master/0 will be lost forever.
+ Continue (yes|[no])? yes
+ DiskDeviceJobQueue::Execute(): executing job: Q28BPrivate15UninitializeJob
+ DiskDeviceJobQueue::Execute(): executing job: Q28BPrivate13InitializeJob
+ Volume &quot;test0mkfs&quot; has been initialized successfully!
+
+ ~&gt; lsindex /test0mkfs/
+ BEOS:APP_SIG
+ last_modified
+ name
+ size
+ }}}
+  - Initialise the same volume again, but with the noindex option:
+ {{{
+ ~&gt; mkfs -t bfs -o noindex -v /dev/disk/ata/1/master/0 test0mkfs
+ Preparing for modifications...
+
+ Parameters Validation...
+
+
+ About to initialize /dev/disk/ata/1/master/0 with Be File System
+ Are you sure you want to do this now?
+
+ ALL YOUR DATA in /dev/disk/ata/1/master/0 will be lost forever.
+ Continue (yes|[no])? yes
+ DiskDeviceJobQueue::Execute(): executing job: Q28BPrivate15UninitializeJob
+ DiskDeviceJobQueue::Execute(): executing job: Q28BPrivate13InitializeJob
+ Volume &quot;test0mkfs&quot; has been initialized successfully!
+
+ ~&gt; lsindex /test0mkfs/
+ BEOS:APP_SIG
+ last_modified
+ name
+ size
+ }}}
+  - Initialise the same volume again, using the previous command:
+ {{{
+ ~&gt; mkfs -t bfs -o noindex -v /dev/disk/ata/1/master/0 test0mkfs
+ Preparing for modifications...
+
+ Parameters Validation...
+
+
+ About to initialize /dev/disk/ata/1/master/0 with Be File System
+ Are you sure you want to do this now?
+
+ ALL YOUR DATA in /dev/disk/ata/1/master/0 will be lost forever.
+ Continue (yes|[no])?yes
+ Continue (yes|[no])? yes
+ DiskDeviceJobQueue::Execute(): executing job: Q28BPrivate15UninitializeJob
+ DiskDeviceJobQueue::Execute(): executing job: Q28BPrivate13InitializeJob
+ Volume &quot;test0mkfs&quot; has been initialized successfully!
+
+ ~&gt; lsindex /test0mkfs/
+ lsindex: can't open index dir of device 25
+ }}}
+
+ When you do however supply an argument to the noindex option, mkfs won't
+ ignore it the first time:
+  - Initialise a volume with an index:
+ {{{
+ ~&gt; mkfs -t bfs -v /dev/disk/ata/1/master/0 test0mkfs
+ Preparing for modifications...
+
+ Parameters Validation...
+
+
+ About to initialize /dev/disk/ata/1/master/0 with Be File System
+ Are you sure you want to do this now?
+
+ ALL YOUR DATA in /dev/disk/ata/1/master/0 will be lost forever.
+ Continue (yes|[no])? yes
+ DiskDeviceJobQueue::Execute(): executing job: Q28BPrivate15UninitializeJob
+ DiskDeviceJobQueue::Execute(): executing job: Q28BPrivate13InitializeJob
+ Volume &quot;test0mkfs&quot; has been initialized successfully!
+
+ ~&gt; lsindex /test0mkfs/
+ BEOS:APP_SIG
+ last_modified
+ name
+ size
+ }}}
+  - Initialise the same volume again, but with argument '1' supplied to the
+ noindex option:
+ {{{
+ ~&gt; mkfs -t bfs -o noindex=1 -v /dev/disk/ata/1/master/0 test0mkfs
+ Preparing for modifications...
+
+ Parameters Validation...
+
+
+ About to initialize /dev/disk/ata/1/master/0 with Be File System
+ Are you sure you want to do this now?
+
+ ALL YOUR DATA in /dev/disk/ata/1/master/0 will be lost forever.
+ Continue (yes|[no])? yes
+ DiskDeviceJobQueue::Execute(): executing job: Q28BPrivate15UninitializeJob
+ DiskDeviceJobQueue::Execute(): executing job: Q28BPrivate13InitializeJob
+ Volume &quot;test0mkfs&quot; has been initialized successfully!
+
+ ~&gt; lsindex /test0mkfs/
+ lsindex: can't open index dir of device 27
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4045">http://dev.haiku-os.org/ticket/4045</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="018156.html">[Haiku-bugs] [Haiku] #3963: Haiku wrongly initialises volume according to BeOS
+</A></li>
+	<LI>Next message: <A HREF="018158.html">[Haiku-bugs] [Haiku] #4045: mkfs ignores noindex option first time when no argument is supplied
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18157">[ date ]</a>
+              <a href="thread.html#18157">[ thread ]</a>
+              <a href="subject.html#18157">[ subject ]</a>
+              <a href="author.html#18157">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

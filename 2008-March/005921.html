@@ -1,0 +1,150 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1986: ifconfig --delete throws a page fault
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231986%3A%20ifconfig%20--delete%20throws%20a%20page%20fault&In-Reply-To=%3C040.4d2e35cffee791bdb2faa5e8de1eac3b%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005923.html">
+   <LINK REL="Next"  HREF="005930.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1986: ifconfig --delete throws a page fault</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231986%3A%20ifconfig%20--delete%20throws%20a%20page%20fault&In-Reply-To=%3C040.4d2e35cffee791bdb2faa5e8de1eac3b%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1986: ifconfig --delete throws a page fault">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Mar 30 15:52:23 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005923.html">[Haiku-bugs] [Haiku] #1985: bulding haiku on haiku-host fails	at ...
+</A></li>
+        <LI>Next message: <A HREF="005930.html">[Haiku-bugs] [Haiku] #1987: BeTask Manager - four problems
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5921">[ date ]</a>
+              <a href="thread.html#5921">[ thread ]</a>
+              <a href="subject.html#5921">[ subject ]</a>
+              <a href="author.html#5921">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1986: ifconfig --delete throws a page fault
+--------------------------------------+-------------------------------------
+ Reporter:  korli                     |       Owner:  axeld         
+     Type:  bug                       |      Status:  new           
+ Priority:  normal                    |   Milestone:  R1            
+Component:  Network &amp; Internet/Stack  |     Version:  R1 development
+ Platform:  All                       |  
+--------------------------------------+-------------------------------------
+ Qemu, ifconfig --delete /dev/net/etherpci/0
+
+ {{{
+ domain_interface_went_down(1, /dev/net/etherpci/0)
+ invalidate_routes(1, /dev/net/etherpci/0)
+ etherpci: close dev=90b43780
+ ether: still waiting for read/write to finish
+ etherpci: free  dev=90b1ccc0
+ vm_soft_fault: va 0x0 not covered by area in address space
+ vm_page_fault: vm_soft_fault returned error 'Bad address' on fault at 0x0,
+ ip 0x805579a6, write 0, user 0, thread 0x87
+ PANIC: vm_page_fault: unhandled page fault in kernel space at 0x0, ip
+ 0x805579a6
+
+ Welcome to Kernel Debugging Land...
+ Running on CPU 0
+ kdebug&gt; bt
+ stack trace for thread 135 &quot;ifconfig&quot;
+     kernel stack: 0x928ba000 to 0x928be000
+       user stack: 0x7efe7000 to 0x7ffe7000
+ frame            caller     &lt;image&gt;:function + offset
+ 928bd58c (+  52) 80084eab   &lt;kernel&gt;:invoke_debugger_command + 0x00cf
+ 928bd5c0 (+  64) 80085c4c   &lt;kernel&gt;:_ParseCommand__16ExpressionParserRi +
+ 0x01f8
+ 928bd600 (+  48) 8008563e
+ &lt;kernel&gt;:EvaluateCommand__16ExpressionParserPCcRi + 0x01de
+ 928bd630 (+ 228) 80086d60   &lt;kernel&gt;:evaluate_debug_command + 0x0088
+ 928bd714 (+  64) 800839ee   &lt;kernel&gt;:kernel_debugger_loop__Fv + 0x017a
+ 928bd754 (+  48) 80084699   &lt;kernel&gt;:kernel_debugger + 0x010d
+ 928bd784 (+ 192) 80084581   &lt;kernel&gt;:panic + 0x0029
+ 928bd844 (+  64) 8005d51b   &lt;kernel&gt;:vm_page_fault + 0x00ab
+ 928bd884 (+  64) 80091595   &lt;kernel&gt;:page_fault_exception + 0x00b1
+ 928bd8c4 (+  12) 80094c9d   &lt;kernel&gt;:int_bottom + 0x001d (nearest)
+ iframe at 0x928bd8d0 (end = 0x928bd928)
+  eax 0x0            ebx 0x80563a98      ecx 0x1          edx 0x246
+  esi 0x909ac800     edi 0x90b26400      ebp 0x928bd964   esp 0x928bd904
+  eip 0x805579a6  eflags 0x293
+  vector: 0xe, error code: 0x0
+ 928bd8d0 (+ 148) 805579a6   &lt;/boot/beos/system/add-
+ ons/kernel/network/stack&gt;:put_device_interface__FP20net_device_interface +
+ 0x014a
+ 928bd964 (+  80) 80556a34   &lt;/boot/beos/system/add-
+ ons/kernel/network/stack&gt;:domain_interface_control__FP18net_domain_privatelP5ifreq
+ + 0x0168
+ 928bd9b4 (+ 288) 80555774   &lt;/boot/beos/system/add-
+ ons/kernel/network/stack&gt;:datalink_control__FP10net_domainlPvPUl + 0x0110
+ 928bdad4 (+  48) 80574a82   &lt;/boot/beos/system/add-
+ ons/kernel/network/protocols/ipv4&gt;:ipv4_control__FP12net_protocoliiPvPUl +
+ 0x0042
+ 928bdb04 (+  64) 8058e50e   &lt;/boot/beos/system/add-
+ ons/kernel/network/protocols/udp&gt;:udp_control__FP12net_protocoliiPvPUl +
+ 0x0036
+ 928bdb44 (+  64) 8055a61f   &lt;/boot/beos/system/add-
+ ons/kernel/network/stack&gt;:socket_control__FP10net_socketlPvUl + 0x0037
+ 928bdb84 (+ 432) 80376509   &lt;/boot/beos/system/add-
+ ons/kernel/drivers/dev/net/net_stack&gt;:net_stack_control__FPvUlT0Ul +
+ 0x07cd
+ 928bdd34 (+ 336) 800411bb   &lt;kernel&gt;:devfs_ioctl__FPvN20UlT0Ul + 0x023f
+ 928bde84 (+  64) 8004cc69
+ &lt;kernel&gt;:common_ioctl__FP15file_descriptorUlPvUl + 0x0049
+ 928bdec4 (+  48) 8004548f   &lt;kernel&gt;:fd_ioctl__FbiUlPvUl + 0x005f
+ 928bdef4 (+  80) 8004614c   &lt;kernel&gt;:_user_ioctl + 0x0044
+ 928bdf44 (+ 100) 80094e12   &lt;kernel&gt;:pre_syscall_debug_done + 0x0002
+ (nearest)
+ iframe at 0x928bdfa8 (end = 0x928be000)
+  eax 0x71           ebx 0x2edec0        ecx 0x7ffe6e20   edx 0xffff0104
+  esi 0x3            edi 0x7ffef55f      ebp 0x7ffe6e4c   esp 0x928bdfdc
+  eip 0xffff0104  eflags 0x216
+  vector: 0x63, error code: 0x0
+ 928bdfa8 (+   0) ffff0104
+ 7ffe6e4c (+ 240) 00201ce2   &lt;_APP_&gt;:delete_interface__FiPCc + 0x0046
+ 7ffe6f3c (+  64) 00202b27   &lt;_APP_&gt;:main + 0x0123
+ 7ffe6f7c (+  48) 00200df7   &lt;_APP_&gt;:_start + 0x005b
+ 7ffe6fac (+  48) 0010078e   1390:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">runtime_loader_seg0ro at 0x00100000</A> + 0x78e
+ 7ffe6fdc (+   0) 7ffe6fec   1389:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">ifconfig_main_stack at 0x7efe7000</A> + 0xffffec
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1986">http://dev.haiku-os.org/ticket/1986</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005923.html">[Haiku-bugs] [Haiku] #1985: bulding haiku on haiku-host fails	at ...
+</A></li>
+	<LI>Next message: <A HREF="005930.html">[Haiku-bugs] [Haiku] #1987: BeTask Manager - four problems
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5921">[ date ]</a>
+              <a href="thread.html#5921">[ thread ]</a>
+              <a href="subject.html#5921">[ subject ]</a>
+              <a href="author.html#5921">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

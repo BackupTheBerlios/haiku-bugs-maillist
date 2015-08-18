@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2574: Something wrong with memory calculation.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232574%3A%20Something%20wrong%20with%20memory%20calculation.&In-Reply-To=%3C038.e3789ba576e8a5eb7113f60ca48882ea%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009319.html">
+   <LINK REL="Next"  HREF="009313.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2574: Something wrong with memory calculation.</H1>
+    <B>bga</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232574%3A%20Something%20wrong%20with%20memory%20calculation.&In-Reply-To=%3C038.e3789ba576e8a5eb7113f60ca48882ea%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2574: Something wrong with memory calculation.">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Aug  5 18:12:34 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009319.html">[Haiku-bugs] [Haiku] #2573: Files taking *A LOT* more space on disk than the sum of their sizes.
+</A></li>
+        <LI>Next message: <A HREF="009313.html">[Haiku-bugs] [Haiku] #2574: Something wrong with memory	calculation.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9312">[ date ]</a>
+              <a href="thread.html#9312">[ thread ]</a>
+              <a href="subject.html#9312">[ subject ]</a>
+              <a href="author.html#9312">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2574: Something wrong with memory calculation.
+---------------------------+------------------------------------------------
+ Reporter:  bga            |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  high           |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1 development
+Blockedby:                 |    Platform:  All           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+ This bug becomes evident when allocating a big chunk of memory in one go.
+ Activity Monitor will report a negative amount of used memory. This does
+ not seem to be an Activity Monitor problem as even sysinfo acts in a weird
+ way.
+
+ This is what I got before allocating 500 Mb in one go (snippet form
+ sysinfo output):
+
+ 2013855744 bytes free (used/max 133627904 / 2147483648)
+                       (cached    17035264)
+
+ And with the memory allocated:
+
+ 1397829632 bytes free (used/max 749654016 / 2147483648)
+                       (cached  3696230400)
+
+ The values for used memory and cache do not look right.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2574">http://dev.haiku-os.org/ticket/2574</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009319.html">[Haiku-bugs] [Haiku] #2573: Files taking *A LOT* more space on disk than the sum of their sizes.
+</A></li>
+	<LI>Next message: <A HREF="009313.html">[Haiku-bugs] [Haiku] #2574: Something wrong with memory	calculation.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9312">[ date ]</a>
+              <a href="thread.html#9312">[ thread ]</a>
+              <a href="subject.html#9312">[ subject ]</a>
+              <a href="author.html#9312">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

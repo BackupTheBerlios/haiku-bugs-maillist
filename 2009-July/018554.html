@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4106: mmap() doesn't zero the last page
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-July/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234106%3A%20mmap%28%29%20doesn%27t%20zero%20the%20last%20page&In-Reply-To=%3C040.6af9621c9e41a772bd756c20de84839c%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="018574.html">
+   <LINK REL="Next"  HREF="018556.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4106: mmap() doesn't zero the last page</H1>
+    <B>zooey</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234106%3A%20mmap%28%29%20doesn%27t%20zero%20the%20last%20page&In-Reply-To=%3C040.6af9621c9e41a772bd756c20de84839c%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4106: mmap() doesn't zero the last page">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Jul 20 22:18:40 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="018574.html">[Haiku-bugs] [Haiku] #4105: r31649 (gcc4/gcc2 mode) can't work
+</A></li>
+        <LI>Next message: <A HREF="018556.html">[Haiku-bugs] [Haiku] #4106: mmap() doesn't zero the last page
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18554">[ date ]</a>
+              <a href="thread.html#18554">[ thread ]</a>
+              <a href="subject.html#18554">[ subject ]</a>
+              <a href="author.html#18554">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4106: mmap() doesn't zero the last page
+---------------------------+------------------------------------------------
+ Reporter:  zooey          |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1 development
+Blockedby:                 |    Platform:  All           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+ According to POSIX, mmap() is supposed to fill the area in the last page
+ that is not &quot;covered&quot; by the mapped file with zeros.
+
+ Our mmap does not do this, which causes gcc's fixincl program to crash, as
+ it relies on these zeros to be there in order to invoke strlen(). If
+ there's no zero in the &quot;empty&quot; area of the last page, strlen will try to
+ access the following page and segfault.
+
+ The current implementation seems to just read the corresponding BFS
+ block(s) until all pages have been filled, as fixincl always crashes with
+ the same file, but will not crash on a copy of that file (which obviously
+ happens to have a trailing zero somewhere).
+
+ This is with r31642.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4106">http://dev.haiku-os.org/ticket/4106</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="018574.html">[Haiku-bugs] [Haiku] #4105: r31649 (gcc4/gcc2 mode) can't work
+</A></li>
+	<LI>Next message: <A HREF="018556.html">[Haiku-bugs] [Haiku] #4106: mmap() doesn't zero the last page
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18554">[ date ]</a>
+              <a href="thread.html#18554">[ thread ]</a>
+              <a href="subject.html#18554">[ subject ]</a>
+              <a href="author.html#18554">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

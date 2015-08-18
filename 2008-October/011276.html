@@ -1,0 +1,123 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2893: System hanging at desktop with	r28244
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232893%3A%20System%20hanging%20at%20desktop%20with%0A%09r28244&In-Reply-To=%3C053.8a8bbefd6d274afe900ead6b15e0ceee%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011271.html">
+   <LINK REL="Next"  HREF="011279.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2893: System hanging at desktop with	r28244</H1>
+    <B>bonefish</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232893%3A%20System%20hanging%20at%20desktop%20with%0A%09r28244&In-Reply-To=%3C053.8a8bbefd6d274afe900ead6b15e0ceee%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2893: System hanging at desktop with	r28244">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Oct 22 16:36:08 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011271.html">[Haiku-bugs] [Haiku] #2893: System hanging at desktop with	r28244
+</A></li>
+        <LI>Next message: <A HREF="011279.html">[Haiku-bugs] [Haiku] #2893: System hanging at desktop with	r28244
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11276">[ date ]</a>
+              <a href="thread.html#11276">[ thread ]</a>
+              <a href="subject.html#11276">[ subject ]</a>
+              <a href="author.html#11276">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2893: System hanging at desktop with r28244
+----------------------------+-----------------------------------------------
+  Reporter:  anevilyak      |       Owner:  axeld         
+      Type:  bug            |      Status:  new           
+  Priority:  normal         |   Milestone:  R1            
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |   Blockedby:                
+  Platform:  All            |    Blocking:                
+----------------------------+-----------------------------------------------
+
+Comment(by bonefish):
+
+ Replying to [comment:15 anevilyak]:
+ &gt; {{{
+ &gt; kdebug&gt; dw [symbol sSems] 1
+ &gt; 0x8010c614     4 kernel_x86:sSems
+ &gt; 0x8010c618     1 kernel_x86:sSemsActive
+ &gt; 0x8010c624     4 kernel_x86:sSemsSpinlock
+ &gt; [0x8010c624]  ....   00000000
+ &gt; kdebug&gt; dw 0x8010c614 13
+ &gt; [0x8010c614]  .p.....&#176;&#185;.q.   8f927000 00000001 8f93b9b0 8f937180
+ &gt; [0x8010c624]  .....S.........   00000000 800e53ea 00000000 00000000
+ &gt; [0x8010c634]  ................   00000000 00000000 00000000 00000000
+ &gt; [0x8010c644]  ....               00000000
+ &gt; }}}
+
+ That went slightly wrong. I didn't think &quot;symbol&quot; would be so &quot;helpful&quot;
+ not only to return the exact name match. Hence the first &quot;dw&quot; printed data
+ from the wrong address. sSems contains the pointer to the semaphore entry
+ table, so we need the data at 0x8f927000 in this case.
+
+ Replying to [comment:16 anevilyak]:
+ &gt; By the way, is there a difference in how acquire_sem validates
+ semaphores vs the kernel debugger?
+
+ Not really. Both just check the ID in the respective semaphore table
+ entry.
+
+ &gt; Since acquire_sem seems to have decided it's ok to try and grab
+ semaphore 0, while the kernel debugger tells me that's not a valid sem id.
+
+ Yep, that's weird indeed. Maybe table entry 0 can tell us more.
+
+ You could add a panic() in switch_sem_etc() when someone tries to acquire
+ semaphore 0 (after the gKernelStartup check). That would drop the thread
+ into the kernel debugger right when it happens.
+
+ The acquire_sem() is invoked by Radeon_WaitForIdle(), probably by the
+ following construct:
+ {{{
+         if( acquire_lock )
+                 ACQUIRE_BEN( di-&gt;si-&gt;cp.lock );
+ }}}
+
+ The lock is initialized in Radeon_InitCP(). Printing the semaphore ID in
+ both functions might verify whether or not it is modified at some point.
+ If it is, a kernel watchpoint should help to track the perpetrator down.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2893#comment:17">http://dev.haiku-os.org/ticket/2893#comment:17</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011271.html">[Haiku-bugs] [Haiku] #2893: System hanging at desktop with	r28244
+</A></li>
+	<LI>Next message: <A HREF="011279.html">[Haiku-bugs] [Haiku] #2893: System hanging at desktop with	r28244
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11276">[ date ]</a>
+              <a href="thread.html#11276">[ thread ]</a>
+              <a href="subject.html#11276">[ subject ]</a>
+              <a href="author.html#11276">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

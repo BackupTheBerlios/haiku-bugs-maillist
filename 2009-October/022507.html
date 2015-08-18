@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4053: USB MIDI not recognized dynamically
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234053%3A%20USB%20MIDI%20not%20recognized%20dynamically&In-Reply-To=%3C048.08703a3b80bdd63c10ec91e2f9106723%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="022502.html">
+   <LINK REL="Next"  HREF="022515.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4053: USB MIDI not recognized dynamically</H1>
+    <B>Pete</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234053%3A%20USB%20MIDI%20not%20recognized%20dynamically&In-Reply-To=%3C048.08703a3b80bdd63c10ec91e2f9106723%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4053: USB MIDI not recognized dynamically">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Oct  6 23:17:53 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="022502.html">[Haiku-bugs] [Haiku] #4427: [AboutSystem] Core 2 Quad is detected as Core 2 Extreme
+</A></li>
+        <LI>Next message: <A HREF="022515.html">[Haiku-bugs] [Haiku] #4053: USB MIDI not recognized dynamically
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22507">[ date ]</a>
+              <a href="thread.html#22507">[ thread ]</a>
+              <a href="subject.html#22507">[ subject ]</a>
+              <a href="author.html#22507">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4053: USB MIDI not recognized dynamically
+---------------------------------+------------------------------------------
+ Reporter:  Pete                 |       Owner:  phoudoin     
+     Type:  bug                  |      Status:  assigned     
+ Priority:  normal               |   Milestone:  R1           
+Component:  Servers/midi_server  |     Version:  R1/pre-alpha1
+Blockedby:                       |    Platform:  All          
+ Blocking:                       |  
+---------------------------------+------------------------------------------
+
+Comment(by Pete):
+
+ [Augghh!! I just spent half an hour composing an entry, but added a couple
+ of attachments before I previewed it -- and lost it all!!  I will try to
+ recreate it....]
+
+ After a few more days of hell [and a pleasant interlude or two -- like a
+ weekend of music in Golden Gate Park (:-)]  I think I have the page fault
+ problem licked.
+
+ As far as I can tell, the faults seem to have been caused by the driver
+ and its objects going away before the system was finished accessing them.
+ The crash was never in the actual usb_midi code at all.  A fragment of
+ serial output and stack trace is attached that shows something of what was
+ happening.  In this case it seems that legacy_drivers::UninitDevice was
+ trying to reach now-absent data.
+
+ To prevent this, I've moved object deletion as late as possible.  The
+ device removal itself is now in usb_midi_free.  Even this was apparently
+ not enough if too many dprintf statements were also enabled, so I think
+ there must still be a hazard somewhere.  (Part of the reason I was having
+ so much trouble tracking things down.)  With printout suppressed, though,
+ it seems to be stable.
+
+ The slightly unfortunate result (at least I think it's a result -- the
+ crashes were preventing me seeing exactly what was happening before) is
+ that each time one unplugs and replugs the usb cable, a new device is
+ created in /dev/midi/usb.  Originally /dev/midi/usb/0, it becomes
+ /dev/midi/usb/1, and so on.  The device nodes don't accumulate, but each
+ is not deleted until the cable is plugged in again, and of course they
+ become safely inactive when it's unplugged.  I think this is because
+ publish_devices is not invoked when the device is finally removed; when it
+ is called in response to a new device things get corrected.
+
+ I think I can live with this, but the user will need to be aware of the
+ need to adjust things if they replug the cable.
+
+ I've attached a zip of the sources (not a diff) that have changed (since
+ r33202).
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4053#comment:35">http://dev.haiku-os.org/ticket/4053#comment:35</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="022502.html">[Haiku-bugs] [Haiku] #4427: [AboutSystem] Core 2 Quad is detected as Core 2 Extreme
+</A></li>
+	<LI>Next message: <A HREF="022515.html">[Haiku-bugs] [Haiku] #4053: USB MIDI not recognized dynamically
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22507">[ date ]</a>
+              <a href="thread.html#22507">[ thread ]</a>
+              <a href="subject.html#22507">[ subject ]</a>
+              <a href="author.html#22507">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

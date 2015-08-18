@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2757: regression: r27665 broke booting, panics at the red rocket
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232757%3A%20regression%3A%20r27665%20broke%20booting%2C%0A%20panics%20at%20the%20red%20rocket&In-Reply-To=%3C049.ab366fca2fe3841c1196a8ceff4509b5%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010468.html">
+   <LINK REL="Next"  HREF="010470.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2757: regression: r27665 broke booting, panics at the red rocket</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232757%3A%20regression%3A%20r27665%20broke%20booting%2C%0A%20panics%20at%20the%20red%20rocket&In-Reply-To=%3C049.ab366fca2fe3841c1196a8ceff4509b5%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2757: regression: r27665 broke booting, panics at the red rocket">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Sep 22 03:54:41 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010468.html">[Haiku-bugs] [Haiku] #2757: regression: r27665 broke booting, panics at the red rocket
+</A></li>
+        <LI>Next message: <A HREF="010470.html">[Haiku-bugs] [Haiku] #2757: regression: r27665 broke booting, panics at the red rocket
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10469">[ date ]</a>
+              <a href="thread.html#10469">[ thread ]</a>
+              <a href="subject.html#10469">[ subject ]</a>
+              <a href="author.html#10469">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2757: regression: r27665 broke booting, panics at the red rocket
+----------------------------+-----------------------------------------------
+  Reporter:  luroh          |       Owner:  axeld         
+      Type:  bug            |      Status:  new           
+  Priority:  normal         |   Milestone:  R1            
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |   Blockedby:                
+  Platform:  All            |    Blocking:                
+----------------------------+-----------------------------------------------
+
+Comment(by anevilyak):
+
+ At init:
+
+ {{{
+ PCI: gPCI initialized to 0x90d95000, &amp;gPCI = 0x808cb1f4
+ }}}
+
+ Note also that quite a few successful calls to pci_get_nth_pci_info appear
+ on serial debug with this initial base address. At crash however:
+
+ {{{
+ pci_get_nth_pci_info(0, 0x90e052d0) - gPCI = 0x00000000, &amp;gPCI =
+ 0xa02bb1f4
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2757#comment:16">http://dev.haiku-os.org/ticket/2757#comment:16</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010468.html">[Haiku-bugs] [Haiku] #2757: regression: r27665 broke booting, panics at the red rocket
+</A></li>
+	<LI>Next message: <A HREF="010470.html">[Haiku-bugs] [Haiku] #2757: regression: r27665 broke booting, panics at the red rocket
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10469">[ date ]</a>
+              <a href="thread.html#10469">[ thread ]</a>
+              <a href="subject.html#10469">[ subject ]</a>
+              <a href="author.html#10469">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

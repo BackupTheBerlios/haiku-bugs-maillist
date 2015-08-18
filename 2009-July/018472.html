@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1307: [MediaPlayer] jumping on screen
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-July/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231307%3A%20%5BMediaPlayer%5D%20jumping%20on%20screen&In-Reply-To=%3C049.006348e983a6b318e2583b3f272ac01d%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="018471.html">
+   <LINK REL="Next"  HREF="018473.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1307: [MediaPlayer] jumping on screen</H1>
+    <B>stippi</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231307%3A%20%5BMediaPlayer%5D%20jumping%20on%20screen&In-Reply-To=%3C049.006348e983a6b318e2583b3f272ac01d%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1307: [MediaPlayer] jumping on screen">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Jul 13 22:53:52 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="018471.html">[Haiku-bugs] [Haiku] #3320: [CodyCam] display alert in a video	view
+</A></li>
+        <LI>Next message: <A HREF="018473.html">[Haiku-bugs] [Haiku] #3628: MediaPlayer : Alt+M, Weird mouse clicks=Alt+B, Alt+C
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18472">[ date ]</a>
+              <a href="thread.html#18472">[ thread ]</a>
+              <a href="subject.html#18472">[ subject ]</a>
+              <a href="author.html#18472">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1307: [MediaPlayer] jumping on screen
+---------------------------------+------------------------------------------
+  Reporter:  diver               |       Owner:  stippi        
+      Type:  bug                 |      Status:  closed        
+  Priority:  normal              |   Milestone:  R1            
+ Component:  Kits/Interface Kit  |     Version:  R1 development
+Resolution:  fixed               |   Blockedby:                
+  Platform:  All                 |    Blocking:                
+---------------------------------+------------------------------------------
+Changes (by stippi):
+
+  * status:  assigned =&gt; closed
+  * resolution:  =&gt; fixed
+
+
+Comment:
+
+ I thought about this some the other day, and I realized what actually
+ caused the problem. The window frame size/position used to be adjusted in
+ MoveBy() and ResizeBy() - sending the app_server relative values. If the
+ real window position/size inside the app_server got seriously out of sync
+ with the client side, because messages piled up, it would cause the
+ behavior described in this ticket. Some time ago (I think) Axel changed
+ that so the commands to the app_server are based on the absolute values
+ (moved the implementation to MoveTo() and ResizeTo()). That made it more
+ robust and actually also solved this ticket.
+
+ What still happens is that when the MediaPlayer window is very large, you
+ can see it lagging behind, because mouse messages pile up as before.
+ However, no jumping around on the screen anymore.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1307#comment:15">http://dev.haiku-os.org/ticket/1307#comment:15</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="018471.html">[Haiku-bugs] [Haiku] #3320: [CodyCam] display alert in a video	view
+</A></li>
+	<LI>Next message: <A HREF="018473.html">[Haiku-bugs] [Haiku] #3628: MediaPlayer : Alt+M, Weird mouse clicks=Alt+B, Alt+C
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18472">[ date ]</a>
+              <a href="thread.html#18472">[ thread ]</a>
+              <a href="subject.html#18472">[ subject ]</a>
+              <a href="author.html#18472">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

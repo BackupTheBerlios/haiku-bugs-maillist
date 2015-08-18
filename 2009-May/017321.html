@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3772: Freeze on Haiku tree compilation	(reproduceable)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233772%3A%20Freeze%20on%20Haiku%20tree%20compilation%0A%09%28reproduceable%29&In-Reply-To=%3C060.182f8298d2e74f8223c0f71ec39fc042%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="017318.html">
+   <LINK REL="Next"  HREF="017322.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3772: Freeze on Haiku tree compilation	(reproduceable)</H1>
+    <B>michael.weirauch</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233772%3A%20Freeze%20on%20Haiku%20tree%20compilation%0A%09%28reproduceable%29&In-Reply-To=%3C060.182f8298d2e74f8223c0f71ec39fc042%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3772: Freeze on Haiku tree compilation	(reproduceable)">trac at haiku-os.org
+       </A><BR>
+    <I>Wed May 13 17:53:34 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="017318.html">[Haiku-bugs] [Haiku] #3594: PS2 Keyboard/Mouse problems on HP Compaq NX7400 Notebook
+</A></li>
+        <LI>Next message: <A HREF="017322.html">[Haiku-bugs] [Haiku] #2481: USB mouse and keyboard sometimes	stop working
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17321">[ date ]</a>
+              <a href="thread.html#17321">[ thread ]</a>
+              <a href="subject.html#17321">[ subject ]</a>
+              <a href="author.html#17321">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3772: Freeze on Haiku tree compilation (reproduceable)
+------------------------------+---------------------------------------------
+ Reporter:  michael.weirauch  |       Owner:  axeld         
+     Type:  bug               |      Status:  new           
+ Priority:  normal            |   Milestone:  R1            
+Component:  System            |     Version:  R1 development
+Blockedby:                    |    Platform:  x86           
+ Blocking:                    |  
+------------------------------+---------------------------------------------
+
+Comment(by michael.weirauch):
+
+ r30772; ata-stack;
+
+ For reproduction, I wen't on and wrote a little script which dd's 10
+ images 100MB each to disk.
+
+ When setting all safe mode options, or just &quot;Disable IDE-DMA&quot; and &quot;Disable
+ SMP&quot; I can run the dd writes several times without freeze. What is
+ reproduceable is that after the images have been written, the &quot;scsi
+ scheduler&quot; kernel thread sucks up one cpu core 100% for about 3-5minutes
+ and then reliefs again. During that high load of the thread a &quot;sync&quot; or
+ system shutdown is not possible. The UI (Deskbar + ActivityMonitor
+ replicants on Desktop) are frozen for a bit of time. The Terminal cursor
+ blinks, and I can move windows around.
+
+ When letting SMP enabled, I could produce a total freeze on third run of
+ the dd writes. (Mileage on subsequent test might vary I guess, though.)
+
+ Perhaps there is some other fix required as done in r30454 as I do have
+ ICH9M running in compat mode? (This rev btw helped a lot regarding uptime
+ until freeze for me.)
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3772#comment:13">http://dev.haiku-os.org/ticket/3772#comment:13</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="017318.html">[Haiku-bugs] [Haiku] #3594: PS2 Keyboard/Mouse problems on HP Compaq NX7400 Notebook
+</A></li>
+	<LI>Next message: <A HREF="017322.html">[Haiku-bugs] [Haiku] #2481: USB mouse and keyboard sometimes	stop working
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17321">[ date ]</a>
+              <a href="thread.html#17321">[ thread ]</a>
+              <a href="subject.html#17321">[ subject ]</a>
+              <a href="author.html#17321">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

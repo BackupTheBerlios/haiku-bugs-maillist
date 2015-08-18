@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1512: deadlock after clicking on Deskbar
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231512%3A%20deadlock%20after%20clicking%20on%20Deskbar&In-Reply-To=%3C059.fcd8f5f3914d347453c754837d97ad8f%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002872.html">
+   <LINK REL="Next"  HREF="002880.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1512: deadlock after clicking on Deskbar</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231512%3A%20deadlock%20after%20clicking%20on%20Deskbar&In-Reply-To=%3C059.fcd8f5f3914d347453c754837d97ad8f%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1512: deadlock after clicking on Deskbar">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Oct  1 23:46:36 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002872.html">[Haiku-bugs] [Haiku] #1512: deadlock after clicking on Deskbar
+</A></li>
+        <LI>Next message: <A HREF="002880.html">[Haiku-bugs] [Haiku] #1512: deadlock after clicking on Deskbar
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2879">[ date ]</a>
+              <a href="thread.html#2879">[ thread ]</a>
+              <a href="subject.html#2879">[ subject ]</a>
+              <a href="author.html#2879">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1512: deadlock after clicking on Deskbar
+------------------------------+---------------------------------------------
+  Reporter:  marcusoverhagen  |       Owner:  axeld         
+      Type:  bug              |      Status:  new           
+  Priority:  critical         |   Milestone:  R1            
+ Component:  System/Kernel    |     Version:  R1 development
+Resolution:                   |    Platform:  All           
+------------------------------+---------------------------------------------
+Comment (by bonefish):
+
+ According to deadlock_menutracking.txt the thread is creating the kernel
+ stack area for an new thread. In insert_area() it apparently accesses
+ invalid memory. If vm.cpp was compiled with gcc 4 and no debugging the
+ instruction would try to access vm_area::base with %edx (0xe8458d00) being
+ the area pointer.
+
+ deadlock3.txt is interesting too: The thread that holds the kernel address
+ space lock still lives -- it is still queued in the semaphore -- but it's
+ no longer in the thread hash table. So it is apparently in the last phase
+ of its death. Probably it is currently deleting its kernel stack area and
+ accesses invalid memory. This would at least allow for the same
+ explanation as in the other case.
+
+ So, supposedly the area/address space structures become invalid at some
+ point. Given that it doesn't seem to be reproducible on a single CPU, a
+ SMP-only race condition seems likely.
+
+ Browsing through some code, I found at least one of those, though it seems
+ a little unlikely to be that well reproducible: In thread_exit2() we call
+ put_death_stack(), but don't hold (and cannot hold) the thread spinlock.
+ Between releasing the spinlock in put_death_stack() and reacquiring it in
+ thread_exit2() another thread could grab our still used death stack.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1512#comment:7">http://dev.haiku-os.org/ticket/1512#comment:7</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002872.html">[Haiku-bugs] [Haiku] #1512: deadlock after clicking on Deskbar
+</A></li>
+	<LI>Next message: <A HREF="002880.html">[Haiku-bugs] [Haiku] #1512: deadlock after clicking on Deskbar
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2879">[ date ]</a>
+              <a href="thread.html#2879">[ thread ]</a>
+              <a href="subject.html#2879">[ subject ]</a>
+              <a href="author.html#2879">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

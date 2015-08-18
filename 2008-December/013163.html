@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3176: swapping control and caps lock keys makes Menu preference, Apps Menus (except Firefox) and Team Monitor do weird things
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-December/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233176%3A%20swapping%20control%20and%20caps%20lock%20keys%0A%20makes%20Menu%20preference%2C%0A%20Apps%20Menus%20%28except%20Firefox%29%20and%20Team%20Monitor%20do%20weird%20things&In-Reply-To=%3C050.0ce59034cb0b75ab24e6a209ff555398%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="013161.html">
+   <LINK REL="Next"  HREF="013164.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3176: swapping control and caps lock keys makes Menu preference, Apps Menus (except Firefox) and Team Monitor do weird things</H1>
+    <B>karmak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233176%3A%20swapping%20control%20and%20caps%20lock%20keys%0A%20makes%20Menu%20preference%2C%0A%20Apps%20Menus%20%28except%20Firefox%29%20and%20Team%20Monitor%20do%20weird%20things&In-Reply-To=%3C050.0ce59034cb0b75ab24e6a209ff555398%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3176: swapping control and caps lock keys makes Menu preference, Apps Menus (except Firefox) and Team Monitor do weird things">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Dec 13 01:53:09 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="013161.html">[Haiku-bugs] [Haiku] #806: Revise locking
+</A></li>
+        <LI>Next message: <A HREF="013164.html">[Haiku-bugs] [Haiku] #3176: swapping control and caps lock keys makes Menu preference, Apps Menus (except Firefox) and Team Monitor do weird things
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13163">[ date ]</a>
+              <a href="thread.html#13163">[ thread ]</a>
+              <a href="subject.html#13163">[ subject ]</a>
+              <a href="author.html#13163">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3176: swapping control and caps lock keys makes Menu preference, Apps Menus
+(except Firefox) and Team Monitor do weird things
+-----------------------------------+----------------------------------------
+  Reporter:  karmak                |       Owner:  korli         
+      Type:  bug                   |      Status:  new           
+  Priority:  normal                |   Milestone:  R1            
+ Component:  Servers/input_server  |     Version:  R1 development
+Resolution:                        |   Blockedby:                
+  Platform:  x86                   |    Blocking:                
+-----------------------------------+----------------------------------------
+
+Comment(by karmak):
+
+ Attached `menu.diff`, which fixes Menu preferences applet. It hardcodes
+ only `Alt` key, and doesn't car of what value is set to Control key. It
+ just inverts the 2 modifiers when conditions are met to.
+
+ Added a TODO entry inside to explain what to do, in case someone want to
+ definitely fix the Applet in case user sets whatever keyboard key to `Alt`
+ (Command).
+
+ I will now dig into app_server/input_server/whatever to understand why
+ native apps have `Control` shown in their menu when `Alt` is set, but not
+ Firefox. But not now (currently 2AM here ; going to sleep).
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3176#comment:9">http://dev.haiku-os.org/ticket/3176#comment:9</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="013161.html">[Haiku-bugs] [Haiku] #806: Revise locking
+</A></li>
+	<LI>Next message: <A HREF="013164.html">[Haiku-bugs] [Haiku] #3176: swapping control and caps lock keys makes Menu preference, Apps Menus (except Firefox) and Team Monitor do weird things
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13163">[ date ]</a>
+              <a href="thread.html#13163">[ thread ]</a>
+              <a href="subject.html#13163">[ subject ]</a>
+              <a href="author.html#13163">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

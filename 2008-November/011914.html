@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3024: address space deadlock when launching application (WonderBrush)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233024%3A%20address%20space%20deadlock%20when%20launching%0A%20application%20%28WonderBrush%29&In-Reply-To=%3C041.a9660d450fc20033a358599c552109d0%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011913.html">
+   <LINK REL="Next"  HREF="011915.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3024: address space deadlock when launching application (WonderBrush)</H1>
+    <B>stippi</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233024%3A%20address%20space%20deadlock%20when%20launching%0A%20application%20%28WonderBrush%29&In-Reply-To=%3C041.a9660d450fc20033a358599c552109d0%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3024: address space deadlock when launching application (WonderBrush)">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Nov  1 23:13:10 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011913.html">[Haiku-bugs] [Haiku] #3023: BTextView::LineAt() and BTextView::CountLines() behavior is incorrect
+</A></li>
+        <LI>Next message: <A HREF="011915.html">[Haiku-bugs] [Haiku] #2803: System unresponsive when there is network activity with rtl81xx driver
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11914">[ date ]</a>
+              <a href="thread.html#11914">[ thread ]</a>
+              <a href="subject.html#11914">[ subject ]</a>
+              <a href="author.html#11914">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3024: address space deadlock when launching application (WonderBrush)
+---------------------------+------------------------------------------------
+ Reporter:  stippi         |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1 development
+Blockedby:                 |    Platform:  All           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+ Trying to track down an Interface Kit bug, I had linked the libbe.so from
+ the generated folder into the WonderBrush lib subfolder and I repeatedly
+ launched WonderBrush with a new build of libbe.so. At one point,
+ WonderBrush would not come up, but just sit there half-started. The rest
+ of the system continued just fine as if nothing happened. I manually
+ entered KDL and took a look a the WonderBrush threads. They seemed to dead
+ lock on the address space rw_lock, but I could not see who was the holder
+ of the lock. I have taken screen shots with a camera. Hopefully I will be
+ able to attach them...
+
+ This may be a duplicate of #2710, unless that one is about freezing the
+ entire system. That was not the case for me, I could even shutdown
+ &quot;normally&quot;, although WonderBrush was obviously unkillable.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3024">http://dev.haiku-os.org/ticket/3024</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011913.html">[Haiku-bugs] [Haiku] #3023: BTextView::LineAt() and BTextView::CountLines() behavior is incorrect
+</A></li>
+	<LI>Next message: <A HREF="011915.html">[Haiku-bugs] [Haiku] #2803: System unresponsive when there is network activity with rtl81xx driver
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11914">[ date ]</a>
+              <a href="thread.html#11914">[ thread ]</a>
+              <a href="subject.html#11914">[ subject ]</a>
+              <a href="author.html#11914">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1515: Pagefault in	arch_thread_init_kthread_stack
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231515%3A%20Pagefault%20in%0A%09arch_thread_init_kthread_stack&In-Reply-To=%3C050.23857671f43e493322603210ef192649%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002865.html">
+   <LINK REL="Next"  HREF="002869.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1515: Pagefault in	arch_thread_init_kthread_stack</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231515%3A%20Pagefault%20in%0A%09arch_thread_init_kthread_stack&In-Reply-To=%3C050.23857671f43e493322603210ef192649%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1515: Pagefault in	arch_thread_init_kthread_stack">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Oct  1 15:24:48 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002865.html">[Haiku-bugs] [Haiku] #1514: PANIC: no range for address	0xffd283ff
+</A></li>
+        <LI>Next message: <A HREF="002869.html">[Haiku-bugs] [Haiku] #1516: Various file operations fail when the filename is the empty string.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2867">[ date ]</a>
+              <a href="thread.html#2867">[ thread ]</a>
+              <a href="subject.html#2867">[ subject ]</a>
+              <a href="author.html#2867">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1515: Pagefault in arch_thread_init_kthread_stack
+-----------------------------+----------------------------------------------
+ Reporter:  marcusoverhagen  |       Owner:  axeld         
+     Type:  bug              |      Status:  new           
+ Priority:  normal           |   Milestone:  R1            
+Component:  System/Kernel    |     Version:  R1 development
+ Platform:  All              |  
+-----------------------------+----------------------------------------------
+ {{{
+ vm_soft_fault: va 0x251837b5 not covered by area in address space
+ vm_page_fault: vm_soft_fault returned error 'Bad address' on fault at
+ 0x251837b5, ip 0x800965a6, write 1, user 0, thread 0x84
+ CPU 1 halted!
+ PANIC: vm_page_fault: unhandled page fault in kernel space at 0x251837b5,
+ ip 0x800965a6
+
+ Welcome to Kernel Debugging Land...
+ Running on CPU 0
+ kdebug&gt; sc
+ stack trace for thread 0x84 &quot;w&gt;Deskbar&quot;
+     kernel stack: 0x94664000 to 0x94668000
+       user stack: 0x700c3000 to 0x70103000
+ frame            caller     &lt;image&gt;:function + offset
+ 94667aa8 (+  52) 80083321   &lt;kernel&gt;:invoke_command + 0x0075
+ 94667adc (+  48) 80083572   &lt;kernel&gt;:kernel_debugger + 0x020e
+ 94667b0c (+ 176) 80083609   &lt;kernel&gt;:panic + 0x002d
+ 94667bbc (+  64) 8005c487   &lt;kernel&gt;:vm_page_fault + 0x00a9
+ 94667bfc (+ 144) 8008b878   &lt;kernel&gt;:i386_handle_trap + 0x0261
+ iframe at 0x94667c94 (end = 0x94667ce8)
+  eax 0x3000         ebx 0x0             ecx 0x251837b5   edx 0x0
+  esi 0x90aae800     edi 0x90a2f000      ebp 0x94667ce4   esp 0x94667cc4
+  eip 0x800965a6  eflags 0x10206
+  vector: 0xe, error code: 0x2
+ 94667c8c (+  88) 800965a6   &lt;kernel&gt;:memset + 0x0016
+ 94667ce4 (+  32) 8008c7e0   &lt;kernel&gt;:arch_thread_init_kthread_stack +
+ 0x0024
+ 94667d04 (+  96) 8003f09a
+ &lt;kernel&gt;:_Z13create_threadPKclPFlPFlPvES1_ES1_S1_lbl + 0x02ce
+ 94667d64 (+  80) 80040108   &lt;kernel&gt;:_user_spawn_thread + 0x004c
+ 94667db4 (+ 368) 800383ab   &lt;kernel&gt;:syscall_dispatcher + 0x0571
+ 94667f24 (+ 128) 8008b92c   &lt;kernel&gt;:i386_handle_trap + 0x0315
+ iframe at 0x94667fac (end = 0x94668000)
+  eax 0x1d           ebx 0x704100        ecx 0x4d2558     edx 0x18053100
+  esi 0x18052f58     edi 0x18053100      ebp 0x70102bfc   esp 0x94667fdc
+  eip 0xffff0102  eflags 0x216
+  vector: 0x63, error code: 0x0
+ 94667fa4 (+   0) ffff0102
+ 70102bfc (+  80) 0034cc88
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libbe.so at 0x00246000</A>&gt;:unknown + 0x106c88
+ 70102c4c (+  64) 0034ce02
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libbe.so at 0x00246000</A>&gt;:unknown + 0x106e02
+ 70102c8c (+ 640) 003a0993
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libbe.so at 0x00246000</A>&gt;:unknown + 0x15a993
+ 70102f0c (+  48) 0021fa2a   &lt;/boot/beos/system/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">Deskbar at 0x00200000</A>&gt;:unknown
+ + 0x1fa2a
+ 70102f3c (+  96) 0039d904
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libbe.so at 0x00246000</A>&gt;:unknown + 0x157904
+ 70102f9c (+  32) 002fb9ee
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libbe.so at 0x00246000</A>&gt;:unknown + 0xb59ee
+ 70102fbc (+  32) 0068a90e
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libroot.so at 0x00669000</A>&gt;:unknown + 0x2190e
+ 70102fdc (+   0) 70102fec   1052:w&gt;<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">Deskbar_84_stack at 0x700c3000</A> + 0x3ffec
+ kdebug&gt;
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1515">http://dev.haiku-os.org/ticket/1515</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002865.html">[Haiku-bugs] [Haiku] #1514: PANIC: no range for address	0xffd283ff
+</A></li>
+	<LI>Next message: <A HREF="002869.html">[Haiku-bugs] [Haiku] #1516: Various file operations fail when the filename is the empty string.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2867">[ date ]</a>
+              <a href="thread.html#2867">[ thread ]</a>
+              <a href="subject.html#2867">[ subject ]</a>
+              <a href="author.html#2867">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

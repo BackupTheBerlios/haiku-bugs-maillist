@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1590: Updated Broadcom Tigon3 ethernet	driver
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231590%3A%20Updated%20Broadcom%20Tigon3%20ethernet%0A%09driver&In-Reply-To=%3C053.43a9ab9eea2a00f896fbeab2c2511010%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012621.html">
+   <LINK REL="Next"  HREF="012461.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1590: Updated Broadcom Tigon3 ethernet	driver</H1>
+    <B>PieterPanman</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231590%3A%20Updated%20Broadcom%20Tigon3%20ethernet%0A%09driver&In-Reply-To=%3C053.43a9ab9eea2a00f896fbeab2c2511010%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1590: Updated Broadcom Tigon3 ethernet	driver">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Nov 13 12:04:24 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012621.html">[Haiku-bugs] [Haiku] #3129: Console debugging output doesn't always resume on key press
+</A></li>
+        <LI>Next message: <A HREF="012461.html">[Haiku-bugs] [Haiku] #3130: [DiskUsage] redraw artifacts when moving another window above it
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12460">[ date ]</a>
+              <a href="thread.html#12460">[ thread ]</a>
+              <a href="subject.html#12460">[ subject ]</a>
+              <a href="author.html#12460">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1590: Updated Broadcom Tigon3 ethernet driver
+------------------------------+---------------------------------------------
+  Reporter:  pieterpan        |       Owner:  axeld         
+      Type:  enhancement      |      Status:  new           
+  Priority:  normal           |   Milestone:  R1            
+ Component:  Drivers/Network  |     Version:  R1 development
+Resolution:                   |   Blockedby:                
+  Platform:  All              |    Blocking:                
+------------------------------+---------------------------------------------
+
+Comment(by PieterPanman):
+
+ Korli,
+ Thanks for the updates and brgphy. Just curious, why do you check for
+ IFF_DRV_RUNNING in the broadcom440x? Shouldn't you still handle the
+ interrupt in that case?
+
+ From broadcom440x glue.c in __haiku_disable_interrupts:
+ {{{
+ istat = CSR_READ_4(sc, BFE_ISTAT);
+ if (istat == 0 || (sc-&gt;bfe_ifp-&gt;if_drv_flags &amp; IFF_DRV_RUNNING) == 0) {
+     HAIKU_INTR_REGISTER_LEAVE();
+     return 0;
+ }
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1590#comment:36">http://dev.haiku-os.org/ticket/1590#comment:36</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012621.html">[Haiku-bugs] [Haiku] #3129: Console debugging output doesn't always resume on key press
+</A></li>
+	<LI>Next message: <A HREF="012461.html">[Haiku-bugs] [Haiku] #3130: [DiskUsage] redraw artifacts when moving another window above it
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12460">[ date ]</a>
+              <a href="thread.html#12460">[ thread ]</a>
+              <a href="subject.html#12460">[ subject ]</a>
+              <a href="author.html#12460">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

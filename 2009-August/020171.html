@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4104: Occasional debugger call from Observable class destructor when Icon-O-Matic is quit
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234104%3A%20Occasional%20debugger%20call%20from%0A%20Observable%20class%20destructor%20when%20Icon-O-Matic%20is%20quit&In-Reply-To=%3C054.f6f3b263482b5e5f66c2ce3fc1d77242%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="020168.html">
+   <LINK REL="Next"  HREF="020172.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4104: Occasional debugger call from Observable class destructor when Icon-O-Matic is quit</H1>
+    <B>korli</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234104%3A%20Occasional%20debugger%20call%20from%0A%20Observable%20class%20destructor%20when%20Icon-O-Matic%20is%20quit&In-Reply-To=%3C054.f6f3b263482b5e5f66c2ce3fc1d77242%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4104: Occasional debugger call from Observable class destructor when Icon-O-Matic is quit">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Aug 25 22:57:20 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="020168.html">[Haiku-bugs] [Haiku] #3122: makebootable says invalid partition	index
+</A></li>
+        <LI>Next message: <A HREF="020172.html">[Haiku-bugs] [Haiku] #3122: makebootable says invalid partition	index
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20171">[ date ]</a>
+              <a href="thread.html#20171">[ thread ]</a>
+              <a href="subject.html#20171">[ subject ]</a>
+              <a href="author.html#20171">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4104: Occasional debugger call from Observable class destructor when Icon-O-Matic
+is quit
+---------------------------------------+------------------------------------
+ Reporter:  leavengood                 |       Owner:  stippi        
+     Type:  bug                        |      Status:  new           
+ Priority:  normal                     |   Milestone:  R1            
+Component:  Applications/Icon-O-Matic  |     Version:  R1 development
+Blockedby:                             |    Platform:  All           
+ Blocking:                             |  
+---------------------------------------+------------------------------------
+
+Comment(by korli):
+
+ I could reproduce this bug on quit:
+ {{{
+ Thread 4972 called debugger(): VectorPath::~VectorPath() - there are still
+ listeners attached! 0x18173854/Q38BPrivate4Icon5Shape
+ Reading symbols from /boot/system/runtime_loader...done.
+ Loaded symbols for /boot/system/runtime_loader
+ Reading symbols from /boot/system/lib/libbe.so...done.
+ Loaded symbols for /boot/system/lib/libbe.so
+ Reading symbols from /boot/system/lib/libtracker.so...done.
+ Loaded symbols for /boot/system/lib/libtracker.so
+ Reading symbols from /boot/system/lib/libtranslation.so...done.
+ Loaded symbols for /boot/system/lib/libtranslation.so
+ Reading symbols from /boot/system/lib/libstdc++.r4.so...done.
+ Loaded symbols for /boot/system/lib/libstdc++.r4.so
+ Reading symbols from /boot/system/lib/libroot.so...done.
+ Loaded symbols for /boot/system/lib/libroot.so
+ Reading symbols from /boot/system/lib/libtextencoding.so...done.
+ Loaded symbols for /boot/system/lib/libtextencoding.so
+ [tcsetpgrp failed in terminal_inferior: Invalid Argument]
+ [Switching to team /boot/system/apps/Icon-O-Matic (4972) thread
+ Icon-O-Matic (4972)]
+ 0xffff0114 in ?? ()
+ (gdb) bt
+ #0  0xffff0114 in ?? ()
+ #1  0x0081f50e in debugger () from /boot/system/lib/libroot.so
+ #2  0x0025bd9b in BPrivate::Icon::VectorPath::~VectorPath ()
+ #3  0x0029ac1e in Referenceable::Release ()
+ #4  0x002cb3b1 in UnassignPathCommand::~UnassignPathCommand ()
+ #5  0x00276acb in CommandStack::Clear ()
+ #6  0x002764d6 in CommandStack::~CommandStack ()
+ #7  0x002742b6 in Document::~Document ()
+ #8  0x002d712e in IconEditorApp::~IconEditorApp ()
+ #9  0x002da82a in main ()
+ (gdb)
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4104#comment:1">http://dev.haiku-os.org/ticket/4104#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="020168.html">[Haiku-bugs] [Haiku] #3122: makebootable says invalid partition	index
+</A></li>
+	<LI>Next message: <A HREF="020172.html">[Haiku-bugs] [Haiku] #3122: makebootable says invalid partition	index
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20171">[ date ]</a>
+              <a href="thread.html#20171">[ thread ]</a>
+              <a href="subject.html#20171">[ subject ]</a>
+              <a href="author.html#20171">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3054: Tracker doesn't load all poses on folders with thousands of files.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233054%3A%20Tracker%20doesn%27t%20load%20all%20poses%20on%0A%20folders%20with%20thousands%20of%20files.&In-Reply-To=%3C041.9c4ee12eb1accd9f59dd935c90e98a72%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011996.html">
+   <LINK REL="Next"  HREF="012042.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3054: Tracker doesn't load all poses on folders with thousands of files.</H1>
+    <B>aldeck</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233054%3A%20Tracker%20doesn%27t%20load%20all%20poses%20on%0A%20folders%20with%20thousands%20of%20files.&In-Reply-To=%3C041.9c4ee12eb1accd9f59dd935c90e98a72%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3054: Tracker doesn't load all poses on folders with thousands of files.">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Nov  3 14:52:02 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011996.html">[Haiku-bugs] [Haiku] #2955: using multiple USB HIDs not possible, USB input devices stop working (was: KDL wacom tablet unlugged: AddOnManager?)
+</A></li>
+        <LI>Next message: <A HREF="012042.html">[Haiku-bugs] [Haiku] #3054: Tracker doesn't load all poses on folders with thousands of files.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11993">[ date ]</a>
+              <a href="thread.html#11993">[ thread ]</a>
+              <a href="subject.html#11993">[ subject ]</a>
+              <a href="author.html#11993">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3054: Tracker doesn't load all poses on folders with thousands of files.
+----------------------------------+-----------------------------------------
+ Reporter:  aldeck                |       Owner:  axeld         
+     Type:  bug                   |      Status:  new           
+ Priority:  normal                |   Milestone:  R1            
+Component:  Applications/Tracker  |     Version:  R1 development
+Blockedby:                        |    Platform:  All           
+ Blocking:                        |  
+----------------------------------+-----------------------------------------
+ Tracker doesn't load all poses on folders with thousands of files.
+ This problem was first mentioned in #2760's comments, but now it's more
+ clear it's a different bug.
+
+ Investigating on #3011 i found some new infos:
+
+ I added some debug output to AddPosesTask and apparently GetNextDirents
+ returns 0 although there are still more items in the dir. <A HREF="http://dev">http://dev</A>
+ .haiku-os.org/browser/haiku/trunk/src/kits/tracker/PoseView.cpp#L1263 . It
+ fails after a few thousand files but it's quite variable.
+
+ Interestingly, when i tried commenting &quot;model-&gt;CloseNode()&quot; here
+ <A HREF="http://dev.haiku-">http://dev.haiku-</A>
+ os.org/browser/haiku/trunk/src/kits/tracker/PoseView.cpp#L1742 for #3011's
+ investigation, i noticed the problem was worse. That is GetNextDirents
+ would fail after a few hundred files.
+
+ Closing model nodes &quot;model-&gt;CloseNode()&quot; on each model in
+ PoseView::AddPosesTask loop and reopening it in CreatePoses, made the
+ problem disappear, although hitting performance a bit.
+
+ There must be something fishy with models not being all closed by seeing
+ the old debug ifdefs in the related methods.
+ Anyone has an idea why GetNextDirents would fail though?
+
+ setting tracker component, might be a kernel/fs bug.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3054">http://dev.haiku-os.org/ticket/3054</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011996.html">[Haiku-bugs] [Haiku] #2955: using multiple USB HIDs not possible, USB input devices stop working (was: KDL wacom tablet unlugged: AddOnManager?)
+</A></li>
+	<LI>Next message: <A HREF="012042.html">[Haiku-bugs] [Haiku] #3054: Tracker doesn't load all poses on folders with thousands of files.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11993">[ date ]</a>
+              <a href="thread.html#11993">[ thread ]</a>
+              <a href="subject.html#11993">[ subject ]</a>
+              <a href="author.html#11993">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

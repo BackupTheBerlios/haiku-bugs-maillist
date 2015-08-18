@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4445: MIDI System Exclusive handling is inconsistent (and BeOS incompatible)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234445%3A%20MIDI%20System%20Exclusive%20handling%20is%0A%20inconsistent%20%28and%20BeOS%20incompatible%29&In-Reply-To=%3C048.d925f740fc1b42b2f513cb1d2e04dbe2%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="021530.html">
+   <LINK REL="Next"  HREF="021938.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4445: MIDI System Exclusive handling is inconsistent (and BeOS incompatible)</H1>
+    <B>Pete</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234445%3A%20MIDI%20System%20Exclusive%20handling%20is%0A%20inconsistent%20%28and%20BeOS%20incompatible%29&In-Reply-To=%3C048.d925f740fc1b42b2f513cb1d2e04dbe2%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4445: MIDI System Exclusive handling is inconsistent (and BeOS incompatible)">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Sep 17 22:48:05 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="021530.html">[Haiku-bugs] [Haiku] #4445: MIDI System Exclusive handling is inconsistent (and BeOS incompatible)
+</A></li>
+        <LI>Next message: <A HREF="021938.html">[Haiku-bugs] [Haiku] #4445: MIDI System Exclusive handling is inconsistent (and BeOS incompatible)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21589">[ date ]</a>
+              <a href="thread.html#21589">[ thread ]</a>
+              <a href="subject.html#21589">[ subject ]</a>
+              <a href="author.html#21589">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4445: MIDI System Exclusive handling is inconsistent (and BeOS incompatible)
+----------------------------------+-----------------------------------------
+  Reporter:  Pete                 |       Owner:  phoudoin     
+      Type:  bug                  |      Status:  reopened     
+  Priority:  normal               |   Milestone:  R1           
+ Component:  Servers/midi_server  |     Version:  R1/pre-alpha1
+Resolution:                       |   Blockedby:               
+  Platform:  All                  |    Blocking:               
+----------------------------------+-----------------------------------------
+
+Comment(by Pete):
+
+ Correcting myself for the sake of correctness...[comment:8 Pete]:
+ &gt; [Unfortunately there's a (known) bug in the UNO firmware that screws
+ this up if the byte-count is not a multiple of 4...]
+ I meant a multiple of 3 (The contents of a single USB MIDI packet).
+
+ Also, you may notice that the revised code has a bit of redundancy.
+ I went for straightforwardness rather than compactness, but I think
+ this slightly smaller code should work as well (untested):
+
+ {{{
+         if (haveSysEx) { // System Exclusive mode
+                 if (next &lt; 0x80) { // System Exclusive data byte
+                         sysexBuf[sysexSize++] = next;
+                         if (sysexSize == sysexAlloc) {
+                                 sysexAlloc *= 2;
+                                 sysexBuf = (uint8*) realloc(sysexBuf,
+ sysexAlloc);
+                         }
+                         continue;
+                 } else if ((next &amp; 0xF8) == 0xF8) {
+                         // System Realtime interleaved in System Exclusive
+ byte(s)
+                         SpraySystemRealTime(next);
+                         continue;
+                 } else {
+                         // Terminate the sequence
+                         SpraySystemExclusive(sysexBuf, sysexSize);
+                         haveSysEx = false;
+                         if (next == B_SYS_EX_END) continue;     // discard
+ this byte
+                 }
+         }
+
+ }}}
+ Change or not as you like...
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4445#comment:10">http://dev.haiku-os.org/ticket/4445#comment:10</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="021530.html">[Haiku-bugs] [Haiku] #4445: MIDI System Exclusive handling is inconsistent (and BeOS incompatible)
+</A></li>
+	<LI>Next message: <A HREF="021938.html">[Haiku-bugs] [Haiku] #4445: MIDI System Exclusive handling is inconsistent (and BeOS incompatible)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21589">[ date ]</a>
+              <a href="thread.html#21589">[ thread ]</a>
+              <a href="subject.html#21589">[ subject ]</a>
+              <a href="author.html#21589">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

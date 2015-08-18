@@ -1,0 +1,143 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3823: Haiku has trouble to connect to	some webservers
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233823%3A%20Haiku%20has%20trouble%20to%20connect%20to%0A%09some%20webservers&In-Reply-To=%3C052.edefd3c2327f4e13ff8630fb80e3929e%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="016730.html">
+   <LINK REL="Next"  HREF="016732.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3823: Haiku has trouble to connect to	some webservers</H1>
+    <B>bga</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233823%3A%20Haiku%20has%20trouble%20to%20connect%20to%0A%09some%20webservers&In-Reply-To=%3C052.edefd3c2327f4e13ff8630fb80e3929e%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3823: Haiku has trouble to connect to	some webservers">trac at haiku-os.org
+       </A><BR>
+    <I>Fri May  1 01:14:22 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="016730.html">[Haiku-bugs] [Haiku] #3842: pressing enter in window list for app triggers Looper must be locked.
+</A></li>
+        <LI>Next message: <A HREF="016732.html">[Haiku-bugs] [Haiku] #3752: CharacterMap Window is way too big.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16731">[ date ]</a>
+              <a href="thread.html#16731">[ thread ]</a>
+              <a href="subject.html#16731">[ subject ]</a>
+              <a href="author.html#16731">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3823: Haiku has trouble to connect to some webservers
+--------------------------------+-------------------------------------------
+ Reporter:  HaiColon            |       Owner:  axeld         
+     Type:  bug                 |      Status:  new           
+ Priority:  normal              |   Milestone:  R1            
+Component:  Network &amp; Internet  |     Version:  R1 development
+Blockedby:                      |    Platform:  x86           
+ Blocking:                      |  
+--------------------------------+-------------------------------------------
+
+Comment(by bga):
+
+ Well, that's why I said TCP/IP. ;) Anyway, I never tried to ping after I
+ saw the problem but one of the side-effects can be easily visible if you
+ visit <A HREF="http://www.bug-br.org.br.">http://www.bug-br.org.br.</A> Every single time the page has problems.
+ The most visible one is that images are only half downloaded or not
+ downloaded at all (and yes, works fine in Windows, Linux and MacOS). Check
+ the left nav bar and you will see what I mean. Sometimes it seems not even
+ the full HTML is downloaded!
+
+ You are probably thinking: Ah, but that could be a Firefox bug!
+
+ Except that:
+
+ {{{
+ [/boot/home]&gt; wget -vvv <A HREF="http://www.bug-br.org.br/img/menu/menu_beos.gif">http://www.bug-br.org.br/img/menu/menu_beos.gif</A>
+ --2009-04-30 20:09:49--  <A HREF="http://www.bug-br.org.br/img/menu/menu_beos.gif">http://www.bug-br.org.br/img/menu/menu_beos.gif</A>
+ Resolving www.bug-br.org.br... 69.73.189.194
+ Connecting to www.bug-br.org.br|69.73.189.194|:80... connected.
+ HTTP request sent, awaiting response... 200 OK
+ Length: 2063 (2.0K) [image/gif]
+ Saving to: `menu_beos.gif'
+
+ 70% [==========================&gt;            ] 1,448       --.-K/s   in 0s
+
+ 2009-04-30 20:09:49 (11.8 MB/s) - Connection closed at byte 1448.
+ Retrying.
+
+ --2009-04-30 20:09:49--  (try: 2)  <A HREF="http://www.bug-">http://www.bug-</A>
+ br.org.br/img/menu/menu_beos.gif
+ Connecting to www.bug-br.org.br|69.73.189.194|:80... connected.
+ HTTP request sent, awaiting response... 206 Partial Content
+ Length: 2063 (2.0K), 615 remaining [image/gif]
+ Saving to: `menu_beos.gif'
+
+ 70% [+++++++++++++++++++++++++++            ] 1,448       --.-K/s   in 0s
+
+ 2009-04-30 20:09:50 (0.00 B/s) - Connection closed at byte 1448. Retrying.
+
+ --2009-04-30 20:09:50--  (try: 3)  <A HREF="http://www.bug-">http://www.bug-</A>
+ br.org.br/img/menu/menu_beos.gif
+ Connecting to www.bug-br.org.br|69.73.189.194|:80... connected.
+ HTTP request sent, awaiting response... 206 Partial Content
+ Length: 2063 (2.0K), 615 remaining [image/gif]
+ Saving to: `menu_beos.gif'
+
+ 70% [+++++++++++++++++++++++++++            ] 1,448       --.-K/s   in 0s
+
+ 2009-04-30 20:09:50 (0.00 B/s) - Connection closed at byte 1448. Retrying.
+
+ --2009-04-30 20:09:50--  (try: 4)  <A HREF="http://www.bug-">http://www.bug-</A>
+ br.org.br/img/menu/menu_beos.gif
+ Connecting to www.bug-br.org.br|69.73.189.194|:80... connected.
+ HTTP request sent, awaiting response... 206 Partial Content
+ Length: 2063 (2.0K), 615 remaining [image/gif]
+ Saving to: `menu_beos.gif'
+
+ 70% [+++++++++++++++++++++++++++            ] 1,448       --.-K/s   in 0s
+ }}}
+
+ This is just a snippet, it just continues trying to download and fails at
+ exactly the same point all the time.
+
+ And yes, at the exact same time I downloaded the same file in 3 different
+ computers here at home and all worked without any problems whatsoever.
+
+ Hope this helps.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3823#comment:4">http://dev.haiku-os.org/ticket/3823#comment:4</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="016730.html">[Haiku-bugs] [Haiku] #3842: pressing enter in window list for app triggers Looper must be locked.
+</A></li>
+	<LI>Next message: <A HREF="016732.html">[Haiku-bugs] [Haiku] #3752: CharacterMap Window is way too big.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16731">[ date ]</a>
+              <a href="thread.html#16731">[ thread ]</a>
+              <a href="subject.html#16731">[ subject ]</a>
+              <a href="author.html#16731">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

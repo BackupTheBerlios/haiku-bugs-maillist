@@ -1,0 +1,862 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3861: iso9660 has issues with various discs burned on a mac
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233861%3A%20iso9660%20has%20issues%20with%20various%0A%20discs%20burned%20on%20a%20mac&In-Reply-To=%3C053.80fa5924629496dbfc4489ba2e273eba%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="016875.html">
+   <LINK REL="Next"  HREF="016878.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3861: iso9660 has issues with various discs burned on a mac</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233861%3A%20iso9660%20has%20issues%20with%20various%0A%20discs%20burned%20on%20a%20mac&In-Reply-To=%3C053.80fa5924629496dbfc4489ba2e273eba%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3861: iso9660 has issues with various discs burned on a mac">trac at haiku-os.org
+       </A><BR>
+    <I>Mon May  4 00:36:36 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="016875.html">[Haiku-bugs] [Haiku] #3861: iso9660 has issues with various discs burned on a mac
+</A></li>
+        <LI>Next message: <A HREF="016878.html">[Haiku-bugs] [Haiku] #3861: iso9660 has issues with various discs burned on a mac
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16876">[ date ]</a>
+              <a href="thread.html#16876">[ thread ]</a>
+              <a href="subject.html#16876">[ subject ]</a>
+              <a href="author.html#16876">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3861: iso9660 has issues with various discs burned on a mac
+-----------------------------------+----------------------------------------
+ Reporter:  anevilyak              |       Owner:  axeld         
+     Type:  bug                    |      Status:  new           
+ Priority:  normal                 |   Milestone:  R1            
+Component:  File Systems/ISO 9660  |     Version:  R1 development
+Blockedby:                         |    Platform:  All           
+ Blocking:                         |  
+-----------------------------------+----------------------------------------
+
+Comment(by anevilyak):
+
+ Also, trace log from when running the ls -la that resulted in the above
+ output:
+ {{{
+ InitNode - ENTER, bufstart is 0x9eeff801, record length is 226 bytes
+ InitNode - data start LBN is 44
+ InitNode - data length is 2048
+ InitNode - flags are 2
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 1
+ DirRec ID String is: .
+ RR: Start of extensions at 0x9eeff822
+ RR: 53, 50, end of extensions.
+ InitNode - ENTER, bufstart is 0x9eeff8e3, record length is 34 bytes
+ InitNode - data start LBN is 44
+ InitNode - data length is 2048
+ InitNode - flags are 2
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 1
+ DirRec ID String is: ..
+ RR: Start of extensions at 0x9eeff904
+ InitNode - ENTER, bufstart is 0x9eeff905, record length is 170 bytes
+ InitNode - data start LBN is 113121
+ InitNode - data length is 91095
+ InitNode - flags are 4
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 44
+ DirRec ID String is: Helmer_MoviePoster.jpg
+ RR: Start of extensions at 0x9eeff952
+ RR: 41, 41, end of extensions.
+ InitNode - ENTER, bufstart is 0x9eeff9af, record length is 170 bytes
+ InitNode - data start LBN is 111115
+ InitNode - data length is 4106772
+ InitNode - flags are 0
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 44
+ DirRec ID String is: Helmer_MoviePoster.jpg
+ RR: Start of extensions at 0x9eeff9fc
+ RR: 41, 41, end of extensions.
+ InitNode - ENTER, bufstart is 0x9eeffa59, record length is 170 bytes
+ InitNode - data start LBN is 178632
+ InitNode - data length is 54130
+ InitNode - flags are 4
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 44
+ DirRec ID String is: Helmer_MoviePoster.psd
+ RR: Start of extensions at 0x9eeffaa6
+ RR: 41, 41, end of extensions.
+ InitNode - ENTER, bufstart is 0x9eeffb03, record length is 170 bytes
+ InitNode - data start LBN is 113166
+ InitNode - data length is 134074020
+ InitNode - flags are 0
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 44
+ DirRec ID String is: Helmer_MoviePoster.psd
+ RR: Start of extensions at 0x9eeffb50
+ RR: 41, 41, end of extensions.
+ InitNode - ENTER, bufstart is 0x9eeffbad, record length is 176 bytes
+ InitNode - data start LBN is 8901
+ InitNode - data length is 98113
+ InitNode - flags are 4
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 50
+ DirRec ID String is: Helmer_altMoviePoster.jpg
+ RR: Start of extensions at 0x9eeffc00
+ RR: 41, 41, end of extensions.
+ InitNode - ENTER, bufstart is 0x9eeffc5d, record length is 176 bytes
+ InitNode - data start LBN is 446
+ InitNode - data length is 17313824
+ InitNode - flags are 0
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 50
+ DirRec ID String is: Helmer_altMoviePoster.jpg
+ RR: Start of extensions at 0x9eeffcb0
+ RR: 41, 41, end of extensions.
+ InitNode - ENTER, bufstart is 0x9eeffd0d, record length is 176 bytes
+ InitNode - data start LBN is 111086
+ InitNode - data length is 57832
+ InitNode - flags are 4
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 50
+ DirRec ID String is: Helmer_altMoviePoster.psd
+ RR: Start of extensions at 0x9eeffd60
+ RR: 41, 41, end of extensions.
+ InitNode - ENTER, bufstart is 0x9eeffdbd, record length is 176 bytes
+ InitNode - data start LBN is 8949
+ InitNode - data length is 209176224
+ InitNode - flags are 0
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 50
+ DirRec ID String is: Helmer_altMoviePoster.psd
+ RR: Start of extensions at 0x9eeffe10
+ RR: 41, 41, end of extensions.
+ ISOReadDirEnt - ENTER
+ InitNode - ENTER, bufstart is 0x9eeff801, record length is 226 bytes
+ InitNode - data start LBN is 44
+ InitNode - data length is 2048
+ InitNode - flags are 2
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 1
+ DirRec ID String is: .
+ RR: Start of extensions at 0x9eeff822
+ RR: 53, 50, end of extensions.
+ ISOReadDirEnt  - success, name is ., block 44, pos 0, inode id 47244640256
+ ISOReadDirEnt - EXIT, result is No error, vnid is 47244640256
+ ISOReadDirEnt - ENTER
+ InitNode - ENTER, bufstart is 0x9eeff8e3, record length is 34 bytes
+ InitNode - data start LBN is 44
+ InitNode - data length is 2048
+ InitNode - flags are 2
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 1
+ DirRec ID String is: ..
+ RR: Start of extensions at 0x9eeff904
+ ISOReadDirEnt  - success, name is .., block 44, pos 226, inode id
+ 47244640482
+ ISOReadDirEnt - EXIT, result is No error, vnid is 47244640482
+ ISOReadDirEnt - ENTER
+ InitNode - ENTER, bufstart is 0x9eeff905, record length is 170 bytes
+ InitNode - data start LBN is 113121
+ InitNode - data length is 91095
+ InitNode - flags are 4
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 44
+ DirRec ID String is: Helmer_MoviePoster.jpg
+ RR: Start of extensions at 0x9eeff952
+ RR: 41, 41, end of extensions.
+ ISOReadDirEnt  - success, name is Helmer_MoviePoster.jpg, block 44, pos
+ 260, inode id 47244640516
+ ISOReadDirEnt - EXIT, result is No error, vnid is 47244640516
+ InitNode - ENTER, bufstart is 0x9eeff801, record length is 226 bytes
+ InitNode - data start LBN is 44
+ InitNode - data length is 2048
+ InitNode - flags are 2
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 1
+ DirRec ID String is: .
+ RR: Start of extensions at 0x9eeff822
+ RR: 53, 50, end of extensions.
+ InitNode - ENTER, bufstart is 0x9eeff8e3, record length is 34 bytes
+ InitNode - data start LBN is 44
+ InitNode - data length is 2048
+ InitNode - flags are 2
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 1
+ DirRec ID String is: ..
+ RR: Start of extensions at 0x9eeff904
+ InitNode - ENTER, bufstart is 0x9eeff905, record length is 170 bytes
+ InitNode - data start LBN is 113121
+ InitNode - data length is 91095
+ InitNode - flags are 4
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 44
+ DirRec ID String is: Helmer_MoviePoster.jpg
+ RR: Start of extensions at 0x9eeff952
+ RR: 41, 41, end of extensions.
+ ISOReadDirEnt - ENTER
+ InitNode - ENTER, bufstart is 0x9eeff9af, record length is 170 bytes
+ InitNode - data start LBN is 111115
+ InitNode - data length is 4106772
+ InitNode - flags are 0
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 44
+ DirRec ID String is: Helmer_MoviePoster.jpg
+ RR: Start of extensions at 0x9eeff9fc
+ RR: 41, 41, end of extensions.
+ ISOReadDirEnt  - success, name is Helmer_MoviePoster.jpg, block 44, pos
+ 430, inode id 47244640686
+ ISOReadDirEnt - EXIT, result is No error, vnid is 47244640686
+ InitNode - ENTER, bufstart is 0x9eeff801, record length is 226 bytes
+ InitNode - data start LBN is 44
+ InitNode - data length is 2048
+ InitNode - flags are 2
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 1
+ DirRec ID String is: .
+ RR: Start of extensions at 0x9eeff822
+ RR: 53, 50, end of extensions.
+ InitNode - ENTER, bufstart is 0x9eeff8e3, record length is 34 bytes
+ InitNode - data start LBN is 44
+ InitNode - data length is 2048
+ InitNode - flags are 2
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 1
+ DirRec ID String is: ..
+ RR: Start of extensions at 0x9eeff904
+ InitNode - ENTER, bufstart is 0x9eeff905, record length is 170 bytes
+ InitNode - data start LBN is 113121
+ InitNode - data length is 91095
+ InitNode - flags are 4
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 44
+ DirRec ID String is: Helmer_MoviePoster.jpg
+ RR: Start of extensions at 0x9eeff952
+ RR: 41, 41, end of extensions.
+ ISOReadDirEnt - ENTER
+ InitNode - ENTER, bufstart is 0x9eeffa59, record length is 170 bytes
+ InitNode - data start LBN is 178632
+ InitNode - data length is 54130
+ InitNode - flags are 4
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 44
+ DirRec ID String is: Helmer_MoviePoster.psd
+ RR: Start of extensions at 0x9eeffaa6
+ RR: 41, 41, end of extensions.
+ ISOReadDirEnt  - success, name is Helmer_MoviePoster.psd, block 44, pos
+ 600, inode id 47244640856
+ ISOReadDirEnt - EXIT, result is No error, vnid is 47244640856
+ InitNode - ENTER, bufstart is 0x9eeff801, record length is 226 bytes
+ InitNode - data start LBN is 44
+ InitNode - data length is 2048
+ InitNode - flags are 2
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 1
+ DirRec ID String is: .
+ RR: Start of extensions at 0x9eeff822
+ RR: 53, 50, end of extensions.
+ InitNode - ENTER, bufstart is 0x9eeff8e3, record length is 34 bytes
+ InitNode - data start LBN is 44
+ InitNode - data length is 2048
+ InitNode - flags are 2
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 1
+ DirRec ID String is: ..
+ RR: Start of extensions at 0x9eeff904
+ InitNode - ENTER, bufstart is 0x9eeff905, record length is 170 bytes
+ InitNode - data start LBN is 113121
+ InitNode - data length is 91095
+ InitNode - flags are 4
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 44
+ DirRec ID String is: Helmer_MoviePoster.jpg
+ RR: Start of extensions at 0x9eeff952
+ RR: 41, 41, end of extensions.
+ InitNode - ENTER, bufstart is 0x9eeff9af, record length is 170 bytes
+ InitNode - data start LBN is 111115
+ InitNode - data length is 4106772
+ InitNode - flags are 0
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 44
+ DirRec ID String is: Helmer_MoviePoster.jpg
+ RR: Start of extensions at 0x9eeff9fc
+ RR: 41, 41, end of extensions.
+ InitNode - ENTER, bufstart is 0x9eeffa59, record length is 170 bytes
+ InitNode - data start LBN is 178632
+ InitNode - data length is 54130
+ InitNode - flags are 4
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 44
+ DirRec ID String is: Helmer_MoviePoster.psd
+ RR: Start of extensions at 0x9eeffaa6
+ RR: 41, 41, end of extensions.
+ ISOReadDirEnt - ENTER
+ InitNode - ENTER, bufstart is 0x9eeffb03, record length is 170 bytes
+ InitNode - data start LBN is 113166
+ InitNode - data length is 134074020
+ InitNode - flags are 0
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 44
+ DirRec ID String is: Helmer_MoviePoster.psd
+ RR: Start of extensions at 0x9eeffb50
+ RR: 41, 41, end of extensions.
+ ISOReadDirEnt  - success, name is Helmer_MoviePoster.psd, block 44, pos
+ 770, inode id 47244641026
+ ISOReadDirEnt - EXIT, result is No error, vnid is 47244641026
+ InitNode - ENTER, bufstart is 0x9eeff801, record length is 226 bytes
+ InitNode - data start LBN is 44
+ InitNode - data length is 2048
+ InitNode - flags are 2
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 1
+ DirRec ID String is: .
+ RR: Start of extensions at 0x9eeff822
+ RR: 53, 50, end of extensions.
+ InitNode - ENTER, bufstart is 0x9eeff8e3, record length is 34 bytes
+ InitNode - data start LBN is 44
+ InitNode - data length is 2048
+ InitNode - flags are 2
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 1
+ DirRec ID String is: ..
+ RR: Start of extensions at 0x9eeff904
+ InitNode - ENTER, bufstart is 0x9eeff905, record length is 170 bytes
+ InitNode - data start LBN is 113121
+ InitNode - data length is 91095
+ InitNode - flags are 4
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 44
+ DirRec ID String is: Helmer_MoviePoster.jpg
+ RR: Start of extensions at 0x9eeff952
+ RR: 41, 41, end of extensions.
+ InitNode - ENTER, bufstart is 0x9eeff9af, record length is 170 bytes
+ InitNode - data start LBN is 111115
+ InitNode - data length is 4106772
+ InitNode - flags are 0
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 44
+ DirRec ID String is: Helmer_MoviePoster.jpg
+ RR: Start of extensions at 0x9eeff9fc
+ RR: 41, 41, end of extensions.
+ InitNode - ENTER, bufstart is 0x9eeffa59, record length is 170 bytes
+ InitNode - data start LBN is 178632
+ InitNode - data length is 54130
+ InitNode - flags are 4
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 44
+ DirRec ID String is: Helmer_MoviePoster.psd
+ RR: Start of extensions at 0x9eeffaa6
+ RR: 41, 41, end of extensions.
+ ISOReadDirEnt - ENTER
+ InitNode - ENTER, bufstart is 0x9eeffbad, record length is 176 bytes
+ InitNode - data start LBN is 8901
+ InitNode - data length is 98113
+ InitNode - flags are 4
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 50
+ DirRec ID String is: Helmer_altMoviePoster.jpg
+ RR: Start of extensions at 0x9eeffc00
+ RR: 41, 41, end of extensions.
+ ISOReadDirEnt  - success, name is Helmer_altMoviePoster.jpg, block 44, pos
+ 940, inode id 47244641196
+ ISOReadDirEnt - EXIT, result is No error, vnid is 47244641196
+ InitNode - ENTER, bufstart is 0x9eeff801, record length is 226 bytes
+ InitNode - data start LBN is 44
+ InitNode - data length is 2048
+ InitNode - flags are 2
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 1
+ DirRec ID String is: .
+ RR: Start of extensions at 0x9eeff822
+ RR: 53, 50, end of extensions.
+ InitNode - ENTER, bufstart is 0x9eeff8e3, record length is 34 bytes
+ InitNode - data start LBN is 44
+ InitNode - data length is 2048
+ InitNode - flags are 2
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 1
+ DirRec ID String is: ..
+ RR: Start of extensions at 0x9eeff904
+ InitNode - ENTER, bufstart is 0x9eeff905, record length is 170 bytes
+ InitNode - data start LBN is 113121
+ InitNode - data length is 91095
+ InitNode - flags are 4
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 44
+ DirRec ID String is: Helmer_MoviePoster.jpg
+ RR: Start of extensions at 0x9eeff952
+ RR: 41, 41, end of extensions.
+ InitNode - ENTER, bufstart is 0x9eeff9af, record length is 170 bytes
+ InitNode - data start LBN is 111115
+ InitNode - data length is 4106772
+ InitNode - flags are 0
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 44
+ DirRec ID String is: Helmer_MoviePoster.jpg
+ RR: Start of extensions at 0x9eeff9fc
+ RR: 41, 41, end of extensions.
+ InitNode - ENTER, bufstart is 0x9eeffa59, record length is 170 bytes
+ InitNode - data start LBN is 178632
+ InitNode - data length is 54130
+ InitNode - flags are 4
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 44
+ DirRec ID String is: Helmer_MoviePoster.psd
+ RR: Start of extensions at 0x9eeffaa6
+ RR: 41, 41, end of extensions.
+ InitNode - ENTER, bufstart is 0x9eeffb03, record length is 170 bytes
+ InitNode - data start LBN is 113166
+ InitNode - data length is 134074020
+ InitNode - flags are 0
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 44
+ DirRec ID String is: Helmer_MoviePoster.psd
+ RR: Start of extensions at 0x9eeffb50
+ RR: 41, 41, end of extensions.
+ InitNode - ENTER, bufstart is 0x9eeffbad, record length is 176 bytes
+ InitNode - data start LBN is 8901
+ InitNode - data length is 98113
+ InitNode - flags are 4
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 50
+ DirRec ID String is: Helmer_altMoviePoster.jpg
+ RR: Start of extensions at 0x9eeffc00
+ RR: 41, 41, end of extensions.
+ ISOReadDirEnt - ENTER
+ InitNode - ENTER, bufstart is 0x9eeffc5d, record length is 176 bytes
+ InitNode - data start LBN is 446
+ InitNode - data length is 17313824
+ InitNode - flags are 0
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 50
+ DirRec ID String is: Helmer_altMoviePoster.jpg
+ RR: Start of extensions at 0x9eeffcb0
+ RR: 41, 41, end of extensions.
+ ISOReadDirEnt  - success, name is Helmer_altMoviePoster.jpg, block 44, pos
+ 1116, inode id 47244641372
+ ISOReadDirEnt - EXIT, result is No error, vnid is 47244641372
+ InitNode - ENTER, bufstart is 0x9eeff801, record length is 226 bytes
+ InitNode - data start LBN is 44
+ InitNode - data length is 2048
+ InitNode - flags are 2
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 1
+ DirRec ID String is: .
+ RR: Start of extensions at 0x9eeff822
+ RR: 53, 50, end of extensions.
+ InitNode - ENTER, bufstart is 0x9eeff8e3, record length is 34 bytes
+ InitNode - data start LBN is 44
+ InitNode - data length is 2048
+ InitNode - flags are 2
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 1
+ DirRec ID String is: ..
+ RR: Start of extensions at 0x9eeff904
+ InitNode - ENTER, bufstart is 0x9eeff905, record length is 170 bytes
+ InitNode - data start LBN is 113121
+ InitNode - data length is 91095
+ InitNode - flags are 4
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 44
+ DirRec ID String is: Helmer_MoviePoster.jpg
+ RR: Start of extensions at 0x9eeff952
+ RR: 41, 41, end of extensions.
+ InitNode - ENTER, bufstart is 0x9eeff9af, record length is 170 bytes
+ InitNode - data start LBN is 111115
+ InitNode - data length is 4106772
+ InitNode - flags are 0
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 44
+ DirRec ID String is: Helmer_MoviePoster.jpg
+ RR: Start of extensions at 0x9eeff9fc
+ RR: 41, 41, end of extensions.
+ InitNode - ENTER, bufstart is 0x9eeffa59, record length is 170 bytes
+ InitNode - data start LBN is 178632
+ InitNode - data length is 54130
+ InitNode - flags are 4
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 44
+ DirRec ID String is: Helmer_MoviePoster.psd
+ RR: Start of extensions at 0x9eeffaa6
+ RR: 41, 41, end of extensions.
+ InitNode - ENTER, bufstart is 0x9eeffb03, record length is 170 bytes
+ InitNode - data start LBN is 113166
+ InitNode - data length is 134074020
+ InitNode - flags are 0
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 44
+ DirRec ID String is: Helmer_MoviePoster.psd
+ RR: Start of extensions at 0x9eeffb50
+ RR: 41, 41, end of extensions.
+ InitNode - ENTER, bufstart is 0x9eeffbad, record length is 176 bytes
+ InitNode - data start LBN is 8901
+ InitNode - data length is 98113
+ InitNode - flags are 4
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 50
+ DirRec ID String is: Helmer_altMoviePoster.jpg
+ RR: Start of extensions at 0x9eeffc00
+ RR: 41, 41, end of extensions.
+ ISOReadDirEnt - ENTER
+ InitNode - ENTER, bufstart is 0x9eeffd0d, record length is 176 bytes
+ InitNode - data start LBN is 111086
+ InitNode - data length is 57832
+ InitNode - flags are 4
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 50
+ DirRec ID String is: Helmer_altMoviePoster.psd
+ RR: Start of extensions at 0x9eeffd60
+ RR: 41, 41, end of extensions.
+ ISOReadDirEnt  - success, name is Helmer_altMoviePoster.psd, block 44, pos
+ 1292, inode id 47244641548
+ ISOReadDirEnt - EXIT, result is No error, vnid is 47244641548
+ InitNode - ENTER, bufstart is 0x9eeff801, record length is 226 bytes
+ InitNode - data start LBN is 44
+ InitNode - data length is 2048
+ InitNode - flags are 2
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 1
+ DirRec ID String is: .
+ RR: Start of extensions at 0x9eeff822
+ RR: 53, 50, end of extensions.
+ InitNode - ENTER, bufstart is 0x9eeff8e3, record length is 34 bytes
+ InitNode - data start LBN is 44
+ InitNode - data length is 2048
+ InitNode - flags are 2
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 1
+ DirRec ID String is: ..
+ RR: Start of extensions at 0x9eeff904
+ InitNode - ENTER, bufstart is 0x9eeff905, record length is 170 bytes
+ InitNode - data start LBN is 113121
+ InitNode - data length is 91095
+ InitNode - flags are 4
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 44
+ DirRec ID String is: Helmer_MoviePoster.jpg
+ RR: Start of extensions at 0x9eeff952
+ RR: 41, 41, end of extensions.
+ InitNode - ENTER, bufstart is 0x9eeff9af, record length is 170 bytes
+ InitNode - data start LBN is 111115
+ InitNode - data length is 4106772
+ InitNode - flags are 0
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 44
+ DirRec ID String is: Helmer_MoviePoster.jpg
+ RR: Start of extensions at 0x9eeff9fc
+ RR: 41, 41, end of extensions.
+ InitNode - ENTER, bufstart is 0x9eeffa59, record length is 170 bytes
+ InitNode - data start LBN is 178632
+ InitNode - data length is 54130
+ InitNode - flags are 4
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 44
+ DirRec ID String is: Helmer_MoviePoster.psd
+ RR: Start of extensions at 0x9eeffaa6
+ RR: 41, 41, end of extensions.
+ InitNode - ENTER, bufstart is 0x9eeffb03, record length is 170 bytes
+ InitNode - data start LBN is 113166
+ InitNode - data length is 134074020
+ InitNode - flags are 0
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 44
+ DirRec ID String is: Helmer_MoviePoster.psd
+ RR: Start of extensions at 0x9eeffb50
+ RR: 41, 41, end of extensions.
+ InitNode - ENTER, bufstart is 0x9eeffbad, record length is 176 bytes
+ InitNode - data start LBN is 8901
+ InitNode - data length is 98113
+ InitNode - flags are 4
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 50
+ DirRec ID String is: Helmer_altMoviePoster.jpg
+ RR: Start of extensions at 0x9eeffc00
+ RR: 41, 41, end of extensions.
+ InitNode - ENTER, bufstart is 0x9eeffc5d, record length is 176 bytes
+ InitNode - data start LBN is 446
+ InitNode - data length is 17313824
+ InitNode - flags are 0
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 50
+ DirRec ID String is: Helmer_altMoviePoster.jpg
+ RR: Start of extensions at 0x9eeffcb0
+ RR: 41, 41, end of extensions.
+ InitNode - ENTER, bufstart is 0x9eeffd0d, record length is 176 bytes
+ InitNode - data start LBN is 111086
+ InitNode - data length is 57832
+ InitNode - flags are 4
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 50
+ DirRec ID String is: Helmer_altMoviePoster.psd
+ RR: Start of extensions at 0x9eeffd60
+ RR: 41, 41, end of extensions.
+ ISOReadDirEnt - ENTER
+ InitNode - ENTER, bufstart is 0x9eeffdbd, record length is 176 bytes
+ InitNode - data start LBN is 8949
+ InitNode - data length is 209176224
+ InitNode - flags are 0
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 50
+ DirRec ID String is: Helmer_altMoviePoster.psd
+ RR: Start of extensions at 0x9eeffe10
+ RR: 41, 41, end of extensions.
+ ISOReadDirEnt  - success, name is Helmer_altMoviePoster.psd, block 44, pos
+ 1468, inode id 47244641724
+ ISOReadDirEnt - EXIT, result is No error, vnid is 47244641724
+ InitNode - ENTER, bufstart is 0x9eeff801, record length is 226 bytes
+ InitNode - data start LBN is 44
+ InitNode - data length is 2048
+ InitNode - flags are 2
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 1
+ DirRec ID String is: .
+ RR: Start of extensions at 0x9eeff822
+ RR: 53, 50, end of extensions.
+ InitNode - ENTER, bufstart is 0x9eeff8e3, record length is 34 bytes
+ InitNode - data start LBN is 44
+ InitNode - data length is 2048
+ InitNode - flags are 2
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 1
+ DirRec ID String is: ..
+ RR: Start of extensions at 0x9eeff904
+ InitNode - ENTER, bufstart is 0x9eeff905, record length is 170 bytes
+ InitNode - data start LBN is 113121
+ InitNode - data length is 91095
+ InitNode - flags are 4
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 44
+ DirRec ID String is: Helmer_MoviePoster.jpg
+ RR: Start of extensions at 0x9eeff952
+ RR: 41, 41, end of extensions.
+ InitNode - ENTER, bufstart is 0x9eeff9af, record length is 170 bytes
+ InitNode - data start LBN is 111115
+ InitNode - data length is 4106772
+ InitNode - flags are 0
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 44
+ DirRec ID String is: Helmer_MoviePoster.jpg
+ RR: Start of extensions at 0x9eeff9fc
+ RR: 41, 41, end of extensions.
+ InitNode - ENTER, bufstart is 0x9eeffa59, record length is 170 bytes
+ InitNode - data start LBN is 178632
+ InitNode - data length is 54130
+ InitNode - flags are 4
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 44
+ DirRec ID String is: Helmer_MoviePoster.psd
+ RR: Start of extensions at 0x9eeffaa6
+ RR: 41, 41, end of extensions.
+ InitNode - ENTER, bufstart is 0x9eeffb03, record length is 170 bytes
+ InitNode - data start LBN is 113166
+ InitNode - data length is 134074020
+ InitNode - flags are 0
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 44
+ DirRec ID String is: Helmer_MoviePoster.psd
+ RR: Start of extensions at 0x9eeffb50
+ RR: 41, 41, end of extensions.
+ InitNode - ENTER, bufstart is 0x9eeffbad, record length is 176 bytes
+ InitNode - data start LBN is 8901
+ InitNode - data length is 98113
+ InitNode - flags are 4
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 50
+ DirRec ID String is: Helmer_altMoviePoster.jpg
+ RR: Start of extensions at 0x9eeffc00
+ RR: 41, 41, end of extensions.
+ InitNode - ENTER, bufstart is 0x9eeffc5d, record length is 176 bytes
+ InitNode - data start LBN is 446
+ InitNode - data length is 17313824
+ InitNode - flags are 0
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 50
+ DirRec ID String is: Helmer_altMoviePoster.jpg
+ RR: Start of extensions at 0x9eeffcb0
+ RR: 41, 41, end of extensions.
+ InitNode - ENTER, bufstart is 0x9eeffd0d, record length is 176 bytes
+ InitNode - data start LBN is 111086
+ InitNode - data length is 57832
+ InitNode - flags are 4
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 50
+ DirRec ID String is: Helmer_altMoviePoster.psd
+ RR: Start of extensions at 0x9eeffd60
+ RR: 41, 41, end of extensions.
+ ISOReadDirEnt - ENTER
+ ISOReadDirEnt - EXIT, result is No such file or directory, vnid is
+ 47244641724
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3861#comment:2">http://dev.haiku-os.org/ticket/3861#comment:2</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="016875.html">[Haiku-bugs] [Haiku] #3861: iso9660 has issues with various discs burned on a mac
+</A></li>
+	<LI>Next message: <A HREF="016878.html">[Haiku-bugs] [Haiku] #3861: iso9660 has issues with various discs burned on a mac
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16876">[ date ]</a>
+              <a href="thread.html#16876">[ thread ]</a>
+              <a href="subject.html#16876">[ subject ]</a>
+              <a href="author.html#16876">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3432: PANIC: tried to get writable block on a read-only cache !
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-February/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233432%3A%20PANIC%3A%20tried%20to%20get%20writable%20block%20on%20a%0A%20read-only%20cache%20%21&In-Reply-To=%3C038.8a9c46acdbe184f16abd29ea03d3b3ab%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="014387.html">
+   <LINK REL="Next"  HREF="014365.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3432: PANIC: tried to get writable block on a read-only cache !</H1>
+    <B>oco</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233432%3A%20PANIC%3A%20tried%20to%20get%20writable%20block%20on%20a%0A%20read-only%20cache%20%21&In-Reply-To=%3C038.8a9c46acdbe184f16abd29ea03d3b3ab%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3432: PANIC: tried to get writable block on a read-only cache !">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Feb 10 00:45:32 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="014387.html">[Haiku-bugs] [Haiku] #3431: haiku hangs when plugin a usb stick
+</A></li>
+        <LI>Next message: <A HREF="014365.html">[Haiku-bugs] [Haiku] #3149: Intel Video Driver Does Not Work	With 945G
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14363">[ date ]</a>
+              <a href="thread.html#14363">[ thread ]</a>
+              <a href="subject.html#14363">[ subject ]</a>
+              <a href="author.html#14363">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3432: PANIC: tried to get writable block on a read-only cache !
+------------------------------+---------------------------------------------
+ Reporter:  oco               |       Owner:  axeld         
+     Type:  bug               |      Status:  new           
+ Priority:  normal            |   Milestone:  R1            
+Component:  File Systems/BFS  |     Version:  R1 development
+Blockedby:                    |    Platform:  All           
+ Blocking:                    |  
+------------------------------+---------------------------------------------
+ Mounting read-only a partition from a USB hard drive that have experienced
+ at least bug #3400 (so probably not cleanly unmounted) result in this
+ error after a few seconds :
+
+ PANIC: tried to get writable block on a read-only cache !
+
+ Once the partition is mounted, the bfs block allocator thread eat most of
+ the CPU until the panic message.
+
+ Tested in r29174.
+
+ Here is the kernel stack :
+
+ panic[[BR]]
+ block_cache_get_writable_etc[[BR]]
+ &lt;bfs&gt; AllocationBlock::SetToWritable(Transaction&amp;: 0x8482bfd0,
+ AllocationGroup&amp;: 0x83457000, uint16: 0x0)[[BR]]
+ &lt;bfs&gt; AllocationGroup::Allocate(Transaction&amp;: 0x8482bfd0, uint16: 0x0,
+ inte32: 4725)[[BR]]
+ &lt;bfs&gt; BlockAllocator::Initialize(BlockAllocator*: NULL)[[BR]]
+ &lt;kernel_x86&gt; _create_kernel_thread_kentry()[[BR]]
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3432">http://dev.haiku-os.org/ticket/3432</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="014387.html">[Haiku-bugs] [Haiku] #3431: haiku hangs when plugin a usb stick
+</A></li>
+	<LI>Next message: <A HREF="014365.html">[Haiku-bugs] [Haiku] #3149: Intel Video Driver Does Not Work	With 945G
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14363">[ date ]</a>
+              <a href="thread.html#14363">[ thread ]</a>
+              <a href="subject.html#14363">[ subject ]</a>
+              <a href="author.html#14363">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

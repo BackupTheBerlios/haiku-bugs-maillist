@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2620: USB boot problem: &quot;PANIC: did not find any boot partitions!&quot;
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232620%3A%20USB%20boot%20problem%3A%20%22PANIC%3A%20did%20not%0A%20find%20any%20boot%20partitions%21%22&In-Reply-To=%3C049.0198bae1bcabfab4b50202ac8eb7bb3f%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009524.html">
+   <LINK REL="Next"  HREF="009579.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2620: USB boot problem: &quot;PANIC: did not find any boot partitions!&quot;</H1>
+    <B>mmlr</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232620%3A%20USB%20boot%20problem%3A%20%22PANIC%3A%20did%20not%0A%20find%20any%20boot%20partitions%21%22&In-Reply-To=%3C049.0198bae1bcabfab4b50202ac8eb7bb3f%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2620: USB boot problem: &quot;PANIC: did not find any boot partitions!&quot;">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Aug 17 23:15:19 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009524.html">[Haiku-bugs] [Haiku] #2620: USB boot problem: &quot;PANIC: did not find any boot partitions!&quot;
+</A></li>
+        <LI>Next message: <A HREF="009579.html">[Haiku-bugs] [Haiku] #2620: USB boot problem: &quot;PANIC: did not find any boot partitions!&quot;
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9575">[ date ]</a>
+              <a href="thread.html#9575">[ thread ]</a>
+              <a href="subject.html#9575">[ subject ]</a>
+              <a href="author.html#9575">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2620: USB boot problem: &quot;PANIC: did not find any boot partitions!&quot;
+------------------------+---------------------------------------------------
+  Reporter:  luroh      |       Owner:  axeld         
+      Type:  bug        |      Status:  closed        
+  Priority:  normal     |   Milestone:  R1            
+ Component:  - General  |     Version:  R1 development
+Resolution:  duplicate  |   Blockedby:  5             
+  Platform:  All        |    Blocking:                
+------------------------+---------------------------------------------------
+Changes (by mmlr):
+
+  * status:  new =&gt; closed
+  * resolution:  =&gt; duplicate
+  * blockedby:  =&gt; 5
+
+
+Comment:
+
+ The cause can be seen in the first screenshot at the top. Both the UHCI
+ and EHCI controllers present have invalid IRQ assignments, which means
+ that the BIOS didn't initialize interrupt routing for them. That means,
+ this is in fact a duplicate of bug #5. If it works when you have a IDE
+ disk connected this probably causes the BIOS to do some additional setup
+ that it doesn't do when that's not the case. Maybe there are some USB
+ legacy settings in the BIOS that you can try changing, otherwise there's
+ not much you can currently do.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2620#comment:4">http://dev.haiku-os.org/ticket/2620#comment:4</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009524.html">[Haiku-bugs] [Haiku] #2620: USB boot problem: &quot;PANIC: did not find any boot partitions!&quot;
+</A></li>
+	<LI>Next message: <A HREF="009579.html">[Haiku-bugs] [Haiku] #2620: USB boot problem: &quot;PANIC: did not find any boot partitions!&quot;
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9575">[ date ]</a>
+              <a href="thread.html#9575">[ thread ]</a>
+              <a href="subject.html#9575">[ subject ]</a>
+              <a href="author.html#9575">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

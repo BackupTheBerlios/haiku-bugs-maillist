@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3943: HAIKU_IMAGE_SIZE in UserBuildConfig - behaved in inconsistent manner.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233943%3A%20HAIKU_IMAGE_SIZE%20in%20UserBuildConfig%20-%0A%20behaved%20in%20inconsistent%20manner.&In-Reply-To=%3C042.7c7172d251d85b53b413ecbfab64fc32%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="017453.html">
+   <LINK REL="Next"  HREF="017456.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3943: HAIKU_IMAGE_SIZE in UserBuildConfig - behaved in inconsistent manner.</H1>
+    <B>Bouncer</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233943%3A%20HAIKU_IMAGE_SIZE%20in%20UserBuildConfig%20-%0A%20behaved%20in%20inconsistent%20manner.&In-Reply-To=%3C042.7c7172d251d85b53b413ecbfab64fc32%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3943: HAIKU_IMAGE_SIZE in UserBuildConfig - behaved in inconsistent manner.">trac at haiku-os.org
+       </A><BR>
+    <I>Thu May 21 01:14:49 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="017453.html">[Haiku-bugs] [Haiku] #3803: Random characters displayed in	Terminal
+</A></li>
+        <LI>Next message: <A HREF="017456.html">[Haiku-bugs] [Haiku] #3943: HAIKU_IMAGE_SIZE in UserBuildConfig - behaved in inconsistent manner.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17455">[ date ]</a>
+              <a href="thread.html#17455">[ thread ]</a>
+              <a href="subject.html#17455">[ subject ]</a>
+              <a href="author.html#17455">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3943: HAIKU_IMAGE_SIZE in UserBuildConfig - behaved in inconsistent manner.
+-----------------------+----------------------------------------------------
+ Reporter:  Bouncer    |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+Blockedby:             |    Platform:  All           
+ Blocking:             |  
+-----------------------+----------------------------------------------------
+ This item may be related to ticket 3879.
+
+ Please Note: It is been many months since I last compiled the Haiku.
+
+ FIRST - I did a full download - and configured UserConfig similarly to my
+ previous experiences. With HAIKU_IMAGE_SIZE set to 300.
+ And HAIKU_ADD_ALL_OPTIONAL_PACKAGES = 1.
+ The jam command was  'jam -q haiku-image'.
+
+ The build was partially successfull. Creating the 300 Mb image but
+ the optional packages were missing.
+
+ Seems obvious as to what was wrong ...
+
+ SECOND - I commented out the 'HAIKU_ADD_ALL_OPTIONAL_PACKAGES' and
+ replaced it with  'AddOptionalHaikuImagePackages', specifying all of the
+ packages that I wanted.
+
+ Now - the packages were downloaded - but the image that was created
+ was only 128 Mb.
+
+ Every subsequent build attempt - always created an image that was only 128
+ Mb in size.  I even deleted the 'image', but the next
+ rebuild still created it with the default size - regardless of
+ what I set HAIKU_IMAGE_SIZE to.
+
+ My build environment was on Ubuntu 8.04
+
+ A POSSIBLE WORKAROUND:
+
+ - I removed all optional packages from UserBuildConfig. The build then
+ successfully created a 300 Mb image.
+ - Next - I restored the optional packages. Using the
+ 'AddOptionalHaikuImagePackages' method.  This time the build created an
+ image of the proper size, with all of the desired packages.
+
+ - There seems to be some sort of persistent environment setting that is
+ sensitive to the presence of optional packages. Only when I removed the
+ optional packages - did it clear itself. After which my builds were
+ normal, even when I re-applied the optional packages again.
+
+ You may close this ticket if you wish.
+
+ I submit it as a reference for others who might encounter the same issues.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3943">http://dev.haiku-os.org/ticket/3943</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="017453.html">[Haiku-bugs] [Haiku] #3803: Random characters displayed in	Terminal
+</A></li>
+	<LI>Next message: <A HREF="017456.html">[Haiku-bugs] [Haiku] #3943: HAIKU_IMAGE_SIZE in UserBuildConfig - behaved in inconsistent manner.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17455">[ date ]</a>
+              <a href="thread.html#17455">[ thread ]</a>
+              <a href="subject.html#17455">[ subject ]</a>
+              <a href="author.html#17455">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

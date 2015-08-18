@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1715: Tracker Deadlock on AppLooper Port
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-January/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231715%3A%20Tracker%20Deadlock%20on%20AppLooper%20Port&In-Reply-To=%3C052.e3e29a66619759d3e467b3ff2d5c30bc%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="004351.html">
+   <LINK REL="Next"  HREF="004354.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1715: Tracker Deadlock on AppLooper Port</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231715%3A%20Tracker%20Deadlock%20on%20AppLooper%20Port&In-Reply-To=%3C052.e3e29a66619759d3e467b3ff2d5c30bc%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1715: Tracker Deadlock on AppLooper Port">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Jan 19 19:34:20 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="004351.html">[Haiku-bugs] [Haiku] #1715: Tracker Deadlock on AppLooper Port
+</A></li>
+        <LI>Next message: <A HREF="004354.html">[Haiku-bugs] [Haiku] #1716: Copying and removing some files (about 2 Mo) in the same destination directory two times corrupt the file system
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4353">[ date ]</a>
+              <a href="thread.html#4353">[ thread ]</a>
+              <a href="subject.html#4353">[ subject ]</a>
+              <a href="author.html#4353">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1715: Tracker Deadlock on AppLooper Port
+-------------------------------------+--------------------------------------
+  Reporter:  bonefish                |       Owner:  axeld         
+      Type:  bug                     |      Status:  new           
+  Priority:  normal                  |   Milestone:  R1            
+ Component:  - Applications/Tracker  |     Version:  R1 development
+Resolution:                          |    Platform:  All           
+-------------------------------------+--------------------------------------
+Comment (by bonefish):
+
+ Replying to [comment:1 axeld]:
+ &gt; I've seen this as well, but only after BeGeistert. When it happens here,
+ the Deskbar is locked up, too, and Tracker doesn't show at all. When I
+ then kill the Deskbar, Tracker gets to that point most of the time,
+ sometimes it manages to start completely, though.
+ &gt;
+ &gt; It either has something to do with the ProcessController automatism, or
+ with the Registrar changes you did with Michael during BeGeistert.
+
+ The only actual change in the registrar was that MIME notification
+ messages are now sent using the message deliverer service, so that the
+ MIME manager thread won't block when the target port is full. This
+ shouldn't have any effect on other apps.
+
+ &gt; I'm pretty certain, though, that I didn't see this problem before you
+ added ProcessController to the Deskbar.
+
+ It may very well be, that the bug shows up (more often) due to this
+ change. I don't know about Deskbar (it looked normal when I encountered
+ the bug, but I didn't try to use it), but Tracker definitely has at least
+ a design problem. Sending messages to your own port is just not a good
+ idea. Though I wonder why the port is used anyway, though -- shouldn't
+ local messages bypass the port?
+
+ Anyway, I suppose there's just too much initialization done in
+ ReadyToRun(), so that the port can run full. It would be interesting to
+ know what messages are queue.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1715#comment:3">http://dev.haiku-os.org/ticket/1715#comment:3</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="004351.html">[Haiku-bugs] [Haiku] #1715: Tracker Deadlock on AppLooper Port
+</A></li>
+	<LI>Next message: <A HREF="004354.html">[Haiku-bugs] [Haiku] #1716: Copying and removing some files (about 2 Mo) in the same destination directory two times corrupt the file system
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4353">[ date ]</a>
+              <a href="thread.html#4353">[ thread ]</a>
+              <a href="subject.html#4353">[ subject ]</a>
+              <a href="author.html#4353">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

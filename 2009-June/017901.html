@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4004: Haiku booting hangs at the 5th icon	on Intel ICH9
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234004%3A%20Haiku%20booting%20hangs%20at%20the%205th%20icon%0A%09on%20Intel%20ICH9&In-Reply-To=%3C057.b89216d5496150bec77d4e52edff02c6%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="017893.html">
+   <LINK REL="Next"  HREF="017907.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4004: Haiku booting hangs at the 5th icon	on Intel ICH9</H1>
+    <B>e_barsukowski</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234004%3A%20Haiku%20booting%20hangs%20at%20the%205th%20icon%0A%09on%20Intel%20ICH9&In-Reply-To=%3C057.b89216d5496150bec77d4e52edff02c6%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4004: Haiku booting hangs at the 5th icon	on Intel ICH9">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Jun  6 23:52:13 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="017893.html">[Haiku-bugs] [Haiku] #4004: Haiku booting hangs at the 5th icon	on Intel ICH9
+</A></li>
+        <LI>Next message: <A HREF="017907.html">[Haiku-bugs] [Haiku] #4004: Haiku booting hangs at the 5th icon	on Intel ICH9
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17901">[ date ]</a>
+              <a href="thread.html#17901">[ thread ]</a>
+              <a href="subject.html#17901">[ subject ]</a>
+              <a href="author.html#17901">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4004: Haiku booting hangs at the 5th icon on Intel ICH9
+---------------------------+------------------------------------------------
+ Reporter:  e_barsukowski  |       Owner:  marcusoverhagen
+     Type:  bug            |      Status:  new            
+ Priority:  normal         |   Milestone:  R1             
+Component:  Drivers/Disk   |     Version:  R1 development 
+Blockedby:                 |    Platform:  x86            
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+
+Comment(by e_barsukowski):
+
+ After setting
+
+ HAIKU_ATA_STACK = 1 ;
+
+ in UserBuildConfig Haiku completely refused to recognize my IDE drives
+ (many messages &quot;ata 0 error: timeout waiting for interrupt&quot; and no
+ partitions found). After I detached both IDE drives from the system Haiku
+ hanged at the message &quot;allocate_commpage_entry(&quot;. I think it is the same
+ place where it froze before, but at that time it printed only the letter
+ &quot;a&quot; on the last line.
+
+ So, 1) 'ata' bus_manager works worse than 'ide' on my system, 2) now it
+ seems to be not the bug in disk driver, but in kernel; it is similar to
+ bug #1711, but I can't see the whole debug message because the system
+ freezes before it can print the message to the end. After rebuilding Haiku
+ with the old bus_manager I'll try to find out more information.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4004#comment:4">http://dev.haiku-os.org/ticket/4004#comment:4</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="017893.html">[Haiku-bugs] [Haiku] #4004: Haiku booting hangs at the 5th icon	on Intel ICH9
+</A></li>
+	<LI>Next message: <A HREF="017907.html">[Haiku-bugs] [Haiku] #4004: Haiku booting hangs at the 5th icon	on Intel ICH9
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17901">[ date ]</a>
+              <a href="thread.html#17901">[ thread ]</a>
+              <a href="subject.html#17901">[ subject ]</a>
+              <a href="author.html#17901">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

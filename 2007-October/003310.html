@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1423: App Network Preferences fails to recover gateway ip after reboot
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231423%3A%20App%20Network%20Preferences%20fails%20to%0A%20recover%20gateway%20ip%20after%20reboot&In-Reply-To=%3C053.f2735afe3b47858c3f39ad531160fae8%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003309.html">
+   <LINK REL="Next"  HREF="003311.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1423: App Network Preferences fails to recover gateway ip after reboot</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231423%3A%20App%20Network%20Preferences%20fails%20to%0A%20recover%20gateway%20ip%20after%20reboot&In-Reply-To=%3C053.f2735afe3b47858c3f39ad531160fae8%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1423: App Network Preferences fails to recover gateway ip after reboot">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Oct 25 01:41:05 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003309.html">[Haiku-bugs] [Haiku] #1208: Adding a &quot;Query&quot;-icon (easy)
+</A></li>
+        <LI>Next message: <A HREF="003311.html">[Haiku-bugs] [Haiku] #1423: App Network Preferences fails to recover gateway ip after reboot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3310">[ date ]</a>
+              <a href="thread.html#3310">[ thread ]</a>
+              <a href="subject.html#3310">[ subject ]</a>
+              <a href="author.html#3310">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1423: App Network Preferences fails to recover gateway ip after reboot
+---------------------------------+------------------------------------------
+  Reporter:  sicutdeux           |       Owner:  axeld         
+      Type:  bug                 |      Status:  new           
+  Priority:  normal              |   Milestone:  R1/alpha      
+ Component:  Servers/net_server  |     Version:  R1 development
+Resolution:                      |    Platform:  x86           
+---------------------------------+------------------------------------------
+Changes (by stippi):
+
+  * owner:  stippi =&gt; axeld
+  * component:  - Preferences/Network =&gt; Servers/net_server
+  * milestone:  R1 =&gt; R1/alpha
+
+Old description:
+
+&gt;<i> The app works nice except after a reboot it doesn't recover the ip from
+</I>&gt;<i> the gateway, also the app can't create the /etc/resolv.conf, i had to
+</I>&gt;<i> touch it manually before the app save the settings on it.
+</I>
+New description:
+
+ Gateway not added to routes on boot, but only when triggering the settings
+ to be reloaded.
+
+Comment:
+
+ I investigated a bit, and this should be a net_server bug, not a bug of
+ the Network preflet. With the exact same settings file: on boot,
+ net_server fails to add the gateway route in manual settings mode. When
+ the Network preflet is used to (re)write the exact same settings file, the
+ gateway is added propery. At first I thought it might be a problem in
+ which order the settins are applied (the gateway is considered as pretty
+ much the first thing), I thought it might need the other settings to be
+ originally applied to work, but moving the gateway stuff down as the last
+ thing in NetServer.cpp didn't help.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1423#comment:4">http://dev.haiku-os.org/ticket/1423#comment:4</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003309.html">[Haiku-bugs] [Haiku] #1208: Adding a &quot;Query&quot;-icon (easy)
+</A></li>
+	<LI>Next message: <A HREF="003311.html">[Haiku-bugs] [Haiku] #1423: App Network Preferences fails to recover gateway ip after reboot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3310">[ date ]</a>
+              <a href="thread.html#3310">[ thread ]</a>
+              <a href="subject.html#3310">[ subject ]</a>
+              <a href="author.html#3310">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

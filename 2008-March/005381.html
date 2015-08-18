@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1364: Bootloader can't find boot volume, booting from cd
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231364%3A%20Bootloader%20can%27t%20find%20boot%20volume%2C%0A%20booting%20from%20cd&In-Reply-To=%3C050.cf1273e1aba66cc8906b5e0f34680563%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005380.html">
+   <LINK REL="Next"  HREF="005382.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1364: Bootloader can't find boot volume, booting from cd</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231364%3A%20Bootloader%20can%27t%20find%20boot%20volume%2C%0A%20booting%20from%20cd&In-Reply-To=%3C050.cf1273e1aba66cc8906b5e0f34680563%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1364: Bootloader can't find boot volume, booting from cd">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Mar  4 15:37:47 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005380.html">[Haiku-bugs] [Haiku] #1364: Bootloader can't find boot volume, booting from cd
+</A></li>
+        <LI>Next message: <A HREF="005382.html">[Haiku-bugs] [Haiku] #1364: Bootloader can't find boot volume, booting from cd
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5381">[ date ]</a>
+              <a href="thread.html#5381">[ thread ]</a>
+              <a href="subject.html#5381">[ subject ]</a>
+              <a href="author.html#5381">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1364: Bootloader can't find boot volume, booting from cd
+---------------------------------+------------------------------------------
+  Reporter:  aldeck              |       Owner:  axeld         
+      Type:  bug                 |      Status:  new           
+  Priority:  normal              |   Milestone:  R1/alpha1     
+ Component:  System/Boot Loader  |     Version:  R1 development
+Resolution:                      |    Platform:  All           
+---------------------------------+------------------------------------------
+Comment (by mmlr):
+
+ About VMWare: are you sure that VMWare emulates multi-track CD-Roms
+ correctly at all? In fact, when using an image file of a CD there is no
+ way to tell where one track starts or ends. This is due to the fact that
+ this information is stored in the TOC of the CD, which is not part of
+ images (hence why you have to use a CUE-Sheet to burn, as the application
+ cannot know either). Under Bochs or QEMU, when emulating a CD from an
+ image, a single track CD with the full size of the image is emulated
+ because of that. I hacked in the -cdtoc option in the BeOS version of QEMU
+ to specify the starting sectors of tracks to circumvent that. When
+ emulating using a real CD as a source though, they will read and use the
+ TOC of that CD.
+ So if you are using VMWare with a CD image you might not be able to get
+ this to work. What you can try to test whether or not the multi track CD
+ is emulated correctly is to boot Haiku from the HD image and have the CD
+ image attached and then see if you have both, the iso9660 and the BFS
+ track available in the mount menu.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1364#comment:13">http://dev.haiku-os.org/ticket/1364#comment:13</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005380.html">[Haiku-bugs] [Haiku] #1364: Bootloader can't find boot volume, booting from cd
+</A></li>
+	<LI>Next message: <A HREF="005382.html">[Haiku-bugs] [Haiku] #1364: Bootloader can't find boot volume, booting from cd
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5381">[ date ]</a>
+              <a href="thread.html#5381">[ thread ]</a>
+              <a href="subject.html#5381">[ subject ]</a>
+              <a href="author.html#5381">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

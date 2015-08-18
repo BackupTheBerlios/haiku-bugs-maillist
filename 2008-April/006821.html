@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2161: r5 Terminal fails with message BShell: can't open a pty
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232161%3A%20r5%20Terminal%20fails%20with%20message%0A%20BShell%3A%20can%27t%20open%20a%20pty&In-Reply-To=%3C052.7167dc716bf57b7dfae8d99ca31abdb0%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006820.html">
+   <LINK REL="Next"  HREF="006831.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2161: r5 Terminal fails with message BShell: can't open a pty</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232161%3A%20r5%20Terminal%20fails%20with%20message%0A%20BShell%3A%20can%27t%20open%20a%20pty&In-Reply-To=%3C052.7167dc716bf57b7dfae8d99ca31abdb0%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2161: r5 Terminal fails with message BShell: can't open a pty">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Apr 26 03:40:12 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006820.html">[Haiku-bugs] [Haiku] #2161: r5 Terminal fails with message BShell: can't open a pty
+</A></li>
+        <LI>Next message: <A HREF="006831.html">[Haiku-bugs] [Haiku] #2161: r5 Terminal fails with message BShell: can't open a pty
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6821">[ date ]</a>
+              <a href="thread.html#6821">[ thread ]</a>
+              <a href="subject.html#6821">[ subject ]</a>
+              <a href="author.html#6821">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2161: r5 Terminal fails with message BShell: can't open a pty
+------------------------+---------------------------------------------------
+  Reporter:  kaoutsis   |       Owner:  axeld         
+      Type:  bug        |      Status:  new           
+  Priority:  normal     |   Milestone:  R1            
+ Component:  - General  |     Version:  R1 development
+Resolution:             |    Platform:  All           
+------------------------+---------------------------------------------------
+Comment (by bonefish):
+
+ The R5 Terminal apparently tries to open the slave end without O_NOCTTY
+ (which didn't exist on BeOS) while not being a session leader. We're POSIX
+ compliant in that we let that attempt fail. I don't think we should change
+ this behavior.
+
+ We could theoretically let the runtime loader pass the GCC version info to
+ the kernel, which could make it available to everyone interested in
+ emulating R5 behavior, including the tty driver. I can't think of any R5
+ application using ptys, that we would actually want to use under Haiku,
+ though, so I'm not really inclined to do that.
+
+ Opinions?
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2161#comment:1">http://dev.haiku-os.org/ticket/2161#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006820.html">[Haiku-bugs] [Haiku] #2161: r5 Terminal fails with message BShell: can't open a pty
+</A></li>
+	<LI>Next message: <A HREF="006831.html">[Haiku-bugs] [Haiku] #2161: r5 Terminal fails with message BShell: can't open a pty
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6821">[ date ]</a>
+              <a href="thread.html#6821">[ thread ]</a>
+              <a href="subject.html#6821">[ subject ]</a>
+              <a href="author.html#6821">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

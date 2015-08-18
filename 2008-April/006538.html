@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2095: At boot time, kernel should load only the drivers that have been previously detected
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232095%3A%20At%20boot%20time%2C%0A%20kernel%20should%20load%20only%20the%20drivers%20that%20have%20been%20previously%0A%20detected&In-Reply-To=%3C052.1552aee00c89dd30b3061c6b776d10ce%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006536.html">
+   <LINK REL="Next"  HREF="006539.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2095: At boot time, kernel should load only the drivers that have been previously detected</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232095%3A%20At%20boot%20time%2C%0A%20kernel%20should%20load%20only%20the%20drivers%20that%20have%20been%20previously%0A%20detected&In-Reply-To=%3C052.1552aee00c89dd30b3061c6b776d10ce%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2095: At boot time, kernel should load only the drivers that have been previously detected">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Apr 18 18:55:53 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006536.html">[Haiku-bugs] [Haiku] #2095: At boot time, kernel should load only the drivers that have been previously detected
+</A></li>
+        <LI>Next message: <A HREF="006539.html">[Haiku-bugs] [Haiku] #2095: At boot time, kernel should load only the drivers that have been previously detected
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6538">[ date ]</a>
+              <a href="thread.html#6538">[ thread ]</a>
+              <a href="subject.html#6538">[ subject ]</a>
+              <a href="author.html#6538">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2095: At boot time, kernel should load only the drivers that have been previously
+detected
+--------------------------+-------------------------------------------------
+  Reporter:  kaoutsis     |       Owner:  axeld         
+      Type:  enhancement  |      Status:  new           
+  Priority:  normal       |   Milestone:  Unscheduled   
+ Component:  - General    |     Version:  R1 development
+Resolution:               |    Platform:  All           
+--------------------------+-------------------------------------------------
+Comment (by kaoutsis):
+
+ Let me try with a concrete example:
+ Taken from the syslog (qemu generated/haiku.image -serial stdio)
+ {{{
+ [...]
+ ipro100: init_hardware(0x80412f04)
+ ipro100: no hardware found.
+ ipro1000: init_hardware(0x804317c4)
+ ipro1000: no hardware found.
+ marvell_yukon: init_hardware(0x80418c3c)
+ marvell_yukon: no hardware found.
+ nforce: init_hardware(0x80415cd8)
+ nforce: no hardware found.
+ rtl8139: init_hardware(0x80411ee0)
+ rtl8139: no hardware found.
+ syskonnect: init_hardware(0x80418258)
+ syskonnect: no hardware found.
+ via_rhine: init_hardware(0x80412238)
+ via_rhine: no hardware found.
+ [...]
+ }}}
+
+ the rtl8139 driver is loaded, tested and unloaded,
+
+ But from the previously detection process:
+ {{{
+ [...]
+ PCI: [dom 0, bus  0] bus   0, device  3, function  0: vendor 10ec, device
+ 8029, revision 00
+ PCI:   class_base 02, class_function 00, class_api 00
+ PCI:   vendor 10ec: Realtek Semiconductor Co., Ltd.
+ PCI:   device 8029: RTL-8029(AS)
+ PCI:   info: Network controller (Ethernet controller)
+ PCI:   line_size 00, latency 00, header_type 00, BIST 00
+ PCI:   ROM base host 00000000, pci 00000000, size 00000000
+ PCI:   cardbus_CIS 00000000, subsystem_id 0000, subsystem_vendor_id 0000
+ PCI:   interrupt_line 0b, interrupt_pin 01, min_grant 00, max_latency 00
+ PCI:   base reg 0: host 0000c100, pci 0000c100, size 00000100, flags 01
+ PCI:   base reg 1: host 00000000, pci 00000000, size 00000000, flags 00
+ PCI:   base reg 2: host 00000000, pci 00000000, size 00000000, flags 00
+ PCI:   base reg 3: host 00000000, pci 00000000, size 00000000, flags 00
+ PCI:   base reg 4: host 00000000, pci 00000000, size 00000000, flags 00
+ PCI:   base reg 5: host 00000000, pci 00000000, size 00000000, flags 00
+ PCI:   Capabilities: (not supported)
+ [...]
+ }}}
+
+ At that point, there was already available the information that the
+ network driver to be
+ loaded has to be the RTL-8029, and kernel should load that driver,
+ if available, else there is no point probing all the available net drivers
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2095#comment:6">http://dev.haiku-os.org/ticket/2095#comment:6</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006536.html">[Haiku-bugs] [Haiku] #2095: At boot time, kernel should load only the drivers that have been previously detected
+</A></li>
+	<LI>Next message: <A HREF="006539.html">[Haiku-bugs] [Haiku] #2095: At boot time, kernel should load only the drivers that have been previously detected
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6538">[ date ]</a>
+              <a href="thread.html#6538">[ thread ]</a>
+              <a href="subject.html#6538">[ subject ]</a>
+              <a href="author.html#6538">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

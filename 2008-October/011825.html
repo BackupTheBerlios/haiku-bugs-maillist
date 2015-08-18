@@ -1,0 +1,141 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2995: Screen preflet: should reselect depth in drop-down menu
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232995%3A%20Screen%20preflet%3A%20should%20reselect%0A%20depth%20in%20drop-down%20menu&In-Reply-To=%3C051.879b95e8667358544f66530fc73993b5%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011824.html">
+   <LINK REL="Next"  HREF="011694.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2995: Screen preflet: should reselect depth in drop-down menu</H1>
+    <B>Adek336</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232995%3A%20Screen%20preflet%3A%20should%20reselect%0A%20depth%20in%20drop-down%20menu&In-Reply-To=%3C051.879b95e8667358544f66530fc73993b5%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2995: Screen preflet: should reselect depth in drop-down menu">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Oct 31 15:58:58 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011824.html">[Haiku-bugs] [Haiku] #2995: Screen preflet: should reselect depth in drop-down menu
+</A></li>
+        <LI>Next message: <A HREF="011694.html">[Haiku-bugs] [Haiku] #2996: [Firefox] Properties box of a bookmark	looks bad
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11825">[ date ]</a>
+              <a href="thread.html#11825">[ thread ]</a>
+              <a href="subject.html#11825">[ subject ]</a>
+              <a href="author.html#11825">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2995: Screen preflet: should reselect depth in drop-down menu
+---------------------------------+------------------------------------------
+  Reporter:  Adek336             |       Owner:  axeld         
+      Type:  bug                 |      Status:  new           
+  Priority:  normal              |   Milestone:  R1            
+ Component:  Preferences/Screen  |     Version:  R1 development
+Resolution:                      |   Blockedby:                
+  Platform:  All                 |    Blocking:                
+---------------------------------+------------------------------------------
+
+Comment(by Adek336):
+
+ {{{
+ KERN: VESA version = 3.0
+ KERN: OEM string: NVIDIA
+ KERN:   100: 640 x 400 x 8 (a = 927, mem = 4, phy = d0000000, p = 1, b =
+ 1)
+ KERN:   101: 640 x 480 x 8 (a = 927, mem = 4, phy = d0000000, p = 1, b =
+ 1)
+ KERN:   102: 800 x 600 x 4 (a = 799, mem = 3, phy = 0, p = 4, b = 1)
+ KERN:   103: 800 x 600 x 8 (a = 927, mem = 4, phy = d0000000, p = 1, b =
+ 1)
+ KERN:   104: 1024 x 768 x 4 (a = 799, mem = 3, phy = 0, p = 4, b = 1)
+ KERN:   105: 1024 x 768 x 8 (a = 927, mem = 4, phy = d0000000, p = 1, b =
+ 1)
+ KERN:   106: 1280 x 1024 x 4 (a = 799, mem = 3, phy = 0, p = 4, b = 1)
+ KERN:   107: 1280 x 1024 x 8 (a = 927, mem = 4, phy = d0000000, p = 1, b =
+ 1)
+ KERN:   10e: 320 x 200 x 16 (a = 927, mem = 6, phy = d0000000, p = 1, b =
+ 1)
+ KERN:   10f: 320 x 200 x 32 (a = 927, mem = 6, phy = d0000000, p = 1, b =
+ 1)
+ KERN:   111: 640 x 480 x 16 (a = 927, mem = 6, phy = d0000000, p = 1, b =
+ 1)
+ KERN:   112: 640 x 480 x 32 (a = 927, mem = 6, phy = d0000000, p = 1, b =
+ 1)
+ KERN:   114: 800 x 600 x 16 (a = 927, mem = 6, phy = d0000000, p = 1, b =
+ 1)
+ KERN:   115: 800 x 600 x 32 (a = 927, mem = 6, phy = d0000000, p = 1, b =
+ 1)
+ KERN:   117: 1024 x 768 x 16 (a = 927, mem = 6, phy = d0000000, p = 1, b =
+ 1)
+ KERN:   118: 1024 x 768 x 32 (a = 927, mem = 6, phy = d0000000, p = 1, b =
+ 1)
+ KERN:   11a: 1280 x 1024 x 16 (a = 927, mem = 6, phy = d0000000, p = 1, b
+ = 1)
+ KERN:   11b: 1280 x 1024 x 32 (a = 927, mem = 6, phy = d0000000, p = 1, b
+ = 1)
+ KERN:   130: 320 x 200 x 8 (a = 927, mem = 4, phy = d0000000, p = 1, b =
+ 1)
+ KERN:   131: 320 x 400 x 8 (a = 927, mem = 4, phy = d0000000, p = 1, b =
+ 1)
+ KERN:   132: 320 x 400 x 16 (a = 927, mem = 6, phy = d0000000, p = 1, b =
+ 1)
+ KERN:   133: 320 x 400 x 32 (a = 927, mem = 6, phy = d0000000, p = 1, b =
+ 1)
+ KERN:   134: 320 x 240 x 8 (a = 927, mem = 4, phy = d0000000, p = 1, b =
+ 1)
+ KERN:   135: 320 x 240 x 16 (a = 927, mem = 6, phy = d0000000, p = 1, b =
+ 1)
+ KERN:   136: 320 x 240 x 32 (a = 927, mem = 6, phy = d0000000, p = 1, b =
+ 1)
+ KERN:   13d: 640 x 400 x 16 (a = 927, mem = 6, phy = d0000000, p = 1, b =
+ 1)
+ KERN:   13e: 640 x 400 x 32 (a = 927, mem = 6, phy = d0000000, p = 1, b =
+ 1)
+ KERN:   147: 1400 x 1050 x 8 (a = 927, mem = 4, phy = d0000000, p = 1, b =
+ 1)
+ KERN:   148: 1400 x 1050 x 16 (a = 927, mem = 6, phy = d0000000, p = 1, b
+ = 1)
+ KERN: VESA compatible graphics!
+ KERN: EDID1: 4f
+ KERN: EDID2: ebx 0
+
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2995#comment:4">http://dev.haiku-os.org/ticket/2995#comment:4</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011824.html">[Haiku-bugs] [Haiku] #2995: Screen preflet: should reselect depth in drop-down menu
+</A></li>
+	<LI>Next message: <A HREF="011694.html">[Haiku-bugs] [Haiku] #2996: [Firefox] Properties box of a bookmark	looks bad
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11825">[ date ]</a>
+              <a href="thread.html#11825">[ thread ]</a>
+              <a href="subject.html#11825">[ subject ]</a>
+              <a href="author.html#11825">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

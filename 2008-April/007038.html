@@ -1,0 +1,191 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2189: PANIC: vm_page_fault: unhandled page fault in kernel space at 0xdeadbf0f, ip 0x80297ab0
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232189%3A%20PANIC%3A%20vm_page_fault%3A%20unhandled%20page%0A%20fault%20in%20kernel%20space%20at%200xdeadbf0f%2C%20ip%200x80297ab0&In-Reply-To=%3C042.51fa43507850629cdba3cfc56283f855%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007037.html">
+   <LINK REL="Next"  HREF="007039.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2189: PANIC: vm_page_fault: unhandled page fault in kernel space at 0xdeadbf0f, ip 0x80297ab0</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232189%3A%20PANIC%3A%20vm_page_fault%3A%20unhandled%20page%0A%20fault%20in%20kernel%20space%20at%200xdeadbf0f%2C%20ip%200x80297ab0&In-Reply-To=%3C042.51fa43507850629cdba3cfc56283f855%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2189: PANIC: vm_page_fault: unhandled page fault in kernel space at 0xdeadbf0f, ip 0x80297ab0">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Apr 30 21:43:12 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007037.html">[Haiku-bugs] [Haiku] #2188: Screen prefs. window shows wrong options
+</A></li>
+        <LI>Next message: <A HREF="007039.html">[Haiku-bugs] [Haiku] #1739: Include a build system script to generate a proper 'develop' directory on Haiku
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7038">[ date ]</a>
+              <a href="thread.html#7038">[ thread ]</a>
+              <a href="subject.html#7038">[ subject ]</a>
+              <a href="author.html#7038">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2189: PANIC: vm_page_fault: unhandled page fault in kernel space at 0xdeadbf0f,
+ip 0x80297ab0
+-----------------------+----------------------------------------------------
+ Reporter:  kaliber    |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+ Platform:  All        |  
+-----------------------+----------------------------------------------------
+ During wget
+
+
+ {{{
+ vm_soft_fault: va 0xdeadbf0f not covered by area in address space
+
+ vm_page_fault: vm_soft_fault returned error 'Bad address' on fault at
+ 0xdeadbf0f, ip 0x80297ab0, write 0, user 0, thread 0xae
+
+ PANIC: vm_page_fault: unhandled page fault in kernel space at 0xdeadbf0f,
+ ip 0x80297ab0
+
+
+
+ Welcome to Kernel Debugging Land...
+
+ Running on CPU 0
+
+ kdebug&gt; bt
+
+ stack trace for thread 174 &quot;wget&quot;
+
+     kernel stack: 0x90aef000 to 0x90af3000
+
+       user stack: 0x7efe7000 to 0x7ffe7000
+
+ frame            caller     &lt;image&gt;:function + offset
+
+ 90af2a88 (+  52) 8008aea7   &lt;kernel&gt;:invoke_debugger_command + 0x00cf
+
+ 90af2abc (+  64) 8008bc50   &lt;kernel&gt;:_ParseCommand__16ExpressionParserRi +
+ 0x01f8
+
+ 90af2afc (+  48) 8008b642
+ &lt;kernel&gt;:EvaluateCommand__16ExpressionParserPCcRi + 0x01de
+
+ 90af2b2c (+ 228) 8008cd64   &lt;kernel&gt;:evaluate_debug_command + 0x0088
+
+ 90af2c10 (+  64) 800899e2   &lt;kernel&gt;:kernel_debugger_loop__Fv + 0x017a
+
+ 90af2c50 (+  48) 8008a695   &lt;kernel&gt;:kernel_debugger + 0x010d
+
+ 90af2c80 (+ 192) 8008a57d   &lt;kernel&gt;:panic + 0x0029
+
+ 90af2d40 (+  64) 80061bd3   &lt;kernel&gt;:vm_page_fault + 0x00ab
+
+ 90af2d80 (+  64) 80097651   &lt;kernel&gt;:page_fault_exception + 0x00b1
+
+ 90af2dc0 (+  12) 8009ad2d   &lt;kernel&gt;:int_bottom + 0x001d (nearest)
+
+ iframe at 0x90af2dcc (end = 0x90af2e24)
+
+  eax 0xdeadbeef     ebx 0x802a1a78      ecx 0x90da5800   edx 0x90e1f180
+
+  esi 0x90e1f000     edi 0x90dfa000      ebp 0x90af2e44   esp 0x90af2e00
+
+  eip 0x80297ab0  eflags 0x10293
+
+  vector: 0xe, error code: 0x0
+
+ 90af2dcc (+ 120) 80297ab0   &lt;/boot/beos/system/add-
+ ons/kernel/network/stack&gt;:socket_free__FP10net_socket + 0x0020
+
+ 90af2e44 (+  48) 8029e655   &lt;/boot/beos/system/add-
+ ons/kernel/network/stack&gt;:stack_interface_free__FP10net_socket + 0x0025
+
+ 90af2e74 (+  32) 8004ae2f   &lt;kernel&gt;:socket_free__FP15file_descriptor +
+ 0x001b
+
+ 90af2e94 (+  48) 80043890   &lt;kernel&gt;:put_fd + 0x0038
+
+ 90af2ec4 (+  64) 8004397a   &lt;kernel&gt;:close_fd_index + 0x0032
+
+ 90af2f04 (+  32) 80044359   &lt;kernel&gt;:common_close__Fib + 0x0031
+
+ 90af2f24 (+  32) 80044c30   &lt;kernel&gt;:_user_close + 0x0018
+
+ 90af2f44 (+ 100) 8009aea2   &lt;kernel&gt;:pre_syscall_debug_done + 0x0002
+ (nearest)
+
+ iframe at 0x90af2fa8 (end = 0x90af3000)
+
+  eax 0x79           ebx 0x32cc30        ecx 0x7ffe6aa0   edx 0xffff0104
+
+  esi 0xb            edi 0xb             ebp 0x7ffe6acc   esp 0x90af2fdc
+
+  eip 0xffff0104  eflags 0x203
+
+  vector: 0x63, error code: 0x0
+
+ 90af2fa8 (+   0) ffff0104
+
+ 7ffe6acc (+  48) 00206ad0   &lt;_APP_&gt;:test_socket_open + 0x01b8 (nearest)
+
+ 7ffe6afc (+  48) 00206f89   &lt;_APP_&gt;:fd_close + 0x0061
+
+ 7ffe6b2c (+ 160) 0020f109   &lt;_APP_&gt;:skey_response + 0x1c55 (nearest)
+
+ 7ffe6bcc (+ 416) 0020f6ba   &lt;_APP_&gt;:skey_response + 0x2206 (nearest)
+
+ 7ffe6d6c (+  48) 0020fb85   &lt;_APP_&gt;:ftp_get_listing + 0x0095
+
+ 7ffe6d9c (+  48) 00210504   &lt;_APP_&gt;:ftp_get_listing + 0x0a14 (nearest)
+
+ 7ffe6dcc (+ 160) 00210937   &lt;_APP_&gt;:ftp_loop + 0x01f7
+
+ 7ffe6e6c (+  96) 002210e8   &lt;_APP_&gt;:retrieve_url + 0x0238
+
+ 7ffe6ecc (+ 176) 0021c725   &lt;_APP_&gt;:main + 0x0811
+
+ 7ffe6f7c (+  48) 00205893   &lt;_APP_&gt;:_start + 0x005b
+
+ 7ffe6fac (+  48) 0010078e   2780:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">runtime_loader_seg0ro at 0x00100000</A> + 0x78e
+
+ 7ffe6fdc (+   0) 7ffe6fec   2779:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">wget_main_stack at 0x7efe7000</A> + 0xffffec
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2189">http://dev.haiku-os.org/ticket/2189</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007037.html">[Haiku-bugs] [Haiku] #2188: Screen prefs. window shows wrong options
+</A></li>
+	<LI>Next message: <A HREF="007039.html">[Haiku-bugs] [Haiku] #1739: Include a build system script to generate a proper 'develop' directory on Haiku
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7038">[ date ]</a>
+              <a href="thread.html#7038">[ thread ]</a>
+              <a href="subject.html#7038">[ subject ]</a>
+              <a href="author.html#7038">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

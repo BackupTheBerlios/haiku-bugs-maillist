@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2805: Tracker crashes after extracting files from an archive
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232805%3A%20Tracker%20crashes%20after%20extracting%0A%20files%20from%20an%20archive&In-Reply-To=%3C051.65f3c16e57f4621fc74e9513912ca087%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012838.html">
+   <LINK REL="Next"  HREF="012840.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2805: Tracker crashes after extracting files from an archive</H1>
+    <B>karmak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232805%3A%20Tracker%20crashes%20after%20extracting%0A%20files%20from%20an%20archive&In-Reply-To=%3C051.65f3c16e57f4621fc74e9513912ca087%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2805: Tracker crashes after extracting files from an archive">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Nov 28 14:52:59 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012838.html">[Haiku-bugs] [Haiku] #3183: Memory leak using realloc	functionality.
+</A></li>
+        <LI>Next message: <A HREF="012840.html">[Haiku-bugs] [Haiku] #3184: deskbar clock has wrong width
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12837">[ date ]</a>
+              <a href="thread.html#12837">[ thread ]</a>
+              <a href="subject.html#12837">[ subject ]</a>
+              <a href="author.html#12837">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2805: Tracker crashes after extracting files from an archive
+-----------------------------------+----------------------------------------
+  Reporter:  scottmc               |       Owner:  axeld         
+      Type:  bug                   |      Status:  new           
+  Priority:  critical              |   Milestone:  R1/alpha1     
+ Component:  Applications/Tracker  |     Version:  R1 development
+Resolution:                        |   Blockedby:                
+  Platform:  All                   |    Blocking:                
+-----------------------------------+----------------------------------------
+Changes (by karmak):
+
+ * cc: <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">olive at deep-ocean.net</A> (added)
+
+
+Comment:
+
+ Hi, I think I've got a valid backtrace ; when trying to sort my mail/in
+ folder (3100+ messages inside) by subject, i've got this one (on real
+ hardware, r28734):
+ {{{
+ #0  0x003bef0a in BList::ItemAt () from /boot/beos/system/lib/libbe.so
+ #1  0x0057a3ed in BPrivate::BPose::WidgetFor ()
+    from /boot/beos/system/lib/libtracker.so
+ #2  0x00599432 in PoseCompareAddWidget ()
+    from /boot/beos/system/lib/libtracker.so
+ #3  0x0059e5fb in PoseCompareAddWidgetBinder ()
+    from /boot/beos/system/lib/libtracker.so
+ #4  0x003c5faf in PointerListHelperWithState::Compare ()
+    from /boot/beos/system/lib/libbe.so
+ #5  0x003c5989 in void ** __unguarded_partition&lt;void **, void *,
+ comparator&gt; ()
+    from /boot/beos/system/lib/libbe.so
+ #6  0x003c5b22 in void __introsort_loop&lt;void **, void *, long, comparator&gt;
+ ()
+    from /boot/beos/system/lib/libbe.so
+ #7  0x003bf7c4 in AbstractPointerListHelper::QuickSort ()
+    from /boot/beos/system/lib/libbe.so
+ #8  0x003bf666 in AbstractPointerListHelper::SortItems ()
+    from /boot/beos/system/lib/libbe.so
+ #9  0x003bf9cf in _PointerList_::SortItems ()
+    from /boot/beos/system/lib/libbe.so
+ #10 0x0059d363 in BObjectList&lt;BPrivate::BPose&gt;::SortItems ()
+    from /boot/beos/system/lib/libtracker.so
+ #11 0x00599791 in BPrivate::BPoseView::SortPoses ()
+    from /boot/beos/system/lib/libtracker.so
+ #12 0x005bc3af in BPrivate::ColumnDragState::Clicked ()
+ ---Type &lt;return&gt; to continue, or q &lt;return&gt; to quit---
+    from /boot/beos/system/lib/libtracker.so
+ #13 0x005bb901 in BPrivate::ColumnTrackState::MouseUp ()
+    from /boot/beos/system/lib/libtracker.so
+ #14 0x005bafe8 in BPrivate::BTitleView::MouseUp ()
+    from /boot/beos/system/lib/libtracker.so
+ #15 0x00360ae1 in BWindow::DispatchMessage ()
+    from /boot/beos/system/lib/libbe.so
+ #16 0x00364e4f in BWindow::task_looper () from
+ /boot/beos/system/lib/libbe.so
+ #17 0x002b60cf in BLooper::_task0_ () from /boot/beos/system/lib/libbe.so
+ #18 0x00668640 in thread_entry () from /boot/beos/system/lib/libroot.so
+ #19 0x701c5fec in ?? ()
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2805#comment:10">http://dev.haiku-os.org/ticket/2805#comment:10</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012838.html">[Haiku-bugs] [Haiku] #3183: Memory leak using realloc	functionality.
+</A></li>
+	<LI>Next message: <A HREF="012840.html">[Haiku-bugs] [Haiku] #3184: deskbar clock has wrong width
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12837">[ date ]</a>
+              <a href="thread.html#12837">[ thread ]</a>
+              <a href="subject.html#12837">[ subject ]</a>
+              <a href="author.html#12837">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

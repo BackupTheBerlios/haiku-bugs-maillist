@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1942: vm_soft_fault when booting with pxe and a haiku.image through remote_disk_server, 
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231942%3A%20vm_soft_fault%20when%20booting%20with%20pxe%20and%0A%20a%20haiku.image%20through%20remote_disk_server%2C%20&In-Reply-To=%3C038.4a960e08b8fc5f80593ec3365106b526%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005682.html">
+   <LINK REL="Next"  HREF="005686.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1942: vm_soft_fault when booting with pxe and a haiku.image through remote_disk_server, </H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231942%3A%20vm_soft_fault%20when%20booting%20with%20pxe%20and%0A%20a%20haiku.image%20through%20remote_disk_server%2C%20&In-Reply-To=%3C038.4a960e08b8fc5f80593ec3365106b526%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1942: vm_soft_fault when booting with pxe and a haiku.image through remote_disk_server, ">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Mar 20 00:46:33 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005682.html">[Haiku-bugs] [Haiku] #1711: Haiku stops booting at allocate_commpage_entry(4, 34)
+</A></li>
+        <LI>Next message: <A HREF="005686.html">[Haiku-bugs] [Haiku] #1942: vm_soft_fault when booting with pxe and a haiku.image through remote_disk_server, 
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5683">[ date ]</a>
+              <a href="thread.html#5683">[ thread ]</a>
+              <a href="subject.html#5683">[ subject ]</a>
+              <a href="author.html#5683">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1942: vm_soft_fault when booting with pxe and a haiku.image through
+remote_disk_server,
+--------------------------------------+-------------------------------------
+ Reporter:  oco                       |       Owner:  axeld         
+     Type:  bug                       |      Status:  new           
+ Priority:  normal                    |   Milestone:  R1            
+Component:  Network &amp; Internet/Stack  |     Version:  R1 development
+ Platform:  All                       |  
+--------------------------------------+-------------------------------------
+ When booting a machine with pxe and a haiku.image through the
+ remote_disk_server, there is a vm_soft_fault. The system seems to reload
+ the network stack, already used to access the remote disk.
+
+ Here is the error :
+
+ vm_soft_fault: va 0x8164a18a not covered by area in address space
+ vm_page_fault: vm_soft_fault returned error 'Bad address' on fault at
+ 0x8164a18a
+ , ip 0x8164a18a, write 0, user 0, thread 0x2d
+ PANIC: vm_page_fault: unhandled page fault in kernel space at 0x8164a18a,
+ ip 0x8
+ 164a18a.
+
+ The serial output is attached (with stack trace).
+
+ The computer is an old celeron 300 with a rtl8139 network card. I use a
+ gPXE floppy disk to boot the system.
+
+ Workaround :
+
+ - mount the haiku.image
+ - rename /&lt;mount point&gt;/beos/system/add-on/kernel/drivers/dev/net to
+ /&lt;mount point&gt;/beos/system/add-on/kernel/drivers/dev/net.arch.
+ - unmount
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1942">http://dev.haiku-os.org/ticket/1942</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005682.html">[Haiku-bugs] [Haiku] #1711: Haiku stops booting at allocate_commpage_entry(4, 34)
+</A></li>
+	<LI>Next message: <A HREF="005686.html">[Haiku-bugs] [Haiku] #1942: vm_soft_fault when booting with pxe and a haiku.image through remote_disk_server, 
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5683">[ date ]</a>
+              <a href="thread.html#5683">[ thread ]</a>
+              <a href="subject.html#5683">[ subject ]</a>
+              <a href="author.html#5683">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

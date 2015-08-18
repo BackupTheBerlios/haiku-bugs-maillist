@@ -1,0 +1,256 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2923: install-haiku target hangs when trying to install to /boot
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232923%3A%20install-haiku%20target%20hangs%20when%20trying%0A%20to%20install%20to%20/boot&In-Reply-To=%3C044.c8280c4e82c0524ac79caceed639dac1%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011363.html">
+   <LINK REL="Next"  HREF="011365.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2923: install-haiku target hangs when trying to install to /boot</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232923%3A%20install-haiku%20target%20hangs%20when%20trying%0A%20to%20install%20to%20/boot&In-Reply-To=%3C044.c8280c4e82c0524ac79caceed639dac1%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2923: install-haiku target hangs when trying to install to /boot">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Oct 24 05:20:00 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011363.html">[Haiku-bugs] [Haiku] #2643: Black screen when DVI connected
+</A></li>
+        <LI>Next message: <A HREF="011365.html">[Haiku-bugs] [Haiku] #2923: install-haiku target hangs when trying to install to /boot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11364">[ date ]</a>
+              <a href="thread.html#11364">[ thread ]</a>
+              <a href="subject.html#11364">[ subject ]</a>
+              <a href="author.html#11364">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2923: install-haiku target hangs when trying to install to /boot
+---------------------------+------------------------------------------------
+ Reporter:  anevilyak      |       Owner:  bonefish      
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1 development
+Blockedby:                 |    Platform:  All           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+ Just to see if it would work, I tried jam -q install-haiku from within
+ Haiku. It got stuck while doing an ln however, in the following way:
+
+ {{{
+  bt 34760
+ stack trace for thread 34760 &quot;ln&quot;
+     kernel stack: 0x98735000 to 0x98739000
+       user stack: 0x7efef000 to 0x7ffef000
+ frame               caller     &lt;image&gt;:function + offset
+  0 98738664 (+  48) 800574d8   &lt;kernel_x86&gt; context_switch(thread*:
+ 0x90136800, thread*: 0x819de000) + 0x003c
+  1 98738694 (+  64) 800577bf   &lt;kernel_x86&gt; simple_reschedule() + 0x029f
+  2 987386d4 (+  48) 8003cf61   &lt;kernel_x86&gt;:_mutex_lock + 0x0149
+  3 98738704 (+  48) 8003c0d0   &lt;kernel_x86&gt;:recursive_lock_lock + 0x0068
+  4 98738734 (+  48) 8006fef3   &lt;kernel_x86&gt; driver_removed(0x819bed60
+ &quot;/boot/beos/system/add-ons/kernel/drivers/dev/bus/usb_raw&quot;) + 0x0037
+  5 98738764 (+ 224) 80070cd1   &lt;kernel_x86&gt;
+ DirectoryWatcher&lt;0x8011f7ac&gt;::EventOccured(NotificationService&amp;:
+ 0x8011f8a0, BPrivate8KMessage*: 0x987388d0, int16: 12899, int32:
+ -1737258800, int8: 3, 0x98738e04, int32: -2146913081, 0x987388d0, 0xa4,
+ 0x98738d34, 0x811ce040, 0x81171bec, 0x0, 0x98738d34) + 0x0439
+  6 98738844 (+  64) 8008b344   &lt;kernel_x86&gt;
+ NodeMonitorService&lt;0x8011f8a0&gt;::_SendNotificationMessage(BPrivate8KMessageP32interest&amp;:
+ 0x987388d0, 0x98738cfc, 0x807e561c00000001, 0x3, 0x9a901550, 0x246,
+ 0x81171b0c, 0x98738980, 0x400044, 0x0, 0x400063, 0x0, 0x3, 0x2, 0x1,
+ 0x6b4d7347, 0x1c, 0x0, 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff,
+ 0x987388fc, 0x400, 0x0, 0xa4, 0x6b4d7347, 0xc8, 0x4e444d4e, 0xffffffff,
+ 0xffffffff, 0xffffffff, 0xffffffff) + 0x0054
+  7 98738884 (+1200) 8008b5db   &lt;kernel_x86&gt;
+ NodeMonitorService&lt;0x8011f8a0&gt;::NotifyEntryCreatedOrRemoved(int32: 2,
+ int32: 3, int64: 4194403, 0x98738e04 &quot;usb_raw&quot;, int64: 4194372) + 0x0217
+  8 98738d34 (+  64) 8008c49c   &lt;kernel_x86&gt;:notify_entry_removed + 0x002c
+  9 98738d74 (+  96) 807de9b7   &lt;bfs&gt; bfs_unlink(fs_volume*: 0x81171ad4,
+ fs_vnode*: 0x9a9036e8, 0x98738e04 &quot;usb_raw&quot;) + 0x0153
+ 10 98738dd4 (+ 304) 80099ba9   &lt;kernel_x86&gt; common_unlink(int32: -1,
+ 0x819be100 &quot;/Haiku&quot;, false) + 0x0065
+ 11 98738f04 (+  64) 8009eb73   &lt;kernel_x86&gt;:_user_unlink + 0x0093
+ 12 98738f44 (+ 100) 800cf621   &lt;kernel_x86&gt;:handle_syscall + 0x00be
+ user iframe at 0x98738fa8 (end = 0x98739000)
+  eax 0x6e           ebx 0x2b971c        ecx 0x7ffeedf0   edx 0xffff0104
+  esi 0x7ffef538     edi 0x7ffef5da      ebp 0x7ffeee1c   esp 0x98738fdc
+  eip 0xffff0104  eflags 0x207      user esp 0x7ffeedf0
+  vector: 0x63, error code: 0x0
+ 13 98738fa8 (+   0) ffff0104   &lt;commpage&gt;:commpage_syscall + 0x0004
+ 14 7ffeee1c (+ 208) 0020201e   &lt;_APP_&gt;:_term_after (nearest) + 0x04a2
+ 15 7ffeeeec (+ 144) 0020286a   &lt;_APP_&gt;:main + 0x04e2
+ 16 7ffeef7c (+  48) 00201a9b   &lt;_APP_&gt;:_start + 0x005b
+ 17 7ffeefac (+  48) 001008ea
+ &lt;/boot/beos/system/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">runtime_loader at 0x00100000</A>&gt;:unknown + 0x08ea
+ 18 7ffeefdc (+   0) 7ffeefec   1127921:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">ln_main_stack at 0x7efef000</A> + 0xffffec
+
+ id:          34760 (0x87c8)
+ name:        'ln'
+ args:        '/bin/ln -sfn ../../bin/usb_raw /Haiku/beos/system/add-
+ ons/kerne'
+ next:        0x00000000
+ parent:      0x812f9990 (id = 34724)
+ children:    0x00000000
+ num_threads: 1
+ state:       0
+ flags:       0x1
+ io_context:  0x81320fc0
+ address_space: 0x9a8f5c30
+ main_thread: 0x90136800
+ thread_list: 0x90136800
+ group_id:    34494
+ session_id:  256
+ }}}
+
+ The mutex in question was:
+ {{{
+ kdebug&gt; call 34760 2 -1
+ thread 34760, ln
+ 987386d4 8003cf61   &lt;kernel_x86&gt;:_mutex_lock(0x8011f7c8)
+
+ kdebug&gt; mutex 0x8011f7c8
+ mutex 0x8011f7c8:
+   name:            legacy driver
+   flags:           0x0
+   count:           -3
+   waiting threads: 34760 34772
+ }}}
+
+ Thread 34772:
+ {{{
+ THREAD: 0x90137000
+ id:                 34772 (0x87d4)
+ name:               &quot;Terminal&quot;
+ all_next:           0x90116800
+ team_next:          0x00000000
+ q_next:             0x80115b20
+ priority:           10 (next 10, I/O: -1)
+ state:              waiting
+ next_state:         waiting
+ cpu:                0x00000000
+ sig_pending:        0x0 (blocked: 0x0)
+ in_kernel:          1
+ waiting for:        mutex 0x8011f7c8
+ fault_handler:      0x00000000
+ args:               0x812fc348 0x00000000
+ entry:              0x8004cedc
+ team:               0x9b85c330, &quot;Terminal&quot;
+   exit.sem:         1009244
+   exit.status:      0x0 (No error)
+   exit.reason:      0x0
+   exit.signal:      0x0
+   exit.waiters:
+ kernel_stack_area:  1127968
+ kernel_stack_base:  0x98749000
+ user_stack_area:    1127969
+ user_stack_base:    0x7efef000
+ user_local_storage: 0x7ffef000
+ kernel_errno:       0x0 (No error)
+ kernel_time:        6112
+ user_time:          12384
+ flags:              0x0
+ architecture dependant section:
+         esp: 0x9874cbf8
+         ss: 0x00000010
+         fpu_state at 0x901373d0
+
+ stack trace for thread 34772 &quot;Terminal&quot;
+     kernel stack: 0x98749000 to 0x9874d000
+       user stack: 0x7efef000 to 0x7ffef000
+ frame               caller     &lt;image&gt;:function + offset
+  0 9874cc54 (+  48) 800574d8   &lt;kernel_x86&gt; context_switch(thread*:
+ 0x90137000, thread*: 0x80115b20) + 0x003c
+  1 9874cc84 (+  64) 800577bf   &lt;kernel_x86&gt; simple_reschedule() + 0x029f
+  2 9874ccc4 (+  48) 8003cf61   &lt;kernel_x86&gt;:_mutex_lock + 0x0149
+  3 9874ccf4 (+  48) 8003c0d0   &lt;kernel_x86&gt;:recursive_lock_lock + 0x0068
+  4 9874cd24 (+  48) 800715ed   &lt;kernel_x86&gt;
+ LegacyDevice&lt;0x811d4540&gt;::InitDevice(0x0) + 0x0029
+  5 9874cd54 (+ 320) 8006ae06   &lt;kernel_x86&gt; devfs_open(fs_volume*:
+ 0x81171284, fs_vnode*: 0x812ab3b8, int32: 4098, 0x9874cec0) + 0x0092
+  6 9874ce94 (+  48) 8009808c   &lt;kernel_x86&gt; open_vnode(vnode*: 0x812ab3b8,
+ int32: 4098, false) + 0x0024
+  7 9874cec4 (+  64) 800987ca   &lt;kernel_x86&gt; file_open(int32: -1,
+ 0x819bd080 &quot;/dev&quot;, int32: 4098, false) + 0x0062
+  8 9874cf04 (+  64) 8009dff1   &lt;kernel_x86&gt;:_user_open + 0x00a1
+  9 9874cf44 (+ 100) 800cf621   &lt;kernel_x86&gt;:handle_syscall + 0x00be
+ user iframe at 0x9874cfa8 (end = 0x9874d000)
+  eax 0x60           ebx 0x84671c        ecx 0x7ffee600   edx 0xffff0104
+  esi 0x18021fb0     edi 0x1             ebp 0x7ffee62c   esp 0x9874cfdc
+  eip 0xffff0104  eflags 0x246      user esp 0x7ffee600
+  vector: 0x63, error code: 0x0
+ 10 9874cfa8 (+   0) ffff0104   &lt;commpage&gt;:commpage_syscall + 0x0004
+ 11 7ffee62c (+  48) 00817e82   &lt;libroot.so&gt;:posix_openpt + 0x0026
+ 12 7ffee65c (+ 528) 0021e854   &lt;_APP_&gt; Shell&lt;0x1801fc80&gt;::_Spawn(int32:
+ 25, int32: 80, 0x231182 &quot;UTF8&quot;, int32: 2, 0x1801a298 &quot;@&#227;&quot;) + 0x005c
+ 13 7ffee86c (+  64) 0021e40c   &lt;_APP_&gt; Shell&lt;0x1801fc80&gt;::Open(int32: 25,
+ int32: 80, 0x231182 &quot;UTF8&quot;, int32: 2, 0x1801a298 &quot;@&#227;&quot;) + 0x0048
+ 14 7ffee8ac (+ 144) 0022470e   &lt;_APP_&gt;
+ TermView&lt;0x18021fb0&gt;::_InitObject(int32: 2, 0x1801a298 &quot;@&#227;&quot;) + 0x056e
+ 15 7ffee93c (+  64) 00223ddb   &lt;_APP_&gt;:__8TermViewiilPPCcl + 0x0167
+ 16 7ffee97c (+  64) 002309e1   &lt;_APP_&gt;:__14CustomTermViewlllPPCcl + 0x0035
+ 17 7ffee9bc (+ 240) 0022fb51   &lt;_APP_&gt;
+ TermWindow&lt;0x180221a8&gt;::_AddTab(Arguments*: 0x1801c2b0) + 0x00ad
+ 18 7ffeeaac (+  80) 0022c339   &lt;_APP_&gt;:__10TermWindowG5BRectPCcP9Arguments
+ + 0x0165
+ 19 7ffeeafc (+  64) 0022056d   &lt;_APP_&gt;
+ TermApp&lt;0x7ffeee50&gt;::_MakeTermWindow(BRect&amp;: 0x7ffeef68) + 0x0075
+ 20 7ffeeb3c (+  96) 0021fc53   &lt;_APP_&gt;
+ TermApp&lt;0x7ffeee50&gt;::ReadyToRun(0x7ffeecd4) + 0x00ef
+ 21 7ffeeb9c (+ 496) 002eb311   &lt;libbe.so&gt;
+ BApplication&lt;0x7ffeee50&gt;::DispatchMessage(BMessage*: 0x1800fd70,
+ BHandler*: 0x7ffeee50) + 0x02f9
+ 22 7ffeed8c (+  64) 002f648d   &lt;libbe.so&gt;
+ BLooper&lt;0x7ffeee50&gt;::task_looper(0x7ffeef5c) + 0x0211
+ 23 7ffeedcc (+  64) 002e9b89   &lt;libbe.so&gt;
+ BApplication&lt;0x7ffeee50&gt;::Run(0x84) + 0x0075
+ 24 7ffeee0c (+ 368) 0021bdd3   &lt;_APP_&gt;:main + 0x002f
+ 25 7ffeef7c (+  48) 00215713   &lt;_APP_&gt;:_start + 0x005b
+ 26 7ffeefac (+  48) 001008ea
+ &lt;/boot/beos/system/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">runtime_loader at 0x00100000</A>&gt;:unknown + 0x08ea
+ 27 7ffeefdc (+   0) 7ffeefec   1127969:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">Terminal_main_stack at 0x7efef000</A> +
+ 0xffffec
+ }}}
+
+ There doesn't seem to be an indicator as to who currently holds the mutex
+ in the info though, so I'm not sure as to how to go about looking for the
+ culprit of the deadlock.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2923">http://dev.haiku-os.org/ticket/2923</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011363.html">[Haiku-bugs] [Haiku] #2643: Black screen when DVI connected
+</A></li>
+	<LI>Next message: <A HREF="011365.html">[Haiku-bugs] [Haiku] #2923: install-haiku target hangs when trying to install to /boot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11364">[ date ]</a>
+              <a href="thread.html#11364">[ thread ]</a>
+              <a href="subject.html#11364">[ subject ]</a>
+              <a href="author.html#11364">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

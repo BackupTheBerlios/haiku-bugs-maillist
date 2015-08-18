@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #156: syslog is corrupted
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23156%3A%20syslog%20is%20corrupted&In-Reply-To=%3C059.8cf86c142d091bb45a15ab0a03d14e7b%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010722.html">
+   <LINK REL="Next"  HREF="010727.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #156: syslog is corrupted</H1>
+    <B>Adek336</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23156%3A%20syslog%20is%20corrupted&In-Reply-To=%3C059.8cf86c142d091bb45a15ab0a03d14e7b%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #156: syslog is corrupted">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Oct  2 21:21:54 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010722.html">[Haiku-bugs] [Haiku] #2796: File size of new file from template not	updated
+</A></li>
+        <LI>Next message: <A HREF="010727.html">[Haiku-bugs] [Haiku] #2767: if_re port from freebsd
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10726">[ date ]</a>
+              <a href="thread.html#10726">[ thread ]</a>
+              <a href="subject.html#10726">[ subject ]</a>
+              <a href="author.html#10726">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#156: syslog is corrupted
+------------------------------+---------------------------------------------
+  Reporter:  marcusoverhagen  |       Owner:  axeld
+      Type:  bug              |      Status:  new  
+  Priority:  high             |   Milestone:  R1   
+ Component:  System/Kernel    |     Version:       
+Resolution:                   |   Blockedby:       
+  Platform:  All              |    Blocking:       
+------------------------------+---------------------------------------------
+
+Comment(by Adek336):
+
+ In the attachment it is like
+ {{{
+ KERN: {QW&lt;syslog_write call count&gt;}{QE&lt;dprint_args call count&gt;, &lt;free
+ space in buff&gt;} message
+ }}}
+
+ We see it discards a thousand messages because of a too small buffer and
+ doesn't emit any &lt;TRUNC&gt;s or &lt;DROP&gt;s.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/156#comment:4">http://dev.haiku-os.org/ticket/156#comment:4</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010722.html">[Haiku-bugs] [Haiku] #2796: File size of new file from template not	updated
+</A></li>
+	<LI>Next message: <A HREF="010727.html">[Haiku-bugs] [Haiku] #2767: if_re port from freebsd
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10726">[ date ]</a>
+              <a href="thread.html#10726">[ thread ]</a>
+              <a href="subject.html#10726">[ subject ]</a>
+              <a href="author.html#10726">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

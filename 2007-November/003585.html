@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1621: Rewrite menu tracking using Mouse	hooks
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231621%3A%20Rewrite%20menu%20tracking%20using%20Mouse%0A%09hooks&In-Reply-To=%3C054.7c91caaa73df7ea640a72efa2edb30e1%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003568.html">
+   <LINK REL="Next"  HREF="003588.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1621: Rewrite menu tracking using Mouse	hooks</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231621%3A%20Rewrite%20menu%20tracking%20using%20Mouse%0A%09hooks&In-Reply-To=%3C054.7c91caaa73df7ea640a72efa2edb30e1%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1621: Rewrite menu tracking using Mouse	hooks">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Nov 13 11:37:09 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003568.html">[Haiku-bugs] [Haiku] #1621: Rewrite menu tracking using Mouse	hooks
+</A></li>
+        <LI>Next message: <A HREF="003588.html">[Haiku-bugs] [Haiku] #1621: Rewrite menu tracking using Mouse	hooks
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3585">[ date ]</a>
+              <a href="thread.html#3585">[ thread ]</a>
+              <a href="subject.html#3585">[ subject ]</a>
+              <a href="author.html#3585">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1621: Rewrite menu tracking using Mouse hooks
+-------------------------------+--------------------------------------------
+  Reporter:  jackburton        |       Owner:  jackburton 
+      Type:  enhancement       |      Status:  assigned   
+  Priority:  normal            |   Milestone:  Unscheduled
+ Component:  - User Interface  |     Version:             
+Resolution:                    |    Platform:  All        
+-------------------------------+--------------------------------------------
+Comment (by jackburton):
+
+ I have a preliminary patch. I'm attaching it here so that other people can
+ have a look.
+
+ Working: Menubars and popup menus (tracker ones, too).
+ Not working: Menus inside a menufield
+ Other issues: Sometimes menubars keep the focus even when menus are
+ closed, other issues
+
+ Menu tracking now works like this:
+ The menu tracking &quot;loop&quot; starts with BMenu/BMenuBar::_Track(), usually
+ called from a spawned
+ thread (just like the old implementation).
+ Here, the root menu just tries to acquire a semaphore.
+ This new implementation does all the work in the Mouse hooks, and when
+ it's time
+ to stop the menu tracking, _StopTracking() is called, using a pointer to
+ the root menu (called
+ fTrackingMenu, maintained for every menu).
+ The only menu which sets the event mask to receive mouse events happening
+ outside its bounds rectangle is the tracking menu. Since we need to do
+ some things on MouseDown, when the mouse pointer is outside any menu, we
+ need to keep track of the position of the mouse pointer vs the menus. To
+ do that, a menu increments an int32 in the root menu when the mouse enters
+ its bounds, and decrements its when it exits.
+ Hope I didn't forget anything.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1621#comment:2">http://dev.haiku-os.org/ticket/1621#comment:2</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003568.html">[Haiku-bugs] [Haiku] #1621: Rewrite menu tracking using Mouse	hooks
+</A></li>
+	<LI>Next message: <A HREF="003588.html">[Haiku-bugs] [Haiku] #1621: Rewrite menu tracking using Mouse	hooks
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3585">[ date ]</a>
+              <a href="thread.html#3585">[ thread ]</a>
+              <a href="subject.html#3585">[ subject ]</a>
+              <a href="author.html#3585">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

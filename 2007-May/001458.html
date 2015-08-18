@@ -1,0 +1,123 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1238: ftp only downloads filess smaller than 1447 bytes. Sometimes appears 'hung' on larger files.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231238%3A%20ftp%20only%20downloads%20filess%20smaller%0A%20than%201447%20bytes.%20Sometimes%20appears%20%27hung%27%20on%20larger%20files.&In-Reply-To=%3C051.2537a648fd2d53bbb5088a19a79b9a65%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001457.html">
+   <LINK REL="Next"  HREF="001481.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1238: ftp only downloads filess smaller than 1447 bytes. Sometimes appears 'hung' on larger files.</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231238%3A%20ftp%20only%20downloads%20filess%20smaller%0A%20than%201447%20bytes.%20Sometimes%20appears%20%27hung%27%20on%20larger%20files.&In-Reply-To=%3C051.2537a648fd2d53bbb5088a19a79b9a65%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1238: ftp only downloads filess smaller than 1447 bytes. Sometimes appears 'hung' on larger files.">trac at haiku-os.org
+       </A><BR>
+    <I>Tue May 22 00:58:20 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001457.html">[Haiku-bugs] [Haiku] #1238: ftp only downloads filess smaller than 1447 bytes. Sometimes appears 'hung' on larger files.
+</A></li>
+        <LI>Next message: <A HREF="001481.html">[Haiku-bugs] [Haiku] #1238: ftp only downloads filess smaller than 1447 bytes. Sometimes appears 'hung' on larger files.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1458">[ date ]</a>
+              <a href="thread.html#1458">[ thread ]</a>
+              <a href="subject.html#1458">[ subject ]</a>
+              <a href="author.html#1458">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1238: ftp only downloads filess smaller than 1447 bytes. Sometimes appears 'hung'
+on larger files.
+---------------------------------------+------------------------------------
+  Reporter:  bouncer                   |       Owner:  hugosantos    
+      Type:  bug                       |      Status:  closed        
+  Priority:  normal                    |   Milestone:  R1            
+ Component:  - Network &amp; Internet/TCP  |     Version:  R1 development
+Resolution:  fixed                     |    Platform:  All           
+---------------------------------------+------------------------------------
+Changes (by hugosantos):
+
+  * status:  assigned =&gt; closed
+  * resolution:  =&gt; fixed
+
+Comment:
+
+ Replying to [ticket:1238 bouncer]:
+ &gt; 1)  Start Haiku.
+ &gt; 2)  Connect to a BeOS machine via  'ftp'
+ &gt;     (BTW - Thanks Hugo, for fixing the vm_page_fault problem).
+ &gt; 3)  Attempt to 'get'  a file.
+ &gt;
+ &gt; Particular details.
+ &gt; a) First attempt was to fetch a file of approx. 5000 byes in size.
+ &gt;    The  ftp just  sat there. I could see the cursor block give a pulse
+ &gt;    every second. But there was no acvitiy.
+ &gt; b) Something (I don't know what) caused ftp to break out of that with an
+ &gt;     'interrupted system call'  message.  But 'ftp' did not die.
+ &gt;     I got the prompt back.
+ &gt; c) I kept trying to download various files. After some experimentation
+ &gt;    I determined that ftp had the following behaviour.
+ &gt;
+ &gt;     - Files  less than or equal to  1446 bytes in size  would download
+ successfully.
+ &gt;     - Files  greater than 1446 bytes but not too large ( less than 2000
+ ??? )
+ &gt;       in size would not download. But would not 'hang' the ftp either.
+ &gt;         o  Ftp 'get'  returned immediatly - with 0 bytes transferred.
+ &gt;         o  A File of 0 bytes will have been created.
+ &gt;     - Files of a large size (eg: 5000 bytes) would 'hang' the ftp
+ operation.
+ &gt;       The 'get' operation never came back.
+ &gt;       A  'control-C' would however get the ftp cursor back again.
+ &gt;
+ &gt;       If not too large  (eg:  1447 - 3000 ? )  the ftp would just return
+ &gt;       without having obtained the file
+ &gt;
+ &gt; Hardware:
+ &gt; This bug occured on real hardware. Using the  e1000 network driver.
+ &gt; The code compiled was at revision 21179.
+ &gt;
+ &gt; Please see the attached file.
+
+ r21195 should fix this issue. I've also been able to further test e1000
+ with success (did a couple large downloads). If you still get any issues
+ regarding this specific issue, please re-open. If other problems arise,
+ keep opening those bugs. And thanks for the help with testing.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1238#comment:10">http://dev.haiku-os.org/ticket/1238#comment:10</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001457.html">[Haiku-bugs] [Haiku] #1238: ftp only downloads filess smaller than 1447 bytes. Sometimes appears 'hung' on larger files.
+</A></li>
+	<LI>Next message: <A HREF="001481.html">[Haiku-bugs] [Haiku] #1238: ftp only downloads filess smaller than 1447 bytes. Sometimes appears 'hung' on larger files.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1458">[ date ]</a>
+              <a href="thread.html#1458">[ thread ]</a>
+              <a href="subject.html#1458">[ subject ]</a>
+              <a href="author.html#1458">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

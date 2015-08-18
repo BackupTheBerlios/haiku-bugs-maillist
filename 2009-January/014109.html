@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3382: break compile on Dan0
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-January/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233382%3A%20break%20compile%20on%20Dan0&In-Reply-To=%3C041.6e651b76ba4e8fb28be5254cbae7e2e6%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="014108.html">
+   <LINK REL="Next"  HREF="014110.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3382: break compile on Dan0</H1>
+    <B>rayman</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233382%3A%20break%20compile%20on%20Dan0&In-Reply-To=%3C041.6e651b76ba4e8fb28be5254cbae7e2e6%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3382: break compile on Dan0">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Jan 28 22:18:11 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="014108.html">[Haiku-bugs] [Haiku] #3381: bfs_shell crash on disk full
+</A></li>
+        <LI>Next message: <A HREF="014110.html">[Haiku-bugs] [Haiku] #3382: break compile on Dan0
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14109">[ date ]</a>
+              <a href="thread.html#14109">[ thread ]</a>
+              <a href="subject.html#14109">[ subject ]</a>
+              <a href="author.html#14109">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3382: break compile on Dan0
+-----------------------+----------------------------------------------------
+ Reporter:  rayman     |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+Blockedby:             |    Platform:  All           
+ Blocking:             |  
+-----------------------+----------------------------------------------------
+ I have a break compile since update of ftpd by mmlr.
+
+ See error message next:
+
+
+ Cc generated/objects/haiku/x86/release/bin/network/ftpd/ftpcmd.o
+ /boot/home/Divers/haiku/src/bin/network/ftpd/ftpcmd.y:230: conflicting
+ types for `YYSTYPE'
+ /boot/home/Divers/haiku/generated/objects/haiku/x86/common/bin/network/ftpd/ftpcmd.h:7:
+ previous declaration of `YYSTYPE'
+ /bison.simple:138: conflicting types for `yylval'
+ /boot/home/Divers/haiku/generated/objects/haiku/x86/common/bin/network/ftpd/ftpcmd.h:81:
+ previous declaration of `yylval'
+
+ gcc -O2 -Wall -Wno-trigraphs -Wmissing-prototypes -Wpointer-arith -Wcast-
+ align -Wsign-compare -Wno-multichar -nostdinc -c
+ &quot;generated/objects/haiku/x86/common/bin/network/ftpd/ftpcmd.c&quot; -D__HAIKU__
+ -DHAIKU_DISTRO_COMPATIBILITY_DEFAULT -D__INTEL__ -DARCH_x86
+ -DBOOT_ARCHIVE_IMAGE_OFFSET=300 -D_BEOS_R5_COMPATIBLE_
+ -DHAIKU_TARGET_PLATFORM_HAIKU -Ibuild/user_config_headers
+ -Ibuild/config_headers -Isrc/bin/network/ftpd
+ -Igenerated/objects/common/bin/network/ftpd
+ -Igenerated/objects/dano/x86/common/bin/network/ftpd
+ -Igenerated/objects/haiku/x86/common/bin/network/ftpd -I-
+ -Iheaders/compatibility/bsd -Isrc/bin/network/ftpd -Iheaders/cpp
+ -Iheaders/build/gcc-2.95.3 -Iheaders -Iheaders/posix -Iheaders/gnu
+ -Iheaders/glibc -Iheaders/os -Iheaders/os/add-ons -Iheaders/os/add-
+ ons/file_system -Iheaders/os/add-ons/graphics -Iheaders/os/add-
+ ons/input_server -Iheaders/os/add-ons/registrar -Iheaders/os/add-
+ ons/screen_saver -Iheaders/os/add-ons/tracker -Iheaders/os/app
+ -Iheaders/os/device -Iheaders/os/drivers -Iheaders/os/game
+ -Iheaders/os/interface -Iheaders/os/kernel -Iheaders/os/media
+ -Iheaders/os/mail -Iheaders/os/midi -Iheaders/os/midi2 -Iheaders/os/net
+ -Iheaders/os/opengl -Iheaders/os/storage -Iheaders/os/support
+ -Iheaders/os/translation -Iheaders/private/. -o
+ &quot;generated/objects/haiku/x86/release/bin/network/ftpd/ftpcmd.o&quot; ;
+
+ ...failed Cc generated/objects/haiku/x86/release/bin/network/ftpd/ftpcmd.o
+ ...
+ ...skipped ftpd for lack of &lt;src!bin!network!ftpd&gt;ftpcmd.o...
+ ...skipped &lt;HaikuImage&gt;haiku.image-copy-files-dummy-beos/bin for lack of
+ ftpd...
+ ...skipped haiku.image for lack of &lt;HaikuImage&gt;haiku.image-copy-files...
+ ...failed updating 1 target(s)...
+ ...skipped 3 target(s)...
+ ...updated 150 target(s)...
+
+ for to be sure, I have erase directory and update by svn
+
+ Thanks for your answer
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3382">http://dev.haiku-os.org/ticket/3382</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="014108.html">[Haiku-bugs] [Haiku] #3381: bfs_shell crash on disk full
+</A></li>
+	<LI>Next message: <A HREF="014110.html">[Haiku-bugs] [Haiku] #3382: break compile on Dan0
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14109">[ date ]</a>
+              <a href="thread.html#14109">[ thread ]</a>
+              <a href="subject.html#14109">[ subject ]</a>
+              <a href="author.html#14109">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1931: Negative Modified Page Queue Count
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231931%3A%20Negative%20Modified%20Page%20Queue%20Count&In-Reply-To=%3C043.fb44406a230138f185b83f0945b8f9c8%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005596.html">
+   <LINK REL="Next"  HREF="005598.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1931: Negative Modified Page Queue Count</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231931%3A%20Negative%20Modified%20Page%20Queue%20Count&In-Reply-To=%3C043.fb44406a230138f185b83f0945b8f9c8%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1931: Negative Modified Page Queue Count">trac at haiku-os.org
+       </A><BR>
+    <I>Tue Mar 18 03:17:46 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005596.html">[Haiku-bugs] [Haiku] #1711: Haiku stops booting at allocate_commpage_entry(4, 34)
+</A></li>
+        <LI>Next message: <A HREF="005598.html">[Haiku-bugs] [Haiku] #1931: Negative Modified Page Queue Count
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5597">[ date ]</a>
+              <a href="thread.html#5597">[ thread ]</a>
+              <a href="subject.html#5597">[ subject ]</a>
+              <a href="author.html#5597">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1931: Negative Modified Page Queue Count
+---------------------------+------------------------------------------------
+ Reporter:  bonefish       |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  critical       |   Milestone:  R1/alpha1     
+Component:  System/Kernel  |     Version:  R1 development
+ Platform:  All            |  
+---------------------------+------------------------------------------------
+ r24417, VMware
+
+ While running a relatively harmless Perl test the page writer suddenly and
+ unmotivatedly started to hog the CPU. As the attachment shows the count of
+ the modified queue has become -1, which causes the semaphore acquisition
+ to be skipped (sModifiedTemporaryPages is unsigned).
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1931">http://dev.haiku-os.org/ticket/1931</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005596.html">[Haiku-bugs] [Haiku] #1711: Haiku stops booting at allocate_commpage_entry(4, 34)
+</A></li>
+	<LI>Next message: <A HREF="005598.html">[Haiku-bugs] [Haiku] #1931: Negative Modified Page Queue Count
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5597">[ date ]</a>
+              <a href="thread.html#5597">[ thread ]</a>
+              <a href="subject.html#5597">[ subject ]</a>
+              <a href="author.html#5597">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

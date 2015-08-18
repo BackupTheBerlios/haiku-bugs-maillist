@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3613: Does not rememeber the selected	partitions
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233613%3A%20Does%20not%20rememeber%20the%20selected%0A%09partitions&In-Reply-To=%3C041.a295b70575e63fffacf34ce2d6eccc13%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="015373.html">
+   <LINK REL="Next"  HREF="015366.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3613: Does not rememeber the selected	partitions</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233613%3A%20Does%20not%20rememeber%20the%20selected%0A%09partitions&In-Reply-To=%3C041.a295b70575e63fffacf34ce2d6eccc13%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3613: Does not rememeber the selected	partitions">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Mar 27 03:44:25 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="015373.html">[Haiku-bugs] [Haiku] #3612: Preferences entry is symlink.	should be folder
+</A></li>
+        <LI>Next message: <A HREF="015366.html">[Haiku-bugs] [Haiku] #3614: [PATCH] Pe-gcc4 to OptionalPackages
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15365">[ date ]</a>
+              <a href="thread.html#15365">[ thread ]</a>
+              <a href="subject.html#15365">[ subject ]</a>
+              <a href="author.html#15365">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3613: Does not rememeber the selected partitions
+------------------------------------+---------------------------------------
+ Reporter:  mmadia                  |       Owner:  korli         
+     Type:  bug                     |      Status:  new           
+ Priority:  normal                  |   Milestone:  R1            
+Component:  Applications/Installer  |     Version:  R1 development
+ Keywords:                          |   Blockedby:                
+ Platform:  All                     |    Blocking:                
+------------------------------------+---------------------------------------
+ Usability issue.  In short, launching drive setup will cause Installer to
+ forget which partitions the user had selected prior to clicking &quot;Setup
+ Partitions&quot;
+
+ To reproduce:
+ Start Installer via Terminal.[[BR]]
+ Select any partition other than the first one listed.  [[BR]]
+ Click &quot;Setup partitions&quot; to launch DriveSetup. [[BR]]
+ Exit DriveSetup.[[BR]]
+ Notice the TargetVisitor::Visit(BPartition *) and similar output.[[BR]]
+ Notice the Install from has changed from the user's selection to the first
+ listed partition.[[BR]]
+
+ Expected results:
+ Upon exiting DriveSetup,  Installer should still retain the user's
+ selected partition for &quot;Install to:&quot;
+
+ Note:  &quot;Onto:&quot; is also lost.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3613">http://dev.haiku-os.org/ticket/3613</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="015373.html">[Haiku-bugs] [Haiku] #3612: Preferences entry is symlink.	should be folder
+</A></li>
+	<LI>Next message: <A HREF="015366.html">[Haiku-bugs] [Haiku] #3614: [PATCH] Pe-gcc4 to OptionalPackages
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15365">[ date ]</a>
+              <a href="thread.html#15365">[ thread ]</a>
+              <a href="subject.html#15365">[ subject ]</a>
+              <a href="author.html#15365">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

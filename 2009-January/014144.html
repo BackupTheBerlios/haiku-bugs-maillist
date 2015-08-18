@@ -1,0 +1,167 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3392: PANIC: vm_page_fault: unhandled page fault in kernel space at 0xdeadbf2b, ip 0x80568f26
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-January/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233392%3A%20PANIC%3A%20vm_page_fault%3A%20unhandled%20page%0A%20fault%20in%20kernel%20space%20at%200xdeadbf2b%2C%20ip%200x80568f26&In-Reply-To=%3C046.076e292a758fae01de7ce333a00cde0e%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="014152.html">
+   <LINK REL="Next"  HREF="014145.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3392: PANIC: vm_page_fault: unhandled page fault in kernel space at 0xdeadbf2b, ip 0x80568f26</H1>
+    <B>umccullough</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233392%3A%20PANIC%3A%20vm_page_fault%3A%20unhandled%20page%0A%20fault%20in%20kernel%20space%20at%200xdeadbf2b%2C%20ip%200x80568f26&In-Reply-To=%3C046.076e292a758fae01de7ce333a00cde0e%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3392: PANIC: vm_page_fault: unhandled page fault in kernel space at 0xdeadbf2b, ip 0x80568f26">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Jan 30 06:50:24 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="014152.html">[Haiku-bugs] [Haiku] #3391: Configure : automatically detect the need to enable use_32bit
+</A></li>
+        <LI>Next message: <A HREF="014145.html">[Haiku-bugs] [Haiku] #2696: unimplemented functions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14144">[ date ]</a>
+              <a href="thread.html#14144">[ thread ]</a>
+              <a href="subject.html#14144">[ subject ]</a>
+              <a href="author.html#14144">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3392: PANIC: vm_page_fault: unhandled page fault in kernel space at 0xdeadbf2b,
+ip 0x80568f26
+------------------------------------+---------------------------------------
+ Reporter:  umccullough             |       Owner:  axeld         
+     Type:  bug                     |      Status:  new           
+ Priority:  normal                  |   Milestone:  R1            
+Component:  Network &amp; Internet/TCP  |     Version:  R1 development
+Blockedby:  2706                    |    Platform:  All           
+ Blocking:                          |  
+------------------------------------+---------------------------------------
+ Looks like I got a very similar issue to #2706 (where there is much more
+ info apparently) - it's probably a duplicate but I'm logging separately
+ just in case (feel free to close as such if necessary).
+
+ This is using a gcc4-built r29087 with an rtl8168 network chip.
+
+ Crash apparently occurred unattended after ~24 hours of uptime with Vision
+ running in the background, and dnetc consuming CPU cycles (and probably
+ communicating with the dnetc server for short periods of time every few
+ hours).
+
+ Was able to extra info by hooking up the serial cable:
+
+ {{{
+ kdebug&gt; info
+ kernel build: Jan 28 2009 20:32:09
+ SVN revision: 29087
+
+ cpu count: 2, active times:
+   [1] 42504899790
+   [2] 42050265531
+ pages:          294418 (521888 max)
+ sems:           1515 (131072 max)
+ ports:          140 (4096 max)
+ threads:        137 (4096 max)
+ teams:          19 (2048 max)
+ kdebug&gt; message
+ vm_page_fault: unhandled page fault in kernel space at 0xdeadbf2b, ip
+ 0x80568f26
+
+ kdebug&gt; bt
+ stack trace for thread 86 &quot;/dev/net/rtl8169/0 consumer&quot;
+     kernel stack: 0x805b9000 to 0x805bd000
+ frame               caller     &lt;image&gt;:function + offset
+  0 805bc8e4 (+  32) 8005ac4a   &lt;kernel_x86&gt; invoke_debugger_command() +
+ 0x00de
+  1 805bc904 (+  48) 8005ad86   &lt;kernel_x86&gt;
+ _ZL19invoke_pipe_segmentP21debugger_command_pipelPc() + 0x0083
+  2 805bc934 (+  32) 8005ae4e   &lt;kernel_x86&gt; invoke_debugger_command_pipe()
+ + 0x008b
+  3 805bc954 (+ 128) 8005e567   &lt;kernel_x86&gt;
+ _ZN16ExpressionParser17_ParseCommandPipeERi() + 0x0aa3
+  4 805bc9d4 (+  48) 80060d03   &lt;kernel_x86&gt;
+ _ZN16ExpressionParser15EvaluateCommandEPKcRi() + 0x06d5
+  5 805bca04 (+ 192) 80060e81   &lt;kernel_x86&gt; evaluate_debug_command() +
+ 0x0089
+  6 805bcac4 (+  80) 8005955a   &lt;kernel_x86&gt; kernel_debugger() + 0x02ca
+  7 805bcb14 (+ 160) 800596ac   &lt;kernel_x86&gt; panic() + 0x002a
+  8 805bcbb4 (+  80) 800ac840   &lt;kernel_x86&gt; vm_page_fault() + 0x00ff
+  9 805bcc04 (+  64) 800b8237   &lt;kernel_x86&gt; page_fault_exception() +
+ 0x00db
+ 10 805bcc44 (+  12) 800bb236   &lt;kernel_x86&gt; int_bottom() + 0x0036
+ kernel iframe at 0x805bcc50 (end = 0x805bcca0)
+  eax 0x810a2898     ebx 0x8056e144      ecx 0x806460fc   edx 0xdeadbeef
+  esi 0x8064617c     edi 0x0             ebp 0x805bcd38   esp 0x805bcc84
+  eip 0x80568f26  eflags 0x10286
+  vector: 0xe, error code: 0x0
+ 11 805bcc50 (+ 232) 80568f26   &lt;/boot/beos/system/add-
+ ons/kernel/network/protocols/ipv4&gt;
+ _Z21ipv4_send_routed_dataP12net_protocolP9net_routeP10net_buffer() +
+ 0x004f
+ 12 805bcd38 (+ 112) 807c705e   &lt;/boot/beos/system/add-
+ ons/kernel/network/protocols/tcp&gt; _ZN11TCPEndpoint11_SendQueuedEbm() +
+ 0x0484
+ 13 805bcda8 (+  32) 807c72aa   &lt;/boot/beos/system/add-
+ ons/kernel/network/protocols/tcp&gt; _ZN11TCPEndpoint15SendAcknowledgeEb() +
+ 0x0026
+ 14 805bcdc8 (+  48) 807c97d0   &lt;/boot/beos/system/add-
+ ons/kernel/network/protocols/tcp&gt;
+ _ZN11TCPEndpoint15SegmentReceivedER18tcp_segment_headerP10net_buffer() +
+ 0x00b0
+ 15 805bcdf8 (+ 208) 807c58f1   &lt;/boot/beos/system/add-
+ ons/kernel/network/protocols/tcp&gt; _Z16tcp_receive_dataP10net_buffer() +
+ 0x0314
+ 16 805bcec8 (+ 160) 8056ad21   &lt;/boot/beos/system/add-
+ ons/kernel/network/protocols/ipv4&gt; _Z17ipv4_receive_dataP10net_buffer() +
+ 0x066c
+ 17 805bcf68 (+  48) 8055831a   &lt;/boot/beos/system/add-
+ ons/kernel/network/stack&gt;
+ _ZL22domain_receive_adapterPvP10net_deviceP10net_buffer() + 0x0033
+ 18 805bcf98 (+  64) 80558139   &lt;/boot/beos/system/add-
+ ons/kernel/network/stack&gt; _ZL22device_consumer_threadPv() + 0x0095
+ 19 805bcfd8 (+  32) 80050abc   &lt;kernel_x86&gt;
+ _ZL28_create_kernel_thread_kentryv() + 0x0015
+ 20 805bcff8 (+2141466632) 800542f0   &lt;kernel_x86&gt;
+ _ZL19thread_kthread_exitv() + 0x0000
+ kdebug&gt;
+ }}}
+
+ Machine is still running and sitting in KDL. If there is any further
+ useful info that can be obtained - let me know.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3392">http://dev.haiku-os.org/ticket/3392</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="014152.html">[Haiku-bugs] [Haiku] #3391: Configure : automatically detect the need to enable use_32bit
+</A></li>
+	<LI>Next message: <A HREF="014145.html">[Haiku-bugs] [Haiku] #2696: unimplemented functions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14144">[ date ]</a>
+              <a href="thread.html#14144">[ thread ]</a>
+              <a href="subject.html#14144">[ subject ]</a>
+              <a href="author.html#14144">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

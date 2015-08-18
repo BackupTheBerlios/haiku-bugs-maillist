@@ -1,0 +1,313 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3784: Haiku strange behaviour - 100% CPU and RAM load by kernel (nforce)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233784%3A%20Haiku%20strange%20behaviour%20-%20100%25%20CPU%0A%20and%20RAM%20load%20by%20kernel%20%28nforce%29&In-Reply-To=%3C050.3892c47a287540418812b9d31364d029%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="016338.html">
+   <LINK REL="Next"  HREF="016313.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3784: Haiku strange behaviour - 100% CPU and RAM load by kernel (nforce)</H1>
+    <B>miqlas</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233784%3A%20Haiku%20strange%20behaviour%20-%20100%25%20CPU%0A%20and%20RAM%20load%20by%20kernel%20%28nforce%29&In-Reply-To=%3C050.3892c47a287540418812b9d31364d029%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3784: Haiku strange behaviour - 100% CPU and RAM load by kernel (nforce)">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Apr 20 21:19:43 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="016338.html">[Haiku-bugs] [Haiku] #3784: Haiku strange behaviour - 100% CPU and RAM load by kernel (nforce)
+</A></li>
+        <LI>Next message: <A HREF="016313.html">[Haiku-bugs] [Haiku] #3456: VLC 0.8.6d fixes lots of errors and	problems
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16423">[ date ]</a>
+              <a href="thread.html#16423">[ thread ]</a>
+              <a href="subject.html#16423">[ subject ]</a>
+              <a href="author.html#16423">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3784: Haiku strange behaviour - 100% CPU and RAM load by kernel (nforce)
+-----------------------------+----------------------------------------------
+ Reporter:  miqlas           |       Owner:  axeld         
+     Type:  bug              |      Status:  new           
+ Priority:  normal           |   Milestone:  R1            
+Component:  Drivers/Network  |     Version:  R1 development
+Blockedby:                   |    Platform:  x86           
+ Blocking:                   |  
+-----------------------------+----------------------------------------------
+
+Comment(by miqlas):
+
+ Listdev:
+
+ {{{
+ device Bridge (Host bridge) [6|0|0]
+   vendor 1022: Advanced Micro Devices [AMD]
+   device 1103: K8 [Athlon64/Opteron] Miscellaneous Control
+
+ device Bridge (Host bridge) [6|0|0]
+   vendor 1022: Advanced Micro Devices [AMD]
+   device 1102: K8 [Athlon64/Opteron] DRAM Controller
+
+ device Bridge (Host bridge) [6|0|0]
+   vendor 1022: Advanced Micro Devices [AMD]
+   device 1101: K8 [Athlon64/Opteron] Address Map
+
+ device Bridge (Host bridge) [6|0|0]
+   vendor 1022: Advanced Micro Devices [AMD]
+   device 1100: K8 [Athlon64/Opteron] HyperTransport Technology
+ Configuration
+
+ device Bridge (PCI bridge, Normal decode) [6|4|0]
+   vendor 10de: nVidia Corporation
+   device 00ed: nForce3 250Gb PCI-to-PCI Bridge
+
+ device Display controller (VGA compatible controller, VGA controller)
+ [3|0|0]
+   vendor 10de: nVidia Corporation
+   device 004e: NV40GL [Quadro FX 4000]
+
+ device Bridge (PCI bridge, Normal decode) [6|4|0]
+   vendor 10de: nVidia Corporation
+   device 00e2: nForce3 250Gb AGP Host to PCI Bridge
+
+ device Mass storage controller (IDE interface) [1|1|8a]
+   vendor 10de: nVidia Corporation
+   device 00e5: CK8S Parallel ATA Controller (v2.5)
+
+ device Multimedia controller (Multimedia audio controller) [4|1|0]
+   vendor 10de: nVidia Corporation
+   device 00ea: nForce3 250Gb AC'97 Audio Controller
+
+ device Bridge [6|80|0]
+   vendor 10de: nVidia Corporation
+   device 00df: CK8S Ethernet Controller
+
+ device Serial bus controller (USB Controller, EHCI) [c|3|20]
+   vendor 10de: nVidia Corporation
+   device 00e8: nForce3 EHCI USB 2.0 Controller
+
+ device Serial bus controller (USB Controller, OHCI) [c|3|10]
+   vendor 10de: nVidia Corporation
+   device 00e7: CK8S USB Controller
+
+ device Serial bus controller (USB Controller, OHCI) [c|3|10]
+   vendor 10de: nVidia Corporation
+   device 00e7: CK8S USB Controller
+
+ device Serial bus controller (SMBus) [c|5|0]
+   vendor 10de: nVidia Corporation
+   device 00e4: nForce 250Gb PCI System Management
+
+ device Bridge (ISA bridge) [6|1|0]
+   vendor 10de: nVidia Corporation
+   device 00e0: nForce3 250Gb LPC Bridge
+
+ device Bridge (Host bridge) [6|0|0]
+   vendor 10de: nVidia Corporation
+   device 00e1: nForce3 250Gb Host Bridge
+ }}}
+
+
+ listusb -v:
+
+ {{{
+ [Device /dev/bus/usb/0/hub]
+     Class .................. 0x09
+     Subclass ............... 0x00
+     Protocol ............... 0x00
+     Max Endpoint 0 Packet .. 64
+     USB Version ............ 0x0110
+     Vendor ID .............. 0x0000
+     Product ID ............. 0x0000
+     Product Version ........ 0x0110
+     Manufacturer String .... &quot;HAIKU Inc.&quot;
+     Product String ......... &quot;OHCI RootHub&quot;
+     Serial Number .......... &quot;&quot;
+     [Configuration 0]
+         Configuration String . &quot;&quot;
+         [Interface 0]
+             [Alternate 0 active]
+                 Class .............. 0x09
+                 Subclass ........... 0x00
+                 Protocol ........... 0x00
+                 Interface String ... &quot;&quot;
+                 [Endpoint 0]
+                     MaxPacketSize .... 8
+                     Interval ......... 255
+                     Type ............. Interrupt
+                     Direction ........ Input
+                 [Descriptor 0]
+                     Type ............. 0x29
+                     Data ............. 04 00 00 00 00 00 ff
+ [Device /dev/bus/usb/1/0]
+     Class .................. 0x00
+     Subclass ............... 0x00
+     Protocol ............... 0x00
+     Max Endpoint 0 Packet .. 8
+     USB Version ............ 0x0110
+     Vendor ID .............. 0x04d9
+     Product ID ............. 0x1603
+     Product Version ........ 0x0310
+     Manufacturer String .... &quot;&quot;
+     Product String ......... &quot;&quot;
+     Serial Number .......... &quot;&quot;
+     [Configuration 0]
+         Configuration String . &quot;&quot;
+         [Interface 0]
+             [Alternate 0 active]
+                 Class .............. 0x03
+                 Subclass ........... 0x01
+                 Protocol ........... 0x01
+                 Interface String ... &quot;&quot;
+                 [Endpoint 0]
+                     MaxPacketSize .... 8
+                     Interval ......... 10
+                     Type ............. Interrupt
+                     Direction ........ Input
+                 [Descriptor 0]
+                     Type ............. 0x21
+                     Data ............. 10 01 00 01 22 3e 00
+         [Interface 1]
+             [Alternate 0 active]
+                 Class .............. 0x03
+                 Subclass ........... 0x00
+                 Protocol ........... 0x00
+                 Interface String ... &quot;&quot;
+                 [Endpoint 0]
+                     MaxPacketSize .... 8
+                     Interval ......... 10
+                     Type ............. Interrupt
+                     Direction ........ Input
+                 [Descriptor 0]
+                     Type ............. 0x21
+                     Data ............. 10 01 00 01 22 65 00
+ [Device /dev/bus/usb/1/hub]
+     Class .................. 0x09
+     Subclass ............... 0x00
+     Protocol ............... 0x00
+     Max Endpoint 0 Packet .. 64
+     USB Version ............ 0x0110
+     Vendor ID .............. 0x0000
+     Product ID ............. 0x0000
+     Product Version ........ 0x0110
+     Manufacturer String .... &quot;HAIKU Inc.&quot;
+     Product String ......... &quot;OHCI RootHub&quot;
+     Serial Number .......... &quot;&quot;
+     [Configuration 0]
+         Configuration String . &quot;&quot;
+         [Interface 0]
+             [Alternate 0 active]
+                 Class .............. 0x09
+                 Subclass ........... 0x00
+                 Protocol ........... 0x00
+                 Interface String ... &quot;&quot;
+                 [Endpoint 0]
+                     MaxPacketSize .... 8
+                     Interval ......... 255
+                     Type ............. Interrupt
+                     Direction ........ Input
+                 [Descriptor 0]
+                     Type ............. 0x29
+                     Data ............. 04 00 00 00 00 00 ff
+ [Device /dev/bus/usb/2/7]
+     Class .................. 0x00
+     Subclass ............... 0x00
+     Protocol ............... 0x00
+     Max Endpoint 0 Packet .. 64
+     USB Version ............ 0x0200
+     Vendor ID .............. 0x13fe
+     Product ID ............. 0x1d00
+     Product Version ........ 0x0110
+     Manufacturer String .... &quot;&quot;
+     Product String ......... &quot;&quot;
+     Serial Number .......... &quot;&quot;
+     [Configuration 0]
+         Configuration String . &quot;&quot;
+         [Interface 0]
+             [Alternate 0 active]
+                 Class .............. 0x08
+                 Subclass ........... 0x06
+                 Protocol ........... 0x50
+                 Interface String ... &quot;&quot;
+                 [Endpoint 0]
+                     MaxPacketSize .... 512
+                     Interval ......... 0
+                     Type ............. Bulk
+                     Direction ........ Input
+                 [Endpoint 1]
+                     MaxPacketSize .... 512
+                     Interval ......... 0
+                     Type ............. Bulk
+                     Direction ........ Output
+ [Device /dev/bus/usb/2/hub]
+     Class .................. 0x09
+     Subclass ............... 0x00
+     Protocol ............... 0x00
+     Max Endpoint 0 Packet .. 64
+     USB Version ............ 0x0200
+     Vendor ID .............. 0x0000
+     Product ID ............. 0x0000
+     Product Version ........ 0x0200
+     Manufacturer String .... &quot;HAIKU Inc.&quot;
+     Product String ......... &quot;EHCI RootHub&quot;
+     Serial Number .......... &quot;&quot;
+     [Configuration 0]
+         Configuration String . &quot;&quot;
+         [Interface 0]
+             [Alternate 0 active]
+                 Class .............. 0x09
+                 Subclass ........... 0x00
+                 Protocol ........... 0x00
+                 Interface String ... &quot;&quot;
+                 [Endpoint 0]
+                     MaxPacketSize .... 8
+                     Interval ......... 255
+                     Type ............. Interrupt
+                     Direction ........ Input
+                 [Descriptor 0]
+                     Type ............. 0x29
+                     Data ............. 08 00 00 00 00 00 ff
+ }}}
+
+ I tested, i don't found this problem again. (Maybe it was a malware attack
+ (I'm live in dormitory, sometimes our floor got malware attack from the
+ neighbours...)
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3784#comment:4">http://dev.haiku-os.org/ticket/3784#comment:4</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="016338.html">[Haiku-bugs] [Haiku] #3784: Haiku strange behaviour - 100% CPU and RAM load by kernel (nforce)
+</A></li>
+	<LI>Next message: <A HREF="016313.html">[Haiku-bugs] [Haiku] #3456: VLC 0.8.6d fixes lots of errors and	problems
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16423">[ date ]</a>
+              <a href="thread.html#16423">[ thread ]</a>
+              <a href="subject.html#16423">[ subject ]</a>
+              <a href="author.html#16423">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

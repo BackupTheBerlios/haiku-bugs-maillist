@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2586: PANIC: ASSERT FAILED (/usr/home/rene/devel/src/add-ons/kernel/bus_managers/ata/ata_request.c:83): status != 0x01
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232586%3A%20PANIC%3A%20ASSERT%20FAILED%0A%20%28/usr/home/rene/devel/src/add-ons/kernel/bus_managers/ata/ata_request.c%3A83%29%3A%0A%20status%20%21%3D%200x01&In-Reply-To=%3C053.4e8352b2c9a70d56dd302f09cfd006b3%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009460.html">
+   <LINK REL="Next"  HREF="009455.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2586: PANIC: ASSERT FAILED (/usr/home/rene/devel/src/add-ons/kernel/bus_managers/ata/ata_request.c:83): status != 0x01</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232586%3A%20PANIC%3A%20ASSERT%20FAILED%0A%20%28/usr/home/rene/devel/src/add-ons/kernel/bus_managers/ata/ata_request.c%3A83%29%3A%0A%20status%20%21%3D%200x01&In-Reply-To=%3C053.4e8352b2c9a70d56dd302f09cfd006b3%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2586: PANIC: ASSERT FAILED (/usr/home/rene/devel/src/add-ons/kernel/bus_managers/ata/ata_request.c:83): status != 0x01">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Aug  8 23:44:55 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009460.html">[Haiku-bugs] [Haiku] #2586: PANIC: ASSERT FAILED (/usr/home/rene/devel/src/add-ons/kernel/bus_managers/ata/ata_request.c:83): status != 0x01
+</A></li>
+        <LI>Next message: <A HREF="009455.html">[Haiku-bugs] [Haiku] #2586: PANIC: ASSERT FAILED (/usr/home/rene/devel/src/add-ons/kernel/bus_managers/ata/ata_request.c:83): status != 0x01
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9452">[ date ]</a>
+              <a href="thread.html#9452">[ thread ]</a>
+              <a href="subject.html#9452">[ subject ]</a>
+              <a href="author.html#9452">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2586: PANIC: ASSERT FAILED (/usr/home/rene/devel/src/add-
+ons/kernel/bus_managers/ata/ata_request.c:83): status != 0x01
+---------------------------+------------------------------------------------
+  Reporter:  anevilyak     |       Owner:  marcusoverhagen
+      Type:  bug           |      Status:  new            
+  Priority:  critical      |   Milestone:  R1/alpha1      
+ Component:  Drivers/Disk  |     Version:  R1 development 
+Resolution:                |   Blockedby:                 
+  Platform:  All           |    Blocking:                 
+---------------------------+------------------------------------------------
+
+Comment(by anevilyak):
+
+ And just in case, the io buffer:
+
+ {{{
+ IOBuffer at 0x90d94780
+   origin:     user
+   kind:       physical
+   length:     131072
+   capacity:   23
+   vecs:       23
+     [0] 0x291ee000, 8192
+     [1] 0x291f1000, 4096
+     [2] 0x291f0000, 4096
+     [3] 0x291f2000, 24576
+     [4] 0x20d4c000, 8192
+     [5] 0x20d5c000, 8192
+     [6] 0x2c332000, 4096
+     [7] 0x2c331000, 4096
+     [8] 0x2c330000, 4096
+     [9] 0x2c2b7000, 4096
+     [10] 0x2c2b6000, 4096
+     [11] 0x2bd6f000, 4096
+     [12] 0x2bd5e000, 4096
+     [13] 0x2bd5d000, 4096
+     [14] 0x2bd5c000, 4096
+     [15] 0x2bd16000, 4096
+     [16] 0x2bd05000, 4096
+     [17] 0x2bcec000, 4096
+     [18] 0x2bceb000, 4096
+     [19] 0x2bce8000, 4096
+     [20] 0x2bcd7000, 4096
+     [21] 0x293d2000, 8192
+     [22] 0x294c0000, 4096
+
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2586#comment:5">http://dev.haiku-os.org/ticket/2586#comment:5</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009460.html">[Haiku-bugs] [Haiku] #2586: PANIC: ASSERT FAILED (/usr/home/rene/devel/src/add-ons/kernel/bus_managers/ata/ata_request.c:83): status != 0x01
+</A></li>
+	<LI>Next message: <A HREF="009455.html">[Haiku-bugs] [Haiku] #2586: PANIC: ASSERT FAILED (/usr/home/rene/devel/src/add-ons/kernel/bus_managers/ata/ata_request.c:83): status != 0x01
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9452">[ date ]</a>
+              <a href="thread.html#9452">[ thread ]</a>
+              <a href="subject.html#9452">[ subject ]</a>
+              <a href="author.html#9452">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

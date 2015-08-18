@@ -1,0 +1,670 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3861: iso9660 has issues with various discs burned on a mac
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233861%3A%20iso9660%20has%20issues%20with%20various%0A%20discs%20burned%20on%20a%20mac&In-Reply-To=%3C053.0804982d1a537517221af6d5d17ff8a4%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="016873.html">
+   <LINK REL="Next"  HREF="016876.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3861: iso9660 has issues with various discs burned on a mac</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233861%3A%20iso9660%20has%20issues%20with%20various%0A%20discs%20burned%20on%20a%20mac&In-Reply-To=%3C053.0804982d1a537517221af6d5d17ff8a4%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3861: iso9660 has issues with various discs burned on a mac">trac at haiku-os.org
+       </A><BR>
+    <I>Mon May  4 00:34:09 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="016873.html">[Haiku-bugs] [Haiku] #3861: iso9660 has issues with various discs	burned on a mac
+</A></li>
+        <LI>Next message: <A HREF="016876.html">[Haiku-bugs] [Haiku] #3861: iso9660 has issues with various discs burned on a mac
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16875">[ date ]</a>
+              <a href="thread.html#16875">[ thread ]</a>
+              <a href="subject.html#16875">[ subject ]</a>
+              <a href="author.html#16875">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3861: iso9660 has issues with various discs burned on a mac
+-----------------------------------+----------------------------------------
+ Reporter:  anevilyak              |       Owner:  axeld         
+     Type:  bug                    |      Status:  new           
+ Priority:  normal                 |   Milestone:  R1            
+Component:  File Systems/ISO 9660  |     Version:  R1 development
+Blockedby:                         |    Platform:  All           
+ Blocking:                         |  
+-----------------------------------+----------------------------------------
+Description changed by anevilyak:
+
+Old description:
+
+&gt;<i> A disc I burned on my Mac appears to have major interpretation problems
+</I>&gt;<i> with our iso9660 driver. The actual contents of the disc look as follows:
+</I>&gt;<i>
+</I>&gt;<i> {{{
+</I>&gt;<i> 05/03/2009  11:20 AM        17,313,824 Helmer_altMoviePoster.jpg
+</I>&gt;<i> 04/13/2009  03:01 PM       209,176,224 Helmer_altMoviePoster.psd
+</I>&gt;<i> 05/03/2009  11:08 AM         4,106,772 Helmer_MoviePoster.jpg
+</I>&gt;<i> 04/13/2009  03:02 PM       134,074,020 Helmer_MoviePoster.psd
+</I>&gt;<i>                4 File(s)    364,670,840 bytes
+</I>&gt;<i>                0 Dir(s)               0 bytes free
+</I>&gt;<i> }}}
+</I>&gt;<i>
+</I>&gt;<i> However, our iso9660 add-on claims this instead:
+</I>&gt;<i> {{{
+</I>&gt;<i> total 591
+</I>&gt;<i> dr-xr-xr-x 0 rene root  2048 May  3 16:47 .
+</I>&gt;<i> drwxrwxrwx 1 rene root     0 May  3 17:03 ..
+</I>&gt;<i> -r--r--r-- 0 rene root 91095 May  3 11:08 Helmer_MoviePoster.jpg
+</I>&gt;<i> -r--r--r-- 0 rene root 91095 May  3 11:08 Helmer_MoviePoster.jpg
+</I>&gt;<i> -r--r--r-- 0 rene root 54130 Apr 13 15:02 Helmer_MoviePoster.psd
+</I>&gt;<i> -r--r--r-- 0 rene root 54130 Apr 13 15:02 Helmer_MoviePoster.psd
+</I>&gt;<i> -r--r--r-- 0 rene root 98113 May  3 11:20 Helmer_altMoviePoster.jpg
+</I>&gt;<i> -r--r--r-- 0 rene root 98113 May  3 11:20 Helmer_altMoviePoster.jpg
+</I>&gt;<i> -r--r--r-- 0 rene root 57832 Apr 13 15:01 Helmer_altMoviePoster.psd
+</I>&gt;<i> -r--r--r-- 0 rene root 57832 Apr 13 15:01 Helmer_altMoviePoster.psd
+</I>&gt;<i> }}}
+</I>&gt;<i>
+</I>&gt;<i> None of the files are usable. Syslog of that CD insertion:
+</I>&gt;<i> {{{
+</I>&gt;<i> KERN: Media changed from /dev/disk/atapi/4/master/raw
+</I>&gt;<i> KERN: KDiskDeviceManager::_ScanPartition(/dev/disk/atapi/4/master/raw)
+</I>&gt;<i> KERN: intel: ep_std_ops(0x1)
+</I>&gt;<i> KERN:   trying: partitioning_systems/intel/extended/v1
+</I>&gt;<i> KERN:   returned: -1
+</I>&gt;<i> KERN: intel: ep_std_ops(0x2)
+</I>&gt;<i> KERN:   trying: partitioning_systems/intel/map/v1
+</I>&gt;<i> KERN: intel: pm_identify_partition(8, 1: 0, 366448640, 2048)
+</I>&gt;<i> KERN:   returned: -1
+</I>&gt;<i> KERN:   trying: file_systems/bfs/v1
+</I>&gt;<i> KERN:   returned: -1
+</I>&gt;<i> KERN:   trying: file_systems/devfs/v1
+</I>&gt;<i> KERN:   returned: -1
+</I>&gt;<i> KERN:   trying: file_systems/rootfs/v1
+</I>&gt;<i> KERN:   returned: -1
+</I>&gt;<i> KERN:   trying: partitioning_systems/session/v1
+</I>&gt;<i> KERN: raw_command:
+</I>&gt;<i> KERN:   returned: 0.699
+</I>&gt;<i> KERN:   trying: file_systems/attribute_overlay/v1
+</I>&gt;<i> KERN:   returned: -1
+</I>&gt;<i> KERN:   trying: file_systems/cdda/v1
+</I>&gt;<i> KERN: raw_command:
+</I>&gt;<i> KERN: 01. 00:02.00 (length 39:45.55)
+</I>&gt;<i> KERN:   returned: -2147483648
+</I>&gt;<i> KERN:   trying: file_systems/ext2/v1
+</I>&gt;<i> KERN:   returned: -2147483648
+</I>&gt;<i> KERN:   trying: file_systems/fat/v1
+</I>&gt;<i> KERN:   returned: -1
+</I>&gt;<i> KERN:   trying: file_systems/iso9660/v1
+</I>&gt;<i> KERN: identify(8, 0x93823ec0)
+</I>&gt;<i> KERN: found primary descriptor
+</I>&gt;<i> KERN:   iso9660_primary_descriptor:
+</I>&gt;<i> KERN:     volume descriptor type: 1 (primary)
+</I>&gt;<i> KERN:     standard identifier:    CD001 (valid)
+</I>&gt;<i> KERN:     version:                1
+</I>&gt;<i> KERN:     identifier:             'PORTFOLIODISC1'
+</I>&gt;<i> KERN:     size:                   178780
+</I>&gt;<i> KERN:     set size:               1
+</I>&gt;<i> KERN:     sequence number:        1
+</I>&gt;<i> KERN:     logical block size:     2048
+</I>&gt;<i> KERN:     path table size:        10
+</I>&gt;<i> KERN:     set identifier:
+</I>&gt;<i> KERN:     root directory record:
+</I>&gt;<i> KERN:       length:               34
+</I>&gt;<i> KERN:       location:             41
+</I>&gt;<i> KERN:       data length:          2048
+</I>&gt;<i> KERN:       volume space:         1
+</I>&gt;<i> KERN: iso9660_info::set_string(0x93823ec0 ('&lt;NULL&gt;'), 'PORTFOLIODISC1',
+</I>&gt;<i> 32)
+</I>&gt;<i> KERN:   returned: 0.6
+</I>&gt;<i> KERN:   trying: file_systems/nfs/v1
+</I>&gt;<i> KERN:   returned: -1
+</I>&gt;<i> KERN:   trying: file_systems/userlandfs/v1
+</I>&gt;<i> KERN:   returned: -1
+</I>&gt;<i> KERN:   trying: file_systems/write_overlay/v1
+</I>&gt;<i> KERN:   returned: -1
+</I>&gt;<i> KERN:   scanning with: partitioning_systems/session/v1
+</I>&gt;<i> KERN: KDiskDeviceManager::_ScanPartition(/dev/disk/atapi/4/master/0)
+</I>&gt;<i> KERN: intel: ep_std_ops(0x1)
+</I>&gt;<i> KERN:   trying: partitioning_systems/intel/extended/v1
+</I>&gt;<i> KERN:   returned: -1
+</I>&gt;<i> KERN: intel: ep_std_ops(0x2)
+</I>&gt;<i> KERN:   trying: partitioning_systems/intel/map/v1
+</I>&gt;<i> KERN: intel: pm_identify_partition(8, 6: 0, 366448640, 2048)
+</I>&gt;<i> KERN:   returned: -1
+</I>&gt;<i> KERN:   trying: file_systems/bfs/v1
+</I>&gt;<i> KERN:   returned: -1
+</I>&gt;<i> KERN:   trying: file_systems/devfs/v1
+</I>&gt;<i> KERN:   returned: -1
+</I>&gt;<i> KERN:   trying: file_systems/rootfs/v1
+</I>&gt;<i> KERN:   returned: -1
+</I>&gt;<i> KERN:   trying: partitioning_systems/session/v1
+</I>&gt;<i> KERN:   returned: -1
+</I>&gt;<i> KERN:   trying: file_systems/attribute_overlay/v1
+</I>&gt;<i> KERN:   returned: -1
+</I>&gt;<i> KERN:   trying: file_systems/cdda/v1
+</I>&gt;<i> KERN: raw_command:
+</I>&gt;<i> KERN: 01. 00:02.00 (length 39:45.55)
+</I>&gt;<i> KERN:   returned: -2147483648
+</I>&gt;<i> KERN:   trying: file_systems/ext2/v1
+</I>&gt;<i> KERN:   returned: -2147483648
+</I>&gt;<i> KERN:   trying: file_systems/fat/v1
+</I>&gt;<i> KERN:   returned: -1
+</I>&gt;<i> KERN:   trying: file_systems/iso9660/v1
+</I>&gt;<i> KERN: identify(8, 0x811f9150)
+</I>&gt;<i> KERN: found primary descriptor
+</I>&gt;<i> KERN:   iso9660_primary_descriptor:
+</I>&gt;<i> KERN:     volume descriptor type: 1 (primary)
+</I>&gt;<i> KERN:     standard identifier:    CD001 (valid)
+</I>&gt;<i> KERN:     version:                1
+</I>&gt;<i> KERN:     identifier:             'PORTFOLIODISC1'
+</I>&gt;<i> KERN:     size:                   178780
+</I>&gt;<i> KERN:     set size:               1
+</I>&gt;<i> KERN:     sequence number:        1
+</I>&gt;<i> KERN:     logical block size:     2048
+</I>&gt;<i> KERN:     path table size:        10
+</I>&gt;<i> KERN:     set identifier:
+</I>&gt;<i> KERN:     root directory record:
+</I>&gt;<i> KERN:       length:               34
+</I>&gt;<i> KERN:       location:             41
+</I>&gt;<i> KERN:       data length:          2048
+</I>&gt;<i> KERN:       volume space:         1
+</I>&gt;<i> KERN: iso9660_info::set_string(0x811f9150 ('&lt;NULL&gt;'), 'PORTFOLIODISC1',
+</I>&gt;<i> 32)
+</I>&gt;<i> KERN:   returned: 0.6
+</I>&gt;<i> KERN:   trying: file_systems/nfs/v1
+</I>&gt;<i> KERN:   returned: -1
+</I>&gt;<i> KERN:   trying: file_systems/userlandfs/v1
+</I>&gt;<i> KERN:   returned: -1
+</I>&gt;<i> KERN:   trying: file_systems/write_overlay/v1
+</I>&gt;<i> KERN:   returned: -1
+</I>&gt;<i> KERN:   scanning with: file_systems/iso9660/v1
+</I>&gt;<i> KERN: Media changed from /dev/disk/atapi/4/master/raw
+</I>&gt;<i> KERN: KDiskDeviceManager::_ScanPartition(/dev/disk/atapi/4/master/raw)
+</I>&gt;<i> KERN: intel: ep_std_ops(0x1)
+</I>&gt;<i> KERN:   trying: partitioning_systems/intel/extended/v1
+</I>&gt;<i> KERN:   returned: -1
+</I>&gt;<i> KERN: intel: ep_std_ops(0x2)
+</I>&gt;<i> KERN:   trying: partitioning_systems/intel/map/v1
+</I>&gt;<i> KERN: intel: pm_identify_partition(8, 1: 0, 366448640, 2048)
+</I>&gt;<i> KERN:   returned: -1
+</I>&gt;<i> KERN:   trying: file_systems/bfs/v1
+</I>&gt;<i> KERN:   returned: -1
+</I>&gt;<i> KERN:   trying: file_systems/devfs/v1
+</I>&gt;<i> KERN:   returned: -1
+</I>&gt;<i> KERN:   trying: file_systems/rootfs/v1
+</I>&gt;<i> KERN:   returned: -1
+</I>&gt;<i> KERN:   trying: partitioning_systems/session/v1
+</I>&gt;<i> KERN: raw_command:
+</I>&gt;<i> KERN:   returned: 0.699
+</I>&gt;<i> KERN:   trying: file_systems/attribute_overlay/v1
+</I>&gt;<i> KERN:   returned: -1
+</I>&gt;<i> KERN:   trying: file_systems/cdda/v1
+</I>&gt;<i> KERN: raw_command:
+</I>&gt;<i> KERN: 01. 00:02.00 (length 39:45.55)
+</I>&gt;<i> KERN:   returned: -2147483648
+</I>&gt;<i> KERN:   trying: file_systems/ext2/v1
+</I>&gt;<i> KERN:   returned: -2147483648
+</I>&gt;<i> KERN:   trying: file_systems/fat/v1
+</I>&gt;<i> KERN:   returned: -1
+</I>&gt;<i> KERN:   trying: file_systems/iso9660/v1
+</I>&gt;<i> KERN: identify(8, 0x811f91b0)
+</I>&gt;<i> KERN: found primary descriptor
+</I>&gt;<i> KERN:   iso9660_primary_descriptor:
+</I>&gt;<i> KERN:     volume descriptor type: 1 (primary)
+</I>&gt;<i> KERN:     standard identifier:    CD001 (valid)
+</I>&gt;<i> KERN:     version:                1
+</I>&gt;<i> KERN:     identifier:             'PORTFOLIODISC1'
+</I>&gt;<i> KERN:     size:                   178780
+</I>&gt;<i> KERN:     set size:               1
+</I>&gt;<i> KERN:     sequence number:        1
+</I>&gt;<i> KERN:     logical block size:     2048
+</I>&gt;<i> KERN:     path table size:        10
+</I>&gt;<i> KERN:     set identifier:
+</I>&gt;<i> KERN:     root directory record:
+</I>&gt;<i> KERN:       length:               34
+</I>&gt;<i> KERN:       location:             41
+</I>&gt;<i> KERN:       data length:          2048
+</I>&gt;<i> KERN:       volume space:         1
+</I>&gt;<i> KERN: iso9660_info::set_string(0x811f91b0 ('&lt;NULL&gt;'), 'PORTFOLIODISC1',
+</I>&gt;<i> 32)
+</I>&gt;<i> KERN:   returned: 0.6
+</I>&gt;<i> KERN:   trying: file_systems/nfs/v1
+</I>&gt;<i> KERN:   returned: -1
+</I>&gt;<i> KERN:   trying: file_systems/userlandfs/v1
+</I>&gt;<i> KERN:   returned: -1
+</I>&gt;<i> KERN:   trying: file_systems/write_overlay/v1
+</I>&gt;<i> KERN:   returned: -1
+</I>&gt;<i> KERN:   scanning with: partitioning_systems/session/v1
+</I>&gt;<i> KERN: KDiskDeviceManager::_ScanPartition(/dev/disk/atapi/4/master/0)
+</I>&gt;<i> KERN: intel: ep_std_ops(0x1)
+</I>&gt;<i> KERN:   trying: partitioning_systems/intel/extended/v1
+</I>&gt;<i> KERN:   returned: -1
+</I>&gt;<i> KERN: intel: ep_std_ops(0x2)
+</I>&gt;<i> KERN:   trying: partitioning_systems/intel/map/v1
+</I>&gt;<i> KERN: intel: pm_identify_partition(8, 7: 0, 366448640, 2048)
+</I>&gt;<i> KERN:   returned: -1
+</I>&gt;<i> KERN:   trying: file_systems/bfs/v1
+</I>&gt;<i> KERN:   returned: -1
+</I>&gt;<i> KERN:   trying: file_systems/devfs/v1
+</I>&gt;<i> KERN:   returned: -1
+</I>&gt;<i> KERN:   trying: file_systems/rootfs/v1
+</I>&gt;<i> KERN:   returned: -1
+</I>&gt;<i> KERN:   trying: partitioning_systems/session/v1
+</I>&gt;<i> KERN:   returned: -1
+</I>&gt;<i> KERN:   trying: file_systems/attribute_overlay/v1
+</I>&gt;<i> KERN:   returned: -1
+</I>&gt;<i> KERN:   trying: file_systems/cdda/v1
+</I>&gt;<i> KERN: raw_command:
+</I>&gt;<i> KERN: 01. 00:02.00 (length 39:45.55)
+</I>&gt;<i> KERN:   returned: -2147483648
+</I>&gt;<i> KERN:   trying: file_systems/ext2/v1
+</I>&gt;<i> KERN:   returned: -2147483648
+</I>&gt;<i> KERN:   trying: file_systems/fat/v1
+</I>&gt;<i> KERN:   returned: -1
+</I>&gt;<i> KERN:   trying: file_systems/iso9660/v1
+</I>&gt;<i> KERN: identify(8, 0x811f9120)
+</I>&gt;<i> KERN: found primary descriptor
+</I>&gt;<i> KERN:   iso9660_primary_descriptor:
+</I>&gt;<i> KERN:     volume descriptor type: 1 (primary)
+</I>&gt;<i> KERN:     standard identifier:    CD001 (valid)
+</I>&gt;<i> KERN:     version:                1
+</I>&gt;<i> KERN:     identifier:             'PORTFOLIODISC1'
+</I>&gt;<i> KERN:     size:                   178780
+</I>&gt;<i> KERN:     set size:               1
+</I>&gt;<i> KERN:     sequence number:        1
+</I>&gt;<i> KERN:     logical block size:     2048
+</I>&gt;<i> KERN:     path table size:        10
+</I>&gt;<i> KERN:     set identifier:
+</I>&gt;<i> KERN:     root directory record:
+</I>&gt;<i> KERN:       length:               34
+</I>&gt;<i> KERN:       location:             41
+</I>&gt;<i> KERN:       data length:          2048
+</I>&gt;<i> KERN:       volume space:         1
+</I>&gt;<i> KERN: iso9660_info::set_string(0x811f9120 ('&lt;NULL&gt;'), 'PORTFOLIODISC1',
+</I>&gt;<i> 32)
+</I>&gt;<i> KERN:   returned: 0.6
+</I>&gt;<i> KERN:   trying: file_systems/nfs/v1
+</I>&gt;<i> KERN:   returned: -1
+</I>&gt;<i> KERN:   trying: file_systems/userlandfs/v1
+</I>&gt;<i> KERN:   returned: -1
+</I>&gt;<i> KERN:   trying: file_systems/write_overlay/v1
+</I>&gt;<i> KERN:   returned: -1
+</I>&gt;<i> KERN:   scanning with: file_systems/iso9660/v1
+</I>&gt;<i> }}}
+</I>&gt;<i>
+</I>&gt;<i> Let me know if you need any other information, I can make these discs
+</I>&gt;<i> pretty much at will.
+</I>
+New description:
+
+ A disc I burned on my Mac appears to have major interpretation problems
+ with our iso9660 driver. The actual contents of the disc look as follows:
+
+ {{{
+ 05/03/2009  11:20 AM        17,313,824 Helmer_altMoviePoster.jpg
+ 04/13/2009  03:01 PM       209,176,224 Helmer_altMoviePoster.psd
+ 05/03/2009  11:08 AM         4,106,772 Helmer_MoviePoster.jpg
+ 04/13/2009  03:02 PM       134,074,020 Helmer_MoviePoster.psd
+                4 File(s)    364,670,840 bytes
+                0 Dir(s)               0 bytes free
+ }}}
+
+ However, our iso9660 add-on claims this instead:
+ {{{
+ total 591
+ dr-xr-xr-x 0 rene root  2048 May  3 16:47 .
+ drwxrwxrwx 1 rene root     0 May  3 17:03 ..
+ -r--r--r-- 0 rene root 91095 May  3 11:08 Helmer_MoviePoster.jpg
+ -r--r--r-- 0 rene root 91095 May  3 11:08 Helmer_MoviePoster.jpg
+ -r--r--r-- 0 rene root 54130 Apr 13 15:02 Helmer_MoviePoster.psd
+ -r--r--r-- 0 rene root 54130 Apr 13 15:02 Helmer_MoviePoster.psd
+ -r--r--r-- 0 rene root 98113 May  3 11:20 Helmer_altMoviePoster.jpg
+ -r--r--r-- 0 rene root 98113 May  3 11:20 Helmer_altMoviePoster.jpg
+ -r--r--r-- 0 rene root 57832 Apr 13 15:01 Helmer_altMoviePoster.psd
+ -r--r--r-- 0 rene root 57832 Apr 13 15:01 Helmer_altMoviePoster.psd
+ }}}
+
+ None of the files are usable. Syslog of that CD insertion:
+ {{{
+ Media changed from /dev/disk/atapi/4/master/raw
+ KDiskDeviceManager::_ScanPartition(/dev/disk/atapi/4/master/raw)
+ intel: ep_std_ops(0x1)
+   trying: partitioning_systems/intel/extended/v1
+   returned: -1
+ intel: ep_std_ops(0x2)
+   trying: partitioning_systems/intel/map/v1
+ intel: pm_identify_partition(8, 1: 0, 366448640, 2048)
+   returned: -1
+   trying: file_systems/bfs/v1
+   returned: -1
+   trying: file_systems/devfs/v1
+   returned: -1
+   trying: file_systems/rootfs/v1
+   returned: -1
+   trying: partitioning_systems/session/v1
+ raw_command:
+   returned: 0.699
+   trying: file_systems/attribute_overlay/v1
+   returned: -1
+   trying: file_systems/cdda/v1
+ raw_command:
+ 01. 00:02.00 (length 39:45.55)
+   returned: -2147483648
+   trying: file_systems/ext2/v1
+   returned: -2147483648
+   trying: file_systems/fat/v1
+   returned: -1
+   trying: file_systems/iso9660/v1
+ identify(8, 0x811f9130)
+ found primary descriptor
+   iso9660_primary_descriptor:
+     volume descriptor type: 1 (primary)
+     standard identifier:    CD001 (valid)
+     version:                1
+     identifier:             'PORTFOLIODISC1'
+     size:                   178780
+     set size:               1
+     sequence number:        1
+     logical block size:     2048
+     path table size:        10
+     set identifier:
+     root directory record:
+       length:               34
+       location:             41
+       data length:          2048
+       volume space:         1
+ iso9660_info::set_string(0x811f9130 ('&lt;NULL&gt;'), 'PORTFOLIODISC1', 32)
+   returned: 0.6
+   trying: file_systems/nfs/v1
+   returned: -1
+   trying: file_systems/userlandfs/v1
+   returned: -1
+   trying: file_systems/write_overlay/v1
+   returned: -1
+   scanning with: partitioning_systems/session/v1
+ KDiskDeviceManager::_ScanPartition(/dev/disk/atapi/4/master/0)
+ intel: ep_std_ops(0x1)
+   trying: partitioning_systems/intel/extended/v1
+   returned: -1
+ intel: ep_std_ops(0x2)
+   trying: partitioning_systems/intel/map/v1
+ intel: pm_identify_partition(8, 10: 0, 366448640, 2048)
+   returned: -1
+   trying: file_systems/bfs/v1
+   returned: -1
+   trying: file_systems/devfs/v1
+   returned: -1
+   trying: file_systems/rootfs/v1
+   returned: -1
+   trying: partitioning_systems/session/v1
+   returned: -1
+   trying: file_systems/attribute_overlay/v1
+   returned: -1
+   trying: file_systems/cdda/v1
+ raw_command:
+ 01. 00:02.00 (length 39:45.55)
+   returned: -2147483648
+   trying: file_systems/ext2/v1
+   returned: -2147483648
+   trying: file_systems/fat/v1
+   returned: -1
+   trying: file_systems/iso9660/v1
+ identify(8, 0x811f9120)
+ found primary descriptor
+   iso9660_primary_descriptor:
+     volume descriptor type: 1 (primary)
+     standard identifier:    CD001 (valid)
+     version:                1
+     identifier:             'PORTFOLIODISC1'
+     size:                   178780
+     set size:               1
+     sequence number:        1
+     logical block size:     2048
+     path table size:        10
+     set identifier:
+     root directory record:
+       length:               34
+       location:             41
+       data length:          2048
+       volume space:         1
+ iso9660_info::set_string(0x811f9120 ('&lt;NULL&gt;'), 'PORTFOLIODISC1', 32)
+   returned: 0.6
+   trying: file_systems/nfs/v1
+   returned: -1
+   trying: file_systems/userlandfs/v1
+   returned: -1
+   trying: file_systems/write_overlay/v1
+   returned: -1
+   scanning with: file_systems/iso9660/v1
+ ISOMount - ENTER
+ B_GET_PARTITION_INFO: ioctl returned error
+ ISOMount: open device/file &quot;/dev/disk/atapi/4/master/0&quot;
+ ISOMount: Is an ISO9660 volume, initting rec
+ InitVolDesc - ENTER
+ InitVolDesc - system id string is APPLE COMPUTER, INC., TYPE: 0002
+ InitVolDesc - volume id string is PORTFOLIODISC1
+ InitNode - ENTER, bufstart is 0x82e6b7a7, record length is 34 bytes
+ InitNode - data start LBN is 41
+ InitNode - data length is 2048
+ InitNode - flags are 2
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 1
+ DirRec ID String is: .
+ RR: Start of extensions at 0x82e6b7c8
+ InitVolDesc - volume set id string is
+ InitVolDesc - volume pub id string is
+ InitVolDesc - volume dataPreparer string is
+ InitVolDesc - volume app id string is
+ InitVolDesc - copyright is
+ ISO9660: volume-&gt;blockSize = 2048
+ ISOMount: block size multiplier is 1
+ ISO9660: cache init: dev 9, max blocks 178780
+ ISO9660 Extensions: Microsoft Joliet Level 1
+ InitNode - ENTER, bufstart is 0x82e6b7a7, record length is 34 bytes
+ InitNode - data start LBN is 44
+ InitNode - data length is 2048
+ InitNode - flags are 2
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 1
+ DirRec ID String is: .
+ RR: Start of extensions at 0x82e6b7c8
+ ISOMount - EXIT, returning 0x819c0800
+ Media changed from /dev/disk/atapi/4/master/raw
+ KDiskDeviceManager::_ScanPartition(/dev/disk/atapi/4/master/raw)
+ intel: ep_std_ops(0x1)
+   trying: partitioning_systems/intel/extended/v1
+   returned: -1
+ intel: ep_std_ops(0x2)
+   trying: partitioning_systems/intel/map/v1
+ intel: pm_identify_partition(8, 1: 0, 366448640, 2048)
+   returned: -1
+   trying: file_systems/bfs/v1
+   returned: -1
+   trying: file_systems/devfs/v1
+   returned: -1
+   trying: file_systems/rootfs/v1
+   returned: -1
+   trying: partitioning_systems/session/v1
+ raw_command:
+   returned: 0.699
+   trying: file_systems/attribute_overlay/v1
+   returned: -1
+   trying: file_systems/cdda/v1
+ raw_command:
+ 01. 00:02.00 (length 39:45.55)
+   returned: -2147483648
+   trying: file_systems/ext2/v1
+   returned: -2147483648
+   trying: file_systems/fat/v1
+   returned: -1
+   trying: file_systems/iso9660/v1
+ identify(8, 0x8118cec0)
+ found primary descriptor
+   iso9660_primary_descriptor:
+     volume descriptor type: 1 (primary)
+     standard identifier:    CD001 (valid)
+     version:                1
+     identifier:             'PORTFOLIODISC1'
+     size:                   178780
+     set size:               1
+     sequence number:        1
+     logical block size:     2048
+     path table size:        10
+     set identifier:
+     root directory record:
+       length:               34
+       location:             41
+       data length:          2048
+       volume space:         1
+ iso9660_info::set_string(0x8118cec0 ('&lt;NULL&gt;'), 'PORTFOLIODISC1', 32)
+   returned: 0.6
+   trying: file_systems/nfs/v1
+   returned: -1
+   trying: file_systems/userlandfs/v1
+   returned: -1
+   trying: file_systems/write_overlay/v1
+   returned: -1
+   scanning with: partitioning_systems/session/v1
+ KDiskDeviceManager::_ScanPartition(/dev/disk/atapi/4/master/0)
+ intel: ep_std_ops(0x1)
+   trying: partitioning_systems/intel/extended/v1
+   returned: -1
+ intel: ep_std_ops(0x2)
+   trying: partitioning_systems/intel/map/v1
+ intel: pm_identify_partition(8, 11: 0, 366448640, 2048)
+   returned: -1
+   trying: file_systems/bfs/v1
+   returned: -1
+   trying: file_systems/devfs/v1
+   returned: -1
+   trying: file_systems/rootfs/v1
+   returned: -1
+   trying: partitioning_systems/session/v1
+   returned: -1
+   trying: file_systems/attribute_overlay/v1
+   returned: -1
+   trying: file_systems/cdda/v1
+ raw_command:
+ 01. 00:02.00 (length 39:45.55)
+   returned: -2147483648
+   trying: file_systems/ext2/v1
+   returned: -2147483648
+   trying: file_systems/fat/v1
+   returned: -1
+   trying: file_systems/iso9660/v1
+ identify(8, 0x8118ceb0)
+ found primary descriptor
+   iso9660_primary_descriptor:
+     volume descriptor type: 1 (primary)
+     standard identifier:    CD001 (valid)
+     version:                1
+     identifier:             'PORTFOLIODISC1'
+     size:                   178780
+     set size:               1
+     sequence number:        1
+     logical block size:     2048
+     path table size:        10
+     set identifier:
+     root directory record:
+       length:               34
+       location:             41
+       data length:          2048
+       volume space:         1
+ iso9660_info::set_string(0x8118ceb0 ('&lt;NULL&gt;'), 'PORTFOLIODISC1', 32)
+   returned: 0.6
+   trying: file_systems/nfs/v1
+   returned: -1
+   trying: file_systems/userlandfs/v1
+   returned: -1
+   trying: file_systems/write_overlay/v1
+   returned: -1
+   scanning with: file_systems/iso9660/v1
+ ISOMount - ENTER
+ B_GET_PARTITION_INFO: ioctl returned error
+ ISOMount: open device/file &quot;/dev/disk/atapi/4/master/0&quot;
+ ISOMount: Is an ISO9660 volume, initting rec
+ InitVolDesc - ENTER
+ InitVolDesc - system id string is APPLE COMPUTER, INC., TYPE: 0002
+ InitVolDesc - volume id string is PORTFOLIODISC1
+ InitNode - ENTER, bufstart is 0x82e6b7a7, record length is 34 bytes
+ InitNode - data start LBN is 41
+ InitNode - data length is 2048
+ InitNode - flags are 2
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 1
+ DirRec ID String is: .
+ RR: Start of extensions at 0x82e6b7c8
+ InitVolDesc - volume set id string is
+ InitVolDesc - volume pub id string is
+ InitVolDesc - volume dataPreparer string is
+ InitVolDesc - volume app id string is
+ InitVolDesc - copyright is
+ ISO9660: volume-&gt;blockSize = 2048
+ ISOMount: block size multiplier is 1
+ ISO9660: cache init: dev 9, max blocks 178780
+ ISO9660 Extensions: Microsoft Joliet Level 1
+ InitNode - ENTER, bufstart is 0x82e6b7a7, record length is 34 bytes
+ InitNode - data start LBN is 44
+ InitNode - data length is 2048
+ InitNode - flags are 2
+ InitNode - fileUnitSize is 0
+ InitNode - interleave gap size = 0
+ InitNode - volume seq num is 16777217
+ InitNode - file id length is 1
+ DirRec ID String is: .
+ RR: Start of extensions at 0x82e6b7c8
+ ISOMount - EXIT, returning 0x819c0800
+ }}}
+
+ Let me know if you need any other information, I can make these discs
+ pretty much at will.
+
+ -- updated log with TRACE_ISO9660 enabled.
+
+--
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3861#comment:1">http://dev.haiku-os.org/ticket/3861#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="016873.html">[Haiku-bugs] [Haiku] #3861: iso9660 has issues with various discs	burned on a mac
+</A></li>
+	<LI>Next message: <A HREF="016876.html">[Haiku-bugs] [Haiku] #3861: iso9660 has issues with various discs burned on a mac
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16875">[ date ]</a>
+              <a href="thread.html#16875">[ thread ]</a>
+              <a href="subject.html#16875">[ subject ]</a>
+              <a href="author.html#16875">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

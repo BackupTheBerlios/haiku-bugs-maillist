@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2706: PANIC: vm_page_fault: unhandled page fault in kernel space at 0xdeadbf07, ip 0x9428897e
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-January/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232706%3A%20PANIC%3A%20vm_page_fault%3A%20unhandled%0A%20page%20fault%20in%20kernel%20space%20at%200xdeadbf07%2C%20ip%200x9428897e&In-Reply-To=%3C050.8241f78e1b9a4a6fda9ee98c56912c09%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="013684.html">
+   <LINK REL="Next"  HREF="013686.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2706: PANIC: vm_page_fault: unhandled page fault in kernel space at 0xdeadbf07, ip 0x9428897e</H1>
+    <B>Adek336</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232706%3A%20PANIC%3A%20vm_page_fault%3A%20unhandled%0A%20page%20fault%20in%20kernel%20space%20at%200xdeadbf07%2C%20ip%200x9428897e&In-Reply-To=%3C050.8241f78e1b9a4a6fda9ee98c56912c09%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2706: PANIC: vm_page_fault: unhandled page fault in kernel space at 0xdeadbf07, ip 0x9428897e">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Jan 14 18:54:18 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="013684.html">[Haiku-bugs] [Haiku] #2753: Subpixel antialiasing doesn't work with hinting on
+</A></li>
+        <LI>Next message: <A HREF="013686.html">[Haiku-bugs] [Haiku] #3213: Workspace preflet code incorrectly handles restoring window position on workspace switches when workspaces differ in resolution
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13685">[ date ]</a>
+              <a href="thread.html#13685">[ thread ]</a>
+              <a href="subject.html#13685">[ subject ]</a>
+              <a href="author.html#13685">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2706: PANIC: vm_page_fault: unhandled page fault in kernel space at 0xdeadbf07,
+ip 0x9428897e
+------------------------------------+---------------------------------------
+ Reporter:  stippi                  |       Owner:  axeld         
+     Type:  bug                     |      Status:  new           
+ Priority:  critical                |   Milestone:  R1/alpha1     
+Component:  Network &amp; Internet/TCP  |     Version:  R1 development
+Blockedby:                          |    Platform:  x86           
+ Blocking:                          |  
+------------------------------------+---------------------------------------
+
+Comment(by Adek336):
+
+ With net_route_infos, to use the route, one has to read
+ net_route_info::route, and then increase it's reference count. But the
+ route may be destroyed in between! Clearly a function to do it atomically
+ is needed. There also seem to be no users of net_route_info atm :-))
+
+ Apart from locking, there might be a problem with deleting a default route
+ and setting up a new one. The current code would put the route and try to
+ setup a new one. However, only one default route may exist, so if the
+ action of removing the old route was delayed (because, for example, some
+ small helper function like ipv4_get_mtu got the route and it's thread lost
+ the cpu before putting the route) then the new route won't be set up. Also
+ the old route is going to be removed shortly, so no default routes remain!
+
+ One solution is to drop the route from the route list when removing the
+ route. That lets the new route be created and the old route used. If also
+ everybody except the small helper functions use net_route_info than they
+ would soon update and put the old route.
+
+ Another solution is, when servicing SIOCDELR, to block servicing SIOCDELR
+ until everyone puts the old route. Again, this requires that everybody use
+ net_route_info and if net_timer would want to remove the route, it might
+ deadlock (but I think only user apps would ever want to remove routes and
+ that net_timer doesn't try to remove routes).
+
+ As for why the page fault happens: when net_server tries to reconfigure
+ the default route, the stack puts the route to tell the world that it no
+ longer references it, that it gives up it's ownership of the route. The
+ route still has a positive reference count due to TCP endpoints, so it is
+ not really removed and the new default route isn't installed when another
+ default route exists. Soon net_server wants to reconfigure the default
+ route and the stack puts the route again... so it gives up ownership of a
+ route whom it does not possess ! Possibly net_route_private could remember
+ how many times it was supposed to be removed so that remove_route would
+ panic or return error on second and later tries.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2706#comment:20">http://dev.haiku-os.org/ticket/2706#comment:20</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="013684.html">[Haiku-bugs] [Haiku] #2753: Subpixel antialiasing doesn't work with hinting on
+</A></li>
+	<LI>Next message: <A HREF="013686.html">[Haiku-bugs] [Haiku] #3213: Workspace preflet code incorrectly handles restoring window position on workspace switches when workspaces differ in resolution
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13685">[ date ]</a>
+              <a href="thread.html#13685">[ thread ]</a>
+              <a href="subject.html#13685">[ subject ]</a>
+              <a href="author.html#13685">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

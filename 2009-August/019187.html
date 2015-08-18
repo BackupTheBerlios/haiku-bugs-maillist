@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4103: cddb not working
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234103%3A%20cddb%20not%20working&In-Reply-To=%3C051.72e02a138989c820c3ef37f6424ad4f2%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="019201.html">
+   <LINK REL="Next"  HREF="019188.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4103: cddb not working</H1>
+    <B>scottmc</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234103%3A%20cddb%20not%20working&In-Reply-To=%3C051.72e02a138989c820c3ef37f6424ad4f2%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4103: cddb not working">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Aug  8 08:36:55 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="019201.html">[Haiku-bugs] [Haiku] #4197: MediaConverter isn't font sensitive
+</A></li>
+        <LI>Next message: <A HREF="019188.html">[Haiku-bugs] [Haiku] #3209: [Terminal] Enhancements (mostly	easy)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19187">[ date ]</a>
+              <a href="thread.html#19187">[ thread ]</a>
+              <a href="subject.html#19187">[ subject ]</a>
+              <a href="author.html#19187">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4103: cddb not working
+-------------------------------+--------------------------------------------
+ Reporter:  scottmc            |       Owner:  bga           
+     Type:  bug                |      Status:  new           
+ Priority:  normal             |   Milestone:  R1            
+Component:  File Systems/cdda  |     Version:  R1 development
+Blockedby:                     |    Platform:  All           
+ Blocking:                     |  
+-------------------------------+--------------------------------------------
+
+Comment(by scottmc):
+
+ Still not working... this with r32198.
+
+ {{{
+ /dev&gt; cd ..
+ /&gt; ls
+ Audio CD   Audio CD2  Audio CD4  Haiku  boot  etc     tmp
+ Audio CD1  Audio CD3  Audio CD5  bin    dev   system  var
+ /&gt; catattr &quot;CD:do_lookup&quot; /Audio\ CD5
+ /Audio CD5 : bool : 0
+ /&gt; catattr &quot;CD:toc&quot; /Audio\ CD5
+ /Audio CD5 : raw_data :
+ 0x000000:  00 6a 01 0c 00 10 01 00 00 00 02 21 00 10 02 00
+ '.j.........!....'
+ 0x000010:  00 05 04 00 00 10 03 00 00 09 12 46 00 10 04 00
+ '...........F....'
+ 0x000020:  00 0c 3a 00 00 10 05 00 00 10 01 3c 00 10 06 00
+ '..:........&lt;....'
+ 0x000030:  00 14 12 3a 00 10 07 00 00 17 0f 3c 00 10 08 00
+ '...:.......&lt;....'
+ 0x000040:  00 19 26 3f 00 10 09 00 00 1d 16 30 00 10 0a 00
+ '..&amp;?.......0....'
+ 0x000050:  00 1f 3b 28 00 10 0b 00 00 23 20 03 00 10 0c 00
+ '..;(.....#......'
+ 0x000060:  00 26 30 1e 00 10 aa 00 00 3b 17 21               '.&amp;0......;.!
+ '
+ /&gt; catattr &quot;CD:cddbid&quot; /Audio\ CD5
+ /Audio CD5 : uint32 : 2869815564
+ /&gt; rm /boot/home/config/settings/cdda/2869815564
+ rm: cannot remove `/boot/home/config/settings/cdda/2869815564': No such
+ file or directory
+ /&gt; ls /boot/home/config/settings/cdda
+ 1e116112  6409b909  b609b10c                     shared
+ 30117a16  ab0de90c  dev_disk_atapi_1_master_raw
+ /&gt; rm /boot/home/config/settings/cdda/1*
+ /&gt; rm /boot/home/config/settings/cdda/3*
+ /&gt; rm /boot/home/config/settings/cdda/6*
+ /&gt; rm /boot/home/config/settings/cdda/a*
+ /&gt; rm /boot/home/config/settings/cdda/b*
+ /&gt; ls /boot/home/config/settings/cdda
+ dev_disk_atapi_1_master_raw  shared
+ /&gt; Skipping device with id 13.
+
+ /&gt; ls /dev
+ audio      console  dvb       keyboard  net   ptmx    tty      zero
+ bluetooth  disk     graphics  midi      null  random  urandom
+ bus        dprintf  input     misc      pt    tt      video
+ /&gt; ls /dev/disk
+ ata  atapi  floppy  usb  virtual
+ /&gt; ls /dev/disk/ata
+ 0
+ /&gt; ls /
+ Audio CD   Audio CD2  Audio CD4  Audio CD6  bin   dev  system  var
+ Audio CD1  Audio CD3  Audio CD5  Haiku      boot  etc  tmp
+ /&gt;
+ }}}
+
+ One thing to note is that every mount/unmount cycle created a new &quot;/Audio
+ CD#&quot;
+ I tried with several common Audio CDs and none worked.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4103#comment:15">http://dev.haiku-os.org/ticket/4103#comment:15</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="019201.html">[Haiku-bugs] [Haiku] #4197: MediaConverter isn't font sensitive
+</A></li>
+	<LI>Next message: <A HREF="019188.html">[Haiku-bugs] [Haiku] #3209: [Terminal] Enhancements (mostly	easy)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19187">[ date ]</a>
+              <a href="thread.html#19187">[ thread ]</a>
+              <a href="subject.html#19187">[ subject ]</a>
+              <a href="author.html#19187">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

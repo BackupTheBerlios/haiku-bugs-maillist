@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2902: USB File corruption with SMP	enabled.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232902%3A%20USB%20File%20corruption%20with%20SMP%0A%09enabled.&In-Reply-To=%3C054.dc1a4a6508419ab6e634caad601b9d81%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012253.html">
+   <LINK REL="Next"  HREF="012256.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2902: USB File corruption with SMP	enabled.</H1>
+    <B>bonefish</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232902%3A%20USB%20File%20corruption%20with%20SMP%0A%09enabled.&In-Reply-To=%3C054.dc1a4a6508419ab6e634caad601b9d81%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2902: USB File corruption with SMP	enabled.">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Nov  9 18:19:22 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012253.html">[Haiku-bugs] [Haiku] #2962: clicking rec button in	Soundrecorder crashes it
+</A></li>
+        <LI>Next message: <A HREF="012256.html">[Haiku-bugs] [Haiku] #2973: ps2 driver recognizes 4 mices on	laptop
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12255">[ date ]</a>
+              <a href="thread.html#12255">[ thread ]</a>
+              <a href="subject.html#12255">[ subject ]</a>
+              <a href="author.html#12255">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2902: USB File corruption with SMP enabled.
+--------------------------+-------------------------------------------------
+  Reporter:  netster403   |       Owner:  mmlr          
+      Type:  bug          |      Status:  new           
+  Priority:  critical     |   Milestone:  R1/alpha1     
+ Component:  Drivers/USB  |     Version:  R1 development
+Resolution:               |   Blockedby:                
+  Platform:  x86          |    Blocking:                
+--------------------------+-------------------------------------------------
+
+Comment(by bonefish):
+
+ I changed the physical page mapper for x86 in r28244. So besides a newly
+ exposed race condition, this could be another origin of the problem. As
+ far as I've seen the USB code doesn't map physical pages directly, which
+ makes it rather unlikely though, since all other code doing it, does it
+ very locally only (e.g. for copying physical pages or PIO).
+
+ For what kind of pages does the problem occur. Is it virtual or physical
+ memory? And where does it come from?
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2902#comment:21">http://dev.haiku-os.org/ticket/2902#comment:21</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012253.html">[Haiku-bugs] [Haiku] #2962: clicking rec button in	Soundrecorder crashes it
+</A></li>
+	<LI>Next message: <A HREF="012256.html">[Haiku-bugs] [Haiku] #2973: ps2 driver recognizes 4 mices on	laptop
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12255">[ date ]</a>
+              <a href="thread.html#12255">[ thread ]</a>
+              <a href="subject.html#12255">[ subject ]</a>
+              <a href="author.html#12255">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

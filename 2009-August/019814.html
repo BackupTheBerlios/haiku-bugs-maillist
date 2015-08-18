@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4287: Haiku Crashes With ATA Stack
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234287%3A%20Haiku%20Crashes%20With%20ATA%20Stack&In-Reply-To=%3C055.11a26802395c51220d7c2694024e9254%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="019807.html">
+   <LINK REL="Next"  HREF="019817.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4287: Haiku Crashes With ATA Stack</H1>
+    <B>tonestone57</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234287%3A%20Haiku%20Crashes%20With%20ATA%20Stack&In-Reply-To=%3C055.11a26802395c51220d7c2694024e9254%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4287: Haiku Crashes With ATA Stack">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Aug 20 02:33:55 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="019807.html">[Haiku-bugs] [Haiku] #4287: Haiku Crashes With ATA Stack
+</A></li>
+        <LI>Next message: <A HREF="019817.html">[Haiku-bugs] [Haiku] #4287: Haiku Crashes With ATA Stack
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19814">[ date ]</a>
+              <a href="thread.html#19814">[ thread ]</a>
+              <a href="subject.html#19814">[ subject ]</a>
+              <a href="author.html#19814">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4287: Haiku Crashes With ATA Stack
+--------------------------+-------------------------------------------------
+ Reporter:  tonestone57   |       Owner:  marcusoverhagen
+     Type:  bug           |      Status:  new            
+ Priority:  normal        |   Milestone:  R1             
+Component:  Drivers/Disk  |     Version:  R1 development 
+Blockedby:                |    Platform:  x86            
+ Blocking:                |  
+--------------------------+-------------------------------------------------
+
+Comment(by tonestone57):
+
+ Yes, with HAIKU_ATA_STACK = 1 ; in UserBuildConfig but NOT with fresh
+ image.
+
+ So, I went into my generated folder &amp; deleted all other folders
+ (attributes, objects, tmp,) except for build, cross_tools, download &amp; the
+ Jamfile which I left alone.
+
+ I went to a slightly older revision, Haiku 32267.  I re-jammed everything
+ but using the old configuration I had in the generated folder.
+
+ {{{
+ Creating image ...
+ Writing boot code to &quot;/dev/hdb2&quot; (partition offset: 10750440960 bytes,
+ start offset = 0) ...
+ Populating image ...
+ Deleting old MIME database ...
+ Installing MIME database ...
+ Unmounting ...
+ ...updated 10167 target(s)...
+ }}}
+
+
+ I notice that I am getting the same crash issue when running through QEMU.
+ qemu -hda /dev/hdb -m 264.
+
+ I will try removing build folder &amp; jamfile from generated folder &amp; re-run
+ configure to start completely new.  I'll just leave in the download folder
+ &amp; delete everything else and maybe that will make a difference?
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4287#comment:7">http://dev.haiku-os.org/ticket/4287#comment:7</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="019807.html">[Haiku-bugs] [Haiku] #4287: Haiku Crashes With ATA Stack
+</A></li>
+	<LI>Next message: <A HREF="019817.html">[Haiku-bugs] [Haiku] #4287: Haiku Crashes With ATA Stack
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19814">[ date ]</a>
+              <a href="thread.html#19814">[ thread ]</a>
+              <a href="subject.html#19814">[ subject ]</a>
+              <a href="author.html#19814">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

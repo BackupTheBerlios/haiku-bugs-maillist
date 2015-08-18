@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2460: Mouse doesn't follow split window divider when dragging it sideways in Vision
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-July/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232460%3A%20Mouse%20doesn%27t%20follow%20split%20window%0A%20divider%20when%20dragging%20it%20sideways%20in%20Vision&In-Reply-To=%3C048.cea944b1004ebfd11c83921d9e46e2c7%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009013.html">
+   <LINK REL="Next"  HREF="009016.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2460: Mouse doesn't follow split window divider when dragging it sideways in Vision</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232460%3A%20Mouse%20doesn%27t%20follow%20split%20window%0A%20divider%20when%20dragging%20it%20sideways%20in%20Vision&In-Reply-To=%3C048.cea944b1004ebfd11c83921d9e46e2c7%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2460: Mouse doesn't follow split window divider when dragging it sideways in Vision">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Jul 18 22:40:36 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009013.html">[Haiku-bugs] [Haiku] #2470: DriveSetup error preparing disk
+</A></li>
+        <LI>Next message: <A HREF="009016.html">[Haiku-bugs] [Haiku] #2460: Mouse doesn't follow split window divider when dragging it sideways in Vision
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9015">[ date ]</a>
+              <a href="thread.html#9015">[ thread ]</a>
+              <a href="subject.html#9015">[ subject ]</a>
+              <a href="author.html#9015">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2460: Mouse doesn't follow split window divider when dragging it sideways in
+Vision
+---------------------------------+------------------------------------------
+  Reporter:  koki                |       Owner:  anevilyak     
+      Type:  bug                 |      Status:  closed        
+  Priority:  normal              |   Milestone:  R1            
+ Component:  Kits/Interface Kit  |     Version:  R1 development
+Resolution:  fixed               |   Blockedby:                
+  Platform:  All                 |    Blocking:                
+---------------------------------+------------------------------------------
+Changes (by anevilyak):
+
+  * status:  new =&gt; closed
+  * resolution:  =&gt; fixed
+
+
+Comment:
+
+ Fixed in r24690.
+
+ The cause was in fact a difference in behavior between R5 and Haiku, but
+ this behavior isn't actually documented anywhere in the BeBook and was
+ more something found by random curiosity at the time, so I'm not sure any
+ other app relies on it. For the time being I've fixed it in Vision itself.
+ To clarify:
+
+ When Vision's ResizeView got a MouseMoved notification, it would ask its
+ BWindow for the current message in the queue, so as to pass that on to
+ whichever view was in fact the target of the resize, since different
+ resize behavior is needed for the nick lists vs the window list. In BeOS
+ r5 and 5.1, this would contain the BPoint for the MouseMoved in window-
+ relative coordinates. In Haiku, it already appears to be pre-converted to
+ the coordinate in the view's space, which needless to say was confusing
+ Vision quite a bit. r24690 should pull an updated package that contains
+ this fix.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2460#comment:2">http://dev.haiku-os.org/ticket/2460#comment:2</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009013.html">[Haiku-bugs] [Haiku] #2470: DriveSetup error preparing disk
+</A></li>
+	<LI>Next message: <A HREF="009016.html">[Haiku-bugs] [Haiku] #2460: Mouse doesn't follow split window divider when dragging it sideways in Vision
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9015">[ date ]</a>
+              <a href="thread.html#9015">[ thread ]</a>
+              <a href="subject.html#9015">[ subject ]</a>
+              <a href="author.html#9015">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

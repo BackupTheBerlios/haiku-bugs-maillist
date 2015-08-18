@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2616: parsedate() with an invalid time value seesm to create stack corruption.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232616%3A%20parsedate%28%29%20with%20an%20invalid%20time%20value%0A%20seesm%20to%20create%20stack%20corruption.&In-Reply-To=%3C038.7cf4ac4dbcf65f2b553a08ade788a469%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009501.html">
+   <LINK REL="Next"  HREF="009535.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2616: parsedate() with an invalid time value seesm to create stack corruption.</H1>
+    <B>bga</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232616%3A%20parsedate%28%29%20with%20an%20invalid%20time%20value%0A%20seesm%20to%20create%20stack%20corruption.&In-Reply-To=%3C038.7cf4ac4dbcf65f2b553a08ade788a469%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2616: parsedate() with an invalid time value seesm to create stack corruption.">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Aug 16 18:51:36 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009501.html">[Haiku-bugs] [Haiku] #2191: Updated posix &amp; bsd license headers
+</A></li>
+        <LI>Next message: <A HREF="009535.html">[Haiku-bugs] [Haiku] #2616: parsedate() with an invalid time value seesm to create stack corruption.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9490">[ date ]</a>
+              <a href="thread.html#9490">[ thread ]</a>
+              <a href="subject.html#9490">[ subject ]</a>
+              <a href="author.html#9490">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2616: parsedate() with an invalid time value seesm to create stack corruption.
+-------------------------------+--------------------------------------------
+ Reporter:  bga                |       Owner:  axeld         
+     Type:  bug                |      Status:  new           
+ Priority:  high               |   Milestone:  R1            
+Component:  System/libroot.so  |     Version:  R1 development
+Blockedby:                     |    Platform:  All           
+ Blocking:                     |  
+-------------------------------+--------------------------------------------
+ I have this email on my account that when parsed by MDR crashes it. More
+ specifically, it crashes in parsedate(). I was able to determine that
+ preparseDate() errors out (more specifically here:
+
+ {{{
+                 // if we're reached our maximum number of elements, bail
+ out
+                 if (index &gt;= MAX_ELEMENTS)
+                         return B_ERROR;
+ }}}
+
+ Then parsedate_etc() catched the error and return it to parsedate():
+
+ {{{
+         if (preparseDate(dateString, elements) &lt; B_OK) {
+                 *_flags = PARSEDATE_INVALID_DATE;
+                 return B_ERROR;
+         }
+ }}}
+
+ This was supposed to return to parsedate() which would in turn return the
+ error but it never actually returns. To be sure I changed parsedate() to:
+
+ {{{
+ time_t
+ parsedate(const char *dateString, time_t now)
+ {
+         int flags = 0;
+
+         printf(&quot;calling parsedate_etc()\n&quot;);
+         time_t result = parsedate_etc(dateString, now, &amp;flags);
+         printf(&quot;returned from parsedate_etc()\n&quot;);
+
+         return result;
+ }
+
+ }}}
+
+ The second printf is never printed.
+
+ I get a segfault and the following useless stack crawl on gdb:
+
+ {{{
+ [Switching to team /system/servers/mail_daemon (5651) thread BGA(BUG-Br)
+ (5659)]
+ 0x00000000 in ?? ()
+ (gdb) bt
+ #0  0x00000000 in ?? ()
+ (gdb)
+ }}}
+
+ The emails that causes this is attached. Note the problem is its &quot;Date&quot;
+ header line.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2616">http://dev.haiku-os.org/ticket/2616</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009501.html">[Haiku-bugs] [Haiku] #2191: Updated posix &amp; bsd license headers
+</A></li>
+	<LI>Next message: <A HREF="009535.html">[Haiku-bugs] [Haiku] #2616: parsedate() with an invalid time value seesm to create stack corruption.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9490">[ date ]</a>
+              <a href="thread.html#9490">[ thread ]</a>
+              <a href="subject.html#9490">[ subject ]</a>
+              <a href="author.html#9490">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

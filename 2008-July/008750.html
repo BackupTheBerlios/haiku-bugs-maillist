@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2483: [kernel] problems opening png image from ext3 partition
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-July/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232483%3A%20%5Bkernel%5D%20problems%20opening%20png%20image%0A%20from%20ext3%20partition&In-Reply-To=%3C040.6709c6f248972105379daa19a294e843%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008754.html">
+   <LINK REL="Next"  HREF="008751.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2483: [kernel] problems opening png image from ext3 partition</H1>
+    <B>diver</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232483%3A%20%5Bkernel%5D%20problems%20opening%20png%20image%0A%20from%20ext3%20partition&In-Reply-To=%3C040.6709c6f248972105379daa19a294e843%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2483: [kernel] problems opening png image from ext3 partition">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Jul  4 15:24:21 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008754.html">[Haiku-bugs] [Haiku] #2482: Panic while automounting usb stick
+</A></li>
+        <LI>Next message: <A HREF="008751.html">[Haiku-bugs] [Haiku] #2483: [kernel] problems opening png image from ext3 partition
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8750">[ date ]</a>
+              <a href="thread.html#8750">[ thread ]</a>
+              <a href="subject.html#8750">[ subject ]</a>
+              <a href="author.html#8750">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2483: [kernel] problems opening png image from ext3 partition
+---------------------------+------------------------------------------------
+ Reporter:  diver          |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1 development
+Blockedby:                 |    Platform:  All           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+ I mounted my ext3 partition (nice work btw, Axel!) where I store my
+ &quot;/home&quot; folder in Ubuntu.
+
+ I launched some files (mp3, txt) and they all opened just fine.
+ Then I tried to open .png image, after that I noticed frozen ShowImage
+ window (which couldn't be killed) and high cpu activity.
+
+ I then took a look at which thread consumed cpu power and it was
+ syslog_sender. Then I did &quot;tail -f /var/log/syslog&quot; and I saw that much
+ information is being written and continue to writing to syslog.
+ So I typed sync just in case.
+
+ Then I tried to unmount that ext3 partition from Tracker using &quot;Force
+ unmount&quot; button. After that partition didn't disappear from Desktop, but
+ disappeared from &quot;/&quot; folder and Desktop context menu.
+ I decided to reboot and shutdown window said that Tracker is not
+ responding, I used kill button and after that reboot completed.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2483">http://dev.haiku-os.org/ticket/2483</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008754.html">[Haiku-bugs] [Haiku] #2482: Panic while automounting usb stick
+</A></li>
+	<LI>Next message: <A HREF="008751.html">[Haiku-bugs] [Haiku] #2483: [kernel] problems opening png image from ext3 partition
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8750">[ date ]</a>
+              <a href="thread.html#8750">[ thread ]</a>
+              <a href="subject.html#8750">[ subject ]</a>
+              <a href="author.html#8750">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

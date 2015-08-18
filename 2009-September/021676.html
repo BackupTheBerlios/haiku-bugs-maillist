@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4586: Master drive not seen on	/dev/disk/atapi/1/
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234586%3A%20Master%20drive%20not%20seen%20on%0A%09/dev/disk/atapi/1/&In-Reply-To=%3C042.ccbdb9b539bc0f5df023912dd787e84a%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="021671.html">
+   <LINK REL="Next"  HREF="021680.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4586: Master drive not seen on	/dev/disk/atapi/1/</H1>
+    <B>Malthus</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234586%3A%20Master%20drive%20not%20seen%20on%0A%09/dev/disk/atapi/1/&In-Reply-To=%3C042.ccbdb9b539bc0f5df023912dd787e84a%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4586: Master drive not seen on	/dev/disk/atapi/1/">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Sep 20 01:49:32 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="021671.html">[Haiku-bugs] [Haiku] #4585: heap grower PANIC
+</A></li>
+        <LI>Next message: <A HREF="021680.html">[Haiku-bugs] [Haiku] #4586: Master drive not seen on	/dev/disk/atapi/1/
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21676">[ date ]</a>
+              <a href="thread.html#21676">[ thread ]</a>
+              <a href="subject.html#21676">[ subject ]</a>
+              <a href="author.html#21676">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4586: Master drive not seen on /dev/disk/atapi/1/
+-----------------------+----------------------------------------------------
+ Reporter:  Malthus    |       Owner:  axeld    
+     Type:  bug        |      Status:  new      
+ Priority:  normal     |   Milestone:  R1       
+Component:  - General  |     Version:  R1/alpha1
+Blockedby:             |    Platform:  All      
+ Blocking:             |  
+-----------------------+----------------------------------------------------
+ This relates to this thread I started relating to kernel panics in R32959
+ <A HREF="http://www.freelists.org/post/haiku/bug-tracker-advice-plse">http://www.freelists.org/post/haiku/bug-tracker-advice-plse</A>
+ I was getting consistent panics reporting:
+ &quot;page fault but interrupts were disabled touching address 0x00000010 from
+ eip 0x008428cc
+ Thread 25 &quot;media checker&quot; running on CPU0&quot;
+ whenever the cd drawer closed. Only on the master drive.
+
+ On advice in that thread that much had changed in the disk controller I
+ upgraded to R1/alpha1 Revision 33109 before trying again.
+
+ Now, I get no kernel panics but the master drive is not seen at all -
+ disks do not appear in the Mount menu, nor does /dev/disk/atapi/1/master
+ appear in Drive Setup. The slave drive is seen and works properly.
+
+ Also, I assume this is related: At the point where I had written an
+ install disk of the R1/alpha1 ISO I tried to install it from the master
+ drive; the machine booted from the disk but then immediately took me into
+ the existing R32959 system with no further user input. I had to put the
+ disk into the slave drive for the install process to work as it should.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4586">http://dev.haiku-os.org/ticket/4586</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="021671.html">[Haiku-bugs] [Haiku] #4585: heap grower PANIC
+</A></li>
+	<LI>Next message: <A HREF="021680.html">[Haiku-bugs] [Haiku] #4586: Master drive not seen on	/dev/disk/atapi/1/
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21676">[ date ]</a>
+              <a href="thread.html#21676">[ thread ]</a>
+              <a href="subject.html#21676">[ subject ]</a>
+              <a href="author.html#21676">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

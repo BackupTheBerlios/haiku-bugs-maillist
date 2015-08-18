@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4466: Screen saver refuses to unlock if the password is only one char
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234466%3A%20Screen%20saver%20refuses%20to%20unlock%20if%0A%20the%20password%20is%20only%20one%20char&In-Reply-To=%3C052.e2af60638ce93b6ec853dc0f1ff955ff%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="021030.html">
+   <LINK REL="Next"  HREF="021132.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4466: Screen saver refuses to unlock if the password is only one char</H1>
+    <B>rogueeve</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234466%3A%20Screen%20saver%20refuses%20to%20unlock%20if%0A%20the%20password%20is%20only%20one%20char&In-Reply-To=%3C052.e2af60638ce93b6ec853dc0f1ff955ff%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4466: Screen saver refuses to unlock if the password is only one char">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Sep 10 06:54:08 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="021030.html">[Haiku-bugs] [Haiku] #4466: Screen saver refuses to unlock if the password is only one char
+</A></li>
+        <LI>Next message: <A HREF="021132.html">[Haiku-bugs] [Haiku] #4466: Screen saver refuses to unlock if the password is only one char
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21031">[ date ]</a>
+              <a href="thread.html#21031">[ thread ]</a>
+              <a href="subject.html#21031">[ subject ]</a>
+              <a href="author.html#21031">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4466: Screen saver refuses to unlock if the password is only one char
+----------------------+-----------------------------------------------------
+ Reporter:  rogueeve  |       Owner:  axeld    
+     Type:  bug       |      Status:  new      
+ Priority:  normal    |   Milestone:  R1       
+Component:  System    |     Version:  R1 alpha1
+Blockedby:            |    Platform:  All      
+ Blocking:            |  
+----------------------+-----------------------------------------------------
+
+Comment(by rogueeve):
+
+ I looked at the source and I know what is wrong now. It should be a fairly
+ simple patch. Here is what is going on.
+
+ Check /haiku/src/preferences/screensaver/PasswordWindow.cpp, line 139, in
+ function PasswordWindow::MessageReceived(). This is the function that
+ changes the screen saver password.
+
+ You can see that the screen saver password is hashed using the crypt()
+ function, like so:
+
+ '''fSettings.SetPassword(crypt(fPasswordControl-&gt;Text(),
+ fPasswordControl-&gt;Text()));'''
+
+ However, this is an incorrect usage of the function.
+ <A HREF="http://www.opengroup.org/onlinepubs/9699919799/functions/crypt.html">http://www.opengroup.org/onlinepubs/9699919799/functions/crypt.html</A> states
+ that the 2nd argument to crypt, the salt, shall be at least two characters
+ long and that it shall consist of only A-Z, a-z, 0-9, or '.' or '/'.
+
+ So by using the password itself as both the key and the salt, the crypt()
+ algorithm fails when the password is only one char long, and it could also
+ possibly fail if the password contained any unusual chars.
+
+ I am not an expert on the crypt() function but it seems that typical use
+ is to choose a &quot;magick&quot; two-character salt such as &quot;AQ&quot; or whatever and
+ pass that in. I couldn't find where the other side (the password checking)
+ comes in at, but if both of those instances where adjusted to use a common
+ constant salt the issue should be resolved.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4466#comment:1">http://dev.haiku-os.org/ticket/4466#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="021030.html">[Haiku-bugs] [Haiku] #4466: Screen saver refuses to unlock if the password is only one char
+</A></li>
+	<LI>Next message: <A HREF="021132.html">[Haiku-bugs] [Haiku] #4466: Screen saver refuses to unlock if the password is only one char
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21031">[ date ]</a>
+              <a href="thread.html#21031">[ thread ]</a>
+              <a href="subject.html#21031">[ subject ]</a>
+              <a href="author.html#21031">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

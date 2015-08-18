@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2359: weird pauses during disk access
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232359%3A%20weird%20pauses%20during%20disk%20access&In-Reply-To=%3C041.e34358929f14904b9a385153c518f095%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007963.html">
+   <LINK REL="Next"  HREF="007965.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2359: weird pauses during disk access</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232359%3A%20weird%20pauses%20during%20disk%20access&In-Reply-To=%3C041.e34358929f14904b9a385153c518f095%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2359: weird pauses during disk access">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Jun  9 14:11:29 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007963.html">[Haiku-bugs] [Haiku] #1823: On some systems (real hardware) any direct to framebuffer drawing is really slow
+</A></li>
+        <LI>Next message: <A HREF="007965.html">[Haiku-bugs] [Haiku] #1823: On some systems (real hardware) any direct to framebuffer drawing is really slow
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7964">[ date ]</a>
+              <a href="thread.html#7964">[ thread ]</a>
+              <a href="subject.html#7964">[ subject ]</a>
+              <a href="author.html#7964">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2359: weird pauses during disk access
+--------------------------+-------------------------------------------------
+ Reporter:  stippi        |       Owner:  marcusoverhagen
+     Type:  bug           |      Status:  new            
+ Priority:  normal        |   Milestone:  R1             
+Component:  Drivers/Disk  |     Version:  R1 development 
+ Platform:  All           |  
+--------------------------+-------------------------------------------------
+ It started some time ago, it could be around the time that Marcus last
+ worked on the AHCI driver to add ATAPI support and handle error
+ conditions. The problem could of course be elsewhere, I should revert that
+ particular patch to make sure. Especially shortly after booting, I get
+ these funny &quot;lock-ups&quot;. For example, when I move the Terminal window and
+ the icons would need to redraw, the screen would freeze (I can still move
+ the mouse though), and after several seconds, the icons would draw and I
+ could move the window again. Also some applications would have a big delay
+ when starting. The system always continues to work fine after these
+ pauses, they don't seem to have any side effect. Another way to see them
+ is when right clicking the Desktop shortly after boot to mount another
+ partition, the menu would not appear for several seconds. Then everything
+ goes on to work normally again. When I find some time, I will try to roll
+ back the latest changes to the AHCI driver to see if these lock-ups
+ disappear then. Will report back here. Hardware is IBM/Lenovo T60, AHCI
+ driver is used for disk access. Revision is r25859, but the problems first
+ appeared sometimes sooner.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2359">http://dev.haiku-os.org/ticket/2359</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007963.html">[Haiku-bugs] [Haiku] #1823: On some systems (real hardware) any direct to framebuffer drawing is really slow
+</A></li>
+	<LI>Next message: <A HREF="007965.html">[Haiku-bugs] [Haiku] #1823: On some systems (real hardware) any direct to framebuffer drawing is really slow
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7964">[ date ]</a>
+              <a href="thread.html#7964">[ thread ]</a>
+              <a href="subject.html#7964">[ subject ]</a>
+              <a href="author.html#7964">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

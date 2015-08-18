@@ -1,0 +1,145 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1941: New network stack fails to route broadcast packets, breaking DHCP
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231941%3A%20New%20network%20stack%20fails%20to%20route%0A%20broadcast%20packets%2C%20breaking%20DHCP&In-Reply-To=%3C044.ca993b45a1b3acfe07115ffd6a448a71%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005646.html">
+   <LINK REL="Next"  HREF="005649.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1941: New network stack fails to route broadcast packets, breaking DHCP</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231941%3A%20New%20network%20stack%20fails%20to%20route%0A%20broadcast%20packets%2C%20breaking%20DHCP&In-Reply-To=%3C044.ca993b45a1b3acfe07115ffd6a448a71%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1941: New network stack fails to route broadcast packets, breaking DHCP">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Mar 19 06:10:05 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005646.html">[Haiku-bugs] [Haiku] #1711: Haiku stops booting at allocate_commpage_entry(4, 34)
+</A></li>
+        <LI>Next message: <A HREF="005649.html">[Haiku-bugs] [Haiku] #1941: New network stack fails to route broadcast packets, breaking DHCP
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5647">[ date ]</a>
+              <a href="thread.html#5647">[ thread ]</a>
+              <a href="subject.html#5647">[ subject ]</a>
+              <a href="author.html#5647">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1941: New network stack fails to route broadcast packets, breaking DHCP
+--------------------------------------+-------------------------------------
+ Reporter:  anevilyak                 |       Owner:  axeld         
+     Type:  bug                       |      Status:  new           
+ Priority:  high                      |   Milestone:  R1/alpha1     
+Component:  Network &amp; Internet/Stack  |     Version:  R1 development
+ Platform:  All                       |  
+--------------------------------------+-------------------------------------
+ When attempting to start the DHCP server after the recent routing change,
+ the DHCP packets fail to send with &quot;No route to host&quot; returned...syslog
+ with route tracing enabled as follows:
+
+ KERN: bfs: bfs_open_dir:1483: Invalid Argument
+ KERN: 3com: init_hardware(0x94832918)
+ KERN: 3com: no hardware found.
+ KERN: etherpci: init_driver init_driver: etherpci not found
+ KERN: ipro100: init_hardware(0x9482fee4)
+ KERN: ipro100: no hardware found.
+ KERN: ipro1000: init_hardware(0x9484e784)
+ KERN: ipro1000: no hardware found.
+ KERN: marvell_yukon: init_hardware(0x94835c1c)
+ KERN: marvell_yukon: no hardware found.
+ KERN: loaded driver /boot/beos/system/add-
+ ons/kernel/drivers/dev/net/net_stack
+ KERN: nforce: init_hardware(0x94835c98)
+ KERN: nforce, found NVIDIA nForce4 CK804 MCP9 Networking Adapter at 13
+ KERN: nforce: init_driver(0x94835c98)
+ KERN: [nforce] (nfe) bus_alloc_resource(3, [16], 0x0, 0xffffffff, 0x1,
+ 0x2)
+ KERN: [nforce] (nfe) bus_alloc_resource(1, [0], 0x0, 0xffffffff, 0x1, 0x6)
+ KERN: if_initname(0x90ec5c00, nfe, 3)
+ KERN: [nforce] nforce: /dev/net/nforce/0
+ KERN: [nforce] () Found MII: ukphy
+ KERN: [nforce] () OUI 0x005043, model 0x000c, rev. 2
+ KERN: [nforce] ()  Adding entry for Ethernet none
+ KERN: Adding entry for Ethernet 10baseT/UTP
+ KERN: 10baseTAdding entry for Ethernet 10baseT/UTP &lt;full-duplex&gt;
+ KERN: , 10baseT-FDXAdding entry for Ethernet 100baseTX
+ KERN: , 100baseTXAdding entry for Ethernet 100baseTX &lt;full-duplex&gt;
+ KERN: , 100baseTX-FDXAdding entry for Ethernet 1000baseTX
+ KERN: , 1000baseTAdding entry for Ethernet 1000baseTX &lt;full-duplex&gt;
+ KERN: , 1000baseT-FDXAdding entry for Ethernet autoselect
+ KERN: , auto
+ KERN: ifmedia_set: target EthernetKERN:  autoselect
+ KERN: ifmedia_set: setting to Ethernet autoselect
+ KERN: loaded driver /boot/beos/system/add-
+ ons/kernel/drivers/dev/net/nforce
+ KERN: rtl8139: init_hardware(0x94dcaec0)
+ KERN: rtl8139: no hardware found.
+ KERN: via_rhine: init_hardware(0x94dcb218)
+ KERN: via_rhine: no hardware found.
+ KERN: register_domain(1, internet)
+ KERN: unregister_domain(0x90f17940, 1, internet)
+ KERN: register_domain(1, internet)
+ KERN: get_device_interface: ask &quot;network/devices/ethernet/v1&quot; for loop
+ KERN: get_device_interface: ask &quot;network/devices/loopback/v1&quot; for loop
+ KERN: remove route from domain internet: dest 204.204.204.204, mask
+ &lt;none&gt;, gw &lt;none&gt;, flags 200004
+ KERN: add route to domain internet: dest 127.0.0.1, mask 255.0.0.0, gw
+ &lt;none&gt;, flags 0
+ KERN: add route to domain internet: dest 127.0.0.1, mask &lt;none&gt;, gw
+ &lt;none&gt;, flags 200004
+ KERN: bfs: bfs_open_dir:1483: Invalid Argument
+ KERN: get_device_interface: ask &quot;network/devices/ethernet/v1&quot; for
+ /dev/net/nforce/0
+ KERN: ipv4_datalink_init(/dev/net/nforce/0)
+ KERN: add route to domain internet: dest &lt;none&gt;, mask &lt;none&gt;, gw &lt;none&gt;,
+ flags 880
+ KERN: [net/nforce/0] compat_open(0x2)
+ KERN: ifmedia_ioctl: switching nfe to Ethernet autoselect
+ KERN: /dev/net/nforce/0: media change, media 0x22 quality 1000 speed 10000
+ KERN: register_domain(4, link)
+ KERN: test address 255.255.255.255 for routes...
+ KERN: remove route from domain internet: dest 204.204.204.204, mask
+ &lt;none&gt;, gw &lt;none&gt;, flags 200004
+ KERN: add route to domain internet: dest 169.254.0.92, mask 255.255.0.0,
+ gw &lt;none&gt;, flags 0
+ KERN: add route to domain internet: dest 169.254.0.92, mask &lt;none&gt;, gw
+ &lt;none&gt;, flags 200004
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1941">http://dev.haiku-os.org/ticket/1941</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005646.html">[Haiku-bugs] [Haiku] #1711: Haiku stops booting at allocate_commpage_entry(4, 34)
+</A></li>
+	<LI>Next message: <A HREF="005649.html">[Haiku-bugs] [Haiku] #1941: New network stack fails to route broadcast packets, breaking DHCP
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5647">[ date ]</a>
+              <a href="thread.html#5647">[ thread ]</a>
+              <a href="subject.html#5647">[ subject ]</a>
+              <a href="author.html#5647">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

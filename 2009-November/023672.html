@@ -1,0 +1,182 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4920: gcc4 BSoundPlayer broken on Alpha
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234920%3A%20gcc4%20BSoundPlayer%20broken%20on%20Alpha&In-Reply-To=%3C051.ccb88ca68983e204dadd2d98fd7d2f49%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="023542.html">
+   <LINK REL="Next"  HREF="023682.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4920: gcc4 BSoundPlayer broken on Alpha</H1>
+    <B>Adek336</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234920%3A%20gcc4%20BSoundPlayer%20broken%20on%20Alpha&In-Reply-To=%3C051.ccb88ca68983e204dadd2d98fd7d2f49%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4920: gcc4 BSoundPlayer broken on Alpha">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Nov 11 06:02:05 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="023542.html">[Haiku-bugs] [Haiku] #4920: gcc4 BSoundPlayer broken on Alpha
+</A></li>
+        <LI>Next message: <A HREF="023682.html">[Haiku-bugs] [Haiku] #4920: gcc4 BSoundPlayer broken on Alpha
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#23672">[ date ]</a>
+              <a href="thread.html#23672">[ thread ]</a>
+              <a href="subject.html#23672">[ subject ]</a>
+              <a href="author.html#23672">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4920: gcc4 BSoundPlayer broken on Alpha
+----------------------------+-----------------------------------------------
+ Reporter:  Adek336         |       Owner:  marcusoverhagen
+     Type:  bug             |      Status:  new            
+ Priority:  normal          |   Milestone:  R1             
+Component:  Kits/Media Kit  |     Version:  R1/alpha1      
+Blockedby:                  |    Platform:  All            
+ Blocking:  3437, 4893      |  
+----------------------------+-----------------------------------------------
+
+Comment(by Adek336):
+
+ Proposed fix, please review.
+
+ gcc2 and gcc4 treat empty structures differently.
+
+ In particular, the following program yields different results with the two
+ compilers:
+ {{{
+ #include &lt;iostream&gt;
+ using namespace std;
+
+ struct one {
+ };
+
+ struct two : one {
+ };
+
+ struct two_1 : one {
+         char x;
+ };
+
+ struct two_2 : one {
+         short x;
+ };
+
+ struct two_4 : one {
+         int x;
+ };
+
+ struct two_8 : one {
+         long long x;
+ };
+
+ struct three : two {
+ };
+
+ struct three_2 : two {
+         short x;
+ };
+
+ struct three_4 : two {
+         int x;
+ };
+
+ int main()
+ {
+         cout &lt;&lt; &quot;__GNUC__\t&quot; &lt;&lt; __GNUC__ &lt;&lt; endl;
+         cout &lt;&lt; &quot;sizeof(one)\t&quot; &lt;&lt; sizeof(one) &lt;&lt; endl;
+         cout &lt;&lt; &quot;sizeof(two)\t&quot; &lt;&lt; sizeof(two) &lt;&lt; endl;
+         cout &lt;&lt; &quot;sizeof(two_1)\t&quot; &lt;&lt; sizeof(two_1) &lt;&lt; endl;
+         cout &lt;&lt; &quot;sizeof(two_2)\t&quot; &lt;&lt; sizeof(two_2) &lt;&lt; endl;
+         cout &lt;&lt; &quot;sizeof(two_4)\t&quot; &lt;&lt; sizeof(two_4) &lt;&lt; endl;
+         cout &lt;&lt; &quot;sizeof(two_8)\t&quot; &lt;&lt; sizeof(two_8) &lt;&lt; endl;
+         cout &lt;&lt; &quot;sizeof(three)\t&quot; &lt;&lt; sizeof(three) &lt;&lt; endl;
+         cout &lt;&lt; &quot;sizeof(three_2)\t&quot; &lt;&lt; sizeof(three_2) &lt;&lt; endl;
+         cout &lt;&lt; &quot;sizeof(three_4)\t&quot; &lt;&lt; sizeof(three_4) &lt;&lt; endl;
+         return 0;
+ }
+
+
+
+
+ }}}
+
+ results
+
+ {{{
+ ~&gt; setgcc gcc2
+ ~&gt; g++ a.cc -o a
+ ~&gt; ./a
+ __GNUC__        2
+ sizeof(one)     1
+ sizeof(two)     1
+ sizeof(two_1)   2
+ sizeof(two_2)   4
+ sizeof(two_4)   8
+ sizeof(two_8)   12
+ sizeof(three)   1
+ sizeof(three_2) 4
+ sizeof(three_4) 8
+ ~&gt; setgcc gcc4
+ ~&gt; g++ a.cc -o a
+ ~&gt; ./a
+ __GNUC__        4
+ sizeof(one)     1
+ sizeof(two)     1
+ sizeof(two_1)   1
+ sizeof(two_2)   2
+ sizeof(two_4)   4
+ sizeof(two_8)   8
+ sizeof(three)   1
+ sizeof(three_2) 2
+ sizeof(three_4) 4
+ }}}
+
+
+ Perhaps there are more empty structures in Haiku breaking compatibility
+ between compiler versions.
+
+
+ The proposed fix makes the gcc4 builds of media kit compatible with the
+ gcc2 builds and does not influence the ABI of the gcc2 builds.
+
+
+ The patch also adds the cstring header to two test files which need it.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4920#comment:6">http://dev.haiku-os.org/ticket/4920#comment:6</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="023542.html">[Haiku-bugs] [Haiku] #4920: gcc4 BSoundPlayer broken on Alpha
+</A></li>
+	<LI>Next message: <A HREF="023682.html">[Haiku-bugs] [Haiku] #4920: gcc4 BSoundPlayer broken on Alpha
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#23672">[ date ]</a>
+              <a href="thread.html#23672">[ thread ]</a>
+              <a href="subject.html#23672">[ subject ]</a>
+              <a href="author.html#23672">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

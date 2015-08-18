@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3985: ActivityMonitor crashes when adding view with keyboard
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233985%3A%20ActivityMonitor%20crashes%20when%20adding%0A%20view%20with%20keyboard&In-Reply-To=%3C041.821c2834e037a86eece8dcd38e495137%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="017719.html">
+   <LINK REL="Next"  HREF="017721.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3985: ActivityMonitor crashes when adding view with keyboard</H1>
+    <B>idefix</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233985%3A%20ActivityMonitor%20crashes%20when%20adding%0A%20view%20with%20keyboard&In-Reply-To=%3C041.821c2834e037a86eece8dcd38e495137%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3985: ActivityMonitor crashes when adding view with keyboard">trac at haiku-os.org
+       </A><BR>
+    <I>Sun May 31 16:11:27 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="017719.html">[Haiku-bugs] [Haiku] #2780: Video out of range on GeForce 6100	(KM51G-754)
+</A></li>
+        <LI>Next message: <A HREF="017721.html">[Haiku-bugs] [Haiku] #1026: Black screen when Haiku switch to graphical mode after bootscreen GeForce 6150
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17720">[ date ]</a>
+              <a href="thread.html#17720">[ thread ]</a>
+              <a href="subject.html#17720">[ subject ]</a>
+              <a href="author.html#17720">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3985: ActivityMonitor crashes when adding view with keyboard
+------------------------------------------+---------------------------------
+ Reporter:  idefix                        |       Owner:  axeld         
+     Type:  bug                           |      Status:  new           
+ Priority:  normal                        |   Milestone:  R1            
+Component:  Applications/ActivityMonitor  |     Version:  R1 development
+Blockedby:                                |    Platform:  All           
+ Blocking:                                |  
+------------------------------------------+---------------------------------
+ When you add a view in ActivityMonitor (r30933, VMWare) with the keyboard
+ it crashes. When you use the mouse it won't crash.
+
+ Steps to reproduce:
+  - Open ActivityMonitor
+  - Press [Alt]-[Esc], the File-menu will open
+  - Press [Enter]
+  - ActivityMonitor expands and then crashes
+
+ Serial-log output:
+ {{{
+ void AddOnManager::MessageReceived(BMessage *) what: vdwI
+ void AddOnManager::MessageReceived(BMessage *) what: vdwI
+ void AddOnManager::MessageReceived(BMessage *) what: vdwI
+ malloc() of 4294967240 bytes asked
+ vm_soft_fault: va 0x0 not covered by area in address space
+ vm_page_fault: vm_soft_fault returned error 'Bad address' on fault at 0x0,
+ ip 0x21150d, write 1, user 1, thread 0xdf
+ vm_page_fault: thread &quot;w&gt;ActivityMonitor&quot; (223) in team &quot;ActivityMonitor&quot;
+ (216) tried to write address 0x0, ip 0x21150d (&quot;ActivityMonitor_seg0ro&quot;
+ +0x1150d)
+ debug_server: Thread 223 entered the debugger: Segment violation
+ stack trace, current PC 0x21150d  Update__11ViewHistoryP11DataHistoryllxxx
+ + 0x241:
+   (0x70102a78)  0x216104  _DrawHistory__12ActivityViewb + 0x4d4
+   (0x70102b88)  0x216594  Draw__12ActivityViewG5BRect + 0x64
+   (0x70102c58)  0x3216d9  Draw__8BDraggerG5BRect + 0x161
+   (0x70102cfc)  0x399bd4  _Draw__5BViewG5BRect + 0x94
+   (0x70102d3c)  0x39e4b9  DispatchMessage__7BWindowP8BMessageP8BHandler +
+ 0x145d
+   (0x70102f1c)  0x3a2088  task_looper__7BWindow + 0x270
+   (0x70102f7c)  0x2e413f  _task0___7BLooperPv + 0x3f
+   (0x70102fac)  0x7caaec  thread_entry + 0x20
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3985">http://dev.haiku-os.org/ticket/3985</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="017719.html">[Haiku-bugs] [Haiku] #2780: Video out of range on GeForce 6100	(KM51G-754)
+</A></li>
+	<LI>Next message: <A HREF="017721.html">[Haiku-bugs] [Haiku] #1026: Black screen when Haiku switch to graphical mode after bootscreen GeForce 6150
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17720">[ date ]</a>
+              <a href="thread.html#17720">[ thread ]</a>
+              <a href="subject.html#17720">[ subject ]</a>
+              <a href="author.html#17720">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

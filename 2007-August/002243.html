@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1370: Alpha Transparency in PNGs missing for desktop backgrounds
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231370%3A%20Alpha%20Transparency%20in%20PNGs%20missing%0A%20for%20desktop%20backgrounds&In-Reply-To=%3C050.e24be750983f7991eb7a2ad9f4dba25d%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002181.html">
+   <LINK REL="Next"  HREF="002296.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1370: Alpha Transparency in PNGs missing for desktop backgrounds</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231370%3A%20Alpha%20Transparency%20in%20PNGs%20missing%0A%20for%20desktop%20backgrounds&In-Reply-To=%3C050.e24be750983f7991eb7a2ad9f4dba25d%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1370: Alpha Transparency in PNGs missing for desktop backgrounds">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Aug 12 19:12:50 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002181.html">[Haiku-bugs] [Haiku] #1370: Alpha Transparency in PNGs missing for desktop backgrounds
+</A></li>
+        <LI>Next message: <A HREF="002296.html">[Haiku-bugs] [Haiku] #1370: Alpha Transparency in PNGs missing for desktop backgrounds
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2243">[ date ]</a>
+              <a href="thread.html#2243">[ thread ]</a>
+              <a href="subject.html#2243">[ subject ]</a>
+              <a href="author.html#2243">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1370: Alpha Transparency in PNGs missing for desktop backgrounds
+-------------------------------------+--------------------------------------
+  Reporter:  kvdman                  |       Owner:  axeld         
+      Type:  enhancement             |      Status:  new           
+  Priority:  low                     |   Milestone:  Unscheduled   
+ Component:  - Applications/Tracker  |     Version:  R1 development
+Resolution:                          |    Platform:  All           
+-------------------------------------+--------------------------------------
+Comment (by axeld):
+
+ I had a look at it, but actually, it would be somewhat nice to solve this
+ in the app_server. There is already the somewhat weird behaviour that it
+ draws the view bitmap using the view's drawing and blending mode (it
+ probably doesn't do this on BeOS), and it could be extended to blend them
+ correctly then.
+
+ Also, I'm not sure if it exists already, but is there a drawing mode that
+ puts the current low color to a bitmap's transparent parts? If not, I
+ think that one would be very practical to have (and not just for that
+ case).
+
+ What would you think about that stippi?
+
+ Putting the code into Tracker would have the downside that you would need
+ to rerender the bitmap whenever the desktop color changes (ie. because you
+ use the same image on a different workspace with a different color).
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1370#comment:7">http://dev.haiku-os.org/ticket/1370#comment:7</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002181.html">[Haiku-bugs] [Haiku] #1370: Alpha Transparency in PNGs missing for desktop backgrounds
+</A></li>
+	<LI>Next message: <A HREF="002296.html">[Haiku-bugs] [Haiku] #1370: Alpha Transparency in PNGs missing for desktop backgrounds
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2243">[ date ]</a>
+              <a href="thread.html#2243">[ thread ]</a>
+              <a href="subject.html#2243">[ subject ]</a>
+              <a href="author.html#2243">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

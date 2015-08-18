@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3502: Haiku stops booting when checking	partitioning_system
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233502%3A%20Haiku%20stops%20booting%20when%20checking%0A%09partitioning_system&In-Reply-To=%3C040.c22c30ef62c9fd7e86b0baa9dd5b810f%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="014780.html">
+   <LINK REL="Next"  HREF="014782.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3502: Haiku stops booting when checking	partitioning_system</H1>
+    <B>adamk</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233502%3A%20Haiku%20stops%20booting%20when%20checking%0A%09partitioning_system&In-Reply-To=%3C040.c22c30ef62c9fd7e86b0baa9dd5b810f%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3502: Haiku stops booting when checking	partitioning_system">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Mar  1 13:55:08 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="014780.html">[Haiku-bugs] [Haiku] #3501: DPMS only turns off one monitor in a	dualhead setup.
+</A></li>
+        <LI>Next message: <A HREF="014782.html">[Haiku-bugs] [Haiku] #3041: [TV] should start at center of the	screen (easy)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14781">[ date ]</a>
+              <a href="thread.html#14781">[ thread ]</a>
+              <a href="subject.html#14781">[ subject ]</a>
+              <a href="author.html#14781">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3502: Haiku stops booting when checking partitioning_system
+---------------------------+------------------------------------------------
+ Reporter:  adamk          |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1 development
+Blockedby:                 |    Platform:  x86           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+ I have a dual Xeon that I am trying to install Haiku on.  It's an intel
+ ICH5 motherboard.  I have a USB disk that I installed Haiku on from
+ another machine and am attempting to boot off the USB disk.  It works on
+ one machine, but on this xeon, it stops booting with:
+
+ Welcome to the Haiku boot loader!
+
+ number of drives: 4
+
+ add_partitions_for(0x00105714, mountFS = no)
+
+ add_partitions_for(fd = 0, mountFS = no)
+
+ 0x00105a90 Partition::Partition
+
+ 0x00105a90 Partition::Scan()
+
+ check for partitioning_system: Amiga Partition Map
+
+ check for partitioning_system: EFI GUID Partition Map
+
+ check for partitioning_system: Intel Partition Map
+
+   priority: 810
+
+ check for partitioning_system: Intel Extended Partition
+
+ check for partitioning_system: Apple Partition Map
+
+
+ The Xeon has three ATA hard drives, with FreeBSD and Vista on two, and
+ another one setup to use for Haiku, if I can get it to boot.
+
+ I am attaching the full serial debug log
+
+ Adam
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3502">http://dev.haiku-os.org/ticket/3502</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="014780.html">[Haiku-bugs] [Haiku] #3501: DPMS only turns off one monitor in a	dualhead setup.
+</A></li>
+	<LI>Next message: <A HREF="014782.html">[Haiku-bugs] [Haiku] #3041: [TV] should start at center of the	screen (easy)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14781">[ date ]</a>
+              <a href="thread.html#14781">[ thread ]</a>
+              <a href="subject.html#14781">[ subject ]</a>
+              <a href="author.html#14781">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

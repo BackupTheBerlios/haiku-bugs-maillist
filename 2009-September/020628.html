@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4369: [patch] Fix configure case-sensitive FS detection (OSX/Darwin)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234369%3A%20%5Bpatch%5D%20Fix%20configure%0A%20case-sensitive%20FS%20detection%20%28OSX/Darwin%29&In-Reply-To=%3C050.1abc8f28642c0c0d50a38e25cad9e937%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="020627.html">
+   <LINK REL="Next"  HREF="020629.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4369: [patch] Fix configure case-sensitive FS detection (OSX/Darwin)</H1>
+    <B>bonefish</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234369%3A%20%5Bpatch%5D%20Fix%20configure%0A%20case-sensitive%20FS%20detection%20%28OSX/Darwin%29&In-Reply-To=%3C050.1abc8f28642c0c0d50a38e25cad9e937%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4369: [patch] Fix configure case-sensitive FS detection (OSX/Darwin)">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Sep  3 02:15:35 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="020627.html">[Haiku-bugs] [Haiku] #2389: [Terminal] Add a menu option to allow the user to give the terminal a custom name
+</A></li>
+        <LI>Next message: <A HREF="020629.html">[Haiku-bugs] [Haiku] #2389: [Terminal] Add a menu option to allow the user to give the terminal a custom name
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20628">[ date ]</a>
+              <a href="thread.html#20628">[ thread ]</a>
+              <a href="subject.html#20628">[ subject ]</a>
+              <a href="author.html#20628">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4369: [patch] Fix configure case-sensitive FS detection (OSX/Darwin)
+--------------------------+-------------------------------------------------
+ Reporter:  VinDuv        |       Owner:  bonefish      
+     Type:  bug           |      Status:  new           
+ Priority:  normal        |   Milestone:  R1            
+Component:  Build System  |     Version:  R1 development
+Blockedby:                |    Platform:  All           
+ Blocking:                |  
+--------------------------+-------------------------------------------------
+
+Comment(by bonefish):
+
+ Replying to [comment:6 axeld]:
+ &gt; There aren't so many oddities, and putting the sources on the wrong file
+ system is worth a check IMO.
+
+ Sounds no more worth to me than checking whether the FS supports symlinks.
+ Or checking whether xattrs are really supported (and don't have a too
+ small size limit), when --use-xattr is given. Or whether make is GNU make
+ and readlink is GNU readlink. Or whether cdrecord is really cdrecord. Or
+ whether all the tools used by the build system have an acceptable version
+ (we do that for yasm already). With all those OSs out there that can
+ potentially serve as build platforms I'm sure there are a lot of oddities
+ we could check for.
+
+ And while I agree that things that silently cause a broken Haiku to be
+ created (like using the wrong cross-compiler) definitely make sense to be
+ checked, anything mentioned in the ReadMe that just breaks building is
+ nothing that really needs to be checked IMHO.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4369#comment:7">http://dev.haiku-os.org/ticket/4369#comment:7</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="020627.html">[Haiku-bugs] [Haiku] #2389: [Terminal] Add a menu option to allow the user to give the terminal a custom name
+</A></li>
+	<LI>Next message: <A HREF="020629.html">[Haiku-bugs] [Haiku] #2389: [Terminal] Add a menu option to allow the user to give the terminal a custom name
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20628">[ date ]</a>
+              <a href="thread.html#20628">[ thread ]</a>
+              <a href="subject.html#20628">[ subject ]</a>
+              <a href="author.html#20628">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

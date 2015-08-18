@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1146: The auich driver miscounts on controls, turns of amp early, never turns it of on shutdown, and UI improvement
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231146%3A%20The%20auich%20driver%20miscounts%20on%20controls%2C%0A%20turns%20of%20amp%20early%2C%20never%20turns%20it%20of%20on%20shutdown%2C%20and%20UI%20improvement&In-Reply-To=%3C038.1f3bfed06a877bdd18e539f95e1ba290%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001223.html">
+   <LINK REL="Next"  HREF="000969.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1146: The auich driver miscounts on controls, turns of amp early, never turns it of on shutdown, and UI improvement</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231146%3A%20The%20auich%20driver%20miscounts%20on%20controls%2C%0A%20turns%20of%20amp%20early%2C%20never%20turns%20it%20of%20on%20shutdown%2C%20and%20UI%20improvement&In-Reply-To=%3C038.1f3bfed06a877bdd18e539f95e1ba290%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1146: The auich driver miscounts on controls, turns of amp early, never turns it of on shutdown, and UI improvement">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Apr  7 22:53:21 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001223.html">[Haiku-bugs] [Haiku] #1145: vm_page_fault in	&quot;/dev/net/bcm570x/0&quot; driver
+</A></li>
+        <LI>Next message: <A HREF="000969.html">[Haiku-bugs] [Haiku] #1146: The auich driver miscounts on controls, turns of amp early, never turns it of on shutdown, and UI improvement
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#953">[ date ]</a>
+              <a href="thread.html#953">[ thread ]</a>
+              <a href="subject.html#953">[ subject ]</a>
+              <a href="author.html#953">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1146: The auich driver miscounts on controls, turns of amp early, never turns it
+of on shutdown, and UI improvement
+--------------------------------+-------------------------------------------
+ Reporter:  tqh                 |       Owner:  korli         
+     Type:  bug                 |      Status:  new           
+ Priority:  normal              |   Milestone:  R1            
+Component:  Drivers/Audio/AC97  |     Version:  R1 development
+ Platform:  All                 |  
+--------------------------------+-------------------------------------------
+ The auich driver makes noise on shutdown because the amplifier is left on
+ after shutdown, the amplifier is also turned on directly after init. The
+ patch changes this to be the last thing to be turned on, and the first to
+ be turned of.
+
+ The creation of controls had an of by 1 error where the last control was
+ skipped.
+
+ Also made the controls more UI friendly so that the 'boost mic +20dB' is a
+ part of the mic control instead of it's own tab, and the AC97 mixer tab is
+ changed to be the first one as it is probably more used than the 'Record'
+ tab, which now is called 'Recording'.
+
+ Very nice driver though...
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1146">http://dev.haiku-os.org/ticket/1146</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001223.html">[Haiku-bugs] [Haiku] #1145: vm_page_fault in	&quot;/dev/net/bcm570x/0&quot; driver
+</A></li>
+	<LI>Next message: <A HREF="000969.html">[Haiku-bugs] [Haiku] #1146: The auich driver miscounts on controls, turns of amp early, never turns it of on shutdown, and UI improvement
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#953">[ date ]</a>
+              <a href="thread.html#953">[ thread ]</a>
+              <a href="subject.html#953">[ subject ]</a>
+              <a href="author.html#953">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

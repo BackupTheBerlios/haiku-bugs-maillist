@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2632: Possible redefinition for struct sockaddr_in, related to IPv6 (was: Duplicate definitions in netinet/in.h and netinet/NetAddress.h)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232632%3A%20Possible%20redefinition%20for%20struct%0A%20sockaddr_in%2C%0A%20related%20to%20IPv6%20%28was%3A%20Duplicate%20definitions%20in%20netinet/in.h%20and%0A%20netinet/NetAddress.h%29&In-Reply-To=%3C052.bcb4db9383afc53b3278b7e9a4297f3f%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009611.html">
+   <LINK REL="Next"  HREF="009615.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2632: Possible redefinition for struct sockaddr_in, related to IPv6 (was: Duplicate definitions in netinet/in.h and netinet/NetAddress.h)</H1>
+    <B>andreasf</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232632%3A%20Possible%20redefinition%20for%20struct%0A%20sockaddr_in%2C%0A%20related%20to%20IPv6%20%28was%3A%20Duplicate%20definitions%20in%20netinet/in.h%20and%0A%20netinet/NetAddress.h%29&In-Reply-To=%3C052.bcb4db9383afc53b3278b7e9a4297f3f%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2632: Possible redefinition for struct sockaddr_in, related to IPv6 (was: Duplicate definitions in netinet/in.h and netinet/NetAddress.h)">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Aug 18 23:12:15 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009611.html">[Haiku-bugs] [Haiku] #2632: Duplicate definitions in netinet/in.h and netinet/NetAddress.h
+</A></li>
+        <LI>Next message: <A HREF="009615.html">[Haiku-bugs] [Haiku] #2632: Possible redefinition for struct sockaddr_in, related to IPv6
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9614">[ date ]</a>
+              <a href="thread.html#9614">[ thread ]</a>
+              <a href="subject.html#9614">[ subject ]</a>
+              <a href="author.html#9614">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2632: Possible redefinition for struct sockaddr_in, related to IPv6
+------------------------+---------------------------------------------------
+  Reporter:  andreasf   |       Owner:  axeld         
+      Type:  bug        |      Status:  reopened      
+  Priority:  normal     |   Milestone:  R1            
+ Component:  - General  |     Version:  R1 development
+Resolution:             |   Blockedby:                
+  Platform:  All        |    Blocking:                
+------------------------+---------------------------------------------------
+Changes (by andreasf):
+
+  * status:  closed =&gt; reopened
+  * resolution:  invalid =&gt;
+
+
+Comment:
+
+ Git confirms that some files have been wrongly moved around somehow on my
+ Mac, yeah. But that's the wrong explanation only.
+
+ The problem of {{{struct sockaddr_in}}} being redefined occurs while
+ compiling on a Haiku system, so that is ''still'' a problem. Unfortunately
+ in this case I have absolutely no explanation at hand. I checked the
+ header guards, and they looked okay.
+
+ I am aware that IPv6 is not or not fully supported yet, but in that case
+ I'd expect to either find that out at runtime, or at compile-time by
+ missing IPv6 structs, functions etc. Not by conflicts with otherwise fine
+ IPv4 stuff.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2632#comment:4">http://dev.haiku-os.org/ticket/2632#comment:4</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009611.html">[Haiku-bugs] [Haiku] #2632: Duplicate definitions in netinet/in.h and netinet/NetAddress.h
+</A></li>
+	<LI>Next message: <A HREF="009615.html">[Haiku-bugs] [Haiku] #2632: Possible redefinition for struct sockaddr_in, related to IPv6
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9614">[ date ]</a>
+              <a href="thread.html#9614">[ thread ]</a>
+              <a href="subject.html#9614">[ subject ]</a>
+              <a href="author.html#9614">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

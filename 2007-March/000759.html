@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1108: [ACPI] The system hang when setting ACPI_SYS_MODE_ACPI
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231108%3A%20%5BACPI%5D%20The%20system%20hang%20when%20setting%0A%20ACPI_SYS_MODE_ACPI&In-Reply-To=%3C038.a2c2c7214ac10cacb2b48d4165d23ab9%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000817.html">
+   <LINK REL="Next"  HREF="000760.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1108: [ACPI] The system hang when setting ACPI_SYS_MODE_ACPI</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231108%3A%20%5BACPI%5D%20The%20system%20hang%20when%20setting%0A%20ACPI_SYS_MODE_ACPI&In-Reply-To=%3C038.a2c2c7214ac10cacb2b48d4165d23ab9%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1108: [ACPI] The system hang when setting ACPI_SYS_MODE_ACPI">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Mar 15 00:54:41 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000817.html">[Haiku-bugs] [Haiku] #1107: [StyledEdit] Loading a 500 kbytes syslog file is more than 20 times slower under Haiku
+</A></li>
+        <LI>Next message: <A HREF="000760.html">[Haiku-bugs] [Haiku] #1108: [ACPI] The system hang when setting ACPI_SYS_MODE_ACPI
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#759">[ date ]</a>
+              <a href="thread.html#759">[ thread ]</a>
+              <a href="subject.html#759">[ subject ]</a>
+              <a href="author.html#759">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1108: [ACPI] The system hang when setting ACPI_SYS_MODE_ACPI
+---------------------------+------------------------------------------------
+ Reporter:  oco            |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1 development
+ Platform:  x86            |  
+---------------------------+------------------------------------------------
+ The system hang when setting ACPI_SYS_MODE_ACPI.
+
+ Unfortunately, my laptop does not have any a serial port. I cannot provide
+ any debug output.
+
+ With some manual debug messages, i found that the system stop when writing
+ ACPI_SYS_MODE_ACPI  to jump into ACPI mode using AcpiOsWritePort. The
+ caller's function is ACPIHWSetMode.
+
+ The system is in ACPI mode as the power button act like in this mode (i
+ have to push it  many second to stop the computer).
+
+ Under BeOS, ACPI is loaded correctly on this computer using an older ACPI
+ module (when it was still compatible with BeOS, aka in late October 2006).
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1108">http://dev.haiku-os.org/ticket/1108</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000817.html">[Haiku-bugs] [Haiku] #1107: [StyledEdit] Loading a 500 kbytes syslog file is more than 20 times slower under Haiku
+</A></li>
+	<LI>Next message: <A HREF="000760.html">[Haiku-bugs] [Haiku] #1108: [ACPI] The system hang when setting ACPI_SYS_MODE_ACPI
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#759">[ date ]</a>
+              <a href="thread.html#759">[ thread ]</a>
+              <a href="subject.html#759">[ subject ]</a>
+              <a href="author.html#759">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

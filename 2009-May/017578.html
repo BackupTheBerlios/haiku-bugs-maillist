@@ -1,0 +1,280 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3772: Freeze on Haiku tree compilation	(reproduceable)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233772%3A%20Freeze%20on%20Haiku%20tree%20compilation%0A%09%28reproduceable%29&In-Reply-To=%3C060.d6a19e8c90926372021eb0c131237715%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="017576.html">
+   <LINK REL="Next"  HREF="017579.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3772: Freeze on Haiku tree compilation	(reproduceable)</H1>
+    <B>michael.weirauch</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233772%3A%20Freeze%20on%20Haiku%20tree%20compilation%0A%09%28reproduceable%29&In-Reply-To=%3C060.d6a19e8c90926372021eb0c131237715%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3772: Freeze on Haiku tree compilation	(reproduceable)">trac at haiku-os.org
+       </A><BR>
+    <I>Wed May 27 00:52:42 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="017576.html">[Haiku-bugs] [Haiku] #3959: Wrong HDD size shown
+</A></li>
+        <LI>Next message: <A HREF="017579.html">[Haiku-bugs] [Haiku] #3959: Wrong HDD size shown
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17578">[ date ]</a>
+              <a href="thread.html#17578">[ thread ]</a>
+              <a href="subject.html#17578">[ subject ]</a>
+              <a href="author.html#17578">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3772: Freeze on Haiku tree compilation (reproduceable)
+------------------------------+---------------------------------------------
+ Reporter:  michael.weirauch  |       Owner:  axeld         
+     Type:  bug               |      Status:  new           
+ Priority:  normal            |   Milestone:  R1            
+Component:  System            |     Version:  R1 development
+Blockedby:                    |    Platform:  x86           
+ Blocking:                    |  
+------------------------------+---------------------------------------------
+
+Comment(by michael.weirauch):
+
+ I just went on testing with r30868; gcc4; ata-bm; acpi; on the second sata
+ disk with an installation and work partition and could reproduce the
+ occassional UI freeze during I/O and total freeze after building the Haiku
+ tree.
+
+ But I never dared to test the old ide-bm after Marcus' changes (some or
+ all related for me: r30443; r30454; r30475), which - if I got things right
+ - have also been applied to the ide-bm &amp; co after the separation of the
+ two bus managers.
+
+ I tested clean installations of r30868; gcc4; '''ide-bm'''; acpi; on the
+ second sata disk and on my primary sata disk with full Haiku builds (jam
+ -qaj2), SDL configures +  builds and the dd write tests mentioned earlier:
+
+  * No occassional UI freezes on I/O (e.g. no Deskbar or ActivityMonitor
+ replicant updates)
+  * No system freeze during or after compiles ... read on ...
+
+ I thought I nailed it down. While writing this text, there was more or
+ less 5 mintutes of no heavy disk I/O after the &quot;tests&quot; performed above and
+ it suddenly froze again.
+
+ At least the UI freezes are not reproduceable with the ide-bm.
+
+ Attaching &quot;hdparm&quot; info for the two disks if these are of interesst:
+
+ Primary:
+ {{{
+
+ /dev/sda:
+
+ ATA device, with non-removable media
+         Model Number:       WDC WD3200BEKT-00F3T0
+         Serial Number:      WD-WXE808PN8192
+         Firmware Revision:  11.01A11
+         Transport:          Serial, SATA 1.0a, SATA II Extensions, SATA
+ Rev 2.5
+ Standards:
+         Supported: 8 7 6 5
+         Likely used: 8
+ Configuration:
+         Logical         max     current
+         cylinders       16383   16383
+         heads           16      16
+         sectors/track   63      63
+         --
+         CHS current addressable sectors:   16514064
+         LBA    user addressable sectors:  268435455
+         LBA48  user addressable sectors:  625142448
+         device size with M = 1024*1024:      305245 MBytes
+         device size with M = 1000*1000:      320072 MBytes (320 GB)
+ Capabilities:
+         LBA, IORDY(can be disabled)
+         Queue depth: 32
+         Standby timer values: spec'd by Standard, with device specific
+ minimum
+         R/W multiple sector transfer: Max = 16  Current = 16
+         Advanced power management level: 128
+         Recommended acoustic management value: 128, current value: 254
+         DMA: mdma0 mdma1 mdma2 udma0 udma1 udma2 udma3 udma4 udma5 *udma6
+              Cycle time: min=120ns recommended=120ns
+         PIO: pio0 pio1 pio2 pio3 pio4
+              Cycle time: no flow control=120ns  IORDY flow control=120ns
+ Commands/features:
+         Enabled Supported:
+            *    SMART feature set
+                 Security Mode feature set
+            *    Power Management feature set
+            *    Write cache
+            *    Look-ahead
+            *    Host Protected Area feature set
+            *    WRITE_BUFFER command
+            *    READ_BUFFER command
+            *    NOP cmd
+            *    DOWNLOAD_MICROCODE
+            *    Advanced Power Management feature set
+                 SET_MAX security extension
+                 Automatic Acoustic Management feature set
+            *    48-bit Address feature set
+            *    Device Configuration Overlay feature set
+            *    Mandatory FLUSH_CACHE
+            *    FLUSH_CACHE_EXT
+            *    SMART error logging
+            *    SMART self-test
+            *    General Purpose Logging feature set
+            *    WRITE_{DMA|MULTIPLE}_FUA_EXT
+            *    64-bit World wide name
+            *    IDLE_IMMEDIATE with UNLOAD
+            *    {READ,WRITE}_DMA_EXT_GPL commands
+            *    Segmented DOWNLOAD_MICROCODE
+            *    SATA-I signaling speed (1.5Gb/s)
+            *    SATA-II signaling speed (3.0Gb/s)
+            *    Native Command Queueing (NCQ)
+            *    Host-initiated interface power management
+            *    Phy event counters
+                 DMA Setup Auto-Activate optimization
+                 Device-initiated interface power management
+            *    Software settings preservation
+            *    SMART Command Transport (SCT) feature set
+            *    SCT Long Sector Access (AC1)
+            *    SCT LBA Segment Access (AC2)
+            *    SCT Error Recovery Control (AC3)
+            *    SCT Features Control (AC4)
+            *    SCT Data Tables (AC5)
+                 unknown 206[12] (vendor specific)
+                 unknown 206[13] (vendor specific)
+ Security:
+         Master password revision code = 65534
+                 supported
+         not     enabled
+         not     locked
+                 frozen
+         not     expired: security count
+                 supported: enhanced erase
+         84min for SECURITY ERASE UNIT. 84min for ENHANCED SECURITY ERASE
+ UNIT.
+ Logical Unit WWN Device Identifier: 50014ee22157687
+         NAA             : 5
+         IEEE OUI        : 14ee
+         Unique ID       : 22157687
+ Checksum: correct
+
+ }}}
+
+ Secondary:
+ {{{
+
+ /dev/sdb:
+
+ ATA device, with non-removable media
+         Model Number:       ST9160823AS
+         Serial Number:      5NK1DJD1
+         Firmware Revision:  3.CME
+ Standards:
+         Supported: 7 6 5 4
+         Likely used: 8
+ Configuration:
+         Logical         max     current
+         cylinders       16383   16383
+         heads           16      16
+         sectors/track   63      63
+         --
+         CHS current addressable sectors:   16514064
+         LBA    user addressable sectors:  268435455
+         LBA48  user addressable sectors:  312581808
+         device size with M = 1024*1024:      152627 MBytes
+         device size with M = 1000*1000:      160041 MBytes (160 GB)
+ Capabilities:
+         LBA, IORDY(can be disabled)
+         Queue depth: 32
+         Standby timer values: spec'd by Standard, no device specific
+ minimum
+         R/W multiple sector transfer: Max = 16  Current = 16
+         Advanced power management level: 128
+         Recommended acoustic management value: 254, current value: 0
+         DMA: mdma0 mdma1 mdma2 udma0 udma1 udma2 udma3 udma4 *udma5
+              Cycle time: min=120ns recommended=120ns
+         PIO: pio0 pio1 pio2 pio3 pio4
+              Cycle time: no flow control=120ns  IORDY flow control=120ns
+ Commands/features:
+         Enabled Supported:
+            *    SMART feature set
+                 Security Mode feature set
+            *    Power Management feature set
+            *    Write cache
+            *    Look-ahead
+            *    Host Protected Area feature set
+            *    WRITE_BUFFER command
+            *    READ_BUFFER command
+            *    DOWNLOAD_MICROCODE
+            *    Advanced Power Management feature set
+                 SET_MAX security extension
+            *    48-bit Address feature set
+            *    Device Configuration Overlay feature set
+            *    Mandatory FLUSH_CACHE
+            *    FLUSH_CACHE_EXT
+            *    SMART error logging
+            *    SMART self-test
+            *    General Purpose Logging feature set
+            *    IDLE_IMMEDIATE with UNLOAD
+            *    Disable Data Transfer After Error Detection
+                 Write-Read-Verify feature set
+            *    WRITE_UNCORRECTABLE_EXT command
+            *    SATA-I signaling speed (1.5Gb/s)
+            *    Native Command Queueing (NCQ)
+            *    Phy event counters
+                 Device-initiated interface power management
+            *    Software settings preservation
+            *    SMART Command Transport (SCT) feature set
+ Security:
+         Master password revision code = 65534
+                 supported
+         not     enabled
+         not     locked
+                 frozen
+         not     expired: security count
+                 supported: enhanced erase
+         56min for SECURITY ERASE UNIT. 56min for ENHANCED SECURITY ERASE
+ UNIT.
+ Checksum: correct
+
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3772#comment:14">http://dev.haiku-os.org/ticket/3772#comment:14</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="017576.html">[Haiku-bugs] [Haiku] #3959: Wrong HDD size shown
+</A></li>
+	<LI>Next message: <A HREF="017579.html">[Haiku-bugs] [Haiku] #3959: Wrong HDD size shown
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17578">[ date ]</a>
+              <a href="thread.html#17578">[ thread ]</a>
+              <a href="subject.html#17578">[ subject ]</a>
+              <a href="author.html#17578">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

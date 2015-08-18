@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2059: KDL during svn checkout in block	notifier/writer
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232059%3A%20KDL%20during%20svn%20checkout%20in%20block%0A%09notifier/writer&In-Reply-To=%3C044.6ebbdfd8333437235326f20214f0188c%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006339.html">
+   <LINK REL="Next"  HREF="006341.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2059: KDL during svn checkout in block	notifier/writer</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232059%3A%20KDL%20during%20svn%20checkout%20in%20block%0A%09notifier/writer&In-Reply-To=%3C044.6ebbdfd8333437235326f20214f0188c%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2059: KDL during svn checkout in block	notifier/writer">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Apr 10 00:54:45 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006339.html">[Haiku-bugs] [Haiku] #1169: The screen NeoMagic on a Dell Latitude CPi A366 (NeoMagic 256AV) are all messed up
+</A></li>
+        <LI>Next message: <A HREF="006341.html">[Haiku-bugs] [Haiku] #2059: KDL during svn checkout in block	notifier/writer
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6340">[ date ]</a>
+              <a href="thread.html#6340">[ thread ]</a>
+              <a href="subject.html#6340">[ subject ]</a>
+              <a href="author.html#6340">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2059: KDL during svn checkout in block notifier/writer
+---------------------------+------------------------------------------------
+ Reporter:  anevilyak      |       Owner:  axeld         
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1 development
+ Platform:  All            |  
+---------------------------+------------------------------------------------
+ After ~1GB of files having been downloaded via svn, Haiku KDLed with:
+
+ PANIC: vm_page_fault: unhandled page fault in kernel space at 0x200246 ip
+ 0x86d9c800
+
+ stack trace for thread 8 &quot;block notifier/writer&quot;
+ &lt;snip&gt;usual debugger parser functions
+ &lt;kernel&gt;:panic + 0x0029
+ &lt;kernel&gt;:vm_page_fault + 0x00ab
+ &lt;kernel&gt;:page_fault_exception + 0x00b1
+ &lt;kernel&gt;:int_bottom + 0x001d (nearest)
+ iframe at 0x8013ad9c (end = 0x8013adf4)
+  eax 0x86d9c800 ebx 0x80131d68 ecx 0x1 edx 0x200246
+  esi 0x80131d88 edi 0x8013ae40 ebp 0x8013ae48 esp 0x8013add0
+  eip 0x86d9c800 eflags 0x210287
+  vector: 0xe, error code: 0x0
+ &lt;kernel&gt;:flush_pending_notifications__Fv + 0x0069
+ &lt;kernel&gt;:block_notifier_and_writer__FPv + 0x0055
+ &lt;kernel&gt;:_create_kernel_thread_kentry__Fv + 0x001b
+ &lt;kernel&gt;:thread_kthread_exit__Fv + 0x0000
+
+ This was on r24880.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2059">http://dev.haiku-os.org/ticket/2059</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006339.html">[Haiku-bugs] [Haiku] #1169: The screen NeoMagic on a Dell Latitude CPi A366 (NeoMagic 256AV) are all messed up
+</A></li>
+	<LI>Next message: <A HREF="006341.html">[Haiku-bugs] [Haiku] #2059: KDL during svn checkout in block	notifier/writer
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6340">[ date ]</a>
+              <a href="thread.html#6340">[ thread ]</a>
+              <a href="subject.html#6340">[ subject ]</a>
+              <a href="author.html#6340">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

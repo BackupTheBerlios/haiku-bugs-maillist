@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1026: Black screen when Haiku switch to graphical mode after bootscreen GeForce 6150
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231026%3A%20Black%20screen%20when%20Haiku%20switch%20to%0A%20graphical%20mode%20after%20bootscreen%20GeForce%206150&In-Reply-To=%3C048.9a491409ff364b67b02b533225af6855%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="023693.html">
+   <LINK REL="Next"  HREF="023695.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1026: Black screen when Haiku switch to graphical mode after bootscreen GeForce 6150</H1>
+    <B>rudolfc</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231026%3A%20Black%20screen%20when%20Haiku%20switch%20to%0A%20graphical%20mode%20after%20bootscreen%20GeForce%206150&In-Reply-To=%3C048.9a491409ff364b67b02b533225af6855%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1026: Black screen when Haiku switch to graphical mode after bootscreen GeForce 6150">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Nov 11 20:53:37 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="023693.html">[Haiku-bugs] [Haiku] #1170: Desorted screen when 640*480 are selected with a GeForce4 440 Go 32MB
+</A></li>
+        <LI>Next message: <A HREF="023695.html">[Haiku-bugs] [Haiku] #1026: Black screen when Haiku switch to graphical mode after bootscreen GeForce 6150
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#23694">[ date ]</a>
+              <a href="thread.html#23694">[ thread ]</a>
+              <a href="subject.html#23694">[ subject ]</a>
+              <a href="author.html#23694">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1026: Black screen when Haiku switch to graphical mode after bootscreen GeForce
+6150
+-------------------------------------+--------------------------------------
+ Reporter:  acca                     |       Owner:  rudolfc      
+     Type:  bug                      |      Status:  new          
+ Priority:  normal                   |   Milestone:  R1           
+Component:  Drivers/Graphics/nVidia  |     Version:  R1/pre-alpha1
+Blockedby:                           |    Platform:  x86          
+ Blocking:                           |  
+-------------------------------------+--------------------------------------
+
+Comment(by rudolfc):
+
+ Hi again fano,
+
+ The behaviour is OK as much as is possible now.
+ - if you only connect your VGA screen then the driver doesn't know it's
+ specs since the I2C buses don't work on your card. Therefore the
+ app_server takes some failsafe, and you can set resolutions/refreshes not
+ supported by the screen (but the card does support them).
+
+ - if you connect both screens, the driver only lets you select resolutions
+ supported by both screens. It assumes the VGA is a 4:3 so all WS modes are
+ not selectable. All 4:3 modes your TV can display are selectable,
+ according to the reported specs of your screen by the GPU programming done
+ by the VGA card's BIOS it can do max. 1280x720: so only 640x480 and
+ 800x600 are selectable.
+
+ - if you only connect your HDTV then you can select WS modes 16:10 and
+ 16:9 supported by the TV's reported resolution: so also 1280x720. This is
+ the max the driver can do for your TV since the driver uses the pre-
+ programmed GPU DVI link which is set at that resolution.
+
+ - I checked your TV: it's indeed a 1920x1080 panel. If the BIOS would
+ program your card for this resolution the driver would allow you the
+ option if you only connect your TV. The only advice I can give you here is
+ to check your DVI cable connector: is it a fully pinned version (so dual
+ link)? IF it isn't please find a duallink cable for testing if possible:
+ it might be that the card's BIOS sets the fullHD mode if it finds such a
+ cable.
+
+ If that's not done, or not possible you can do max. 1280x720.
+
+ Please note that the refresh is not programmed for the TV. You can enable
+ refresh programming via nvidia.settings, but even then it will program for
+ fixed 60Hz.
+
+ Maybe I could remove that limitation and let it program the refresh the
+ user selects, but probably only if DDC/EDID works since that gives the
+ valid refreshrate options.
+ Since the I2C buses don't work with my driver on your card I don't have
+ this info at my disposal (the driver that is :).
+
+ At this time the only real bug left in the driver for your card is the
+ lack of working I2C buses. That I can't fix without access to a non-
+ functional card in this respect.. And I don't have such a card.
+
+ Anyhow, I'm glad we could get this far :-) !!
+
+ I'm awaiting your dualhead tests, and I think we could close this ticket
+ afterwards since the original fault is now gone.
+
+ Awaiting your reply.
+
+
+ Greetings,
+
+ Rudolf.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1026#comment:67">http://dev.haiku-os.org/ticket/1026#comment:67</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="023693.html">[Haiku-bugs] [Haiku] #1170: Desorted screen when 640*480 are selected with a GeForce4 440 Go 32MB
+</A></li>
+	<LI>Next message: <A HREF="023695.html">[Haiku-bugs] [Haiku] #1026: Black screen when Haiku switch to graphical mode after bootscreen GeForce 6150
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#23694">[ date ]</a>
+              <a href="thread.html#23694">[ thread ]</a>
+              <a href="subject.html#23694">[ subject ]</a>
+              <a href="author.html#23694">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

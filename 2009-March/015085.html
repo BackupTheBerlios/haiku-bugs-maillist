@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3308: Possible floating point failures in IEEE 754 tests
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233308%3A%20Possible%20floating%20point%20failures%20in%0A%20IEEE%20754%20tests&In-Reply-To=%3C051.2eac43a7fac3b4af71d2e593e2b57ead%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="015083.html">
+   <LINK REL="Next"  HREF="015087.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3308: Possible floating point failures in IEEE 754 tests</H1>
+    <B>oco</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233308%3A%20Possible%20floating%20point%20failures%20in%0A%20IEEE%20754%20tests&In-Reply-To=%3C051.2eac43a7fac3b4af71d2e593e2b57ead%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3308: Possible floating point failures in IEEE 754 tests">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Mar 14 01:15:26 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="015083.html">[Haiku-bugs] [Haiku] #1305: [app_server] redraw issue
+</A></li>
+        <LI>Next message: <A HREF="015087.html">[Haiku-bugs] [Haiku] #3554: Time out error if i copy Haiku from usb	to HDD
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15085">[ date ]</a>
+              <a href="thread.html#15085">[ thread ]</a>
+              <a href="subject.html#15085">[ subject ]</a>
+              <a href="author.html#15085">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3308: Possible floating point failures in IEEE 754 tests
+-------------------------------+--------------------------------------------
+ Reporter:  scottmc            |       Owner:  axeld         
+     Type:  bug                |      Status:  new           
+ Priority:  critical           |   Milestone:  R1/alpha1     
+Component:  System/libroot.so  |     Version:  R1 development
+Blockedby:                     |    Platform:  All           
+ Blocking:                     |  
+-------------------------------+--------------------------------------------
+
+Comment(by oco):
+
+ Oh ! I was wrong about the sign. The long double type has a size of 12
+ bytes but it contains a 10 bytes floating point value (the x87 native
+ format). 2 padding bytes are added to complete the value.
+
+ Here is post about this :
+
+  - <A HREF="http://thread.gmane.org/gmane.linux.c-programming/2780/focus=2782">http://thread.gmane.org/gmane.linux.c-programming/2780/focus=2782</A>
+
+ I will take a look at configuration on other platforms. But i may also try
+ to track down the difference beetween fpc and gcc. This could help me find
+ what kind of configuration i should search for in gcc.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3308#comment:12">http://dev.haiku-os.org/ticket/3308#comment:12</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="015083.html">[Haiku-bugs] [Haiku] #1305: [app_server] redraw issue
+</A></li>
+	<LI>Next message: <A HREF="015087.html">[Haiku-bugs] [Haiku] #3554: Time out error if i copy Haiku from usb	to HDD
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15085">[ date ]</a>
+              <a href="thread.html#15085">[ thread ]</a>
+              <a href="subject.html#15085">[ subject ]</a>
+              <a href="author.html#15085">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

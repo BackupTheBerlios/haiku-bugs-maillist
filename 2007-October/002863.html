@@ -1,0 +1,284 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1511: PANIC: ASSERT FAILED (src/system/kernel/arch/x86/arch_thread.c:68): stack-&gt;index &lt; 4
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231511%3A%20PANIC%3A%20ASSERT%20FAILED%0A%20%28src/system/kernel/arch/x86/arch_thread.c%3A68%29%3A%20stack-%3Eindex%20%3C%204&In-Reply-To=%3C059.de1277d1a1b99cfcafa849bc525787d1%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002857.html">
+   <LINK REL="Next"  HREF="002883.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1511: PANIC: ASSERT FAILED (src/system/kernel/arch/x86/arch_thread.c:68): stack-&gt;index &lt; 4</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231511%3A%20PANIC%3A%20ASSERT%20FAILED%0A%20%28src/system/kernel/arch/x86/arch_thread.c%3A68%29%3A%20stack-%3Eindex%20%3C%204&In-Reply-To=%3C059.de1277d1a1b99cfcafa849bc525787d1%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1511: PANIC: ASSERT FAILED (src/system/kernel/arch/x86/arch_thread.c:68): stack-&gt;index &lt; 4">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Oct  1 14:48:49 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002857.html">[Haiku-bugs] [Haiku] #1511: PANIC: ASSERT FAILED (src/system/kernel/arch/x86/arch_thread.c:68): stack-&gt;index &lt; 4
+</A></li>
+        <LI>Next message: <A HREF="002883.html">[Haiku-bugs] [Haiku] #1511: PANIC: ASSERT FAILED (src/system/kernel/arch/x86/arch_thread.c:68): stack-&gt;index &lt; 4
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2863">[ date ]</a>
+              <a href="thread.html#2863">[ thread ]</a>
+              <a href="subject.html#2863">[ subject ]</a>
+              <a href="author.html#2863">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1511: PANIC: ASSERT FAILED (src/system/kernel/arch/x86/arch_thread.c:68):
+stack-&gt;index &lt; 4
+------------------------------+---------------------------------------------
+  Reporter:  marcusoverhagen  |       Owner:  axeld         
+      Type:  bug              |      Status:  new           
+  Priority:  normal           |   Milestone:  R1            
+ Component:  System/Kernel    |     Version:  R1 development
+Resolution:                   |    Platform:  All           
+------------------------------+---------------------------------------------
+Comment (by marcusoverhagen):
+
+ The problem happens less frequently when underclocking the CPU to 900 MHz
+
+ Here are some other back traces for the same ASSERT, made at full CPU
+ speed.
+
+ {{{
+ CPU 1 halted!
+ PANIC: ASSERT FAILED (src/system/kernel/arch/x86/arch_thread.c:68):
+ stack-&gt;index &lt; 4
+
+ Welcome to Kernel Debugging Land...
+ Running on CPU 0
+ kdebug&gt; bt
+ stack trace for thread 0xac &quot;w&gt;TrackerWindow&quot;
+     kernel stack: 0x90707000 to 0x9070b000
+       user stack: 0x70000000 to 0x70040000
+ frame            caller     &lt;image&gt;:function + offset
+ 9070a5f0 (+  52) 80083321   &lt;kernel&gt;:invoke_command + 0x0075
+ 9070a624 (+  48) 80083572   &lt;kernel&gt;:kernel_debugger + 0x020e
+ 9070a654 (+ 176) 80083609   &lt;kernel&gt;:panic + 0x002d
+ 9070a704 (+  32) 8008c3ef   &lt;kernel&gt;:x86_push_iframe + 0x0026
+ 9070a724 (+ 128) 8008b641   &lt;kernel&gt;:i386_handle_trap + 0x002a
+ 9070a7a4 (+  88) 8008e34e   &lt;kernel&gt;:kernel_stack + 0x0005 (nearest)
+ 9070a7fc (+ 216) 8005b5ec   &lt;kernel&gt;:_Z13vm_soft_faultmbb + 0x008e
+ 9070a8d4 (+  48) 8005c412   &lt;kernel&gt;:vm_page_fault + 0x0034
+ 9070a904 (+ 144) 8008b878   &lt;kernel&gt;:i386_handle_trap + 0x0261
+ iframe at 0x9070a99c (end = 0x9070a9f0)
+  eax 0x815be82b     ebx 0x908b0000      ecx 0xe8458000   edx 0xe8458d00
+  esi 0x0            edi 0xe8458d04      ebp 0x9070a9ec   esp 0x9070a9cc
+  eip 0x80055fb4  eflags 0x10286
+  vector: 0xe, error code: 0x0
+ 9070a994 (+  88) 80055fb4   &lt;kernel&gt;:vm_area_lookup + 0x0026
+ 9070a9ec (+ 216) 8005b5ec   &lt;kernel&gt;:_Z13vm_soft_faultmbb + 0x008e
+ 9070aac4 (+  48) 8005c412   &lt;kernel&gt;:vm_page_fault + 0x0034
+ 9070aaf4 (+ 144) 8008b878   &lt;kernel&gt;:i386_handle_trap + 0x0261
+ iframe at 0x9070ab8c (end = 0x9070abe0)
+  eax 0x815be82b     ebx 0x908b0000      ecx 0xe8d44000   edx 0xe8458d00
+  esi 0x0            edi 0xe8d44595      ebp 0x9070abdc   esp 0x9070abbc
+  eip 0x80055fb4  eflags 0x10286
+  vector: 0xe, error code: 0x0
+ 9070ab84 (+  88) 80055fb4   &lt;kernel&gt;:vm_area_lookup + 0x0026
+ 9070abdc (+ 216) 8005b5ec   &lt;kernel&gt;:_Z13vm_soft_faultmbb + 0x008e
+ 9070acb4 (+  48) 8005c412   &lt;kernel&gt;:vm_page_fault + 0x0034
+ 9070ace4 (+ 144) 8008b878   &lt;kernel&gt;:i386_handle_trap + 0x0261
+ iframe at 0x9070ad7c (end = 0x9070add0)
+  eax 0x1            ebx 0xe8d44589      ecx 0x93f5f000   edx 0xe8d44595
+  esi 0x1            edi 0x9466c7b5      ebp 0x9070ade4   esp 0x9070adac
+  eip 0x800911d5  eflags 0x10286
+  vector: 0xe, error code: 0x2
+ 9070ad74 (+ 112) 800911d5   &lt;kernel&gt;:atomic_add + 0x0008 (nearest)
+ 9070ade4 (+  48) 80059625   &lt;kernel&gt;:vm_area_get_locked_cache + 0x002b
+ 9070ae14 (+ 208) 8005b691   &lt;kernel&gt;:_Z13vm_soft_faultmbb + 0x0133
+ 9070aee4 (+  48) 8005c412   &lt;kernel&gt;:vm_page_fault + 0x0034
+ 9070af14 (+ 144) 8008b878   &lt;kernel&gt;:i386_handle_trap + 0x0261
+ iframe at 0x9070afac (end = 0x9070b000)
+  eax 0x3f           ebx 0x6c0100        ecx 0x18189ba0   edx 0x18189ba0
+  esi 0x1818a068     edi 0x9             ebp 0x7003f75c   esp 0x9070afdc
+  eip 0x64f6dc    eflags 0x10202    user esp 0x7003f734
+  vector: 0xe, error code: 0x6
+ 9070afa4 (+   0) 0064f6dc
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libroot.so at 0x00625000</A>&gt;:unknown + 0x2a6dc
+ 7003f75c (+  48) 0064fc76
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libroot.so at 0x00625000</A>&gt;:unknown + 0x2ac76
+ 7003f78c (+  80) 0064febc
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libroot.so at 0x00625000</A>&gt;:unknown + 0x2aebc
+ 7003f7dc (+  48) 006510d7
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libroot.so at 0x00625000</A>&gt;:unknown + 0x2c0d7
+ 7003f80c (+  32) 002bbe9a
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libbe.so at 0x00202000</A>&gt;:unknown + 0xb9e9a
+ 7003f82c (+  32) 002bbf7b
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libbe.so at 0x00202000</A>&gt;:unknown + 0xb9f7b
+ 7003f84c (+  48) 002bbfac
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libbe.so at 0x00202000</A>&gt;:unknown + 0xb9fac
+ 7003f87c (+ 320) 00517eae
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libtracker.so at 0x00498000</A>&gt;:unknown + 0x7feae
+ 7003f9bc (+ 736) 0051cbf6
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libtracker.so at 0x00498000</A>&gt;:unknown + 0x84bf6
+ 7003fc9c (+  32) 002b6282
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libbe.so at 0x00202000</A>&gt;:unknown + 0xb4282
+ 7003fcbc (+ 640) 0035d175
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libbe.so at 0x00202000</A>&gt;:unknown + 0x15b175
+ 7003ff3c (+  96) 00359904
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libbe.so at 0x00202000</A>&gt;:unknown + 0x157904
+ 7003ff9c (+  32) 002b79ee
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libbe.so at 0x00202000</A>&gt;:unknown + 0xb59ee
+ 7003ffbc (+  32) 0064690e
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libroot.so at 0x00625000</A>&gt;:unknown + 0x2190e
+ 7003ffdc (+   0) 7003ffecPANIC: ASSERT FAILED
+ (src/system/kernel/arch/x86/arch_thread.c:68): stack-&gt;index &lt; 4
+ }}}
+
+
+ {{{
+ CPU 0 halted!
+ PANIC: ASSERT FAILED (src/system/kernel/arch/x86/arch_thread.c:68):
+ stack-&gt;index &lt; 4
+
+ Welcome to Kernel Debugging Land...
+ Running on CPU 1
+ kdebug&gt; sc
+ stack trace for thread 0x33 &quot;main_mime&quot;
+     kernel stack: 0x803d7000 to 0x803db000
+       user stack: 0x70082000 to 0x700c2000
+ frame            caller     &lt;image&gt;:function + offset
+ 803d9c60 (+  52) 80083321   &lt;kernel&gt;:invoke_command + 0x0075
+ 803d9c94 (+  48) 80083572   &lt;kernel&gt;:kernel_debugger + 0x020e
+ 803d9cc4 (+ 176) 80083609   &lt;kernel&gt;:panic + 0x002d
+ 803d9d74 (+  32) 8008c3ef   &lt;kernel&gt;:x86_push_iframe + 0x0026
+ 803d9d94 (+ 128) 8008b641   &lt;kernel&gt;:i386_handle_trap + 0x002a
+ 803d9e14 (+  88) 8008e34e   &lt;kernel&gt;:kernel_stack + 0x0005 (nearest)
+ 803d9e6c (+ 216) 8005b5ec   &lt;kernel&gt;:_Z13vm_soft_faultmbb + 0x008e
+ 803d9f44 (+  48) 8005c412   &lt;kernel&gt;:vm_page_fault + 0x0034
+ 803d9f74 (+ 144) 8008b878   &lt;kernel&gt;:i386_handle_trap + 0x0261
+ iframe at 0x803da00c (end = 0x803da060)
+  eax 0x815be82b     ebx 0x908b0000      ecx 0xe8458000   edx 0xe8458d00
+  esi 0x0            edi 0xe8458d04      ebp 0x803da05c   esp 0x803da03c
+  eip 0x80055fb4  eflags 0x10286
+  vector: 0xe, error code: 0x0
+ 803da004 (+  88) 80055fb4   &lt;kernel&gt;:vm_area_lookup + 0x0026
+ 803da05c (+ 216) 8005b5ec   &lt;kernel&gt;:_Z13vm_soft_faultmbb + 0x008e
+ 803da134 (+  48) 8005c412   &lt;kernel&gt;:vm_page_fault + 0x0034
+ 803da164 (+ 144) 8008b878   &lt;kernel&gt;:i386_handle_trap + 0x0261
+ iframe at 0x803da1fc (end = 0x803da250)
+  eax 0x815be82b     ebx 0x908b0000      ecx 0xe8458000   edx 0xe8458d00
+  esi 0x0            edi 0xe8458d04      ebp 0x803da24c   esp 0x803da22c
+  eip 0x80055fb4  eflags 0x10286
+  vector: 0xe, error code: 0x0
+ 803da1f4 (+  88) 80055fb4   &lt;kernel&gt;:vm_area_lookup + 0x0026
+ 803da24c (+ 216) 8005b5ec   &lt;kernel&gt;:_Z13vm_soft_faultmbb + 0x008e
+ 803da324 (+  48) 8005c412   &lt;kernel&gt;:vm_page_fault + 0x0034
+ 803da354 (+ 144) 8008b878   &lt;kernel&gt;:i386_handle_trap + 0x0261
+ iframe at 0x803da3ec (end = 0x803da440)
+  eax 0x815be82b     ebx 0x908b0000      ecx 0xa0243000   edx 0xe8458d00
+  esi 0x908b0000     edi 0x803da4ab      ebp 0x803da43c   esp 0x803da41c
+  eip 0x80055fb4  eflags 0x10286
+  vector: 0xe, error code: 0x0
+ 803da3e4 (+  88) 80055fb4   &lt;kernel&gt;:vm_area_lookup + 0x0026
+ 803da43c (+  40) 800560b5
+ &lt;kernel&gt;:_Z16test_lock_memoryP16vm_address_spacemRb + 0x0029
+ 803da464 (+  96) 8005c2a7   &lt;kernel&gt;:lock_memory + 0x0087
+ 803da4c4 (+ 192) 8026a979   &lt;block_io&gt;:block_io_readwrite + 0x0495
+ 803da584 (+  48) 8026ae0c   &lt;block_io&gt;:block_io_readv_int + 0x0025
+ 803da5b4 (+  48) 8026ae3e   &lt;block_io&gt;:block_io_read + 0x002b
+ 803da5e4 (+  48) 80055511   &lt;kernel&gt;:_ZN11IOScheduler7ProcessER9IORequest
+ + 0x0047
+ 803da614 (+ 128) 80043546   &lt;kernel&gt;:_Z10devfs_readPvS_S_xS_Pm + 0x00d4
+ 803da694 (+  48) 80048084   &lt;kernel&gt;:_Z9file_readP15file_descriptorxPvPm +
+ 0x002e
+ 803da6c4 (+  64) 8004715f   &lt;kernel&gt;:_kern_read + 0x009f
+ 803da704 (+  48) 800960f8   &lt;kernel&gt;:read_pos + 0x0036
+ 803da734 (+  80) 80061443
+ &lt;kernel&gt;:_Z16get_cached_blockP11block_cachexPbb + 0x00f3
+ 803da784 (+  64) 80061583
+ &lt;kernel&gt;:_Z25get_writable_cached_blockP11block_cachexxxlb + 0x0063
+ 803da7c4 (+  80) 80061f5a   &lt;kernel&gt;:block_cache_get_writable_etc + 0x00a2
+ 803da814 (+  48) 80061fb3   &lt;kernel&gt;:block_cache_get_writable + 0x001f
+ 803da844 (+  96) 8024323d
+ &lt;bfs&gt;:_ZN10CachedNode13InternalSetToEP11Transactionx + 0x013b
+ 803da8a4 (+  48) 80243323
+ &lt;bfs&gt;:_ZN10CachedNode19SetToWritableHeaderER11Transaction + 0x0065
+ 803da8d4 (+  80) 80243ab1
+ &lt;bfs&gt;:_ZN9BPlusTree5SetToER11TransactionP5Inodel + 0x0095
+ 803da924 (+  32) 80243c72   &lt;bfs&gt;:_ZN9BPlusTreeC1ER11TransactionP5Inodel +
+ 0x0056
+ 803da944 (+ 112) 8024afe7   &lt;bfs&gt;:_ZN14InodeAllocator10CreateTreeEv +
+ 0x005d
+ 803da9b4 (+ 208) 8025029e
+ &lt;bfs&gt;:_ZN5Inode6CreateER11TransactionPS_PKclimPbPxPS2_ + 0x0544
+ 803daa84 (+ 112) 802506df
+ &lt;bfs&gt;:_ZN5Inode15CreateAttributeER11TransactionPKcmPPS_ + 0x004f
+ 803daaf4 (+ 384) 802509f4
+ &lt;bfs&gt;:_ZN5Inode14WriteAttributeER11TransactionPKclxPKhPm + 0x0228
+ 803dac74 (+  64) 80247877
+ &lt;bfs&gt;:_ZN9Attribute5WriteER11TransactionP11attr_cookiexPKhPm + 0x0055
+ 803dacb4 (+ 128) 80259d59   &lt;bfs&gt;:_Z14bfs_write_attrPvS_S_xPKvPm + 0x0079
+ 803dad34 (+  64) 80048457
+ &lt;kernel&gt;:_Z10attr_writeP15file_descriptorxPKvPm + 0x0043
+ 803dad74 (+  64) 80047592   &lt;kernel&gt;:_user_write + 0x00b2
+ 803dadb4 (+ 368) 80038c93   &lt;kernel&gt;:syscall_dispatcher + 0x0e59
+ 803daf24 (+ 128) 8008b92c   &lt;kernel&gt;:i386_handle_trap + 0x0315
+ iframe at 0x803dafac (end = 0x803db000)
+  eax 0x65           ebx 0x576100        ecx 0x0          edx 0x0
+  esi 0xd            edi 0x1802ff5b      ebp 0x700c1c3c   esp 0x803dafdc
+  eip 0xffff0102  eflags 0x216
+  vector: 0x63, error code: 0x0
+ 803dafa4 (+   0) ffff0102
+ 700c1c3c (+  64) 003bb01e
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libbe.so at 0x00245000</A>&gt;:unknown + 0x17601e
+ 700c1c7c (+ 144) 003cf88d
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libbe.so at 0x00245000</A>&gt;:unknown + 0x18a88d
+ 700c1d0c (+  48) 003cf9da
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libbe.so at 0x00245000</A>&gt;:unknown + 0x18a9da
+ 700c1d3c (+ 224) 0021e552
+ &lt;/boot/beos/system/servers/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">registrar at 0x00200000</A>&gt;:unknown + 0x1e552
+ 700c1e1c (+ 288) 0021e822
+ &lt;/boot/beos/system/servers/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">registrar at 0x00200000</A>&gt;:unknown + 0x1e822
+ 700c1f3c (+  32) 002f9282
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libbe.so at 0x00245000</A>&gt;:unknown + 0xb4282
+ 700c1f5c (+  64) 002fa924
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libbe.so at 0x00245000</A>&gt;:unknown + 0xb5924
+ 700c1f9c (+  32) 002fa9ee
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libbe.so at 0x00245000</A>&gt;:unknown + 0xb59ee
+ 700c1fbc (+  32) 004fc90e
+ &lt;/boot/beos/system/lib/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">libroot.so at 0x004db000</A>&gt;:unknown + 0x2190e
+ 700c1fdc (+   0) 700c1fec   346:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">main_mime_33_stack at 0x70082000</A> + 0x3ffec
+ kdebug&gt;
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1511#comment:1">http://dev.haiku-os.org/ticket/1511#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002857.html">[Haiku-bugs] [Haiku] #1511: PANIC: ASSERT FAILED (src/system/kernel/arch/x86/arch_thread.c:68): stack-&gt;index &lt; 4
+</A></li>
+	<LI>Next message: <A HREF="002883.html">[Haiku-bugs] [Haiku] #1511: PANIC: ASSERT FAILED (src/system/kernel/arch/x86/arch_thread.c:68): stack-&gt;index &lt; 4
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2863">[ date ]</a>
+              <a href="thread.html#2863">[ thread ]</a>
+              <a href="subject.html#2863">[ subject ]</a>
+              <a href="author.html#2863">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

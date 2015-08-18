@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2084: ipro100 driver makes the system	crawl
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232084%3A%20ipro100%20driver%20makes%20the%20system%0A%09crawl&In-Reply-To=%3C048.d6af2d17d9bb3b40ed0bda505174c274%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011826.html">
+   <LINK REL="Next"  HREF="011829.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2084: ipro100 driver makes the system	crawl</H1>
+    <B>heto</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232084%3A%20ipro100%20driver%20makes%20the%20system%0A%09crawl&In-Reply-To=%3C048.d6af2d17d9bb3b40ed0bda505174c274%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2084: ipro100 driver makes the system	crawl">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Oct 31 16:09:08 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011826.html">[Haiku-bugs] [Haiku] #1816: Tracker doesn't properly redraw modified date column when date&amp;time format changed (seems easy)
+</A></li>
+        <LI>Next message: <A HREF="011829.html">[Haiku-bugs] [Haiku] #1590: Updated Broadcom Tigon3 ethernet	driver
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11827">[ date ]</a>
+              <a href="thread.html#11827">[ thread ]</a>
+              <a href="subject.html#11827">[ subject ]</a>
+              <a href="author.html#11827">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2084: ipro100 driver makes the system crawl
+------------------------------+---------------------------------------------
+  Reporter:  heto             |       Owner:  axeld         
+      Type:  bug              |      Status:  new           
+  Priority:  normal           |   Milestone:  R1            
+ Component:  Drivers/Network  |     Version:  R1 development
+Resolution:                   |   Blockedby:                
+  Platform:  x86              |    Blocking:                
+------------------------------+---------------------------------------------
+
+Comment(by heto):
+
+ Using r28387 I get behaviour similar to what RandomInsano has: a complete
+ hang if a usb device is plugged but no problems otherwise. Now even
+ lowering the priority of the fxp intr handler thread doesn't help.
+
+ In my case interrupt 11 is shared not only by UHCI and ipro100 but also by
+ radeon and auich, yet these two devices don't seem to be causing any
+ trouble. (I can't get any sound output, though, but this problem may be
+ completely unrelated.)
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2084#comment:7">http://dev.haiku-os.org/ticket/2084#comment:7</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011826.html">[Haiku-bugs] [Haiku] #1816: Tracker doesn't properly redraw modified date column when date&amp;time format changed (seems easy)
+</A></li>
+	<LI>Next message: <A HREF="011829.html">[Haiku-bugs] [Haiku] #1590: Updated Broadcom Tigon3 ethernet	driver
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11827">[ date ]</a>
+              <a href="thread.html#11827">[ thread ]</a>
+              <a href="subject.html#11827">[ subject ]</a>
+              <a href="author.html#11827">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

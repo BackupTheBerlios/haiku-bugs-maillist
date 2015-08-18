@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1939: chart demo crashes when moved around
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231939%3A%20chart%20demo%20crashes%20when%20moved%20around&In-Reply-To=%3C058.b475964b2b8728b75234cb9cf3afedec%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="019232.html">
+   <LINK REL="Next"  HREF="019222.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1939: chart demo crashes when moved around</H1>
+    <B>jackburton</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231939%3A%20chart%20demo%20crashes%20when%20moved%20around&In-Reply-To=%3C058.b475964b2b8728b75234cb9cf3afedec%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1939: chart demo crashes when moved around">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Aug  8 23:15:09 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="019232.html">[Haiku-bugs] [Haiku] #4202: Using pop-up navigation always	moves files
+</A></li>
+        <LI>Next message: <A HREF="019222.html">[Haiku-bugs] [Haiku] #4203: Installer gives unreadable dialog box at end of install when installed onto the boot drive
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19221">[ date ]</a>
+              <a href="thread.html#19221">[ thread ]</a>
+              <a href="subject.html#19221">[ subject ]</a>
+              <a href="author.html#19221">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1939: chart demo crashes when moved around
+--------------------------------+-------------------------------------------
+ Reporter:  the ringmaster      |       Owner:  jackburton    
+     Type:  bug                 |      Status:  new           
+ Priority:  normal              |   Milestone:  R1            
+Component:  Servers/app_server  |     Version:  R1 development
+Blockedby:                      |    Platform:  x86           
+ Blocking:                      |  
+--------------------------------+-------------------------------------------
+
+Comment(by jackburton):
+
+ After some debugging, I found out that the app is killed by the
+ app_server. More specifically, what happens is that, when the window is
+ moved beyond the left bound of the visible screen, Chart (but also the
+ DirectWindowTest application, based on Stars) blocks inside
+ DirectConnected(), so the app_server, which is waiting on a semaphore with
+ a timeout (cf. ServerWindow::HandleDirectConnection()), kills the app.
+ Since these applications just do some calculations inside DirectConnected,
+ why this is happening is beyond me.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1939#comment:12">http://dev.haiku-os.org/ticket/1939#comment:12</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="019232.html">[Haiku-bugs] [Haiku] #4202: Using pop-up navigation always	moves files
+</A></li>
+	<LI>Next message: <A HREF="019222.html">[Haiku-bugs] [Haiku] #4203: Installer gives unreadable dialog box at end of install when installed onto the boot drive
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19221">[ date ]</a>
+              <a href="thread.html#19221">[ thread ]</a>
+              <a href="subject.html#19221">[ subject ]</a>
+              <a href="author.html#19221">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

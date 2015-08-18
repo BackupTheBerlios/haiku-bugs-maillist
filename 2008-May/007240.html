@@ -1,0 +1,196 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2206: ShowImage (JPEGTranslator) crashes while reading jpeg file.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232206%3A%20ShowImage%20%28JPEGTranslator%29%20crashes%0A%20while%20reading%20jpeg%20file.&In-Reply-To=%3C046.a53674a80d47c5a938a3325da2e7189e%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007126.html">
+   <LINK REL="Next"  HREF="007243.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2206: ShowImage (JPEGTranslator) crashes while reading jpeg file.</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232206%3A%20ShowImage%20%28JPEGTranslator%29%20crashes%0A%20while%20reading%20jpeg%20file.&In-Reply-To=%3C046.a53674a80d47c5a938a3325da2e7189e%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2206: ShowImage (JPEGTranslator) crashes while reading jpeg file.">trac at haiku-os.org
+       </A><BR>
+    <I>Sun May 11 11:54:02 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007126.html">[Haiku-bugs] [Haiku] #2206: ShowImage (JPEGTranslator) crashes while reading jpeg file.
+</A></li>
+        <LI>Next message: <A HREF="007243.html">[Haiku-bugs] [Haiku] #2206: ShowImage (JPEGTranslator) crashes while reading jpeg file.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7240">[ date ]</a>
+              <a href="thread.html#7240">[ thread ]</a>
+              <a href="subject.html#7240">[ subject ]</a>
+              <a href="author.html#7240">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2206: ShowImage (JPEGTranslator) crashes while reading jpeg file.
+----------------------------------+-----------------------------------------
+  Reporter:  mt                   |       Owner:  axeld         
+      Type:  bug                  |      Status:  new           
+  Priority:  normal               |   Milestone:  R1            
+ Component:  Add-Ons/Translators  |     Version:  R1 development
+Resolution:                       |    Platform:  x86           
+----------------------------------+-----------------------------------------
+Comment (by stippi):
+
+ Axel, it's entering an infinite loop in convert_exif_to_message() and
+ parse_tiff_directory().
+
+ {{{
+ fcffa7a0   e4dd943c  parse_tiff_directory(TReadHelper &amp;, BMessage &amp;,
+ convert_tag const *, unsigned long) + 000000ac
+ fcffa7e0   e4dd931a  parse_tiff_directory(TReadHelper &amp;, long long,
+ BMessage &amp;, convert_tag const *, unsigned long) + 000000fa
+ fcffa820   e4dd943c  parse_tiff_directory(TReadHelper &amp;, BMessage &amp;,
+ convert_tag const *, unsigned long) + 000000ac
+ fcffa860   e4dd931a  parse_tiff_directory(TReadHelper &amp;, long long,
+ BMessage &amp;, convert_tag const *, unsigned long) + 000000fa
+ fcffa8a0   e4dd943c  parse_tiff_directory(TReadHelper &amp;, BMessage &amp;,
+ convert_tag const *, unsigned long) + 000000ac
+ fcffa8e0   e4dd931a  parse_tiff_directory(TReadHelper &amp;, long long,
+ BMessage &amp;, convert_tag const *, unsigned long) + 000000fa
+ fcffa920   e4dd943c  parse_tiff_directory(TReadHelper &amp;, BMessage &amp;,
+ convert_tag const *, unsigned long) + 000000ac
+ fcffa960   e4dd931a  parse_tiff_directory(TReadHelper &amp;, long long,
+ BMessage &amp;, convert_tag const *, unsigned long) + 000000fa
+ fcffa9a0   e4dd943c  parse_tiff_directory(TReadHelper &amp;, BMessage &amp;,
+ convert_tag const *, unsigned long) + 000000ac
+ fcffa9e0   e4dd931a  parse_tiff_directory(TReadHelper &amp;, long long,
+ BMessage &amp;, convert_tag const *, unsigned long) + 000000fa
+ fcffaa20   e4dd943c  parse_tiff_directory(TReadHelper &amp;, BMessage &amp;,
+ convert_tag const *, unsigned long) + 000000ac
+ fcffaa60   e4dd931a  parse_tiff_directory(TReadHelper &amp;, long long,
+ BMessage &amp;, convert_tag const *, unsigned long) + 000000fa
+ fcffaaa0   e4dd943c  parse_tiff_directory(TReadHelper &amp;, BMessage &amp;,
+ convert_tag const *, unsigned long) + 000000ac
+ fcffaae0   e4dd931a  parse_tiff_directory(TReadHelper &amp;, long long,
+ BMessage &amp;, convert_tag const *, unsigned long) + 000000fa
+ fcffab20   e4dd943c  parse_tiff_directory(TReadHelper &amp;, BMessage &amp;,
+ convert_tag const *, unsigned long) + 000000ac
+ fcffab60   e4dd931a  parse_tiff_directory(TReadHelper &amp;, long long,
+ BMessage &amp;, convert_tag const *, unsigned long) + 000000fa
+ fcffaba0   e4dd943c  parse_tiff_directory(TReadHelper &amp;, BMessage &amp;,
+ convert_tag const *, unsigned long) + 000000ac
+ fcffabe0   e4dd931a  parse_tiff_directory(TReadHelper &amp;, long long,
+ BMessage &amp;, convert_tag const *, unsigned long) + 000000fa
+ fcffac20   e4dd943c  parse_tiff_directory(TReadHelper &amp;, BMessage &amp;,
+ convert_tag const *, unsigned long) + 000000ac
+ fcffac60   e4dd931a  parse_tiff_directory(TReadHelper &amp;, long long,
+ BMessage &amp;, convert_tag const *, unsigned long) + 000000fa
+ fcffaca0   e4dd943c  parse_tiff_directory(TReadHelper &amp;, BMessage &amp;,
+ convert_tag const *, unsigned long) + 000000ac
+ fcfface0   e4dd931a  parse_tiff_directory(TReadHelper &amp;, long long,
+ BMessage &amp;, convert_tag const *, unsigned long) + 000000fa
+ fcffad20   e4dd943c  parse_tiff_directory(TReadHelper &amp;, BMessage &amp;,
+ convert_tag const *, unsigned long) + 000000ac
+ fcffad60   e4dd931a  parse_tiff_directory(TReadHelper &amp;, long long,
+ BMessage &amp;, convert_tag const *, unsigned long) + 000000fa
+ fcffada0   e4dd943c  parse_tiff_directory(TReadHelper &amp;, BMessage &amp;,
+ convert_tag const *, unsigned long) + 000000ac
+ fcffade0   e4dd931a  parse_tiff_directory(TReadHelper &amp;, long long,
+ BMessage &amp;, convert_tag const *, unsigned long) + 000000fa
+ fcffae20   e4dd943c  parse_tiff_directory(TReadHelper &amp;, BMessage &amp;,
+ convert_tag const *, unsigned long) + 000000ac
+ fcffae60   e4dd931a  parse_tiff_directory(TReadHelper &amp;, long long,
+ BMessage &amp;, convert_tag const *, unsigned long) + 000000fa
+ fcffaea0   e4dd943c  parse_tiff_directory(TReadHelper &amp;, BMessage &amp;,
+ convert_tag const *, unsigned long) + 000000ac
+ fcffaee0   e4dd931a  parse_tiff_directory(TReadHelper &amp;, long long,
+ BMessage &amp;, convert_tag const *, unsigned long) + 000000fa
+ fcffaf20   e4dd943c  parse_tiff_directory(TReadHelper &amp;, BMessage &amp;,
+ convert_tag const *, unsigned long) + 000000ac
+ fcffaf60   e4dd931a  parse_tiff_directory(TReadHelper &amp;, long long,
+ BMessage &amp;, convert_tag const *, unsigned long) + 000000fa
+ fcffafa0   e4dd943c  parse_tiff_directory(TReadHelper &amp;, BMessage &amp;,
+ convert_tag const *, unsigned long) + 000000ac
+ fcffafe0   e4dd931a  parse_tiff_directory(TReadHelper &amp;, long long,
+ BMessage &amp;, convert_tag const *, unsigned long) + 000000fa
+ fcffb020   e4dd943c  parse_tiff_directory(TReadHelper &amp;, BMessage &amp;,
+ convert_tag const *, unsigned long) + 000000ac
+ fcffb060   e4dd931a  parse_tiff_directory(TReadHelper &amp;, long long,
+ BMessage &amp;, convert_tag const *, unsigned long) + 000000fa
+ fcffb0a0   e4dd943c  parse_tiff_directory(TReadHelper &amp;, BMessage &amp;,
+ convert_tag const *, unsigned long) + 000000ac
+ fcffb0e0   e4dd931a  parse_tiff_directory(TReadHelper &amp;, long long,
+ BMessage &amp;, convert_tag const *, unsigned long) + 000000fa
+ fcffb120   e4dd943c  parse_tiff_directory(TReadHelper &amp;, BMessage &amp;,
+ convert_tag const *, unsigned long) + 000000ac
+ fcffb160   e4dd931a  parse_tiff_directory(TReadHelper &amp;, long long,
+ BMessage &amp;, convert_tag const *, unsigned long) + 000000fa
+ fcffb1a0   e4dd943c  parse_tiff_directory(TReadHelper &amp;, BMessage &amp;,
+ convert_tag const *, unsigned long) + 000000ac
+ fcffb1e0   e4dd931a  parse_tiff_directory(TReadHelper &amp;, long long,
+ BMessage &amp;, convert_tag const *, unsigned long) + 000000fa
+ fcffb220   e4dd943c  parse_tiff_directory(TReadHelper &amp;, BMessage &amp;,
+ convert_tag const *, unsigned long) + 000000ac
+ fcffb260   e4dd931a  parse_tiff_directory(TReadHelper &amp;, long long,
+ BMessage &amp;, convert_tag const *, unsigned long) + 000000fa
+ fcffb2a0   e4dd943c  parse_tiff_directory(TReadHelper &amp;, BMessage &amp;,
+ convert_tag const *, unsigned long) + 000000ac
+ fcffb2e0   e4dd95d2  convert_exif_to_message(BPositionIO &amp;, BMessage &amp;,
+ convert_tag const *, unsigned long) + 0000017e
+ fcffb370   e4dd9659  convert_exif_to_message(BPositionIO &amp;, BMessage &amp;) +
+ 00000029
+ fcffb3a0   e4ddd32c  Decompress(BPositionIO *, BPositionIO *, BMessage *,
+ __jmp_buf_tag const (*)[1]) + 00000154
+ fcffb730   e4ddc979  Translate + 000000b9
+ fcffb780   ec5e1f12  BTranslatorRoster::Translate(BPositionIO *,
+ translator_info const *, BMessage *, BPositionIO *, unsigned long,
+ unsigned long, char const *) + 00000142
+ fcffb9b4   80011e11  ShowImageView::SetImage(entry_ref const *) + 000001d5
+ fcffbd80   8001a08d  ShowImageWindow::ShowImageWindow(entry_ref const *,
+ BMessenger const &amp;) + 00000559
+ fcffbe64   80010278  ShowImageApp::Open(entry_ref const *) + 00000038
+ fcffbe8c   800101e1  ShowImageApp::RefsReceived(BMessage *) + 000000ad
+ fcffbec4   ec16916c  BApplication::DispatchMessage(BMessage *, BHandler *)
+ + 00000494
+ fcffc0e4   ec171a19  BLooper::task_looper(void) + 00000275
+ fcffc140   ec16740c  BApplication::Run(void) + 00000068
+ fcffc154   8000fa90  main + 0000003c
+ fcffc34c   8000f924  _start + 00000060
+ ShowImage:
+ }}}
+
+ Have not looked at the code yet, but it is 100% reproducable, also in
+ ZETA.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2206#comment:1">http://dev.haiku-os.org/ticket/2206#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007126.html">[Haiku-bugs] [Haiku] #2206: ShowImage (JPEGTranslator) crashes while reading jpeg file.
+</A></li>
+	<LI>Next message: <A HREF="007243.html">[Haiku-bugs] [Haiku] #2206: ShowImage (JPEGTranslator) crashes while reading jpeg file.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7240">[ date ]</a>
+              <a href="thread.html#7240">[ thread ]</a>
+              <a href="subject.html#7240">[ subject ]</a>
+              <a href="author.html#7240">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

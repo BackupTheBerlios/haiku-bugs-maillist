@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4445: MIDI System Exclusive handling is inconsistent (and BeOS incompatible)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234445%3A%20MIDI%20System%20Exclusive%20handling%20is%0A%20inconsistent%20%28and%20BeOS%20incompatible%29&In-Reply-To=%3C048.c9b49f45a2c7e5eaaceb79be91304018%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="021386.html">
+   <LINK REL="Next"  HREF="021510.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4445: MIDI System Exclusive handling is inconsistent (and BeOS incompatible)</H1>
+    <B>phoudoin</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234445%3A%20MIDI%20System%20Exclusive%20handling%20is%0A%20inconsistent%20%28and%20BeOS%20incompatible%29&In-Reply-To=%3C048.c9b49f45a2c7e5eaaceb79be91304018%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4445: MIDI System Exclusive handling is inconsistent (and BeOS incompatible)">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Sep 16 11:05:37 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="021386.html">[Haiku-bugs] [Haiku] #4445: MIDI System Exclusive handling is inconsistent (and BeOS incompatible)
+</A></li>
+        <LI>Next message: <A HREF="021510.html">[Haiku-bugs] [Haiku] #4445: MIDI System Exclusive handling is inconsistent (and BeOS incompatible)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21408">[ date ]</a>
+              <a href="thread.html#21408">[ thread ]</a>
+              <a href="subject.html#21408">[ subject ]</a>
+              <a href="author.html#21408">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4445: MIDI System Exclusive handling is inconsistent (and BeOS incompatible)
+----------------------------------+-----------------------------------------
+  Reporter:  Pete                 |       Owner:  phoudoin     
+      Type:  bug                  |      Status:  closed       
+  Priority:  normal               |   Milestone:  R1           
+ Component:  Servers/midi_server  |     Version:  R1/pre-alpha1
+Resolution:  fixed                |   Blockedby:               
+  Platform:  All                  |    Blocking:               
+----------------------------------+-----------------------------------------
+Changes (by phoudoin):
+
+  * status:  assigned =&gt; closed
+  * resolution:  =&gt; fixed
+
+
+Comment:
+
+ Okay, thanks for testing.
+ One major change I've done too regarding SysEx is that now *only* F7 byte
+ can end it, and except F8 all bytes above 0x80 interleaved in F0 ... F7
+ sequence are discarded plain and simple. Before, any byte in [0x81, 0xF7]
+ range was ending a SysEx.
+ According to MIDI spec, that was wrong, but maybe we're too strict now on
+ this regard.
+
+ I'll closed this ticket now, to be reopened if needed.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4445#comment:7">http://dev.haiku-os.org/ticket/4445#comment:7</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="021386.html">[Haiku-bugs] [Haiku] #4445: MIDI System Exclusive handling is inconsistent (and BeOS incompatible)
+</A></li>
+	<LI>Next message: <A HREF="021510.html">[Haiku-bugs] [Haiku] #4445: MIDI System Exclusive handling is inconsistent (and BeOS incompatible)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21408">[ date ]</a>
+              <a href="thread.html#21408">[ thread ]</a>
+              <a href="subject.html#21408">[ subject ]</a>
+              <a href="author.html#21408">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

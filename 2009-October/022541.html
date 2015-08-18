@@ -1,0 +1,346 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4741: Kernel never loads on Dell OptiPlex 755	- Core 2 duo
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234741%3A%20Kernel%20never%20loads%20on%20Dell%20OptiPlex%20755%0A%09-%20Core%202%20duo&In-Reply-To=%3C044.6eac474fe3490213513e7e1d51cdfe7e%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="022537.html">
+   <LINK REL="Next"  HREF="022542.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4741: Kernel never loads on Dell OptiPlex 755	- Core 2 duo</H1>
+    <B>kallisti5</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234741%3A%20Kernel%20never%20loads%20on%20Dell%20OptiPlex%20755%0A%09-%20Core%202%20duo&In-Reply-To=%3C044.6eac474fe3490213513e7e1d51cdfe7e%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4741: Kernel never loads on Dell OptiPlex 755	- Core 2 duo">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Oct  7 20:10:29 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="022537.html">[Haiku-bugs] [Haiku] #2789: writing to usb disks fail after 10-100Mb of writing files
+</A></li>
+        <LI>Next message: <A HREF="022542.html">[Haiku-bugs] [Haiku] #2789: writing to usb disks fail after 10-100Mb of writing files
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22541">[ date ]</a>
+              <a href="thread.html#22541">[ thread ]</a>
+              <a href="subject.html#22541">[ subject ]</a>
+              <a href="author.html#22541">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4741: Kernel never loads on Dell OptiPlex 755 - Core 2 duo
+--------------------------------+-------------------------------------------
+ Reporter:  kallisti5           |       Owner:  axeld    
+     Type:  bug                 |      Status:  new      
+ Priority:  normal              |   Milestone:  R1       
+Component:  System/Boot Loader  |     Version:  R1/alpha1
+Blockedby:                      |    Platform:  x86      
+ Blocking:                      |  
+--------------------------------+-------------------------------------------
+ Result of booting Haiku image from a USB stick (i think it was around
+ r33477)
+ {{{
+ &quot;
+ APM version 1.2 available, flags 3.
+ smp: using ACPI to detect MP configuration
+ smp: local apic address is 0xfee00000
+ smp: found local APIC with id 0
+ smp: found local APIC with id 1
+ smp: found local APIC with id 5
+ smp: APIC is disabled and will not be used
+ smp: found local APIC with id 7
+ smp: APIC is disabled and will not be used
+ smp: found local APIC with id 0
+ smp: APIC is disabled and will not be used
+ smp: found local APIC with id 1
+ smp: APIC is disabled and will not be used
+ smp: found local APIC with id 2
+ smp: APIC is disabled and will not be used
+ smp: found local APIC with id 3
+ smp: APIC is disabled and will not be used
+ smp: found io APIC with id 8 and address 0xfec00000
+ VESA version = 3.0, capabilities 1
+ OEM string: Intel(r)Q33/Q35/G33 Graphics Chip Accelerated VGA BIOS
+   160: 848 x 480 x 8 (a = 155, mem = 4, phy = d0000000, p = 1, b = 1)
+   161: 848 x 480 x 16 (a = 155, mem = 6, phy = d0000000, p = 1, b = 1)
+   162: 848 x 480 x 32 (a = 155, mem = 6, phy = d0000000, p = 1, b = 1)
+   163: 0 x 0 x 0 (a = 0, mem = 0, phy = 0, p = 0, b = 0)
+   164: 0 x 0 x 0 (a = 0, mem = 0, phy = 0, p = 0, b = 0)
+   165: 0 x 0 x 0 (a = 0, mem = 0, phy = 0, p = 0, b = 0)
+   166: 0 x 0 x 0 (a = 0, mem = 0, phy = 0, p = 0, b = 0)
+   167: 0 x 0 x 0 (a = 0, mem = 0, phy = 0, p = 0, b = 0)
+   168: 0 x 0 x 0 (a = 0, mem = 0, phy = 0, p = 0, b = 0)
+   13c: 1920 x 1440 x 8 (a = 155, mem = 4, phy = d0000000, p = 1, b = 1)
+   14d: 1920 x 1440 x 16 (a = 155, mem = 6, phy = d0000000, p = 1, b = 1)
+   15c: 0 x 0 x 0 (a = 0, mem = 0, phy = 0, p = 0, b = 0)
+   13a: 1600 x 1200 x 8 (a = 155, mem = 4, phy = d0000000, p = 1, b = 1)
+   14b: 1600 x 1200 x 16 (a = 155, mem = 6, phy = d0000000, p = 1, b = 1)
+   15a: 1600 x 1200 x 32 (a = 155, mem = 6, phy = d0000000, p = 1, b = 1)
+   107: 1280 x 1024 x 8 (a = 155, mem = 4, phy = d0000000, p = 1, b = 1)
+   11a: 1280 x 1024 x 16 (a = 155, mem = 6, phy = d0000000, p = 1, b = 1)
+   11b: 1280 x 1024 x 32 (a = 155, mem = 6, phy = d0000000, p = 1, b = 1)
+   105: 1024 x 768 x 8 (a = 155, mem = 4, phy = d0000000, p = 1, b = 1)
+   117: 1024 x 768 x 16 (a = 155, mem = 6, phy = d0000000, p = 1, b = 1)
+   118: 1024 x 768 x 32 (a = 155, mem = 6, phy = d0000000, p = 1, b = 1)
+   112: 640 x 480 x 32 (a = 155, mem = 6, phy = d0000000, p = 1, b = 1)
+   114: 800 x 600 x 16 (a = 155, mem = 6, phy = d0000000, p = 1, b = 1)
+   115: 800 x 600 x 32 (a = 155, mem = 6, phy = d0000000, p = 1, b = 1)
+   101: 640 x 480 x 8 (a = 155, mem = 4, phy = d0000000, p = 1, b = 1)
+   103: 800 x 600 x 8 (a = 155, mem = 4, phy = d0000000, p = 1, b = 1)
+   111: 640 x 480 x 16 (a = 155, mem = 6, phy = d0000000, p = 1, b = 1)
+ VESA compatible graphics!
+ EDID1: 4f
+ EDID2: ebx 102
+ EDID3: 4f
+ Vendor: NEC
+ Product ID: 25012
+ Serial #: 16843009
+ Produced in week/year: 11/2002
+ EDID version: 1.3
+ Type: Analog
+ Size: 37 cm x 28 cm
+ Gamma=2.2
+ White (X,Y)=(0.283,0.296)
+ Supported Future Video Modes:
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">640x480 at 85Hz</A> (id=22833)
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">800x600 at 85Hz</A> (id=22853)
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">1024x768 at 85Hz</A> (id=22881)
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">1152x864 at 75Hz</A> (id=20337)
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">1280x960 at 85Hz</A> (id=22913)
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">1280x1024 at 85Hz</A> (id=39297)
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">1600x1200 at 75Hz</A> (id=20393)
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">1792x1344 at 65Hz</A> (id=17857)
+ Supported VESA Video Modes:
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">720x400 at 70Hz</A>
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">720x400 at 88Hz</A>
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">640x480 at 60Hz</A>
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">640x480 at 67Hz</A>
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">640x480 at 72Hz</A>
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">640x480 at 75Hz</A>
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">800x600 at 56Hz</A>
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">800x600 at 60Hz</A>
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">800x600 at 72Hz</A>
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">800x600 at 75Hz</A>
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">832x624 at 75Hz</A>
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">1024x768 at 87Hz</A> interlaced
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">1024x768 at 60Hz</A>
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">1024x768 at 70Hz</A>
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">1024x768 at 75Hz</A>
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">1280x1024 at 75Hz</A>
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">1152x870 at 75Hz</A>
+ Additional Video Mode (<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">1280x1024 at 85Hz</A>):
+ clock=157.5 MHz
+ h: (1280, 1344, 1504, 1728)
+ v: (1024, 1025, 1028, 1072)
+ size: 35.6 cm x 26.7 cm
+ border: 0 cm x 0 cm
+ Horizontal frequency range = 30..96 kHz
+ Vertical frequency range = 50..160 Hz
+ Maximum pixel clock = 240 MHz
+ Monitor Name: NEC FE950+
+ Serial Number: 2338890NA
+ crtc: h 1344/1504/1728, v 1025/1028/1072, pixel clock 157500000, refresh
+ 8557
+ Welcome to the Haiku boot loader!
+ number of drives: 2
+ add_partitions_for(0x00105298, mountFS = no)
+ add_partitions_for(fd = 0, mountFS = no)
+ 0x001054a4 Partition::Partition
+ 0x001054a4 Partition::Scan()
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+   priority: 500
+ check for partitioning_system: Intel Extended Partition
+ boot partition offset: 0
+ 0x001054a4 Partition::_Mount check for file_system: BFS Filesystem
+ add_partitions_for(0x00105350, mountFS = yes)
+ add_partitions_for(fd = 2, mountFS = yes)
+ 0x00106a94 Partition::Partition
+ 0x00106a94 Partition::Scan()
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+   priority: 810
+ check for partitioning_system: Intel Extended Partition
+ 0x00106bf8 Partition::Partition
+ 0x00106a94 Partition::AddChild 0x00106bf8
+ 0x00106bf8 Partition::SetParent 0x00106a94
+ new child partition!
+ 0x00106a94 Partition::Scan(): scan child 0x00106bf8 (start = 32256, size =
+ 7999!
+ 0x00106bf8 Partition::Scan()
+ check for partitioning_system: EFI GUID Partition Map
+ check for partitioning_system: Intel Partition Map
+ check for partitioning_system: Intel Extended Partition
+ 0x00106bf8 Partition::_Mount check for file_system: BFS Filesystem
+ 0x00106bf8 Partition::_Mount check for file_system: TAR Filesystem
+ 0x00106bf8 Partition::~Partition
+ 0x00106a94 Partition::~Partition
+ user_menu: enter
+ user_menu: leave
+ load kernel...
+ elf_load_image(fd = 2, image = 0x00055268)
+ segment 2: start = 0x80000000, size = 1171456, delta = 80000000
+ segment 3: start = 0x8011e000, size = 81920, delta = 7fee2000
+ load segment 2 (1167756 bytes)...
+ load segment 3 (25840 bytes)...
+ loaded 6645 debug symbols
+ total 17 relocs
+ ^^^^ LOCKUP ^^^^
+ &quot;
+ }}}
+
+ ==========================
+ Alpha 1 R1 CD (burned at 8x):
+
+ When you attempt to boot the following repeats over and over via serial
+ logs.  Video will not appear (black screen)
+ {{{
+ &quot;
+ APM version 1.2 available, flags 3.
+ smp: using ACPI to detect MP configuration
+ smp: local apic address is 0xfee00000
+ smp: found local APIC with id 0
+ smp: found local APIC with id 1
+ smp: found local APIC with id 5
+ smp: APIC is disabled and will not be used
+ smp: found local APIC with id 7
+ smp: APIC is disabled and will not be used
+ smp: found local APIC with id 0
+ smp: APIC is disabled and will not be used
+ smp: found local APIC with id 1
+ smp: APIC is disabled and will not be used
+ smp: found local APIC with id 2
+ smp: APIC is disabled and will not be used
+ smp: found local APIC with id 3
+ smp: APIC is disabled and will not be used
+ smp: found io APIC with id 8 and address 0xfec00000
+ VESA version = 3.0, capabilities 1
+ OEM string: Intel(r)Q33/Q35/G33 Graphics Chip Accelerated VGA BIOS
+   160: 848 x 480 x 8 (a = 155, mem = 4, phy = d0000000, p = 1, b = 1)
+   161: 848 x 480 x 16 (a = 155, mem = 6, phy = d0000000, p = 1, b = 1)
+   162: 848 x 480 x 32 (a = 155, mem = 6, phy = d0000000, p = 1, b = 1)
+   163: 0 x 0 x 0 (a = 0, mem = 0, phy = 0, p = 0, b = 0)
+   164: 0 x 0 x 0 (a = 0, mem = 0, phy = 0, p = 0, b = 0)
+   165: 0 x 0 x 0 (a = 0, mem = 0, phy = 0, p = 0, b = 0)
+   166: 0 x 0 x 0 (a = 0, mem = 0, phy = 0, p = 0, b = 0)
+   167: 0 x 0 x 0 (a = 0, mem = 0, phy = 0, p = 0, b = 0)
+   168: 0 x 0 x 0 (a = 0, mem = 0, phy = 0, p = 0, b = 0)
+   13c: 1920 x 1440 x 8 (a = 155, mem = 4, phy = d0000000, p = 1, b = 1)
+   14d: 1920 x 1440 x 16 (a = 155, mem = 6, phy = d0000000, p = 1, b = 1)
+   15c: 0 x 0 x 0 (a = 0, mem = 0, phy = 0, p = 0, b = 0)
+   13a: 1600 x 1200 x 8 (a = 155, mem = 4, phy = d0000000, p = 1, b = 1)
+   14b: 1600 x 1200 x 16 (a = 155, mem = 6, phy = d0000000, p = 1, b = 1)
+   15a: 1600 x 1200 x 32 (a = 155, mem = 6, phy = d0000000, p = 1, b = 1)
+   107: 1280 x 1024 x 8 (a = 155, mem = 4, phy = d0000000, p = 1, b = 1)
+   11a: 1280 x 1024 x 16 (a = 155, mem = 6, phy = d0000000, p = 1, b = 1)
+   11b: 1280 x 1024 x 32 (a = 155, mem = 6, phy = d0000000, p = 1, b = 1)
+   105: 1024 x 768 x 8 (a = 155, mem = 4, phy = d0000000, p = 1, b = 1)
+   117: 1024 x 768 x 16 (a = 155, mem = 6, phy = d0000000, p = 1, b = 1)
+   118: 1024 x 768 x 32 (a = 155, mem = 6, phy = d0000000, p = 1, b = 1)
+   112: 640 x 480 x 32 (a = 155, mem = 6, phy = d0000000, p = 1, b = 1)
+   114: 800 x 600 x 16 (a = 155, mem = 6, phy = d0000000, p = 1, b = 1)
+   115: 800 x 600 x 32 (a = 155, mem = 6, phy = d0000000, p = 1, b = 1)
+   101: 640 x 480 x 8 (a = 155, mem = 4, phy = d0000000, p = 1, b = 1)
+   103: 800 x 600 x 8 (a = 155, mem = 4, phy = d0000000, p = 1, b = 1)
+   111: 640 x 480 x 16 (a = 155, mem = 6, phy = d0000000, p = 1, b = 1)
+ VESA compatible graphics!
+ EDID1: 4f
+ EDID2: ebx 102
+ EDID3: 4f
+ Vendor: NEC
+ Product ID: 25012
+ Serial #: 16843009
+ Produced in week/year: 11/2002
+ EDID version: 1.3
+ Type: Analog
+ Size: 37 cm x 28 cm
+ Gamma=2.2
+ White (X,Y)=(0.283,0.296)
+ Supported Future Video Modes:
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">640x480 at 85Hz</A> (id=22833)
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">800x600 at 85Hz</A> (id=22853)
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">1024x768 at 85Hz</A> (id=22881)
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">1152x864 at 75Hz</A> (id=20337)
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">1280x960 at 85Hz</A> (id=22913)
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">1280x1024 at 85Hz</A> (id=39297)
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">1600x1200 at 75Hz</A> (id=20393)
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">1792x1344 at 65Hz</A> (id=17857)
+ Supported VESA Video Modes:
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">720x400 at 70Hz</A>
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">720x400 at 88Hz</A>
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">640x480 at 60Hz</A>
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">640x480 at 67Hz</A>
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">640x480 at 72Hz</A>
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">640x480 at 75Hz</A>
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">800x600 at 56Hz</A>
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">800x600 at 60Hz</A>
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">800x600 at 72Hz</A>
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">800x600 at 75Hz</A>
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">832x624 at 75Hz</A>
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">1024x768 at 87Hz</A> interlaced
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">1024x768 at 60Hz</A>
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">1024x768 at 70Hz</A>
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">1024x768 at 75Hz</A>
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">1280x1024 at 75Hz</A>
+ <A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">1152x870 at 75Hz</A>
+ Additional Video Mode (<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">1280x1024 at 85Hz</A>):
+ clock=157.5 MHz
+ h: (1280, 1344, 1504, 1728)
+ v: (1024, 1025, 1028, 1072)
+ size: 35.6 cm x 26.7 cm
+ border: 0 cm x 0 cm
+ Horizontal frequency range = 30..96 kHz
+ Vertical frequency range = 50..160 Hz
+ Maximum pixel clock = 240 MHz
+ Monitor Name: NEC FE950+
+ Serial Number: 2338890NA
+ crtc: h 1344/1504/1728, v 1025/1028/1072, pixel clock 157500000, refresh
+ 8557
+ Welcome to the Haiku boot loader!
+ number of drives: 1
+ add_partitions_for(0x00105298, mountFS = no)
+ add_partitions_for(fd = 0, mountFS = no)
+ 0x001054a4 Partition::Partition
+ 0x001054a4 Partition::Scan()
+ boot partition offset: 0
+ 0x001054a4 Partition::_Mount check for file_system: TAR Filesystem
+ load kernel...
+ ^^^^ LOOP ^^^^
+ &quot;
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4741">http://dev.haiku-os.org/ticket/4741</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="022537.html">[Haiku-bugs] [Haiku] #2789: writing to usb disks fail after 10-100Mb of writing files
+</A></li>
+	<LI>Next message: <A HREF="022542.html">[Haiku-bugs] [Haiku] #2789: writing to usb disks fail after 10-100Mb of writing files
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22541">[ date ]</a>
+              <a href="thread.html#22541">[ thread ]</a>
+              <a href="subject.html#22541">[ subject ]</a>
+              <a href="author.html#22541">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

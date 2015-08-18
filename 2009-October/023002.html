@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4433: PPC haiku-boot-cd-ppc broken on x86_64 Linux compiles.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234433%3A%20PPC%20haiku-boot-cd-ppc%20broken%20on%0A%20x86_64%20Linux%20compiles.&In-Reply-To=%3C053.8dbe281dbfe1a14593a61ece4b436e8f%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="022998.html">
+   <LINK REL="Next"  HREF="023003.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4433: PPC haiku-boot-cd-ppc broken on x86_64 Linux compiles.</H1>
+    <B>cdr</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234433%3A%20PPC%20haiku-boot-cd-ppc%20broken%20on%0A%20x86_64%20Linux%20compiles.&In-Reply-To=%3C053.8dbe281dbfe1a14593a61ece4b436e8f%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4433: PPC haiku-boot-cd-ppc broken on x86_64 Linux compiles.">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Oct 22 08:41:48 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="022998.html">[Haiku-bugs] [Haiku] #4829: MPEG4 AAC mono files play audio at	2x speed
+</A></li>
+        <LI>Next message: <A HREF="023003.html">[Haiku-bugs] [Haiku] #4433: PPC haiku-boot-cd-ppc broken on x86_64 Linux compiles.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#23002">[ date ]</a>
+              <a href="thread.html#23002">[ thread ]</a>
+              <a href="subject.html#23002">[ subject ]</a>
+              <a href="author.html#23002">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4433: PPC haiku-boot-cd-ppc broken on x86_64 Linux compiles.
+--------------------------------+-------------------------------------------
+ Reporter:  kallisti5           |       Owner:  axeld        
+     Type:  bug                 |      Status:  new          
+ Priority:  normal              |   Milestone:  R1           
+Component:  System/Boot Loader  |     Version:  R1/pre-alpha1
+Blockedby:                      |    Platform:  PowerPC      
+ Blocking:                      |  
+--------------------------------+-------------------------------------------
+
+Comment(by cdr):
+
+ I got the same problem when trying to build x86 Haiku on x86_64 Linux. The
+ first thing I had to do to build the cross toolchain was to use linux32 to
+ fool it into thinking it's building on i686 (well, libiberty's configure
+ didn't detect x86_64-unknown-linux-gnu as a valid platform):
+ $ linux32 ./configure --build-cross-tools ./buildtools/
+
+ After that the toolchain built OK, but then when I tried to actually build
+ any part of Haiku, it failed when trying to build libroot.so with exactly
+ the same error as in the bug report. It looked like setversion has failed.
+
+ I debugged setversion and I found out that the size of Elf32_Ehdr
+ structure is 80 bytes instead of 52 bytes - classical portability issue.
+ So I looked at the types in headers/os/support/SupportDefs.h and
+ headers/[build/]os/support/SupportDefs.h and uint32 is defined as unsigned
+ long and int32 is defined as long. 64-bit Linux follows LP64 convention
+ meaning that long is 64-bit, so it means that [u]int32 is actually 64-bit
+ in the cross-binaries (like e.g. setversion) used to build Haiku.
+
+ To fix it [u]int32 has to be redefined as [unsigned]int. This fix will
+ also be needed is Haiku will ever be ported to x86_64/amd64 arch. Fixing
+ this will also trigger changes in BString::operator&lt;&lt; (duplicate int and
+ int32) as well as in a couple of other places where string formatting is
+ done.
+
+ Please let me know if I can do anything to help to solve this. I can even
+ provide a sample change set, but this seems easy to fix so far but will
+ still probably require more testing.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4433#comment:5">http://dev.haiku-os.org/ticket/4433#comment:5</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="022998.html">[Haiku-bugs] [Haiku] #4829: MPEG4 AAC mono files play audio at	2x speed
+</A></li>
+	<LI>Next message: <A HREF="023003.html">[Haiku-bugs] [Haiku] #4433: PPC haiku-boot-cd-ppc broken on x86_64 Linux compiles.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#23002">[ date ]</a>
+              <a href="thread.html#23002">[ thread ]</a>
+              <a href="subject.html#23002">[ subject ]</a>
+              <a href="author.html#23002">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

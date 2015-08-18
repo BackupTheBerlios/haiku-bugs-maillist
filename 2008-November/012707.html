@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3166: Wonderbrush crashing when max zooming	large image
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233166%3A%20Wonderbrush%20crashing%20when%20max%20zooming%0A%09large%20image&In-Reply-To=%3C044.2a81c164a717778b200dfbb69fc48b76%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012706.html">
+   <LINK REL="Next"  HREF="012709.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3166: Wonderbrush crashing when max zooming	large image</H1>
+    <B>humdinger</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233166%3A%20Wonderbrush%20crashing%20when%20max%20zooming%0A%09large%20image&In-Reply-To=%3C044.2a81c164a717778b200dfbb69fc48b76%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3166: Wonderbrush crashing when max zooming	large image">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Nov 22 08:15:15 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012706.html">[Haiku-bugs] [Haiku] #1590: Updated Broadcom Tigon3 ethernet	driver
+</A></li>
+        <LI>Next message: <A HREF="012709.html">[Haiku-bugs] [Haiku] #3166: Wonderbrush crashing when max	zooming large image
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12707">[ date ]</a>
+              <a href="thread.html#12707">[ thread ]</a>
+              <a href="subject.html#12707">[ subject ]</a>
+              <a href="author.html#12707">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3166: Wonderbrush crashing when max zooming large image
+-----------------------+----------------------------------------------------
+ Reporter:  humdinger  |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+Blockedby:             |    Platform:  All           
+ Blocking:             |  
+-----------------------+----------------------------------------------------
+ This is on vmware (1gb RAM), r28625.
+
+ When working with a large image (in my case 2480 x 3508), Haiku's crashing
+ when I reach maximal zooming level (x3200). ActivityMonitor reports around
+ 280mb used memory.
+ See attached serial-log.txt. Nope... can't attach a file... It's quite
+ short though:
+ {{{
+ vm_page_fault: vm_soft_fault returned error 'Bad address' on fault at
+ 0x70555000, ip 0x2a8b47, write 1, user 1, thread 0xb0
+ vm_page_fault: thread &quot;w:173:WonderBrush | Haiku-Alpha&quot; (176) in team
+ &quot;app_server&quot; (49) tried to write address 0x70555000, ip 0x2a8b47
+ (&quot;app_server_seg0ro&quot; +0xa8b47)
+ stack trace:
+   0x002a8846 (app_server_seg0ro + 0xa8846)
+   0x002a76bb (app_server_seg0ro + 0xa76bb)
+   0x00296b85 (app_server_seg0ro + 0x96b85)
+   0x00281d30 (app_server_seg0ro + 0x81d30)
+   0x002813a6 (app_server_seg0ro + 0x813a6)
+   0x0027f0dd (app_server_seg0ro + 0x7f0dd)
+   0x00285106 (app_server_seg0ro + 0x85106)
+   0x002675c0 (app_server_seg0ro + 0x675c0)
+   0x006f49b8 (libroot.so_seg0ro + 0x259b8)
+   0x70594fec (w:173:WonderBrush_176_stack + 0x3ffec)
+ vm_soft_fault: va 0x0 not covered by area in address space
+ vm_page_fault: vm_soft_fault returned error 'Bad address' on fault at 0x0,
+ ip 0x800cda9c, write 0, user 0, thread 0xb0
+ debug_server: Thread 176 entered the debugger: Segment violation
+ stack trace, current PC 0x2a8b47
+ _DrawBitmapNearestNeighborCopy32__C7PainterRQ23aggt13row_ptr_cache1ZUcddddG5BRect
+ + 0x1bb:
+   (0x705948dc)  0x2a8846
+ _DrawBitmap__C7PainterRQ23aggt13row_ptr_cache1ZUc11color_spaceG5BRectN23Ul
+ + 0x992
+   (0x705949ac)  0x2a76bb  DrawBitmap__C7PainterPC12ServerBitmapG5BRectT2Ul
+ + 0x1eb
+   (0x70594a5c)  0x296b85
+ DrawBitmap__13DrawingEngineP12ServerBitmapRC5BRectT2Ul + 0x145
+   (0x70594aec)  0x281d30
+ _DispatchViewDrawingMessage__12ServerWindowlRQ28BPrivate12LinkReceiver +
+ 0x738
+   (0x70594c4c)  0x2813a6
+ _DispatchViewMessage__12ServerWindowlRQ28BPrivate12LinkReceiver + 0x220e
+   (0x70594dec)  0x27f0dd
+ _DispatchMessage__12ServerWindowlRQ28BPrivate12LinkReceiver + 0x1181
+   (0x70594f0c)  0x285106  _MessageLooper__12ServerWindow + 0x282
+   (0x70594f7c)  0x2675c0  _message_thread__13MessageLooperPv + 0x28
+   (0x70594fac)  0x6f49b8  thread_entry + 0x20
+ }}}
+ It's probably not Wonderbrush's fault. Please reassign to the appropriate
+ component.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3166">http://dev.haiku-os.org/ticket/3166</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012706.html">[Haiku-bugs] [Haiku] #1590: Updated Broadcom Tigon3 ethernet	driver
+</A></li>
+	<LI>Next message: <A HREF="012709.html">[Haiku-bugs] [Haiku] #3166: Wonderbrush crashing when max	zooming large image
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12707">[ date ]</a>
+              <a href="thread.html#12707">[ thread ]</a>
+              <a href="subject.html#12707">[ subject ]</a>
+              <a href="author.html#12707">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

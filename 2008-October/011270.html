@@ -1,0 +1,158 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2893: System hanging at desktop with	r28244
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232893%3A%20System%20hanging%20at%20desktop%20with%0A%09r28244&In-Reply-To=%3C053.2ef248cc53c216ecb1ea3a64f97b489e%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011269.html">
+   <LINK REL="Next"  HREF="011271.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2893: System hanging at desktop with	r28244</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232893%3A%20System%20hanging%20at%20desktop%20with%0A%09r28244&In-Reply-To=%3C053.2ef248cc53c216ecb1ea3a64f97b489e%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2893: System hanging at desktop with	r28244">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Oct 22 14:44:39 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011269.html">[Haiku-bugs] [Haiku] #2893: System hanging at desktop with	r28244
+</A></li>
+        <LI>Next message: <A HREF="011271.html">[Haiku-bugs] [Haiku] #2893: System hanging at desktop with	r28244
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11270">[ date ]</a>
+              <a href="thread.html#11270">[ thread ]</a>
+              <a href="subject.html#11270">[ subject ]</a>
+              <a href="author.html#11270">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2893: System hanging at desktop with r28244
+----------------------------+-----------------------------------------------
+  Reporter:  anevilyak      |       Owner:  axeld         
+      Type:  bug            |      Status:  new           
+  Priority:  normal         |   Milestone:  R1            
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |   Blockedby:                
+  Platform:  All            |    Blocking:                
+----------------------------+-----------------------------------------------
+
+Comment(by anevilyak):
+
+ I tried altering the debugging levels in the radeon driver to get more
+ information, but that didn't change much other than that it locks sooner.
+ Now I have the deskbar's window thread in the semaphore 0 state, backtrace
+ as follows:
+
+ {{{
+ stack trace for thread 157 &quot;w:93:Deskbar&quot;
+     kernel stack: 0x91645000 to 0x91649000
+       user stack: 0x704d3000 to 0x70513000
+ frame               caller     &lt;image&gt;:function + offset
+  0 91648c04 (+  48) 8005704c   &lt;kernel_x86&gt; context_switch(thread*:
+ 0x900f3800, thread*: 0x900d7800) + 0x003c
+  1 91648c34 (+  64) 80057333   &lt;kernel_x86&gt; simple_reschedule() + 0x029f
+  2 91648c74 (+  64) 800464ed   &lt;kernel_x86&gt;:switch_sem_etc + 0x0319
+  3 91648cb4 (+  48) 8004617c   &lt;kernel_x86&gt;:acquire_sem + 0x001c
+  4 91648ce4 (+  48) 908a365d   &lt;/boot/beos/system/add-
+ ons/kernel/drivers/dev/graphics/radeon&gt;:Radeon_WaitForIdle + 0x0051
+  5 91648d14 (+  64) 9089e971   &lt;/boot/beos/system/add-
+ ons/kernel/drivers/dev/graphics/radeon&gt;:control_hook + 0x0221
+  6 91648d54 (+ 320) 8006b2bf   &lt;kernel_x86&gt; devfs_ioctl(fs_volume*:
+ 0x81170284, fs_vnode*: 0x812026e8, 0x81229210, uint32: 0x2716 (10006),
+ 0x705129a4, uint32: 0x8 (8)) + 0x0217
+  7 91648e94 (+  64) 80098e17   &lt;kernel_x86&gt; common_ioctl(file_descriptor*:
+ 0x812273e8, uint32: 0x2716 (10006), 0x705129a4, uint32: 0x8 (8)) + 0x0043
+  8 91648ed4 (+  48) 80086b4b   &lt;kernel_x86&gt; fd_ioctl(false, int32: 9,
+ uint32: 0x2716 (10006), 0x705129a4, uint32: 0x8 (8)) + 0x005f
+  9 91648f04 (+  64) 80087a09   &lt;kernel_x86&gt;:_user_ioctl + 0x0051
+ 10 91648f44 (+ 100) 800ceec1   &lt;kernel_x86&gt;:handle_syscall + 0x00be
+ user iframe at 0x91648fa8 (end = 0x91649000)
+  eax 0x85           ebx 0x77e2fc        ecx 0x70512950   edx 0xffff0104
+  esi 0x9            edi 0x180489d4      ebp 0x7051297c   esp 0x91648fdc
+  eip 0xffff0104  eflags 0x206      user esp 0x70512950
+  vector: 0x63, error code: 0x0
+ 11 91648fa8 (+   0) ffff0104   &lt;commpage&gt;:commpage_syscall + 0x0004
+ 12 7051297c (+  48) 007fd363   &lt;radeon.accelerant&gt;:Radeon_WaitForIdle +
+ 0x0037
+ 13 705129ac (+  80) 007f910f   &lt;radeon.accelerant&gt;:SYNC_TO_TOKEN + 0x004f
+ 14 705129fc (+  48) 007f8f45   &lt;radeon.accelerant&gt;:ACQUIRE_ENGINE + 0x0059
+ 15 70512a2c (+  48) 002942e3   &lt;_APP_&gt;
+ AccelerantHWInterface&lt;0x18048918&gt;::FillRegion(BRegion&amp;: 0x70512aec,
+ rgb_color&amp;: 0x70512ab8, true) + 0x004f
+ 16 70512a5c (+ 176) 002981ff   &lt;_APP_&gt;
+ DrawingEngine&lt;0x18056648&gt;::FillRect(BRect: 0x70512c34) + 0x028f
+ 17 70512b0c (+ 320) 0028149e   &lt;_APP_&gt;
+ ServerWindow&lt;0x180bd600&gt;::_DispatchViewDrawingMessage(int32: 157,
+ BPrivate12LinkReceiver&amp;: 0x180bf960) + 0x051e
+ 18 70512c4c (+ 416) 00280d2e   &lt;_APP_&gt;
+ ServerWindow&lt;0x180bd600&gt;::_DispatchViewMessage(int32: 157,
+ BPrivate12LinkReceiver&amp;: 0x180bf960) + 0x2132
+ 19 70512dec (+ 288) 0027eb41   &lt;_APP_&gt;
+ ServerWindow&lt;0x180bd600&gt;::_DispatchMessage(int32: 157,
+ BPrivate12LinkReceiver&amp;: 0x180bf960, 0x7fffffff, int32: 3084832,
+ 0x900f3800, 0x0) + 0x117d
+ 20 70512f0c (+ 112) 00284a16   &lt;_APP_&gt;
+ ServerWindow&lt;0x180bd600&gt;::_MessageLooper(0x0) + 0x0282
+ 21 70512f7c (+  48) 00267028   &lt;_APP_&gt;
+ MessageLooper&lt;0x180bd600&gt;::_message_thread(NULL) + 0x0028
+ 22 70512fac (+  48) 006f28fc   &lt;libroot.so&gt;:_get_next_team_info (nearest)
+ + 0x005c
+ 23 70512fdc (+   0) 70512fec   5197:w:93:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">Deskbar_157_stack at 0x704d3000</A> +
+ 0x3ffec
+
+ call 157 3 -1
+ thread 157, w:93:Deskbar
+ 91648cb4 8004617c   &lt;kernel_x86&gt;:acquire_sem(0x0 (0))
+
+ kdebug&gt; dw [symbol sSems] 1
+ 0x8010c614     4 kernel_x86:sSems
+ 0x8010c618     1 kernel_x86:sSemsActive
+ 0x8010c624     4 kernel_x86:sSemsSpinlock
+ [0x8010c624]  ....   00000000
+ kdebug&gt; dw 0x8010c614 13
+ [0x8010c614]  .p.....&#176;&#185;.q.   8f927000 00000001 8f93b9b0 8f937180
+ [0x8010c624]  .....S.........   00000000 800e53ea 00000000 00000000
+ [0x8010c634]  ................   00000000 00000000 00000000 00000000
+ [0x8010c644]  ....               00000000
+ }}}
+
+ Hope that helps, need to head to work now so any further info will have to
+ wait until later in the day.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2893#comment:15">http://dev.haiku-os.org/ticket/2893#comment:15</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011269.html">[Haiku-bugs] [Haiku] #2893: System hanging at desktop with	r28244
+</A></li>
+	<LI>Next message: <A HREF="011271.html">[Haiku-bugs] [Haiku] #2893: System hanging at desktop with	r28244
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11270">[ date ]</a>
+              <a href="thread.html#11270">[ thread ]</a>
+              <a href="subject.html#11270">[ subject ]</a>
+              <a href="author.html#11270">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

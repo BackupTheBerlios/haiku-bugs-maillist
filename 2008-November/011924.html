@@ -1,0 +1,143 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3028: fseeko broken on stdin?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233028%3A%20fseeko%20broken%20on%20stdin%3F&In-Reply-To=%3C042.7fdcdc779c70d8b4fee4c42c984b34fc%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012136.html">
+   <LINK REL="Next"  HREF="012357.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3028: fseeko broken on stdin?</H1>
+    <B>kaliber</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233028%3A%20fseeko%20broken%20on%20stdin%3F&In-Reply-To=%3C042.7fdcdc779c70d8b4fee4c42c984b34fc%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3028: fseeko broken on stdin?">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Nov  2 12:18:00 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012136.html">[Haiku-bugs] [Haiku] #3027: [GlTeapot] double click window tab and you won't get it back
+</A></li>
+        <LI>Next message: <A HREF="012357.html">[Haiku-bugs] [Haiku] #3028: fseeko broken on stdin?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11924">[ date ]</a>
+              <a href="thread.html#11924">[ thread ]</a>
+              <a href="subject.html#11924">[ subject ]</a>
+              <a href="author.html#11924">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3028: fseeko broken on stdin?
+-------------------------------+--------------------------------------------
+ Reporter:  kaliber            |       Owner:  axeld         
+     Type:  bug                |      Status:  new           
+ Priority:  normal             |   Milestone:  R1            
+Component:  System/libroot.so  |     Version:  R1 development
+Blockedby:                     |    Platform:  All           
+ Blocking:                     |  
+-------------------------------+--------------------------------------------
+ Here is a test from findutils 4.4.0
+ {{{
+ /* Test of fseeko() function.
+    Copyright (C) 2007 Free Software Foundation, Inc.
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see &lt;<A HREF="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</A>&gt;.
+ */
+
+ /* Written by Bruno Haible &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">bruno at clisp.org</A>&gt;, 2007.  */
+
+ #include &lt;config.h&gt;
+
+ #include &lt;stdio.h&gt;
+
+ /* Get off_t.  */
+ #include &lt;sys/types.h&gt;
+
+ int
+ main (int argc, char **argv)
+ {
+   /* Assume stdin is non-empty and seekable iff argc &gt; 1.  */
+   int expected = argc &gt; 1 ? 0 : -1;
+   /* Exit with success only if fseek/fseeko agree.  */
+   int r1 = fseeko (stdin, (off_t)0, SEEK_CUR);
+   int r2 = fseek (stdin, (long)0, SEEK_CUR);
+   if (r1 != r2 || r1 != expected)
+     return 1;
+   if (argc &gt; 1)
+     {
+       /* Test that fseek discards ungetc data.  */
+       int ch = fgetc (stdin);
+       if (ch == EOF)
+         return 1;
+       if (ungetc (ch ^ 0xff, stdin) != (ch ^ 0xff))
+         return 1;
+       if (fseeko (stdin, (off_t) 0, SEEK_END))
+         return 1;
+       if (fgetc (stdin) != EOF)
+         return 1;
+       /* Test that fseek resets end-of-file marker.  */
+       if (!feof (stdin))
+         return 1;
+       if (fseeko (stdin, (off_t) 0, SEEK_END))
+         return 1;
+       if (feof (stdin))
+         return 1;
+     }
+   return 0;
+ }
+ }}}
+
+ After
+ {{{
+ fseeko (stdin, (off_t) 0, SEEK_END)
+ }}}
+
+ fgetc (stdin) returns 10 instead of EOF (-1)
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3028">http://dev.haiku-os.org/ticket/3028</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012136.html">[Haiku-bugs] [Haiku] #3027: [GlTeapot] double click window tab and you won't get it back
+</A></li>
+	<LI>Next message: <A HREF="012357.html">[Haiku-bugs] [Haiku] #3028: fseeko broken on stdin?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11924">[ date ]</a>
+              <a href="thread.html#11924">[ thread ]</a>
+              <a href="subject.html#11924">[ subject ]</a>
+              <a href="author.html#11924">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

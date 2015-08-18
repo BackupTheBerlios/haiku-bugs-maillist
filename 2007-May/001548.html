@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1236: Intel 82801FB USB Controllers: BIOS Legacy USB Support: ON disables publishing USB2 devices.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231236%3A%20Intel%2082801FB%20USB%20Controllers%3A%20BIOS%0A%20Legacy%20USB%20Support%3A%20ON%20disables%20publishing%20USB2%20devices.&In-Reply-To=%3C052.4a68e179ba659fb04e754f4d1d539830%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001520.html">
+   <LINK REL="Next"  HREF="001554.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1236: Intel 82801FB USB Controllers: BIOS Legacy USB Support: ON disables publishing USB2 devices.</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231236%3A%20Intel%2082801FB%20USB%20Controllers%3A%20BIOS%0A%20Legacy%20USB%20Support%3A%20ON%20disables%20publishing%20USB2%20devices.&In-Reply-To=%3C052.4a68e179ba659fb04e754f4d1d539830%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1236: Intel 82801FB USB Controllers: BIOS Legacy USB Support: ON disables publishing USB2 devices.">trac at haiku-os.org
+       </A><BR>
+    <I>Sun May 27 17:41:21 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001520.html">[Haiku-bugs] [Haiku] #1236: Intel 82801FB USB Controllers: BIOS Legacy USB Support: ON disables publishing USB2 devices.
+</A></li>
+        <LI>Next message: <A HREF="001554.html">[Haiku-bugs] [Haiku] #1236: Intel 82801FB USB Controllers: BIOS Legacy USB Support: ON disables publishing USB2 devices.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1548">[ date ]</a>
+              <a href="thread.html#1548">[ thread ]</a>
+              <a href="subject.html#1548">[ subject ]</a>
+              <a href="author.html#1548">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1236: Intel 82801FB USB Controllers: BIOS Legacy USB Support: ON disables
+publishing USB2 devices.
+--------------------------+-------------------------------------------------
+  Reporter:  siarzhuk     |       Owner:  mmlr          
+      Type:  bug          |      Status:  assigned      
+  Priority:  normal       |   Milestone:  R1            
+ Component:  Drivers/USB  |     Version:  R1 development
+Resolution:               |    Platform:  All           
+--------------------------+-------------------------------------------------
+Comment (by siarzhuk):
+
+ 1) Information about laptop.
+ It is in German but, I hope, understandable. It is the model from our
+ local discounter (Aldi). Unfortunately, I found no detailed information in
+ English. :-\
+
+ Details zum Notebook Medion MD 96500 Titanium:
+     * Intel Pentium M Prozessor 740 (1,73 GHz, 2 MB L2 Cache, FSB 533)
+     * Intel 915 PM Chipsatz und Intel PRO/Wireless 2200
+     * ATI Mobility Radeon X700 XL PCI-Express mit 128 MB DDR RAM
+     * SAMSUNG Festplatte 100 GB mit 5.400 U/min und 8 MB Cache
+     * 1024 MB DDR II RAM (Beide Speicherb&#228;nke belegt)
+     * Biometrische Sicherheit
+     * Wireless Lan
+     * 8 in 2 Multikartenleser
+     * 56k Modem
+     * SAMSUNG 15,4 Zoll Hochglanz-TFT W-XGA Breitbildschirm - Aufl&#246;sung
+ 1280 x 800 Pixel
+     * Digital TV Tuner
+     * Radio Tuner
+     * Bluetooth 2.0
+     * PANASONIC 8x Multi Standard DVD/CD-Brenner mit Dual Layer und DVD
+ RAM Unterst&#252;tzung
+
+ NOTE: Attached devices.list is an output from R5 listdev command for this
+ laptop.
+
+ 2) About BIOS:
+ PhoenixBIOS 4.0 Release 6.1
+ (c) 1985-2003 Phoenix Technologies Ltd.
+ BIOS Version: R01-A0O
+ CPU-Intel (R) Pentium (R) M Processor 1.73 GHz
+ 1024 System RAM
+
+ NOTE: BIOS was updated to latest version available currently from laptop
+ vendor.
+
+ 3) Running Haiku USB bus managers at R5.
+ I tried to replace R5 USB bus managers with [BONE] version of USB Stack
+ replacement currently available at your blog at [<A HREF="http://haiku.mlotz.ch">http://haiku.mlotz.ch</A>]. I
+ placed all modules under /boot/beos/system/add-ons/ instead of recommended
+ ~/config/add-ons/. After reboot I observe '''no mentioned problems''' with
+ USB2 devices. And this behaviour is not related to state of &quot;Legacy USB
+ Support in BIOS&quot;. In both positions, disabled and enabled - USB2 devices
+ are recognized by Haiku USB stack successfully. May be this dependent on
+ other non-implemented features?
+ NOTE: Unfortunately I failed to build actual BONE version of USB bus
+ managers from Haiku sources. Neither recommended, &quot;usb modules only&quot; build
+ command, nor full rebuild are working. :-\ Looks like [my] bone/r5 builds
+ are broken currently.
+
+ Offtopic: Have you received my e-mail about sending requests to non-
+ default endpoints? What do you mean about it?
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1236#comment:2">http://dev.haiku-os.org/ticket/1236#comment:2</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001520.html">[Haiku-bugs] [Haiku] #1236: Intel 82801FB USB Controllers: BIOS Legacy USB Support: ON disables publishing USB2 devices.
+</A></li>
+	<LI>Next message: <A HREF="001554.html">[Haiku-bugs] [Haiku] #1236: Intel 82801FB USB Controllers: BIOS Legacy USB Support: ON disables publishing USB2 devices.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1548">[ date ]</a>
+              <a href="thread.html#1548">[ thread ]</a>
+              <a href="subject.html#1548">[ subject ]</a>
+              <a href="author.html#1548">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

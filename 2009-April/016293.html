@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3768: create_image -i 943718400 (or other large sizes) results in freeze
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233768%3A%20create_image%20-i%20943718400%20%28or%20other%0A%20large%20sizes%29%20results%20in%20freeze&In-Reply-To=%3C053.f35636fcab97c2edaeb04a9740c2308b%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="016274.html">
+   <LINK REL="Next"  HREF="016294.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3768: create_image -i 943718400 (or other large sizes) results in freeze</H1>
+    <B>bonefish</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233768%3A%20create_image%20-i%20943718400%20%28or%20other%0A%20large%20sizes%29%20results%20in%20freeze&In-Reply-To=%3C053.f35636fcab97c2edaeb04a9740c2308b%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3768: create_image -i 943718400 (or other large sizes) results in freeze">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Apr 18 01:59:40 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="016274.html">[Haiku-bugs] [Haiku] #3768: create_image -i 943718400 (or other large sizes) results in freeze
+</A></li>
+        <LI>Next message: <A HREF="016294.html">[Haiku-bugs] [Haiku] #3768: create_image -i 943718400 (or other large sizes) results in freeze
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16293">[ date ]</a>
+              <a href="thread.html#16293">[ thread ]</a>
+              <a href="subject.html#16293">[ subject ]</a>
+              <a href="author.html#16293">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3768: create_image -i 943718400 (or other large sizes) results in freeze
+---------------------------+------------------------------------------------
+ Reporter:  anevilyak      |       Owner:  bonefish      
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1 development
+Blockedby:                 |    Platform:  All           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+
+Comment(by bonefish):
+
+ Replying to [comment:12 anevilyak]:
+ &gt; I'm guessing this is most likely a flaw in the preemption logic itself,
+ since I can vouch for the fact that the exact same flaw shows up in
+ scheduler_affine, and the decision making process for when to preempt is
+ one of the few things that was left entirely untouched when creating that
+ scheduler.
+
+ Mmh, that doesn't quite convince me. We have a fixed quantum of 3 ms after
+ which we reschedule and we reschedule in release_sem_etc(), if a thread
+ with a higher priority has been woken up (and B_DO_NOT_RESCHEDULE was not
+ set), as well as when sending signals (needs some fixing, but is
+ relatively rare anyway).
+
+ For the realtime thread with the highest priority in a busy system one
+ would thus expect an average latency of half a quantum, i.e. 1.5 ms.
+ Unless I've overlooked one, that would be the &quot;Extended PS/2 Mouse 1
+ watcher&quot; with a priority of 104. According to the data its average latency
+ was almost 6.7 ms, though. That's more than two quanta, which shouldn't
+ really happen, since at the end of the quantum of the thread that woke up
+ the &quot;Extended PS/2 Mouse 1 watcher&quot; it would have been scheduled for sure.
+ The (priority 103) &quot;_input_server_event_loop_&quot; thread's average latency is
+ 2.9 ms, which is least less than a quantum, but also greater than I would
+ expect.
+
+ Regarding the mystery that almost every thread seems to do I/O, that can
+ actually be easily explained: Apparently the memory pressure is high
+ enough that read-only memory mapped executable pages are discarded, even
+ ones that are not really &quot;inactive&quot;. Hence we get a lot of page faults
+ that need to re-read the pages into memory. This would also explain why
+ the system is so unusable.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3768#comment:13">http://dev.haiku-os.org/ticket/3768#comment:13</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="016274.html">[Haiku-bugs] [Haiku] #3768: create_image -i 943718400 (or other large sizes) results in freeze
+</A></li>
+	<LI>Next message: <A HREF="016294.html">[Haiku-bugs] [Haiku] #3768: create_image -i 943718400 (or other large sizes) results in freeze
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16293">[ date ]</a>
+              <a href="thread.html#16293">[ thread ]</a>
+              <a href="subject.html#16293">[ subject ]</a>
+              <a href="author.html#16293">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

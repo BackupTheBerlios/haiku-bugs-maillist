@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2893: System hanging at desktop with	r28244
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232893%3A%20System%20hanging%20at%20desktop%20with%0A%09r28244&In-Reply-To=%3C053.29ef5bff48007a3197058ae79027bf17%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011240.html">
+   <LINK REL="Next"  HREF="011244.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2893: System hanging at desktop with	r28244</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232893%3A%20System%20hanging%20at%20desktop%20with%0A%09r28244&In-Reply-To=%3C053.29ef5bff48007a3197058ae79027bf17%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2893: System hanging at desktop with	r28244">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Oct 22 01:26:59 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011240.html">[Haiku-bugs] [Haiku] #2893: System hanging at desktop with	r28244
+</A></li>
+        <LI>Next message: <A HREF="011244.html">[Haiku-bugs] [Haiku] #2893: System hanging at desktop with	r28244
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11243">[ date ]</a>
+              <a href="thread.html#11243">[ thread ]</a>
+              <a href="subject.html#11243">[ subject ]</a>
+              <a href="author.html#11243">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2893: System hanging at desktop with r28244
+----------------------------+-----------------------------------------------
+  Reporter:  anevilyak      |       Owner:  axeld         
+      Type:  bug            |      Status:  new           
+  Priority:  normal         |   Milestone:  R1            
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |   Blockedby:                
+  Platform:  All            |    Blocking:                
+----------------------------+-----------------------------------------------
+
+Comment(by anevilyak):
+
+ Ran through this a few more times, and while the other thread states vary
+ somewhat, the root cause reliably seems to be picasso deadlocking while
+ holding other locks, and always on the same sem. Picasso's backtrace:
+
+ {{{
+ stack trace for thread 61 &quot;picasso&quot;
+     kernel stack: 0x80233000 to 0x80237000
+       user stack: 0x7efef000 to 0x7ffef000
+ frame               caller     &lt;image&gt;:function + offset
+  0 80236d84 (+  48) 80055318   &lt;kernel_x86&gt; context_switch(thread*:
+ 0x83868000, thread*: 0x838cb800) + 0x003c
+  1 80236db4 (+  64) 800555ff   &lt;kernel_x86&gt; simple_reschedule() + 0x029f
+  2 80236df4 (+  64) 80044bed   &lt;kernel_x86&gt;:switch_sem_etc + 0x0319
+  3 80236e34 (+  64) 800448a6   &lt;kernel_x86&gt;:acquire_sem_etc + 0x0026
+  4 80236e74 (+  80) 8004204a   &lt;kernel_x86&gt;:_get_port_message_info_etc +
+ 0x012e
+  5 80236ec4 (+  80) 80041f0d   &lt;kernel_x86&gt;:port_buffer_size_etc + 0x0025
+  6 80236f14 (+  48) 80042d99   &lt;kernel_x86&gt;:_user_port_buffer_size_etc +
+ 0x008d
+  7 80236f44 (+ 100) 800cae52   &lt;kernel_x86&gt;:handle_syscall + 0x00af
+ user iframe at 0x80236fa8 (end = 0x80237000)
+  eax 0xc3           ebx 0x77e71c        ecx 0x7ffeecd0   edx 0xffff0104
+  esi 0xffffffff     edi 0x7fffffff      ebp 0x7ffeecfc   esp 0x80236fdc
+  eip 0xffff0104  eflags 0x212      user esp 0x7ffeecd0
+  vector: 0x63, error code: 0x0
+  8 80236fa8 (+   0) ffff0104   &lt;commpage&gt;:commpage_syscall + 0x0004
+  9 7ffeecfc (+  48) 003c6e9d   &lt;libbe.so&gt;
+ BPrivate12LinkReceiverx&lt;0x1801e3a0&gt;::AdjustReplyBuffer(0xffffffff) +
+ 0x0045
+ 10 7ffeed2c (+  64) 003c6f5f   &lt;libbe.so&gt;
+ BPrivate12LinkReceiverx&lt;0x1801e3a0&gt;::ReadFromPort(0xffffffff) + 0x003b
+ 11 7ffeed6c (+  48) 003c6d43   &lt;libbe.so&gt;
+ BPrivate12LinkReceiverRlx&lt;0x1801e3a0&gt;::GetNextMessage(0x7ffeedd8) + 0x0047
+ 12 7ffeed9c (+ 320) 00266f41   &lt;_APP_&gt;
+ MessageLooper&lt;0x1801a300&gt;::_MessageLooper(0x18023ef0) + 0x0051
+ 13 7ffeeedc (+  48) 00267028   &lt;_APP_&gt;
+ MessageLooper&lt;0x1801a300&gt;::_message_thread(NULL) + 0x0028
+ 14 7ffeef0c (+  64) 0023f519   &lt;_APP_&gt;
+ AppServer&lt;0x1801a300&gt;::RunLooper(0x7ffef120) + 0x003d
+ 15 7ffeef4c (+  48) 0023fb23   &lt;_APP_&gt;:main + 0x0093
+ 16 7ffeef7c (+  48) 0023e6d7   &lt;_APP_&gt;:_start + 0x005b
+ 17 7ffeefac (+  48) 001008ea
+ &lt;/boot/beos/system/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">runtime_loader at 0x00100000</A>&gt;:unknown + 0x08ea
+ 18 7ffeefdc (+   0) 7ffeefec   3643:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">app_server_main_stack at 0x7efef000</A> +
+ 0xffffec
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2893#comment:9">http://dev.haiku-os.org/ticket/2893#comment:9</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011240.html">[Haiku-bugs] [Haiku] #2893: System hanging at desktop with	r28244
+</A></li>
+	<LI>Next message: <A HREF="011244.html">[Haiku-bugs] [Haiku] #2893: System hanging at desktop with	r28244
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11243">[ date ]</a>
+              <a href="thread.html#11243">[ thread ]</a>
+              <a href="subject.html#11243">[ subject ]</a>
+              <a href="author.html#11243">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3723: Improving disk performance by changing VirtualMemory path
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233723%3A%20Improving%20disk%20performance%20by%20changing%0A%20VirtualMemory%20path&In-Reply-To=%3C040.18a9c35a3cc4c0c9205028518726f1a4%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="016128.html">
+   <LINK REL="Next"  HREF="015882.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3723: Improving disk performance by changing VirtualMemory path</H1>
+    <B>haiqu</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233723%3A%20Improving%20disk%20performance%20by%20changing%0A%20VirtualMemory%20path&In-Reply-To=%3C040.18a9c35a3cc4c0c9205028518726f1a4%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3723: Improving disk performance by changing VirtualMemory path">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Apr  9 07:20:21 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="016128.html">[Haiku-bugs] [Haiku] #3722: Tracker Status bar shows wrong file	count
+</A></li>
+        <LI>Next message: <A HREF="015882.html">[Haiku-bugs] [Haiku] #3724: BOutlineListView selection issue
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15881">[ date ]</a>
+              <a href="thread.html#15881">[ thread ]</a>
+              <a href="subject.html#15881">[ subject ]</a>
+              <a href="author.html#15881">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3723: Improving disk performance by changing VirtualMemory path
+---------------------------------------+------------------------------------
+ Reporter:  haiqu                      |       Owner:  axeld         
+     Type:  enhancement                |      Status:  new           
+ Priority:  normal                     |   Milestone:  R1            
+Component:  Preferences/VirtualMemory  |     Version:  R1 development
+Blockedby:                             |    Platform:  All           
+ Blocking:                             |  
+---------------------------------------+------------------------------------
+ Currently the haiku BFS is a little slow. My guess is that DMA transfers
+ have not yet been enabled.
+
+ There is a simple interim solution. By allowing the user to select a
+ virtual memory path on a separate drive - preferrably on another bus
+ entirely - disk swapping speed can be increased significantly. This is due
+ to the fact that the physical heads in your drive need to change what
+ they're doing to service a virtual memory call.
+
+ By placing the virtual memory on a separate bus, optimum improvement is
+ gained due to the fact that the PC's controller is now less loaded, and
+ because there is now less data on the bus.
+
+ I believe this would be a fairly simple change, and very worthwhile even
+ in the long-term. Checking to ensure the drive is mounted and recreating
+ virtual memory if this fails is about all the extra work required.
+
+ No change would be noticed in systems with a single HDD, but then again no
+ improvement is available from Haiku's ability to run SMP either if you
+ only have one CPU ...
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3723">http://dev.haiku-os.org/ticket/3723</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="016128.html">[Haiku-bugs] [Haiku] #3722: Tracker Status bar shows wrong file	count
+</A></li>
+	<LI>Next message: <A HREF="015882.html">[Haiku-bugs] [Haiku] #3724: BOutlineListView selection issue
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15881">[ date ]</a>
+              <a href="thread.html#15881">[ thread ]</a>
+              <a href="subject.html#15881">[ subject ]</a>
+              <a href="author.html#15881">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

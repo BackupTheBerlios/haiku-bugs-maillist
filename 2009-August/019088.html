@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4166: Recent changes to video modes seem to have removed some modes.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234166%3A%20Recent%20changes%20to%20video%20modes%20seem%0A%20to%20have%20removed%20some%20modes.&In-Reply-To=%3C047.cd65bfb2967a3289f63de27c4517b415%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="019087.html">
+   <LINK REL="Next"  HREF="019089.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4166: Recent changes to video modes seem to have removed some modes.</H1>
+    <B>bga</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234166%3A%20Recent%20changes%20to%20video%20modes%20seem%0A%20to%20have%20removed%20some%20modes.&In-Reply-To=%3C047.cd65bfb2967a3289f63de27c4517b415%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4166: Recent changes to video modes seem to have removed some modes.">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Aug  5 02:41:49 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="019087.html">[Haiku-bugs] [Haiku] #3399: The system reboots while running jam -q on the haiku trunk.
+</A></li>
+        <LI>Next message: <A HREF="019089.html">[Haiku-bugs] [Haiku] #2769: Radeon driver is Slower than VESA	...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19088">[ date ]</a>
+              <a href="thread.html#19088">[ thread ]</a>
+              <a href="subject.html#19088">[ subject ]</a>
+              <a href="author.html#19088">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4166: Recent changes to video modes seem to have removed some modes.
+------------------------------+---------------------------------------------
+ Reporter:  bga               |       Owner:  axeld         
+     Type:  bug               |      Status:  new           
+ Priority:  normal            |   Milestone:  R1            
+Component:  Drivers/Graphics  |     Version:  R1 development
+Blockedby:                    |    Platform:  All           
+ Blocking:                    |  
+------------------------------+---------------------------------------------
+
+Comment(by bga):
+
+ This is weird. I added a debug_printf() to the create_display_modes()
+ function so it looked like this:
+
+ {{{
+ extern &quot;C&quot; area_id
+ create_display_modes(const char* name, edid1_info* edid,
+         const display_mode* initialModes, uint32 initialModeCount,
+         const color_space *spaces, uint32 spacesCount,
+         check_display_mode_hook hook, display_mode** _modes, uint32*
+ _count)
+ {
+         debug_printf(&quot;***** CREATE DISPLAY MODES *****\n&quot;);
+         if (_modes == NULL || _count == NULL)
+                 return B_BAD_VALUE;
+
+ [...]
+
+ }}}
+
+ After this, I rebuild and installed the vesa.accelerant.
+
+ This was never printed to syslog when I rebooted so either the function is
+ not being called (which I guess is not really an option) or debug_printf()
+ simply is not working.
+
+ Just to confirm when you made your suggestion, you said to look into the
+ file at src/add-ons/accelerants/common/create_mode_list.cpp, which does
+ not exist. the file that exists and that I added the debug to is src/add-
+ ons/accelerants/common/create_display_modes.cpp. This is the correct file,
+ right?
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4166#comment:14">http://dev.haiku-os.org/ticket/4166#comment:14</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="019087.html">[Haiku-bugs] [Haiku] #3399: The system reboots while running jam -q on the haiku trunk.
+</A></li>
+	<LI>Next message: <A HREF="019089.html">[Haiku-bugs] [Haiku] #2769: Radeon driver is Slower than VESA	...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19088">[ date ]</a>
+              <a href="thread.html#19088">[ thread ]</a>
+              <a href="subject.html#19088">[ subject ]</a>
+              <a href="author.html#19088">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

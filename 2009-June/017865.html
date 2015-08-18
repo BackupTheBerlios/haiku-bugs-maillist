@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4003: GCC4 build break when building at -O1
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234003%3A%20GCC4%20build%20break%20when%20building%20at%20-O1&In-Reply-To=%3C043.d20de27aebeea6c5644ffd33adad5e37%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="018221.html">
+   <LINK REL="Next"  HREF="017878.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4003: GCC4 build break when building at -O1</H1>
+    <B>jprostko</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234003%3A%20GCC4%20build%20break%20when%20building%20at%20-O1&In-Reply-To=%3C043.d20de27aebeea6c5644ffd33adad5e37%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4003: GCC4 build break when building at -O1">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Jun  6 03:47:26 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="018221.html">[Haiku-bugs] [Haiku] #4002: volume control replicant does not function after reboot
+</A></li>
+        <LI>Next message: <A HREF="017878.html">[Haiku-bugs] [Haiku] #4003: GCC4 build break when building at	-O1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17865">[ date ]</a>
+              <a href="thread.html#17865">[ thread ]</a>
+              <a href="subject.html#17865">[ subject ]</a>
+              <a href="author.html#17865">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4003: GCC4 build break when building at -O1
+--------------------------+-------------------------------------------------
+ Reporter:  jprostko      |       Owner:  bonefish      
+     Type:  bug           |      Status:  new           
+ Priority:  normal        |   Milestone:  R1            
+Component:  Build System  |     Version:  R1 development
+Blockedby:                |    Platform:  All           
+ Blocking:                |  
+--------------------------+-------------------------------------------------
+ With trying to build Haiku with -O1 (set via BuildSetup) with GCC 4.3.3,
+ the Bluetooth kit fails to compile with the following error:
+
+ C++ /boot/home/haiku/trunk/generated-
+ gcc-4.3.3/objects/haiku/x86/release/kits/bluetooth/ConnectionIncoming.o
+ Link /boot/home/haiku/trunk/generated-
+ gcc-4.3.3/objects/haiku/x86/release/kits/bluetooth/libbluetooth.so
+ /boot/home/haiku/trunk/generated-
+ gcc-4.3.3/objects/haiku/x86/release/kits/bluetooth/ConnectionIncoming.o:
+ In function `__static_initialization_and_destruction_0(int, int)':
+ ConnectionIncoming.cpp:(.text+0x3c): undefined reference to
+ `std::ios_base::Init::Init()'
+ ConnectionIncoming.cpp:(.text+0x5c): undefined reference to
+ `std::ios_base::Init::~Init()'
+ collect2: ld returned 1 exit status
+
+
+ This is remedied by adding a $(TARGET_LIBSTDC++) to the
+ src/kits/bluetooth/Jamfile.
+
+ I initially found this out, as the native Haiku GCC 4.4 I am working with
+ encountered the same problem, but at -O2.
+
+ The GCC 4.4 port encounters similar issues at -O1 in two more files.
+
+ These are src/bin/locale/Jamfile and src/apps/cdplayer/Jamfile .  They
+ both need $(TARGET_LIBSTDC++) added to them as well.
+
+ Those could probably be ignored for now, but there's no harm fixing those
+ files now as far as I can tell.  Actually, on the haiku-commits' list,
+ there was an issue raised about r30573 and there needing to be a
+ $(TARGET_LIBSTDC++) added to the locale Jamfile.  I am pretty sure this
+ wasn't a mere coincidence to the break I noted on my 4.4 Haiku build.
+
+ By the way, GCC 2.95.3 has none of these issues, as I tested it as well.
+ Also, if it was relevant, the last time I attempted this was at r30953 of
+ Haiku.
+
+ Attached is one file that addresses all issues.  I realize we may not want
+ to touch the locale and cdplayer jamfiles until we actually use 4.4
+ officially (I'll see about getting that in the tree when 4.4.1 comes out
+ later this month, if everyone's cool with that), so proceed as you see
+ fit.  It'd be good to at least get the bluetooth Jamfile fix applied
+ though, as it is relevant to GCC 4.3.3.
+
+ By the way, I saw quite a few Jamfiles in the tree that exceed 80
+ characters across, but I edited these to make sure they are only 80
+ across.  I'm not sure if the coding guidelines apply to the Jamfiles or
+ not, but I assumed they did.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4003">http://dev.haiku-os.org/ticket/4003</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="018221.html">[Haiku-bugs] [Haiku] #4002: volume control replicant does not function after reboot
+</A></li>
+	<LI>Next message: <A HREF="017878.html">[Haiku-bugs] [Haiku] #4003: GCC4 build break when building at	-O1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17865">[ date ]</a>
+              <a href="thread.html#17865">[ thread ]</a>
+              <a href="subject.html#17865">[ subject ]</a>
+              <a href="author.html#17865">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

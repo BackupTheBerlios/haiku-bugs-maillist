@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2041: In some cases, __mbrtowc can enter in an infinite loop
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232041%3A%20In%20some%20cases%2C%0A%20__mbrtowc%20can%20enter%20in%20an%20infinite%20loop&In-Reply-To=%3C038.70db48c479fe886ace2210d9e551705c%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006251.html">
+   <LINK REL="Next"  HREF="006247.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2041: In some cases, __mbrtowc can enter in an infinite loop</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232041%3A%20In%20some%20cases%2C%0A%20__mbrtowc%20can%20enter%20in%20an%20infinite%20loop&In-Reply-To=%3C038.70db48c479fe886ace2210d9e551705c%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2041: In some cases, __mbrtowc can enter in an infinite loop">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Apr  7 01:59:23 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006251.html">[Haiku-bugs] [Haiku] #2040: Fixed the ellipsis stuff
+</A></li>
+        <LI>Next message: <A HREF="006247.html">[Haiku-bugs] [Haiku] #2041: In some cases, __mbrtowc can enter in an infinite loop
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6242">[ date ]</a>
+              <a href="thread.html#6242">[ thread ]</a>
+              <a href="subject.html#6242">[ subject ]</a>
+              <a href="author.html#6242">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2041: In some cases, __mbrtowc can enter in an infinite loop
+-------------------------------+--------------------------------------------
+ Reporter:  oco                |       Owner:  axeld         
+     Type:  bug                |      Status:  new           
+ Priority:  normal             |   Milestone:  R1            
+Component:  System/libroot.so  |     Version:  R1 development
+ Platform:  All                |  
+-------------------------------+--------------------------------------------
+ When compiling current ruby source tree, miniruby (a reduced version of
+ ruby used in the build process) eat all the CPU when initializing his
+ regex engine.
+
+ The kernel debugger show this call stack :
+
+ __mbrtowc
+ mblen
+ ruby_re_mbcinit
+ ruby_incpush
+ init_load_path
+ ruby_process_options
+ ruby_options
+ main
+
+ I will investigate more to identify in which special case this infinite
+ loop occur.
+
+ Here is the current steps needed to reproduce the problem :
+
+  - get latest ruby source tree : svn co <A HREF="http://svn.ruby-">http://svn.ruby-</A>
+ lang.org/repos/ruby/branches/ruby_1_8
+  - apply the patch ruby_on_haiku_06_04_2008.diff (see attached files)
+  - run autoconf
+  - ./configure
+  - make
+
+ The second file is an evil &quot;workaround&quot; based on the previous &quot;dummy&quot;
+ implementation. This enable a complete build of ruby under haiku. If you
+ are not sure about the &quot;evilness&quot;, look at the file size...
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2041">http://dev.haiku-os.org/ticket/2041</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006251.html">[Haiku-bugs] [Haiku] #2040: Fixed the ellipsis stuff
+</A></li>
+	<LI>Next message: <A HREF="006247.html">[Haiku-bugs] [Haiku] #2041: In some cases, __mbrtowc can enter in an infinite loop
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6242">[ date ]</a>
+              <a href="thread.html#6242">[ thread ]</a>
+              <a href="subject.html#6242">[ subject ]</a>
+              <a href="author.html#6242">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

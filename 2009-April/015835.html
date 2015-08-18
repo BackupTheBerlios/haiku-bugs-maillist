@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3714: PANIC: ASSERT FAILED (headers/private/kernel/util/DoublyLinkedList.h:467): fFirst != __null &amp;&amp; fLast != __null &amp;&amp; (fFirst != fLast ||
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233714%3A%20PANIC%3A%20ASSERT%20FAILED%0A%20%28headers/private/kernel/util/DoublyLinkedList.h%3A467%29%3A%20fFirst%20%21%3D%20__null%20%26%26%0A%20fLast%20%21%3D%20__null%20%26%26%20%28fFirst%20%21%3D%20fLast%20%7C%7C&In-Reply-To=%3C044.b895a903feeac90c24ca3a36c14db02e%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="016336.html">
+   <LINK REL="Next"  HREF="015836.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3714: PANIC: ASSERT FAILED (headers/private/kernel/util/DoublyLinkedList.h:467): fFirst != __null &amp;&amp; fLast != __null &amp;&amp; (fFirst != fLast ||</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233714%3A%20PANIC%3A%20ASSERT%20FAILED%0A%20%28headers/private/kernel/util/DoublyLinkedList.h%3A467%29%3A%20fFirst%20%21%3D%20__null%20%26%26%0A%20fLast%20%21%3D%20__null%20%26%26%20%28fFirst%20%21%3D%20fLast%20%7C%7C&In-Reply-To=%3C044.b895a903feeac90c24ca3a36c14db02e%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3714: PANIC: ASSERT FAILED (headers/private/kernel/util/DoublyLinkedList.h:467): fFirst != __null &amp;&amp; fLast != __null &amp;&amp; (fFirst != fLast ||">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Apr  8 03:08:06 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="016336.html">[Haiku-bugs] [Haiku] #3713: OptionalPackages does not include Development target without zipfiles
+</A></li>
+        <LI>Next message: <A HREF="015836.html">[Haiku-bugs] [Haiku] #3714: PANIC: ASSERT FAILED (headers/private/kernel/util/DoublyLinkedList.h:467): fFirst != __null &amp;&amp; fLast != __null &amp;&amp; (fFirst != fLast ||
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15835">[ date ]</a>
+              <a href="thread.html#15835">[ thread ]</a>
+              <a href="subject.html#15835">[ subject ]</a>
+              <a href="author.html#15835">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3714: PANIC: ASSERT FAILED (headers/private/kernel/util/DoublyLinkedList.h:467):
+fFirst != __null &amp;&amp; fLast != __null &amp;&amp; (fFirst != fLast ||
+-----------------------+----------------------------------------------------
+ Reporter:  anevilyak  |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+Blockedby:             |    Platform:  All           
+ Blocking:             |  
+-----------------------+----------------------------------------------------
+ This KDL happened while I was shutting down BezillaBrowser.
+
+ Backtrace as follows:
+ {{{
+ list: 0x80769d48, element: 0x811a1e58
+ PANIC: ASSERT FAILED (headers/private/kernel/util/DoublyLinkedList.h:467):
+ fFirst != __null &amp;&amp; fLast != __null &amp;&amp; (fFirst != fLast ||
+ Welcome to Kernel Debugging Land...
+ Thread 340 &quot;BeZillaBrowser&quot; running on CPU 0
+ kdebug&gt; bt
+ stack trace for thread 340 &quot;BeZillaBrowser&quot;
+     kernel stack: 0x98622000 to 0x98626000
+       user stack: 0x7efef000 to 0x7ffef000
+ frame               caller     &lt;image&gt;:function + offset
+  0 98625914 (+  48) 8006267d   &lt;kernel_x86&gt;:invoke_debugger_command +
+ 0x00f5
+  1 98625944 (+  64) 8006246d   &lt;kernel_x86&gt;
+ invoke_pipe_segment(debugger_command_pipe*: 0x8012e800, int32: 0, 0x0
+ &quot;&lt;NULL&gt;&quot;) + 0x0079
+  2 98625984 (+  64) 800627f4   &lt;kernel_x86&gt;:invoke_debugger_command_pipe +
+ 0x009c
+  3 986259c4 (+  48) 80063da4   &lt;kernel_x86&gt;
+ ExpressionParser&lt;0x98625a78&gt;::_ParseCommandPipe(0x98625a74) + 0x0234
+  4 986259f4 (+  64) 800631de   &lt;kernel_x86&gt;
+ ExpressionParser&lt;0x98625a78&gt;::EvaluateCommand(0x801220a0 &quot;bt&quot;, 0x98625a74)
+ + 0x02ba
+  5 98625a34 (+ 224) 800651cc   &lt;kernel_x86&gt;:evaluate_debug_command +
+ 0x0088
+  6 98625b14 (+  64) 8006056e   &lt;kernel_x86&gt; kernel_debugger_loop() +
+ 0x01ae
+  7 98625b54 (+  32) 800613fd   &lt;kernel_x86&gt;:kernel_debugger + 0x004d
+  8 98625b74 (+ 192) 800613a5   &lt;kernel_x86&gt;:panic + 0x0029
+  9 98625c34 (+  64) 8075e200   &lt;/boot/system/add-ons/kernel/network/stack&gt;
+ socket_delete(net_socket*: 0x811a1e58) + 0x00a8
+ 10 98625c74 (+  48) 8075da0c   &lt;/boot/system/add-ons/kernel/network/stack&gt;
+ socket_free(net_socket*: 0x811a1e58) + 0x0038
+ 11 98625ca4 (+  48) 8076578d   &lt;/boot/system/add-ons/kernel/network/stack&gt;
+ stack_interface_free(net_socket*: 0x811a1e58) + 0x0025
+ 12 98625cd4 (+  32) 800968af   &lt;kernel_x86&gt; socket_free(file_descriptor*:
+ 0x814406b8) + 0x001b
+ 13 98625cf4 (+  48) 8008ec44   &lt;kernel_x86&gt;:put_fd + 0x0038
+ 14 98625d24 (+  64) 8009f898   &lt;kernel_x86&gt;
+ vfs_free_io_context(io_context*: 0x9819661c) + 0x0084
+ 15 98625d64 (+  48) 8009f921   &lt;kernel_x86&gt;:vfs_put_io_context + 0x0029
+ 16 98625d94 (+ 112) 8005497f   &lt;kernel_x86&gt;:team_delete_team + 0x022b
+ 17 98625e04 (+ 192) 800584cb   &lt;kernel_x86&gt;:thread_exit + 0x03af
+ 18 98625ec4 (+  64) 8004cf5d   &lt;kernel_x86&gt;:handle_signals + 0x03d5
+ 19 98625f04 (+  64) 80058948   &lt;kernel_x86&gt;:thread_at_kernel_exit + 0x0090
+ 20 98625f44 (+ 100) 800d8072   &lt;kernel_x86&gt;:kernel_exit_handle_signals +
+ 0x0006
+ user iframe at 0x98625fa8 (end = 0x98626000)
+  eax 0x0            ebx 0x1ac7ad4       ecx 0x7ffeef40   edx 0x246
+  esi 0x1acb5c0      edi 0x7ffef544      ebp 0x7ffeef6c   esp 0x98625fdc
+  eip 0xffff0104  eflags 0x207      user esp 0x7ffeef40
+  vector: 0x63, error code: 0x0
+ 21 98625fa8 (+   0) ffff0104   &lt;commpage&gt;:commpage_syscall + 0x0004
+ 7ffeef6c -- read fault
+ }}}
+
+ Possible info of interest:
+ {{{
+ SOCKET 0x811a1e58
+   family.type.protocol: 1.1.6
+   parent:               0x00000000
+   first protocol:       0x8126e744
+   first module_info:    0x90db6d00
+   options:              0
+   linger:               0
+   bound to device:      0
+   owner:                223
+   max backlog:          0
+   child_count:          0
+ }}}
+
+ Not sure what else to look up that would be helpful for this one.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3714">http://dev.haiku-os.org/ticket/3714</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="016336.html">[Haiku-bugs] [Haiku] #3713: OptionalPackages does not include Development target without zipfiles
+</A></li>
+	<LI>Next message: <A HREF="015836.html">[Haiku-bugs] [Haiku] #3714: PANIC: ASSERT FAILED (headers/private/kernel/util/DoublyLinkedList.h:467): fFirst != __null &amp;&amp; fLast != __null &amp;&amp; (fFirst != fLast ||
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15835">[ date ]</a>
+              <a href="thread.html#15835">[ thread ]</a>
+              <a href="subject.html#15835">[ subject ]</a>
+              <a href="author.html#15835">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

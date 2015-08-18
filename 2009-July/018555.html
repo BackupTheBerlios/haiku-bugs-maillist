@@ -1,0 +1,176 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4107: KDL in usb_midi
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-July/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234107%3A%20KDL%20in%20usb_midi&In-Reply-To=%3C039.6e3c973f26c46e285d174a037cdb06fa%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="018617.html">
+   <LINK REL="Next"  HREF="018566.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4107: KDL in usb_midi</H1>
+    <B>Pete</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234107%3A%20KDL%20in%20usb_midi&In-Reply-To=%3C039.6e3c973f26c46e285d174a037cdb06fa%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4107: KDL in usb_midi">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Jul 20 23:13:14 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="018617.html">[Haiku-bugs] [Haiku] #4106: mmap() doesn't zero the last page
+</A></li>
+        <LI>Next message: <A HREF="018566.html">[Haiku-bugs] [Haiku] #4107: KDL in usb_midi
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18555">[ date ]</a>
+              <a href="thread.html#18555">[ thread ]</a>
+              <a href="subject.html#18555">[ subject ]</a>
+              <a href="author.html#18555">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4107: KDL in usb_midi
+---------------------+------------------------------------------------------
+ Reporter:  Pete     |       Owner:  axeld         
+     Type:  bug      |      Status:  new           
+ Priority:  normal   |   Milestone:  R1            
+Component:  Drivers  |     Version:  R1 development
+Blockedby:           |    Platform:  x86           
+ Blocking:           |  
+---------------------+------------------------------------------------------
+ While trying to find out why usb_midi is not working (properly) with my
+ M-Audio UNO, I was adding dprintf statements to track what was failing.  I
+ suddenly started going into KDL when I plugged in the UNO, and I've
+ established that it is a particular dprintf in the 'usb_midi_added'
+ function that triggers this.  The KDL itself, though, happens in the
+ 'midi_usb_callback', when it hits a '0xcccccccc' pointer.  If the dprintf
+ is commented out, that pointer becomes valid.
+
+ To avoid the KDL, I added an abort-check for the bad pointer so I can get
+ a record in syslog.  Also, the original code to 'set_alt_interface' has
+ been modified so that it isn't called for the UNO, because that stalls if
+ it is.
+
+ I will try to attach relevant files, but as I'm new to this (:-/) I'll
+ include some excerpts here.
+
+ First, a diff of the changes I made to the original usb_midi.c:
+
+ {{{
+ 193,195d192
+ &lt;       DPRINTF_INFO ((MY_ID &quot;in callback: my_dev = %p endpoint = %p (base
+ %p)\n&quot;,
+ &lt;               my_dev, my_dev-&gt;ept, *(void **)my_dev));
+ &lt;       if (my_dev-&gt;ept == 0xcccccccc) return;  /* prevent KDL */
+ 217d213
+ &lt;       int alt;
+ 236a233
+ &gt;               int alt;
+ 265c262
+ &lt;       if(alt &amp;&amp; (st = usb-&gt;set_alt_interface(dev, intf)) != B_OK) {
+ ---
+ &gt;       if((st = usb-&gt;set_alt_interface(dev, intf)) != B_OK) {
+ 269c266
+ &lt;
+ ---
+ &gt;
+ 280,281d276
+ &lt;       DPRINTF_INFO ((MY_ID &quot;my_dev = %p interface endpoint = %p\n&quot;,
+ &lt;               my_dev, &amp;intf-&gt;endpoint [0]));
+ 294d288
+ &lt;       DPRINTF_INFO ((MY_ID &quot;queueing bulk xfer ep 0\n&quot;));
+ }}}
+
+ Here's the section of syslog if that final DPRINTF_INFO is present:
+
+ {{{
+ KERN: usb hub 2: port 0: new device connected
+ KERN: usb_midi: init_hardware() Jul 17 2009 14:36:17
+ KERN: usb_midi: init_driver() Jul 17 2009 14:36:17
+ KERN: usb_midi: device_added()
+ KERN: usb_midi: vendor ID 0x0763, product ID 0x0150
+ KERN: usb_midi: interface 0, alt : 0: class 1, subclass 1, protocol 0
+ KERN: usb_midi: interface 1, alt : 0: class 1, subclass 3, protocol 0
+ KERN: usb_midi: my_dev = 0x81004bb8 interface endpoint = 0x80ed3bf0
+ KERN: usb_midi: queueing bulk xfer ep 0
+ KERN: usb error uhci 0: td (0x0208a980) error: status: 0x18400003; token:
+ 0x006803e1;
+ KERN: usb_midi: midi_usb_callback()
+ KERN: usb_midi: bus status -2147442667
+ KERN: usb_midi: in callback: my_dev = 0x81004bb8 endpoint = 0xcccccccc
+ (base 0xcccccccc)
+ KERN: usb_midi: added midi/usb/0
+ KERN: usb_midi: init_driver() OK
+ KERN: usb_midi: publish_devices()
+ KERN: usb_midi: publishing midi/usb/0
+ KERN: usb_midi: find_device(midi/usb/0)
+ }}}
+
+ and this is the syslog if it is commented out:
+
+ {{{
+ KERN: usb hub 2: port 0: new device connected
+ KERN: usb_midi: init_hardware() Jul 17 2009 14:30:46
+ KERN: usb_midi: init_driver() Jul 17 2009 14:30:46
+ KERN: usb_midi: device_added()
+ KERN: usb_midi: vendor ID 0x0763, product ID 0x0150
+ KERN: usb_midi: interface 0, alt : 0: class 1, subclass 1, protocol 0
+ KERN: usb_midi: interface 1, alt : 0: class 1, subclass 3, protocol 0
+ KERN: usb_midi: my_dev = 0x873b8258 interface endpoint = 0x80ed39b0
+ KERN: usb_midi: added midi/usb/0
+ KERN: usb error uhci 0: td (0x0208a300) error: status: 0x18400003; token:
+ 0x006802e1;
+ KERN: usb_midi: midi_usb_callback()
+ KERN: usb_midi: bus status -2147442667
+ KERN: usb_midi: init_driver() OK
+ KERN: usb_midi: in callback: my_dev = 0x873b8258 endpoint = 0x80ed39b0
+ (base 0x00000000)
+ KERN: usb_midi: publish_devices()
+ KERN: usb_midi: publishing midi/usb/0
+ KERN: usb_midi: find_device(midi/usb/0)
+ }}}
+
+ Two things may be relevant in the above.  One, there is always a uhci
+ error (that I haven't got to look at yet -- uhci is still a black box --
+ but the UNO '''partially''' works if it doesn't KDL, even though it still
+ shows a stall), and two, the order of execution seems different in the two
+ cases.  (The 'base' value printout isn't shown in the diff, but is just
+ the first longword in the structure; it also differs, but this doesn't
+ indicate that the whole structure is uninitialized.  I did a later check
+ of other values in the structure and they seem to be initialized
+ correctly.)  I suspect a race condition may be the root cause.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4107">http://dev.haiku-os.org/ticket/4107</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="018617.html">[Haiku-bugs] [Haiku] #4106: mmap() doesn't zero the last page
+</A></li>
+	<LI>Next message: <A HREF="018566.html">[Haiku-bugs] [Haiku] #4107: KDL in usb_midi
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18555">[ date ]</a>
+              <a href="thread.html#18555">[ thread ]</a>
+              <a href="subject.html#18555">[ subject ]</a>
+              <a href="author.html#18555">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

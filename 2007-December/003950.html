@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1669: Fails on boot
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-December/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231669%3A%20Fails%20on%20boot&In-Reply-To=%3C041.97a88b3be8ceb6eaa0b7a84bc846bc33%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003961.html">
+   <LINK REL="Next"  HREF="003962.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1669: Fails on boot</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231669%3A%20Fails%20on%20boot&In-Reply-To=%3C041.97a88b3be8ceb6eaa0b7a84bc846bc33%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1669: Fails on boot">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Dec 16 14:05:24 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003961.html">[Haiku-bugs] [Haiku] #1668: Booting fails with nforce driver
+</A></li>
+        <LI>Next message: <A HREF="003962.html">[Haiku-bugs] [Haiku] #1669: Fails on boot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3950">[ date ]</a>
+              <a href="thread.html#3950">[ thread ]</a>
+              <a href="subject.html#3950">[ subject ]</a>
+              <a href="author.html#3950">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1669: Fails on boot
+--------------------------+-------------------------------------------------
+ Reporter:  artemm        |       Owner:  axeld         
+     Type:  bug           |      Status:  new           
+ Priority:  normal        |   Milestone:  R1            
+Component:  Drivers/Disk  |     Version:  R1 development
+ Platform:  x86           |  
+--------------------------+-------------------------------------------------
+ System:
+ Acer Aspire3683WXMi
+ Intel Celeron M 430
+ ide controller: Intel 82801GBM/GHM (ICH7 Family) SATA IDE Controller
+ (27c4)
+ graphics controller: Intel Mobile 945GM/GMS, 943/940GML Express Integrated
+ Graphics Controller (27a2, 27a6)
+
+ Haiku installed by JAM on First Logical partition of Extended Partition
+
+ the first fail is like in #1655 ticket
+ if it passed with 'Use fail-safe video mode' option there is next problem.
+
+ {{{
+ PANIC:  get_boot_partitions failed!
+ Welcome to Kernel Debugging Land...
+ Running on CPU 0
+ kdebug&gt;sc
+ stack trace for thrwad 0x7 &quot;main2&quot;
+     kernel stock: 0x80148000 to 0x8014c000
+ frame            caller     &lt;image&gt;:function + offset
+ 8014bad4 (+  52) 8007b31c   &lt;kernel&gt;:invoke_command + 0x0074
+ 8014bb08 (+  48) 8007b43a   &lt;kernel&gt;:kernel_debugger + 0x00de
+ 8014bb38 (+  32) 8007bf0e   &lt;kernel&gt;:kernel_debugger + 0x00b6
+ 8014bb58 (+ 192) 8007be4d   &lt;kernel&gt;:panic + 0x0029
+ 8014bc18 (+ 816) 8004c6d5   &lt;kernel&gt;:vfs_mount_boot_file_system + 0x0045
+ 8014bf48 (+ 144) 800259f9   &lt;kernel&gt;:main2 + 0x00d1
+ 8014bfd8 (+  32) 8003442b   &lt;kernel&gt;:_create_kernel_thread_kentry__Fv +
+ 0x001b
+ 8014bff8 (+2146123784) 800343c0   &lt;kernel&gt;:thread_kthread_exit__Fv +
+ 0x0000
+ }}}
+
+ with screen debug output option
+
+ {{{
+ PANIC:  get_boot_partitions failed!
+ Welcome to Kernel Debugging Land...
+ Running on CPU 0
+ kdebug&gt;
+
+
+ ahci: ahci_get_supported_path
+         found isa!!
+         found dfiver/dev/disk/ide!!
+         add module busses/ide/ide_isa/device_v1 to list
+ has connection? yes
+ module: busses/ide/ide_isa/device_v1, support: 0.6
+ INIT: main: done... begin idle loop on cpu 0
+ tried best module: busses/ide/ide_isa/device_v1: No error
+ KdiskDeviceManager::InitialDeviceScan() failed: No such file or directory
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1669">http://dev.haiku-os.org/ticket/1669</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003961.html">[Haiku-bugs] [Haiku] #1668: Booting fails with nforce driver
+</A></li>
+	<LI>Next message: <A HREF="003962.html">[Haiku-bugs] [Haiku] #1669: Fails on boot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3950">[ date ]</a>
+              <a href="thread.html#3950">[ thread ]</a>
+              <a href="subject.html#3950">[ subject ]</a>
+              <a href="author.html#3950">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

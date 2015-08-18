@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #4721: app_server flag fixes (patch)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-October/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234721%3A%20app_server%20flag%20fixes%20%28patch%29&In-Reply-To=%3C043.a900ff586cefeb67fb3a82a503e6e7f8%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="022326.html">
+   <LINK REL="Next"  HREF="022338.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #4721: app_server flag fixes (patch)</H1>
+    <B>rogueeve</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%234721%3A%20app_server%20flag%20fixes%20%28patch%29&In-Reply-To=%3C043.a900ff586cefeb67fb3a82a503e6e7f8%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #4721: app_server flag fixes (patch)">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Oct  5 04:23:38 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="022326.html">[Haiku-bugs] [Haiku] #4720: Wallpapers should be able to fill &amp; keep proper aspect ratio (easy)
+</A></li>
+        <LI>Next message: <A HREF="022338.html">[Haiku-bugs] [Haiku] #4721: app_server flag fixes (patch)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22298">[ date ]</a>
+              <a href="thread.html#22298">[ thread ]</a>
+              <a href="subject.html#22298">[ subject ]</a>
+              <a href="author.html#22298">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#4721: app_server flag fixes (patch)
+--------------------------------+-------------------------------------------
+ Reporter:  rogueeve            |       Owner:  axeld    
+     Type:  bug                 |      Status:  new      
+ Priority:  normal              |   Milestone:  R1       
+Component:  Servers/app_server  |     Version:  R1/alpha1
+Blockedby:                      |    Platform:  All      
+ Blocking:                      |  
+--------------------------------+-------------------------------------------
+ Patch candidate for some app_server issues having to do with
+ B_NO_SERVER_SIDE_WINDOW_MODIFIERS, as discussed on the haiku-dev mailing
+ list. The second file is a program that can be used to test the changes.
+ Changeset is:
+
+ * Fixed B_NO_SERVER_SIDE_WINDOW_MODIFIERS and B_CLOSE_ON_ESCAPE window
+ flags not working.
+
+ * Added B_VALID_WINDOW_FLAGS constant to Window.h and modified
+ app_server's ValidWindowFlags() function, to eliminate the need for a list
+ of flags to be in two places, and possibly avoid the above problem in the
+ future.
+
+ * The same method unfortunately would not work for the WINDOW_FEEL and
+ _LOOK constants, because they are not bitflags, so a warning was added to
+ Window.h about the possible need to update app_server if they are changed
+ (a bit of a todo, I guess)
+
+ * CTRL+ALT-click &quot;server side window modifiers&quot; now require exactly the
+ CTRL+ALT shortcut to be down; CTRL+ALT+SHIFT for example is not counted.
+
+ * CTRL+ALT clicks are ignored and let through to the window if no special
+ action would have been taken anyway; e.g. if the window is not movable.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/4721">http://dev.haiku-os.org/ticket/4721</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="022326.html">[Haiku-bugs] [Haiku] #4720: Wallpapers should be able to fill &amp; keep proper aspect ratio (easy)
+</A></li>
+	<LI>Next message: <A HREF="022338.html">[Haiku-bugs] [Haiku] #4721: app_server flag fixes (patch)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22298">[ date ]</a>
+              <a href="thread.html#22298">[ thread ]</a>
+              <a href="subject.html#22298">[ subject ]</a>
+              <a href="author.html#22298">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

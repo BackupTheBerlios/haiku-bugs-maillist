@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2902: USB File corruption with SMP	enabled.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232902%3A%20USB%20File%20corruption%20with%20SMP%0A%09enabled.&In-Reply-To=%3C054.05e7501c9bb643298939178beee1b476%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012599.html">
+   <LINK REL="Next"  HREF="012250.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2902: USB File corruption with SMP	enabled.</H1>
+    <B>mmlr</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232902%3A%20USB%20File%20corruption%20with%20SMP%0A%09enabled.&In-Reply-To=%3C054.05e7501c9bb643298939178beee1b476%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2902: USB File corruption with SMP	enabled.">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Nov  9 14:35:58 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012599.html">[Haiku-bugs] [Haiku] #3098: [SoundRecorder] don't add unsupported files to playlist
+</A></li>
+        <LI>Next message: <A HREF="012250.html">[Haiku-bugs] [Haiku] #2902: USB File corruption with SMP	enabled.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12249">[ date ]</a>
+              <a href="thread.html#12249">[ thread ]</a>
+              <a href="subject.html#12249">[ subject ]</a>
+              <a href="author.html#12249">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2902: USB File corruption with SMP enabled.
+--------------------------+-------------------------------------------------
+  Reporter:  netster403   |       Owner:  mmlr          
+      Type:  bug          |      Status:  new           
+  Priority:  critical     |   Milestone:  R1/alpha1     
+ Component:  Drivers/USB  |     Version:  R1 development
+Resolution:               |   Blockedby:                
+  Platform:  x86          |    Blocking:                
+--------------------------+-------------------------------------------------
+
+Comment(by mmlr):
+
+ OK, I've verified that it is a problem within the USB stack itself. The
+ buffers are simply not filled with any incoming data it seems. With dd I
+ cannot reproduce the problem at all, but with data transfers from usb_disk
+ it happens all the time. That the corruptions are on page boundaries comes
+ from the fact that the read requests usb_disk gets are all 4096 in size.
+ These whole buffers are then not filled with any data, so whatever was
+ previously in that page will be written to the target file.
+
+ The &quot;funny&quot; thing is that the buffer address is always exactly the same
+ one. So if one transfer doesn't overwrite that page, it should in fact
+ just be the last block repeated again. But it isn't. It is random content,
+ syslog data for example. Possibly the same buffer was used for a
+ read/write on another device though.
+
+ I don't quite understand how this can happen, because the mechanism worked
+ previously and wasn't changed. It looks a bit like if the buffer is
+ supposed to be written from another core that it doesn't reach the right
+ page. Some caching/TLB invalidation issue maybe? I remember seeing changes
+ in that direction recently.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2902#comment:19">http://dev.haiku-os.org/ticket/2902#comment:19</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012599.html">[Haiku-bugs] [Haiku] #3098: [SoundRecorder] don't add unsupported files to playlist
+</A></li>
+	<LI>Next message: <A HREF="012250.html">[Haiku-bugs] [Haiku] #2902: USB File corruption with SMP	enabled.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12249">[ date ]</a>
+              <a href="thread.html#12249">[ thread ]</a>
+              <a href="subject.html#12249">[ subject ]</a>
+              <a href="author.html#12249">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

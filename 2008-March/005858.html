@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1956: Garbage In Files
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231956%3A%20Garbage%20In%20Files&In-Reply-To=%3C052.2a0e4532c01b815908440c22360e200e%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005857.html">
+   <LINK REL="Next"  HREF="005731.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1956: Garbage In Files</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231956%3A%20Garbage%20In%20Files&In-Reply-To=%3C052.2a0e4532c01b815908440c22360e200e%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1956: Garbage In Files">trac at haiku-os.org
+       </A><BR>
+    <I>Fri Mar 28 16:54:46 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005857.html">[Haiku-bugs] [Haiku] #1956: Garbage In Files
+</A></li>
+        <LI>Next message: <A HREF="005731.html">[Haiku-bugs] [Haiku] #1222: check if AboutHaiku lists an acknowledgment for all packages
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5858">[ date ]</a>
+              <a href="thread.html#5858">[ thread ]</a>
+              <a href="subject.html#5858">[ subject ]</a>
+              <a href="author.html#5858">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1956: Garbage In Files
+----------------------------+-----------------------------------------------
+  Reporter:  bonefish       |       Owner:  axeld         
+      Type:  bug            |      Status:  new           
+  Priority:  critical       |   Milestone:  R1/alpha1     
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |    Platform:  All           
+----------------------------+-----------------------------------------------
+Comment (by bonefish):
+
+ Replying to [comment:9 axeld]:
+ &gt; BTW how would I go about implement chkbfs on Haiku using the device API?
+
+ The most important part is obviously implementing the FS repair() hook.
+ :-) I don't know, if everything from BPartition::Repair(), over the BFS
+ userland add-on (I think that isn't implemented yet), over the syscall is
+ wired correctly. The syscall definitely needs a review, and I also think
+ we should consider making BPartition::Repair() immediate, just like
+ Mount(). I don't think one ever wants to edit a few partitions and also
+ schedule a repair on one at the same time (probably the same for
+ Defragment()).
+
+ I believe generally missing is a back channel from the repair() hook to
+ the userland app. At the moment it can't be interactive (&quot;Inode 19412 is
+ toast. Remove it? [y/n]&quot;) at all. That's not so easy to implement in a
+ generic way, though. The userland add-on would need to wrap all the
+ communication with the kernel add-on and probably provide a GUI and a non-
+ GUI alternative. For the communication itself a port could be used
+ (obviously two threads are needed), which would be passed via a driver-
+ settings-style parameters parameter.
+
+ BPartition::Repair() could then work like this: It takes an additional
+ BDiskDeviceOperationCallback (or, if we need it specialized:
+ BPartitionRepairCallback (*Callback might not fit that well)), which is
+ the interface for the userland add-on to interact with the application.
+ I.e. it could pass a GUI to it, and call hooks for events that require
+ interaction. Repair() would first check with the userland add-on, if
+ repairing is generally OK and ask for additional parameters (driver-
+ settings) to pass to the kernel. It would then spawn a thread and send it
+ into the userland add-on, where it will do the communication with the
+ kernel add-on and the callback object from the application until the
+ repair operation is done. Afterwards Repair() invokes the syscall.
+
+ Anyway, this is all pretty off-topic for this ticket. :-)
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1956#comment:10">http://dev.haiku-os.org/ticket/1956#comment:10</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005857.html">[Haiku-bugs] [Haiku] #1956: Garbage In Files
+</A></li>
+	<LI>Next message: <A HREF="005731.html">[Haiku-bugs] [Haiku] #1222: check if AboutHaiku lists an acknowledgment for all packages
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5858">[ date ]</a>
+              <a href="thread.html#5858">[ thread ]</a>
+              <a href="subject.html#5858">[ subject ]</a>
+              <a href="author.html#5858">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

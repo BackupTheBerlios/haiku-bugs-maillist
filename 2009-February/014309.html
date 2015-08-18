@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3417: tcsetpgrp() causes the shell &quot;bsh&quot; to hang infinitely while trying to set tty process group
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-February/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233417%3A%20tcsetpgrp%28%29%20causes%20the%20shell%20%22bsh%22%20to%0A%20hang%20infinitely%20while%20trying%20to%20set%20tty%20process%20group&In-Reply-To=%3C041.9866bd77889905b598741f3c6ffc23c6%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="014308.html">
+   <LINK REL="Next"  HREF="014310.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3417: tcsetpgrp() causes the shell &quot;bsh&quot; to hang infinitely while trying to set tty process group</H1>
+    <B>schily</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233417%3A%20tcsetpgrp%28%29%20causes%20the%20shell%20%22bsh%22%20to%0A%20hang%20infinitely%20while%20trying%20to%20set%20tty%20process%20group&In-Reply-To=%3C041.9866bd77889905b598741f3c6ffc23c6%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3417: tcsetpgrp() causes the shell &quot;bsh&quot; to hang infinitely while trying to set tty process group">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Feb  7 17:43:47 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="014308.html">[Haiku-bugs] [Haiku] #2305: [Preferences::Time] crashes on	startup
+</A></li>
+        <LI>Next message: <A HREF="014310.html">[Haiku-bugs] [Haiku] #3418: media_server crashes at startup with	rev291524
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14309">[ date ]</a>
+              <a href="thread.html#14309">[ thread ]</a>
+              <a href="subject.html#14309">[ subject ]</a>
+              <a href="author.html#14309">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3417: tcsetpgrp() causes the shell &quot;bsh&quot; to hang infinitely while trying to set
+tty process group
+-----------------------+----------------------------------------------------
+ Reporter:  schily     |       Owner:  axeld         
+     Type:  bug        |      Status:  new           
+ Priority:  normal     |   Milestone:  R1            
+Component:  - General  |     Version:  R1 development
+Blockedby:             |    Platform:  All           
+ Blocking:             |  
+-----------------------+----------------------------------------------------
+ bsh forks and the child process calls tcsetpgrp() in order to
+ set the TTY process group of the child to the child process.
+ This is needed in order to redirect signals only to the child.
+
+ after bsh calls tcsetpgrp(), tcsetpgrp() calls ioctl() and
+ hangs inside the ioctl.
+
+ Workaround: edit the Makefile for bsh and comment out
+ the line with -DJOBCONTROL
+
+ Note that bsh worked without problems on Zeta.
+
+
+ bsh is inside the schily source consolidation at:
+
+ <A HREF="ftp://ftp.berlios.de/pub/schily/schily-dist/preliminary-2.tar.bz2">ftp://ftp.berlios.de/pub/schily/schily-dist/preliminary-2.tar.bz2</A>
+
+ The named file is the first version that was ported to Haiku
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3417">http://dev.haiku-os.org/ticket/3417</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="014308.html">[Haiku-bugs] [Haiku] #2305: [Preferences::Time] crashes on	startup
+</A></li>
+	<LI>Next message: <A HREF="014310.html">[Haiku-bugs] [Haiku] #3418: media_server crashes at startup with	rev291524
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14309">[ date ]</a>
+              <a href="thread.html#14309">[ thread ]</a>
+              <a href="subject.html#14309">[ subject ]</a>
+              <a href="author.html#14309">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3795: Kinesis USB Keyboard on Non-Root Hub Doesn't Work in KDL
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-April/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233795%3A%20Kinesis%20USB%20Keyboard%20on%20Non-Root%0A%20Hub%20Doesn%27t%20Work%20in%20KDL&In-Reply-To=%3C052.fb32411e7f441906cac93cd2c8d4a8d6%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="016354.html">
+   <LINK REL="Next"  HREF="016417.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3795: Kinesis USB Keyboard on Non-Root Hub Doesn't Work in KDL</H1>
+    <B>mmlr</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233795%3A%20Kinesis%20USB%20Keyboard%20on%20Non-Root%0A%20Hub%20Doesn%27t%20Work%20in%20KDL&In-Reply-To=%3C052.fb32411e7f441906cac93cd2c8d4a8d6%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3795: Kinesis USB Keyboard on Non-Root Hub Doesn't Work in KDL">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Apr 19 19:16:40 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="016354.html">[Haiku-bugs] [Haiku] #3795: Kinesis USB Keyboard on Non-Root Hub Doesn't Work in KDL
+</A></li>
+        <LI>Next message: <A HREF="016417.html">[Haiku-bugs] [Haiku] #3795: Kinesis USB Keyboard on Non-Root Hub Doesn't Work in KDL
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16357">[ date ]</a>
+              <a href="thread.html#16357">[ thread ]</a>
+              <a href="subject.html#16357">[ subject ]</a>
+              <a href="author.html#16357">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3795: Kinesis USB Keyboard on Non-Root Hub Doesn't Work in KDL
+-------------------------+--------------------------------------------------
+ Reporter:  bonefish     |       Owner:  mmlr          
+     Type:  bug          |      Status:  new           
+ Priority:  normal       |   Milestone:  R1            
+Component:  Drivers/USB  |     Version:  R1 development
+Blockedby:               |    Platform:  All           
+ Blocking:               |  
+-------------------------+--------------------------------------------------
+
+Comment(by mmlr):
+
+ Replying to [ticket:3795 bonefish]:
+ &gt; Setup: Haiku r30247, gcc 4 build, Lenovo T61 with docking station,
+ Kinesis USB keyboard plugged into non-root hub (in docking station).
+
+ This cannot work, as we don't support debug transfers in EHCI. The problem
+ is that the device is a low-speed device behind a high-speed hub using a
+ transaction translator. Supporting transfers like this in EHCI (and EHCI
+ transfers in general) is quite a bit more involved than supporting them
+ for UHCI.
+
+ Replying to [ticket:3795 bonefish]:
+ &gt; When entering KDL via F12, neither the USB keyboard nor the PS/2
+ keyboard work. The USB keyboard works fine in KDL when plugged into a root
+ hub, though.
+
+ That the PS/2 keyboard doesn't work anymore is fixed in r30265. In this
+ case one of them should always work (either USB or PS/2).
+
+ Since I really don't see the effort to implement EHCI debug transfers as
+ worth it, can you live with this situation? As at least one of the input
+ methods should now always work this should be good enough.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3795#comment:1">http://dev.haiku-os.org/ticket/3795#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="016354.html">[Haiku-bugs] [Haiku] #3795: Kinesis USB Keyboard on Non-Root Hub Doesn't Work in KDL
+</A></li>
+	<LI>Next message: <A HREF="016417.html">[Haiku-bugs] [Haiku] #3795: Kinesis USB Keyboard on Non-Root Hub Doesn't Work in KDL
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16357">[ date ]</a>
+              <a href="thread.html#16357">[ thread ]</a>
+              <a href="subject.html#16357">[ subject ]</a>
+              <a href="author.html#16357">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2355: Incorrect BView::Draw() Update Rect after CopyBits()
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232355%3A%20Incorrect%20BView%3A%3ADraw%28%29%20Update%20Rect%0A%20after%20CopyBits%28%29&In-Reply-To=%3C052.4d314ee82ea5b6a902d60ded17848a14%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007936.html">
+   <LINK REL="Next"  HREF="007953.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2355: Incorrect BView::Draw() Update Rect after CopyBits()</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232355%3A%20Incorrect%20BView%3A%3ADraw%28%29%20Update%20Rect%0A%20after%20CopyBits%28%29&In-Reply-To=%3C052.4d314ee82ea5b6a902d60ded17848a14%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2355: Incorrect BView::Draw() Update Rect after CopyBits()">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Jun  8 19:08:54 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007936.html">[Haiku-bugs] [Haiku] #2355: Incorrect BView::Draw() Update Rect after CopyBits()
+</A></li>
+        <LI>Next message: <A HREF="007953.html">[Haiku-bugs] [Haiku] #2355: Incorrect BView::Draw() Update Rect after CopyBits()
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7939">[ date ]</a>
+              <a href="thread.html#7939">[ thread ]</a>
+              <a href="subject.html#7939">[ subject ]</a>
+              <a href="author.html#7939">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2355: Incorrect BView::Draw() Update Rect after CopyBits()
+---------------------------------+------------------------------------------
+  Reporter:  bonefish            |       Owner:  axeld         
+      Type:  bug                 |      Status:  new           
+  Priority:  normal              |   Milestone:  R1            
+ Component:  Servers/app_server  |     Version:  R1 development
+Resolution:                      |    Platform:  All           
+---------------------------------+------------------------------------------
+Comment (by bonefish):
+
+ The behavior can be observed in r25853 as well. Unfortunately I haven't
+ been able to reproduce the behavior with a minimal test app yet. Might be
+ timing related. It is relatively reliably reproducible with the Terminal
+ in the state I have it ATM.
+
+ At any rate I really can't see how supplying an unnecessarily large update
+ rect to Draw() can have any positive effects. Even if the rect is cached
+ and used as a clipping region for later drawing outside Draw() the minimal
+ update rect should suffice. The only effect I can see is that more work
+ than necessary is caused.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2355#comment:2">http://dev.haiku-os.org/ticket/2355#comment:2</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007936.html">[Haiku-bugs] [Haiku] #2355: Incorrect BView::Draw() Update Rect after CopyBits()
+</A></li>
+	<LI>Next message: <A HREF="007953.html">[Haiku-bugs] [Haiku] #2355: Incorrect BView::Draw() Update Rect after CopyBits()
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7939">[ date ]</a>
+              <a href="thread.html#7939">[ thread ]</a>
+              <a href="subject.html#7939">[ subject ]</a>
+              <a href="author.html#7939">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

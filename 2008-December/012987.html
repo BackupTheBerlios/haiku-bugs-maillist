@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2514: Enlarged Terminal wraps input line overwriting beginning
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-December/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232514%3A%20Enlarged%20Terminal%20wraps%20input%20line%0A%20overwriting%20beginning&In-Reply-To=%3C050.47f723fe9331ed800d271693fa7d5b9f%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012986.html">
+   <LINK REL="Next"  HREF="012988.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2514: Enlarged Terminal wraps input line overwriting beginning</H1>
+    <B>Adek336</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232514%3A%20Enlarged%20Terminal%20wraps%20input%20line%0A%20overwriting%20beginning&In-Reply-To=%3C050.47f723fe9331ed800d271693fa7d5b9f%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2514: Enlarged Terminal wraps input line overwriting beginning">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Dec  3 22:54:02 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012986.html">[Haiku-bugs] [Haiku] #2514: Enlarged Terminal wraps input line overwriting beginning
+</A></li>
+        <LI>Next message: <A HREF="012988.html">[Haiku-bugs] [Haiku] #3172: registrar creating huge amounts of worker threads over time
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12987">[ date ]</a>
+              <a href="thread.html#12987">[ thread ]</a>
+              <a href="subject.html#12987">[ subject ]</a>
+              <a href="author.html#12987">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2514: Enlarged Terminal wraps input line overwriting beginning
+------------------------+---------------------------------------------------
+  Reporter:  stippi     |       Owner:  axeld         
+      Type:  bug        |      Status:  closed        
+  Priority:  normal     |   Milestone:  R1            
+ Component:  - General  |     Version:  R1 development
+Resolution:  fixed      |   Blockedby:                
+  Platform:  All        |    Blocking:                
+------------------------+---------------------------------------------------
+
+Comment(by Adek336):
+
+ Currently, running a second bash from the terminal by typing bash&lt;enter&gt;
+ invokes a non-login shell which ignores /etc/profile (which is sourced
+ only by login shells). So, for example, &quot;ls&quot; is colorful in a login shell,
+ but in a non-login shell.
+
+ The following makes non-login shells source /etc/bashrc:
+ {{{
+ Index: src/bin/bash/config-top.h
+ ===================================================================
+ --- src/bin/bash/config-top.h   (wersja 28736)
+ +++ src/bin/bash/config-top.h   (kopia robocza)
+ @@ -73,7 +73,7 @@
+  #define KSH_COMPATIBLE_SELECT
+
+  /* System-wide .bashrc file for interactive shells. */
+ -/* #define SYS_BASHRC &quot;/etc/bash.bashrc&quot; */
+ +#define SYS_BASHRC &quot;/etc/bashrc&quot;
+
+  /* System-wide .bash_logout for login shells. */
+  /* #define SYS_BASH_LOGOUT &quot;/etc/bash.bash_logout&quot; */
+ }}}
+
+ After this, one can move the general parts of /etc/profile to /etc/bashrc
+ (that is, everything from alias ls=... down to shopt -s checkwinsize) and
+ add the line
+ {{{
+ source /etc/bashrc
+ }}}
+ to /etc/profile.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2514#comment:13">http://dev.haiku-os.org/ticket/2514#comment:13</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012986.html">[Haiku-bugs] [Haiku] #2514: Enlarged Terminal wraps input line overwriting beginning
+</A></li>
+	<LI>Next message: <A HREF="012988.html">[Haiku-bugs] [Haiku] #3172: registrar creating huge amounts of worker threads over time
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12987">[ date ]</a>
+              <a href="thread.html#12987">[ thread ]</a>
+              <a href="subject.html#12987">[ subject ]</a>
+              <a href="author.html#12987">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

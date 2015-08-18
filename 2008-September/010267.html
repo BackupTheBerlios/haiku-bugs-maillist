@@ -1,0 +1,145 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2727: PANIC: get_writable_cached_block: invalid block number 53535436759393 (max 1048319
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-September/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232727%3A%20PANIC%3A%20get_writable_cached_block%3A%0A%20invalid%20block%20number%2053535436759393%20%28max%201048319&In-Reply-To=%3C042.b53cbe8d7cd9a93527d17b53397796d2%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010263.html">
+   <LINK REL="Next"  HREF="010290.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2727: PANIC: get_writable_cached_block: invalid block number 53535436759393 (max 1048319</H1>
+    <B>emitrax</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232727%3A%20PANIC%3A%20get_writable_cached_block%3A%0A%20invalid%20block%20number%2053535436759393%20%28max%201048319&In-Reply-To=%3C042.b53cbe8d7cd9a93527d17b53397796d2%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2727: PANIC: get_writable_cached_block: invalid block number 53535436759393 (max 1048319">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Sep 13 13:50:09 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010263.html">[Haiku-bugs] [Haiku] #2726: truncated width menu layout messed up
+</A></li>
+        <LI>Next message: <A HREF="010290.html">[Haiku-bugs] [Haiku] #2727: [bfs]: PANIC when deleting a soft link to a long filename (was: PANIC: get_writable_cached_block: invalid block number 53535436759393 (max 1048319)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10267">[ date ]</a>
+              <a href="thread.html#10267">[ thread ]</a>
+              <a href="subject.html#10267">[ subject ]</a>
+              <a href="author.html#10267">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2727: PANIC: get_writable_cached_block: invalid block number 53535436759393 (max
+1048319
+------------------------------+---------------------------------------------
+ Reporter:  emitrax           |       Owner:  axeld         
+     Type:  bug               |      Status:  new           
+ Priority:  critical          |   Milestone:  R1/alpha1     
+Component:  File Systems/BFS  |     Version:  R1 development
+Blockedby:                    |    Platform:  All           
+ Blocking:                    |  
+------------------------------+---------------------------------------------
+ It happens while deleting a bounch of directories.
+ r27472.
+
+ {{{
+ PANIC: get_writable_cached_block: invalid block number 53535436759393 (max
+ 1048319)
+ Welcome to Kernel Debugging Land...
+ Thread 1463 &quot;rm&quot; running on CPU 0
+ kdebug&gt; bt
+ stack trace for thread 1463 &quot;rm&quot;
+     kernel stack: 0x920db000 to 0x920df000
+       user stack: 0x7efe6000 to 0x7ffe6000
+ frame            caller     &lt;image&gt;:function + offset
+  0 920de614 (+  48) 80057ce1   &lt;kernel&gt;:invoke_debugger_command + 0x00f5
+  1 920de644 (+  64) 80057ad1
+ &lt;kernel&gt;:invoke_pipe_segment__FP21debugger_command_pipelPc + 0x0079
+  2 920de684 (+  64) 80057e59   &lt;kernel&gt;:invoke_debugger_command_pipe +
+ 0x009d
+  3 920de6c4 (+  48) 80059394
+ &lt;kernel&gt;:_ParseCommandPipe__16ExpressionParserRi + 0x0234
+  4 920de6f4 (+  64) 800587ce
+ &lt;kernel&gt;:EvaluateCommand__16ExpressionParserPCcRi + 0x02ba
+  5 920de734 (+ 224) 8005a7bc   &lt;kernel&gt;:evaluate_debug_command + 0x0088
+  6 920de814 (+  64) 800560e2   &lt;kernel&gt;:kernel_debugger_loop__Fv + 0x01ae
+  7 920de854 (+  48) 80056cb5   &lt;kernel&gt;:kernel_debugger + 0x0121
+  8 920de884 (+ 192) 80056b89   &lt;kernel&gt;:panic + 0x0029
+  9 920de944 (+  64) 8002cb47
+ &lt;kernel&gt;:get_writable_cached_block__FP11block_cachexxxlb + 0x003f
+ 10 920de984 (+  80) 8002f8c3   &lt;kernel&gt;:block_cache_get_writable_etc +
+ 0x0073
+ 11 920de9d4 (+ 128) 8059610f
+ &lt;bfs&gt;:_FreeStaticStreamArray__5InodeR11TransactionlG9block_runxxRx +
+ 0x01f7
+ 12 920dea54 (+ 144) 80596586   &lt;bfs&gt;:_ShrinkStream__5InodeR11Transactionx
+ + 0x007a
+ 13 920deae4 (+  48) 805968dd   &lt;bfs&gt;:SetFileSize__5InodeR11Transactionx +
+ 0x0099
+ 14 920deb14 (+ 352) 80596b0d   &lt;bfs&gt;:Free__5InodeR11Transaction + 0x0029
+ 15 920dec74 (+  80) 8059f453
+ &lt;bfs&gt;:bfs_remove_vnode__FP9fs_volumeP8fs_vnodeb + 0x00b3
+ 16 920decc4 (+  48) 8008c998   &lt;kernel&gt;:free_vnode__FP5vnodeb + 0x00ac
+ 17 920decf4 (+  48) 8008cb93   &lt;kernel&gt;:dec_vnode_ref_count__FP5vnodebT1 +
+ 0x013f
+ 18 920ded24 (+  48) 80090791   &lt;kernel&gt;:put_vnode + 0x0069
+ 19 920ded54 (+  48) 8059a46a   &lt;bfs&gt;:_UnlockInodes__11Transaction + 0x008e
+ 20 920ded84 (+  80) 805a0970   &lt;bfs&gt;:bfs_unlink__FP9fs_volumeP8fs_vnodePCc
+ + 0x0104
+ 21 920dedd4 (+ 304) 800949a7   &lt;kernel&gt;:common_unlink__FiPcb + 0x0067
+ 22 920def04 (+  64) 80099b4b   &lt;kernel&gt;:_user_unlink + 0x0093
+ 23 920def44 (+ 100) 800c8842   &lt;kernel&gt;:pre_syscall_debug_done + 0x0002
+ (nearest)
+ user iframe at 0x920defa8 (end = 0x920df000)
+  eax 0x6d           ebx 0x2bde5c        ecx 0x7ffe5a90   edx 0xffff0104
+  esi 0x7ffe5f68     edi 0x0             ebp 0x7ffe5abc   esp 0x920defdc
+  eip 0xffff0104  eflags 0x207      user esp 0x7ffe5a90
+  vector: 0x63, error code: 0x0
+ 24 920defa8 (+   0) ffff0104
+ 25 7ffe5abc (+ 576) 00207254   &lt;_APP_&gt;:rpl_unlinkat + 0x0194
+ 26 7ffe5cfc (+  64) 00204262   &lt;_APP_&gt;:main + 0x1a7e (nearest)
+ 27 7ffe5d3c (+  80) 002045e1   &lt;_APP_&gt;:main + 0x1dfd (nearest)
+ 28 7ffe5d8c (+ 224) 00204a8c   &lt;_APP_&gt;:main + 0x22a8 (nearest)
+ 29 7ffe5e6c (+ 128) 00205049   &lt;_APP_&gt;:main + 0x2865 (nearest)
+ 30 7ffe5eec (+  64) 002050fc   &lt;_APP_&gt;:rm + 0x0088
+ 31 7ffe5f2c (+  80) 00202b8e   &lt;_APP_&gt;:main + 0x03aa
+ 32 7ffe5f7c (+  48) 002024a3   &lt;_APP_&gt;:_start + 0x005b
+ 33 7ffe5fac (+  48) 001008ea   33427:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">runtime_loader_seg0ro at 0x00100000</A> +
+ 0x8ea
+ 34 7ffe5fdc (+   0) 7ffe5fec   33426:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">rm_main_stack at 0x7efe6000</A> + 0xffffec
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2727">http://dev.haiku-os.org/ticket/2727</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010263.html">[Haiku-bugs] [Haiku] #2726: truncated width menu layout messed up
+</A></li>
+	<LI>Next message: <A HREF="010290.html">[Haiku-bugs] [Haiku] #2727: [bfs]: PANIC when deleting a soft link to a long filename (was: PANIC: get_writable_cached_block: invalid block number 53535436759393 (max 1048319)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10267">[ date ]</a>
+              <a href="thread.html#10267">[ thread ]</a>
+              <a href="subject.html#10267">[ subject ]</a>
+              <a href="author.html#10267">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

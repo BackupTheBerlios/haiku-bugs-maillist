@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #169: [Registrar] Shutdown Status window isn't font sensitive (easy)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-August/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23169%3A%20%5BRegistrar%5D%20Shutdown%20Status%20window%0A%20isn%27t%20font%20sensitive%20%28easy%29&In-Reply-To=%3C049.299f7b016d908d95613ecff660f96610%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="020258.html">
+   <LINK REL="Next"  HREF="019761.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #169: [Registrar] Shutdown Status window isn't font sensitive (easy)</H1>
+    <B>stpere</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23169%3A%20%5BRegistrar%5D%20Shutdown%20Status%20window%0A%20isn%27t%20font%20sensitive%20%28easy%29&In-Reply-To=%3C049.299f7b016d908d95613ecff660f96610%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #169: [Registrar] Shutdown Status window isn't font sensitive (easy)">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Aug 19 03:36:28 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="020258.html">[Haiku-bugs] [Haiku] #4284: [patch] ReleaseBuildProfiles, OptionalPackagesDependencies for R1Alpha1
+</A></li>
+        <LI>Next message: <A HREF="019761.html">[Haiku-bugs] [Haiku] #4285: emuxki goes dead after media server	restart
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19759">[ date ]</a>
+              <a href="thread.html#19759">[ thread ]</a>
+              <a href="subject.html#19759">[ subject ]</a>
+              <a href="author.html#19759">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#169: [Registrar] Shutdown Status window isn't font sensitive (easy)
+--------------------------------+-------------------------------------------
+  Reporter:  diver              |       Owner:  stpere        
+      Type:  bug                |      Status:  closed        
+  Priority:  normal             |   Milestone:  R1            
+ Component:  Servers/registrar  |     Version:  R1 development
+Resolution:  fixed              |   Blockedby:                
+  Platform:  All                |    Blocking:                
+--------------------------------+-------------------------------------------
+Changes (by stpere):
+
+  * status:  assigned =&gt; closed
+  * resolution:  =&gt; fixed
+
+
+Comment:
+
+ Committed a fix in r32501. I think the problem had something to do with
+ the way the wrapping happened.  The text is put in a very small TextView
+ (10x10), and with large fonts, we get this :
+
+ T            &lt;- a very tall line[[BR]]
+ w            &lt;- a short line[[BR]]
+ o[[BR]]
+ [[BR]]
+ l[[BR]]
+ i[[BR]]
+ n[[BR]]
+ e[[BR]]
+ s[[BR]]
+
+ And the size is only computed for the first 2 lines.  Then we resize the
+ whole text view based on those stats.  What I did was to disable the
+ WordWrap the time we get the size, then enable the WordWrap again.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/169#comment:10">http://dev.haiku-os.org/ticket/169#comment:10</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="020258.html">[Haiku-bugs] [Haiku] #4284: [patch] ReleaseBuildProfiles, OptionalPackagesDependencies for R1Alpha1
+</A></li>
+	<LI>Next message: <A HREF="019761.html">[Haiku-bugs] [Haiku] #4285: emuxki goes dead after media server	restart
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19759">[ date ]</a>
+              <a href="thread.html#19759">[ thread ]</a>
+              <a href="subject.html#19759">[ subject ]</a>
+              <a href="author.html#19759">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

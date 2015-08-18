@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2350: Segment violation in FillRectNoClipping when booting on eeePC
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-July/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232350%3A%20Segment%20violation%20in%0A%20FillRectNoClipping%20when%20booting%20on%20eeePC&In-Reply-To=%3C052.22846b7cdcb765c9722a6a24d6e53fe1%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009173.html">
+   <LINK REL="Next"  HREF="009177.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2350: Segment violation in FillRectNoClipping when booting on eeePC</H1>
+    <B>mmlr</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232350%3A%20Segment%20violation%20in%0A%20FillRectNoClipping%20when%20booting%20on%20eeePC&In-Reply-To=%3C052.22846b7cdcb765c9722a6a24d6e53fe1%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2350: Segment violation in FillRectNoClipping when booting on eeePC">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Jul 27 14:47:26 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009173.html">[Haiku-bugs] [Haiku] #2350: Segment violation in FillRectNoClipping when booting on eeePC
+</A></li>
+        <LI>Next message: <A HREF="009177.html">[Haiku-bugs] [Haiku] #2551: [Tracker]: Copy To shows wrong content of Desktop directory when selecting a bfs volume on a usb stick
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9174">[ date ]</a>
+              <a href="thread.html#9174">[ thread ]</a>
+              <a href="subject.html#9174">[ subject ]</a>
+              <a href="author.html#9174">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2350: Segment violation in FillRectNoClipping when booting on eeePC
+---------------------------------+------------------------------------------
+  Reporter:  exparrot            |       Owner:  axeld         
+      Type:  bug                 |      Status:  new           
+  Priority:  normal              |   Milestone:  R1            
+ Component:  Servers/app_server  |     Version:  R1 development
+Resolution:                      |   Blockedby:                
+  Platform:  x86                 |    Blocking:                
+---------------------------------+------------------------------------------
+
+Comment(by mmlr):
+
+ The way I work around it is to boot in safe video mode by booth setting
+ &quot;Use Failsafe Video Mode&quot; and choosing a video mode in the boot menu, then
+ when booted use the Screen preflet to select any mode different than the
+ current one (doesn't matter). This will cause a settings file to be
+ written. The resolution used when rebooting is then chosen based on the
+ preferred mode of the graphics driver disregarding the settings file. The
+ issue seems that the preferred mode isn't used when there is no settings
+ file at all. What I could imagine is that when there is a settings file it
+ will try to set that mode, which will fail for the intel driver (as it
+ only allows the native resolution) and then fall back to the preferred
+ mode. If there is no settings file, it won't try setting the mode and
+ won't fall back either.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2350#comment:8">http://dev.haiku-os.org/ticket/2350#comment:8</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009173.html">[Haiku-bugs] [Haiku] #2350: Segment violation in FillRectNoClipping when booting on eeePC
+</A></li>
+	<LI>Next message: <A HREF="009177.html">[Haiku-bugs] [Haiku] #2551: [Tracker]: Copy To shows wrong content of Desktop directory when selecting a bfs volume on a usb stick
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9174">[ date ]</a>
+              <a href="thread.html#9174">[ thread ]</a>
+              <a href="subject.html#9174">[ subject ]</a>
+              <a href="author.html#9174">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

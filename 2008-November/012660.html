@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2853: [Terminal] midnight commander Fx	keys are shifted
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232853%3A%20%5BTerminal%5D%20midnight%20commander%20Fx%0A%09keys%20are%20shifted&In-Reply-To=%3C049.3782057b405e4703ccaf5f7a718620c7%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012659.html">
+   <LINK REL="Next"  HREF="012665.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2853: [Terminal] midnight commander Fx	keys are shifted</H1>
+    <B>kaliber</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232853%3A%20%5BTerminal%5D%20midnight%20commander%20Fx%0A%09keys%20are%20shifted&In-Reply-To=%3C049.3782057b405e4703ccaf5f7a718620c7%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2853: [Terminal] midnight commander Fx	keys are shifted">trac at haiku-os.org
+       </A><BR>
+    <I>Wed Nov 19 19:40:48 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012659.html">[Haiku-bugs] [Haiku] #1072: Write an HDA audio driver and add-on
+</A></li>
+        <LI>Next message: <A HREF="012665.html">[Haiku-bugs] [Haiku] #1420: Copying a folder with the same name as an existing folder should offer the option to merge both folders
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12660">[ date ]</a>
+              <a href="thread.html#12660">[ thread ]</a>
+              <a href="subject.html#12660">[ subject ]</a>
+              <a href="author.html#12660">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2853: [Terminal] midnight commander Fx keys are shifted
+------------------------------------+---------------------------------------
+  Reporter:  diver                  |       Owner:  jackburton    
+      Type:  bug                    |      Status:  new           
+  Priority:  normal                 |   Milestone:  R1            
+ Component:  Applications/Terminal  |     Version:  R1 development
+Resolution:                         |   Blockedby:                
+  Platform:  All                    |    Blocking:                
+------------------------------------+---------------------------------------
+
+Comment(by kaliber):
+
+ The problem is that key codes (in src/apps/terminal/VTKeyTbl.c) are
+ adjusted for beterm. Unfortunately the default TERM variable is set to
+ xterm, so key codes should be as follow:
+
+
+ {{{
+ char *function_key_char_table [] =
+ {
+ &quot;\033OP&quot;,
+ &quot;\033OQ&quot;,
+ &quot;\033OR&quot;,
+ &quot;\033OS&quot;,
+ &quot;\033[15~&quot;,
+ &quot;\033[17~&quot;,
+ &quot;\033[18~&quot;,
+ &quot;\033[19~&quot;,
+ &quot;\033[20~&quot;,
+ &quot;\033[21~&quot;,
+ &quot;\033[22~&quot;,
+ &quot;\033[24~&quot;,
+ };
+
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2853#comment:3">http://dev.haiku-os.org/ticket/2853#comment:3</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012659.html">[Haiku-bugs] [Haiku] #1072: Write an HDA audio driver and add-on
+</A></li>
+	<LI>Next message: <A HREF="012665.html">[Haiku-bugs] [Haiku] #1420: Copying a folder with the same name as an existing folder should offer the option to merge both folders
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12660">[ date ]</a>
+              <a href="thread.html#12660">[ thread ]</a>
+              <a href="subject.html#12660">[ subject ]</a>
+              <a href="author.html#12660">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

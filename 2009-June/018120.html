@@ -1,0 +1,340 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3963: Haiku wrongly initialises volume according to BeOS
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233963%3A%20Haiku%20wrongly%20initialises%20volume%0A%20according%20to%20BeOS&In-Reply-To=%3C050.8257c223722df9391a9e9a20a8cd83a8%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="018118.html">
+   <LINK REL="Next"  HREF="018121.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3963: Haiku wrongly initialises volume according to BeOS</H1>
+    <B>idefix</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233963%3A%20Haiku%20wrongly%20initialises%20volume%0A%20according%20to%20BeOS&In-Reply-To=%3C050.8257c223722df9391a9e9a20a8cd83a8%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3963: Haiku wrongly initialises volume according to BeOS">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Jun 25 22:06:40 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="018118.html">[Haiku-bugs] [Haiku] #3963: Haiku wrongly initialises volume according to BeOS
+</A></li>
+        <LI>Next message: <A HREF="018121.html">[Haiku-bugs] [Haiku] #3963: Haiku wrongly initialises volume according to BeOS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18120">[ date ]</a>
+              <a href="thread.html#18120">[ thread ]</a>
+              <a href="subject.html#18120">[ subject ]</a>
+              <a href="author.html#18120">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3963: Haiku wrongly initialises volume according to BeOS
+-------------------------------+--------------------------------------------
+  Reporter:  idefix            |       Owner:  axeld         
+      Type:  bug               |      Status:  reopened      
+  Priority:  critical          |   Milestone:  R1            
+ Component:  File Systems/BFS  |     Version:  R1 development
+Resolution:                    |   Blockedby:                
+  Platform:  All               |    Blocking:                
+-------------------------------+--------------------------------------------
+
+Comment(by idefix):
+
+ After mkfs initialised the volume:
+ {{{
+ PANIC: keyboard requested halt.
+
+ Welcome to Kernel Debugging Land...
+ Thread 1 &quot;idle thread 1&quot; running on CPU 0
+ kdebug&gt; mounts
+ address     id root       covers     cookie     fs_name
+ 0x80fa82d0   1 0x80f9b044 0x00000000 0x80f9a708 rootfs
+ 0x80fa8348   2 0x80f9b0cc 0x80f9b088 0x80f9a758 devfs
+ 0x80fc8f00   3 0x80f9b50c 0x80f9b484 0x811c6f00 bfs
+ kdebug&gt; continue
+ bfs: mounted &quot;test0mkfs&quot; (root node at 524288, device =
+ /dev/disk/ata/1/master/0)
+ bfs: bfs_stat_index:2050: No such file or directory
+ PANIC: keyboard requested halt.
+
+ Welcome to Kernel Debugging Land...
+ Thread 1 &quot;idle thread 1&quot; running on CPU 0
+ kdebug&gt; mounts
+ address     id root       covers     cookie     fs_name
+ 0x80fa82d0   1 0x80f9b044 0x00000000 0x80f9a708 rootfs
+ 0x80fa8348   2 0x80f9b0cc 0x80f9b088 0x80f9a758 devfs
+ 0x80fc8f00   3 0x80f9b50c 0x80f9b484 0x811c6f00 bfs
+ 0x80f91f00   5 0x8100fee0 0x81002000 0x811cb0e0 bfs
+ kdebug&gt; mount 5
+ MOUNT: 0x80f91f00
+  id:            5
+  device_name:   /dev/disk/ata/1/master/0
+  root_vnode:    0x8100fee0
+  covers_vnode:  0x81002000
+  partition:     0x80fde198
+  lock:          0x80f91f10
+  flags:
+  volume 0x8103e8c0:
+   layer:            0
+   private_volume:   0x811cb0e0
+   ops:              0x805e8c20
+   file_system:      0x805e8d60
+   file_system_name: bfs
+ kdebug&gt; bfs _volume
+ id:           5
+ block cache:  0x810a5258
+ journal:      0x80f8a690
+ allocator:    0x811cb2f4
+ root node:    0x81005000
+ indices node: 0x810453fc
+
+ disk_super_block:
+   name           = test0mkfs
+   magic1         = 0x42465331 (BFS1) valid
+   fs_byte_order  = 0x42494745 (BIGE)
+   block_size     = 2048
+   block_shift    = 11
+   num_blocks     = 3747161
+   used_blocks    = 4502
+   inode_size     = 2048
+   magic2         = 0xdd121031 (...1) valid
+   blocks_per_ag  = 4
+   ag_shift       = 16 (65536 bytes)
+   num_ags        = 58
+   flags          = 0x434c454e (CLEN)
+   log_blocks     = (0, 233, 4096)
+   log_start      = 269
+   log_end        = 269
+   magic3         = 0x15b6830e (....) valid
+   root_dir       = (8, 0, 1)
+   indices        = (0, 4329, 1)
+ }}}
+ Then, after running checkfs on the volume:
+ {{{
+ PANIC: keyboard requested halt.
+
+ Welcome to Kernel Debugging Land...
+ Thread 1 &quot;idle thread 1&quot; running on CPU 0
+ kdebug&gt; mounts
+ address     id root       covers     cookie     fs_name
+ 0x80fa82d0   1 0x80f9b044 0x00000000 0x80f9a708 rootfs
+ 0x80fa8348   2 0x80f9b0cc 0x80f9b088 0x80f9a758 devfs
+ 0x80fc8f00   3 0x80f9b50c 0x80f9b484 0x811c6f00 bfs
+ 0x80f91f00   5 0x8100fee0 0x81002000 0x811cb0e0 bfs
+ kdebug&gt; mount 5
+ MOUNT: 0x80f91f00
+  id:            5
+  device_name:   /dev/disk/ata/1/master/0
+  root_vnode:    0x8100fee0
+  covers_vnode:  0x81002000
+  partition:     0x80fde198
+  lock:          0x80f91f10
+  flags:
+  volume 0x8103e8c0:
+   layer:            0
+   private_volume:   0x811cb0e0
+   ops:              0x805e8c20
+   file_system:      0x805e8d60
+   file_system_name: bfs
+ kdebug&gt; bfs _volume
+ id:           5
+ block cache:  0x810a5258
+ journal:      0x80f8a690
+ allocator:    0x811cb2f4
+ root node:    0x81005000
+ indices node: 0x810453fc
+
+ disk_super_block:
+   name           = test0mkfs
+   magic1         = 0x42465331 (BFS1) valid
+   fs_byte_order  = 0x42494745 (BIGE)
+   block_size     = 2048
+   block_shift    = 11
+   num_blocks     = 3747161
+   used_blocks    = 4502
+   inode_size     = 2048
+   magic2         = 0xdd121031 (...1) valid
+   blocks_per_ag  = 4
+   ag_shift       = 16 (65536 bytes)
+   num_ags        = 58
+   flags          = 0x434c454e (CLEN)
+   log_blocks     = (0, 233, 4096)
+   log_start      = 269
+   log_end        = 269
+   magic3         = 0x15b6830e (....) valid
+   root_dir       = (8, 0, 1)
+   indices        = (0, 4329, 1)
+ }}}
+ Booting into BeOS and using the BFS-tools:
+ {{{
+
+ Welcome to the BeOS shell.
+
+ $ mountvolume test0mkfs
+ scanning volumes...
+ test0mkfs mounted OK
+
+ $ bfsinfo -s /test0mkfs/
+ Copyright (c) 2001-2008 pinc Software.
+
+ disk_super_block:
+   name           = test0mkfs
+   magic1         = 0x42465331 (BFS1) valid
+   fs_byte_order  = 0x42494745 (BIGE, little endian)
+   block_size     = 2048
+   block_shift    = 11
+   num_blocks     = 3747161
+   used_blocks    = 4506
+   inode_size     = 2048
+   magic2         = 0xdd121031 (...1) valid
+   blocks_per_ag  = 4
+   ag_shift       = 16
+   num_ags        = 58
+   flags          = 0x434c454e (CLEN)
+   log_blocks     = (0, 233, 4096)
+   log_start      = 278
+   log_end        = 278
+   magic3         = 0x15b6830e (....) valid
+   root_dir       = (8, 0, 1)
+   indices        = (0, 4329, 1)
+
+ $ chkbfs /test0mkfs/
+ bfs: /dev/disk/ide/ata/1/master/0/0_0 is read-only!
+ Files processed:     11
+ BFS has 3 blocks allocated that should not be.
+
+     Block allocation mismatches detected.  Fixing.
+
+     File system check completed.
+
+ $ bfsinfo -s /test0mkfs/
+ Copyright (c) 2001-2008 pinc Software.
+
+ disk_super_block:
+   name           = test0mkfs
+   magic1         = 0x42465331 (BFS1) valid
+   fs_byte_order  = 0x42494745 (BIGE, little endian)
+   block_size     = 2048
+   block_shift    = 11
+   num_blocks     = 3747161
+   used_blocks    = 4506
+   inode_size     = 2048
+   magic2         = 0xdd121031 (...1) valid
+   blocks_per_ag  = 4
+   ag_shift       = 16
+   num_ags        = 58
+   flags          = 0x434c454e (CLEN)
+   log_blocks     = (0, 233, 4096)
+   log_start      = 278
+   log_end        = 278
+   magic3         = 0x15b6830e (....) valid
+   root_dir       = (8, 0, 1)
+   indices        = (0, 4329, 1)
+ }}}
+ Booting back into Haiku and then mounting the partition (which results in
+ a crash):
+ {{{
+ PANIC: keyboard requested halt.
+
+ Welcome to Kernel Debugging Land...
+ Thread 1 &quot;idle thread 1&quot; running on CPU 0
+ kdebug&gt; mounts
+ address     id root       covers     cookie     fs_name
+ 0x80fa82d0   1 0x80f9b044 0x00000000 0x80f9a708 rootfs
+ 0x80fa8348   2 0x80f9b0cc 0x80f9b088 0x80f9a758 devfs
+ 0x80fc8f00   3 0x80f9b50c 0x80f9b484 0x811c6f00 bfs
+ kdebug&gt; continue
+ bfs: mounted &quot;test0mkfs&quot; (root node at 524288, device =
+ /dev/disk/ata/1/master/0)
+ bfs: bfs_stat_index:2050: No such file or directory
+ bfs: AllocationBlock::Allocate(): some blocks are already allocated, start
+ = 0, numBlocks = 4297
+ PANIC: blocks already set!
+ Welcome to Kernel Debugging Land...
+ Thread 171 &quot;bfs block allocator&quot; running on CPU 0
+ kdebug&gt; mounts
+ address     id root       covers     cookie     fs_name
+ 0x80fa82d0   1 0x80f9b044 0x00000000 0x80f9a708 rootfs
+ 0x80fa8348   2 0x80f9b0cc 0x80f9b088 0x80f9a758 devfs
+ 0x80fc8f00   3 0x80f9b50c 0x80f9b484 0x811c6f00 bfs
+ 0x8100ae10   4 0x8100f908 0x81002b28 0x811c7e80 bfs
+ kdebug&gt; mount 4
+ MOUNT: 0x8100ae10
+  id:            4
+  device_name:   /dev/disk/ata/1/master/0
+  root_vnode:    0x8100f908
+  covers_vnode:  0x81002b28
+  partition:     0x80fde198
+  lock:          0x8100ae20
+  flags:
+  volume 0x810a6ed8:
+   layer:            0
+   private_volume:   0x811c7e80
+   ops:              0x805e8c20
+   file_system:      0x805e8d60
+   file_system_name: bfs
+ kdebug&gt; bfs _volume
+ id:           4
+ block cache:  0x81078960
+ journal:      0x810789d8
+ allocator:    0x811c8094
+ root node:    0x80fe7e9c
+ indices node: 0x81060550
+
+ disk_super_block:
+   name           = test0mkfs
+   magic1         = 0x42465331 (BFS1) valid
+   fs_byte_order  = 0x42494745 (BIGE)
+   block_size     = 2048
+   block_shift    = 11
+   num_blocks     = 3747161
+   used_blocks    = 4506
+   inode_size     = 2048
+   magic2         = 0xdd121031 (...1) valid
+   blocks_per_ag  = 4
+   ag_shift       = 16 (65536 bytes)
+   num_ags        = 58
+   flags          = 0x434c454e (CLEN)
+   log_blocks     = (0, 233, 4096)
+   log_start      = 278
+   log_end        = 278
+   magic3         = 0x15b6830e (....) valid
+   root_dir       = (8, 0, 1)
+   indices        = (0, 4329, 1)
+ }}}
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3963#comment:6">http://dev.haiku-os.org/ticket/3963#comment:6</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="018118.html">[Haiku-bugs] [Haiku] #3963: Haiku wrongly initialises volume according to BeOS
+</A></li>
+	<LI>Next message: <A HREF="018121.html">[Haiku-bugs] [Haiku] #3963: Haiku wrongly initialises volume according to BeOS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18120">[ date ]</a>
+              <a href="thread.html#18120">[ thread ]</a>
+              <a href="subject.html#18120">[ subject ]</a>
+              <a href="author.html#18120">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

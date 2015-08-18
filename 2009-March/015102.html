@@ -1,0 +1,168 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3563: Odd firefox problem on hybrid build
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233563%3A%20Odd%20firefox%20problem%20on%20hybrid%20build&In-Reply-To=%3C044.4238e54eef7729ac9dd9da2e27fb5aad%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="015105.html">
+   <LINK REL="Next"  HREF="015103.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3563: Odd firefox problem on hybrid build</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233563%3A%20Odd%20firefox%20problem%20on%20hybrid%20build&In-Reply-To=%3C044.4238e54eef7729ac9dd9da2e27fb5aad%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3563: Odd firefox problem on hybrid build">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Mar 14 19:28:37 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="015105.html">[Haiku-bugs] [Haiku] #3562: Add scroll bar decorator settings
+</A></li>
+        <LI>Next message: <A HREF="015103.html">[Haiku-bugs] [Haiku] #3563: Odd firefox problem on hybrid build
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15102">[ date ]</a>
+              <a href="thread.html#15102">[ thread ]</a>
+              <a href="subject.html#15102">[ subject ]</a>
+              <a href="author.html#15102">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3563: Odd firefox problem on hybrid build
+-----------------------------------+----------------------------------------
+ Reporter:  anevilyak              |       Owner:  bonefish      
+     Type:  bug                    |      Status:  new           
+ Priority:  normal                 |   Milestone:  R1            
+Component:  System/runtime_loader  |     Version:  R1 development
+Blockedby:                         |    Platform:  All           
+ Blocking:                         |  
+-----------------------------------+----------------------------------------
+ I have a gcc4 firefox. If I try to run this on gcc2 haiku w/ hybrid libs,
+ on first start it exits (you get control back at the shell), and then its
+ last thread sits at 100% CPU usage. If you attempt to attach gdb to it, it
+ immediately exits (you see the child exit in gdb right after attaching).
+ On subsequent runs this doesn't occur. It also doesn't occur when running
+ the same exact binaries on gcc4 haiku. Dropping into the kernel debugger
+ and looking at the offending thread yields the following:
+
+ {{{
+ kdebug&gt; teams
+ team           id  parent      name
+ 0x8128bcc0    279  0x8119e198  firefox-bin
+ 0x8119ee58    217  0x81269b28  Terminal
+ 0x8119e990     62  0x8119e198  app_server
+ 0x81269330     94  0x8119e198  Tracker
+ 0x8119e198      1  0x00000000  kernel_team
+ 0x81269660     95  0x8119e198  Deskbar
+ 0x8128b330    221  0x8119ee58  sh
+ 0x81269b28     98  0x8119e198  Terminal
+ 0x8128b198    161  0x81269b28  sh
+ 0x81269cc0     99  0x8119e198  media_server
+ 0x81269e58    100  0x8119e198  midi_server
+ 0x8128b4c8    225  0x8128b330  Vision
+ 0x8128b000    101  0x8119e198  print_server
+ 0x8119eb28     81  0x8119e198  syslog_daemon
+ 0x812694c8     85  0x8119e990  input_server
+ 0x8119e4c8     54  0x8119e198  registrar
+ 0x8119e330    120  0x81269cc0  media_addon_server
+ 0x8119e660     59  0x8119e198  debug_server
+ 0x8119e7f8     60  0x8119e198  net_server
+ kdebug&gt; threads 279
+ thread         id  state     wait for   object  cpu pri  stack      team
+ name
+ 0x841d2800    279  running           -            0  10  0xb923a000  279
+ firefox-bin
+ kdebug&gt; bt 279
+ stack trace for thread 279 &quot;firefox-bin&quot;
+     kernel stack: 0xb923a000 to 0xb923e000
+       user stack: 0x7efee000 to 0x7ffee000
+ frame               caller     &lt;image&gt;:function + offset
+  0 b923db90 (+  48) 8005c01d   &lt;kernel_x86&gt;:invoke_debugger_command +
+ 0x00f5
+  1 b923dbc0 (+  64) 8005be0d   &lt;kernel_x86&gt;
+ invoke_pipe_segment(debugger_command_pipe*: 0x80122c60, int32: 0, 0x0
+ &quot;&lt;NULL&gt;&quot;) + 0x0079
+  2 b923dc00 (+  64) 8005c194   &lt;kernel_x86&gt;:invoke_debugger_command_pipe +
+ 0x009c
+  3 b923dc40 (+  48) 8005d744   &lt;kernel_x86&gt;
+ ExpressionParser&lt;0xb923dcf4&gt;::_ParseCommandPipe(0xb923dcf0) + 0x0234
+  4 b923dc70 (+  64) 8005cb7e   &lt;kernel_x86&gt;
+ ExpressionParser&lt;0xb923dcf4&gt;::EvaluateCommand(0x801140a0 &quot;bt 279&quot;,
+ 0xb923dcf0) + 0x02ba
+  5 b923dcb0 (+ 224) 8005eb6c   &lt;kernel_x86&gt;:evaluate_debug_command +
+ 0x0088
+  6 b923dd90 (+  64) 80059f1a   &lt;kernel_x86&gt; kernel_debugger_loop() +
+ 0x01ae
+  7 b923ddd0 (+  32) 8005ad9d   &lt;kernel_x86&gt;:kernel_debugger + 0x004d
+  8 b923ddf0 (+ 192) 8005ad45   &lt;kernel_x86&gt;:panic + 0x0029
+  9 b923deb0 (+  48) 851de6a1   &lt;/boot/beos/system/add-
+ ons/kernel/bus_managers/ps2&gt;:ps2_interrupt + 0x00d1
+ 10 b923dee0 (+  48) 8003b157   &lt;kernel_x86&gt;:int_io_interrupt_handler +
+ 0x006f
+ 11 b923df10 (+  48) 800cb6c4   &lt;kernel_x86&gt;:hardware_interrupt + 0x0070
+ 12 b923df40 (+  12) 800ced36   &lt;kernel_x86&gt;:int_bottom + 0x0036
+ kernel iframe at 0xb923df4c (end = 0xb923df9c)
+  eax 0x0            ebx 0x8c06ed11      ecx 0x1          edx 0x0
+  esi 0xb            edi 0x841d2800      ebp 0xb923dfa8   esp 0xb923df80
+  eip 0x800cef11  eflags 0x287
+  vector: 0x21, error code: 0x0
+ 13 b923df4c (+  92) 800cef11   &lt;kernel_x86&gt;:handle_syscall + 0x005e
+ user iframe at 0xb923dfa8 (end = 0xb923e000)
+  eax 0xb            ebx 0x13c2510       ecx 0x7ffedb0c   edx 0xffff0104
+  esi 0xeaf5c        edi 0x7ffedf40      ebp 0x7ffedb28   esp 0xb923dfdc
+  eip 0xffff0104  eflags 0x212      user esp 0x7ffedb0c
+  vector: 0x63, error code: 0x0
+ 14 b923dfa8 (+   0) ffff0104   &lt;commpage&gt;:commpage_syscall + 0x0004
+ 15 7ffedb28 (+  48) 0033f47d   &lt;firefox-bin&gt;:_init_before (nearest) +
+ 0x8153
+ 16 7ffedb58 (+1024) 00339ccb   &lt;firefox-bin&gt;:_init_before (nearest) +
+ 0x29a1
+ 17 7ffedf58 (+  32) 0033739b   &lt;firefox-bin&gt;:_init_before (nearest) +
+ 0x0071
+ 18 7ffedf78 (+  52) 0033724d   &lt;firefox-bin&gt;:_start + 0x0051
+ 19 7ffedfac (+  48) 0010090a
+ &lt;/boot/beos/system/<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">runtime_loader at 0x00100000</A>&gt;:unknown + 0x090a
+ 20 7ffedfdc (+   0) 7ffedfec   9999:<A HREF="https://lists.berlios.de/mailman/listinfo/haiku-bugs">firefox-bin_main_stack at 0x7efee000</A> +
+ 0xffffec
+ }}}
+
+ Note this is 100% reproducible on a fresh Haiku build, so just let me know
+ what other information might be of interest here and I can gather it.
+ Categorizing this is as runtime loader for now since that's my best guess
+ as to the culprit.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3563">http://dev.haiku-os.org/ticket/3563</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="015105.html">[Haiku-bugs] [Haiku] #3562: Add scroll bar decorator settings
+</A></li>
+	<LI>Next message: <A HREF="015103.html">[Haiku-bugs] [Haiku] #3563: Odd firefox problem on hybrid build
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15102">[ date ]</a>
+              <a href="thread.html#15102">[ thread ]</a>
+              <a href="subject.html#15102">[ subject ]</a>
+              <a href="author.html#15102">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,229 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3983: KDL when ejecting not mounted CD
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233983%3A%20KDL%20when%20ejecting%20not%20mounted%20CD&In-Reply-To=%3C053.b132ac221c066d403a8ade3f313f897b%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="017708.html">
+   <LINK REL="Next"  HREF="017710.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3983: KDL when ejecting not mounted CD</H1>
+    <B>anevilyak</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233983%3A%20KDL%20when%20ejecting%20not%20mounted%20CD&In-Reply-To=%3C053.b132ac221c066d403a8ade3f313f897b%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3983: KDL when ejecting not mounted CD">trac at haiku-os.org
+       </A><BR>
+    <I>Sun May 31 07:50:35 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="017708.html">[Haiku-bugs] [Haiku] #3983: KDL when ejecting not mounted CD
+</A></li>
+        <LI>Next message: <A HREF="017710.html">[Haiku-bugs] [Haiku] #3983: KDL when ejecting not mounted CD
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17709">[ date ]</a>
+              <a href="thread.html#17709">[ thread ]</a>
+              <a href="subject.html#17709">[ subject ]</a>
+              <a href="author.html#17709">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3983: KDL when ejecting not mounted CD
+---------------------------+------------------------------------------------
+ Reporter:  anevilyak      |       Owner:  bonefish      
+     Type:  bug            |      Status:  new           
+ Priority:  normal         |   Milestone:  R1            
+Component:  System/Kernel  |     Version:  R1 development
+Blockedby:                 |    Platform:  All           
+ Blocking:                 |  
+---------------------------+------------------------------------------------
+Description changed by anevilyak:
+
+Old description:
+
+&gt;<i> I seem to be able to quite reliably panic Haiku by an iso9660 CD. Panic
+</I>&gt;<i> message:
+</I>&gt;<i>
+</I>&gt;<i> {{{
+</I>&gt;<i> PANIC: vm_page_fault: unhandled page fault in kernel space at 0xdeadbf1f,
+</I>&gt;<i> ip 0x80078d2e
+</I>&gt;<i> }}}
+</I>&gt;<i>
+</I>&gt;<i> Backtrace:
+</I>&gt;<i> {{{
+</I>&gt;<i> stack trace for thread 29 &quot;media checker&quot;
+</I>&gt;<i>     kernel stack: 0x806a3000 to 0x806a7000
+</I>&gt;<i> frame               caller     &lt;image&gt;:function + offset
+</I>&gt;<i>  0 806a68f4 (+  48) 80065bcd   &lt;kernel_x86&gt;:invoke_debugger_command +
+</I>&gt;<i> 0x00f5
+</I>&gt;<i>  1 806a6924 (+  64) 800659bd   &lt;kernel_x86&gt;
+</I>&gt;<i> invoke_pipe_segment(debugger_command_pipe*: 0x80137b20, int32: 0, 0x0
+</I>&gt;<i> &quot;&lt;NULL&gt;&quot;) + 0x0079
+</I>&gt;<i>  2 806a6964 (+  64) 80065d44   &lt;kernel_x86&gt;:invoke_debugger_command_pipe
+</I>&gt;<i> + 0x009c
+</I>&gt;<i>  3 806a69a4 (+  48) 800672f4   &lt;kernel_x86&gt;
+</I>&gt;<i> ExpressionParser&lt;0x806a6a58&gt;::_ParseCommandPipe(0x806a6a54) + 0x0234
+</I>&gt;<i>  4 806a69d4 (+  64) 8006672e   &lt;kernel_x86&gt;
+</I>&gt;<i> ExpressionParser&lt;0x806a6a58&gt;::EvaluateCommand(0x80128200 &quot;bt&quot;,
+</I>&gt;<i> 0x806a6a54) + 0x02ba
+</I>&gt;<i>  5 806a6a14 (+ 224) 8006871c   &lt;kernel_x86&gt;:evaluate_debug_command +
+</I>&gt;<i> 0x0088
+</I>&gt;<i>  6 806a6af4 (+  64) 80063a82   &lt;kernel_x86&gt; kernel_debugger_loop() +
+</I>&gt;<i> 0x01ae
+</I>&gt;<i>  7 806a6b34 (+  32) 8006494d   &lt;kernel_x86&gt;:kernel_debugger + 0x004d
+</I>&gt;<i>  8 806a6b54 (+ 192) 800648f5   &lt;kernel_x86&gt;:panic + 0x0029
+</I>&gt;<i>  9 806a6c14 (+  64) 800ca366   &lt;kernel_x86&gt;:vm_page_fault + 0x013a
+</I>&gt;<i> 10 806a6c54 (+  64) 800da571   &lt;kernel_x86&gt;:page_fault_exception + 0x00d9
+</I>&gt;<i> 11 806a6c94 (+  12) 800ddc86   &lt;kernel_x86&gt;:int_bottom + 0x0036
+</I>&gt;<i> kernel iframe at 0x806a6ca0 (end = 0x806a6cf0)
+</I>&gt;<i>  eax 0xdeadbeef     ebx 0x811b33f8      ecx 0x811a167c   edx 0x811a36d8
+</I>&gt;<i>  esi 0xf            edi 0xf             ebp 0x806a6e28   esp 0x806a6cd4
+</I>&gt;<i>  eip 0x80078d2e  eflags 0x210287
+</I>&gt;<i>  vector: 0xe, error code: 0x0
+</I>&gt;<i> 12 806a6ca0 (+ 392) 80078d2e   &lt;kernel_x86&gt; devfs_ioctl(fs_volume*:
+</I>&gt;<i> 0x811ad730, fs_vnode*: 0x811ae550, 0x811a36d0, uint32: 0xf (15),
+</I>&gt;<i> 0x811b33f8, uint32: 0x811a167c) + 0x0212
+</I>&gt;<i> 13 806a6e28 (+  64) 800a7ae4   &lt;kernel_x86&gt;
+</I>&gt;<i> common_ioctl(file_descriptor*: 0x811adde8, uint32: 0xf (15), 0x811b33f8,
+</I>&gt;<i> uint32: 0x811a167c) + 0x0038
+</I>&gt;<i> 14 806a6e68 (+  48) 8009579f   &lt;kernel_x86&gt; fd_ioctl(true, int32: 5,
+</I>&gt;<i> uint32: 0xf (15), 0x811b33f8, uint32: 0x811a167c) + 0x005f
+</I>&gt;<i> 15 806a6e98 (+  80) 80096f12   &lt;kernel_x86&gt;:_kern_ioctl + 0x0046
+</I>&gt;<i> 16 806a6ee8 (+  48) 800e98bc   &lt;kernel_x86&gt;:ioctl + 0x001c
+</I>&gt;<i> 17 806a6f18 (+  64) 8008a5d7   &lt;kernel_x86&gt;
+</I>&gt;<i> BPrivate::DiskDevice::KDiskDevice&lt;0x811b3300&gt;::GetMediaStatus(0x811b33f8)
+</I>&gt;<i> + 0x0023
+</I>&gt;<i> 18 806a6f58 (+  32) 8008a2a9   &lt;kernel_x86&gt;
+</I>&gt;<i> BPrivate::DiskDevice::KDiskDevice&lt;0x811b3300&gt;::UpdateMediaStatusIfNeeded(0x806a0001,
+</I>&gt;<i> 0x0) + 0x0025
+</I>&gt;<i> 19 806a6f78 (+  64) 8008d731   &lt;kernel_x86&gt;
+</I>&gt;<i> BPrivate::DiskDevice::KDiskDeviceManager&lt;0x8119faf0&gt;::_CheckMediaStatus(0x81998800,
+</I>&gt;<i> 0x8005967d, 0x801276b4, 0x0, int8: 0, 0x806a6ff8, int8: -9, 0x8119faf0,
+</I>&gt;<i> 0x0, 0x0, 0x0, int8: 0, 0x0, 0x0, int32: -2147117420) + 0x008d
+</I>&gt;<i> 20 806a6fb8 (+  32) 8008d8c2   &lt;kernel_x86&gt;
+</I>&gt;<i> BPrivate::DiskDevice::KDiskDeviceManager&lt;0x8119faf0&gt;::_CheckMediaStatusDaem(NULL)
+</I>&gt;<i> + 0x0012
+</I>&gt;<i> 21 806a6fd8 (+  32) 800596f7   &lt;kernel_x86&gt;
+</I>&gt;<i> _create_kernel_thread_kentry() + 0x001b
+</I>&gt;<i> 22 806a6ff8 (+2140508168) 80059694   &lt;kernel_x86&gt; thread_kthread_exit() +
+</I>&gt;<i> 0x0000
+</I>&gt;<i> }}}
+</I>&gt;<i>
+</I>&gt;<i> I'd assume this is relatively recent since I don't recall anything like
+</I>&gt;<i> this happening back when I was testing iso9660 bugs for Axel, but that
+</I>&gt;<i> was several hundred revisions ago. In any case, environment is r30933,
+</I>&gt;<i> gcc2 + gcc4 hybrid using the ata bus manager. Let me know what other
+</I>&gt;<i> information I can pull out here.
+</I>
+New description:
+
+ I seem to be able to quite reliably panic Haiku by ejecting an iso9660 CD.
+ Panic message:
+
+ {{{
+ PANIC: vm_page_fault: unhandled page fault in kernel space at 0xdeadbf1f,
+ ip 0x80078d2e
+ }}}
+
+ Backtrace:
+ {{{
+ stack trace for thread 29 &quot;media checker&quot;
+     kernel stack: 0x806a3000 to 0x806a7000
+ frame               caller     &lt;image&gt;:function + offset
+  0 806a68f4 (+  48) 80065bcd   &lt;kernel_x86&gt;:invoke_debugger_command +
+ 0x00f5
+  1 806a6924 (+  64) 800659bd   &lt;kernel_x86&gt;
+ invoke_pipe_segment(debugger_command_pipe*: 0x80137b20, int32: 0, 0x0
+ &quot;&lt;NULL&gt;&quot;) + 0x0079
+  2 806a6964 (+  64) 80065d44   &lt;kernel_x86&gt;:invoke_debugger_command_pipe +
+ 0x009c
+  3 806a69a4 (+  48) 800672f4   &lt;kernel_x86&gt;
+ ExpressionParser&lt;0x806a6a58&gt;::_ParseCommandPipe(0x806a6a54) + 0x0234
+  4 806a69d4 (+  64) 8006672e   &lt;kernel_x86&gt;
+ ExpressionParser&lt;0x806a6a58&gt;::EvaluateCommand(0x80128200 &quot;bt&quot;, 0x806a6a54)
+ + 0x02ba
+  5 806a6a14 (+ 224) 8006871c   &lt;kernel_x86&gt;:evaluate_debug_command +
+ 0x0088
+  6 806a6af4 (+  64) 80063a82   &lt;kernel_x86&gt; kernel_debugger_loop() +
+ 0x01ae
+  7 806a6b34 (+  32) 8006494d   &lt;kernel_x86&gt;:kernel_debugger + 0x004d
+  8 806a6b54 (+ 192) 800648f5   &lt;kernel_x86&gt;:panic + 0x0029
+  9 806a6c14 (+  64) 800ca366   &lt;kernel_x86&gt;:vm_page_fault + 0x013a
+ 10 806a6c54 (+  64) 800da571   &lt;kernel_x86&gt;:page_fault_exception + 0x00d9
+ 11 806a6c94 (+  12) 800ddc86   &lt;kernel_x86&gt;:int_bottom + 0x0036
+ kernel iframe at 0x806a6ca0 (end = 0x806a6cf0)
+  eax 0xdeadbeef     ebx 0x811b33f8      ecx 0x811a167c   edx 0x811a36d8
+  esi 0xf            edi 0xf             ebp 0x806a6e28   esp 0x806a6cd4
+  eip 0x80078d2e  eflags 0x210287
+  vector: 0xe, error code: 0x0
+ 12 806a6ca0 (+ 392) 80078d2e   &lt;kernel_x86&gt; devfs_ioctl(fs_volume*:
+ 0x811ad730, fs_vnode*: 0x811ae550, 0x811a36d0, uint32: 0xf (15),
+ 0x811b33f8, uint32: 0x811a167c) + 0x0212
+ 13 806a6e28 (+  64) 800a7ae4   &lt;kernel_x86&gt; common_ioctl(file_descriptor*:
+ 0x811adde8, uint32: 0xf (15), 0x811b33f8, uint32: 0x811a167c) + 0x0038
+ 14 806a6e68 (+  48) 8009579f   &lt;kernel_x86&gt; fd_ioctl(true, int32: 5,
+ uint32: 0xf (15), 0x811b33f8, uint32: 0x811a167c) + 0x005f
+ 15 806a6e98 (+  80) 80096f12   &lt;kernel_x86&gt;:_kern_ioctl + 0x0046
+ 16 806a6ee8 (+  48) 800e98bc   &lt;kernel_x86&gt;:ioctl + 0x001c
+ 17 806a6f18 (+  64) 8008a5d7   &lt;kernel_x86&gt;
+ BPrivate::DiskDevice::KDiskDevice&lt;0x811b3300&gt;::GetMediaStatus(0x811b33f8)
+ + 0x0023
+ 18 806a6f58 (+  32) 8008a2a9   &lt;kernel_x86&gt;
+ BPrivate::DiskDevice::KDiskDevice&lt;0x811b3300&gt;::UpdateMediaStatusIfNeeded(0x806a0001,
+ 0x0) + 0x0025
+ 19 806a6f78 (+  64) 8008d731   &lt;kernel_x86&gt;
+ BPrivate::DiskDevice::KDiskDeviceManager&lt;0x8119faf0&gt;::_CheckMediaStatus(0x81998800,
+ 0x8005967d, 0x801276b4, 0x0, int8: 0, 0x806a6ff8, int8: -9, 0x8119faf0,
+ 0x0, 0x0, 0x0, int8: 0, 0x0, 0x0, int32: -2147117420) + 0x008d
+ 20 806a6fb8 (+  32) 8008d8c2   &lt;kernel_x86&gt;
+ BPrivate::DiskDevice::KDiskDeviceManager&lt;0x8119faf0&gt;::_CheckMediaStatusDaem(NULL)
+ + 0x0012
+ 21 806a6fd8 (+  32) 800596f7   &lt;kernel_x86&gt; _create_kernel_thread_kentry()
+ + 0x001b
+ 22 806a6ff8 (+2140508168) 80059694   &lt;kernel_x86&gt; thread_kthread_exit() +
+ 0x0000
+ }}}
+
+ I'd assume this is relatively recent since I don't recall anything like
+ this happening back when I was testing iso9660 bugs for Axel, but that was
+ several hundred revisions ago. In any case, environment is r30933,  gcc2 +
+ gcc4 hybrid using the ata bus manager. Let me know what other information
+ I can pull out here.
+
+--
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3983#comment:2">http://dev.haiku-os.org/ticket/3983#comment:2</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="017708.html">[Haiku-bugs] [Haiku] #3983: KDL when ejecting not mounted CD
+</A></li>
+	<LI>Next message: <A HREF="017710.html">[Haiku-bugs] [Haiku] #3983: KDL when ejecting not mounted CD
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17709">[ date ]</a>
+              <a href="thread.html#17709">[ thread ]</a>
+              <a href="subject.html#17709">[ subject ]</a>
+              <a href="author.html#17709">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

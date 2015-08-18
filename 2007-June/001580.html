@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1254: rtl8139 read_hook: Error in package reception: bits: 20704 length 26088!!!
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-June/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231254%3A%20rtl8139%20read_hook%3A%20Error%20in%20package%0A%20reception%3A%20bits%3A%2020704%20length%2026088%21%21%21&In-Reply-To=%3C043.9529328e33253927123c30ea4ac1cff1%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001579.html">
+   <LINK REL="Next"  HREF="001581.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1254: rtl8139 read_hook: Error in package reception: bits: 20704 length 26088!!!</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231254%3A%20rtl8139%20read_hook%3A%20Error%20in%20package%0A%20reception%3A%20bits%3A%2020704%20length%2026088%21%21%21&In-Reply-To=%3C043.9529328e33253927123c30ea4ac1cff1%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1254: rtl8139 read_hook: Error in package reception: bits: 20704 length 26088!!!">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Jun  3 12:39:18 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001579.html">[Haiku-bugs] [Haiku] #1253: panic invalid bin_index 24
+</A></li>
+        <LI>Next message: <A HREF="001581.html">[Haiku-bugs] [Haiku] #889: [PackageBuilder] crash on File-&gt;Open
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1580">[ date ]</a>
+              <a href="thread.html#1580">[ thread ]</a>
+              <a href="subject.html#1580">[ subject ]</a>
+              <a href="author.html#1580">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1254: rtl8139 read_hook: Error in package reception: bits: 20704 length 26088!!!
+-----------------------------+----------------------------------------------
+ Reporter:  kaoutsis         |       Owner:  axeld         
+     Type:  bug              |      Status:  new           
+ Priority:  normal           |   Milestone:  R1            
+Component:  Drivers/Network  |     Version:  R1 development
+ Platform:  All              |  
+-----------------------------+----------------------------------------------
+ updating haiku via network with rsync!:
+
+ client side:
+ command: rsync -rav 192.168.0.135::test-vol /haiku
+ (update recursively /haiku from the latest files resides in /test-vol
+ in the remote machine)
+ address: 192.168.0.105
+ cpu: 3Ghz P4
+ ram: 512 MB
+
+ server side:
+ command: rsync --daemon
+ (daemon working in the background, waiting requests)
+ address: 192.168.0.135
+ cpu: 233Mhz Pentium-mmx
+ ram: 109 MB
+
+ some notes:
+ *both machines have rtl8139
+ *if a switch roles (server is client, and client be the server)
+ process is going far and somewhere in the middle
+ KDL say &quot;welcome&quot; with the well known problem &quot;no more free pages&quot;
+ * rsync with small directories with ~200 kB works well
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1254">http://dev.haiku-os.org/ticket/1254</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001579.html">[Haiku-bugs] [Haiku] #1253: panic invalid bin_index 24
+</A></li>
+	<LI>Next message: <A HREF="001581.html">[Haiku-bugs] [Haiku] #889: [PackageBuilder] crash on File-&gt;Open
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1580">[ date ]</a>
+              <a href="thread.html#1580">[ thread ]</a>
+              <a href="subject.html#1580">[ subject ]</a>
+              <a href="author.html#1580">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

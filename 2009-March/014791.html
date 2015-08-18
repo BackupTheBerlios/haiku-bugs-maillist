@@ -1,0 +1,150 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #3504: usb_webcam.media_addon and firewire_dv.media_addon makes system freezeon Acer Travelmate 6460
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2009-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233504%3A%20usb_webcam.media_addon%20and%0A%20firewire_dv.media_addon%20makes%20system%20freezeon%20Acer%20Travelmate%206460&In-Reply-To=%3C042.932524ea2ce518c49f04979a3d2768af%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="014790.html">
+   <LINK REL="Next"  HREF="014792.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #3504: usb_webcam.media_addon and firewire_dv.media_addon makes system freezeon Acer Travelmate 6460</H1>
+    <B>vegardw</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%233504%3A%20usb_webcam.media_addon%20and%0A%20firewire_dv.media_addon%20makes%20system%20freezeon%20Acer%20Travelmate%206460&In-Reply-To=%3C042.932524ea2ce518c49f04979a3d2768af%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #3504: usb_webcam.media_addon and firewire_dv.media_addon makes system freezeon Acer Travelmate 6460">trac at haiku-os.org
+       </A><BR>
+    <I>Sun Mar  1 16:26:26 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="014790.html">[Haiku-bugs] [Haiku] #1296: No way to unattach an attached	image.
+</A></li>
+        <LI>Next message: <A HREF="014792.html">[Haiku-bugs] [Haiku] #3504: usb_webcam.media_addon and firewire_dv.media_addon makes system freeze on Acer Travelmate 6460 (was: usb_webcam.media_addon and firewire_dv.media_addon makes system freezeon Acer Travelmate 6460)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14791">[ date ]</a>
+              <a href="thread.html#14791">[ thread ]</a>
+              <a href="subject.html#14791">[ subject ]</a>
+              <a href="author.html#14791">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#3504: usb_webcam.media_addon and firewire_dv.media_addon makes system freezeon
+Acer Travelmate 6460
+---------------------+------------------------------------------------------
+ Reporter:  vegardw  |       Owner:  axeld         
+     Type:  bug      |      Status:  new           
+ Priority:  normal   |   Milestone:  R1            
+Component:  Add-Ons  |     Version:  R1 development
+Blockedby:           |    Platform:  x86           
+ Blocking:           |  
+---------------------+------------------------------------------------------
+ == Summary ==
+ I have a Acer Travelmate 6463WLMi that I tried to install Haiku on.
+
+ If either usb_webcam.media_addon or firewire_dv.media_addon (or both of
+ the) is included in the image, Haiku freezes/becomes unresponsive. Some
+ times I also get thrown into KDL after a few minutes.
+
+ == Steps to reproduce ==
+  * Compile Haiku GCC2 version and install in real partition on a
+ Travelmate 6460 series notebook.
+  * Reboot notebook and boot Haiku
+
+ == Expected results ==
+ Haiku boots normal on the notebook
+
+ == Actual results ==
+ Haiku boots, but when starting the media_server the system freezes.
+ Sometimes, after a while you get thrown into KDL
+
+ == Reproducibility ==
+  * Freezing: Always, happens on every boot.
+  * KDL: Not always
+
+ == Work around ==
+ To get Haiku to boot on the notebook I had to either remove both
+ usb_webcam.media_addon and firewire_dv.media_addon from
+ &quot;build/jam/HaikuImage&quot; or change the bootscript to not start the
+ media_server.
+
+ == Testet on ==
+  * Haiku r29362
+  * GCC2 version, compiled on Ubuntu Linux 8.10
+  * Installed on real partition, running on real HW
+
+ == Hardware ==
+ Acer Travelmate 6463WLMi notebook, P/N LX.TED06.057 with the following
+ specs:
+  * Intel Core 2 Duo T5500 CPU
+  * Intel 945 PM chipset (i945PM)
+  * 2x1GB PC2-4300 SODIMM
+  * Ati Mobility Radeon X1300 128MB/256MB Hypermemory
+  * Notebook has built-in USB webcam
+  * Notebook has firewire controller/firewire port
+
+ == Additional ==
+ If any of the two addons are enabled, the following is printed constantly
+ to the serial log:
+
+ {{{
+ ide: ide_timeout() bus 0x80fb5a5c
+ ide: ide_timeout_dpc() bus 0x80fb5a5c, device 0x81796e80
+ ide: reset_device() device 0x81796e80
+ ide: reset_device() device 0x81796e80 success
+ More than 99% interrupts of vector 11 are unhandled
+ }}}
+
+ and
+
+ {{{
+ ide: reset_device() device 0x81796aa0
+ ide: reset_device() device 0x81796aa0 failed, calling reset_bus
+ ide: reset_bus() device 0x81796aa0, bus 0x80fb5990
+ More than 99% interrupts of vector 11 are unhandled
+ ide: reset_bus() device 0x81796aa0, bus 0x80fb5990 success
+ More than 99% interrupts of vector 11 are unhandled
+ }}}
+
+ along with a bunch of &quot;Last message repeated XX times.&quot; messages.
+
+ With both addons removed these messages is not printed to the serial log.
+
+ == Attached ==
+ Serial logs from booting with both addons, each addon seperate and without
+ any addons
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/3504">http://dev.haiku-os.org/ticket/3504</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="014790.html">[Haiku-bugs] [Haiku] #1296: No way to unattach an attached	image.
+</A></li>
+	<LI>Next message: <A HREF="014792.html">[Haiku-bugs] [Haiku] #3504: usb_webcam.media_addon and firewire_dv.media_addon makes system freeze on Acer Travelmate 6460 (was: usb_webcam.media_addon and firewire_dv.media_addon makes system freezeon Acer Travelmate 6460)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14791">[ date ]</a>
+              <a href="thread.html#14791">[ thread ]</a>
+              <a href="subject.html#14791">[ subject ]</a>
+              <a href="author.html#14791">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

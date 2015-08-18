@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #731: [Cortex] media_addon_server start to	eat cpu
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2007-December/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23731%3A%20%5BCortex%5D%20media_addon_server%20start%20to%0A%09eat%20cpu&In-Reply-To=%3C049.69bf30b4807348dab528e9ff4fe9c129%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003856.html">
+   <LINK REL="Next"  HREF="003858.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #731: [Cortex] media_addon_server start to	eat cpu</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%23731%3A%20%5BCortex%5D%20media_addon_server%20start%20to%0A%09eat%20cpu&In-Reply-To=%3C049.69bf30b4807348dab528e9ff4fe9c129%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #731: [Cortex] media_addon_server start to	eat cpu">trac at haiku-os.org
+       </A><BR>
+    <I>Thu Dec  6 13:38:49 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003856.html">[Haiku-bugs] [Haiku] #1112: media_server crashes when &quot;Restarting Media Services&quot;
+</A></li>
+        <LI>Next message: <A HREF="003858.html">[Haiku-bugs] [Haiku] #597: [Cortex] double click on audio mixer opens non-resizable window
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3857">[ date ]</a>
+              <a href="thread.html#3857">[ thread ]</a>
+              <a href="subject.html#3857">[ subject ]</a>
+              <a href="author.html#3857">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#731: [Cortex] media_addon_server start to eat cpu
+-----------------------------+----------------------------------------------
+  Reporter:  diver           |       Owner:  marcusoverhagen
+      Type:  bug             |      Status:  new            
+  Priority:  normal          |   Milestone:  R1             
+ Component:  Kits/Media Kit  |     Version:                 
+Resolution:                  |    Platform:  All            
+-----------------------------+----------------------------------------------
+Changes (by marcusoverhagen):
+
+ * cc: jackburton, stippi (added)
+  * component:  - General =&gt; Kits/Media Kit
+
+Comment:
+
+ I started debugging this issue in July 2007, but I was
+ unable to find a correct solution at that time due to
+ other work.
+
+ The problem is this:
+
+ Cortex seems to call SetTimeSource for each node during
+ startup.
+
+ When no supported soundcard exists, as in VMware, it will
+ call SetTimeSource on the system time source, giving the
+ system time source as parameter.
+
+ At some later place it calls BTimeSource::SetRunMode
+ on all nodes, which triggers an infinite loop of 0x204 (NODE_SET_RUN_MODE)
+ messages.
+
+ I don't think the Cortex behaviour of changing run modes and time
+ sources is correct. I believe it should not touch the configuration.
+
+ Until the root cause of this bug in the media kit is fixed, please
+ do not modify Cortex.
+
+ I checked in some debugging instrumentation with r22029 which at least
+ turnes the various lockups caused by this issue into a debugger call.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/731#comment:8">http://dev.haiku-os.org/ticket/731#comment:8</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003856.html">[Haiku-bugs] [Haiku] #1112: media_server crashes when &quot;Restarting Media Services&quot;
+</A></li>
+	<LI>Next message: <A HREF="003858.html">[Haiku-bugs] [Haiku] #597: [Cortex] double click on audio mixer opens non-resizable window
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3857">[ date ]</a>
+              <a href="thread.html#3857">[ thread ]</a>
+              <a href="subject.html#3857">[ subject ]</a>
+              <a href="author.html#3857">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

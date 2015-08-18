@@ -1,0 +1,239 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #2291: vm_soft_fault when discovering	bluetooth devices
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-May/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232291%3A%20vm_soft_fault%20when%20discovering%0A%09bluetooth%20devices&In-Reply-To=%3C040.c50b25037ba7cd5854594f884896fac6%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007785.html">
+   <LINK REL="Next"  HREF="007787.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #2291: vm_soft_fault when discovering	bluetooth devices</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%232291%3A%20vm_soft_fault%20when%20discovering%0A%09bluetooth%20devices&In-Reply-To=%3C040.c50b25037ba7cd5854594f884896fac6%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #2291: vm_soft_fault when discovering	bluetooth devices">trac at haiku-os.org
+       </A><BR>
+    <I>Sat May 31 08:49:13 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007785.html">[Haiku-bugs] [Haiku] #2290: bluetooth crashes when removing device
+</A></li>
+        <LI>Next message: <A HREF="007787.html">[Haiku-bugs] [Haiku] #2071: No accelerated video starting	r24669 nightly
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7786">[ date ]</a>
+              <a href="thread.html#7786">[ thread ]</a>
+              <a href="subject.html#7786">[ subject ]</a>
+              <a href="author.html#7786">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#2291: vm_soft_fault when discovering bluetooth devices
+-------------------------------+--------------------------------------------
+ Reporter:  monni              |       Owner:  oruizdorantes 
+     Type:  bug                |      Status:  new           
+ Priority:  normal             |   Milestone:  R1            
+Component:  Drivers/Bluetooth  |     Version:  R1 development
+ Platform:  All                |  
+-------------------------------+--------------------------------------------
+ How to reproduce: Run bt_discovery before starting bluetooth_server
+ Experienced behavior: No KDL
+ Expected behavior: whine like a baby
+
+ KERN: BT  device_control: ioctl() opcode 12999 size 7.
+ KERN: BT  command_complete: 11 09:10:00:
+ KERN: BT  assembly_rx: count 12 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: Frame goes up!
+ KERN: BT  post_packet_up: HCI not present, Posting to userland
+ KERN: BT  device_control: ioctl() opcode 12999 size 7.
+ KERN: BT  command_complete: 11 14:0c:00:
+ KERN: BT  assembly_rx: count 16 0x00000000 0x8058f3e0
+ KERN: Last message repeated 14 times.
+ KERN: BT  assembly_rx: count 14 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: Frame goes up!
+ KERN: BT  post_packet_up: HCI not present, Posting to userland
+ KERN: BT  device_control: ioctl() opcode 12999 size 12.
+ KERN: BT  command_complete: 16 01:04:05:
+ KERN: BT  assembly_rx: count 6 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: Frame goes up!
+ KERN: BT  post_packet_up: HCI not present, Posting to userland
+ KERN: BT  assembly_rx: count 16 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: count 1 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: Frame goes up!
+ KERN: BT  post_packet_up: HCI not present, Posting to userland
+ KERN: BT  assembly_rx: count 16 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: count 1 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: Frame goes up!
+ KERN: BT  post_packet_up: HCI not present, Posting to userland
+ KERN: BT  assembly_rx: count 16 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: count 1 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: Frame goes up!
+ KERN: BT  post_packet_up: HCI not present, Posting to userland
+ KERN: BT  assembly_rx: count 16 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: count 1 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: Frame goes up!
+ KERN: BT  post_packet_up: HCI not present, Posting to userland
+ KERN: BT  assembly_rx: count 16 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: count 1 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: Frame goes up!
+ KERN: BT  post_packet_up: HCI not present, Posting to userland
+ KERN: BT  assembly_rx: count 16 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: count 1 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: Frame goes up!
+ KERN: BT  post_packet_up: HCI not present, Posting to userland
+ KERN: BT  assembly_rx: count 16 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: count 1 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: Frame goes up!
+ KERN: BT  post_packet_up: HCI not present, Posting to userland
+ KERN: BT  assembly_rx: count 16 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: count 1 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: Frame goes up!
+ KERN: BT  post_packet_up: HCI not present, Posting to userland
+ KERN: BT  assembly_rx: count 16 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: count 1 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: Frame goes up!
+ KERN: BT  post_packet_up: HCI not present, Posting to userland
+ KERN: BT  assembly_rx: count 16 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: count 1 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: Frame goes up!
+ KERN: BT  post_packet_up: HCI not present, Posting to userland
+ KERN: BT  assembly_rx: count 16 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: count 1 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: Frame goes up!
+ KERN: BT  post_packet_up: HCI not present, Posting to userland
+ KERN: BT  assembly_rx: count 16 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: count 1 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: Frame goes up!
+ KERN: BT  post_packet_up: HCI not present, Posting to userland
+ KERN: BT  assembly_rx: count 16 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: count 1 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: Frame goes up!
+ KERN: BT  post_packet_up: HCI not present, Posting to userland
+ KERN: BT  assembly_rx: count 16 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: count 1 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: Frame goes up!
+ KERN: BT  post_packet_up: HCI not present, Posting to userland
+ KERN: BT  assembly_rx: count 16 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: count 1 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: Frame goes up!
+ KERN: BT  post_packet_up: HCI not present, Posting to userland
+ KERN: BT  assembly_rx: count 16 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: count 1 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: Frame goes up!
+ KERN: BT  post_packet_up: HCI not present, Posting to userland
+ KERN: BT  assembly_rx: count 16 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: count 1 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: Frame goes up!
+ KERN: BT  post_packet_up: HCI not present, Posting to userland
+ KERN: BT  assembly_rx: count 16 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: count 1 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: Frame goes up!
+ KERN: BT  post_packet_up: HCI not present, Posting to userland
+ KERN: BT  assembly_rx: count 16 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: count 1 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: Frame goes up!
+ KERN: BT  post_packet_up: HCI not present, Posting to userland
+ KERN: BT  assembly_rx: count 16 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: count 1 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: Frame goes up!
+ KERN: BT  post_packet_up: HCI not present, Posting to userland
+ KERN: BT  assembly_rx: count 16 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: count 1 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: Frame goes up!
+ KERN: BT  post_packet_up: HCI not present, Posting to userland
+ KERN: BT  assembly_rx: count 16 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: count 1 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: Frame goes up!
+ KERN: BT  post_packet_up: HCI not present, Posting to userland
+ KERN: BT  assembly_rx: count 16 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: count 1 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: Frame goes up!
+ KERN: BT  post_packet_up: HCI not present, Posting to userland
+ KERN: BT  assembly_rx: count 16 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: count 1 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: Frame goes up!
+ KERN: BT  post_packet_up: HCI not present, Posting to userland
+ KERN: BT  assembly_rx: count 16 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: count 1 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: Frame goes up!
+ KERN: BT  post_packet_up: HCI not present, Posting to userland
+ KERN: BT  assembly_rx: count 16 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: count 1 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: Frame goes up!
+ KERN: BT  post_packet_up: HCI not present, Posting to userland
+ KERN: BT  assembly_rx: count 16 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: count 1 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: Frame goes up!
+ KERN: BT  post_packet_up: HCI not present, Posting to userland
+ KERN: BT  assembly_rx: count 16 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: count 1 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: Frame goes up!
+ KERN: BT  post_packet_up: HCI not present, Posting to userland
+ KERN: BT  assembly_rx: count 16 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: count 1 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: Frame goes up!
+ KERN: BT  post_packet_up: HCI not present, Posting to userland
+ KERN: BT  assembly_rx: count 16 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: count 1 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: Frame goes up!
+ KERN: BT  post_packet_up: HCI not present, Posting to userland
+ KERN: BT  assembly_rx: count 16 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: count 1 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: Frame goes up!
+ KERN: BT  post_packet_up: HCI not present, Posting to userland
+ KERN: BT  assembly_rx: count 16 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: count 1 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: Frame goes up!
+ KERN: BT  post_packet_up: HCI not present, Posting to userland
+ KERN: BT  assembly_rx: count 3 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: Frame goes up!
+ KERN: BT  post_packet_up: HCI not present, Posting to userland
+ KERN: vm_soft_fault: va 0x0 not covered by area in address space
+ KERN: vm_page_fault: vm_soft_fault returned error 'Bad address' on fault
+ at 0x0, ip 0x800a28a8, write 1, user 0, thread 0x13d
+ KERN: BT  device_control: ioctl() opcode 12999 size 17.
+ KERN: BT  command_complete: 21 19:04:0a:
+ KERN: BT  assembly_rx: count 6 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: Frame goes up!
+ KERN: BT  post_packet_up: HCI not present, Posting to userland
+ KERN: BT  assembly_rx: count 16 0x00000000 0x8058f3e0
+ KERN: Last message repeated 15 times.
+ KERN: BT  assembly_rx: count 1 0x00000000 0x8058f3e0
+ KERN: BT  assembly_rx: Frame goes up!
+ KERN: BT  post_packet_up: HCI not present, Posting to userland
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/2291">http://dev.haiku-os.org/ticket/2291</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007785.html">[Haiku-bugs] [Haiku] #2290: bluetooth crashes when removing device
+</A></li>
+	<LI>Next message: <A HREF="007787.html">[Haiku-bugs] [Haiku] #2071: No accelerated video starting	r24669 nightly
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7786">[ date ]</a>
+              <a href="thread.html#7786">[ thread ]</a>
+              <a href="subject.html#7786">[ subject ]</a>
+              <a href="author.html#7786">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

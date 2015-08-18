@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1733: BAlert sometimes crashes (appears to be somewhere in BMessage's internals)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-January/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231733%3A%20BAlert%20sometimes%20crashes%20%28appears%20to%20be%0A%20somewhere%20in%20BMessage%27s%20internals%29&In-Reply-To=%3C044.f4a86b9d0fcb4f6ec22e64e7467ed5e9%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="004491.html">
+   <LINK REL="Next"  HREF="004497.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1733: BAlert sometimes crashes (appears to be somewhere in BMessage's internals)</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231733%3A%20BAlert%20sometimes%20crashes%20%28appears%20to%20be%0A%20somewhere%20in%20BMessage%27s%20internals%29&In-Reply-To=%3C044.f4a86b9d0fcb4f6ec22e64e7467ed5e9%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1733: BAlert sometimes crashes (appears to be somewhere in BMessage's internals)">trac at haiku-os.org
+       </A><BR>
+    <I>Mon Jan 28 02:51:22 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="004491.html">[Haiku-bugs] [Haiku] #1310: [GLTeapot] The teapot can't be controlled by a mouse
+</A></li>
+        <LI>Next message: <A HREF="004497.html">[Haiku-bugs] [Haiku] #1637: Frozen empty desktop with an inert cursor on startup.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4496">[ date ]</a>
+              <a href="thread.html#4496">[ thread ]</a>
+              <a href="subject.html#4496">[ subject ]</a>
+              <a href="author.html#4496">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1733: BAlert sometimes crashes (appears to be somewhere in BMessage's internals)
+----------------------------------+-----------------------------------------
+ Reporter:  anevilyak             |       Owner:  axeld         
+     Type:  bug                   |      Status:  new           
+ Priority:  normal                |   Milestone:  R1            
+Component:  Kits/Application Kit  |     Version:  R1 development
+ Platform:  All                   |  
+----------------------------------+-----------------------------------------
+ In Vision, there is an option to warn you on pasting multiline messages.
+ This brings up a BAlert that is constructed as follows:
+
+ BString str;
+
+ str += &quot;As if there isn't enough, you &quot;;
+ str += &quot;are about to add &quot;;
+ str &lt;&lt; lines;
+ str += &quot; more lines of spam to &quot;;
+ str += &quot;the internet.  How &quot;;
+ str += &quot;would you like to go about this?&quot;;
+
+ BAlert *alert (new BAlert (
+ &quot;Spam&quot;,
+ str.String(),
+ &quot;Cancel&quot;,
+ &quot;Spam!&quot;,
+ &quot;Single Line&quot;,
+ B_WIDTH_FROM_WIDEST,
+ B_OFFSET_SPACING,
+ B_WARNING_ALERT));
+
+ BMessage *invokeMsg (new BMessage (msg));
+ BInvoker *invoker (new BInvoker (invokeMsg, msgr));
+ invokeMsg-&gt;AddPointer (&quot;invoker&quot;, invoker);
+ alert-&gt;Go (invoker);
+
+
+ Roughly every other time, picking any of the presented options on the
+ aforementioned alert results in a crash with the following trace:
+
+ 0x003d09a1 in BMessage::IsSourceWaiting () from /
+ boot/beos/system/lib/libbe.so
+ (gdb) bt
+ #0  0x003d09a1 in BMessage::IsSourceWaiting ()
+ from /boot/beos/system/lib/libbe.so
+ #1  0x003d3158 in BMessage::_SendMessage () from /
+ boot/beos/system/lib/libbe.so
+ #2  0x003d97d8 in BMessenger::SendMessage ()
+ from /boot/beos/system/lib/libbe.so
+ #3  0x003d971b in BMessenger::SendMessage ()
+ from /boot/beos/system/lib/libbe.so
+ #4  0x003cb805 in BInvoker::Invoke () from /boot/
+ beos/system/lib/libbe.so
+ #5  0x003e8da3 in BAlert::MessageReceived ()
+ from /boot/beos/system/lib/libbe.so
+ #6  0x003ccd1b in BLooper::DispatchMessage ()
+ from /boot/beos/system/lib/libbe.so
+ #7  0x0046d769 in BWindow::DispatchMessage ()
+ from /boot/beos/system/lib/libbe.so
+ #8  0x003e8eeb in BAlert::DispatchMessage ()
+ from /boot/beos/system/lib/libbe.so
+ #9  0x00470f00 in BWindow::task_looper () from /
+ boot/beos/system/lib/libbe.so
+ #10 0x003ce253 in BLooper::_task0_ () from /boot/
+ beos/system/lib/libbe.so
+ #11 0x0086e264 in thread_entry () from /boot/beos/
+ system/lib/libroot.so
+ #12 0x70184fec in ?? ()
+
+ Unfortunately I'm unable to debug this further using gdb because I've been
+ unsuccessful at building debugging versions of libbe (halted by libroot
+ failing to link).
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1733">http://dev.haiku-os.org/ticket/1733</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="004491.html">[Haiku-bugs] [Haiku] #1310: [GLTeapot] The teapot can't be controlled by a mouse
+</A></li>
+	<LI>Next message: <A HREF="004497.html">[Haiku-bugs] [Haiku] #1637: Frozen empty desktop with an inert cursor on startup.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4496">[ date ]</a>
+              <a href="thread.html#4496">[ thread ]</a>
+              <a href="subject.html#4496">[ subject ]</a>
+              <a href="author.html#4496">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>

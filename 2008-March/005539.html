@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Haiku-bugs] [Haiku] #1920: Userland Heap Garbage in Kernel	Heap Page
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/haiku-bugs/2008-March/index.html" >
+   <LINK REL="made" HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231920%3A%20Userland%20Heap%20Garbage%20in%20Kernel%0A%09Heap%20Page&In-Reply-To=%3C052.b86e42567d98ec9e627cb1ec66a3db15%40haiku-os.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005538.html">
+   <LINK REL="Next"  HREF="005540.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Haiku-bugs] [Haiku] #1920: Userland Heap Garbage in Kernel	Heap Page</H1>
+    <B>Haiku</B> 
+    <A HREF="mailto:haiku-bugs%40lists.berlios.de?Subject=Re%3A%20%5BHaiku-bugs%5D%20%5BHaiku%5D%20%231920%3A%20Userland%20Heap%20Garbage%20in%20Kernel%0A%09Heap%20Page&In-Reply-To=%3C052.b86e42567d98ec9e627cb1ec66a3db15%40haiku-os.org%3E"
+       TITLE="[Haiku-bugs] [Haiku] #1920: Userland Heap Garbage in Kernel	Heap Page">trac at haiku-os.org
+       </A><BR>
+    <I>Sat Mar 15 00:15:26 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005538.html">[Haiku-bugs] [Haiku] #1920: Userland Heap Garbage in Kernel Heap	Page
+</A></li>
+        <LI>Next message: <A HREF="005540.html">[Haiku-bugs] [Haiku] #1920: Userland Heap Garbage in Kernel	Heap Page
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5539">[ date ]</a>
+              <a href="thread.html#5539">[ thread ]</a>
+              <a href="subject.html#5539">[ subject ]</a>
+              <a href="author.html#5539">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>#1920: Userland Heap Garbage in Kernel Heap Page
+----------------------------+-----------------------------------------------
+  Reporter:  bonefish       |       Owner:  axeld         
+      Type:  bug            |      Status:  new           
+  Priority:  blocker        |   Milestone:  R1/alpha1     
+ Component:  System/Kernel  |     Version:  R1 development
+Resolution:                 |    Platform:  All           
+----------------------------+-----------------------------------------------
+Comment (by axeld):
+
+ I haven't found much time to look into this, but this looks like
+ environment variables. And those aren't only part of userland apps, but
+ also copied inside the kernel when a new app launches (see team.cpp
+ create_team_arg()).
+
+ Since parts of this page are filled with 0xcccccccc, it might have been
+ handed out by the kernel allocator, not the userland allocator (only the
+ former fills it with 0xcc).
+
+ And since we found it in the middle of a hashtable allocation, and it's
+ still filled with 0xcc, I'd say the kernel allocator has given this page
+ away twice. It's just the question if it has been mapped twice (as you
+ assumed), or if there is a bug in the heap implementation.
+
+ Note also that the cache uses hash_insert_grow() which means the memory of
+ the hash table might change over time.
+
+-- 
+Ticket URL: &lt;<A HREF="http://dev.haiku-os.org/ticket/1920#comment:1">http://dev.haiku-os.org/ticket/1920#comment:1</A>&gt;
+Haiku &lt;<A HREF="http://dev.haiku-os.org">http://dev.haiku-os.org</A>&gt;
+The Haiku operating system.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005538.html">[Haiku-bugs] [Haiku] #1920: Userland Heap Garbage in Kernel Heap	Page
+</A></li>
+	<LI>Next message: <A HREF="005540.html">[Haiku-bugs] [Haiku] #1920: Userland Heap Garbage in Kernel	Heap Page
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5539">[ date ]</a>
+              <a href="thread.html#5539">[ thread ]</a>
+              <a href="subject.html#5539">[ subject ]</a>
+              <a href="author.html#5539">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/haiku-bugs">More information about the Haiku-bugs
+mailing list</a><br>
+</body></html>
